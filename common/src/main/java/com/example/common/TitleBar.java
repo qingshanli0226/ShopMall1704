@@ -1,4 +1,4 @@
-package com.example.shopmall;
+package com.example.common;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -170,7 +170,7 @@ public class TitleBar extends LinearLayout {
         mTitle.setBackgroundColor(colorRes);
     }
 
-    interface TitleClickLisner {
+    public interface TitleClickLisner {
         void LeftClick();
 
         void RightClick();

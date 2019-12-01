@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
-            android:name=".ShopService"
+            android:name="com.example.base.ShopService"
             android:enabled="true"
             android:exported="true"></service>
 
