@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DimensionLeague.iml" filepath="$PROJECT_DIR$/DimensionLeague.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/buy/buy.iml" filepath="$PROJECT_DIR$/buy/buy.iml" />
     </modules>
   </component>
 </project>
