@@ -19,7 +19,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        super.initData();
         titleBar.setCenterText("标题栏", 30, Color.RED);
         titleBar.setLeftText("左边");
         titleBar.setRightText("右边");

@@ -35,9 +35,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public abstract void initView();
 
-    public void initData() {
-
-    }
+    public abstract void initData();
 
     @Override
     protected void onDestroy() {
