@@ -17,7 +17,7 @@ public class AppActivityManager {
     public static void removeActivity(Activity activity) {
         activityList.remove(activity);
     }
-
+    //关闭全部activity
     public static void finishActivity() {
         for (Activity activity : activityList) {
             activity.finish();
