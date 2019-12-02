@@ -14,6 +14,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
 
+//自定义标题栏
 public class TitleBar extends LinearLayout {
 
     private Context context;
@@ -41,10 +42,9 @@ public class TitleBar extends LinearLayout {
     private RelativeLayout mTitle;
     private TitleClickLisner titleClickLisner;
 
+    //初始化
     private void init() {
-
         View view = LayoutInflater.from(context).inflate(R.layout.titlebar_layout, this);
-
         mTvCenter = view.findViewById(R.id.tv_center);
         mTvLeft = view.findViewById(R.id.tv_left);
         mTvRight = view.findViewById(R.id.tv_right);
@@ -59,7 +59,6 @@ public class TitleBar extends LinearLayout {
                 titleClickLisner.RightClick();
             }
         });
-
         mTvRight.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,16 +91,19 @@ public class TitleBar extends LinearLayout {
         });
     }
 
+    //设置标题栏监听
     public void setTitleClickLisner(TitleClickLisner titleClickLisner) {
         this.titleClickLisner = titleClickLisner;
     }
 
+    //设置标题栏标题内容
     public void setCenterText(String msg) {
         if (msg != null) {
             mTvCenter.setText(msg);
         }
     }
 
+    //设置标题栏标题内容和字体大小
     public void setCenterText(String msg, int size) {
         if (msg != null) {
             mTvCenter.setText(msg);
@@ -109,19 +111,21 @@ public class TitleBar extends LinearLayout {
         }
     }
 
+    //设置标题栏标题内容和字体大小和文字颜色
     public void setCenterText(String msg, int size, @ColorInt int color) {
         mTvCenter.setText(msg);
         mTvCenter.setTextSize(size);
         mTvCenter.setTextColor(color);
     }
 
+    //设置标题栏左标题内容
     public void setLeftText(String msg) {
         if (msg != null) {
             mTvLeft.setText(msg);
         }
     }
 
-
+    //设置标题栏左标题内容和字体大小
     public void setLeftText(String msg, int size) {
         if (msg != null) {
             mTvLeft.setText(msg);
@@ -129,18 +133,21 @@ public class TitleBar extends LinearLayout {
         }
     }
 
+    //设置标题栏左标题内容和字体大小和字体颜色
     public void setLeftText(String msg, int size, @ColorInt int color) {
         mTvLeft.setText(msg);
         mTvLeft.setTextSize(size);
         mTvLeft.setTextColor(color);
     }
 
+    //设置标题栏右标题内容
     public void setRightText(String msg) {
         if (msg != null) {
             mTvRight.setText(msg);
         }
     }
 
+    //设置标题栏右标题内容和字体大小
     public void setRightText(String msg, int size) {
         if (msg != null) {
             mTvRight.setText(msg);
@@ -148,28 +155,34 @@ public class TitleBar extends LinearLayout {
         }
     }
 
+    //设置标题栏右标题内容和字体大小和字体大小和字体颜色
     public void setRightText(String msg, int size, @ColorInt int color) {
         mTvRight.setText(msg);
         mTvRight.setTextSize(size);
         mTvRight.setTextColor(color);
     }
 
+    //设置中间的图片
     public void setCenterImg(@DrawableRes int imgRes) {
         mIvCenter.setImageResource(imgRes);
     }
 
+    //设置左边的图片
     public void setLeftImg(@DrawableRes int imgRes) {
         mIvLeft.setImageResource(imgRes);
     }
 
+    //设置右边的图片
     public void setRightImg(@DrawableRes int imgRes) {
         mIvRight.setImageResource(imgRes);
     }
 
+    //设置标题栏背景
     public void setTitleBacKGround(@ColorInt int colorRes) {
         mTitle.setBackgroundColor(colorRes);
     }
 
+    //标题栏监听
     public interface TitleClickLisner {
         void LeftClick();
 
