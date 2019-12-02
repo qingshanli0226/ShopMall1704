@@ -9,24 +9,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.base.BaseFragment;
+import com.example.common.TitleBar;
 import com.example.shopmall.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ClassifyFragment extends Fragment {
+public class ClassifyFragment extends BaseFragment {
 
-
-    public ClassifyFragment() {
-        // Required empty public constructor
-    }
-
+    TitleBar tb_classify;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_classify, container, false);
+    protected void initData() {
+        tb_classify.setCenterText("分类");
     }
 
+    @Override
+    protected void initView(View view) {
+        tb_classify = view.findViewById(R.id.tb_classify);
+    }
+
+    @Override
+    protected int setLayout() {
+        return R.layout.fragment_classify;
+    }
 }

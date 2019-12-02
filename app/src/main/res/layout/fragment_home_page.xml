@@ -9,7 +9,7 @@
 <!--    <include layout="@layout/title_top" />-->
 
     <com.example.shopmall.TitleBar
-        android:id="@+id/tb_main"
+        android:id="@+id/tb_homepage"
         android:layout_width="match_parent"
         android:layout_height="50dp" />
 

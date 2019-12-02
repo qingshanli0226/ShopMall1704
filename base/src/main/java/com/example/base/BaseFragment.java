@@ -20,11 +20,9 @@ public abstract class BaseFragment extends Fragment {
         return view;
     }
 
-    private void initData() {
+    protected abstract void initData();
 
-    }
+    protected abstract void initView(View view);
 
-    abstract void initView(View view);
-
-    abstract int setLayout();
+    protected abstract int setLayout();
 }
