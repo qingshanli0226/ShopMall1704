@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< HEAD
+  <component name="Encoding">
+=======
   <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8" addBOMForNewFiles="with NO BOM">
+>>>>>>> e92504845feaa076cfd5b88bee8391fc35a0b7d3
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

@@ -9,10 +9,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+<<<<<<< HEAD
+        //测试
+        //sas
+=======
 
 
 
 
 
+>>>>>>> e92504845feaa076cfd5b88bee8391fc35a0b7d3
     }
 }
