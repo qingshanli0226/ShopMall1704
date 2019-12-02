@@ -23,8 +23,6 @@ public abstract class BaseActivity<T> extends AppCompatActivity implements IBase
         ActivityInstanceManager.addActivity(this);
 
 
-
-
     }
 
     protected abstract void initView();
@@ -32,18 +30,13 @@ public abstract class BaseActivity<T> extends AppCompatActivity implements IBase
     public abstract View getLayoutId();
 
 
-
-
-
-
-
     @Override
-    public void onRequestHttpDataSuccess(int requestCode, T data) {
+    public void onRequestHttpDataSuccess(int requestCode, String message, T data) {
 
     }
 
     @Override
-    public void onRequestHttpDataListSuccess(int requestCode, List<T> data) {
+    public void onRequestHttpDataListSuccess(int requestCode, String message, List<T> data) {
 
     }
 
