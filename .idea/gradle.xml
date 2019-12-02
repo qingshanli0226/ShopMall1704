@@ -9,7 +9,11 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+<<<<<<< HEAD
             <option value="$PROJECT_DIR$/net" />
+=======
+            <option value="$PROJECT_DIR$/framework" />
+>>>>>>> lihaofan
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

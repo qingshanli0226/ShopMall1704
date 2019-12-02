@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 include ':app', ':net'
+=======
+include ':app', ':framework'
+>>>>>>> lihaofan
 rootProject.name='DimensionLeague'
