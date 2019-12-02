@@ -1,4 +1,4 @@
-package com.example.shopmall;
+package com.example.base;
 
 import android.graphics.Color;
 import android.os.Build;

@@ -1,4 +1,4 @@
-package com.example.shopmall;
+package com.example.base;
 
 import android.content.ComponentName;
 import android.content.Context;

@@ -1,8 +1,9 @@
-package com.example.shopmall;
+package com.example.common;
 
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,10 +13,12 @@ import androidx.annotation.Nullable;
 
 public class LoadingPage extends LinearLayout {
 
-    private static int LOADING_SUCCEED = 1;
-    private static int LOADING_FAILURE = 0;
+    public static int LOADING_SUCCEED = 1;
+    public static int LOADING_FAILURE = 0;
     private int current;
     private Context mContext;
+    private ImageView imageView;
+    private AnimationDrawable animationDrawable;
 
     public LoadingPage(Context context) {
         this(context, null);
@@ -28,23 +31,34 @@ public class LoadingPage extends LinearLayout {
     public LoadingPage(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.mContext = context;
-        init();
     }
 
-    ImageView imageView;
 
     private void init() {
-        if (current == 0) {
+        if (current == LOADING_SUCCEED) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.succees_layout, this);
             imageView = view.findViewById(R.id.iv_succeed);
-            AnimationDrawable animationDrawable = (AnimationDrawable) imageView.getBackground();
+            animationDrawable = (AnimationDrawable) imageView.getBackground();
             if (!animationDrawable.isRunning()) {
                 animationDrawable.start();
             }
-        } else {
+        } else if (current == LOADING_FAILURE) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.failure_layout, this);
-            imageView = view.findViewById(R.id.iv_succeed);
+            imageView = view.findViewById(R.id.iv_failure);
         }
+    }
+
+    public void start(int current) {
+        this.current = current;
+        removeAllViews();
+        init();
+    }
+
+    public void isSucceed() {
+        if (animationDrawable.isRunning()) {
+            animationDrawable.stop();
+        }
+        this.setVisibility(GONE);
     }
 
 

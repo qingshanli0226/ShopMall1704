@@ -1,4 +1,4 @@
-package com.example.shopmall;
+package com.example.common;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

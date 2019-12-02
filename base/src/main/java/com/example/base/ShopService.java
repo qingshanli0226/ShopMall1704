@@ -1,4 +1,4 @@
-package com.example.shopmall;
+package com.example.base;
 
 import android.app.Service;
 import android.content.Intent;
