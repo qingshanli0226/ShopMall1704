@@ -12,5 +12,8 @@ public class MainActivity extends AppCompatActivity {
         //测试开发分支
         setContentView(R.layout.activity_main);
         Log.d("LQS", "MainActivity");
+        Log.d("LQS", "liqingshan");
+
+
     }
 }
