@@ -15,5 +15,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("LQS", "liqingshan");
 
 
+
+        Log.d("LQS", "1704");
     }
 }
