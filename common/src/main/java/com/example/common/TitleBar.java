@@ -184,7 +184,7 @@ public class TitleBar extends LinearLayout {
 
     //标题栏监听
     public interface TitleClickLisner {
-        void LeftClick();
+        void LeftClick();//左边监听
 
         void RightClick();
 
