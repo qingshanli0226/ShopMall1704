@@ -1,4 +1,4 @@
-package com.example.base;
+package com.example.common;
 
 import android.app.Service;
 import android.content.Intent;

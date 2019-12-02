@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
+//自定义加载页
 public class LoadingPage extends LinearLayout {
 
     public static int LOADING_SUCCEED = 1;
@@ -33,16 +34,19 @@ public class LoadingPage extends LinearLayout {
         this.mContext = context;
     }
 
-
+    //初始化
     private void init() {
+        //如果是加载中
         if (current == LOADING_SUCCEED) {
+            //获取布局
             View view = LayoutInflater.from(mContext).inflate(R.layout.succees_layout, this);
             imageView = view.findViewById(R.id.iv_succeed);
             animationDrawable = (AnimationDrawable) imageView.getBackground();
             if (!animationDrawable.isRunning()) {
-                animationDrawable.start();
+                animationDrawable.start();//开始加载动画
             }
-        } else if (current == LOADING_FAILURE) {
+        } else if (current == LOADING_FAILURE) {//如果是加载失败
+            //获取布局
             View view = LayoutInflater.from(mContext).inflate(R.layout.failure_layout, this);
             imageView = view.findViewById(R.id.iv_failure);
         }
@@ -50,10 +54,10 @@ public class LoadingPage extends LinearLayout {
 
     public void start(int current) {
         this.current = current;
-        removeAllViews();
+        removeAllViews();//移除view
         init();
     }
-
+    //加载成功时调用
     public void isSucceed() {
         if (animationDrawable.isRunning()) {
             animationDrawable.stop();

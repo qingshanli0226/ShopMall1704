@@ -8,6 +8,9 @@ import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.common.AppActivityManager;
+
 /**
  * base类
  * */

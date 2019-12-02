@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+//自定义底部导航
 public class BottomBar extends LinearLayout {
 
     private Context mContext;
@@ -75,16 +76,16 @@ public class BottomBar extends LinearLayout {
         });
 
     }
-
+    //设置底部导航的名字,不能超过五个
     public void setBottombarName(String... msg) {
         for (int i = 0; i < msg.length; i++) {
             radioButtons[i].setText(msg[i]);
         }
     }
 
-    //设置tap的数量 不能超过4个
+    //设置tap的数量 不能超过5个
     public void setTapNum(int num) {
-        if (num > 4) {
+        if (num > 5) {
             Toast.makeText(mContext, "不能超过四个", Toast.LENGTH_SHORT).show();
         }
         for (int i = 0; i < radioButtons.length; i++) {

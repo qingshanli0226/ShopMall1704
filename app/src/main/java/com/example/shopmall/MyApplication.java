@@ -2,6 +2,9 @@ package com.example.shopmall;
 
 import android.app.Application;
 import android.content.Context;
+import android.net.ConnectivityManager;
+
+import com.example.common.ConnectManager;
 
 public class MyApplication extends Application {
 
@@ -13,6 +16,7 @@ public class MyApplication extends Application {
 
         context = this;
 
+        ConnectManager.getInstance().init(this);
     }
 
     public static Context getContext() {

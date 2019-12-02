@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.base.BaseActivity;
+import com.example.common.ConnectManager;
 import com.example.common.LoadingPage;
 import com.example.common.TitleBar;
 import com.example.shopmall.fragment.ClassifyFragment;
@@ -19,7 +20,7 @@ import com.example.shopmall.fragment.ShoppingCartFragment;
 
 import java.util.ArrayList;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity{
 
     TitleBar titleBar;
 
@@ -33,13 +34,16 @@ public class MainActivity extends BaseActivity {
     protected int setLayout() {
         return R.layout.activity_main;
     }
+
     LoadingPage loadingPage;
+
     RadioGroup rg_main;
     RadioButton rb_homepage;
     RadioButton rb_classify;
     RadioButton rb_horizontal;
     RadioButton rb_shoppingcart;
     RadioButton rb_mine;
+
     @Override
     public void initView() {
         loadingPage = findViewById(R.id.loading);
@@ -55,7 +59,6 @@ public class MainActivity extends BaseActivity {
         fragmentArrayList.add(new HorizontalFragment());
         fragmentArrayList.add(new ShoppingCartFragment());
         fragmentArrayList.add(new MineFragment());
-
     }
 
     @Override
