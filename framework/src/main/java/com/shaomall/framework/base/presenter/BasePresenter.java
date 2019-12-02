@@ -1,5 +1,7 @@
 package com.shaomall.framework.base.presenter;
 
+import com.example.commen.ErrorUtil;
+import com.example.commen.ShopMailError;
 import com.example.net.ResEntity;
 import com.example.net.RetrofitCreator;
 import com.google.gson.Gson;
@@ -25,7 +27,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
      * @param requestCode
      */
     @Override
-    public void doGetHttpRequest(int requestCode) {
+    public void doGetHttpRequest(final int requestCode) {
         RetrofitCreator.getNetApiService().getData(getHeaderParams(), getPath(), getParams())
                 .subscribeOn(Schedulers.io()) //订阅
                 .observeOn(AndroidSchedulers.mainThread()) //观察
@@ -43,15 +45,39 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
                             //判断数据是否是列表
                             if (isList()) {
-                                List<ResEntity<T>> resEntityList = new Gson().fromJson(string, getBeanType());
+                                ResEntity<List<T>> resEntityList = new Gson().fromJson(string, getBeanType());
 
+                                //获取数据列表成功
+                                if (resEntityList.getCode() == 200) { //数据请求成功
+                                    if (iBaseView != null) {
+                                        iBaseView.onRequestHttpDataListSuccess(requestCode, resEntityList.getMessage(), resEntityList.getResult());
+                                    }
+                                } else {
+                                    //获取列表数据失败
+                                    if (iBaseView != null) {
+                                        iBaseView.onRequestHttpDataFailed(requestCode, ShopMailError.BUSINESS_ERROR);
+                                    }
+                                }
 
+                            } else { //不是列表
+                                ResEntity<T> resEntity = new Gson().fromJson(string, getBeanType());
 
+                                if (resEntity.getCode() == 200) { //数据请求成功
+                                    if (iBaseView != null) {
+                                        iBaseView.onRequestHttpDataSuccess(requestCode, resEntity.getMessage(), resEntity.getResult());
+                                    } else {
+                                        //获取数据失败
+                                        if (iBaseView != null) {
+                                            iBaseView.onRequestHttpDataFailed(requestCode, ShopMailError.BUSINESS_ERROR);
+                                        }
+                                    }
+                                }
                             }
 
 
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            //e.printStackTrace();
+                            throw new RuntimeException("获取数据为空"); //扔出异常, 让onError函数统一管理
                         }
 
                     }
@@ -59,6 +85,10 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                     @Override
                     public void onError(Throwable e) {
 
+                        //获取数据失败
+                        if (iBaseView != null) {
+                            iBaseView.onRequestHttpDataFailed(requestCode, ErrorUtil.handlerError(e));
+                        }
                     }
 
                     @Override
@@ -70,13 +100,89 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
 
     @Override
-    public void doPostHttpRequest(int requestCode) {
+    public void doPostHttpRequest(final int requestCode) {
+        RetrofitCreator.getNetApiService().postData(getHeaderParams(), getPath(), getParams())
+                .subscribeOn(Schedulers.io()) //订阅
+                .observeOn(AndroidSchedulers.mainThread()) //观察
+                .subscribe(new Observer<ResponseBody>() {
 
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        try {
+                            String string = responseBody.string();
+
+                            //判断数据是否是列表
+                            if (isList()) {
+                                ResEntity<List<T>> resEntityList = new Gson().fromJson(string, getBeanType());
+
+                                //获取数据列表成功
+                                if (resEntityList.getCode() == 200) { //数据请求成功
+                                    if (iBaseView != null) {
+                                        iBaseView.onRequestHttpDataListSuccess(requestCode, resEntityList.getMessage(), resEntityList.getResult());
+                                    }
+                                } else {
+                                    //获取列表数据失败
+                                    if (iBaseView != null) {
+                                        iBaseView.onRequestHttpDataFailed(requestCode, ShopMailError.BUSINESS_ERROR);
+                                    }
+                                }
+
+                            } else { //不是列表
+                                ResEntity<T> resEntity = new Gson().fromJson(string, getBeanType());
+
+                                if (resEntity.getCode() == 200) { //数据请求成功
+                                    if (iBaseView != null) {
+                                        iBaseView.onRequestHttpDataSuccess(requestCode, resEntity.getMessage(), resEntity.getResult());
+                                    } else {
+                                        //获取数据失败
+                                        if (iBaseView != null) {
+                                            iBaseView.onRequestHttpDataFailed(requestCode, ShopMailError.BUSINESS_ERROR);
+                                        }
+                                    }
+                                }
+                            }
+
+
+                        } catch (IOException e) {
+                            //e.printStackTrace();
+                            throw new RuntimeException("获取数据为空"); //扔出异常, 让onError函数统一管理
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                        //获取数据失败
+                        if (iBaseView != null) {
+                            iBaseView.onRequestHttpDataFailed(requestCode, ErrorUtil.handlerError(e));
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
 
+    /**
+     *
+     * @return
+     */
     protected abstract Type getBeanType();
 
+    /**
+     *
+     * 请求的数据是否是集合
+     * @return
+     */
     protected boolean isList() {
         return false;
     }
