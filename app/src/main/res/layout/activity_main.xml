@@ -4,10 +4,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:orientation="vertical">
 
     <com.example.shopmall.TitleBar
         android:id="@+id/tb_main"
         android:layout_width="match_parent"
         android:layout_height="50dp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"/>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:text="首页"
+            android:textSize="16sp"
+            android:gravity="center_horizontal"
+            android:drawableTop="@drawable/homepage_image"
+            android:layout_marginTop="8dp"/>
+
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:text="分类"
+            android:textSize="16sp"
+            android:gravity="center_horizontal"
+            android:drawableTop="@drawable/classify_image"
+            android:layout_marginTop="8dp"/>
+
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:text="发现"
+            android:textSize="16sp"
+            android:gravity="center_horizontal"
+            android:drawableTop="@drawable/discover_image"
+            android:layout_marginTop="8dp"/>
+
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:text="购物车"
+            android:textSize="16sp"
+            android:gravity="center_horizontal"
+            android:drawableTop="@drawable/shoppingcart_image"
+            android:layout_marginTop="8dp"/>
+
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:text="我的"
+            android:textSize="16sp"
+            android:gravity="center_horizontal"
+            android:drawableTop="@drawable/mine_image"
+            android:layout_marginTop="8dp"/>
+
+    </RadioGroup>
+
 </LinearLayout>
