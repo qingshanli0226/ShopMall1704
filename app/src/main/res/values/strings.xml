@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">ShaoMall</string>
+    <string name="app_name">邵华商城</string>
+    <string name="message">消息</string>
 </resources>

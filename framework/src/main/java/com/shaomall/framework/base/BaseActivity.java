@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.gyf.immersionbar.ImmersionBar;
 import com.shaomall.framework.manager.ActivityInstanceManager;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -18,12 +19,20 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 获取TAG的activity名称
      */
     protected Activity mActivity;
+    private ImmersionBar immersionBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(setLayoutId());
         mActivity = this;
+        immersionBar = ImmersionBar.with(this);
+        immersionBar
+//               .statusBarDarkFont(true, 0.2f)//设置状态栏图片为深色，(如果android 6.0以下就是半透明)
+                .transparentBar()
+                //      .fitsSystemWindows(true)//设置这个是为了防止布局和顶部的状态栏重叠
+//               .statusBarColor(setBarColor())//这里的颜色，你可以自定义。
+                .init();
         //activity 管理类
         ActivityInstanceManager.addActivity(this);
 
@@ -31,11 +40,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         initData();
     }
 
+    protected abstract int setBarColor();
+
+    protected abstract void initView();
 
     @LayoutRes
     protected abstract int setLayoutId();
-
-    protected abstract void initView();
 
     protected abstract void initData();
 
@@ -105,5 +115,12 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     public void toast(int resId, boolean isLong) {
         Toast.makeText(mActivity, resId, isLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (immersionBar != null)
+            ImmersionBar.destroy(this, null);
     }
 }

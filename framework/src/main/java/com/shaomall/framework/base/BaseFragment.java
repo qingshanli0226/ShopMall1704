@@ -34,6 +34,7 @@ public abstract class BaseFragment extends Fragment {
         return inflater.inflate(setLayoutId(), container, false);
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         initView(view, savedInstanceState);
