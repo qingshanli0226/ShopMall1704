@@ -13,8 +13,8 @@ import java.util.List;
  */
 public interface IBaseView<T> {
     //通过requestCode进行多次访问
-    void onRequestHttpDataSuccess(int requestCode, T data);
-    void onRequestHttpDataListSuccess(int requestCode, List<T> data);
+    void onRequestHttpDataSuccess(int requestCode, String message, T data);
+    void onRequestHttpDataListSuccess(int requestCode, String message, List<T> data);
     void onRequestHttpDataFailed(int requestCode, ShopMailError error);
 
 

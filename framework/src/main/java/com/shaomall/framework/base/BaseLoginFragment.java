@@ -4,18 +4,26 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.commen.ShopMailError;
-import com.shaomall.framework.base.view.IBaseView;
+import com.example.commen.bean.LoginBean;
+import com.shaomall.framework.manager.UserInfoManager;
 
 import java.util.List;
 
-public abstract class BaseFragment<T> extends Fragment implements IBaseView<T> {
+public abstract class BaseLoginFragment<T> extends BaseFragment<T> implements UserInfoManager.UserInfoStatusListener {
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        UserInfoManager.getInstance().registerUserInfoStatusListener(this);
+
+
+    }
 
     @Nullable
     @Override
@@ -32,7 +40,6 @@ public abstract class BaseFragment<T> extends Fragment implements IBaseView<T> {
 
     @LayoutRes
     public abstract int getLayoutId();
-
 
     @Override
     public void onRequestHttpDataSuccess(int requestCode, String message, T data) {
@@ -51,6 +58,12 @@ public abstract class BaseFragment<T> extends Fragment implements IBaseView<T> {
 
     @Override
     public void loadingPage(int code) {
+
+    }
+
+
+    @Override
+    public void onUserStatus(boolean isLogin, LoginBean userInfo) {
 
     }
 }
