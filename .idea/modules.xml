@@ -2,6 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/app/Android_GitHub-ShopMall1704-app.iml" filepath="$PROJECT_DIR$/app/Android_GitHub-ShopMall1704-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common/Android_GitHub-ShopMall1704-common.iml" filepath="$PROJECT_DIR$/common/Android_GitHub-ShopMall1704-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/framework/Android_GitHub-ShopMall1704-framework.iml" filepath="$PROJECT_DIR$/framework/Android_GitHub-ShopMall1704-framework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/net/Android_GitHub-ShopMall1704-net.iml" filepath="$PROJECT_DIR$/net/Android_GitHub-ShopMall1704-net.iml" />
       <module fileurl="file://$PROJECT_DIR$/DimensionLeague.iml" filepath="$PROJECT_DIR$/DimensionLeague.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/ShopMall1704.iml" filepath="$PROJECT_DIR$/.idea/ShopMall1704.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/ShopMall1704-app.iml" filepath="$PROJECT_DIR$/app/ShopMall1704-app.iml" />
