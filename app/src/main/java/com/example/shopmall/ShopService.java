@@ -1,4 +1,4 @@
-package com.example.common;
+package com.example.shopmall;
 
 import android.app.Service;
 import android.content.Intent;
@@ -18,6 +18,10 @@ public class ShopService extends Service {
         public ShopService getService() {
             return ShopService.this;
         }
+    }
+
+    public void getData(){
+
     }
 
 
