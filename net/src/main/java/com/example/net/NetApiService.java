@@ -22,4 +22,9 @@ public interface NetApiService {
     @POST
     Observable<ResponseBody> postData(@HeaderMap HashMap<String,String> header, @Path("path")String path, @FieldMap HashMap<String,String> params);
 
+
+
+
+
+
 }
