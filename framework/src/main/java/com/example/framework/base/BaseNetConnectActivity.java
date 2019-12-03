@@ -1,8 +1,7 @@
 package com.example.framework.base;
 
-import android.view.View;
-
-import com.example.framework.R;
+import android.widget.RelativeLayout;
+import com.example.common.LoadingPageUtils;
 import com.example.framework.manager.NetConnectManager;
 import com.example.framework.port.IActivity;
 import com.example.framework.port.INetConnectListener;
@@ -13,18 +12,15 @@ public abstract class BaseNetConnectActivity extends BaseActivity implements IAc
     //TODO 网络连接管理类
     NetConnectManager netConnectManager;
 
-    private LoadingPage loadingPage;
-
-    @Override
-    protected View getView() {
-        loadingPage = new LoadingPage(this, R.layout.page_loading,R.layout.page_error,R.layout.page_empty);
-        return loadingPage;
-    }
+    private LoadingPageUtils loadingPage;
+    private RelativeLayout relativeLayout;
 
     @Override
     public void init() {
         netConnectManager = NetConnectManager.getInstance();
         netConnectManager.registerNetConnectListener(this);
+        relativeLayout = findViewById(getRelativeLayout());
+        loadingPage = new LoadingPageUtils(this,relativeLayout);
     }
 
     @Override

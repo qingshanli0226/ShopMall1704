@@ -1,7 +1,9 @@
 package com.example.framework.base;
 
 import android.view.View;
+import android.widget.RelativeLayout;
 
+import com.example.common.LoadingPageUtils;
 import com.example.framework.R;
 import com.example.framework.port.INetConnectListener;
 import com.example.framework.port.IView;
@@ -11,11 +13,12 @@ import com.example.framework.port.IView;
  */
 public abstract class BaseNetConnectFragment extends BaseFragment implements IView, INetConnectListener {
 
-    private LoadingPage loadingPage;
-
+    private LoadingPageUtils loadingPage;
+    private RelativeLayout relativeLayout;
     @Override
     public void init(View view) {
-        loadingPage = new LoadingPage(getContext(), R.layout.page_loading,R.layout.page_error,R.layout.page_empty);
+        relativeLayout = view.findViewById(getRelativeLayout());
+        loadingPage = new LoadingPageUtils(getContext(),relativeLayout);
     }
 
     @Override

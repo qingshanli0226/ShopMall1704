@@ -25,12 +25,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getLayoutId()==0){
-            setContentView(getView());
-        }else {
-            setContentView(getLayoutId());
-        }
+        setContentView(getLayoutId());
         //TODO 沉浸式状态栏
         ImmersionBar.with(this).init();
         activityInstanceManager = ActivityInstanceManager.getInstance();
@@ -39,8 +34,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
 
         initDate();
     }
-
-    protected abstract View getView();
 
     //TODO 启动新的activity
     public void startActivity(Class Activity,Bundle bundle){
