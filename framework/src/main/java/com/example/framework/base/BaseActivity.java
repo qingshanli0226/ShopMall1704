@@ -3,6 +3,7 @@ package com.example.framework.base;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,14 +25,22 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getLayoutId());
+
+        if (getLayoutId()==0){
+            setContentView(getView());
+        }else {
+            setContentView(getLayoutId());
+        }
         //TODO 沉浸式状态栏
         ImmersionBar.with(this).init();
         activityInstanceManager = ActivityInstanceManager.getInstance();
         activityInstanceManager.addActivity(this);
         init();
+
         initDate();
     }
+
+    protected abstract View getView();
 
     //TODO 启动新的activity
     public void startActivity(Class Activity,Bundle bundle){

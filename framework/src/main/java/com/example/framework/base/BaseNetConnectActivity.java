@@ -1,5 +1,8 @@
 package com.example.framework.base;
 
+import android.view.View;
+
+import com.example.framework.R;
 import com.example.framework.manager.NetConnectManager;
 import com.example.framework.port.IActivity;
 import com.example.framework.port.INetConnectListener;
@@ -9,6 +12,15 @@ public abstract class BaseNetConnectActivity extends BaseActivity implements IAc
 
     //TODO 网络连接管理类
     NetConnectManager netConnectManager;
+
+    private LoadingPage loadingPage;
+
+    @Override
+    protected View getView() {
+        loadingPage = new LoadingPage(this, R.layout.page_loading,R.layout.page_error,R.layout.page_empty);
+        return loadingPage;
+    }
+
     @Override
     public void init() {
         netConnectManager = NetConnectManager.getInstance();
@@ -43,14 +55,39 @@ public abstract class BaseNetConnectActivity extends BaseActivity implements IAc
 
     }
 
+    //TODO 显示加载页面
     @Override
     public void showLoading() {
-
+        loadingPage.showLoading();
     }
 
+    //TODO 隐藏加载页
     @Override
     public void hideLoading() {
+        loadingPage.hideLoading();
+    }
 
+    //TODO 显示错误页面
+    @Override
+    public void showError() {
+        loadingPage.showError();
+    }
+
+    //TODO 显示无网络页面
+    @Override
+    public void showEmpty() {
+        loadingPage.showEmpty();
+    }
+
+    //TODO 隐藏错误页面
+    @Override
+    public void hideError() {
+        loadingPage.hideError();
+    }
+    //TODO 隐藏无网络页面
+    @Override
+    public void hideEmpty() {
+        loadingPage.hideEmpty();
     }
 
     @Override

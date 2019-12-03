@@ -1,16 +1,8 @@
 package com.example.framework.base;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.example.framework.LoadingPage;
 import com.example.framework.R;
-import com.example.framework.port.IFragment;
 import com.example.framework.port.INetConnectListener;
 import com.example.framework.port.IView;
 
@@ -43,14 +35,39 @@ public abstract class BaseNetConnectFragment extends BaseFragment implements IVi
 
     }
 
+    //TODO 显示加载页面
     @Override
     public void showLoading() {
-
+        loadingPage.showLoading();
     }
 
+    //TODO 隐藏加载页
     @Override
     public void hideLoading() {
+        loadingPage.hideLoading();
+    }
 
+    //TODO 显示错误页面
+    @Override
+    public void showError() {
+        loadingPage.showError();
+    }
+
+    //TODO 显示无网络页面
+    @Override
+    public void showEmpty() {
+        loadingPage.showEmpty();
+    }
+
+    //TODO 隐藏错误页面
+    @Override
+    public void hideError() {
+        loadingPage.hideError();
+    }
+    //TODO 隐藏无网络页面
+    @Override
+    public void hideEmpty() {
+        loadingPage.hideEmpty();
     }
 
     @Override
