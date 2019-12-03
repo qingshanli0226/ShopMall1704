@@ -3,7 +3,10 @@ package com.example.base;
 //网络下载
 public class BasePresenter<T> implements IBasePresenter<T> {
 
-    IBaseView<T> baseView;
+    private IBaseView<T> baseView;
+
+
+
 
     //绑定
     @Override
@@ -16,5 +19,10 @@ public class BasePresenter<T> implements IBasePresenter<T> {
     @Override
     public void detachView() {
         this.baseView = null;
+    }
+
+    @Override
+    public void getData(T data) {
+        
     }
 }
