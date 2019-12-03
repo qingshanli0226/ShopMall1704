@@ -1,37 +1,39 @@
 package com.shaomall.framework.base;
 
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.commen.ShopMailError;
+import com.shaomall.framework.base.presenter.IBasePresenter;
 import com.shaomall.framework.base.view.IBaseView;
 
 import java.util.List;
 
-public abstract class BaseFragment<T> extends Fragment implements IBaseView<T> {
+public abstract class MVPBaseFragment<T> extends BaseFragment implements IBaseView<T> {
+    private IBasePresenter<T> iBasePresenter;
 
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(getLayoutId(), container, false);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //获取 IBasePresenter
+        if (iBasePresenter == null) {
+            iBasePresenter = setBasePresenter();
+        }
+        //进行绑定
+        if (iBasePresenter != null) {
+            iBasePresenter.attachView(this);
+        }
+        initData(iBasePresenter);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        initView(view, savedInstanceState);
-    }
+    protected void initData() {}
 
-    protected abstract void initView(View view, Bundle savedInstanceState);
 
-    @LayoutRes
-    public abstract int getLayoutId();
+    protected abstract IBasePresenter<T> setBasePresenter();
+
+    protected abstract void initData(IBasePresenter<T> iBasePresenter);
 
 
     @Override
@@ -52,5 +54,16 @@ public abstract class BaseFragment<T> extends Fragment implements IBaseView<T> {
     @Override
     public void loadingPage(int code) {
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        iBasePresenter.detachView();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
     }
 }

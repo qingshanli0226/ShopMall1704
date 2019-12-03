@@ -43,7 +43,18 @@ public class UserInfoManager {
      * @return
      */
     public boolean isLogin() {
-        return sharedPreferences.getBoolean("isLogin", false);
+
+        //        return sharedPreferences.getBoolean("isLogin", false);
+        return getToken() != null;
+    }
+
+    /**
+     * 获取token值
+     *
+     * @return
+     */
+    public String getToken() {
+        return sharedPreferences.getString("token", null);
     }
 
     /**
@@ -53,7 +64,7 @@ public class UserInfoManager {
         if (isLogin()) { //登录状态
             aCache.remove("userInfo");
             SharedPreferences.Editor edit = sharedPreferences.edit();
-            edit.remove("isLogin");
+            edit.clear();
             edit.apply();
 
 
@@ -75,7 +86,9 @@ public class UserInfoManager {
             aCache.put("userInfo", dataBean); //缓存用户信息
             //设置登录状态
             SharedPreferences.Editor edit = sharedPreferences.edit();
-            edit.putBoolean("isLogin", true);
+            //edit.putBoolean("isLogin", true);
+            //通过token值, 判断是否登录
+            edit.putString("token", dataBean.getToken());
             edit.apply();
 
             //登录状态监听

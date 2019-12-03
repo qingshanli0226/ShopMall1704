@@ -2,33 +2,36 @@ package com.shaomall.framework.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
 import com.example.commen.ShopMailError;
+import com.shaomall.framework.base.presenter.IBasePresenter;
 import com.shaomall.framework.base.view.IBaseView;
-import com.shaomall.framework.manager.ActivityInstanceManager;
 
 import java.util.List;
 
-public abstract class BaseActivity<T> extends AppCompatActivity implements IBaseView<T> {
+public abstract class MVPBaseActivity<T> extends BaseActivity implements IBaseView<T> {
+    private IBasePresenter<T> iBasePresenter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(getLayoutId());
-
-        initView();
-
-        //activity 管理类
-        ActivityInstanceManager.addActivity(this);
-
-
+        //获取 IBasePresenter
+        if (iBasePresenter == null) {
+            iBasePresenter = setBasePresenter();
+        }
+        //进行绑定
+        if (iBasePresenter != null) {
+            iBasePresenter.attachView(this);
+        }
+        initData(iBasePresenter);
     }
 
-    protected abstract void initView();
+    @Override
+    protected void initData() {}
 
-    public abstract View getLayoutId();
+    protected abstract void initData(IBasePresenter<T> iBasePresenter);
 
+    protected abstract IBasePresenter<T> setBasePresenter();
 
     @Override
     public void onRequestHttpDataSuccess(int requestCode, String message, T data) {
@@ -51,5 +54,9 @@ public abstract class BaseActivity<T> extends AppCompatActivity implements IBase
     }
 
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        iBasePresenter.detachView();
+    }
 }

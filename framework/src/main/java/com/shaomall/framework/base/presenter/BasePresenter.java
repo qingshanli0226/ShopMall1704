@@ -1,6 +1,7 @@
 package com.shaomall.framework.base.presenter;
 
 import com.example.commen.ErrorUtil;
+import com.example.commen.LoadingPageConfig;
 import com.example.commen.ShopMailError;
 import com.example.net.ResEntity;
 import com.example.net.RetrofitCreator;
@@ -35,7 +36,8 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        //提示用户正在加载, 显示加载页
+                        setLoadingPager(LoadingPageConfig.STATE_LOADING_CODE);
                     }
 
                     @Override
@@ -74,9 +76,12 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                                 }
                             }
 
-
+                            //数据请求成功
+                            setLoadingPager(LoadingPageConfig.STATE_SUCCESS_CODE);
                         } catch (IOException e) {
                             //e.printStackTrace();
+                            //数据为空
+                            setLoadingPager(LoadingPageConfig.STATE_EMPTY_CODE);
                             throw new RuntimeException("获取数据为空"); //扔出异常, 让onError函数统一管理
                         }
 
@@ -84,7 +89,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        setLoadingPager(LoadingPageConfig.STATE_ERROR_CODE);
                         //获取数据失败
                         if (iBaseView != null) {
                             iBaseView.onRequestHttpDataFailed(requestCode, ErrorUtil.handlerError(e));
@@ -108,7 +113,8 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        //提示用户正在加载, 显示加载页
+                        setLoadingPager(LoadingPageConfig.STATE_LOADING_CODE);
                     }
 
                     @Override
@@ -147,18 +153,20 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                                 }
                             }
 
-
+                            //数据请求成功
+                            setLoadingPager(LoadingPageConfig.STATE_SUCCESS_CODE);
                         } catch (IOException e) {
-                            //e.printStackTrace();
+                            //数据为空
+                            setLoadingPager(LoadingPageConfig.STATE_EMPTY_CODE);
                             throw new RuntimeException("获取数据为空"); //扔出异常, 让onError函数统一管理
+                            //e.printStackTrace();
                         }
-
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
                         //获取数据失败
+                        setLoadingPager(LoadingPageConfig.STATE_ERROR_CODE);
                         if (iBaseView != null) {
                             iBaseView.onRequestHttpDataFailed(requestCode, ErrorUtil.handlerError(e));
                         }
@@ -172,15 +180,22 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
     }
 
 
+    //设置加载页状态
+    private void setLoadingPager(int type) {
+        if (iBaseView != null) {
+            iBaseView.loadingPage(type);
+        }
+    }
+
+
     /**
-     *
      * @return
      */
     protected abstract Type getBeanType();
 
     /**
-     *
      * 请求的数据是否是集合
+     *
      * @return
      */
     protected boolean isList() {
@@ -191,13 +206,6 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
     @Override
     public void attachView(IBaseView<T> iBaseView) {
         this.iBaseView = iBaseView;
-    }
-
-    @Override
-    public void detachView() {
-        if (iBaseView != null) {
-            this.iBaseView = null;
-        }
     }
 
 
@@ -226,4 +234,11 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
      * @return
      */
     public abstract String getPath();
+
+    @Override
+    public void detachView() {
+        if (iBaseView != null) {
+            this.iBaseView = null;
+        }
+    }
 }
