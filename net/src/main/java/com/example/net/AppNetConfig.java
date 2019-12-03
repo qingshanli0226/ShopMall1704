@@ -1,6 +1,6 @@
-package com.example.commen;
+package com.example.net;
 
-public class Constant {
+public class AppNetConfig {
     //标记是否打印log
     public static final boolean PRINT_LOG = true;
 
