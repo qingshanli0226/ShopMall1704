@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-
+/**
+ * author:李浩帆
+ */
 public class BaseViewHolder extends RecyclerView.ViewHolder {
 
     //TODO 存放View的集合

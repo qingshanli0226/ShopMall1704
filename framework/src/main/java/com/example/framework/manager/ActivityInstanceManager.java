@@ -6,11 +6,18 @@ import android.widget.Toast;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * author:李浩帆
+ */
 public class ActivityInstanceManager {
 
+    /**
+     * 单例模式
+     */
+    //TODO 私有化对象
     private static ActivityInstanceManager instanceManager;
 
-    //TODO 单例模式
+    //TODO 私有化构造
     private ActivityInstanceManager() {}
 
     public static ActivityInstanceManager getInstance(){

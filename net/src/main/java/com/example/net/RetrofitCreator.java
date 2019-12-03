@@ -34,8 +34,6 @@ public class RetrofitCreator {
                 .client(builder)
                 .baseUrl(AppNetConfig.BASE_URL)
                 .build();
-
-
         netInterence=build.create(NetInterence.class);
     }
 }
