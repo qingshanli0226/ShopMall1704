@@ -1,6 +1,7 @@
 package com.example.shopmall;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -9,9 +10,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.base.BaseActivity;
-import com.example.common.ConnectManager;
+import com.example.common.BottomBar;
 import com.example.common.LoadingPage;
-import com.example.common.TitleBar;
 import com.example.shopmall.fragment.ClassifyFragment;
 import com.example.shopmall.fragment.HomePageFragment;
 import com.example.shopmall.fragment.HorizontalFragment;
@@ -21,8 +21,6 @@ import com.example.shopmall.fragment.ShoppingCartFragment;
 import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity{
-
-    TitleBar titleBar;
 
     //数据
     private ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
@@ -35,24 +33,14 @@ public class MainActivity extends BaseActivity{
         return R.layout.activity_main;
     }
 
-    LoadingPage loadingPage;
+//    LoadingPage loadingPage;
 
-    RadioGroup rg_main;
-    RadioButton rb_homepage;
-    RadioButton rb_classify;
-    RadioButton rb_horizontal;
-    RadioButton rb_shoppingcart;
-    RadioButton rb_mine;
+    BottomBar bottomBar;
 
     @Override
     public void initView() {
-        loadingPage = findViewById(R.id.loading);
-        rg_main = findViewById(R.id.rg_main);
-        rb_homepage = findViewById(R.id.rb_homepage);
-        rb_classify = findViewById(R.id.rb_classify);
-        rb_horizontal = findViewById(R.id.rb_horizontal);
-        rb_shoppingcart = findViewById(R.id.rb_shoppingcart);
-        rb_mine = findViewById(R.id.rb_mine);
+//        loadingPage = findViewById(R.id.loading);
+        bottomBar = findViewById(R.id.bb_main);
 
         fragmentArrayList.add(new HomePageFragment());
         fragmentArrayList.add(new ClassifyFragment());
@@ -63,49 +51,25 @@ public class MainActivity extends BaseActivity{
 
     @Override
     public void initData() {
-        titleBar.setCenterText("标题栏", 30, Color.RED);
-        titleBar.setLeftText("左边");
-        titleBar.setRightText("右边");
-        titleBar.setTitleBacKGround(Color.BLUE);
+        replaceFragment(fragmentArrayList.get(0));
 
-        titleBar.setTitleClickLisner(new TitleBar.TitleClickLisner() {
-            @Override
-            public void LeftClick() {
-                Log.e("####", "左边");
-            }
+//        loadingPage.start(LoadingPage.LOADING_FAILURE);
 
-            @Override
-            public void RightClick() {
-                Log.e("####", "右边");
-            }
+        String[] str = new String[]{"首页","分类","发现","购物车","个人中心"};
 
-            @Override
-            public void CenterClick() {
-                Log.e("####", "中间");
-            }
-        });
-        loadingPage.start(LoadingPage.LOADING_FAILURE);
+        bottomBar.setBottombarName(str);
+        Drawable homepage_image = getResources().getDrawable(R.drawable.homepage_image);
+        Drawable classify_image = getResources().getDrawable(R.drawable.classify_image);
+        Drawable horizontal_image = getResources().getDrawable(R.drawable.horizontal_image);
+        Drawable shoppingcart_image = getResources().getDrawable(R.drawable.shoppingcart_image);
+        Drawable mine_image = getResources().getDrawable(R.drawable.mine_image);
+        Drawable[] integers = new Drawable[]{homepage_image,classify_image,horizontal_image,shoppingcart_image,mine_image};
+        bottomBar.setTapDrables(integers);
 
-        rg_main.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        bottomBar.setOnTapListener(new BottomBar.OnTapListener() {
             @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                switch (i){
-                    case R.id.rb_homepage:
-                        replaceFragment(fragmentArrayList.get(0));
-                        break;
-                    case R.id.rb_classify:
-                        replaceFragment(fragmentArrayList.get(1));
-                        break;
-                    case R.id.rb_horizontal:
-                        replaceFragment(fragmentArrayList.get(2));
-                        break;
-                    case R.id.rb_shoppingcart:
-                        replaceFragment(fragmentArrayList.get(3));
-                        break;
-                    case R.id.rb_mine:
-                        replaceFragment(fragmentArrayList.get(4));
-                        break;
-                }
+            public void tapItemClick(int i) {
+                replaceFragment(fragmentArrayList.get(i));
             }
         });
 

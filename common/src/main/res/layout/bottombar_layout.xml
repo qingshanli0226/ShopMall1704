@@ -8,7 +8,7 @@
     <RadioGroup
         android:id="@+id/rg"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -19,7 +19,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:gravity="center"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <RadioButton
             android:id="@+id/rb_two"
@@ -28,7 +28,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:gravity="center"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <RadioButton
             android:id="@+id/rb_three"
@@ -37,7 +37,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:gravity="center"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <RadioButton
             android:id="@+id/rb_four"
@@ -46,7 +46,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:gravity="center"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <RadioButton
             android:id="@+id/rb_five"
@@ -55,6 +55,6 @@
             android:layout_weight="1"
             android:button="@null"
             android:gravity="center"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
     </RadioGroup>
 </LinearLayout>

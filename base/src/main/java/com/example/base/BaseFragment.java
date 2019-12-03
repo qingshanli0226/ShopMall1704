@@ -14,7 +14,7 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(setLayout(), container, false);
+        View view = LayoutInflater.from(getContext()).inflate(setLayout(),container,false);
         initView(view);//初始化控件
         initData();//初始化数据
         return view;

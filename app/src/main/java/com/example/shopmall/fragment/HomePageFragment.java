@@ -2,6 +2,8 @@ package com.example.shopmall.fragment;
 
 import androidx.fragment.app.Fragment;
 
+import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 
 import com.example.base.BaseFragment;
@@ -14,11 +16,33 @@ import com.example.shopmall.R;
  */
 public class HomePageFragment extends BaseFragment {
 
+    //http://49.233.93.155:8080/application/json
+    //http://www.qubaobei.com/ios/cf/dish_list.php?stage_id=1&limit=10&page=1
+
     TitleBar tb_homepage;
 
     @Override
     protected void initData() {
-        tb_homepage.setCenterText("首页");
+        tb_homepage.setTitleBacKGround(Color.RED);
+        tb_homepage.setCenterText("首页",18,Color.WHITE);
+
+        tb_homepage.setTitleClickLisner(new TitleBar.TitleClickLisner() {
+            @Override
+            public void LeftClick() {
+                Log.e("####", "左边");
+            }
+
+            @Override
+            public void RightClick() {
+                Log.e("####", "右边");
+            }
+
+            @Override
+            public void CenterClick() {
+                Log.e("####", "中间");
+            }
+        });
+
     }
 
     @Override

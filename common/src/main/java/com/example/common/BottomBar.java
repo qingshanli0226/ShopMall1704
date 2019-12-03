@@ -43,7 +43,6 @@ public class BottomBar extends LinearLayout {
     private RadioButton[] radioButtons;
 
     private void init() {
-
         View view = LayoutInflater.from(mContext).inflate(R.layout.bottombar_layout, this);
         mBottombar = view.findViewById(R.id.ll_bottombar);
         mRadioGroup = view.findViewById(R.id.rg);
@@ -53,21 +52,26 @@ public class BottomBar extends LinearLayout {
         mRadioFour = view.findViewById(R.id.rb_four);
         mRadioFive = view.findViewById(R.id.rb_five);
         radioButtons = new RadioButton[]{mRadioOne, mRadioTwo, mRadioThree, mRadioFour, mRadioFive};
-
+        mRadioOne.setChecked(true);
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 int indexInt = 0;
                 if (checkedId == R.id.rb_one) {
                     indexInt = 0;
+                    mRadioOne.setChecked(true);
                 } else if (checkedId == R.id.rb_two) {
                     indexInt = 1;
+                    mRadioTwo.setChecked(true);
                 } else if (checkedId == R.id.rb_three) {
                     indexInt = 2;
+                    mRadioThree.setChecked(true);
                 } else if (checkedId == R.id.rb_four) {
                     indexInt = 3;
+                    mRadioFour.setChecked(true);
                 } else if (checkedId == R.id.rb_five) {
                     indexInt = 4;
+                    mRadioFive.setChecked(true);
                 }
                 if (onTapListener != null) {
                     onTapListener.tapItemClick(indexInt);

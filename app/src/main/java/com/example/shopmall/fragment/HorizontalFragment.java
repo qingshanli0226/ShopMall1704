@@ -1,13 +1,10 @@
 package com.example.shopmall.fragment;
 
 
-import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
+import android.graphics.Color;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.base.BaseFragment;
 import com.example.common.TitleBar;
@@ -18,20 +15,41 @@ import com.example.shopmall.R;
  */
 public class HorizontalFragment extends BaseFragment {
 
-    TitleBar tb_classify;
+    TitleBar tb_horizontal;
 
     @Override
     protected void initData() {
+        tb_horizontal.setTitleBacKGround(Color.RED);
+        tb_horizontal.setCenterText("发现",18,Color.WHITE);
+
+        tb_horizontal.setTitleClickLisner(new TitleBar.TitleClickLisner() {
+            @Override
+            public void LeftClick() {
+
+            }
+
+            @Override
+            public void RightClick() {
+
+            }
+
+            @Override
+            public void CenterClick() {
+
+            }
+        });
 
     }
 
+
+
     @Override
     protected void initView(View view) {
-        tb_classify = view.findViewById(R.id.tb_classify);
+        tb_horizontal = view.findViewById(R.id.tb_horizontal);
     }
 
     @Override
     protected int setLayout() {
-        return 0;
+        return R.layout.fragment_horizontal;
     }
 }

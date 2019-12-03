@@ -7,89 +7,16 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
-    <com.example.common.LoadingPage
-        android:id="@+id/loading"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
-
     <FrameLayout
         android:id="@+id/fl_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="9"/>
 
-    <RadioGroup
-        android:id="@+id/rg_main"
+    <com.example.common.BottomBar
+        android:id="@+id/bb_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/rb_homepage"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:text="首页"
-            android:textSize="16sp"
-            android:gravity="center_horizontal"
-            android:drawableTop="@drawable/homepage_image"
-            android:layout_marginTop="8dp"/>
-
-        <RadioButton
-            android:id="@+id/rb_classify"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:text="分类"
-            android:textSize="16sp"
-            android:gravity="center_horizontal"
-            android:drawableTop="@drawable/classify_image"
-            android:layout_marginTop="8dp"/>
-
-        <RadioButton
-            android:id="@+id/rb_horizontal"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:text="发现"
-            android:textSize="16sp"
-            android:gravity="center_horizontal"
-            android:drawableTop="@drawable/discover_image"
-            android:layout_marginTop="8dp"/>
-
-        <RadioButton
-            android:id="@+id/rb_shoppingcart"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:text="购物车"
-            android:textSize="16sp"
-            android:gravity="center_horizontal"
-            android:drawableTop="@drawable/shoppingcart_image"
-            android:layout_marginTop="8dp"/>
-
-        <RadioButton
-            android:id="@+id/rb_mine"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:button="@null"
-            android:text="我的"
-            android:textSize="16sp"
-            android:gravity="center_horizontal"
-            android:drawableTop="@drawable/mine_image"
-            android:layout_marginTop="8dp"/>
-
-    </RadioGroup>
-
-<!--    <com.example.common.BottomBar-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp" -->
-<!--        android:layout_weight="1"/>-->
+        android:layout_weight="1"/>
 
 </LinearLayout>
