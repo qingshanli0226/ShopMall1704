@@ -1,9 +1,17 @@
 package com.example.buy;
 
+import android.animation.AnimatorSet;
+import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.graphics.Path;
+import android.graphics.PathMeasure;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,8 +20,9 @@ public class GoodsActiviy extends AppCompatActivity implements View.OnClickListe
     private Button goPayBut;
     private Button joinCartBut;
     private Button collectBut;
-
-
+    private ImageView goodsImage;
+    private Button cartBut;
+    private ImageView beiImgage;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,25 +36,30 @@ public class GoodsActiviy extends AppCompatActivity implements View.OnClickListe
     protected void onStart() {
         super.onStart();
         //获取到用户点击商品     发起请求
-        Intent intent = getIntent();
-        String goods = intent.getStringExtra("goods");
-        intData(goods);
+//        Intent intent = getIntent();
+//        String goods = intent.getStringExtra("goods");
+//        intData(goods);
     }
 
     //设置页面
     private void intData(String goods) {
         //完成设置页面之后,再次发起请求,获取该产品库存,然后判断用户是否能购买/加入购物车
         verifyNumber();
-
     }
 
     private void initView() {
         goPayBut = findViewById(R.id.goPayBut);
         joinCartBut = findViewById(R.id.joinCartBut);
         collectBut = findViewById(R.id.collectBut);
+        cartBut = findViewById(R.id.cartBut);
+        goodsImage = findViewById(R.id.goodsImage);
+        beiImgage = findViewById(R.id.beiImgage);
         collectBut.setOnClickListener(this);
         joinCartBut.setOnClickListener(this);
         goPayBut.setOnClickListener(this);
+        goodsImage.setOnClickListener(this);
+        cartBut.setOnClickListener(this);
+        beiImgage.setOnClickListener(this);
     }
 
     @Override
@@ -74,7 +88,40 @@ public class GoodsActiviy extends AppCompatActivity implements View.OnClickListe
              * 返回格式：application/json, text/json
              * 示例：{"code":"200","message":"请求成功","result":"请求成功"}
              * */
-        }else if (v.getId() == collectBut.getId()){
+
+
+            //加入购物车动画
+            //获取布局的宽和高
+            DisplayMetrics metrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(metrics);
+            int height= metrics.heightPixels;
+            int width= metrics.widthPixels;
+            //贝塞尔路径绘制
+            Path path = new Path();
+            path.moveTo(0,0);
+            path.quadTo(width,height/2, 0,height);
+            final PathMeasure pathMeasure = new PathMeasure();
+            // false表示path路径不闭合
+            pathMeasure.setPath(path, false);
+            //属性动画加载
+            ValueAnimator valueAnimator = ValueAnimator.ofInt(0, (int) pathMeasure.getLength());
+            //动画时长设置
+            valueAnimator.setDuration(10000);
+            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    int value = (int) animation.getAnimatedValue();
+                    //临时存储当前控件位置
+                    float[] currentPosition = new float[2];
+                    pathMeasure.getPosTan(value, currentPosition, null);
+                    //设置位置
+                    beiImgage.setX(currentPosition[0]);
+                    beiImgage.setY(currentPosition[1]);
+                }
+            });
+            valueAnimator.start();
+
+        } else if (v.getId() == collectBut.getId()) {
             //本地sp存储收藏的商品的信息
 
         }

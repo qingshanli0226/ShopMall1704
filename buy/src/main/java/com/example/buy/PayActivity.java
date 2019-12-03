@@ -20,6 +20,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_pay);
         initView();
         //http://49.233.93.155:8080  updateMoney  money=1333
+
     }
 
     private void initView() {

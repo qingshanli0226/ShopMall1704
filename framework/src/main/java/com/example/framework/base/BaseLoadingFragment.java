@@ -1,5 +1,7 @@
 package com.example.framework.base;
 
+import java.util.List;
+
 public class BaseLoadingFragment extends BaseFragment{
     @Override
     public int getLayoutId() {
@@ -13,6 +15,16 @@ public class BaseLoadingFragment extends BaseFragment{
 
     @Override
     public void hideLoading() {
+
+    }
+
+    @Override
+    public void onHttpRequestDataSuccess(int requestCode, Object data) {
+
+    }
+
+    @Override
+    public void onHttpRequestDataListSuccess(int requestCode, List data) {
 
     }
 }

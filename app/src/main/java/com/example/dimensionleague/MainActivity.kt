@@ -1,7 +1,9 @@
 package com.example.dimensionleague
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.buy.GoodsActiviy
 
 class MainActivity : AppCompatActivity() {
 

@@ -7,15 +7,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class ShopCartFragment extends Fragment implements View.OnClickListener {
     Context context;
     private Button buyBut;
     private Button delBut;
+    private RecyclerView recyclerView;
+    private CheckBox checkAll;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public ShopCartFragment(Context context) {
         this.context = context;
@@ -29,15 +35,33 @@ public class ShopCartFragment extends Fragment implements View.OnClickListener {
         view = inflater.inflate(R.layout.fragment_shopcart, container, false);
         buyBut = view.findViewById(R.id.buyBut);
         delBut = view.findViewById(R.id.delBut);
+        recyclerView = view.findViewById(R.id.recyclerView);
+        checkAll = view.findViewById(R.id.checkAll);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         buyBut.setOnClickListener(this);
         delBut.setOnClickListener(this);
+
+        //下拉刷新
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //下拉刷新购物车数据
+                requestCart();
+            }
+        });
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
+        //判断是否登录
         // 进入页面进行请求购物车数据   然后进行库存判断
+        requestCart();
+        verifyGoods();
+        initData();
+    }
+    private void requestCart() {
         /**
          *
          * 16, “getShortcartProducts”
@@ -52,11 +76,7 @@ public class ShopCartFragment extends Fragment implements View.OnClickListener {
          * 示例：
          * {"code":"200","message":"请求成功","result":"[{\"productId\":\"1512\",\"productNum\":1,\"productName\":\"衬衫\",\"url\":\"http://www.baidu.com\"}]"}
          * */
-
-        verifyGoods();
-        initData();
     }
-
     private void verifyGoods() {
         /**
          * 18,”checkInventory”
@@ -78,12 +98,12 @@ public class ShopCartFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if(v.getId()==buyBut.getId()){
+        if (v.getId() == buyBut.getId()) {
             Intent intent = new Intent(context, PayActivity.class);
             startActivity(intent);
-        }else if(v.getId()==delBut.getId()){
+        } else if (v.getId() == delBut.getId()) {
             //上传删除的商品  并进行回调,对用户进行反馈
-
+            //
         }
     }
 }
