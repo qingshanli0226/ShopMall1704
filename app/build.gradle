@@ -35,6 +35,9 @@ dependencies {
     implementation 'com.android.support:percent:26.+'
 
     implementation project(path: ':base')
+<<<<<<< HEAD
     implementation project(path: ':common')
+=======
+>>>>>>> zhangjinwei
     implementation project(path: ':net')
 }

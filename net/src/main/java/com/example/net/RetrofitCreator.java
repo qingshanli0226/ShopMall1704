@@ -13,21 +13,21 @@ public class RetrofitCreator {
     private static NetGetService netGetSerivice;
     private static NetPostService netPostService;
 
-    public NetGetService getNetGetSerivice() {
+    public static NetGetService getNetGetSerivice() {
         if (netGetSerivice == null) {
             netGetSerivice = createNetGetService();
         }
         return netGetSerivice;
     }
 
-    public NetPostService getNetPostService() {
+    public static NetPostService getNetPostService() {
         if (netPostService == null) {
             netPostService = createNetPostService();
         }
         return netPostService;
     }
 
-    private NetGetService createNetGetService() {
+    private static NetGetService createNetGetService() {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
@@ -45,7 +45,7 @@ public class RetrofitCreator {
         return netGetSerivice = retrofit.create(NetGetService.class);
     }
 
-    private NetPostService createNetPostService() {
+    private static NetPostService createNetPostService() {
 
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
