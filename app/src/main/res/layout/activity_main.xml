@@ -4,12 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:id="@+id/main_relative">
 
 
+<<<<<<< HEAD
     <com.next.easynavigation.view.EasyNavigationBar
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/main_easy"/>
+=======
+>>>>>>> lihaofan
 
 </RelativeLayout>

@@ -3,6 +3,7 @@ package com.example.framework.base;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
         activityInstanceManager = ActivityInstanceManager.getInstance();
         activityInstanceManager.addActivity(this);
         init();
+
         initDate();
     }
 
