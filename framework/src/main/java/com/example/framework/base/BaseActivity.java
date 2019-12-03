@@ -8,20 +8,29 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.framework.manager.ActivityInstanceManager;
+import com.example.framework.manager.NetConnectManager;
 import com.example.framework.port.IActivity;
+import com.example.framework.port.INetConnectListener;
 import com.example.framework.port.IView;
 import com.gyf.immersionbar.ImmersionBar;
+/**
+ * author:李浩帆
+ */
+public abstract class BaseActivity extends AppCompatActivity implements IActivity {
 
-public abstract class BaseActivity extends AppCompatActivity implements IActivity, IView {
-
+    //TODO Activity实例管理类
     ActivityInstanceManager activityInstanceManager;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
+        //TODO 沉浸式状态栏
         ImmersionBar.with(this).init();
         activityInstanceManager = ActivityInstanceManager.getInstance();
         activityInstanceManager.addActivity(this);
+        init();
+        initDate();
     }
 
     //TODO 启动新的activity
@@ -34,11 +43,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
         startActivity(intent);
     }
 
-    //TODO 销毁当前的Activity
-    public void removeCurrentActivity(){
-        activityInstanceManager.removeActivity(this);
-    }
-
     //TODO 销毁所有的activity
     public void removeAll(){
         activityInstanceManager.finishAllActivity();
@@ -48,10 +52,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
     public void toast(Activity instance,String msg){
         activityInstanceManager.toast(instance,msg);
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        removeCurrentActivity();
+        activityInstanceManager.removeActivity(this);
+
     }
 }

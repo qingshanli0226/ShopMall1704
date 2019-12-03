@@ -16,21 +16,15 @@ import android.widget.RelativeLayout;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class GoodsActiviy extends AppCompatActivity implements View.OnClickListener {
+import com.example.framework.base.BaseActivity;
+
+public class GoodsActiviy extends BaseActivity implements View.OnClickListener {
     private Button goPayBut;
     private Button joinCartBut;
     private Button collectBut;
     private ImageView goodsImage;
     private Button cartBut;
     private ImageView beiImgage;
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_goods);
-        initView();
-        //http://49.233.93.155:8080  updateMoney  money=1333
-    }
-
 
     @Override
     protected void onStart() {
@@ -46,22 +40,6 @@ public class GoodsActiviy extends AppCompatActivity implements View.OnClickListe
         //完成设置页面之后,再次发起请求,获取该产品库存,然后判断用户是否能购买/加入购物车
         verifyNumber();
     }
-
-    private void initView() {
-        goPayBut = findViewById(R.id.goPayBut);
-        joinCartBut = findViewById(R.id.joinCartBut);
-        collectBut = findViewById(R.id.collectBut);
-        cartBut = findViewById(R.id.cartBut);
-        goodsImage = findViewById(R.id.goodsImage);
-        beiImgage = findViewById(R.id.beiImgage);
-        collectBut.setOnClickListener(this);
-        joinCartBut.setOnClickListener(this);
-        goPayBut.setOnClickListener(this);
-        goodsImage.setOnClickListener(this);
-        cartBut.setOnClickListener(this);
-        beiImgage.setOnClickListener(this);
-    }
-
     @Override
     public void onClick(View v) {
         //加入和购买 两个按钮点击之前,都要进行库存检验
@@ -143,5 +121,33 @@ public class GoodsActiviy extends AppCompatActivity implements View.OnClickListe
         //库存不足 按钮不能点击
         goPayBut.setClickable(false);
         joinCartBut.setClickable(false);
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_goods;
+    }
+
+    @Override
+    public void init() {
+        //http://49.233.93.155:8080  updateMoney  money=1333
+
+        goPayBut = findViewById(R.id.goPayBut);
+        joinCartBut = findViewById(R.id.joinCartBut);
+        collectBut = findViewById(R.id.collectBut);
+        cartBut = findViewById(R.id.cartBut);
+        goodsImage = findViewById(R.id.goodsImage);
+        beiImgage = findViewById(R.id.beiImgage);
+        collectBut.setOnClickListener(this);
+        joinCartBut.setOnClickListener(this);
+        goPayBut.setOnClickListener(this);
+        goodsImage.setOnClickListener(this);
+        cartBut.setOnClickListener(this);
+        beiImgage.setOnClickListener(this);
+    }
+
+    @Override
+    public void initDate() {
+
     }
 }

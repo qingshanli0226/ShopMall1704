@@ -1,2 +1,2 @@
-include ':app', ':framework',':buy',':net'
+include ':app', ':framework',':net', ':common',':buy'
 rootProject.name='DimensionLeague'

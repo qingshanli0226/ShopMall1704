@@ -8,26 +8,13 @@ import android.widget.Button;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class PayActivity extends AppCompatActivity implements View.OnClickListener {
+import com.example.framework.base.BaseActivity;
+
+public class PayActivity extends BaseActivity implements View.OnClickListener {
 
     private Button payBut;
 
     int money;
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pay);
-        initView();
-        //http://49.233.93.155:8080  updateMoney  money=1333
-
-    }
-
-    private void initView() {
-        payBut = findViewById(R.id.payBut);
-        payBut.setOnClickListener(this);
-    }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -59,6 +46,23 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 
     //支付取消,更改订单为待支付订单
     private void orderCancel(){
+
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_pay;
+    }
+
+    @Override
+    public void init() {
+        payBut = findViewById(R.id.payBut);
+        payBut.setOnClickListener(this);
+        //http://49.233.93.155:8080  updateMoney  money=1333
+    }
+
+    @Override
+    public void initDate() {
 
     }
 }

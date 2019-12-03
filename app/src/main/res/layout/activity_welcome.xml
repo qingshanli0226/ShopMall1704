@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WelcomeActivity">
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/welcome_vp"/>
+    <Button
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="50dp"
+        android:id="@+id/welcome_button"
+        android:focusable="false"
+        android:background="@drawable/roundness"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/dp_10"
+        android:textSize="@dimen/sp_12"
+        android:textColor="@color/colorWhite"
+        android:text="5秒"/>
+
+</RelativeLayout>
