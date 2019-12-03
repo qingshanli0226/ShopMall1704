@@ -10,18 +10,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.commen.ShopMailError;
+import com.gyf.immersionbar.ImmersionBar;
+import com.shaomall.framework.R;
 import com.shaomall.framework.base.view.IBaseView;
 
 import java.util.List;
 
 public abstract class BaseFragment<T> extends Fragment implements IBaseView<T> {
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+
         return inflater.inflate(getLayoutId(), container, false);
     }
+
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -53,4 +59,6 @@ public abstract class BaseFragment<T> extends Fragment implements IBaseView<T> {
     public void loadingPage(int code) {
 
     }
+
+
 }

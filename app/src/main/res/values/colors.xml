@@ -8,4 +8,5 @@
     <color name="gray_dark_bg">#ffbababa</color>
     <color name="transparent">#00000000</color>
     <color name="text_unselect">#929191</color>
+    <color name="colorWhite">#fff</color>
 </resources>
