@@ -16,19 +16,20 @@ import retrofit2.http.Url;
 
 public  interface NetInterence {
 
-   //GET请求
+    //GET请求
     @GET("{path}")
     Observable<ResponseBody> getData(@HeaderMap HashMap<String, String> headers, @Path("path") String path, @QueryMap HashMap<String, String> params);
 
     //POST请求
-   @POST("{path}")
-   @FormUrlEncoded
-   Observable<ResponseBody> postData(@FieldMap HashMap<String, String> headers, @Path("path") String path, @FieldMap HashMap<String, String> params);
+    @POST("{path}")
+    @FormUrlEncoded
+    Observable<ResponseBody> postData(@HeaderMap HashMap<String, String> headers, @Path("path") String path, @FieldMap HashMap<String, String> params);
 
-   //下载文件
-   @Streaming
-   @GET
-   Observable<ResponseBody> downloadFileWithDynamicUrlSync(@Url String fileUrl);
+
+    //下载文件
+    @Streaming
+    @GET
+    Observable<ResponseBody> downloadFileWithDynamicUrlSync(@Url String fileUrl);
 
 
 

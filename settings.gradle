@@ -1,6 +1,2 @@
-<<<<<<< HEAD
-include ':app', ':net'
-=======
-include ':app', ':framework'
->>>>>>> lihaofan
+include ':app', ':framework',':net'
 rootProject.name='DimensionLeague'

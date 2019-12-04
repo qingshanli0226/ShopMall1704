@@ -9,7 +9,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitCreator {
-    public  static NetInterence netInterence;
+    private   static NetInterence netInterence;
     public  static NetInterence getNetInterence(){
         if (netInterence==null){
             createNet();
@@ -36,6 +36,6 @@ public class RetrofitCreator {
                 .build();
 
 
-        netInterence=build.create(NetInterence.class);
+        netInterence= build.create(NetInterence.class);
     }
 }
