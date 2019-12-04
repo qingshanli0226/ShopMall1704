@@ -11,21 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp" />
 
-    <com.youth.banner.Banner
-        android:id="@+id/banner_home_page"
-        android:layout_width="match_parent"
-        android:layout_height="100dp" />
-
-    <GridView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:numColumns="3"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_home_page"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

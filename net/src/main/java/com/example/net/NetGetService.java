@@ -13,7 +13,7 @@ import retrofit2.http.QueryMap;
 //get网络请求
 public interface NetGetService {
 
-    @GET("{path}")
+    @GET("/atguigu/json/{path}")
     Observable<ResponseBody> getGetData(@Path("path") String path, @HeaderMap HashMap<String, String> headMap, @QueryMap HashMap<String, String> queryMap);
 
 

@@ -143,9 +143,9 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
     protected abstract String getPath();
 
-    abstract HashMap<String, String> getHeader();
+    protected abstract HashMap<String, String> getHeader();
 
-    abstract HashMap<String, String> getQuery();
+    protected abstract HashMap<String, String> getQuery();
 
     //绑定
     @Override
