@@ -2,6 +2,7 @@ package com.example.shopmall.fragment;
 
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.View;
 import com.example.base.BaseFragment;
 import com.example.common.TitleBar;
 import com.example.shopmall.R;
+import com.example.shopmall.activity.MessageActivity;
 
 
 /**
@@ -36,6 +38,7 @@ public class HomePageFragment extends BaseFragment {
             @Override
             public void RightClick() {
                 Log.e("####", "右边");
+                startActivity(new Intent(getContext(), MessageActivity.class));
             }
 
             @Override
