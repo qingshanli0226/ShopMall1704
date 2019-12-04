@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.dimensionleague">
-    <uses-feature android:name="android.hardware.sensor.stepcounter"/>
-    <uses-feature android:name="feature:android.hardware.sensor.stepdetector"/>
+    <!--计歩需要的权限-->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-feature android:name="android.hardware.sensor.accelerometer" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-feature
+        android:name="android.hardware.sensor.stepcounter"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.sensor.stepdetector"
+        android:required="true" />
+    <!--以上是计歩需要的权限-->
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <application
@@ -21,12 +35,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name=".service.StepService"></service>
+        <activity android:name=".activity.StepActivity"
+            android:launchMode="singleInstance">
+
+        </activity>
+
         <activity android:name=".MainActivity">
 
         </activity>
         <activity android:name="com.example.buy.GoodsActiviy"/>
         <activity android:name="com.example.buy.PayActivity"/>
         <activity android:name="com.example.buy.ShowOrderActivity"/>
+
+        <activity android:name=".activity.PhysicalActivity"></activity>
+        <activity android:name=".activity.HistoryActivity"></activity>
+        <activity android:name="com.example.framework.base.BaseActivity"></activity>
     </application>
 
 </manifest>

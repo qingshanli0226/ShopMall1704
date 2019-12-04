@@ -20,4 +20,6 @@ public interface IView<T> {
     void onHttpGetRequestDataSuccess(int requestCode,T data);
     //TODO 返回post请求数据
     void onHttpPostRequestDataSuccess(int requestCode,T data);
+    //TODO 获取RelativeLayoutId
+    int getRelativeLayout();
 }

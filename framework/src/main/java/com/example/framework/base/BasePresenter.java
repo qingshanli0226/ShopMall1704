@@ -62,7 +62,7 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
 
     @Override
     public void onHttpPostRequest(final int requestCode) {
-        RetrofitCreator.getNetInterence().getData(getHeaders(), getPath(), getParams())
+        RetrofitCreator.getNetInterence().postData(getHeaders(), getPath(), getParams())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {

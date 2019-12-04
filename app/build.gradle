@@ -9,7 +9,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.example.dimensionleague"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -34,8 +34,8 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+
     implementation 'com.github.forvv231:EasyNavigation:1.0.3'
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     implementation 'com.github.bumptech.glide:glide:4.5.0'
     implementation 'com.google.code.gson:gson:2.8.0'
@@ -43,4 +43,8 @@ dependencies {
     implementation project(path: ':net')
     implementation project(path: ':framework')
     implementation project(path: ':buy')
+
+    implementation project(path: ':framework')
+    implementation project(path: ':net')
+
 }

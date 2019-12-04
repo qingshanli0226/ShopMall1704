@@ -14,9 +14,9 @@ import retrofit2.http.QueryMap;
 import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
-public  interface NetInterence {
+public interface NetInterence {
 
-   //GET请求
+    //GET请求
     @GET("{path}")
     Observable<ResponseBody> getData(@HeaderMap HashMap<String, String> headers, @Path("path") String path, @QueryMap HashMap<String, String> params);
 
@@ -29,7 +29,4 @@ public  interface NetInterence {
    @Streaming
    @GET
    Observable<ResponseBody> downloadFileWithDynamicUrlSync(@Url String fileUrl);
-
-
-
 }

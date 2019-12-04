@@ -26,8 +26,10 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
+
         //TODO 沉浸式状态栏
         ImmersionBar.with(this).init();
+
         activityInstanceManager = ActivityInstanceManager.getInstance();
         activityInstanceManager.addActivity(this);
         init();
