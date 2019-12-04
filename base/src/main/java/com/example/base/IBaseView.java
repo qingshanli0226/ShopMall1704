@@ -7,6 +7,9 @@ public interface IBaseView<T> {
 
     void onPostDataSucess(T data);
 
+    //请求数据失败
+    void onGetDataFailed(String ErrorMsg);
+
     void onLoadingPage();
 
     void onStopLoadingPage();
