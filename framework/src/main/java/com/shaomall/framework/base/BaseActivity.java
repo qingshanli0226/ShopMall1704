@@ -18,8 +18,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 获取TAG的activity名称
      */
-    protected Activity mActivity;
-    private ImmersionBar immersionBar;
+    protected Activity     mActivity;
+    private   ImmersionBar immersionBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,10 +28,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         mActivity = this;
         immersionBar = ImmersionBar.with(this);
         immersionBar
-//               .statusBarDarkFont(true, 0.2f)//设置状态栏图片为深色，(如果android 6.0以下就是半透明)
+                //               .statusBarDarkFont(true, 0.2f)//设置状态栏图片为深色，(如果android 6.0以下就是半透明)
                 .transparentBar()
                 //      .fitsSystemWindows(true)//设置这个是为了防止布局和顶部的状态栏重叠
-//               .statusBarColor(setBarColor())//这里的颜色，你可以自定义。
+                //               .statusBarColor(setBarColor())//这里的颜色，你可以自定义。
                 .init();
         //activity 管理类
         ActivityInstanceManager.addActivity(this);
@@ -78,7 +78,9 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected void toClass(Class<? extends Activity> clazz, Bundle bundle) {
         Intent intent = new Intent(mActivity, clazz);
-        intent.putExtras(bundle);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
         startActivity(intent);
     }
 

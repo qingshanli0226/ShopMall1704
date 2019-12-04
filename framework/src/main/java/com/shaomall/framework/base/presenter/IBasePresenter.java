@@ -11,9 +11,13 @@ import com.shaomall.framework.base.view.IBaseView;
 public interface IBasePresenter<T> {
 
     //requestCode来区分不同的网络请求
-    void doGetHttpRequest(int requestCode);
+    void doGetHttpRequest(int requestCode);     //get请求
 
-    void doPostHttpRequest(int requestCode);
+    void doPostHttpRequest(int requestCode);    //post请求
+
+//    void doUpLoadHttpRequest(int requestCode);  //上传头像
+
+//    void doDownLoadFileHttpRequest(int requestCode); //下载文件
 
 
     void attachView(IBaseView<T> iBaseView); //关联IBaseView

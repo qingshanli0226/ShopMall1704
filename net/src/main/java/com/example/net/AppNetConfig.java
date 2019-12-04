@@ -5,7 +5,7 @@ public class AppNetConfig {
     public static final boolean PRINT_LOG = true;
 
     //服务端
-    public static final String BASE_URL = "http://49.233.93.155:8080";
+    public static final String BASE_URL = "http://49.233.93.155:8080/";
 
     ////////////////////////////////////////////
     //User 处理接口

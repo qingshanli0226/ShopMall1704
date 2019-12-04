@@ -1,6 +1,7 @@
 package com.example.administrator.shaomall.home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -10,8 +11,12 @@ import com.example.administrator.shaomall.AnimationNestedScrollView;
 import com.example.administrator.shaomall.CommonUtil;
 import com.example.administrator.shaomall.R;
 import com.shaomall.framework.base.BaseFragment;
+import com.shaomall.framework.base.MVPBaseFragment;
+import com.shaomall.framework.base.presenter.IBasePresenter;
 
-public class HomeFragment extends BaseFragment{
+import java.util.List;
+
+public class HomeFragment extends MVPBaseFragment<HomeBean.ResultBean> {
     private AnimationNestedScrollView sv_view;
     private LinearLayout ll_search;
     private TextView tv_title;
@@ -34,9 +39,27 @@ public class HomeFragment extends BaseFragment{
         setTitle();
     }
 
-    @Override
-    protected void initData() {
 
+    @Override
+    protected IBasePresenter<HomeBean.ResultBean> setBasePresenter() {
+        return new HomePresenter();
+    }
+
+    @Override
+    protected void initData(IBasePresenter<HomeBean.ResultBean> iBasePresenter) {
+        iBasePresenter.doGetHttpRequest(101);
+    }
+
+    @Override
+    public void onRequestHttpDataSuccess(int requestCode, String message, HomeBean.ResultBean data) {
+        super.onRequestHttpDataSuccess(requestCode, message, data);
+        Log.i("tag", "onRequestHttpDataSuccess: "+message+"  ------"+data.getName());
+    }
+
+    @Override
+    public void onRequestHttpDataListSuccess(int requestCode, String message, List<HomeBean.ResultBean> data) {
+        super.onRequestHttpDataListSuccess(requestCode, message, data);
+        Log.i("tag", "list: "+message+"  ------"+data.size());
     }
 
     private void setTitle() {
