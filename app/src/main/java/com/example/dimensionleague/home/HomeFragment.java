@@ -31,7 +31,6 @@ public class HomeFragment extends BaseNetConnectFragment {
 
     @Override
     public void initDate() {
-        super.initDate();
         tv.setSelected(true);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -43,4 +42,8 @@ public class HomeFragment extends BaseNetConnectFragment {
     }
 
 
+    @Override
+    public int getRelativeLayout() {
+        return 0;
+    }
 }

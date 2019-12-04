@@ -11,7 +11,17 @@ public class MyFragment extends BaseNetConnectFragment {
     }
 
     @Override
+    public void initDate() {
+
+    }
+
+    @Override
     public int getLayoutId() {
         return R.layout.fragment_my;
+    }
+
+    @Override
+    public int getRelativeLayout() {
+        return 0;
     }
 }

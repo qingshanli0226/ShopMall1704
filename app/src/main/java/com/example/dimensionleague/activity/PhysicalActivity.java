@@ -114,6 +114,5 @@ public class PhysicalActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         init();
         initDate();
-
     }
 }

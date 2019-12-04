@@ -149,7 +149,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
     }
 
     @Override
-    public void onHttpPostRequestDataSuccess(Object data) {
+    public void onHttpRequestDataSuccess(Object data) {
         list.clear();
         recyclerView.getAdapter().notifyDataSetChanged();
         Gson gson = new Gson();

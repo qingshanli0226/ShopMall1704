@@ -48,9 +48,4 @@ public class HistoryActivity extends BaseActivity {
         return R.layout.history_activity;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 }
