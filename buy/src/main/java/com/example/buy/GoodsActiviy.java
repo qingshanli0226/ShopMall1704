@@ -26,6 +26,11 @@ public class GoodsActiviy extends BaseActivity implements View.OnClickListener {
     private Button cartBut;
     private ImageView beiImgage;
 
+    //初始位置   控制点  结束位置   x,y
+    float[] startLoaction=new float[2];
+    float[] controlLoaction=new float[2];
+    float[] endLoaction=new float[2];
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -40,15 +45,14 @@ public class GoodsActiviy extends BaseActivity implements View.OnClickListener {
         //完成设置页面之后,再次发起请求,获取该产品库存,然后判断用户是否能购买/加入购物车
         verifyNumber();
     }
+
     @Override
     public void onClick(View v) {
         //加入和购买 两个按钮点击之前,都要进行库存检验
         verifyNumber();
         if (v.getId() == goPayBut.getId()) {
             //携带商品数据跳转到支付页  并结束页面
-            Intent intent = new Intent(this, PayActivity.class);
-            intent.putExtra("money", 123);
-            startActivity(intent);
+            startActivity(PayActivity.class,null);
             finish();
         } else if (v.getId() == joinCartBut.getId()) {
             /**
@@ -66,38 +70,7 @@ public class GoodsActiviy extends BaseActivity implements View.OnClickListener {
              * 返回格式：application/json, text/json
              * 示例：{"code":"200","message":"请求成功","result":"请求成功"}
              * */
-
-
-            //加入购物车动画
-            //获取布局的宽和高
-            DisplayMetrics metrics = new DisplayMetrics();
-            getWindowManager().getDefaultDisplay().getMetrics(metrics);
-            int height= metrics.heightPixels;
-            int width= metrics.widthPixels;
-            //贝塞尔路径绘制
-            Path path = new Path();
-            path.moveTo(0,0);
-            path.quadTo(width,height/2, 0,height);
-            final PathMeasure pathMeasure = new PathMeasure();
-            // false表示path路径不闭合
-            pathMeasure.setPath(path, false);
-            //属性动画加载
-            ValueAnimator valueAnimator = ValueAnimator.ofInt(0, (int) pathMeasure.getLength());
-            //动画时长设置
-            valueAnimator.setDuration(10000);
-            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    int value = (int) animation.getAnimatedValue();
-                    //临时存储当前控件位置
-                    float[] currentPosition = new float[2];
-                    pathMeasure.getPosTan(value, currentPosition, null);
-                    //设置位置
-                    beiImgage.setX(currentPosition[0]);
-                    beiImgage.setY(currentPosition[1]);
-                }
-            });
-            valueAnimator.start();
+            setBesselAnimation(beiImgage);
 
         } else if (v.getId() == collectBut.getId()) {
             //本地sp存储收藏的商品的信息
@@ -149,5 +122,48 @@ public class GoodsActiviy extends BaseActivity implements View.OnClickListener {
     @Override
     public void initDate() {
 
+    }
+
+    //加入购物车动画
+    private void setBesselAnimation(final View view){
+        //设置位置
+        startLoaction[0]=0;
+        startLoaction[1]=0;
+
+        //获取布局的宽和高
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int height= metrics.heightPixels;
+        int width= metrics.widthPixels;
+        controlLoaction[0]=height;
+        controlLoaction[1]=height/2;
+
+        endLoaction[0]=0;
+        endLoaction[1]=height;
+
+        //贝塞尔路径绘制
+        Path path = new Path();
+        //控制初始点
+        path.moveTo(startLoaction[0],startLoaction[1]);
+        path.quadTo(controlLoaction[0], controlLoaction[1],endLoaction[0],endLoaction[1]);
+        final PathMeasure pathMeasure = new PathMeasure();
+        // false表示path路径不闭合
+        pathMeasure.setPath(path,false);
+        //属性动画加载
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, (int) pathMeasure.getLength());valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int value = (int) animation.getAnimatedValue();
+                //临时存储当前控件位置
+                float[] currentPosition = new float[2];
+                pathMeasure.getPosTan(value, currentPosition, null);
+                //设置位置
+                view.setX(currentPosition[0]);
+                view.setY(currentPosition[1]);
+            }
+        });
+        //动画时长设置
+        valueAnimator.setDuration(10000);
+        valueAnimator.start();
     }
 }
