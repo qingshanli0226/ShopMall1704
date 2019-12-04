@@ -25,6 +25,7 @@ public class HomePageFragment extends BaseFragment {
     protected void initData() {
         tb_homepage.setTitleBacKGround(Color.RED);
         tb_homepage.setCenterText("首页",18,Color.WHITE);
+        tb_homepage.setRightImg(R.mipmap.new_message_icon);
 
         tb_homepage.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
@@ -42,7 +43,6 @@ public class HomePageFragment extends BaseFragment {
                 Log.e("####", "中间");
             }
         });
-
     }
 
     @Override

@@ -17,4 +17,7 @@ public class BasePresenter<T> implements IBasePresenter<T> {
     public void detachView() {
         this.baseView = null;
     }
+
+
+
 }
