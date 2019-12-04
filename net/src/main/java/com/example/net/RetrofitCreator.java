@@ -1,7 +1,5 @@
 package com.example.net;
 
-import com.example.commen.Constant;
-
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -36,7 +34,7 @@ public class RetrofitCreator {
         //通过拦截器打印网络请求log
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         //判断是否进行打印log
-        if (Constant.PRINT_LOG){
+        if (AppNetConfig.PRINT_LOG){
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         }else {
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
@@ -52,7 +50,7 @@ public class RetrofitCreator {
 
         //Retrofit的使用
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constant.BASE_URL)
+                .baseUrl(AppNetConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient)
