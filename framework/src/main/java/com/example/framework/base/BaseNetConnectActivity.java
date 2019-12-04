@@ -39,15 +39,9 @@ public abstract class BaseNetConnectActivity extends BaseActivity implements IAc
         return netConnectManager.isNetType();
     }
 
-    //TODO get请求到的数据默认实现
+    //TODO 获取数据
     @Override
-    public void onHttpGetRequestDataSuccess(int requestCode,Object data) {
-
-    }
-
-    //TODO post请求到的数据默认实现
-    @Override
-    public void onHttpPostRequestDataSuccess(int requestCode,Object data) {
+    public void onRequestDataSuccess(int requestCode, Object data) {
 
     }
 

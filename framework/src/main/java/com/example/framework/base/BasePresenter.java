@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -20,50 +21,33 @@ import okhttp3.ResponseBody;
  */
 public abstract class BasePresenter<T> implements IPresenter<T> {
 
+
     private IView<T> iView;
+
+    //TODO postJson
+    @Override
+    public void onHttpPostJsonRequest(int requestCode) {
+        Observable<ResponseBody> data = RetrofitCreator.getNetInterence().postJsonData(getHeaders(), getPath(), getJsonParams());
+        onHttpRequest(requestCode,data);
+    }
 
     //TODO get获取数据
     @Override
     public void onHttpGetRequest(final int requestCode){
-        RetrofitCreator.getNetInterence().getData(getHeaders(), getPath(), getParams())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResponseBody>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        iView.showLoading();
-                    }
-
-                    @Override
-                    public void onNext(ResponseBody responseBody) {
-                        iView.hideLoading();
-                        try {
-                            T resEntity = new Gson().fromJson(responseBody.string(), getBeanType());
-                            //获取数据成功
-                            iView.onHttpGetRequestDataSuccess(requestCode,resEntity);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        iView.hideLoading();
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+        Observable<ResponseBody> data = RetrofitCreator.getNetInterence().getData(getHeaders(), getPath(), getParams());
+        onHttpRequest(requestCode,data);
     }
 
     //TODO post获取数据
-
     @Override
     public void onHttpPostRequest(final int requestCode) {
-        RetrofitCreator.getNetInterence().getData(getHeaders(), getPath(), getParams())
-                .subscribeOn(Schedulers.io())
+        Observable<ResponseBody> data = RetrofitCreator.getNetInterence().postData(getHeaders(), getPath(), getParams());
+        onHttpRequest(requestCode,data);
+    }
+
+    @Override
+    public void onHttpRequest(final int requestCode, Observable<ResponseBody> observable) {
+        observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
@@ -77,7 +61,7 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                         try {
                             T resEntity = new Gson().fromJson(responseBody.string(), getBeanType());
                             //获取数据成功
-                            iView.onHttpPostRequestDataSuccess(requestCode,resEntity);
+                            iView.onRequestDataSuccess(requestCode,resEntity);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -88,7 +72,6 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                         iView.hideLoading();
                     }
 
-                    //TODO 请求完成
                     @Override
                     public void onComplete() {
 
@@ -109,6 +92,10 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
 
     public HashMap<String, String> getParams() {
         return new HashMap<>();
+    }
+
+    public Object getJsonParams() {
+        return null;
     }
 
     //TODO 让子类来提供返回bean的类型

@@ -16,8 +16,6 @@ public interface IView<T> {
     void showEmpty();
     //TODO 隐藏无网络页面
     void hideEmpty();
-    //TODO 返回get请求数据
-    void onHttpGetRequestDataSuccess(int requestCode,T data);
-    //TODO 返回post请求数据
-    void onHttpPostRequestDataSuccess(int requestCode,T data);
+    //TODO 返回数据
+    void onRequestDataSuccess(int requestCode,T data);
 }

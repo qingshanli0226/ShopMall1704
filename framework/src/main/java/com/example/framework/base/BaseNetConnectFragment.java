@@ -23,14 +23,9 @@ public abstract class BaseNetConnectFragment extends BaseFragment implements IVi
         loadingPage = new LoadingPageUtils(getContext(),relativeLayout);
     }
 
-    //TODO 默认实现get请求数据
+    //TODO 获取到数据
     @Override
-    public void onHttpGetRequestDataSuccess(int requestCode,Object data){
-
-    }
-    //TODO 默认实现post请求数据
-    @Override
-    public void onHttpPostRequestDataSuccess(int requestCode,Object data) {
+    public void onRequestDataSuccess(int requestCode, Object data) {
 
     }
 

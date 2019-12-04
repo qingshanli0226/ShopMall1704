@@ -1,5 +1,8 @@
 package com.example.framework.port;
 
+import io.reactivex.Observable;
+import okhttp3.ResponseBody;
+
 /**
  * author:李浩帆
  */
@@ -12,4 +15,8 @@ public interface IPresenter<T> {
     void onHttpGetRequest(int requestCode);
     //TODO post请求数据
     void onHttpPostRequest(int requestCode);
+    //TODO post JSON
+    void onHttpPostJsonRequest(int requestCode);
+
+    void onHttpRequest(int requestCode, Observable<ResponseBody> observable);
 }

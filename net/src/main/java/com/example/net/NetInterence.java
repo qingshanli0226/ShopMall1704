@@ -3,7 +3,9 @@ package com.example.net;
 import java.util.HashMap;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -25,7 +27,11 @@ public  interface NetInterence {
    @FormUrlEncoded
    Observable<ResponseBody> postData(@HeaderMap HashMap<String, String> headers, @Path("path") String path, @FieldMap HashMap<String, String> params);
 
-   //下载文件
+    //POST JSON
+    @POST("getOrderInfo")
+    Observable<ResponseBody> postJsonData(@HeaderMap HashMap<String, String> headers, @Path("path") String path,@Body Object object);
+
+    //下载文件
    @Streaming
    @GET
    Observable<ResponseBody> downloadFileWithDynamicUrlSync(@Url String fileUrl);

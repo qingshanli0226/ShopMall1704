@@ -25,6 +25,11 @@ public class ShowOrderActivity extends BaseActivity {
     }
 
     @Override
+    public int getRelativeLayout() {
+        return 0;
+    }
+
+    @Override
     public void init() {
         showOrderType.setText("展示的订单类型");
         //http://49.233.93.155:8080  updateMoney  money=1333
