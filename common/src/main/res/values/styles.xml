@@ -1,0 +1,22 @@
+<resources>
+<!--    加载页layout-->
+    <style name="PageLayout">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@color/colorWhite</item>
+        <item name="android:gravity">center</item>
+    </style>
+<!--    加载页图片-->
+    <style name="PageImageView">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+<!--    加载页文字-->
+    <style name="PageTextView">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">@dimen/page_text_size</item>
+    </style>
+</resources>

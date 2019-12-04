@@ -25,12 +25,12 @@ public abstract class BaseNetConnectFragment extends BaseFragment implements IVi
 
     //TODO 默认实现get请求数据
     @Override
-    public void onHttpGetRequestDataSuccess(Object data){
+    public void onHttpGetRequestDataSuccess(int requestCode,Object data){
 
     }
     //TODO 默认实现post请求数据
     @Override
-    public void onHttpPostRequestDataSuccess(Object data) {
+    public void onHttpPostRequestDataSuccess(int requestCode,Object data) {
 
     }
 

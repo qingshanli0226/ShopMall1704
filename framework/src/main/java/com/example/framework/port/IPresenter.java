@@ -9,7 +9,7 @@ public interface IPresenter<T> {
     //TODO 结束时销毁
     void detachView();
     //TODO Get请求数据
-    void onHttpGetRequest();
+    void onHttpGetRequest(int requestCode);
     //TODO post请求数据
-    void onHttpPostRequest();
+    void onHttpPostRequest(int requestCode);
 }

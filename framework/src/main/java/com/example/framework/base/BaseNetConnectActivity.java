@@ -41,13 +41,13 @@ public abstract class BaseNetConnectActivity extends BaseActivity implements IAc
 
     //TODO get请求到的数据默认实现
     @Override
-    public void onHttpGetRequestDataSuccess(Object data) {
+    public void onHttpGetRequestDataSuccess(int requestCode,Object data) {
 
     }
 
     //TODO post请求到的数据默认实现
     @Override
-    public void onHttpPostRequestDataSuccess(Object data) {
+    public void onHttpPostRequestDataSuccess(int requestCode,Object data) {
 
     }
 

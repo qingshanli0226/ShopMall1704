@@ -24,7 +24,7 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
 
     //TODO get获取数据
     @Override
-    public void onHttpGetRequest(){
+    public void onHttpGetRequest(final int requestCode){
         RetrofitCreator.getNetInterence().getData(getHeaders(), getPath(), getParams())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -40,7 +40,7 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                         try {
                             T resEntity = new Gson().fromJson(responseBody.string(), getBeanType());
                             //获取数据成功
-                            iView.onHttpGetRequestDataSuccess(resEntity);
+                            iView.onHttpGetRequestDataSuccess(requestCode,resEntity);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -61,7 +61,7 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
     //TODO post获取数据
 
     @Override
-    public void onHttpPostRequest() {
+    public void onHttpPostRequest(final int requestCode) {
         RetrofitCreator.getNetInterence().getData(getHeaders(), getPath(), getParams())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -77,7 +77,7 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                         try {
                             T resEntity = new Gson().fromJson(responseBody.string(), getBeanType());
                             //获取数据成功
-                            iView.onHttpPostRequestDataSuccess(resEntity);
+                            iView.onHttpPostRequestDataSuccess(requestCode,resEntity);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
