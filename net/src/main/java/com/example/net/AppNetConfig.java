@@ -141,5 +141,6 @@ public class AppNetConfig {
 
     //待发货订单  GET 无参数
     public static final String FINDFORSEND="findForSend";
-
+    //TODO 加载头像 GET BASE_URL+用户的avatar
+    //TODO 加载图片 GET BASE_URl_IMAGE+请求到的图片url
 }
