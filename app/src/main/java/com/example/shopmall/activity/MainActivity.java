@@ -1,4 +1,4 @@
-package com.example.shopmall;
+package com.example.shopmall.activity;
 
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.base.BaseActivity;
 import com.example.common.BottomBar;
 import com.example.common.LoadingPage;
+import com.example.shopmall.R;
 import com.example.shopmall.fragment.ClassifyFragment;
 import com.example.shopmall.fragment.HomePageFragment;
 import com.example.shopmall.fragment.HorizontalFragment;

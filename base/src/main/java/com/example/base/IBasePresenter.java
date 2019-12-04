@@ -7,4 +7,6 @@ public interface IBasePresenter<T> {
 
     void detachView();
 
+    void getData();
+
 }

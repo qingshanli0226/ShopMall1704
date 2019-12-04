@@ -22,11 +22,11 @@
         <activity android:name=".activity.WelcomeActivity" />
 
         <service
-            android:name="com.example.common.ShopService"
+            android:name=".ShopService"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

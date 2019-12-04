@@ -22,9 +22,13 @@ public class NumberAddSubView extends LinearLayout implements View.OnClickListen
     private ImageView btn_sub;
     private ImageView btn_add;
     private TextView tv_count;
+    String mPrice = "";
     private int value = 1;
     private int minValue = 1;
-    private int maxValue = 10;
+    boolean ischecked = false;
+    private TextView tv_price;
+    private int maxValue = 999999;
+    private int position = 0;
 
     public int getValue() {
         String countStr = tv_count.getText().toString().trim();//文本内容
@@ -32,35 +36,6 @@ public class NumberAddSubView extends LinearLayout implements View.OnClickListen
             value = Integer.valueOf(countStr);
         }
         return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
-        tv_count.setText(String.valueOf(value));
-    }
-
-    public int getMinValue() {
-        return minValue;
-    }
-
-    public void setMinValue(int minValue) {
-        this.minValue = minValue;
-    }
-
-    public int getMaxValue() {
-        return maxValue;
-    }
-
-    public void setMaxValue(int maxValue) {
-        this.maxValue = maxValue;
-    }
-
-    public NumberAddSubView(Context context) {
-        this(context, null);
-    }
-
-    public NumberAddSubView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -71,6 +46,7 @@ public class NumberAddSubView extends LinearLayout implements View.OnClickListen
         btn_sub = (ImageView) findViewById(R.id.btn_sub);
         btn_add = (ImageView) findViewById(R.id.btn_add);
         tv_count = (TextView) findViewById(R.id.tv_count);
+        tv_price = findViewById(R.id.tv_price_gov);
 
         getValue();
 
@@ -104,43 +80,89 @@ public class NumberAddSubView extends LinearLayout implements View.OnClickListen
         }
     }
 
+    public void setPostion(int positon) {
+        this.position = positon;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+        tv_count.setText(String.valueOf(value));
+    }
+
+    public int getMinValue() {
+        return minValue;
+    }
+
+    public void setMinValue(int minValue) {
+        this.minValue = minValue;
+    }
+
+    public int getMaxValue() {
+        return maxValue;
+    }
+
+    public void setMaxValue(int maxValue) {
+        this.maxValue = maxValue;
+    }
+
+    public NumberAddSubView(Context context) {
+        this(context, null);
+    }
+
+    public NumberAddSubView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public void setChecked(boolean ischecked) {
+        this.ischecked = ischecked;
+    }
+
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_add) {
             //加
-            addNumber();
-            if (onNumberChangeListener != null) {
-                onNumberChangeListener.addNumber(v, value);
+            if (value < maxValue) {
+                addNumber();
+                if (onNumberChangeListener != null) {
+                    onNumberChangeListener.addNumber(v, value, mPrice, ischecked, position);
+                }
             }
         } else {
             //减
-            subNumber();
-            if (onNumberChangeListener != null) {
-                onNumberChangeListener.subNumner(v, value);
+            if (value > minValue) {
+                subNumber();
+                if (onNumberChangeListener != null) {
+                    onNumberChangeListener.subNumner(v, value, mPrice, ischecked, position);
+                }
             }
+
         }
+    }
+
+    public String getPrice() {
+        return mPrice;
+    }
+
+    public void setPrice(String price) {
+        mPrice = price;
+        tv_price.setText("￥" + price + ".00");
     }
 
     private void subNumber() {
-        if (value > minValue) {
-            value -= 1;
-        }
+        value -= 1;
         setValue(value);
-
     }
 
     private void addNumber() {
-        if (value < maxValue) {
-            value += 1;
-        }
+        value += 1;
         setValue(value);
     }
 
     public interface OnNumberChangeListener {
         //当按钮被点击的时候回调
-        void addNumber(View view, int value);
+        void addNumber(View view, int value, String price, boolean ischecked, int postion);
 
-        void subNumner(View view, int value);
+        void subNumner(View view, int value, String price, boolean ischecked, int postion);
     }
 
     private OnNumberChangeListener onNumberChangeListener;

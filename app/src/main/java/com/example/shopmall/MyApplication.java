@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 
 import com.example.common.ConnectManager;
+import com.example.common.CrashHandler;
 
 public class MyApplication extends Application {
 
@@ -17,6 +18,7 @@ public class MyApplication extends Application {
         context = this;
 
         ConnectManager.getInstance().init(this);
+        CrashHandler.getInstance(this).init();
     }
 
     public static Context getContext() {
