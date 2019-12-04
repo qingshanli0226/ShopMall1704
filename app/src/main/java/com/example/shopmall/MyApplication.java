@@ -19,6 +19,8 @@ public class MyApplication extends Application {
 
         ConnectManager.getInstance().init(this);
         CrashHandler.getInstance(this).init();
+        CaCheManager.getInstance().init(this);
+
     }
 
     public static Context getContext() {

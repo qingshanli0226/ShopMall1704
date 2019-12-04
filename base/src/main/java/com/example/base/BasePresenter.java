@@ -3,11 +3,13 @@ package com.example.base;
 import android.util.Log;
 
 import com.example.net.RetrofitCreator;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 
 import io.reactivex.Observer;
@@ -37,9 +39,11 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
+
                         try {
+                            T data = new Gson().fromJson(responseBody.string(), getBeanType());
                             if (baseView != null)
-                                baseView.onGetDataSucess((T) responseBody.string());
+                                baseView.onGetDataSucess(data);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -59,6 +63,8 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                     }
                 });
     }
+
+    protected abstract Type getBeanType();
 
     @Override
     public void getPostFormData() {
@@ -150,9 +156,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
     //绑定
     @Override
     public void attachView(IBaseView<T> baseView) {
-        if (baseView == null) {
-            this.baseView = baseView;
-        }
+        this.baseView = baseView;
     }
 
     //解绑
@@ -160,7 +164,6 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
     public void detachView() {
         this.baseView = null;
     }
-
 
 
 }
