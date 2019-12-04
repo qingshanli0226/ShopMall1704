@@ -5,5 +5,82 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/dp_30"
+        app:layout_scrollFlags="scroll|enterAlwaysCollapsed|exitUntilCollapsed"
+        android:background="@color/colorRed"
+        android:layout_height="@dimen/dp_150">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed|exitUntilCollapsed"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="@dimen/dp_150"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:enabled="true"
+                android:focusable="true"
+                android:singleLine="true"
+                android:id="@+id/home_marquee"
+                android:textColor="@color/colorWhite"
+                android:text="@string/top_messenger"
+                android:textSize="@dimen/sp_16" />
+            <TextView
+                android:layout_width="@dimen/dp_50"
+                android:layout_height="@dimen/dp_50"
+                android:gravity="center"
+                android:text="@string/top_scan"
+                android:textColor="@color/colorWhite"
+                android:layout_marginRight="@dimen/dp_30"
+                android:textSize="@dimen/sp_10"
+                android:layout_alignParentRight="true"
+                android:drawableTop="@drawable/scan_code"/>
+            <TextView
+                android:layout_width="@dimen/dp_50"
+                android:layout_height="@dimen/dp_50"
+                android:gravity="center"
+                android:text="@string/messenger"
+                android:textSize="@dimen/sp_10"
+                android:textColor="@color/colorWhite"
+                android:layout_alignParentRight="true"
+                android:drawableTop="@drawable/message"/>
+        </RelativeLayout>
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_150"
 
+            android:background="@color/colorAccent"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed|exitUntilCollapsed"
+            >
+
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_100"
+                android:background="@color/colorAccent"
+                app:layout_collapseMode="parallax">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_5"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:drawableLeft="@drawable/search"
+                    android:background="@drawable/round"
+                    android:drawableRight="@drawable/camera"
+                    android:hint="@string/top_hint"/>
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:id="@+id/home_rv"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
