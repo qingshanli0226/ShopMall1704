@@ -33,20 +33,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/itemPrice" />
-    <TextView
+    <Button
+        android:id="@+id/itemDelBut"
+        android:background="@null"
         android:layout_margin="10dp"
         android:layout_toLeftOf="@id/itemNum"
         android:layout_below="@id/itemPrice"
         android:text="-"
         android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <TextView
+        android:layout_width="20dp"
+        android:layout_height="20dp"/>
+    <Button
+        android:id="@+id/itemAddBut"
+        android:background="@null"
         android:textStyle="bold"
         android:layout_margin="10dp"
         android:layout_toRightOf="@id/itemNum"
         android:layout_below="@id/itemPrice"
         android:text="+"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_width="20dp"
+        android:layout_height="20dp"/>
 </RelativeLayout>

@@ -17,8 +17,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.framework.base.BaseActivity;
+import com.example.framework.base.BaseNetConnectActivity;
 
-public class GoodsActiviy extends BaseActivity implements View.OnClickListener {
+public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClickListener {
     private Button goPayBut;
     private Button joinCartBut;
     private Button collectBut;
@@ -48,6 +49,8 @@ public class GoodsActiviy extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        //http://49.233.93.155:8080  /atguigu/json/  GOODSINFO_URL.json"   "$BASE/atguigu/json/"
+
         //加入和购买 两个按钮点击之前,都要进行库存检验
         verifyNumber();
         if (v.getId() == goPayBut.getId()) {
@@ -99,6 +102,11 @@ public class GoodsActiviy extends BaseActivity implements View.OnClickListener {
     @Override
     public int getLayoutId() {
         return R.layout.activity_goods;
+    }
+
+    @Override
+    public int getRelativeLayout() {
+        return R.id.goodsRel;
     }
 
     @Override

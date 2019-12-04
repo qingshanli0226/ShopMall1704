@@ -9,8 +9,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.framework.base.BaseActivity;
+import com.example.framework.base.BaseNetConnectActivity;
 
-public class PayActivity extends BaseActivity implements View.OnClickListener {
+public class PayActivity extends BaseNetConnectActivity implements View.OnClickListener {
 
     private Button payBut;
 
@@ -52,6 +53,11 @@ public class PayActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public int getLayoutId() {
         return R.layout.activity_pay;
+    }
+
+    @Override
+    public int getRelativeLayout() {
+        return R.id.payRel;
     }
 
     @Override

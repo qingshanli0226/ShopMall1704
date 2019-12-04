@@ -6,10 +6,14 @@ import android.os.Bundle
 import com.example.buy.GoodsActiviy
 import androidx.fragment.app.Fragment
 import android.graphics.Color
-import com.example.framework.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import com.example.framework.base.BaseNetConnectActivity
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseNetConnectActivity() {
+    override fun getRelativeLayout(): Int {
+        return R.id.main_relative
+    }
+
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main
@@ -18,6 +22,7 @@ class MainActivity : BaseActivity() {
     var list: MutableList<Fragment> = mutableListOf()
 
     override fun init() {
+
         list.add(HomeFragment())
         list.add(HomeFragment())
         list.add(HomeFragment())
@@ -50,6 +55,10 @@ class MainActivity : BaseActivity() {
             .titleItems(arrayOf("首页", "分类", "发现", "购物车", "我的"))
             .canScroll(true)
             .build()
+
+        super.init()
+        showEmpty()
+
     }
 }
 

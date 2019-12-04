@@ -23,7 +23,7 @@ public  interface NetInterence {
     //POST请求
    @POST("{path}")
    @FormUrlEncoded
-   Observable<ResponseBody> postData(@FieldMap HashMap<String, String> headers, @Path("path") String path, @FieldMap HashMap<String, String> params);
+   Observable<ResponseBody> postData(@HeaderMap HashMap<String, String> headers, @Path("path") String path, @FieldMap HashMap<String, String> params);
 
    //下载文件
    @Streaming

@@ -1,17 +1,12 @@
 package com.example.framework.base;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.example.framework.LoadingPage;
+import com.example.common.LoadingPageUtils;
 import com.example.framework.R;
-import com.example.framework.port.IFragment;
 import com.example.framework.port.INetConnectListener;
+import com.example.framework.port.IPresenter;
 import com.example.framework.port.IView;
 
 /**
@@ -19,18 +14,14 @@ import com.example.framework.port.IView;
  */
 public abstract class BaseNetConnectFragment extends BaseFragment implements IView, INetConnectListener {
 
-    private LoadingPage loadingPage;
+    private LoadingPageUtils loadingPage;
+    private RelativeLayout relativeLayout;
 
     @Override
     public void init(View view) {
-        loadingPage = new LoadingPage(getContext(), R.layout.page_loading,R.layout.page_error,R.layout.page_empty);
+        relativeLayout = view.findViewById(getRelativeLayout());
+        loadingPage = new LoadingPageUtils(getContext(),relativeLayout);
     }
-
-    @Override
-    public void initDate() {
-
-    }
-
 
     //TODO 默认实现get请求数据
     @Override
@@ -43,14 +34,39 @@ public abstract class BaseNetConnectFragment extends BaseFragment implements IVi
 
     }
 
+    //TODO 显示加载页面
     @Override
     public void showLoading() {
-
+        loadingPage.showLoading();
     }
 
+    //TODO 隐藏加载页
     @Override
     public void hideLoading() {
+        loadingPage.hideLoading();
+    }
 
+    //TODO 显示错误页面
+    @Override
+    public void showError() {
+        loadingPage.showError();
+    }
+
+    //TODO 显示无网络页面
+    @Override
+    public void showEmpty() {
+        loadingPage.showEmpty();
+    }
+
+    //TODO 隐藏错误页面
+    @Override
+    public void hideError() {
+        loadingPage.hideError();
+    }
+    //TODO 隐藏无网络页面
+    @Override
+    public void hideEmpty() {
+        loadingPage.hideEmpty();
     }
 
     @Override

@@ -8,6 +8,14 @@ public interface IView<T> {
     void showLoading();
     //TODO 隐藏加载页面
     void hideLoading();
+    //TODO 显示错误页面
+    void showError();
+    //TODO 隐藏错误页面
+    void hideError();
+    //TODO 显示无网络页面
+    void showEmpty();
+    //TODO 隐藏无网络页面
+    void hideEmpty();
     //TODO 返回get请求数据
     void onHttpGetRequestDataSuccess(T data);
     //TODO 返回post请求数据

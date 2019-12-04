@@ -23,7 +23,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     }
 
     //TODO 获取View控件
-    private View getView(int viewId){
+    public View getView(int viewId){
         View view = sparseArray.get(viewId);
         if(view==null){
             sparseArray.put(viewId, itemView.findViewById(viewId));

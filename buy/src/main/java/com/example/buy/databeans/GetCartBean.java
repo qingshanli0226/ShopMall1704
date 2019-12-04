@@ -1,9 +1,9 @@
 package com.example.buy.databeans;
 
-public class CartBean {
+public class GetCartBean {
     @Override
     public String toString() {
-        return "CartBean{" +
+        return "GetCartBean{" +
                 "code='" + code + '\'' +
                 ", message='" + message + '\'' +
                 ", result='" + result + '\'' +
@@ -43,4 +43,5 @@ public class CartBean {
     public void setResult(String result) {
         this.result = result;
     }
+
 }

@@ -9,6 +9,11 @@ public class CollectActivity extends BaseActivity {
     }
 
     @Override
+    public int getRelativeLayout() {
+        return 0;
+    }
+
+    @Override
     public void init() {
 
     }

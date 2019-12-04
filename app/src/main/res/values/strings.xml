@@ -1,4 +1,8 @@
 <resources>
+<<<<<<< HEAD
     <string name="app_name">DimensionLeague</string>
 
+=======
+    <string name="app_name">次元联盟</string>
+>>>>>>> lihaofan
 </resources>

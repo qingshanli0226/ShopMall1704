@@ -1,9 +1,9 @@
 package com.example.buy.databeans;
 
-public class MoneyBean {
+public class CheckGoodsBean {
     @Override
     public String toString() {
-        return "MoneyBean{" +
+        return "CheckGoodsBean{" +
                 "code='" + code + '\'' +
                 ", message='" + message + '\'' +
                 ", result='" + result + '\'' +
@@ -12,8 +12,8 @@ public class MoneyBean {
 
     /**
      * code : 200
-     * message : 请求成功
-     * result : 6666666
+     * message : æ£€æŸĄĺş“ĺ-ďĽŚćś‰å•†å“æ•°æ®æ•°é‡æ— æ³•æ»¡è¶³
+     * result : [{"productNum":"2","productId":"1003","productName":"衬衫","url":"http://www.baidu.com"},{"productNum":"2","productId":"1004","productName":"衬衫","url":"http://www.baidu.com"}]
      */
 
     private String code;
