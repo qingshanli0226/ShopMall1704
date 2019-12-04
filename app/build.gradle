@@ -30,4 +30,5 @@ dependencies {
     implementation project(':net')
     implementation project(path: ':commen')
     implementation project(path: ':framework')
+    implementation project(':remindsteporgan')
 }
