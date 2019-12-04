@@ -204,7 +204,7 @@
     <orderEntry type="library" name="Gradle: com.gyf.immersionbar:immersionbar:3.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.gyf.immersionbar:immersionbar-components:3.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.gyf.immersionbar:immersionbar-ktx:3.0.0@aar" level="project" />
-    <orderEntry type="module" module-name="framework" />
-    <orderEntry type="module" module-name="net" />
+    <orderEntry type="module" module-name="ShopMall1704-framework" />
+    <orderEntry type="module" module-name="ShopMall1704-net" />
   </component>
 </module>
