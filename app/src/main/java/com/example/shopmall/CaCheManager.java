@@ -6,6 +6,18 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 
+import com.example.net.Constant;
+import com.example.net.RetrofitCreator;
+import com.google.gson.Gson;
+
+import java.io.IOException;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
+
 public class CaCheManager {
 
     private static CaCheManager caCheManager;
@@ -31,6 +43,37 @@ public class CaCheManager {
 
         }
     };
+
+    public void getHttpData() {
+        RetrofitCreator.getNetGetSerivice().getGetData( )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseBody>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody body) {
+                        try {
+                            Object o = new Gson().fromJson(body.string(), );
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                })
+    }
 
     public void init(Context context) {
         this.context = context;
