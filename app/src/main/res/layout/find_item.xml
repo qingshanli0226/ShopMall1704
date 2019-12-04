@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/background_which"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="@dimen/dp_50"
+        android:src="@mipmap/ic_launcher_round"
+        android:layout_margin="@dimen/dp_15"
+        android:id="@+id/find_item_img"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/find_item_title"
+        android:textSize="@dimen/sp_20"
+        android:text="屁昂百度吧"
+        android:textColor="@color/colorBlank"
+        android:singleLine="true"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_marginLeft="@dimen/dp_72"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/find_item_date"
+        android:layout_below="@id/find_item_title"
+        android:textSize="@dimen/sp_12"
+        android:text="11月22日发布"
+        android:singleLine="true"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginLeft="@dimen/dp_72"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_15"
+        android:textColor="@color/colorBlank"
+        android:layout_below="@id/find_item_date"
+        android:text="配上奶,牛奶大家一起来分享,你有我"
+        android:textSize="@dimen/sp_14"
+        android:singleLine="true"
+        android:id="@+id/find_item_contentText"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_72"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_15"
+        android:layout_below="@id/find_item_contentText"
+        android:text="撒旦发生的风格"
+        android:textColor="@color/colorGray"
+        android:padding="@dimen/dp_15"
+        android:background="@drawable/background_gray"
+        android:id="@+id/find_item_text"/>
+
+
+
+</RelativeLayout>

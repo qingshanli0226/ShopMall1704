@@ -6,6 +6,11 @@ import android.os.Bundle
 import com.example.buy.GoodsActiviy
 import androidx.fragment.app.Fragment
 import android.graphics.Color
+<<<<<<< HEAD
+=======
+import com.example.dimensionleague.home.HomeFragment
+import com.example.framework.base.BaseActivity
+>>>>>>> sususu
 import kotlinx.android.synthetic.main.activity_main.*
 import com.example.framework.base.BaseNetConnectActivity
 
