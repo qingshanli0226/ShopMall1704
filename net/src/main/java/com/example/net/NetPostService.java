@@ -3,7 +3,9 @@ package com.example.net;
 import java.util.HashMap;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.HeaderMap;
@@ -14,5 +16,8 @@ import retrofit2.http.Path;
 public interface NetPostService {
     @FormUrlEncoded
     @POST("{path}")
-    Observable<ResponseBody> getPostData(@Path("path") String path, @HeaderMap HashMap<String, String> headMap, @FieldMap HashMap<String, String> fieldMap);
+    Observable<ResponseBody> getFormData(@Path("path") String path, @HeaderMap HashMap<String, String> headMap, @FieldMap HashMap<String, String> fieldMap);
+
+    @POST("{path}")
+    Observable<ResponseBody> getJsonData(@Path("path") String path, @Body RequestBody body);
 }
