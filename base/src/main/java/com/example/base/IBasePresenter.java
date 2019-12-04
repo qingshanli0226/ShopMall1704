@@ -7,6 +7,10 @@ public interface IBasePresenter<T> {
 
     void detachView();
 
-    void getData();
+    void getGetData();
+
+    void getPostJsonData();
+
+    void getPostFormData();
 
 }

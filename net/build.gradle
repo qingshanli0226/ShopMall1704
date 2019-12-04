@@ -42,4 +42,6 @@ dependencies {
     api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     //非必要依赖， log依赖，如果需要打印OkHttpLog需要添加
     api 'com.squareup.okhttp3:logging-interceptor:3.9.0'
+
+    api 'com.squareup.okhttp3:okhttp:3.12.1'
 }
