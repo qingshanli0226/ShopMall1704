@@ -11,8 +11,7 @@ import com.example.administrator.shaomall.CommonUtil;
 import com.example.administrator.shaomall.R;
 import com.shaomall.framework.base.BaseFragment;
 
-public class HomeFragment extends BaseFragment<HomeBean.ResultBean
-        > {
+public class HomeFragment extends BaseFragment{
     private AnimationNestedScrollView sv_view;
     private LinearLayout ll_search;
     private TextView tv_title;
@@ -33,6 +32,11 @@ public class HomeFragment extends BaseFragment<HomeBean.ResultBean
 
 
         setTitle();
+    }
+
+    @Override
+    protected void initData() {
+
     }
 
     private void setTitle() {
@@ -83,7 +87,7 @@ public class HomeFragment extends BaseFragment<HomeBean.ResultBean
 
 
     @Override
-    public int getLayoutId() {
+    public int setLayoutId() {
         return R.layout.fragment_home;
     }
 }
