@@ -14,13 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
-    <TextView
-        android:gravity="center"
-        android:id="@+id/tv2"
-        android:text="Ssdasd1"
-        android:textSize="50dp"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+
 
 </LinearLayout>

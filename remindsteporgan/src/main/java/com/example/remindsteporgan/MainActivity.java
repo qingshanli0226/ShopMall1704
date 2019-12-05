@@ -28,7 +28,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity  implements SensorEventListener {
 
     private TextView tv1;
-    private TextView tv2;
+
     float X;
     BeanDao beanDao;
     //ss
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.remindactivity_main);
         tv1 = (TextView) this.findViewById(R.id.tv1);
-        tv2 = (TextView) this.findViewById(R.id.tv2);
+
 
 
 
@@ -145,10 +145,6 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
 
 
 
-
-        } else if(event.sensor.getType() == Sensor.TYPE_STEP_DETECTOR){
-            float X = event.values[0];
-            tv2.setText("DECTOR："+ X);
 
         }
     }
