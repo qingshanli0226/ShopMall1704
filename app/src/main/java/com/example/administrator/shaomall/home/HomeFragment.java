@@ -10,13 +10,12 @@ import android.widget.TextView;
 import com.example.administrator.shaomall.AnimationNestedScrollView;
 import com.example.administrator.shaomall.CommonUtil;
 import com.example.administrator.shaomall.R;
-import com.shaomall.framework.base.BaseFragment;
-import com.shaomall.framework.base.MVPBaseFragment;
+import com.shaomall.framework.base.BaseMVPFragment;
 import com.shaomall.framework.base.presenter.IBasePresenter;
 
 import java.util.List;
 
-public class HomeFragment extends MVPBaseFragment<HomeBean.ResultBean> {
+public class HomeFragment extends BaseMVPFragment<HomeBean.ResultBean> {
     private AnimationNestedScrollView sv_view;
     private LinearLayout ll_search;
     private TextView tv_title;
@@ -37,17 +36,6 @@ public class HomeFragment extends MVPBaseFragment<HomeBean.ResultBean> {
 
 
         setTitle();
-    }
-
-
-    @Override
-    protected IBasePresenter<HomeBean.ResultBean> setBasePresenter() {
-        return new HomePresenter();
-    }
-
-    @Override
-    protected void initData(IBasePresenter<HomeBean.ResultBean> iBasePresenter) {
-        iBasePresenter.doGetHttpRequest(101);
     }
 
     @Override

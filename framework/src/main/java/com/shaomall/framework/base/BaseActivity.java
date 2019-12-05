@@ -78,7 +78,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected void toClass(Class<? extends Activity> clazz, Bundle bundle) {
         Intent intent = new Intent(mActivity, clazz);
-        if (bundle != null) {
+        if (bundle != null && bundle.size() != 0) {
             intent.putExtras(bundle);
         }
         startActivity(intent);
@@ -94,7 +94,9 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected void toClass(Class<? extends Activity> clazz, Bundle bundle, int requestCode) {
         Intent intent = new Intent(mActivity, clazz);
-        intent.putExtras(bundle);
+        if (bundle != null && bundle.size() != 0) {
+            intent.putExtras(bundle);
+        }
         startActivityForResult(intent, requestCode);
     }
 

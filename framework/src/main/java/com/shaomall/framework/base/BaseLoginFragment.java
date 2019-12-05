@@ -8,7 +8,7 @@ import com.shaomall.framework.manager.UserInfoManager;
 
 import java.util.List;
 
-public abstract class BaseLoginFragment<T> extends MVPBaseFragment<T> implements UserInfoManager.UserInfoStatusListener {
+public abstract class BaseLoginFragment<T> extends BaseMVPFragment<T> implements UserInfoManager.UserInfoStatusListener {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
