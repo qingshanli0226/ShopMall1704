@@ -1,5 +1,4 @@
 package com.example.administrator.shaomall;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.FrameLayout;
@@ -44,17 +43,28 @@ public class MainActivity extends BaseActivity {
     }
 
 
+<<<<<<< HEAD
+=======
+
+    @Override
+    protected int setBarColor() {
+        return 0;
+    }
+
+>>>>>>> shanshaohua
     protected void initView() {
-        fragments.add(new HomeFragment());
-        switchFragment(fragments.get(0));
-        mMainFragmentHome = findViewById(R.id.main_fragmentHome);
-        mMainTab = findViewById(R.id.main_tab);
-        setTab();
+        toClass(com.example.remindsteporgan.MainActivity.class);
+
+//        fragments.add(new HomeFragment());
+//        switchFragment(fragments.get(0));
+//        mMainFragmentHome = findViewById(R.id.main_fragmentHome);
+//        mMainTab = findViewById(R.id.main_tab);
+       // setTab();
     }
 
     @Override
     public int setLayoutId() {
-        return R.layout.activity_main;
+        return R.layout.remindactivity_main;
     }
 
     @Override
@@ -102,5 +112,6 @@ public class MainActivity extends BaseActivity {
         public int getTabUnselectedIcon() {
             return unicon;
         }
+
     }
 }

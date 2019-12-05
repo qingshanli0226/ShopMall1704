@@ -56,7 +56,9 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param clazz
      */
     protected void toClass(Class<? extends Activity> clazz) {
-        toClass(clazz, null);
+        Intent intent = new Intent(mActivity, clazz);
+
+        startActivity(intent);
     }
 
     /**

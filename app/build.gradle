@@ -30,9 +30,13 @@ dependencies {
     implementation project(':net')
     implementation project(path: ':commen')
     implementation project(path: ':framework')
+
+    implementation project(':remindsteporgan')
+
     implementation project(':framework')
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'com.youth.banner:banner:1.4.10'
+
 
 }
