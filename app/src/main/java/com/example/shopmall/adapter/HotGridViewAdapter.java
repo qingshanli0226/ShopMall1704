@@ -56,16 +56,13 @@ public class HotGridViewAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        HomepageBean.ResultBean.HotInfoBean hotInfoBean = data.get(position);
-        Glide.with(mContext)
-                .load(Constant.BASE_URL_IMAGE +hotInfoBean.getFigure())
-                .into(viewHolder.iv_hot);
-        viewHolder.tv_name.setText(hotInfoBean.getName());
-        viewHolder.tv_price.setText("￥" + hotInfoBean.getCover_price());
+        Glide.with(mContext).load(Constant.BASE_URL_IMAGE +data.get(position).getFigure()).into(viewHolder.iv_hot);
+        viewHolder.tv_name.setText(data.get(position).getName());
+        viewHolder.tv_price.setText("￥" + data.get(position).getCover_price());
         return convertView;
     }
 
-    static class ViewHolder {
+    class ViewHolder {
         ImageView iv_hot;
         TextView tv_name;
         TextView tv_price;

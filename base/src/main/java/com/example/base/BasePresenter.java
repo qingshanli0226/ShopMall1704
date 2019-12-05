@@ -28,22 +28,23 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
     @Override
     public void getGetData() {
-        RetrofitCreator.getNetGetSerivice().getGetData(getPath(), getHeader(), getQuery())
+        RetrofitCreator.getNetGetSerivice().getGetData(getPath())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        baseView.onLoadingPage();
                     }
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
-
+                        baseView.onStopLoadingPage();
                         try {
                             T data = new Gson().fromJson(responseBody.string(), getBeanType());
                             if (baseView != null)
                                 baseView.onGetDataSucess(data);
+                                baseView.onLoadingPage();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -54,6 +55,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                         Log.e("####", "" + e.getMessage());
                         if (baseView != null) {
                             baseView.onGetDataFailed(ErrorUtil.handleError(e));
+                            baseView.onStopLoadingPage();
                         }
                     }
 

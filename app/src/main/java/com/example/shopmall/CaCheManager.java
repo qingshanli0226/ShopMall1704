@@ -16,14 +16,18 @@ import java.util.List;
 
 public class CaCheManager {
 
-    private static CaCheManager caCheManager;
-    private Context context;
+    public static CaCheManager caCheManager;
+    public Context context;
     private List<IDataRecivedListener> iDataRecivedListeners = new LinkedList<>();
     private ShopService shopService;
 
-    static CaCheManager getInstance() {
+    public CaCheManager(Context context) {
+        this.context = context;
+    }
+
+    public static CaCheManager getInstance(Context context) {
         if (caCheManager == null) {
-            return new CaCheManager();
+            return new CaCheManager(context);
         }
         return caCheManager;
     }
@@ -92,7 +96,7 @@ public class CaCheManager {
     }
 
     //获取存储到sp中的bean类
-    public HomepageBean getCacheBean() {
+    public HomepageBean getCacheBean(Context context) {
         ACache aCache = ACache.get(context);
         HomepageBean homepageBean = (HomepageBean) aCache.getAsObject("HomepageBean");
         if (homepageBean != null) {
@@ -102,10 +106,9 @@ public class CaCheManager {
     }
 
     //管理类初始化
-    public void init(Context context) {
-        this.context = context;
+    void init(Context context) {
         Intent intent = new Intent(context, ShopService.class);
-        this.context.startService(intent);
-        this.context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+        context.startService(intent);
+        context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 }

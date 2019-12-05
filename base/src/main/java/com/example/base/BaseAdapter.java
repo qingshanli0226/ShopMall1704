@@ -25,19 +25,15 @@ public abstract class BaseAdapter<T, V extends RecyclerView.ViewHolder> extends 
     @NonNull
     @Override
     public V onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(getLayout(), null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(getLayout(viewType), null);
         return getViewHolder(view, viewType);
     }
 
     //根据类型返回不同的viewholder
     protected abstract V getViewHolder(View view, int viewType);
 
-<<<<<<< HEAD
-    protected abstract int getLayout();
-=======
     //返回布局文件
     protected abstract int getLayout(int viewType);
->>>>>>> one
 
     @Override
     public void onBindViewHolder(@NonNull V holder, int position) {

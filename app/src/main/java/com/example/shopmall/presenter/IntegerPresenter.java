@@ -7,27 +7,23 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
-<<<<<<< HEAD:app/src/main/java/com/example/shopmall/posenter/WelcomePosenter.java
-public class WelcomePosenter extends BasePresenter {
+public class IntegerPresenter extends BasePresenter {
 
     private String Config;
     private Type type;
 
-    public WelcomePosenter(String config) {
+    public IntegerPresenter(String config) {
         Config = config;
     }
 
-    public WelcomePosenter(String config, Type type) {
+    public IntegerPresenter(String config, Type type) {
         Config = config;
         this.type = type;
-=======
-public class WelcomePresenter extends BasePresenter<HomepageBean> {
+    }
 
     @Override
     protected Type getBeanType() {
-        return new TypeToken<HomepageBean>() {
-        }.getType();
->>>>>>> one:app/src/main/java/com/example/shopmall/presenter/WelcomePresenter.java
+        return type;
     }
 
     @Override
@@ -44,4 +40,5 @@ public class WelcomePresenter extends BasePresenter<HomepageBean> {
     protected HashMap<String, String> getQuery() {
         return new HashMap<>();
     }
+
 }
