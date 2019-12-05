@@ -15,9 +15,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.buy.databeans.GetCartBean;
 import com.example.buy.databeans.GoodsBean;
 import com.example.buy.databeans.OkBean;
-import com.example.buy.presenter.CartPresenter;
-import com.example.buy.presenter.UpDatePresenter;
-import com.example.buy.presenter.VerifyGoodsPresenter;
+import com.example.buy.presenter.GetCartPresenter;
+import com.example.buy.presenter.PostUpDatePresenter;
+import com.example.buy.presenter.PostVerifyGoodsPresenter;
 import com.example.common.IntentUtil;
 import com.example.framework.base.BaseNetConnectFragment;
 import com.example.framework.base.BaseRecyclerAdapter;
@@ -44,7 +44,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
     ArrayList<Boolean> checks = new ArrayList<>();
 
     //购物车数据获取 库存  购物车更新
-    IPresenter cartPresenter;
+    IPresenter sendCartPresenter;
     IPresenter goodsPresenter;
     IPresenter upDatePresenter;
 
@@ -87,8 +87,8 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                 holder.getTextView(R.id.itemTitle, list.get(position).getProductName());
                 holder.getTextView(R.id.itemNum, list.get(position).getProductNum() + "");
                 holder.getTextView(R.id.itemPrice, list.get(position).getProductId());
-
                 CheckBox itemCheck = (CheckBox) holder.getView(R.id.itemCheck);
+
                 for (boolean i:checks){
                     itemCheck.setChecked(i);
                 }
@@ -97,16 +97,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         checks.set(position,isChecked);
-                        boolean flag=true;
-                        for (boolean i:checks){
-                            if (!i){
-                                flag=i;
-                                break;
-                            }
-                        }
-                        if (flag){
-                            checkAll.setChecked(true);
-                        }
+                        judgeCheckAll();
                     }
                 });
                 //减按钮
@@ -121,7 +112,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                         if (list.get(position).getProductNum()== 1) {
                             v.setClickable(false);
                         }
-                        upDatePresenter=new UpDatePresenter(list.get(position));
+                        upDatePresenter=new PostUpDatePresenter(list.get(position));
                         upDatePresenter.attachView(ShopCartFragment.this);
                         upDatePresenter.onHttpPostRequest(UPDATA_GOODS);
                     }
@@ -132,7 +123,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                     public void onClick(View v) {
                         int num = list.get(position).getProductNum();
                         list.get(position).setProductNum(num + 1);
-                        upDatePresenter=new UpDatePresenter(list.get(position));
+                        upDatePresenter=new PostUpDatePresenter(list.get(position));
                         upDatePresenter.attachView(ShopCartFragment.this);
                         upDatePresenter.onHttpPostRequest(UPDATA_GOODS);
                     }
@@ -144,7 +135,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
             @Override
             public void onRefresh() {
                 //下拉刷新购物车数据
-                cartPresenter.onHttpGetRequest(CART_GOODS);
+                sendCartPresenter.onHttpGetRequest(CART_GOODS);
             }
         });
         //全选监听
@@ -158,19 +149,19 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
             }
         });
 
-        cartPresenter=new CartPresenter();
-        cartPresenter.attachView(this);
+        sendCartPresenter=new GetCartPresenter();
+        sendCartPresenter.attachView(this);
     }
 
     @Override
     public void initDate() {
-        cartPresenter.onHttpGetRequest(CART_GOODS);
+        sendCartPresenter.onHttpGetRequest(CART_GOODS);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        cartPresenter.detachView();
+        sendCartPresenter.detachView();
         goodsPresenter.detachView();
         upDatePresenter.detachView();
     }
@@ -207,7 +198,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                 recyclerView.getAdapter().notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);
                 //每一次刷新购物车都重新检查库存
-                goodsPresenter=new VerifyGoodsPresenter(list);
+                goodsPresenter=new PostVerifyGoodsPresenter(list);
                 goodsPresenter.attachView(this);
                 //监听全局的购物车商品数量
                 onCartListener.OnCartChangeListener(list.size());
@@ -223,5 +214,17 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                 break;
         }
     }
-
+    private void judgeCheckAll(){
+        //判断全选
+        boolean flag=true;
+        for (boolean i:checks){
+            if (!i){
+                flag=i;
+                break;
+            }
+        }
+        if (flag){
+            checkAll.setChecked(true);
+        }
+    }
 }

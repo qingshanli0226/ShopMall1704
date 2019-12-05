@@ -7,14 +7,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buy.databeans.GetOrderBean;
-import com.example.buy.presenter.PayOrderPresenter;
-import com.example.buy.presenter.WaitOrderPresenter;
+import com.example.buy.presenter.GetPayOrderPresenter;
+import com.example.buy.presenter.GetWaitOrderPresenter;
 import com.example.common.IntentUtil;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.base.BaseRecyclerAdapter;
 import com.example.framework.base.BaseViewHolder;
 import com.example.framework.port.IPresenter;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 /**
@@ -51,8 +50,8 @@ public class OrderActivity extends BaseNetConnectActivity {
 
     @Override
     public void init() {
-        payOrder=new PayOrderPresenter();
-        watiOrder=new WaitOrderPresenter();
+        payOrder=new GetPayOrderPresenter();
+        watiOrder=new GetWaitOrderPresenter();
         //http://49.233.93.155:8080  updateMoney  money=1333
         //获取传递过来的数据,然后进行订单类型的显示
 

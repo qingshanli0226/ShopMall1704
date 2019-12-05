@@ -4,24 +4,21 @@ import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.buy.databeans.GoodsBean;
 import com.example.buy.databeans.OkBean;
 import com.example.buy.databeans.ShowGoodsBean;
-import com.example.buy.presenter.AddCartPresenter;
-import com.example.buy.presenter.VerifyOnePresenter;
+import com.example.buy.presenter.PostAddCartPresenter;
+import com.example.buy.presenter.PostVerifyOnePresenter;
 import com.example.common.IntentUtil;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.port.IPresenter;
@@ -55,6 +52,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
 
     //需要一个商品信息的对象
     GoodsBean goods;
+    ValueAnimator valueAnimator;
 
     @Override
     protected void onStart() {
@@ -89,30 +87,6 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         }
     }
 
-    private void setPopuWindow() {
-        //弹出窗体
-        popupWindow = new PopupWindow(this);
-
-        View view = LayoutInflater.from(this).inflate(R.layout.popuwindow_goods,null);
-
-        Button popuSure = view.findViewById(R.id.popuSure);
-        popuSure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-                getBesselLocation();
-                addCartPresenter = new AddCartPresenter(goods);
-                addCartPresenter.onHttpPostRequest(ADD_CART);
-            }
-        });
-
-        popupWindow.setContentView(view);
-        popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-        //设置点击外部消失
-        popupWindow.setOutsideTouchable(true);
-    }
-
     @Override
     public void onRequestSuccess(int requestCode, Object data) {
         super.onRequestSuccess(requestCode, data);
@@ -135,7 +109,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
 
     //库存检验
     private void verifyNumber() {
-        verifyOnePresenter = new VerifyOnePresenter(goods.getProductId(), goods.getProductNum());
+        verifyOnePresenter = new PostVerifyOnePresenter(goods.getProductId(), goods.getProductNum());
         verifyOnePresenter.attachView(this);
         verifyOnePresenter.onHttpPostRequest(VERIFY_ONE);
     }
@@ -152,8 +126,6 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
 
     @Override
     public void init() {
-        //http://49.233.93.155:8080  updateMoney  money=1333
-
         goPayBut = findViewById(R.id.goPayBut);
         joinCartBut = findViewById(R.id.joinCartBut);
         collectBut = findViewById(R.id.collectBut);
@@ -166,17 +138,16 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         goodsImage.setOnClickListener(this);
         cartBut.setOnClickListener(this);
         beiImgage.setOnClickListener(this);
-
-        setPopuWindow();
     }
 
     @Override
     public void initDate() {
-
+        setPopuWindow();
+        setBesselLocation();
     }
 
     //设置贝塞尔曲线的位置
-    private void getBesselLocation() {
+    private void setBesselLocation() {
         startLoaction[0] = 0;
         startLoaction[1] = 0;
 
@@ -205,7 +176,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         // false表示path路径不闭合
         pathMeasure.setPath(path, false);
         //属性动画加载
-        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, (int) pathMeasure.getLength());
+        valueAnimator = ValueAnimator.ofInt(0, (int) pathMeasure.getLength());
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -220,9 +191,31 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         });
         //动画时长设置
         valueAnimator.setDuration(10000);
-        valueAnimator.start();
     }
 
+    //设置弹窗
+    private void setPopuWindow() {
+        //弹出窗体
+        popupWindow = new PopupWindow(this);
+
+        View view = LayoutInflater.from(this).inflate(R.layout.popuwindow_goods,null);
+
+        Button popuSure = view.findViewById(R.id.popuSure);
+        popuSure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+                valueAnimator.start();
+                addCartPresenter = new PostAddCartPresenter(goods);
+                addCartPresenter.onHttpPostRequest(ADD_CART);
+            }
+        });
+        popupWindow.setContentView(view);
+        popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        //设置点击外部消失
+        popupWindow.setOutsideTouchable(true);
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

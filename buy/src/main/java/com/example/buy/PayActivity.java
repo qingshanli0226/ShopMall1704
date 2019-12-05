@@ -4,27 +4,36 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.buy.databeans.GetPayOrderBean;
 import com.example.buy.databeans.GoodsBean;
+import com.example.buy.databeans.SendOrdersBean;
+import com.example.buy.presenter.PostOrderPresenter;
 import com.example.common.IntentUtil;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.base.BaseRecyclerAdapter;
 import com.example.framework.base.BaseViewHolder;
 import com.example.framework.port.IPresenter;
+import com.example.net.AppNetConfig;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PayActivity extends BaseNetConnectActivity implements View.OnClickListener {
 
+    public static final int CODE_ORDER=100;
     private Button payBut;
     private RecyclerView recyclerView;
+    private TextView orderMoney;
+    private TextView payMoney;
+
     ArrayList<GoodsBean> list=new ArrayList<>();
+
+    IPresenter sendOrederPresenter;
 
     @Override
     protected void onStart() {
@@ -33,33 +42,26 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
         Bundle bundle = intent.getBundleExtra(IntentUtil.ORDERS);
         list = bundle.getParcelableArrayList(IntentUtil.GOODS);
         recyclerView.getAdapter().notifyDataSetChanged();
-
+        orderMoney.setText(getMoney());
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.payBut) {
-            //检验,然后支付
-            verifyMoney();
+            List<SendOrdersBean.BodyBean> bodyBeans=new ArrayList<>();
+            for (GoodsBean i:list){
+                bodyBeans.add(new SendOrdersBean.BodyBean(i.getProductName(),i.getProductId()));
+            }
+            //直接发起订单
+            SendOrdersBean sendOrdersBean = new SendOrdersBean(
+                    "购买",
+                    getMoney(),
+                    bodyBeans
+            );
+            sendOrederPresenter=new PostOrderPresenter(sendOrdersBean);
+            sendOrederPresenter.attachView(this);
+            sendOrederPresenter.onHttpPostRequest(CODE_ORDER);
         }
-    }
-
-    //发起更新现金请求
-    private void verifyMoney() {
-        //{"code":"200","message":"请求成功","result":"6666666"}
-        //如果没钱则提示用户,他是个穷人,待支付
-        orderCancel();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        orderCancel();
-    }
-
-    //支付取消,更改订单为待支付订单
-    private void orderCancel() {
-
     }
 
     @Override
@@ -75,6 +77,8 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
     @Override
     public void init() {
         payBut = findViewById(R.id.payBut);
+        orderMoney = findViewById(R.id.orderMoney);
+        payMoney = findViewById(R.id.payMoney);
         recyclerView = findViewById(R.id.recyclerView);
         //http://49.233.93.155:8080  updateMoney  money=1333
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -97,5 +101,29 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
     @Override
     public void onRequestSuccess(int requestCode, Object data) {
         super.onRequestSuccess(requestCode, data);
+        switch (requestCode){
+            case CODE_ORDER:
+                if (AppNetConfig.CODE_OK== Integer.valueOf(((GetPayOrderBean)data).getCode())){
+                    //下订单成功
+                    //订单号
+                    ((GetPayOrderBean)data).getResult().getOutTradeNo();
+                    //拼接的数据 appid 格式之类
+                    ((GetPayOrderBean)data).getResult().getOrderInfo();
+                }
+                break;
+        }
+    }
+    private String getMoney(){
+        int sum=0;
+        for (GoodsBean i:list){
+            sum+=Integer.valueOf(i.getProductId())*i.getProductNum();
+        }
+        return sum+"";
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        sendOrederPresenter.detachView();
     }
 }
