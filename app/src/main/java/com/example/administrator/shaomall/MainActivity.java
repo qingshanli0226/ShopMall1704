@@ -43,23 +43,10 @@ public class MainActivity extends BaseActivity {
     }
 
 
-<<<<<<< HEAD
-=======
 
-    @Override
-    protected int setBarColor() {
-        return 0;
-    }
-
->>>>>>> shanshaohua
     protected void initView() {
         toClass(com.example.remindsteporgan.MainActivity.class);
 
-//        fragments.add(new HomeFragment());
-//        switchFragment(fragments.get(0));
-//        mMainFragmentHome = findViewById(R.id.main_fragmentHome);
-//        mMainTab = findViewById(R.id.main_tab);
-       // setTab();
     }
 
     @Override
