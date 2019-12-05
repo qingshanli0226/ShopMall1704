@@ -1,29 +1,44 @@
 package com.example.administrator.shaomall.home;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.shaomall.AnimationNestedScrollView;
 import com.example.administrator.shaomall.CommonUtil;
 import com.example.administrator.shaomall.R;
+import com.example.commen.ACache;
+import com.example.net.AppNetConfig;
 import com.shaomall.framework.base.BaseFragment;
+import com.shaomall.framework.base.MVPBaseFragment;
+import com.shaomall.framework.base.presenter.IBasePresenter;
+import com.youth.banner.loader.ImageLoader;
 
-public class HomeFragment extends BaseFragment{
+import java.util.ArrayList;
+import java.util.List;
+
+public class HomeFragment extends BaseFragment {
     private AnimationNestedScrollView sv_view;
     private LinearLayout ll_search;
     private TextView tv_title;
     private float LL_SEARCH_MIN_TOP_MARGIN, LL_SEARCH_MAX_TOP_MARGIN, LL_SEARCH_MAX_WIDTH, LL_SEARCH_MIN_WIDTH, TV_TITLE_MAX_TOP_MARGIN;
     private ViewGroup.MarginLayoutParams searchLayoutParams, titleLayoutParams;
-
-
+    private com.youth.banner.Banner mHomeBanner;
+    private android.support.v7.widget.RecyclerView mHomeRecycler;
 
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
-
+        mHomeBanner = view.findViewById(R.id.home_banner);
+        mHomeRecycler = view.findViewById(R.id.home_recycler);
         sv_view = view.findViewById(R.id.search_sv_view);
         ll_search =  view.findViewById(R.id.search_ll_search);
         tv_title =  view.findViewById(R.id.search_tv_title);
@@ -32,12 +47,20 @@ public class HomeFragment extends BaseFragment{
 
 
         setTitle();
+
     }
 
     @Override
     protected void initData() {
-
+        ACache aCache = ACache.get(getContext());
+       HomeBean data = (HomeBean) aCache.getAsObject(AppNetConfig.KEY_HOME_DATA);
+       if (data!=null)
+       setBanenr(data.getResult().getBanner_info());
     }
+
+
+
+
 
     private void setTitle() {
         LL_SEARCH_MIN_TOP_MARGIN = CommonUtil.dp2px(getContext(), 4.5f);//布局关闭时顶部距离
@@ -85,7 +108,22 @@ public class HomeFragment extends BaseFragment{
     }
 
 
-
+    private void setBanenr(List<HomeBean.ResultBean.BannerInfoBean> banenrs){
+        final List<String> images = new ArrayList<>();
+        for (int i = 0; i < banenrs.size(); i++) {
+            images.add(AppNetConfig.BASE_URl_IMAGE+banenrs.get(i).getImage());
+        }
+        Log.i("LW", "setBanenr: "+AppNetConfig.BASE_URl_IMAGE+banenrs.get(1).getImage());
+        mHomeBanner.setImages(images);
+        mHomeBanner.setImageLoader(new ImageLoader() {
+            @Override
+            public void displayImage(Context context, Object path, ImageView imageView) {
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                Glide.with(context).load((String)path).apply(RequestOptions.bitmapTransform(new RoundedCorners(30))).into(imageView);
+            }
+        });
+        mHomeBanner.start();
+    }
     @Override
     public int setLayoutId() {
         return R.layout.fragment_home;

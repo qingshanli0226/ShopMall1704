@@ -5,9 +5,18 @@ public class AppNetConfig {
     public static final boolean PRINT_LOG = true;
 
     //服务端
-    public static final String BASE_URL = "http://49.233.93.155:8080";
+    public static final String BASE_URL = "http://49.233.93.155:8080/";
 
     ////////////////////////////////////////////
+    // 请求Json数据基本URL
+    public static final String BASE_URL_JSON = BASE_URL+"atguigu/json/";
+
+    // 请求图片基本URL
+    public static final String BASE_URl_IMAGE = BASE_URL+"atguigu/img";
+//    http://49.233.93.155:8080/atguigu/img  /1478770583834.png
+    //主页Fragment路径
+    public static final String HOME_URL ="HOME_URL.json";
+
     //User 处理接口
     //1. 注册接口处理 post
     public static final String REGISTER_URL = "register";
@@ -81,4 +90,10 @@ public class AppNetConfig {
 
     //22. 查找待发货的订单 get
     public static final String FIND_FOR_SEND = "findForSend";
+
+    //首页数据Code
+    public static final int HOME_DATA_CODE = 100;
+
+    //acache 首页数据 Key
+    public static final String KEY_HOME_DATA = "Home_Data";
 }

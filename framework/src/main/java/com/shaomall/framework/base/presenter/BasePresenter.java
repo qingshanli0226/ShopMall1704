@@ -62,18 +62,19 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                                 }
 
                             } else { //不是列表
-                                ResEntity<T> resEntity = new Gson().fromJson(string, getBeanType());
+//                                ResEntity<T> resEntity = new Gson().fromJson(string, getBeanType());
+                                T resEntity = new Gson().fromJson(string, getBeanType());
 
-                                if (resEntity.getCode() == 200) { //数据请求成功
-                                    if (iBaseView != null) {
-                                        iBaseView.onRequestHttpDataSuccess(requestCode, resEntity.getMessage(), resEntity.getResult());
-                                    } else {
-                                        //获取数据失败
-                                        if (iBaseView != null) {
-                                            iBaseView.onRequestHttpDataFailed(requestCode, ShopMailError.BUSINESS_ERROR);
-                                        }
-                                    }
-                                }
+//                                if (resEntity.getCode() == 200) { //数据请求成功
+//                                    if (iBaseView != null) {
+                                        iBaseView.onRequestHttpDataSuccess(requestCode, "", resEntity);
+//                                    } else {
+//                                        //获取数据失败
+//                                        if (iBaseView != null) {
+//                                            iBaseView.onRequestHttpDataFailed(requestCode, ShopMailError.BUSINESS_ERROR);
+//                                        }
+//                                    }
+//                                }
                             }
 
                             //数据请求成功

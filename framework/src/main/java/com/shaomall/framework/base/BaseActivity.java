@@ -24,6 +24,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        flagFullScreen();
         setContentView(setLayoutId());
         mActivity = this;
         immersionBar = ImmersionBar.with(this);
@@ -40,7 +41,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         initData();
     }
 
-    protected abstract int setBarColor();
+    public void flagFullScreen() {
+    }
+
 
     protected abstract void initView();
 
@@ -78,6 +81,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected void toClass(Class<? extends Activity> clazz, Bundle bundle) {
         Intent intent = new Intent(mActivity, clazz);
+        if (bundle != null && bundle.size() != 0)
         intent.putExtras(bundle);
         startActivity(intent);
     }
@@ -92,6 +96,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected void toClass(Class<? extends Activity> clazz, Bundle bundle, int requestCode) {
         Intent intent = new Intent(mActivity, clazz);
+        if (bundle != null && bundle.size() != 0)
         intent.putExtras(bundle);
         startActivityForResult(intent, requestCode);
     }
