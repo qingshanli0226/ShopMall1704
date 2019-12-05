@@ -1,12 +1,19 @@
-package com.example.shopmall.posenter;
+package com.example.shopmall.presenter;
 
 import com.example.base.BasePresenter;
-import com.example.net.Constant;
 import com.example.shopmall.bean.HomepageBean;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
 
-public class WelcomePosenter extends BasePresenter<HomepageBean> {
+public class WelcomePresenter extends BasePresenter<HomepageBean> {
+
+    @Override
+    protected Type getBeanType() {
+        return new TypeToken<HomepageBean>() {
+        }.getType();
+    }
 
     @Override
     protected String getPath() {
