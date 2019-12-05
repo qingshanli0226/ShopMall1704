@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 
 
+import com.example.shopmall.bean.StepBean;
+import com.example.shopmall.greendao.StepBeanDao;
 import com.example.shopmall.step.StepService;
 
 import org.greenrobot.greendao.query.QueryBuilder;
@@ -46,6 +48,15 @@ public class StepManager {
                     }
                 });
             }
+    //添加步数,并通知接口回调activity返回步数
+    public void addStep(StepBean stepBean) {
+    }
+
+    //根据时间返回数据记录
+//    public List<StepBean> findStep(String date) {
+//        QueryBuilder<StepBean> findDate = stepBeanDao.queryBuilder().where(StepBeanDao.Properties.Data.eq(date));
+//        return findDate.list();
+//    }
 
             @Override
             public void onServiceDisconnected(ComponentName componentName) {
