@@ -56,6 +56,8 @@ public class MainActivity extends BaseActivity{
 
 //        loadingPage.start(LoadingPage.LOADING_FAILURE);
 
+
+
         String[] str = new String[]{"首页","分类","发现","购物车","个人中心"};
 
         bottomBar.setBottombarName(str);
@@ -99,6 +101,8 @@ public class MainActivity extends BaseActivity{
 
         //更新当前正在显示的fragment
         currentFragment = fragment;
+
+
 
     }
 

@@ -6,7 +6,7 @@ import com.litesuits.orm.db.annotation.Table;
 import com.litesuits.orm.db.enums.AssignType;
 
 @Table("step")
-class ShopStepBean {
+public class ShopStepBean {
 
     @PrimaryKey(AssignType.AUTO_INCREMENT)
     int id;

@@ -1,20 +1,32 @@
 package com.example.shopmall;
 
+
+
+
+
+
+
+/*
+  初始化init 开启服务, 注册记步的回调接口 ,在onDestory中注销服务
+ */
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.widget.Toast;
 
 
+<<<<<<< HEAD
 import com.example.shopmall.bean.StepBean;
 import com.example.shopmall.greendao.StepBeanDao;
+=======
+import com.example.shopmall.step.OrmUtils;
+import com.example.shopmall.step.ShopStepBean;
+>>>>>>> bing
 import com.example.shopmall.step.StepService;
 
-import org.greenrobot.greendao.query.QueryBuilder;
-
-import java.util.LinkedList;
 import java.util.List;
 
 public class StepManager {
@@ -24,6 +36,8 @@ public class StepManager {
     StepService stepService;
     ServiceConnection serviceConnection;
     StepManagerListener stepManagerListener;
+
+    SharedPreferences sharedPreferences;
     public static StepManager getInstance() {
         if (stepManager == null) {
             stepManager = new StepManager();
@@ -31,6 +45,7 @@ public class StepManager {
         return stepManager;
     }
 
+    //绑定服务
     public void init(Context context){
         this.context=context;
         Intent intent = new Intent(context, StepService.class);
@@ -64,12 +79,61 @@ public class StepManager {
             }
         };
         context.bindService(intent,serviceConnection,Context.BIND_AUTO_CREATE);
+
+
+       sharedPreferences = context.getSharedPreferences("Gal", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putInt("gal",0);
+        edit.commit();
+
+
     }
 
-    interface StepManagerListener{
+    public int getGal(){
+        getInterGal();
+        int gal = sharedPreferences.getInt("gal", 0);
+        return gal;
+    }
+
+    public void getInterGal(){
+        List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
+
+        if(queryAll!=null){
+        for (int i=0;i<queryAll.size();i++){
+            String current_step = queryAll.get(i).getCurrent_step();
+            int i1 = Integer.parseInt(current_step);
+            if(i1>100){
+                int intGal =(int) i1 / 100;
+                int gal = sharedPreferences.getInt("gal", 0);
+                if(gal>0){
+                    gal+=intGal;
+                    SharedPreferences.Editor edit = sharedPreferences.edit();
+                    edit.putInt("gal",gal);
+                    edit.commit();
+                }else{
+
+                }
+
+
+            }else {
+                //步数没有到达要求
+            }
+        }
+
+        }else{
+            Toast.makeText(context, "您目前没有积分,今天运动一下把!", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    //获取历史记录
+    public List<ShopStepBean> getStepHistory(){
+        List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
+        return queryAll;
+    }
+    public interface StepManagerListener{
         void onStepChange(int count);
     }
-
     public void registerListener(StepManagerListener stepManagerListener){
         this.stepManagerListener=stepManagerListener;
     }
