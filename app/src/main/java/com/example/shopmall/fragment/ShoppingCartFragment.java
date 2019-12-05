@@ -44,7 +44,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A simple {@link Fragment} subclass.
+ * 购物车页面
  */
 public class ShoppingCartFragment extends BaseFragment implements NumberAddSubView.OnNumberChangeListener {
 
