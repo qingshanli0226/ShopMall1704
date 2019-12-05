@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -21,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-<<<<<<< HEAD
 import com.bumptech.glide.Glide;
 import com.example.net.Constant;
 import com.example.shopmall.R;
@@ -35,10 +33,6 @@ import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
-=======
-import com.example.framework.base.BaseAdapter;
-
->>>>>>> one
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

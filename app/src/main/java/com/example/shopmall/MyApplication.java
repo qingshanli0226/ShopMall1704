@@ -21,19 +21,13 @@ public class MyApplication extends Application {
         //初始化缓存管理类
         CaCheManager.getInstance(this).init(this);
 
-        //初始化网络连接管理类
-
-        StepManager.getInstance().init(this);
 
         //点击通知跳转MainActivity
         Intent intent = new Intent(this, MainActivity.class);
-        StepManager.getInstance().setActivityStack(intent);
 
         ConnectManager.getInstance().init(this);
         //初始化异常
         CrashHandler.getInstance(this).init();
-
-        StepManager.getInstance().init(this);
     }
 
     public static Context getContext() {

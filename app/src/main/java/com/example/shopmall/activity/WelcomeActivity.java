@@ -6,15 +6,9 @@ import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-<<<<<<< HEAD
-import com.example.base.BaseActivity;
-import com.example.common.ConnectManager;
-=======
 import com.example.framework.base.BaseActivity;
-import com.example.framework.base.BasePresenter;
-import com.example.framework.base.IBaseView;
 import com.example.framework.manager.ConnectManager;
->>>>>>> one
+
 import com.example.shopmall.R;
 
 public class WelcomeActivity extends BaseActivity {

@@ -2,30 +2,18 @@ package com.example.shopmall.fragment;
 
 
 import androidx.fragment.app.Fragment;
-<<<<<<< HEAD
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-=======
->>>>>>> one
 
 import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
-<<<<<<< HEAD
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
 import android.widget.ListView;
-
-import com.example.base.BaseFragment;
-import com.example.base.IBaseView;
-import com.example.common.TitleBar;
-import com.example.net.Constant;
-=======
 
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseFragment;
->>>>>>> one
+import com.example.framework.base.IBaseView;
+import com.example.net.Constant;
 import com.example.shopmall.R;
 import com.example.shopmall.adapter.ClassifyLeftAdapter;
 import com.example.shopmall.adapter.ClassifyRightAdapter;
