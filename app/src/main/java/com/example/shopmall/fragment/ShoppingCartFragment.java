@@ -165,6 +165,12 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             ll_check_all.setVisibility(View.GONE);
             ll_delete.setVisibility(View.VISIBLE);
         }
+        setAllUnChecked();
+        cb_all.setChecked(false);
+        checkbox_all.setChecked(false);
+        allCount = 0;
+        myShoppingBasketAdapter.setAllcount(0);
+        myShoppingBasketAdapter.refresh(data);
     }
 
     private void setCheckAll() {
@@ -192,6 +198,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
                         data.set(i, map);
                     }
                 }
+                myShoppingBasketAdapter.refresh(data);
             }
         });
 
