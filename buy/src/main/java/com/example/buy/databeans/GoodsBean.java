@@ -12,6 +12,13 @@ import android.os.Parcelable;
  * */
 public class GoodsBean implements Parcelable {
 
+    public GoodsBean(String productId, int productNum, String productName, String url) {
+        this.productId = productId;
+        this.productNum = productNum;
+        this.productName = productName;
+        this.url = url;
+    }
+
     @Override
     public String toString() {
         return "GoodsBean{" +
@@ -77,9 +84,6 @@ public class GoodsBean implements Parcelable {
         dest.writeInt(this.productNum);
         dest.writeString(this.productName);
         dest.writeString(this.url);
-    }
-
-    public GoodsBean() {
     }
 
     protected GoodsBean(Parcel in) {

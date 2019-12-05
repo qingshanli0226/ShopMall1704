@@ -24,8 +24,7 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
 
     private Button payBut;
     private RecyclerView recyclerView;
-    ArrayList<GoodsBean> list;
-
+    ArrayList<GoodsBean> list=new ArrayList<>();
 
     @Override
     protected void onStart() {
@@ -96,7 +95,7 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
     }
 
     @Override
-    public void onRequestDataSuccess(int requestCode, Object data) {
-
+    public void onRequestSuccess(int requestCode, Object data) {
+        super.onRequestSuccess(requestCode, data);
     }
 }

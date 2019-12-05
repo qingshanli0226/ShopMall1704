@@ -7,6 +7,8 @@ import com.example.framework.port.IActivity;
 import com.example.framework.port.INetConnectListener;
 import com.example.framework.port.IView;
 
+import io.reactivex.Observable;
+
 public abstract class BaseNetConnectActivity extends BaseActivity implements IActivity, IView, INetConnectListener {
 
     //TODO 网络连接管理类
@@ -19,15 +21,20 @@ public abstract class BaseNetConnectActivity extends BaseActivity implements IAc
     public void init() {
         netConnectManager = NetConnectManager.getInstance();
         netConnectManager.registerNetConnectListener(this);
-        relativeLayout = findViewById(getRelativeLayout());
-        loadingPage = new LoadingPageUtils(this,relativeLayout);
+        if(getRelativeLayout()!=0){
+            relativeLayout = findViewById(getRelativeLayout());
+            loadingPage = new LoadingPageUtils(this,relativeLayout);
+        }
     }
 
     @Override
     public void initDate() {
 
     }
-
+    @Override
+    public int getRelativeLayout() {
+        return 0;
+    }
 
     //TODO 网络状态
     public boolean isConnectStatus(){
@@ -39,9 +46,17 @@ public abstract class BaseNetConnectActivity extends BaseActivity implements IAc
         return netConnectManager.isNetType();
     }
 
-    //TODO 获取数据
+
+    //TODO 请求到单数据
     @Override
-    public void onRequestDataSuccess(int requestCode, Object data) {
+    public void onRequestSuccess(Object data) {
+
+    }
+
+    //TODO 请求到单数据
+    @Override
+    public void onRequestSuccess(int requestCode, Object data) {
+
 
     }
 

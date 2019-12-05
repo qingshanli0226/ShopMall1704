@@ -9,6 +9,8 @@ import com.example.framework.port.INetConnectListener;
 import com.example.framework.port.IPresenter;
 import com.example.framework.port.IView;
 
+import io.reactivex.Observable;
+
 /**
  * author:李浩帆
  */
@@ -23,9 +25,14 @@ public abstract class BaseNetConnectFragment extends BaseFragment implements IVi
         loadingPage = new LoadingPageUtils(getContext(),relativeLayout);
     }
 
-    //TODO 获取到数据
     @Override
-    public void onRequestDataSuccess(int requestCode, Object data) {
+    public void onRequestSuccess(Object data) {
+
+    }
+
+    @Override
+    public void onRequestSuccess(int requestCode, Object data) {
+
 
     }
 

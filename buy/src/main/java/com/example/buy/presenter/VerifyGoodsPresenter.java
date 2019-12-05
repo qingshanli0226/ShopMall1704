@@ -7,12 +7,17 @@ import com.example.net.AppNetConfig;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class GoodsPresenter extends BasePresenter<GoodsBean> {
+import io.reactivex.Observable;
+import okhttp3.ResponseBody;
+/**
+ * 购物车P层  ShopCartFragment  发起库存请求
+ * */
+public class VerifyGoodsPresenter extends BasePresenter<GoodsBean> {
     //参数json串
 
     ArrayList<GoodsBean> list;
 
-    public GoodsPresenter(ArrayList<GoodsBean> list) {
+    public VerifyGoodsPresenter(ArrayList<GoodsBean> list) {
         this.list = list;
     }
 
@@ -30,4 +35,5 @@ public class GoodsPresenter extends BasePresenter<GoodsBean> {
     public String getPath() {
         return AppNetConfig.CHECKINVENTORY;
     }
+
 }

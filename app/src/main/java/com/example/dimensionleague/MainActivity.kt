@@ -1,11 +1,9 @@
 package com.example.dimensionleague
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import com.example.buy.GoodsActiviy
 import androidx.fragment.app.Fragment
 import android.graphics.Color
+import com.example.buy.ShopCartFragment
+import com.example.dimensionleague.home.HomeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import com.example.framework.base.BaseNetConnectActivity
 
@@ -22,11 +20,11 @@ class MainActivity : BaseNetConnectActivity() {
     var list: MutableList<Fragment> = mutableListOf()
 
     override fun init() {
-
+        super.init()
         list.add(HomeFragment())
         list.add(HomeFragment())
         list.add(HomeFragment())
-        list.add(HomeFragment())
+        list.add(ShopCartFragment())
         list.add(HomeFragment())
     }
     override fun initDate() {
@@ -56,8 +54,7 @@ class MainActivity : BaseNetConnectActivity() {
             .canScroll(true)
             .build()
 
-        super.init()
-        showEmpty()
+
 
     }
 }

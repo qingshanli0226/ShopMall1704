@@ -5,7 +5,9 @@ import com.example.framework.base.BasePresenter;
 import com.example.net.AppNetConfig;
 
 import java.lang.reflect.Type;
-
+/**
+ * 购物车P层  ShopCartFragment  发起订单请求
+ * */
 public class CartPresenter extends BasePresenter<GetCartBean> {
     @Override
     public Type getBeanType() {

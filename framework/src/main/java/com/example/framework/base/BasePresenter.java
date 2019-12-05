@@ -24,30 +24,33 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
 
     private IView<T> iView;
 
-    //TODO postJson
+    //TODO get获取单数据
     @Override
-    public void onHttpPostJsonRequest(int requestCode) {
-        Observable<ResponseBody> data = RetrofitCreator.getNetInterence().postJsonData(getHeaders(), getPath(), getJsonParams());
-        onHttpRequest(requestCode,data);
+    public void onHttpGetRequest(){
+        getDate(RetrofitCreator.getNetInterence().getData(getHeaders(), getPath(), getParams()));
     }
 
-    //TODO get获取数据
+    //TODO post获取单数据
+    @Override
+    public void onHttpPostRequest() {
+        getDate(RetrofitCreator.getNetInterence().postData(getHeaders(), getPath(), getParams()));
+    }
+
+    //TODO get获取多数据
     @Override
     public void onHttpGetRequest(final int requestCode){
-        Observable<ResponseBody> data = RetrofitCreator.getNetInterence().getData(getHeaders(), getPath(), getParams());
-        onHttpRequest(requestCode,data);
+        getDate(requestCode,RetrofitCreator.getNetInterence().getData(getHeaders(), getPath(), getParams()));
     }
 
-    //TODO post获取数据
+    //TODO post获取多数据
     @Override
     public void onHttpPostRequest(final int requestCode) {
-        Observable<ResponseBody> data = RetrofitCreator.getNetInterence().postData(getHeaders(), getPath(), getParams());
-        onHttpRequest(requestCode,data);
+        getDate(requestCode,RetrofitCreator.getNetInterence().postData(getHeaders(), getPath(), getParams()));
     }
 
     @Override
-    public void onHttpRequest(final int requestCode, Observable<ResponseBody> observable) {
-        observable.subscribeOn(Schedulers.io())
+    public void getDate(Observable<ResponseBody> data) {
+        data.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
@@ -61,7 +64,40 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                         try {
                             T resEntity = new Gson().fromJson(responseBody.string(), getBeanType());
                             //获取数据成功
-                            iView.onRequestDataSuccess(requestCode,resEntity);
+                            iView.onRequestSuccess(resEntity);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        iView.hideLoading();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void getDate(final int requestCode, Observable<ResponseBody> data) {
+        data.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseBody>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        iView.showLoading();
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                        iView.hideLoading();
+                        try {
+                            T resEntity = new Gson().fromJson(responseBody.string(), getBeanType());
+                            iView.onRequestSuccess(requestCode,resEntity);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

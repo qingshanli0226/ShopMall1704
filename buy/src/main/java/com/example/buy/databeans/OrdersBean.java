@@ -2,6 +2,7 @@ package com.example.buy.databeans;
 
 import java.util.List;
 /**
+ * 下订单的请求
  * 发起多个订单
  *
  * */

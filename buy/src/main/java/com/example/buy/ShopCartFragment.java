@@ -14,8 +14,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.buy.databeans.GetCartBean;
 import com.example.buy.databeans.GoodsBean;
+import com.example.buy.databeans.OkBean;
 import com.example.buy.presenter.CartPresenter;
-import com.example.buy.presenter.GoodsPresenter;
+import com.example.buy.presenter.UpDatePresenter;
+import com.example.buy.presenter.VerifyGoodsPresenter;
 import com.example.common.IntentUtil;
 import com.example.framework.base.BaseNetConnectFragment;
 import com.example.framework.base.BaseRecyclerAdapter;
@@ -30,6 +32,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
 
     public final int CART_GOODS=100;
     public final int VERIFY_GOODS=101;
+    public final int UPDATA_GOODS=102;
 
     private Button buyBut;
     private Button delBut;
@@ -40,9 +43,16 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
     ArrayList<GoodsBean> list = new ArrayList<>();
     ArrayList<Boolean> checks = new ArrayList<>();
 
-    //购物车控制  库存控制
+    //购物车数据获取 库存  购物车更新
     IPresenter cartPresenter;
     IPresenter goodsPresenter;
+    IPresenter upDatePresenter;
+
+    OnCartListener onCartListener;
+
+    public void setOnCartListener(OnCartListener onCartListener) {
+        this.onCartListener = onCartListener;
+    }
 
     @Override
     public void onClick(View v) {
@@ -111,6 +121,9 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                         if (list.get(position).getProductNum()== 1) {
                             v.setClickable(false);
                         }
+                        upDatePresenter=new UpDatePresenter(list.get(position));
+                        upDatePresenter.attachView(ShopCartFragment.this);
+                        upDatePresenter.onHttpPostRequest(UPDATA_GOODS);
                     }
                 });
                 //加按钮
@@ -119,6 +132,9 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                     public void onClick(View v) {
                         int num = list.get(position).getProductNum();
                         list.get(position).setProductNum(num + 1);
+                        upDatePresenter=new UpDatePresenter(list.get(position));
+                        upDatePresenter.attachView(ShopCartFragment.this);
+                        upDatePresenter.onHttpPostRequest(UPDATA_GOODS);
                     }
                 });
             }
@@ -128,7 +144,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
             @Override
             public void onRefresh() {
                 //下拉刷新购物车数据
-                goodsPresenter.onHttpPostRequest(CART_GOODS);
+                cartPresenter.onHttpGetRequest(CART_GOODS);
             }
         });
         //全选监听
@@ -148,11 +164,35 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
 
     @Override
     public void initDate() {
-        goodsPresenter.onHttpPostRequest(CART_GOODS);
+        cartPresenter.onHttpGetRequest(CART_GOODS);
     }
 
     @Override
-    public void onRequestDataSuccess(int requestCode, Object data) {
+    public void onDestroy() {
+        super.onDestroy();
+        cartPresenter.detachView();
+        goodsPresenter.detachView();
+        upDatePresenter.detachView();
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.fragment_shopcart;
+    }
+
+    @Override
+    public int getRelativeLayout() {
+        return R.id.shopCartRel;
+    }
+
+    @Override
+    public void onRequestSuccess(Object data) {
+        super.onRequestSuccess(data);
+    }
+
+    @Override
+    public void onRequestSuccess(int requestCode, Object data) {
+        super.onRequestSuccess(requestCode, data);
         switch (requestCode){
             case CART_GOODS:
                 checks.clear();
@@ -166,37 +206,22 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                 }
                 recyclerView.getAdapter().notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);
-                //每一次加入购物车都重新请求库存
-                verifyGoods();
+                //每一次刷新购物车都重新检查库存
+                goodsPresenter=new VerifyGoodsPresenter(list);
+                goodsPresenter.attachView(this);
+                //监听全局的购物车商品数量
+                onCartListener.OnCartChangeListener(list.size());
                 break;
             case VERIFY_GOODS:
                 GoodsBean[] noGoods = new Gson().fromJson(((GetCartBean) data).getResult(), GoodsBean[].class);
-                Log.e("xxxx","库存不足的商品"+noGoods);
+                Log.e("xxxx","库存刷新后的商品"+noGoods);
+                break;
+            case UPDATA_GOODS:
+                if (Integer.valueOf(((OkBean)data).getCode())!=200){
+                    //更新失败
+                }
                 break;
         }
-    }
-
-    private void verifyGoods() {
-        cartPresenter.onHttpPostRequest(VERIFY_GOODS);
-        goodsPresenter.detachView();
-        goodsPresenter=new GoodsPresenter(list);
-        goodsPresenter.attachView(this);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        cartPresenter.detachView();
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.fragment_shopcart;
-    }
-
-    @Override
-    public int getRelativeLayout() {
-        return R.id.shopCartRel;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.net;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
@@ -16,16 +17,16 @@ import retrofit2.http.QueryMap;
 import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
-public  interface NetInterence {
+public interface NetInterence {
 
-   //GET请求
+    //GET请求
     @GET("{path}")
-    Observable<ResponseBody> getData(@HeaderMap HashMap<String, String> headers, @Path("path") String path, @QueryMap HashMap<String, String> params);
+    Observable<ResponseBody> getData(@HeaderMap HashMap<String, String> headers, @Path("path") String path, @QueryMap Map<String, String> params);
 
     //POST请求
    @POST("{path}")
    @FormUrlEncoded
-   Observable<ResponseBody> postData(@HeaderMap HashMap<String, String> headers, @Path("path") String path, @FieldMap HashMap<String, String> params);
+   Observable<ResponseBody> postData(@HeaderMap HashMap<String, String> headers, @Path("path") String path, @FieldMap Map<String, String> params);
 
     //POST JSON
     @POST("getOrderInfo")
@@ -35,7 +36,4 @@ public  interface NetInterence {
    @Streaming
    @GET
    Observable<ResponseBody> downloadFileWithDynamicUrlSync(@Url String fileUrl);
-
-
-
 }

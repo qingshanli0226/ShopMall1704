@@ -1,2 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.buy" />
+    package="com.example.buy" >
+    <application>
+        <activity android:name="com.example.buy.GoodsActiviy"
+            android:launchMode="singleTask">
+
+        </activity>
+        <activity android:name="com.example.buy.PayActivity"/>
+        <activity android:name="com.example.buy.OrderActivity"/>
+    </application>
+</manifest>

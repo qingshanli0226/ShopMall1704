@@ -1,79 +1,87 @@
 package com.example.buy;
 
-import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.framework.base.BaseActivity;
+import com.example.buy.databeans.GoodsBean;
+import com.example.buy.databeans.OkBean;
+import com.example.buy.databeans.ShowGoodsBean;
+import com.example.buy.presenter.AddCartPresenter;
+import com.example.buy.presenter.VerifyOnePresenter;
+import com.example.common.IntentUtil;
 import com.example.framework.base.BaseNetConnectActivity;
+import com.example.framework.port.IPresenter;
+import com.example.net.AppNetConfig;
+import com.google.gson.Gson;
+
+/**
+ * 商品详情页
+ */
 
 public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClickListener {
+
+    private static final int ADD_CART = 300;
+    private static final int VERIFY_ONE = 301;
+
     private Button goPayBut;
     private Button joinCartBut;
     private Button collectBut;
     private ImageView goodsImage;
     private Button cartBut;
     private ImageView beiImgage;
+    PopupWindow popupWindow;
 
     //初始位置   控制点  结束位置   x,y
-    float[] startLoaction=new float[2];
-    float[] controlLoaction=new float[2];
-    float[] endLoaction=new float[2];
+    float[] startLoaction = new float[2];
+    float[] controlLoaction = new float[2];
+    float[] endLoaction = new float[2];
+    //加入购物车请求  库存请求  商品信息请求  立即购买转支付页面
+    IPresenter addCartPresenter;
+    IPresenter verifyOnePresenter;
+
+    //需要一个商品信息的对象
+    GoodsBean goods;
 
     @Override
     protected void onStart() {
         super.onStart();
-        //获取到用户点击商品     发起请求
-//        Intent intent = getIntent();
-//        String goods = intent.getStringExtra("goods");
-//        intData(goods);
-    }
-
-    //设置页面
-    private void intData(String goods) {
-        //完成设置页面之后,再次发起请求,获取该产品库存,然后判断用户是否能购买/加入购物车
+//        获取到用户点击的商品     发起请求,获取商品数据
+        Intent intent = getIntent();
+        String str = intent.getStringExtra(IntentUtil.SHOW_GOOD);
+        ShowGoodsBean showGoodsBean = new Gson().fromJson(str, ShowGoodsBean.class);
+        goods = new GoodsBean(
+                showGoodsBean.getProduct_id(),
+                1,
+                showGoodsBean.getName(),
+                showGoodsBean.getFigure());
         verifyNumber();
     }
 
     @Override
     public void onClick(View v) {
-        //http://49.233.93.155:8080  /atguigu/json/  GOODSINFO_URL.json"   "$BASE/atguigu/json/"
-
         //加入和购买 两个按钮点击之前,都要进行库存检验
         verifyNumber();
         if (v.getId() == goPayBut.getId()) {
             //携带商品数据跳转到支付页  并结束页面
-            startActivity(PayActivity.class,null);
+            startActivity(PayActivity.class, null);
             finish();
         } else if (v.getId() == joinCartBut.getId()) {
-            /**
-             * 通知服务器  然后,提示用户加入完成
-             *
-             * 15，“addOneProduct”
-             * 说明：向服务端购物车添加一个产品的接口
-             * POST
-             * 请求参数：
-             * 参数格式：application/json, text/json
-             * 示例：{"productId":"1512","productNum":1,"productName":"衬衫","url":"http:\/\/www.baidu.com"}
-             * 请求头需要添加token
-             *
-             * 返回值:
-             * 返回格式：application/json, text/json
-             * 示例：{"code":"200","message":"请求成功","result":"请求成功"}
-             * */
-            setBesselAnimation(beiImgage);
+            //加入购物车  弹窗
+            popupWindow.showAtLocation(findViewById(R.id.goodsRel), Gravity.BOTTOM, 0, 0);
 
         } else if (v.getId() == collectBut.getId()) {
             //本地sp存储收藏的商品的信息
@@ -81,22 +89,55 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         }
     }
 
+    private void setPopuWindow() {
+        //弹出窗体
+        popupWindow = new PopupWindow(this);
+
+        View view = LayoutInflater.from(this).inflate(R.layout.popuwindow_goods,null);
+
+        Button popuSure = view.findViewById(R.id.popuSure);
+        popuSure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+                getBesselLocation();
+                addCartPresenter = new AddCartPresenter(goods);
+                addCartPresenter.onHttpPostRequest(ADD_CART);
+            }
+        });
+
+        popupWindow.setContentView(view);
+        popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        //设置点击外部消失
+        popupWindow.setOutsideTouchable(true);
+    }
+
+    @Override
+    public void onRequestSuccess(int requestCode, Object data) {
+        super.onRequestSuccess(requestCode, data);
+        switch (requestCode) {
+            case ADD_CART:
+                if (Integer.valueOf(((OkBean) data).getCode()) == AppNetConfig.CODE_OK) {
+                    //提示用户加入购物车完成
+                    Toast.makeText(this,getResources().getString(R.string.app_name),Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case VERIFY_ONE:
+                if (Integer.valueOf(((String) data)) == 0) {
+                    //库存不足 按钮不能点击
+                    goPayBut.setClickable(false);
+                    joinCartBut.setClickable(false);
+                }
+                break;
+        }
+    }
+
     //库存检验
     private void verifyNumber() {
-        /***
-         14，”checkOneProductInventory”
-         说明：检查服务端一个产品库存情况的接口
-         POST
-         请求头需要添加token
-
-         请求参数：
-         参数格式：application/x-www-form-urlencoded
-         示例：productId=1532&productNum=2
-         * */
-
-        //库存不足 按钮不能点击
-        goPayBut.setClickable(false);
-        joinCartBut.setClickable(false);
+        verifyOnePresenter = new VerifyOnePresenter(goods.getProductId(), goods.getProductNum());
+        verifyOnePresenter.attachView(this);
+        verifyOnePresenter.onHttpPostRequest(VERIFY_ONE);
     }
 
     @Override
@@ -125,6 +166,8 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         goodsImage.setOnClickListener(this);
         cartBut.setOnClickListener(this);
         beiImgage.setOnClickListener(this);
+
+        setPopuWindow();
     }
 
     @Override
@@ -132,33 +175,38 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
 
     }
 
-    //加入购物车动画
-    private void setBesselAnimation(final View view){
-        //设置位置
-        startLoaction[0]=0;
-        startLoaction[1]=0;
+    //设置贝塞尔曲线的位置
+    private void getBesselLocation() {
+        startLoaction[0] = 0;
+        startLoaction[1] = 0;
 
         //获取布局的宽和高
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int height= metrics.heightPixels;
-        int width= metrics.widthPixels;
-        controlLoaction[0]=height;
-        controlLoaction[1]=height/2;
+        int height = metrics.heightPixels;
+        int width = metrics.widthPixels;
+        controlLoaction[0] = height;
+        controlLoaction[1] = height / 2;
 
-        endLoaction[0]=0;
-        endLoaction[1]=height;
+        endLoaction[0] = 0;
+        endLoaction[1] = height;
 
+        setBesselAnimation(beiImgage);
+    }
+
+    //加入购物车动画
+    private void setBesselAnimation(final View view) {
         //贝塞尔路径绘制
         Path path = new Path();
         //控制初始点
-        path.moveTo(startLoaction[0],startLoaction[1]);
-        path.quadTo(controlLoaction[0], controlLoaction[1],endLoaction[0],endLoaction[1]);
+        path.moveTo(startLoaction[0], startLoaction[1]);
+        path.quadTo(controlLoaction[0], controlLoaction[1], endLoaction[0], endLoaction[1]);
         final PathMeasure pathMeasure = new PathMeasure();
         // false表示path路径不闭合
-        pathMeasure.setPath(path,false);
+        pathMeasure.setPath(path, false);
         //属性动画加载
-        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, (int) pathMeasure.getLength());valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, (int) pathMeasure.getLength());
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 int value = (int) animation.getAnimatedValue();
@@ -174,4 +222,12 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         valueAnimator.setDuration(10000);
         valueAnimator.start();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        addCartPresenter.detachView();
+        verifyOnePresenter.detachView();
+    }
+
 }

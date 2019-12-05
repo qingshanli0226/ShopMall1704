@@ -9,9 +9,6 @@ public interface IFragment {
     //TODO 获取布局Id
     int getLayoutId();
 
-    //TODO 获取RelativeLayoutId
-    int getRelativeLayout();
-
     //TODO 初始化方法
     void init(View view);
 
