@@ -30,17 +30,18 @@ public class MyShoppingBasketAdapter extends RecyclerView.Adapter<MyShoppingBask
     private Context context;
     private NumberAddSubView.OnNumberChangeListener listener;
 
-    //    fun refresh2(data : ArrayList<HashMap<String,String>>,position: Int){
-//        this.data.clear()
-//        this.data.addAll(data)
-//        notifyItemChanged(position)
-//    }
     private Handler handler;
+
+    private int checkedcount = 0;
 
     public MyShoppingBasketAdapter(Context context, NumberAddSubView.OnNumberChangeListener listener, Handler handler) {
         this.context = context;
         this.listener = listener;
         this.handler = handler;
+    }
+
+    public void setCheckedcount(int checkedcount) {
+        this.checkedcount = checkedcount;
     }
 
     public void refresh(List<Map<String, String>> data) {
@@ -49,10 +50,15 @@ public class MyShoppingBasketAdapter extends RecyclerView.Adapter<MyShoppingBask
         notifyDataSetChanged();
     }
 
-    public void refresh2(List<Map<String, String>> data, int position) {
+    public void refresh2(List<Map<String, String>> data, int position, int allcount) {
         this.data.clear();
         this.data.addAll(data);
         notifyItemChanged(position);
+        this.allcount = allcount;
+    }
+
+    public void setAllcount(int allcount) {
+        this.allcount = allcount;
     }
 
     @NonNull
@@ -109,16 +115,33 @@ public class MyShoppingBasketAdapter extends RecyclerView.Adapter<MyShoppingBask
                     message.arg2 = position;
                     message.obj = "true " + x;
                     handler.sendMessage(message);
+
+                    checkedcount++;
                 } else {
 
                     int count = x * Integer.parseInt(hashMap.get("price"));
+                    Log.e("####", allcount + "");
                     allcount -= count;
+
+                    Log.e("####", count + "/" + allcount);
 
                     Message message = Message.obtain();
                     message.what = 100;
                     message.arg1 = allcount;
                     message.arg2 = position;
                     message.obj = "false " + x;
+                    handler.sendMessage(message);
+
+                    checkedcount--;
+                }
+
+                Message message = Message.obtain();
+                message.what = 200;
+                if (checkedcount == data.size()) {
+                    message.arg1 = 0;
+                    handler.sendMessage(message);
+                } else {
+                    message.arg1 = 1;
                     handler.sendMessage(message);
                 }
             }
@@ -137,21 +160,5 @@ public class MyShoppingBasketAdapter extends RecyclerView.Adapter<MyShoppingBask
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
         }
-
-
-//        var iv_minus : ImageView = itemView.findViewById(R.id.iv_minus)
-//        var tv_num : TextView = itemView.findViewById(R.id.tv_num)
-//        var iv_add : ImageView = itemView.findViewById(R.id.iv_add)
     }
-
-//    private lateinit var onItemClickListener : OnItemClickListener
-//
-//    fun setOnItemClickListener(onItemClickListener: OnItemClickListener){
-//        this.onItemClickListener = onItemClickListener
-//    }
-//
-//    interface OnItemClickListener{
-//        fun OnItemAddClick(position:Int)
-//        fun OnItemMinusClick(position:Int)
-//    }
 }

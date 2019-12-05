@@ -24,6 +24,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -47,14 +49,22 @@ import java.util.Map;
 public class ShoppingCartFragment extends BaseFragment implements NumberAddSubView.OnNumberChangeListener {
 
     TitleBar tb_shopping_cart;
+    TextView tv_shopcart_edit;
     ImageView iv_shopping_cart;
     RecyclerView mRecyclerview;
     LinearLayout shoppingcartlayout;
     TextView tv_shopcart_total;
+    CheckBox checkbox_all;
+    CheckBox cb_all;
+    LinearLayout ll_delete;
+    LinearLayout ll_check_all;
+    Button btn_delete;
+    Button btn_check_out;
 
     int allCount = 0;
 
-    int numCount = 1;
+    boolean isSetting = false;
+
 
     private List<Map<String, String>> data = new ArrayList<>();
     private MyShoppingBasketAdapter myShoppingBasketAdapter;
@@ -67,13 +77,38 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
                 case 100:
                     setCheck(msg);
                     break;
+                case 200:
+                    int arg1 = msg.arg1;
+                    if (arg1 == 0) {
+                        checkbox_all.setChecked(true);
+                    } else if (arg1 == 1) {
+                        checkbox_all.setChecked(false);
+                    }
+                    break;
             }
         }
     };
 
+    public int getAllMoney() {
+        return allCount;
+    }
+
+    public int getAllNumber() {
+        int nums = 0;
+        for (int i = 0; i < data.size(); i++) {
+            Map<String, String> map = data.get(i);
+            String num = map.get("num");
+            int i1 = Integer.parseInt(num);
+            nums += i1;
+        }
+        return nums;
+    }
+
     protected void setCheck(Message msg) {
-        allCount = msg.arg1;
-        tv_shopcart_total.setText("￥" + allCount + ".00");
+        if (!isSetting) {
+            allCount = msg.arg1;
+            tv_shopcart_total.setText("￥" + allCount + ".00");
+        }
 
         Map<String, String> map = data.get(msg.arg2);
         map.put("img", map.get("img"));
@@ -83,12 +118,130 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         map.put("ischecked", s[0]);
         map.put("num", s[1]);
         data.set(msg.arg2, map);
-        myShoppingBasketAdapter.refresh2(data, msg.arg2);
+        myShoppingBasketAdapter.refresh2(data, msg.arg2, allCount);
+
     }
 
     @Override
     protected void initData() {
         initData2();
+        setCheckAll();
+        setSetting();
+        setDelete();
+    }
+
+    private void setDelete() {
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for (int i = 0; i < data.size(); i++) {
+                    Map<String, String> map = data.get(i);
+                    if (map.get("ischecked").equals("true")) {
+                        data.remove(i);
+                        i--;
+                    }
+                }
+                myShoppingBasketAdapter.refresh(data);
+            }
+        });
+    }
+
+    private void setSetting() {
+        tv_shopcart_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                settingChanged();
+            }
+        });
+    }
+
+    private void settingChanged() {
+        if (isSetting) {
+            isSetting = false;
+            ll_check_all.setVisibility(View.VISIBLE);
+            ll_delete.setVisibility(View.GONE);
+        } else {
+            isSetting = true;
+            ll_check_all.setVisibility(View.GONE);
+            ll_delete.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setCheckAll() {
+        cb_all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (cb_all.isChecked()) {
+                    for (int i = 0; i < data.size(); i++) {
+                        Map<String, String> map = data.get(i);
+                        map.put("img", map.get("img"));
+                        map.put("title", map.get("title"));
+                        map.put("price", map.get("price"));
+                        map.put("ischecked", "true");
+                        map.put("num", map.get("num"));
+                        data.set(i, map);
+                    }
+                } else {
+                    for (int i = 0; i < data.size(); i++) {
+                        Map<String, String> map = data.get(i);
+                        map.put("img", map.get("img"));
+                        map.put("title", map.get("title"));
+                        map.put("price", map.get("price"));
+                        map.put("ischecked", "false");
+                        map.put("num", map.get("num"));
+                        data.set(i, map);
+                    }
+                }
+            }
+        });
+
+        checkbox_all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (checkbox_all.isChecked()) {
+                    setAllChecked();
+                } else {
+                    setAllUnChecked();
+                }
+                tv_shopcart_total.setText("￥" + allCount + ".00");
+
+                myShoppingBasketAdapter.refresh(data);
+                myShoppingBasketAdapter.setAllcount(allCount);
+            }
+        });
+    }
+
+    private void setAllUnChecked() {
+        for (int i = 0; i < data.size(); i++) {
+            Map<String, String> map = data.get(i);
+            map.put("img", map.get("img"));
+            map.put("title", map.get("title"));
+            map.put("price", map.get("price"));
+            map.put("ischecked", "false");
+            map.put("num", map.get("num"));
+            data.set(i, map);
+
+            allCount -= Integer.parseInt(map.get("price")) * Integer.parseInt(map.get("num"));
+        }
+    }
+
+    private void setAllChecked() {
+        for (int i = 0; i < data.size(); i++) {
+            Map<String, String> map = data.get(i);
+            map.put("img", map.get("img"));
+            map.put("title", map.get("title"));
+            map.put("price", map.get("price"));
+            String ischecked = map.get("ischecked");
+            map.put("ischecked", "true");
+            map.put("num", map.get("num"));
+            data.set(i, map);
+
+            if (ischecked.equals("false")) {
+                allCount += Integer.parseInt(map.get("price")) * Integer.parseInt(map.get("num"));
+            }
+
+            myShoppingBasketAdapter.setCheckedcount(data.size());
+        }
     }
 
     private void initData2() {
@@ -133,6 +286,13 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         mRecyclerview = view.findViewById(R.id.mRecyclerview);
         shoppingcartlayout = view.findViewById(R.id.shoppingcartlayout);
         tv_shopcart_total = view.findViewById(R.id.tv_shopcart_total);
+        checkbox_all = view.findViewById(R.id.checkbox_all);
+        tv_shopcart_edit = view.findViewById(R.id.tv_shopcart_edit);
+        ll_delete = view.findViewById(R.id.ll_delete);
+        ll_check_all = view.findViewById(R.id.ll_check_all);
+        cb_all = view.findViewById(R.id.cb_all);
+        btn_delete = view.findViewById(R.id.btn_delete);
+        btn_check_out = view.findViewById(R.id.btn_check_out);
 
         setTitleBar();
         setRecycler();
@@ -164,11 +324,12 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         map.put("num", value + "");
         data.set(postion, map);
 
-        myShoppingBasketAdapter.refresh2(data, postion);
+        myShoppingBasketAdapter.refresh2(data, postion, allCount);
 
         if (ischecked) {
             allCount += Integer.parseInt(price);
             tv_shopcart_total.setText("￥" + allCount + ".00");
+            myShoppingBasketAdapter.setAllcount(allCount);
         }
     }
 
@@ -183,11 +344,12 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         map.put("num", value + "");
         data.set(postion, map);
 
-        myShoppingBasketAdapter.refresh2(data, postion);
+        myShoppingBasketAdapter.refresh2(data, postion, allCount);
 
         if (ischecked) {
             allCount -= Integer.parseInt(price);
             tv_shopcart_total.setText("￥" + allCount + ".00");
+            myShoppingBasketAdapter.setAllcount(allCount);
         }
     }
 
