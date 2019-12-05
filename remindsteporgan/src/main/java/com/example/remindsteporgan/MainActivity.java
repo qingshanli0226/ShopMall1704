@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.example.commen.SPUtils;
 import com.example.remindsteporgan.Base.Bean;
 import com.example.remindsteporgan.Util.ScreenBroadcastListener;
 import com.example.remindsteporgan.Util.ScreenManager;
@@ -25,8 +26,12 @@ import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity  implements SensorEventListener {
+
     private TextView tv1;
     private TextView tv2;
+    float X;
+    BeanDao beanDao;
+
     float y=0;
 
     float plus=0;
@@ -39,9 +44,12 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        tv2 = (TextView) findViewById(R.id.tv2);
-        tv1 = (TextView) findViewById(R.id.tv1);
+        setContentView(R.layout.remindactivity_main);
+        tv1 = (TextView) this.findViewById(R.id.tv1);
+        tv2 = (TextView) this.findViewById(R.id.tv2);
+
+
+
 
         //实例化数据库
         DaoMaster.DevOpenHelper openHelper=new DaoMaster.DevOpenHelper(this,"ssh");
@@ -95,30 +103,48 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
     @Override
     public void onSensorChanged(SensorEvent event) {
         if(event.sensor.getType() == Sensor.TYPE_STEP_COUNTER){
+            //获取当前系统的时间
+            Calendar calendar=Calendar.getInstance();
 
-            float X = event.values[0];
+            X = event.values[0];
             if (y==0){
                 y=X;
             }else {
 
             }
+            if (daychange==0){
+                //说明是第一次运行
+                SharedPreferences.Editor edit = sp.edit();
+                edit.putInt("step", (int) X);
+                //这个是获取天数
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                daychange=day;
+            }else {
+                //不是第一次运行了
+
+                //greendao查询语句
+                List<Bean> where_time = beanDao.queryRaw("where time = ?",daychange+"");
+
+                //查找出最新的
+                if (where_time==null){
+                    //这个说明就是新一天的数据
+
+                }else {
+                    //还是当天的数据
+                    SharedPreferences.Editor edit = sp.edit();
+                    edit.putInt("step",0);
+
+                }
+
+            }
             tv1.setText("COUNTER："+(X-y+plus));
 
-            //获取当前系统的时间
-            Calendar calendar=Calendar.getInstance();
-            //这个是获取小时
-            int hour = calendar.get(Calendar.HOUR_OF_DAY);
-            //这个是获取天
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-            BeanDao beanDao = dao.getBeanDao();
 
-            List<Bean> where_num = beanDao.queryRaw("where num");
-            for (Bean bean : where_num) {
-                Log.d("SSHHH",bean.getNum().toString());
-            }
+            beanDao = dao.getBeanDao();
 
-            beanDao.insert(new Bean((long) (X-y+plus),day+""));
+
+
 
         } else if(event.sensor.getType() == Sensor.TYPE_STEP_DETECTOR){
             float X = event.values[0];
@@ -129,6 +155,22 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        //获取当前系统的时间
+        Calendar calendar=Calendar.getInstance();
+        //这个是获取小时
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        //这个是获取天
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        //greendao添加语句
+        beanDao.insert(new Bean((long) (X-y+plus),day+""));
 
     }
 }
