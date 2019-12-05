@@ -19,7 +19,7 @@ class MainActivity : BaseNetConnectActivity() {
     var list: MutableList<Fragment> = mutableListOf()
 
     override fun init() {
-
+        super.init()
         list.add(HomeFragment())
         list.add(HomeFragment())
         list.add(HomeFragment())
@@ -52,9 +52,6 @@ class MainActivity : BaseNetConnectActivity() {
             .titleItems(arrayOf("首页", "分类", "发现", "购物车", "我的"))
             .canScroll(true)
             .build()
-
-        super.init()
-        showEmpty()
 
     }
 }

@@ -18,8 +18,10 @@ class SeckillAdapter(
     init {
         this.list = list
     }
+
+    private var onSeckill: OnSeckill? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
-        return RecyclerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.home_seckill,parent,false))
+        return RecyclerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.home_seckill_item,parent,false))
     }
 
     override fun getItemCount(): Int {
@@ -28,10 +30,18 @@ class SeckillAdapter(
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         with(holder.itemView){
-//            Glide.with(holder.itemView.context).load("${AppNetConfig.BASE_URl_IMAGE}${list!!.get(position).figure}").into(home_seckill_iv_figure)
+            Glide.with(holder.itemView.context).load("${AppNetConfig.BASE_URl_IMAGE}${list!!.get(position).figure}").into(home_seckill_iv_figure)
             home_seckill_tv_cover_price.text = "${list!!.get(position).cover_price}￥"
             home_seckill_tv_origin_price.text = "${list!!.get(position).origin_price}￥"
         }
     }
+    interface OnSeckill {
+        fun onClick(position: Int)
+    }
+
+    fun setOnSeckillRecyclerView(onSeckillRecyclerView: OnSeckill) {
+        this.onSeckill = onSeckillRecyclerView
+    }
+
     inner class RecyclerViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView)
 }

@@ -18,7 +18,7 @@ public interface NetInterence {
 
     //GET请求
     @GET("{path}")
-    Observable<ResponseBody> getData(@HeaderMap HashMap<String, String> headers, @Path("path") String path, @QueryMap HashMap<String, String> params);
+    Observable<ResponseBody> getData(@HeaderMap HashMap<String, String> headers,@Path(value = "path", encoded = true) String path, @QueryMap HashMap<String, String> params);
 
     //POST请求
    @POST("{path}")

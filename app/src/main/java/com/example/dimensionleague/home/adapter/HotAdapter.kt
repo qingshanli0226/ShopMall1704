@@ -4,8 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import com.bumptech.glide.Glide
 import com.example.dimensionleague.R
 import com.example.dimensionleague.businessbean.HomeBean
+import com.example.net.AppNetConfig
 import kotlinx.android.synthetic.main.home_hot_item.view.*
 
 class HotAdapter (
@@ -18,15 +20,10 @@ class HotAdapter (
     override fun getView(posion: Int, view: View?, constan: ViewGroup?): View {
         lateinit var view: View
         lateinit var viewholder:ViewHolder
-        if(view==null){
-            view = LayoutInflater.from(constan!!.context).inflate(R.layout.home_hot,constan,false)
+            view = LayoutInflater.from(constan!!.context).inflate(R.layout.home_hot_item,constan,false)
             viewholder = ViewHolder(view)
             view.setTag(viewholder)
-        }else{
-            view = view
-            viewholder = view.getTag() as ViewHolder
-        }
-//        Glide.with(p2!!.context).load("${AppNetConfig.BASE_URl_IMAGE}${hotInfo?.get(p0)?.figure}").into(viewholder.iv_hot)
+        Glide.with(constan!!.context).load(AppNetConfig.BASE_URl_IMAGE+hotInfo?.get(posion)?.figure).into(viewholder.iv_hot)
         viewholder.tv_name.text = hotInfo?.get(posion)?.name
         viewholder.tv_price.text = "${hotInfo?.get(posion)?.cover_price}￥"
         return view
