@@ -3,10 +3,10 @@ package com.example.shopmall.activity;
 import android.content.Intent;
 import android.widget.Toast;
 
-import com.example.base.BaseActivity;
-import com.example.base.BasePresenter;
-import com.example.base.IBaseView;
-import com.example.common.ConnectManager;
+import com.example.framework.base.BaseActivity;
+import com.example.framework.base.BasePresenter;
+import com.example.framework.base.IBaseView;
+import com.example.framework.manager.ConnectManager;
 import com.example.shopmall.R;
 import com.example.shopmall.StepManager;
 import com.example.shopmall.bean.HomepageBean;

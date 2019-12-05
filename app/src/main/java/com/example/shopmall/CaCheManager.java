@@ -8,7 +8,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.example.common.ACache;
-import com.example.common.ConnectManager;
+import com.example.framework.manager.ConnectManager;
 import com.example.shopmall.bean.HomepageBean;
 
 import java.util.LinkedList;

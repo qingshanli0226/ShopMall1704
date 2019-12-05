@@ -4,7 +4,8 @@ import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.base.BaseAdapter;
+import com.example.framework.base.BaseAdapter;
+
 
 public class MyHomePageAdapter extends BaseAdapter<Object,RecyclerView.ViewHolder> {
 

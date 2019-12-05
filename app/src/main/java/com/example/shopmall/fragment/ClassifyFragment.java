@@ -2,17 +2,13 @@ package com.example.shopmall.fragment;
 
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.graphics.Color;
 import android.view.View;
-import android.widget.FrameLayout;
 
-import com.example.base.BaseFragment;
 import com.example.common.TitleBar;
+import com.example.framework.base.BaseFragment;
 import com.example.shopmall.R;
-
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.

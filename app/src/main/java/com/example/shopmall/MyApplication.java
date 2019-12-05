@@ -2,10 +2,9 @@ package com.example.shopmall;
 
 import android.app.Application;
 import android.content.Context;
-import android.net.ConnectivityManager;
 
-import com.example.common.ConnectManager;
-import com.example.common.CrashHandler;
+import com.example.framework.manager.ConnectManager;
+import com.example.framework.manager.CrashHandler;
 
 public class MyApplication extends Application {
 

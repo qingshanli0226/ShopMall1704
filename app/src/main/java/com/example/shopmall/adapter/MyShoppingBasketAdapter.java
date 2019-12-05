@@ -3,7 +3,6 @@ package com.example.shopmall.adapter;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.shopmall.R;
-import com.example.shopmall.view.NumberAddSubView;
+import com.example.common.NumberAddSubView;
 
 import java.util.ArrayList;
 import java.util.List;

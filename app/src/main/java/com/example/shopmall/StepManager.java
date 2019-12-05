@@ -4,18 +4,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
-
-
 import com.example.shopmall.bean.StepBean;
-import com.example.shopmall.greendao.StepBeanDao;
 import com.example.shopmall.step.StepService;
-
-import org.greenrobot.greendao.query.QueryBuilder;
-
-import java.util.LinkedList;
-import java.util.List;
 
 public class StepManager {
 
