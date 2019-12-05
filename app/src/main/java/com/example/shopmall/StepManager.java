@@ -1,11 +1,5 @@
 package com.example.shopmall;
 
-
-
-
-
-
-
 /*
   初始化init 开启服务, 注册记步的回调接口 ,在onDestory中注销服务
  */
@@ -18,13 +12,10 @@ import android.os.IBinder;
 import android.widget.Toast;
 
 
-<<<<<<< HEAD
 import com.example.shopmall.bean.StepBean;
 import com.example.shopmall.greendao.StepBeanDao;
-=======
 import com.example.shopmall.step.OrmUtils;
 import com.example.shopmall.step.ShopStepBean;
->>>>>>> bing
 import com.example.shopmall.step.StepService;
 
 import java.util.List;

@@ -16,20 +16,14 @@ public class MyApplication extends Application {
         super.onCreate();
 
         context = this;
-<<<<<<< HEAD
         //初始化网络连接管理类
-=======
 
         StepManager.getInstance().init(getContext());
->>>>>>> bing
         ConnectManager.getInstance().init(this);
         //初始化异常
         CrashHandler.getInstance(this).init();
-<<<<<<< HEAD
         //初始化缓存管理类
         CaCheManager.getInstance().init(this);
-=======
->>>>>>> bing
 
     }
 

@@ -170,15 +170,15 @@ public class StepService extends Service implements SensorEventListener {
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        channel = new NotificationChannel(this.getPackageName(), "通知记步", NotificationManager.IMPORTANCE_DEFAULT);
+//        channel = new NotificationChannel(this.getPackageName(), "通知记步", NotificationManager.IMPORTANCE_DEFAULT);
         nbuilder = new Notification.Builder(this);
         nbuilder.setSmallIcon(R.mipmap.custome_head)
                 .setWhen(System.currentTimeMillis())
                 .setContentTitle("用户您好!")
                 .setContentText("您今天已经走了" + currentStep + "步,每天多运动,开心每一天!!")
-                .setContentIntent(pendingIntent)
-                .setChannelId(this.getPackageName());
-        notificationManager.createNotificationChannel(channel);
+                .setContentIntent(pendingIntent);
+//                .setChannelId(this.getPackageName());
+//        notificationManager.createNotificationChannel(channel);
         notificationManager.notify(100, nbuilder.build());
         if (updateUi != null) {
             updateUi.getUpdateStep(currentStep);
@@ -220,16 +220,16 @@ public class StepService extends Service implements SensorEventListener {
     private void initNotification() {
 
         notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        channel = new NotificationChannel(this.getPackageName(), "通知记步", NotificationManager.IMPORTANCE_DEFAULT);
+//        channel = new NotificationChannel(this.getPackageName(), "通知记步", NotificationManager.IMPORTANCE_DEFAULT);
         nbuilder = new Notification.Builder(this);
         nbuilder.setSmallIcon(R.mipmap.custome_head)
                 .setContentIntent(getDefalutIntent(Notification.FLAG_ONGOING_EVENT))
                 .setPriority(Notification.PRIORITY_DEFAULT)
                 .setWhen(System.currentTimeMillis())
                 .setContentTitle("用户您好!")
-                .setContentText("您今天已经走了" + currentStep + "步,每天多运动,开心每一天!")
-                .setChannelId(this.getPackageName());
-        notificationManager.createNotificationChannel(channel);
+                .setContentText("您今天已经走了" + currentStep + "步,每天多运动,开心每一天!");
+//                .setChannelId(this.getPackageName());
+//        notificationManager.createNotificationChannel(channel);
         startForeground(100, nbuilder.build());
 
     }
