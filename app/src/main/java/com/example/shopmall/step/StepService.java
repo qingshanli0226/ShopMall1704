@@ -1,4 +1,5 @@
-package com.example.step;
+package com.example.shopmall.step;
+
 
 import android.annotation.SuppressLint;
 import android.app.Notification;

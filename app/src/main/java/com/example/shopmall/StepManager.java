@@ -1,12 +1,14 @@
 package com.example.shopmall;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.IBinder;
 
-import com.example.shopmall.bean.StepBean;
-import com.example.shopmall.greendao.DaoMaster;
-import com.example.shopmall.greendao.DaoSession;
-import com.example.shopmall.greendao.StepBeanDao;
+
+import com.example.shopmall.step.StepService;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
@@ -17,10 +19,9 @@ public class StepManager {
 
     private static StepManager stepManager;
     private Context context;
-    private SQLiteDatabase sqLiteDatabase;
-    private List<IStepChangedListener> iStepChangedListenerList = new LinkedList<>();
-    private StepBeanDao stepBeanDao;
-
+    StepService stepService;
+    ServiceConnection serviceConnection;
+    StepManagerListener stepManagerListener;
     public static StepManager getInstance() {
         if (stepManager == null) {
             stepManager = new StepManager();
@@ -28,39 +29,42 @@ public class StepManager {
         return stepManager;
     }
 
-    public void init(Context context) {
-        this.context = context;
-        sqLiteDatabase = new DaoMaster.DevOpenHelper(context, "step.db").getWritableDatabase();
-        DaoMaster daoMaster = new DaoMaster(sqLiteDatabase);
-        DaoSession daoSession = daoMaster.newSession();
-        stepBeanDao = daoSession.getStepBeanDao();
+    public void init(Context context){
+        this.context=context;
+        Intent intent = new Intent(context, StepService.class);
+         serviceConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+
+                stepService=((StepService.StepBinder)iBinder).getService();
+                stepService.registerListener(new StepService.UpdateUi() {
+                    @Override
+                    public void getUpdateStep(int count) {
+                        if(stepManagerListener!=null){
+                            stepManagerListener.onStepChange(count);
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName componentName) {
+
+            }
+        };
+        context.bindService(intent,serviceConnection,Context.BIND_AUTO_CREATE);
     }
 
-    public void addStep(StepBean stepBean) {
-        stepBeanDao.insert(stepBean);
-        for (IStepChangedListener stepChangedListener : iStepChangedListenerList) {
-            stepChangedListener.onStepChanged(stepBean.getCurrentStrp());
-        }
+    interface StepManagerListener{
+        void onStepChange(int count);
     }
 
-    public List<StepBean> findStep(String date) {
-        QueryBuilder<StepBean> findDate = stepBeanDao.queryBuilder().where(StepBeanDao.Properties.Data.eq(date));
-        return findDate.list();
+    public void registerListener(StepManagerListener stepManagerListener){
+        this.stepManagerListener=stepManagerListener;
     }
-
-
-    public void registerStepListener(IStepChangedListener iStepChangedListener) {
-        if (!iStepChangedListenerList.contains(iStepChangedListener)) {
-            iStepChangedListenerList.add(iStepChangedListener);
-        }
-    }
-
-    public void unregisterStepListener(IStepChangedListener iStepChangedListener) {
-        iStepChangedListenerList.remove(iStepChangedListener);
-    }
-
-    public interface IStepChangedListener {
-        void onStepChanged(String step);
+    public void unRegisterLisener(){
+        this.stepManagerListener=null;
+        context.unbindService(serviceConnection);
     }
 
 }
