@@ -64,6 +64,12 @@ public class UserManager {
         return spUtil.getToken();
     }
 
+    //TODO 保存签名
+    public void saveSign(String sign){spUtil.setSign(sign);}
+
+    //TODO 获取签名
+    public String getSign(){return spUtil.getSign();}
+
     //TODO 页面需要用到用户信息
     public void registerUserCallBack(IUserCallBack iUserCallBack){
         synchronized (list){

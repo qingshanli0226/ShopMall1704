@@ -1,5 +1,7 @@
 package com.example.framework.base;
 
+import com.example.common.Constant;
+import com.example.common.SignUtil;
 import com.example.framework.port.IPresenter;
 import com.example.framework.port.IView;
 import com.example.net.RetrofitCreator;
@@ -8,6 +10,8 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -32,7 +36,7 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
     //TODO post获取单数据
     @Override
     public void onHttpPostRequest() {
-        getDate(RetrofitCreator.getNetInterence().postData(getHeaders(), getPath(), getParams()));
+        getDate(RetrofitCreator.getNetInterence().postData(getHeaders(), getPath(), signEncrypt()));
     }
 
     //TODO get获取多数据
@@ -44,7 +48,7 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
     //TODO post获取多数据
     @Override
     public void onHttpPostRequest(final int requestCode) {
-        getDate(requestCode,RetrofitCreator.getNetInterence().postData(getHeaders(), getPath(), getParams()));
+        getDate(requestCode,RetrofitCreator.getNetInterence().postData(getHeaders(), getPath(), signEncrypt()));
     }
 
     @Override
@@ -126,8 +130,18 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
         return new HashMap<>();
     }
 
-    public HashMap<String, String> getParams() {
+    //TODO 父类默认实现
+    public Map<String, String> getParams() {
         return new HashMap<>();
+    }
+
+    //TODO 加签加密
+    public Map<String,String> signEncrypt(){
+        Map<String, String> params = getParams();
+        String sign = SignUtil.generateSign(params);
+        params.put(Constant.SIGN,sign);
+        TreeMap<String, String> treeMap = SignUtil.encryptParamsByBase64(params);
+        return treeMap;
     }
 
     //TODO 让子类来提供返回bean的类型

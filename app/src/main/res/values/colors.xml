@@ -8,4 +8,5 @@
     <color name="colorGray">#707070</color>
     <color name="colorLimitGray">#FFBABABA</color>
     <color name="colorRed">#FF1000</color>
+    <color name="color_gradual_purple">#CF00FF</color>
 </resources>

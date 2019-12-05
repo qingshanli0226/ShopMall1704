@@ -14,6 +14,8 @@ import com.example.framework.port.IActivity;
 import com.example.framework.port.INetConnectListener;
 import com.example.framework.port.IView;
 import com.gyf.immersionbar.ImmersionBar;
+import com.jaeger.library.StatusBarUtil;
+
 /**
  * author:李浩帆
  */
@@ -29,7 +31,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
 
         //TODO 沉浸式状态栏
         ImmersionBar.with(this).init();
-
+        StatusBarUtil.setTransparent(this);
         activityInstanceManager = ActivityInstanceManager.getInstance();
         activityInstanceManager.addActivity(this);
         init();

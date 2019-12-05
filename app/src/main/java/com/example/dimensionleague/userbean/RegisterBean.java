@@ -11,4 +11,13 @@ public class RegisterBean {
     public String code;
     public String message;
     public String result;
+
+    @Override
+    public String toString() {
+        return "RegisterBean{" +
+                "code='" + code + '\'' +
+                ", message='" + message + '\'' +
+                ", result='" + result + '\'' +
+                '}';
+    }
 }

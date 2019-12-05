@@ -30,4 +30,16 @@ public class SPUtil {
     public static boolean isLogin(){
         return sp.getBoolean(Constant.IS_LOGIN,false);
     }
+
+    //TODO 存储注册签名
+    public static void setSign(String sign){
+        SharedPreferences.Editor edit = sp.edit();
+        edit.putString(Constant.SIGN,sign);
+        edit.apply();
+    }
+
+    //TODO 获取签名
+    public static String getSign(){
+        return sp.getString(Constant.SIGN,"");
+    }
 }

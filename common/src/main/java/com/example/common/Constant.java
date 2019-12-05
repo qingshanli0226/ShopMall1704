@@ -8,4 +8,6 @@ public class Constant {
     public static final String TOKEN = "token";
     //TODO 是否登录
     public static final String IS_LOGIN = "isLogin";
+    //TODO 签名
+    public static final String SIGN = "sign";
 }

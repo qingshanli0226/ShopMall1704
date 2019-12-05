@@ -38,6 +38,5 @@ public class RetrofitCreator {
                 .build();
 
         netInterence=build.create(NetInterence.class);
-        netInterence= build.create(NetInterence.class);
     }
 }
