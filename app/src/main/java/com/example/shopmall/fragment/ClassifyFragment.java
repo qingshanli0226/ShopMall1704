@@ -2,13 +2,17 @@ package com.example.shopmall.fragment;
 
 
 import androidx.fragment.app.Fragment;
+<<<<<<< HEAD
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+=======
+>>>>>>> one
 
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
+<<<<<<< HEAD
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
@@ -17,13 +21,16 @@ import com.example.base.BaseFragment;
 import com.example.base.IBaseView;
 import com.example.common.TitleBar;
 import com.example.net.Constant;
+=======
+
+import com.example.common.TitleBar;
+import com.example.framework.base.BaseFragment;
+>>>>>>> one
 import com.example.shopmall.R;
 import com.example.shopmall.adapter.ClassifyLeftAdapter;
 import com.example.shopmall.adapter.ClassifyRightAdapter;
 import com.example.shopmall.bean.ClassifyBean;
 import com.example.shopmall.presenter.IntegerPresenter;
-
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.

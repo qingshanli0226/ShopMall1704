@@ -1,11 +1,13 @@
 package com.example.shopmall;
 
+
 import android.app.Application;
 import android.content.Context;
-import android.net.ConnectivityManager;
+import android.content.Intent;
 
-import com.example.common.ConnectManager;
-import com.example.common.CrashHandler;
+import com.example.framework.manager.ConnectManager;
+import com.example.framework.manager.CrashHandler;
+import com.example.shopmall.activity.MainActivity;
 
 public class MyApplication extends Application {
 
@@ -14,13 +16,19 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         context = this;
 
         //初始化缓存管理类
         CaCheManager.getInstance(this).init(this);
 
         //初始化网络连接管理类
+
+        StepManager.getInstance().init(this);
+
+        //点击通知跳转MainActivity
+        Intent intent = new Intent(this, MainActivity.class);
+        StepManager.getInstance().setActivityStack(intent);
+
         ConnectManager.getInstance().init(this);
         //初始化异常
         CrashHandler.getInstance(this).init();

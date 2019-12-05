@@ -1,13 +1,9 @@
 package com.example.shopmall.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.graphics.Color;
-import android.os.Bundle;
-import android.view.View;
 
-import com.example.base.BaseActivity;
 import com.example.common.TitleBar;
+import com.example.framework.base.BaseActivity;
 import com.example.shopmall.R;
 
 public class IntegralActivity extends BaseActivity {

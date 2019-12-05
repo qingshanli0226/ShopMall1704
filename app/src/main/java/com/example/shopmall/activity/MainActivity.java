@@ -1,27 +1,22 @@
 package com.example.shopmall.activity;
 
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.base.BaseActivity;
+import com.example.buy.fragment.ShoppingCartFragment;
 import com.example.common.BottomBar;
-import com.example.common.LoadingPage;
+import com.example.framework.base.BaseActivity;
 import com.example.shopmall.R;
 import com.example.shopmall.fragment.ClassifyFragment;
 import com.example.shopmall.fragment.HomePageFragment;
 import com.example.shopmall.fragment.HorizontalFragment;
 import com.example.shopmall.fragment.MineFragment;
-import com.example.shopmall.fragment.ShoppingCartFragment;
 
 import java.util.ArrayList;
 
-public class MainActivity extends BaseActivity{
+public class MainActivity extends BaseActivity {
 
     //数据
     private ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
@@ -48,6 +43,9 @@ public class MainActivity extends BaseActivity{
         fragmentArrayList.add(new HorizontalFragment());
         fragmentArrayList.add(new ShoppingCartFragment());
         fragmentArrayList.add(new MineFragment());
+
+
+
     }
 
     @Override
@@ -55,6 +53,8 @@ public class MainActivity extends BaseActivity{
         replaceFragment(fragmentArrayList.get(0));
 
 //        loadingPage.start(LoadingPage.LOADING_FAILURE);
+
+
 
         String[] str = new String[]{"首页","分类","发现","购物车","个人中心"};
 
@@ -99,6 +99,8 @@ public class MainActivity extends BaseActivity{
 
         //更新当前正在显示的fragment
         currentFragment = fragment;
+
+
 
     }
 

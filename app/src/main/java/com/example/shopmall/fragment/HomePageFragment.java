@@ -9,14 +9,22 @@ import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 
-import com.example.base.BaseFragment;
 import com.example.common.TitleBar;
+<<<<<<< HEAD
 import com.example.shopmall.CaCheManager;
+=======
+import com.example.framework.base.BaseFragment;
+>>>>>>> one
 import com.example.shopmall.R;
+
 import com.example.shopmall.activity.MessageActivity;
+<<<<<<< HEAD
 import com.example.shopmall.adapter.MyHomePageAdapter;
 import com.example.shopmall.bean.HomepageBean;
 import com.example.shopmall.presenter.IntegerPresenter;
+=======
+import com.example.step.StepManager;
+>>>>>>> one
 
 
 /**
@@ -53,10 +61,22 @@ public class HomePageFragment extends BaseFragment{
                 Log.e("####", "中间");
             }
         });
+<<<<<<< HEAD
         HomepageBean cacheBean = new CaCheManager(getContext()).getCacheBean(getContext());
         MyHomePageAdapter myHomePageAdapter = new MyHomePageAdapter(getContext(), cacheBean);
         rv_home_page.setAdapter(myHomePageAdapter);
 
+=======
+
+
+
+        StepManager.getInstance().registerListener(new StepManager.StepManagerListener() {
+            @Override
+            public void onStepChange(int count) {
+                Log.e("##Step",count+"");
+            }
+        });
+>>>>>>> one
     }
 
     @Override
