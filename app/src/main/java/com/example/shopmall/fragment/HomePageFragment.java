@@ -10,6 +10,7 @@ import android.view.View;
 import com.example.base.BaseFragment;
 import com.example.common.TitleBar;
 import com.example.shopmall.R;
+import com.example.shopmall.StepManager;
 import com.example.shopmall.activity.MessageActivity;
 
 
@@ -44,6 +45,15 @@ public class HomePageFragment extends BaseFragment {
             @Override
             public void CenterClick() {
                 Log.e("####", "中间");
+            }
+        });
+
+
+
+        StepManager.getInstance().registerListener(new StepManager.StepManagerListener() {
+            @Override
+            public void onStepChange(int count) {
+                Log.e("##Step",count+"");
             }
         });
     }

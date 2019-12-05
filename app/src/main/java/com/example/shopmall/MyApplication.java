@@ -17,8 +17,10 @@ public class MyApplication extends Application {
 
         context = this;
 
+        StepManager.getInstance().init(getContext());
         ConnectManager.getInstance().init(this);
         CrashHandler.getInstance(this).init();
+
     }
 
     public static Context getContext() {

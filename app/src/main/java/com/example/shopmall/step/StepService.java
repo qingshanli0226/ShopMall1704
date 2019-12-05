@@ -46,7 +46,7 @@ public class StepService extends Service implements SensorEventListener {
     private NotificationManager notificationManager;
 
 
-    private TimeCount timeCount;
+//    private TimeCount timeCount;
     private UpdateUi updateUi;
 
     @Nullable
@@ -58,19 +58,22 @@ public class StepService extends Service implements SensorEventListener {
     @Override
     public void onCreate() {
         super.onCreate();
+        //初始化通知,提到前台
         initNotification();
-        updateNotification();
+        //初始化当前日期
         initToday();
+        //初始化广播
         initBoradCast();
-
-
+        //初始化传感器
         new Thread(new Runnable() {
+
             @Override
             public void run() {
                 initSensorListener();
             }
         }).start();
-        startTimer();
+
+//        startTimer();
 
 
     }
@@ -79,12 +82,12 @@ public class StepService extends Service implements SensorEventListener {
         this.updateUi = updateUi;
     }
 
-    private void startTimer() {
-        if (timeCount == null) {
-            timeCount = new TimeCount(2000, 1000);
-        }
-        timeCount.start();
-    }
+//    private void startTimer() {
+//        if (timeCount == null) {
+//            timeCount = new TimeCount(2000, 1000);
+//        }
+//        timeCount.start();
+//    }
 
     private void initBoradCast() {
         IntentFilter intentFilter = new IntentFilter();
@@ -143,14 +146,7 @@ public class StepService extends Service implements SensorEventListener {
         }
     }
 
-    public List<ShopStepBean> getHisSteptory() {
-        List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
-        if (queryAll != null) {
-            return queryAll;
-        } else {
-            return null;
-        }
-    }
+
 
     private void initToday() {
         CURRENT_DATE = getTodayDate();
@@ -207,7 +203,6 @@ public class StepService extends Service implements SensorEventListener {
             OrmUtils.update(shopStepBean);
         }
 
-        getHisSteptory();
         Log.e("##save", queryByWhere.size() + "--" + queryByWhere.toString());
 
 
@@ -252,7 +247,7 @@ public class StepService extends Service implements SensorEventListener {
             manager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
         Sensor ctor = manager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
-        manager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+        manager.registerListener(this, ctor, SensorManager.SENSOR_DELAY_NORMAL);
 
 
     }
@@ -314,25 +309,25 @@ public class StepService extends Service implements SensorEventListener {
         }
     }
 
-    class TimeCount extends CountDownTimer {
-
-        public TimeCount(long millisInFuture, long countDownInterval) {
-            super(millisInFuture, countDownInterval);
-        }
-
-        @Override
-        public void onTick(long l) {
-
-        }
-
-        @Override
-        public void onFinish() {
-
-            timeCount.cancel();
-            save();
-            startTimer();
-        }
-    }
+//    class TimeCount extends CountDownTimer {
+//
+//        public TimeCount(long millisInFuture, long countDownInterval) {
+//            super(millisInFuture, countDownInterval);
+//        }
+//
+//        @Override
+//        public void onTick(long l) {
+//
+//        }
+//
+//        @Override
+//        public void onFinish() {
+//
+//            timeCount.cancel();
+//            save();
+//            startTimer();
+//        }
+//    }
 
 
 }
