@@ -22,6 +22,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        flagFullScreen();
         setContentView(setLayoutId());
 
         //activity 管理类
@@ -31,6 +32,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         initData();
     }
 
+    public void flagFullScreen() {
+    }
     protected abstract void initView();
 
     @LayoutRes
@@ -56,9 +59,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param clazz
      */
     protected void toClass(Class<? extends Activity> clazz) {
-        Intent intent = new Intent(mActivity, clazz);
-
-        startActivity(intent);
+        toClass(clazz, null);
     }
 
     /**

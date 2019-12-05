@@ -1,4 +1,5 @@
 package com.example.administrator.shaomall;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.FrameLayout;
@@ -22,17 +23,25 @@ public class MainActivity extends BaseActivity {
     private Fragment currentFragment = new Fragment();
     private List<Fragment> fragments = new ArrayList<>();
 
+    @Override
+    public int setLayoutId() {
+        return R.layout.activity_main;
+    }
+
+    protected void initView() {
+
+    }
 
     private void setTab() {
         for (int i = 0; i < titles.length; i++) {
-            tabEntities.add(new TabData(unicon[i],icon[i],titles[i]));
+            tabEntities.add(new TabData(unicon[i], icon[i], titles[i]));
         }
         mMainTab.setTabData(tabEntities);
 
         mMainTab.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
-              switchFragment(fragments.get(position));
+                switchFragment(fragments.get(position));
             }
 
             @Override
@@ -42,21 +51,8 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-
-
-    protected void initView() {
-        toClass(com.example.remindsteporgan.MainActivity.class);
-
-    }
-
-    @Override
-    public int setLayoutId() {
-        return R.layout.remindactivity_main;
-    }
-
     @Override
     protected void initData() {
-
     }
 
     private void switchFragment(Fragment targetFragment) {
@@ -64,41 +60,33 @@ public class MainActivity extends BaseActivity {
         if (!targetFragment.isAdded()) {
             if (currentFragment != null)
                 fragmentTransaction.hide(currentFragment);
-
             fragmentTransaction.add(R.id.main_fragmentHome, targetFragment).commit();
-
         } else
             fragmentTransaction.hide(currentFragment).show(targetFragment).commit();
-
         currentFragment = targetFragment;
     }
 
 
-    class TabData implements CustomTabEntity{
+    class TabData implements CustomTabEntity {
         private int icon;
         private int unicon;
         private String title;
-
         public TabData(int icon, int unicon, String title) {
             this.icon = icon;
             this.unicon = unicon;
             this.title = title;
         }
-
         @Override
         public String getTabTitle() {
             return title;
         }
-
         @Override
         public int getTabSelectedIcon() {
             return icon;
         }
-
         @Override
         public int getTabUnselectedIcon() {
             return unicon;
         }
-
     }
 }

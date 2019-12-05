@@ -18,6 +18,7 @@ import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
 public interface NetApiService {
+
     /**
      * ResponseBody 是一个通用的返回类型，如果不清楚服务端返回的json数据，可以通过它来获取
      *
@@ -28,6 +29,7 @@ public interface NetApiService {
      */
     @GET("{path}")
     Observable<ResponseBody> getData(@HeaderMap HashMap<String, String> headers, @Path(value = "path", encoded = true) String path, @QueryMap HashMap<String, String> params);
+
 
     /**
      * @param header
