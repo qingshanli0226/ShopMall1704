@@ -43,6 +43,9 @@ public class MainActivity extends BaseActivity {
         fragmentArrayList.add(new HorizontalFragment());
         fragmentArrayList.add(new ShoppingCartFragment());
         fragmentArrayList.add(new MineFragment());
+
+
+
     }
 
     @Override

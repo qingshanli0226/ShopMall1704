@@ -1,4 +1,4 @@
-package com.example.shopmall.step;
+package com.example.step;
 
 import com.litesuits.orm.db.annotation.Column;
 import com.litesuits.orm.db.annotation.PrimaryKey;
