@@ -83,7 +83,7 @@ public abstract class BaseFragment extends Fragment {
      */
     protected void toClass(Class<? extends Activity> clazz, Bundle bundle) {
         Intent intent = new Intent(mContext, clazz);
-        if (bundle != null) {
+        if (bundle != null && bundle.size() != 0) {
             intent.putExtras(bundle);
         }
         mContext.startActivity(intent);
@@ -99,7 +99,9 @@ public abstract class BaseFragment extends Fragment {
      */
     protected void toClass(Class<? extends Activity> clazz, Bundle bundle, int requestCode) {
         Intent intent = new Intent(mContext, clazz);
-        intent.putExtras(bundle);
+        if (bundle != null && bundle.size() != 0) {
+            intent.putExtras(bundle);
+        }
         getActivity().startActivityForResult(intent, requestCode);
     }
 
