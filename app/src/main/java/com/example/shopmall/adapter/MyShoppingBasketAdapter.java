@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.shopmall.R;
-import com.example.shopmall.view.NumberAddSubView;
+import com.example.common.NumberAddSubView;
 
 import java.util.ArrayList;
 import java.util.List;

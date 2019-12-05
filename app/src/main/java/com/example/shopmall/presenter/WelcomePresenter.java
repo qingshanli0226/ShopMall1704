@@ -1,6 +1,6 @@
 package com.example.shopmall.presenter;
 
-import com.example.base.BasePresenter;
+import com.example.framework.base.BasePresenter;
 import com.example.shopmall.bean.HomepageBean;
 import com.google.gson.reflect.TypeToken;
 

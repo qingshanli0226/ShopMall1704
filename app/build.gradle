@@ -35,13 +35,13 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.youth.banner:banner:1.4.10'
     //轮播图
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'org.greenrobot:greendao:3.2.2'
     // 需要加密数据库的话添加这个
     implementation 'net.zetetic:android-database-sqlcipher:3.5.6'
-    implementation project(path: ':base')
     implementation project(path: ':common')
     implementation project(path: ':net')
     implementation files('libs/lite-orm-1.9.2.jar')
+    implementation project(path: ':framework')
 }

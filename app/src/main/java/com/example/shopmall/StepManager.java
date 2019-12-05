@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 
 import com.example.shopmall.bean.StepBean;
-import com.example.shopmall.greendao.StepBeanDao;
 import com.example.shopmall.step.OrmUtils;
 import com.example.shopmall.step.ShopStepBean;
 import com.example.shopmall.step.StepService;

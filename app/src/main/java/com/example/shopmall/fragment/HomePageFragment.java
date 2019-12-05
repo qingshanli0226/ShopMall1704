@@ -7,8 +7,8 @@ import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 
-import com.example.base.BaseFragment;
 import com.example.common.TitleBar;
+import com.example.framework.base.BaseFragment;
 import com.example.shopmall.R;
 import com.example.shopmall.StepManager;
 import com.example.shopmall.activity.MessageActivity;

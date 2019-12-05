@@ -8,7 +8,6 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.PointF;
-import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -18,11 +17,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -30,13 +25,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.example.base.BaseFragment;
 import com.example.common.TitleBar;
+import com.example.framework.base.BaseFragment;
 import com.example.shopmall.BezierTypeEvaluator;
 import com.example.shopmall.R;
 import com.example.shopmall.adapter.MyShoppingBasketAdapter;
-import com.example.shopmall.view.NumberAddSubView;
+import com.example.common.NumberAddSubView;
 
 import java.util.ArrayList;
 import java.util.HashMap;

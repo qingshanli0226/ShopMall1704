@@ -3,17 +3,14 @@ package com.example.shopmall.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.base.BaseFragment;
 import com.example.common.TitleBar;
+import com.example.framework.base.BaseFragment;
 import com.example.shopmall.R;
 import com.example.shopmall.activity.IntegralActivity;
 import com.example.shopmall.activity.LoginActivity;
