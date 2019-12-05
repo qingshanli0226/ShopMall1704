@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
     private TextView tv2;
     float X;
     BeanDao beanDao;
-
+    //ss
     float y=0;
 
     float plus=0;
