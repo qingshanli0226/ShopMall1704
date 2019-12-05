@@ -172,7 +172,7 @@ public class StepService extends Service implements SensorEventListener {
         notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         channel = new NotificationChannel(this.getPackageName(), "通知记步", NotificationManager.IMPORTANCE_DEFAULT);
         nbuilder = new Notification.Builder(this);
-        nbuilder.setSmallIcon(R.mipmap.custome_head)
+        nbuilder.setSmallIcon(R.mipmap.head)
                 .setWhen(System.currentTimeMillis())
                 .setContentTitle("用户您好!")
                 .setContentText("您今天已经走了" + currentStep + "步,每天多运动,开心每一天!!")
@@ -222,7 +222,7 @@ public class StepService extends Service implements SensorEventListener {
         notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         channel = new NotificationChannel(this.getPackageName(), "通知记步", NotificationManager.IMPORTANCE_DEFAULT);
         nbuilder = new Notification.Builder(this);
-        nbuilder.setSmallIcon(R.mipmap.custome_head)
+        nbuilder.setSmallIcon(R.mipmap.head)
                 .setContentIntent(getDefalutIntent(Notification.FLAG_ONGOING_EVENT))
                 .setPriority(Notification.PRIORITY_DEFAULT)
                 .setWhen(System.currentTimeMillis())
