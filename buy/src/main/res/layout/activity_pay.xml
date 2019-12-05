@@ -5,13 +5,54 @@
     android:id="@+id/payRel">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_above="@id/payBut"
+        android:layout_above="@id/head"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-    <Button
-        android:id="@+id/payBut"
+    <RelativeLayout
+        android:id="@+id/head"
         android:layout_alignParentBottom="true"
-        android:text="支付"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/payBut"
+            android:text="支付"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/integralNow"
+            android:text="拥有的积分数"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/moneyNow"
+            android:layout_toRightOf="@id/integralNow"
+            android:text="拥有的现金"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/orderMoney"
+            android:layout_toRightOf="@id/moneyNow"
+            android:text="原来商品所需的现金"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/subtractIntegra"
+            android:text="减去的积分数"
+            android:layout_below="@+id/integralNow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <CheckBox
+            android:id="@+id/checkInegra"
+            android:layout_below="@id/subtractIntegra"
+            android:text="是否选择积分减免"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/payMoney"
+            android:layout_below="@+id/checkInegra"
+            android:text="最终支付的现金"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
 </RelativeLayout>

@@ -1,10 +1,12 @@
 package com.example.buy.databeans;
-
-public class OrderBean {
+/**
+ * 向服务器请求订单返回的数据
+ * */
+public class GetOrderBean {
 
     @Override
     public String toString() {
-        return "OrderBean{" +
+        return "GetOrderBean{" +
                 "subject='" + subject + '\'' +
                 ", body='" + body + '\'' +
                 ", totalPrice='" + totalPrice + '\'' +

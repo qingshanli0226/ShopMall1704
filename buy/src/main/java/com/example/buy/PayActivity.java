@@ -34,6 +34,7 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
         Bundle bundle = intent.getBundleExtra(IntentUtil.ORDERS);
         list = bundle.getParcelableArrayList(IntentUtil.GOODS);
         recyclerView.getAdapter().notifyDataSetChanged();
+
     }
 
     @Override
