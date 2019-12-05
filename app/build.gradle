@@ -43,4 +43,5 @@ dependencies {
     implementation project(path: ':base')
     implementation project(path: ':common')
     implementation project(path: ':net')
+    implementation project(path: ':step')
 }
