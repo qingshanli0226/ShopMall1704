@@ -19,13 +19,13 @@
         <option name="ALLOW_USER_CONFIGURATION" value="false" />
         <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
         <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
-        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res" />
+        <option name="RES_FOLDERS_RELATIVE_PATH" value="file://$MODULE_DIR$/src/main/res;file://$MODULE_DIR$/build/generated/res/resValues/debug" />
         <option name="TEST_RES_FOLDERS_RELATIVE_PATH" value="" />
         <option name="ASSETS_FOLDER_RELATIVE_PATH" value="/src/main/assets" />
       </configuration>
     </facet>
     <facet type="kotlin-language" name="Kotlin">
-      <configuration version="3" platform="JVM 1.6" allPlatforms="JVM [1.6]" useProjectSettings="false" pureKotlinSourceFolders="E:\Android_GitHub\number_two\zha\ShopMall1704\app\src\debug\kotlin;E:\Android_GitHub\number_two\zha\ShopMall1704\app\src\debug\java;E:\Android_GitHub\number_two\zha\ShopMall1704\app\src\release\kotlin;E:\Android_GitHub\number_two\zha\ShopMall1704\app\src\release\java;E:\Android_GitHub\number_two\zha\ShopMall1704\app\src\debugAndroidTest\kotlin;E:\Android_GitHub\number_two\zha\ShopMall1704\app\src\debugUnitTest\kotlin;E:\Android_GitHub\number_two\zha\ShopMall1704\app\src\releaseUnitTest\kotlin">
+      <configuration version="3" platform="JVM 1.6" allPlatforms="JVM [1.6]" useProjectSettings="false" pureKotlinSourceFolders="E:\Android_GitHub\number_two\wang\ShopMall1704\app\src\debug\kotlin;E:\Android_GitHub\number_two\wang\ShopMall1704\app\src\debug\java;E:\Android_GitHub\number_two\wang\ShopMall1704\app\src\release\kotlin;E:\Android_GitHub\number_two\wang\ShopMall1704\app\src\release\java;E:\Android_GitHub\number_two\wang\ShopMall1704\app\src\debugAndroidTest\kotlin;E:\Android_GitHub\number_two\wang\ShopMall1704\app\src\debugUnitTest\kotlin;E:\Android_GitHub\number_two\wang\ShopMall1704\app\src\releaseUnitTest\kotlin">
         <compilerSettings>
           <option name="additionalArguments" value="-Xallow-no-source-files" />
         </compilerSettings>
@@ -205,8 +205,8 @@
     <orderEntry type="library" name="Gradle: com.gyf.immersionbar:immersionbar:3.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.gyf.immersionbar:immersionbar-components:3.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.gyf.immersionbar:immersionbar-ktx:3.0.0@aar" level="project" />
-    <orderEntry type="module" module-name="ShopMall1704-framework" />
-    <orderEntry type="module" module-name="ShopMall1704-net" />
-    <orderEntry type="module" module-name="ShopMall1704-buy" />
+    <orderEntry type="module" module-name="wang-ShopMall1704-framework" />
+    <orderEntry type="module" module-name="wang-ShopMall1704-net" />
+    <orderEntry type="module" module-name="wang-ShopMall1704-buy" />
   </component>
 </module>

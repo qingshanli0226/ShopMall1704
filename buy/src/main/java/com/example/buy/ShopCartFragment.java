@@ -148,14 +148,14 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
         goodsPresenter.onHttpPostRequest();
     }
 
-    @Override
-    public void onHttpRequestDataSuccess(Object data) {
-        list.clear();
-        recyclerView.getAdapter().notifyDataSetChanged();
-        Gson gson = new Gson();
-        GoodsBean[] goods = gson.fromJson(((GetCartBean) data).getResult(), GoodsBean[].class);
-        list.addAll(Arrays.asList(goods));
-        recyclerView.getAdapter().notifyDataSetChanged();
-        swipeRefreshLayout.setRefreshing(false);
-    }
+//    @Override
+//    public void onHttpRequestDataSuccess(Object data) {
+//        list.clear();
+//        recyclerView.getAdapter().notifyDataSetChanged();
+//        Gson gson = new Gson();
+//        GoodsBean[] goods = gson.fromJson(((GetCartBean) data).getResult(), GoodsBean[].class);
+//        list.addAll(Arrays.asList(goods));
+//        recyclerView.getAdapter().notifyDataSetChanged();
+//        swipeRefreshLayout.setRefreshing(false);
+//    }
 }
