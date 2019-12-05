@@ -36,6 +36,7 @@ public class StepManager {
         stepBeanDao = daoSession.getStepBeanDao();
     }
 
+    //添加步数,并通知接口回调activity返回步数
     public void addStep(StepBean stepBean) {
         stepBeanDao.insert(stepBean);
         for (IStepChangedListener stepChangedListener : iStepChangedListenerList) {
@@ -43,6 +44,7 @@ public class StepManager {
         }
     }
 
+    //根据时间返回数据记录
     public List<StepBean> findStep(String date) {
         QueryBuilder<StepBean> findDate = stepBeanDao.queryBuilder().where(StepBeanDao.Properties.Data.eq(date));
         return findDate.list();

@@ -16,9 +16,11 @@ public class MyApplication extends Application {
         super.onCreate();
 
         context = this;
-
+        //初始化网络连接管理类
         ConnectManager.getInstance().init(this);
+        //初始化异常
         CrashHandler.getInstance(this).init();
+        //初始化缓存管理类
         CaCheManager.getInstance().init(this);
 
     }

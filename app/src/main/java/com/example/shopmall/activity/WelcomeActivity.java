@@ -1,7 +1,6 @@
 package com.example.shopmall.activity;
 
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.example.base.BaseActivity;
@@ -9,11 +8,14 @@ import com.example.base.BasePresenter;
 import com.example.base.IBaseView;
 import com.example.common.ConnectManager;
 import com.example.shopmall.R;
+import com.example.shopmall.StepManager;
 import com.example.shopmall.bean.HomepageBean;
 import com.example.shopmall.presenter.WelcomePresenter;
 
 public class WelcomeActivity extends BaseActivity implements IBaseView<HomepageBean> {
 
+
+    private BasePresenter welcomePresenter;
 
     @Override
     protected int setLayout() {
@@ -26,7 +28,8 @@ public class WelcomeActivity extends BaseActivity implements IBaseView<HomepageB
 
     @Override
     public void initData() {
-        BasePresenter welcomePresenter = new WelcomePresenter();
+        StepManager.getInstance().init(this);
+        welcomePresenter = new WelcomePresenter();
         welcomePresenter.attachView(this);
         welcomePresenter.getGetData();
         boolean connectStatus = ConnectManager.getInstance().getConnectStatus();
@@ -72,5 +75,6 @@ public class WelcomeActivity extends BaseActivity implements IBaseView<HomepageB
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        welcomePresenter.detachView();
     }
 }
