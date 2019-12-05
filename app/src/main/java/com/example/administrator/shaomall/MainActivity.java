@@ -29,10 +29,18 @@ public class MainActivity extends BaseActivity {
     }
 
     protected void initView() {
+        mMainFragmentHome = findViewById(R.id.main_fragmentHome);
+        mMainTab = findViewById(R.id.main_tab);
+        fragments.add(new HomeFragment());
+        fragments.add(new TypeFragment());
+        fragments.add(new FindFragment());
+        fragments.add(new ShopCarFragment());
+        fragments.add(new MineFragment());
 
     }
 
     private void setTab() {
+        switchFragment(fragments.get(0));
         for (int i = 0; i < titles.length; i++) {
             tabEntities.add(new TabData(unicon[i], icon[i], titles[i]));
         }
@@ -53,6 +61,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        setTab();
     }
 
     private void switchFragment(Fragment targetFragment) {

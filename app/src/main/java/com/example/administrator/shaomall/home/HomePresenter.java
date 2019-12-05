@@ -10,12 +10,17 @@ import java.util.List;
 public class HomePresenter extends BasePresenter<HomeBean.ResultBean> {
     @Override
     protected Type getBeanType() {
-
-        return new TypeToken<ResEntity<List<HomeBean>>>(){}.getType();
+        return new TypeToken<ResEntity<HomeBean.ResultBean>>(){}.getType();
+//        return HomeBean.class;
     }
 
     @Override
     public String getPath() {
         return AppNetConfig.HOME_URL;
+    }
+
+    @Override
+    protected boolean isList() {
+        return false;
     }
 }

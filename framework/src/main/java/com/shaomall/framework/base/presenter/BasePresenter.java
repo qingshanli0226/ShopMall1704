@@ -42,9 +42,11 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
-                        try {
-                            String string = responseBody.string();
 
+                        try {
+                            //数据请求成功
+                            setLoadingPager(LoadingPageConfig.STATE_SUCCESS_CODE);
+                            String string = responseBody.string();
                             //判断数据是否是列表
                             if (isList()) {
                                 ResEntity<List<T>> resEntityList = new Gson().fromJson(string, getBeanType());
@@ -62,23 +64,22 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                                 }
 
                             } else { //不是列表
-//                                ResEntity<T> resEntity = new Gson().fromJson(string, getBeanType());
-                                T resEntity = new Gson().fromJson(string, getBeanType());
+                                ResEntity<T> resEntity = new Gson().fromJson(string, getBeanType());
+//                                T resEntity = new Gson().fromJson(string, getBeanType());
 
-//                                if (resEntity.getCode() == 200) { //数据请求成功
-//                                    if (iBaseView != null) {
-                                        iBaseView.onRequestHttpDataSuccess(requestCode, "", resEntity);
-//                                    } else {
-//                                        //获取数据失败
-//                                        if (iBaseView != null) {
-//                                            iBaseView.onRequestHttpDataFailed(requestCode, ShopMailError.BUSINESS_ERROR);
-//                                        }
-//                                    }
-//                                }
+                                if (resEntity.getCode() == 200) { //数据请求成功
+                                    if (iBaseView != null) {
+                                        iBaseView.onRequestHttpDataSuccess(requestCode, "", resEntity.getResult());
+                                    }
+                                }else {
+                                    //获取数据失败
+                                    if (iBaseView != null) {
+                                        iBaseView.onRequestHttpDataFailed(requestCode, ShopMailError.BUSINESS_ERROR);
+                                    }
+                                }
                             }
 
-                            //数据请求成功
-                            setLoadingPager(LoadingPageConfig.STATE_SUCCESS_CODE);
+
                         } catch (IOException e) {
                             //e.printStackTrace();
                             //数据为空
@@ -121,6 +122,9 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         try {
+                            //数据请求成功
+                            setLoadingPager(LoadingPageConfig.STATE_SUCCESS_CODE);
+
                             String string = responseBody.string();
 
                             //判断数据是否是列表
@@ -145,17 +149,16 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                                 if (resEntity.getCode() == 200) { //数据请求成功
                                     if (iBaseView != null) {
                                         iBaseView.onRequestHttpDataSuccess(requestCode, resEntity.getMessage(), resEntity.getResult());
-                                    } else {
-                                        //获取数据失败
-                                        if (iBaseView != null) {
-                                            iBaseView.onRequestHttpDataFailed(requestCode, ShopMailError.BUSINESS_ERROR);
-                                        }
+                                    }
+                                }else {
+                                    //获取数据失败
+                                    if (iBaseView != null) {
+                                        iBaseView.onRequestHttpDataFailed(requestCode, ShopMailError.BUSINESS_ERROR);
                                     }
                                 }
                             }
 
-                            //数据请求成功
-                            setLoadingPager(LoadingPageConfig.STATE_SUCCESS_CODE);
+
                         } catch (IOException e) {
                             //数据为空
                             setLoadingPager(LoadingPageConfig.STATE_EMPTY_CODE);

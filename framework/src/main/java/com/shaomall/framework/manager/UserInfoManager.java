@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.commen.ACache;
-import com.example.commen.bean.LoginBean;
+import com.shaomall.framework.bean.LoginBean;
 
 import java.util.LinkedList;
 

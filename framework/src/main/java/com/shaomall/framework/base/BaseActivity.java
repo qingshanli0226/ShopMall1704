@@ -24,7 +24,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         flagFullScreen();
         setContentView(setLayoutId());
-
+        mActivity = this;
         //activity 管理类
         ActivityInstanceManager.addActivity(this);
 

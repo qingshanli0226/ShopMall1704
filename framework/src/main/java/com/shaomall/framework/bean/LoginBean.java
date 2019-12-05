@@ -1,4 +1,4 @@
-package com.example.commen.bean;
+package com.shaomall.framework.bean;
 
 import java.io.Serializable;
 

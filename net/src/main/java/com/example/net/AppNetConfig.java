@@ -10,12 +10,11 @@ public class AppNetConfig {
     ////////////////////////////////////////////
     // 请求Json数据基本URL
     public static final String BASE_URL_JSON = BASE_URL+"atguigu/json/";
-
     // 请求图片基本URL
     public static final String BASE_URl_IMAGE = BASE_URL+"atguigu/img";
 //    http://49.233.93.155:8080/atguigu/img  /1478770583834.png
     //主页Fragment路径
-    public static final String HOME_URL ="HOME_URL.json";
+    public static final String HOME_URL ="atguigu/json/HOME_URL.json";
 
     //User 处理接口
     //1. 注册接口处理 post

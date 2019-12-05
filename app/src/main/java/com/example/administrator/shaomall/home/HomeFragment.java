@@ -20,6 +20,8 @@ import com.example.net.AppNetConfig;
 import com.shaomall.framework.base.BaseMVPFragment;
 import com.youth.banner.loader.ImageLoader;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,10 +52,11 @@ public class HomeFragment extends BaseMVPFragment<HomeBean.ResultBean> {
 
     protected void initData() {
         setTitle();
-        ACache aCache = ACache.get(getContext());
-        HomeBean data = (HomeBean) aCache.getAsObject(AppNetConfig.KEY_HOME_DATA);
+        ACache aCache = ACache.get(mContext);
+        HomeBean.ResultBean data = (HomeBean.ResultBean) aCache.getAsObject(AppNetConfig.KEY_HOME_DATA);
+
         if (data != null)
-            setBanenr(data.getResult().getBanner_info());
+            setBanenr(data.getBanner_info());
     }
 
 

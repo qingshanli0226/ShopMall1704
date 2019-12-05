@@ -1,5 +1,6 @@
 package com.example.administrator.shaomall;
 
+import android.util.Log;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 
@@ -20,7 +21,7 @@ public class WelcomeActivity extends BaseMVPActivity<HomeBean.ResultBean> {
     private boolean isData = false;
     private int count = 0;
     private ACache aCache;
-    private IBasePresenter iBasePresenter;
+    private IBasePresenter<HomeBean.ResultBean> iHomePresenter;
 
     @Override
     protected int setLayoutId() {
@@ -30,7 +31,9 @@ public class WelcomeActivity extends BaseMVPActivity<HomeBean.ResultBean> {
     @Override
     protected void initView() {
         aCache = ACache.get(this);
-        iBasePresenter = new HomePresenter();
+        iHomePresenter = new HomePresenter();
+        iHomePresenter.attachView(this);
+        iHomePresenter.doGetHttpRequest(AppNetConfig.HOME_DATA_CODE);
 
         mWelcomeBackground = findViewById(R.id.welcome_background);
         mIvWelcomeIcon = findViewById(R.id.iv_welcome_icon);
@@ -44,7 +47,6 @@ public class WelcomeActivity extends BaseMVPActivity<HomeBean.ResultBean> {
 
     @Override
     protected void initData() {
-        iBasePresenter.doGetHttpRequest(AppNetConfig.HOME_DATA_CODE);
         TimeThread();
     }
 
@@ -53,8 +55,8 @@ public class WelcomeActivity extends BaseMVPActivity<HomeBean.ResultBean> {
         super.onRequestHttpDataSuccess(requestCode, message, data);
         if (requestCode == AppNetConfig.HOME_DATA_CODE)
             if (data != null) {
-                isData = true;
                 aCache.put(AppNetConfig.KEY_HOME_DATA, data);
+                isData = true;
             }
     }
 
@@ -71,6 +73,7 @@ public class WelcomeActivity extends BaseMVPActivity<HomeBean.ResultBean> {
             public void run() {
                 count++;
                 if (count >= 4 && isData) {
+
                     toClass(MainActivity.class);
                     finish();
                     timer.cancel();
