@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.buy.fragment.ShoppingCartFragment;
 import com.example.common.BottomBar;
 import com.example.framework.base.BaseActivity;
 import com.example.shopmall.R;
@@ -12,7 +13,6 @@ import com.example.shopmall.fragment.ClassifyFragment;
 import com.example.shopmall.fragment.HomePageFragment;
 import com.example.shopmall.fragment.HorizontalFragment;
 import com.example.shopmall.fragment.MineFragment;
-import com.example.shopmall.fragment.ShoppingCartFragment;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.example.shopmall.adapter;
+package com.example.buy.adapter;
 
 import android.content.Context;
 import android.os.Handler;
@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.shopmall.R;
 import com.example.common.NumberAddSubView;
 
 import java.util.ArrayList;
@@ -64,7 +63,7 @@ public class MyShoppingBasketAdapter extends RecyclerView.Adapter<MyShoppingBask
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shop_cart, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(com.example.buy.R.layout.item_shop_cart, parent, false);
 
         return new ViewHolder(view);
     }
@@ -152,10 +151,10 @@ public class MyShoppingBasketAdapter extends RecyclerView.Adapter<MyShoppingBask
     class ViewHolder extends RecyclerView.ViewHolder {
 
 
-        ImageView iv_img = itemView.findViewById(R.id.iv_gov);
-        TextView tv_title = itemView.findViewById(R.id.tv_desc_gov);
-        NumberAddSubView numberAddSubView = itemView.findViewById(R.id.numberAddSubView);
-        CheckBox cb_gov = itemView.findViewById(R.id.cb_gov);
+        ImageView iv_img = itemView.findViewById(com.example.buy.R.id.iv_gov);
+        TextView tv_title = itemView.findViewById(com.example.buy.R.id.tv_desc_gov);
+        NumberAddSubView numberAddSubView = itemView.findViewById(com.example.buy.R.id.numberAddSubView);
+        CheckBox cb_gov = itemView.findViewById(com.example.buy.R.id.cb_gov);
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

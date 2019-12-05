@@ -1,2 +1,2 @@
-include ':app', ':common', ':net', ':framework'
+include ':app', ':common', ':net', ':framework', ':buy'
 rootProject.name='ShopMall'
