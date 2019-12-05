@@ -37,14 +37,8 @@
             android:enabled="true"
             android:exported="true" />
 
-<<<<<<< HEAD
         <activity android:name=".activity.MainActivity" />
-=======
-        <activity android:name=".activity.MainActivity">
-
-        </activity>
         <service android:name=".step.StepService"></service>
->>>>>>> one
     </application>
 
 </manifest>
