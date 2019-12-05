@@ -18,6 +18,7 @@ import com.example.shopmall.fragment.HomePageFragment;
 import com.example.shopmall.fragment.HorizontalFragment;
 import com.example.shopmall.fragment.MineFragment;
 import com.example.shopmall.fragment.ShoppingCartFragment;
+import com.example.step.StepManager;
 
 import java.util.ArrayList;
 
@@ -48,6 +49,9 @@ public class MainActivity extends BaseActivity{
         fragmentArrayList.add(new HorizontalFragment());
         fragmentArrayList.add(new ShoppingCartFragment());
         fragmentArrayList.add(new MineFragment());
+
+
+
     }
 
     @Override

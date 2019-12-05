@@ -44,4 +44,5 @@ dependencies {
     implementation project(path: ':common')
     implementation project(path: ':net')
     implementation files('libs/lite-orm-1.9.2.jar')
+    implementation project(path: ':step')
 }

@@ -1,4 +1,4 @@
-package com.example.shopmall.step;
+package com.example.step;
 
 import android.content.Context;
 

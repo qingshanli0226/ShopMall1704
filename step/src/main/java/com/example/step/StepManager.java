@@ -1,4 +1,4 @@
-package com.example.shopmall;
+package com.example.step;
 
 
 
@@ -9,6 +9,7 @@ package com.example.shopmall;
 /*
   初始化init 开启服务, 注册记步的回调接口 ,在onDestory中注销服务
  */
+
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -17,10 +18,6 @@ import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.widget.Toast;
 
-
-import com.example.shopmall.step.OrmUtils;
-import com.example.shopmall.step.ShopStepBean;
-import com.example.shopmall.step.StepService;
 
 import java.util.List;
 
@@ -33,6 +30,8 @@ public class StepManager {
     StepManagerListener stepManagerListener;
 
     SharedPreferences sharedPreferences;
+
+    private Intent intent;
     public static StepManager getInstance() {
         if (stepManager == null) {
             stepManager = new StepManager();
@@ -40,9 +39,11 @@ public class StepManager {
         return stepManager;
     }
 
+
     //绑定服务
     public void init(Context context){
         this.context=context;
+
         Intent intent = new Intent(context, StepService.class);
          serviceConnection = new ServiceConnection() {
             @Override
@@ -75,6 +76,27 @@ public class StepManager {
 
     }
 
+//    Stack<Activity> activityStack=new Stack<>();
+//    public Stack<Activity> getActivityStack() {
+//        return activityStack;
+//    }
+
+    public void setActivityStack(Intent intent){
+//        activityStack.add(activity);
+        this.intent=intent;
+        getIntent();
+   }
+   public Intent getIntent(){
+//            Activity activity = getActivityStack().get(0);
+//            activity.getClass();
+//            intent = new Intent(context, activity.getClass());
+        if(this.intent !=null){
+           return this.intent;
+
+        }else{
+            return null;
+        }
+   }
     public int getGal(){
         getInterGal();
         int gal = sharedPreferences.getInt("gal", 0);

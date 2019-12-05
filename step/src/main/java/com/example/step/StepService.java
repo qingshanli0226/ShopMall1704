@@ -1,4 +1,4 @@
-package com.example.shopmall.step;
+package com.example.step;
 
 
 import android.annotation.SuppressLint;
@@ -16,14 +16,13 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Binder;
-import android.os.CountDownTimer;
+import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 
-import com.example.shopmall.R;
-import com.example.shopmall.activity.MainActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -41,7 +40,7 @@ public class StepService extends Service implements SensorEventListener {
     private BroadcastReceiver broadcastReceiver;
 
 
-    private Notification.Builder nbuilder;
+    private  NotificationCompat.Builder nbuilder;
     private NotificationChannel channel;
     private NotificationManager notificationManager;
 
@@ -131,6 +130,7 @@ public class StepService extends Service implements SensorEventListener {
                 }
 
             }
+
         };
 
         if (broadcastReceiver != null) {
@@ -163,22 +163,24 @@ public class StepService extends Service implements SensorEventListener {
         updateNotification();
     }
 
+
     //更新通知
     @SuppressLint("NewApi")
     private void updateNotification() {
 
-        Intent intent = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        channel = new NotificationChannel(this.getPackageName(), "通知记步", NotificationManager.IMPORTANCE_DEFAULT);
-        nbuilder = new Notification.Builder(this);
-        nbuilder.setSmallIcon(R.mipmap.head)
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, StepManager.getInstance().getIntent(), PendingIntent.FLAG_CANCEL_CURRENT);
+
+        nbuilder
                 .setWhen(System.currentTimeMillis())
                 .setContentTitle("用户您好!")
                 .setContentText("您今天已经走了" + currentStep + "步,每天多运动,开心每一天!!")
-                .setContentIntent(pendingIntent)
-                .setChannelId(this.getPackageName());
-        notificationManager.createNotificationChannel(channel);
+                .setSmallIcon(R.mipmap.head)
+                .setContentIntent(pendingIntent);
+
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            nbuilder.setChannelId(this.getPackageName());
+            notificationManager.createNotificationChannel(channel);
+        }
         notificationManager.notify(100, nbuilder.build());
         if (updateUi != null) {
             updateUi.getUpdateStep(currentStep);
@@ -220,16 +222,21 @@ public class StepService extends Service implements SensorEventListener {
     private void initNotification() {
 
         notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        channel = new NotificationChannel(this.getPackageName(), "通知记步", NotificationManager.IMPORTANCE_DEFAULT);
-        nbuilder = new Notification.Builder(this);
-        nbuilder.setSmallIcon(R.mipmap.head)
+        nbuilder=new NotificationCompat.Builder(this);
+        nbuilder
                 .setContentIntent(getDefalutIntent(Notification.FLAG_ONGOING_EVENT))
                 .setPriority(Notification.PRIORITY_DEFAULT)
                 .setWhen(System.currentTimeMillis())
                 .setContentTitle("用户您好!")
-                .setContentText("您今天已经走了" + currentStep + "步,每天多运动,开心每一天!")
-                .setChannelId(this.getPackageName());
-        notificationManager.createNotificationChannel(channel);
+                .setOngoing(true)
+                .setSmallIcon(R.mipmap.head)
+                .setContentText("您今天已经走了" + currentStep + "步,每天多运动,开心每一天!");
+
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+             channel = new NotificationChannel(this.getPackageName(), "记步", NotificationManager.IMPORTANCE_DEFAULT);
+            nbuilder.setChannelId(this.getPackageName());
+            notificationManager.createNotificationChannel(channel);
+        }
         startForeground(100, nbuilder.build());
 
     }
@@ -328,6 +335,7 @@ public class StepService extends Service implements SensorEventListener {
 //            startTimer();
 //        }
 //    }
+
 
 
 }
