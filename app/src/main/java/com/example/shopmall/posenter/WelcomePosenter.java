@@ -4,13 +4,26 @@ import com.example.base.BasePresenter;
 import com.example.net.Constant;
 import com.example.shopmall.bean.HomepageBean;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
 
-public class WelcomePosenter extends BasePresenter<HomepageBean> {
+public class WelcomePosenter extends BasePresenter {
+
+    private String Config;
+    private Type type;
+
+    public WelcomePosenter(String config) {
+        Config = config;
+    }
+
+    public WelcomePosenter(String config, Type type) {
+        Config = config;
+        this.type = type;
+    }
 
     @Override
     protected String getPath() {
-        return "HOME_URL.json";
+        return Config;
     }
 
     @Override

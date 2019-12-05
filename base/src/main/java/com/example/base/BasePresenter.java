@@ -150,9 +150,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
     //绑定
     @Override
     public void attachView(IBaseView<T> baseView) {
-        if (baseView == null) {
-            this.baseView = baseView;
-        }
+        this.baseView = baseView;
     }
 
     //解绑

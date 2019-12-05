@@ -23,13 +23,13 @@ public abstract class BaseAdapter<T, V extends RecyclerView.ViewHolder> extends 
     @NonNull
     @Override
     public V onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(getLayout(viewType), null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(getLayout(), null);
         return getViewHolder(view, viewType);
     }
 
     protected abstract V getViewHolder(View view, int viewType);
 
-    protected abstract int getLayout( int viewType);
+    protected abstract int getLayout();
 
     @Override
     public void onBindViewHolder(@NonNull V holder, int position) {
