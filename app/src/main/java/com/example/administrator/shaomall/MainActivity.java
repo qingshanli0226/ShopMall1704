@@ -44,11 +44,6 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    @Override
-    protected int setBarColor() {
-        return 0;
-    }
-
     protected void initView() {
         fragments.add(new HomeFragment());
         switchFragment(fragments.get(0));

@@ -40,8 +40,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         initData();
     }
 
-    protected abstract int setBarColor();
-
     protected abstract void initView();
 
     @LayoutRes
