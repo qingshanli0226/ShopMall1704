@@ -349,7 +349,7 @@ public class HomeBean implements Serializable {
                 this.value = value;
             }
 
-            public static class ValueBeanX {
+            public static class ValueBeanX implements Serializable{
                 /**
                  * channel_id : 8
                  */

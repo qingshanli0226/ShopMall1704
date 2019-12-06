@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/start_background"
     android:id="@+id/welcome_background"
-    tools:context=".WelcomeActivity">
+    tools:context=".activity.WelcomeActivity">
 
     <ImageView
         android:id="@+id/iv_welcome_icon"

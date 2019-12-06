@@ -2,6 +2,7 @@ package com.example.administrator.shaomall.home;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +14,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.shaomall.AnimationNestedScrollView;
-import com.example.administrator.shaomall.CommonUtil;
+import com.example.commen.CommonUtil;
 import com.example.administrator.shaomall.R;
 import com.example.commen.ACache;
 import com.example.net.AppNetConfig;
 import com.shaomall.framework.base.BaseMVPFragment;
-import com.youth.banner.loader.ImageLoader;
-
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class HomeFragment extends BaseMVPFragment<HomeBean.ResultBean> {
     private AnimationNestedScrollView sv_view;
@@ -31,7 +26,6 @@ public class HomeFragment extends BaseMVPFragment<HomeBean.ResultBean> {
     private TextView tv_title;
     private float LL_SEARCH_MIN_TOP_MARGIN, LL_SEARCH_MAX_TOP_MARGIN, LL_SEARCH_MAX_WIDTH, LL_SEARCH_MIN_WIDTH, TV_TITLE_MAX_TOP_MARGIN;
     private ViewGroup.MarginLayoutParams searchLayoutParams, titleLayoutParams;
-    private com.youth.banner.Banner mHomeBanner;
     private android.support.v7.widget.RecyclerView mHomeRecycler;
 
     @Override
@@ -41,7 +35,6 @@ public class HomeFragment extends BaseMVPFragment<HomeBean.ResultBean> {
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
-        mHomeBanner = view.findViewById(R.id.home_banner);
         mHomeRecycler = view.findViewById(R.id.home_recycler);
         sv_view = view.findViewById(R.id.search_sv_view);
         ll_search = view.findViewById(R.id.search_ll_search);
@@ -55,8 +48,19 @@ public class HomeFragment extends BaseMVPFragment<HomeBean.ResultBean> {
         ACache aCache = ACache.get(mContext);
         HomeBean.ResultBean data = (HomeBean.ResultBean) aCache.getAsObject(AppNetConfig.KEY_HOME_DATA);
 
-        if (data != null)
-            setBanenr(data.getBanner_info());
+        if (data != null) {
+            mHomeRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+            mHomeRecycler.setAdapter(new HomeRecycleAdapter(data,getContext()));
+        }
+
+//
+//        CacheManager.getInstance().registerListener(new CacheManager.IHomeReceivedListener() {
+//            @Override
+//            public void onHomeDataReceived(HomeBean.ResultBean homeBean) {
+//                Log.i("lw", "onHomeDataReceived: "+homeBean.getBanner_info().size());
+//                setBanenr(homeBean.getBanner_info());
+//            }
+//        });
     }
 
 
@@ -105,20 +109,5 @@ public class HomeFragment extends BaseMVPFragment<HomeBean.ResultBean> {
         });
     }
 
-    private void setBanenr(List<HomeBean.ResultBean.BannerInfoBean> banenrs) {
-        final List<String> images = new ArrayList<>();
-        for (int i = 0; i < banenrs.size(); i++) {
-            images.add(AppNetConfig.BASE_URl_IMAGE + banenrs.get(i).getImage());
-        }
-        Log.i("LW", "setBanenr: " + AppNetConfig.BASE_URl_IMAGE + banenrs.get(1).getImage());
-        mHomeBanner.setImages(images);
-        mHomeBanner.setImageLoader(new ImageLoader() {
-            @Override
-            public void displayImage(Context context, Object path, ImageView imageView) {
-                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                Glide.with(context).load((String) path).apply(RequestOptions.bitmapTransform(new RoundedCorners(30))).into(imageView);
-            }
-        });
-        mHomeBanner.start();
-    }
+
 }

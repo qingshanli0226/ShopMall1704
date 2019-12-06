@@ -1,9 +1,14 @@
-package com.example.administrator.shaomall;
+package com.example.administrator.shaomall.activity;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.FrameLayout;
 
+import com.example.administrator.shaomall.FindFragment;
+import com.example.administrator.shaomall.MineFragment;
+import com.example.administrator.shaomall.R;
+import com.example.administrator.shaomall.ShopCarFragment;
+import com.example.administrator.shaomall.TypeFragment;
 import com.example.administrator.shaomall.home.HomeFragment;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
