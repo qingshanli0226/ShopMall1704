@@ -3,6 +3,10 @@ package com.example.dimensionleague;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.dimensionleague.businessbean.HomeBean;
 import com.example.framework.base.BaseNetConnectActivity;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +32,8 @@ public class WelcomeActivity extends BaseNetConnectActivity {
     private int index = 5;
     private int count = 0;
     private Handler handler;
-    private boolean isNetOk = true;
+    private boolean isNetOk = false;
+
 
     @Override
     public void init() {
@@ -47,6 +53,20 @@ public class WelcomeActivity extends BaseNetConnectActivity {
         icon.add(R.drawable.timg1);
         icon.add(R.drawable.timg2);
         icon.add(R.drawable.timg3);
+        CacheManager.getInstance().getHomeDate();
+        CacheManager.getInstance().registerGetDateListener(new CacheManager.IHomeReceivedListener() {
+            @Override
+            public void onHomeDataReceived(HomeBean.ResultBean homeBean) {
+                isNetOk=true;
+            }
+
+            @Override
+            public void onHomeDataError(String s) {
+                isNetOk=false;
+                toast(WelcomeActivity.this,s);
+
+            }
+        });
 
         vp.setAdapter(new PagerAdapter() {
             @Override
@@ -88,6 +108,7 @@ public class WelcomeActivity extends BaseNetConnectActivity {
         }
         thread = null;
         handler = null;
+        CacheManager.getInstance().unRegisterGetDateListener();
     }
 
     @Override
@@ -114,8 +135,22 @@ public class WelcomeActivity extends BaseNetConnectActivity {
                         //                    跳转到主页面
                         startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
                     } else {
-                        Toast.makeText(WelcomeActivity.this, "您的网络状态不佳, 请检查", Toast.LENGTH_LONG).show();
-                        handler.sendEmptyMessageDelayed(102, 5000);
+                        try {
+                            AlertDialog alertDialog = new AlertDialog.Builder(WelcomeActivity.this)
+                                    .setTitle("警告")
+                                    .setMessage("网络信号不好哟~宝宝卡得要哭了~")
+                                    .setPositiveButton("点击重试", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            CacheManager.getInstance().getHomeDate();
+                                            handler.sendEmptyMessage(102);
+                                        }
+                                    }).create();
+                            alertDialog.show();
+                    } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return;
                     }
                     break;
                 default:

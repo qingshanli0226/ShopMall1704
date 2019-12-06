@@ -3,9 +3,10 @@ package com.example.dimensionleague.businessbean;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class HomeBean {
+public class HomeBean implements Serializable {
 
     /**
      * code : 200
@@ -17,7 +18,7 @@ public class HomeBean {
     public String msg;
     public ResultBean result;
 
-    public static class ResultBean {
+    public static class ResultBean implements Serializable {
         /**
          * act_info : [{"icon_url":"/operation/img/1478169868/1478761370286.png","name":"尚硅谷福利专区之111.1专区","url":"/oper/1478169868app.html"},{"icon_url":"/operation/img/1478763176/1478762941492.png","name":"尚硅谷福利专区 黄金狗粮限量11.1元抢","url":"/oper/1478763176app.html"}]
          * banner_info : [{"image":"/1478770583834.png","option":3,"type":0,"value":{"url":"/act20161111?cyc_app=1"}},{"image":"/1478770583835.png","option":2,"type":0,"value":{"url":"/act20161111?cyc_app=1"}},{"image":"/1478770583836.png","option":1,"type":0,"value":{"url":"/act20161111?cyc_app=1"}}]
@@ -33,7 +34,7 @@ public class HomeBean {
         public List<ChannelInfoBean> channel_info;
         public List<HotInfoBean> hot_info;
         public List<RecommendInfoBean> recommend_info;
-        public static class SeckillInfoBean {
+        public static class SeckillInfoBean implements Serializable {
             /**
              * end_time : 1479052800
              * list : [{"cover_price":"20.00","figure":"/1478489000522.png","name":"尚硅谷购物节特供优惠券  满600-120优惠券","origin_price":"20.00","product_id":"7100"},{"cover_price":"10.00","figure":"/1478489035167.png","name":"尚硅谷购物节特供优惠券  满300-80优惠券","origin_price":"10.00","product_id":"7101"},{"cover_price":"5.00","figure":"/1478489878735.png","name":"尚硅谷购物节特供优惠券  满160-40优惠券","origin_price":"5.00","product_id":"7102"},{"cover_price":"49.00","figure":"/1475045805488.jpg","name":"【古风原创】 自动直柄伞 晴雨伞 【云鹤游】包邮  新增折叠伞","origin_price":"69.00","product_id":"9593"},{"cover_price":"5.00","figure":"/1478678511949.png","name":"尚硅谷购物节特供优惠券  满60-20优惠券","origin_price":"5.00","product_id":"10536"},{"cover_price":"49.00","figure":"/1438680345318.jpg","name":"【古风原创】 自动直柄伞 晴雨伞 【青竹词】包邮  新增折叠伞","origin_price":"59.00","product_id":"555"}]
@@ -46,7 +47,7 @@ public class HomeBean {
 
 
 
-            public static class ListBean {
+            public static class ListBean implements Serializable {
                 /**
                  * cover_price : 20.00
                  * figure : /1478489000522.png
@@ -64,7 +65,7 @@ public class HomeBean {
             }
         }
 
-        public static class ActInfoBean{
+        public static class ActInfoBean implements Serializable {
             /**
              * icon_url : /operation/img/1478169868/1478761370286.png
              * name : 尚硅谷福利专区之111.1专区
@@ -77,7 +78,7 @@ public class HomeBean {
 
         }
 
-        public static class BannerInfoBean{
+        public static class BannerInfoBean implements Serializable {
             /**
              * image : /1478770583834.png
              * option : 3
@@ -90,7 +91,7 @@ public class HomeBean {
             public int type;
             public ValueBean value;
 
-            public static class ValueBean {
+            public static class ValueBean implements Serializable {
                 /**
                  * url : /act20161111?cyc_app=1
                  */
@@ -99,7 +100,7 @@ public class HomeBean {
             }
         }
 
-        public static class ChannelInfoBean {
+        public static class ChannelInfoBean implements Serializable {
             /**
              * channel_name : 服饰
              * image : /app/img/menu-cyc.png
@@ -114,7 +115,7 @@ public class HomeBean {
             public int type;
             public ValueBeanX value;
 
-            public static class ValueBeanX {
+            public static class ValueBeanX implements Serializable {
                 /**
                  * channel_id : 8
                  */
@@ -123,7 +124,7 @@ public class HomeBean {
             }
         }
 
-        public static class HotInfoBean {
+        public static class HotInfoBean implements Serializable {
             /**
              * cover_price : 159.00
              * figure : /1477984921265.jpg
@@ -137,7 +138,7 @@ public class HomeBean {
             public String product_id;
         }
 
-        public static class RecommendInfoBean {
+        public static class RecommendInfoBean implements Serializable {
             /**
              * cover_price : 138.00
              * figure : /supplier/1478873740576.jpg

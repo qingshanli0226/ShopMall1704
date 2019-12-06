@@ -1,10 +1,12 @@
 package com.example.dimensionleague.home;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.dimensionleague.CacheManager;
 import com.example.dimensionleague.R;
 import com.example.dimensionleague.businessbean.HomeBean;
 import com.example.dimensionleague.home.adapter.HomeAdapter;
@@ -17,7 +19,7 @@ import java.util.List;
 public class HomeFragment extends BaseNetConnectFragment {
     private RecyclerView rv;
     private HomeAdapter adapter;
-    private List<HomeBean.ResultBean> list;
+    private HomeBean.ResultBean list;
     private  BasePresenter iBasePresenter;
 
 
@@ -25,15 +27,19 @@ public class HomeFragment extends BaseNetConnectFragment {
     public void init(View view) {
         super.init(view);
         rv=view.findViewById(R.id.home_rv);
-        list=new ArrayList<>();
         iBasePresenter=new HomePresenter();
     }
 
     @Override
     public void initDate() {
-        iBasePresenter.attachView(this);
-        iBasePresenter.onHttpGetRequest();
-
+//        iBasePresenter.attachView(this);
+//        iBasePresenter.onHttpGetRequest();
+        Log.d("sss", "initDate: "+((HomeBean) CacheManager.getInstance().getHomeBeanData()).result);
+        list=(((HomeBean) CacheManager.getInstance().getHomeBeanData()).result );
+        adapter=new HomeAdapter(list,getContext());
+// 设置网格布局
+        rv.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+        rv.setAdapter(adapter);
 
     }
 
