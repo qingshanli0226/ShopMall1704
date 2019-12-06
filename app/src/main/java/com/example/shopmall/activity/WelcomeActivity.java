@@ -64,6 +64,9 @@ public class WelcomeActivity extends BaseActivity implements IBaseView<HomepageB
 
     @Override
     public void initData() {
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(iv_welcome,"Alpha",0,1);
+        objectAnimator.setDuration(3000);
+        objectAnimator.start();
 
         IntegerPresenter integerPresenter = new IntegerPresenter(Constant.HOME_URL, HomepageBean.class);
         integerPresenter.attachView(this);
@@ -81,16 +84,6 @@ public class WelcomeActivity extends BaseActivity implements IBaseView<HomepageB
                 }
             },1000,1000);
 
-            ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(iv_welcome,"Alpha",0,1);
-            objectAnimator.setDuration(3000);
-            objectAnimator.start();
-
-//            new Handler().postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//
-//                }
-//            },3000);
         } else {
             Toast.makeText(this, "无网络连接", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(WelcomeActivity.this, MainActivity.class));

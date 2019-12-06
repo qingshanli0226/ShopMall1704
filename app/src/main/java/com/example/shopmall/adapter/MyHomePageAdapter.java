@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -418,24 +419,20 @@ public class MyHomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     class HotViewHolder extends RecyclerView.ViewHolder {
 
         public TextView tv_more_hot;
-//        public GridView gv_hot;
         public RecyclerView rv_hot;
         public Context mContext;
 
         public HotViewHolder(@NonNull View itemView, Context mContext) {
             super(itemView);
             tv_more_hot = itemView.findViewById(R.id.tv_more_hot);
-//            gv_hot = itemView.findViewById(R.id.gv_hot);
             rv_hot = itemView.findViewById(R.id.rv_hot);
-            rv_hot.setLayoutManager(new GridLayoutManager(mContext,2));
+//            rv_hot.setLayoutManager(new GridLayoutManager(mContext,2));
+            rv_hot.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
             this.mContext = mContext;
 
         }
 
         public void setData(final List<HomepageBean.ResultBean.HotInfoBean> hot_info) {
-//            HotGridViewAdapter adapter = new HotGridViewAdapter(mContext, hot_info);
-//            gv_hot.setAdapter(adapter);
-
             HotRecyclerAdapter hotRecyclerAdapter = new HotRecyclerAdapter(mContext, hot_info);
             rv_hot.setAdapter(hotRecyclerAdapter);
 
@@ -453,23 +450,6 @@ public class MyHomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     mContext.startActivity(intent);
                 }
             });
-
-            //点击事件
-//            gv_hot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                @Override
-//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                    // Toast.makeText(mContext, "position:" + position, Toast.LENGTH_SHORT).show();
-//                    String cover_price = hot_info.get(position).getCover_price();
-//                    String name = hot_info.get(position).getName();
-//                    String figure = hot_info.get(position).getFigure();
-//                    String product_id = hot_info.get(position).getProduct_id();
-//                    GoodsBean goodsBean = new GoodsBean(name, cover_price, figure, product_id);
-//
-//                    Intent intent = new Intent(mContext, GoodsInfoActivity.class);
-//                    intent.putExtra(GOODS_BEAN, goodsBean);
-//                    mContext.startActivity(intent);
-//                }
-//            });
         }
     }
 
