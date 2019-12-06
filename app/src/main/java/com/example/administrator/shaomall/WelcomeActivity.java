@@ -30,10 +30,10 @@ public class WelcomeActivity extends BaseMVPActivity<HomeBean.ResultBean> {
 
     @Override
     protected void initView() {
-        aCache = ACache.get(this);
-        iHomePresenter = new HomePresenter();
-        iHomePresenter.attachView(this);
-        iHomePresenter.doGetHttpRequest(AppNetConfig.HOME_DATA_CODE);
+//        aCache = ACache.get(this);
+////        iHomePresenter = new HomePresenter();
+//        iHomePresenter.attachView(this);
+//        iHomePresenter.doGetHttpRequest(AppNetConfig.HOME_DATA_CODE);
 
         mWelcomeBackground = findViewById(R.id.welcome_background);
         mIvWelcomeIcon = findViewById(R.id.iv_welcome_icon);

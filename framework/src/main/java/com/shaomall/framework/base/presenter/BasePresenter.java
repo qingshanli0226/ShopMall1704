@@ -1,10 +1,13 @@
 package com.shaomall.framework.base.presenter;
 
+import android.util.Log;
+
 import com.example.commen.ErrorUtil;
 import com.example.commen.LoadingPageConfig;
 import com.example.commen.ShopMailError;
 import com.example.net.ResEntity;
 import com.example.net.RetrofitCreator;
+import com.example.net.sign.SignUtil;
 import com.google.gson.Gson;
 import com.shaomall.framework.base.view.IBaseView;
 
@@ -12,6 +15,9 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -65,13 +71,13 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
                             } else { //不是列表
                                 ResEntity<T> resEntity = new Gson().fromJson(string, getBeanType());
-//                                T resEntity = new Gson().fromJson(string, getBeanType());
+                                //                                T resEntity = new Gson().fromJson(string, getBeanType());
 
                                 if (resEntity.getCode() == 200) { //数据请求成功
                                     if (iBaseView != null) {
                                         iBaseView.onRequestHttpDataSuccess(requestCode, "", resEntity.getResult());
                                     }
-                                }else {
+                                } else {
                                     //获取数据失败
                                     if (iBaseView != null) {
                                         iBaseView.onRequestHttpDataFailed(requestCode, ShopMailError.BUSINESS_ERROR);
@@ -86,7 +92,6 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                             setLoadingPager(LoadingPageConfig.STATE_EMPTY_CODE);
                             throw new RuntimeException("获取数据为空"); //扔出异常, 让onError函数统一管理
                         }
-
                     }
 
                     @Override
@@ -108,7 +113,8 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
     @Override
     public void doPostHttpRequest(final int requestCode) {
-        RetrofitCreator.getNetApiService().postData(getHeaderParams(), getPath(), getParams())
+        //加密请求
+        RetrofitCreator.getNetApiService().postData(getHeaderParams(), getPath(), getEncryptParamMap())
                 .subscribeOn(Schedulers.io()) //订阅
                 .observeOn(AndroidSchedulers.mainThread()) //观察
                 .subscribe(new Observer<ResponseBody>() {
@@ -150,7 +156,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                                     if (iBaseView != null) {
                                         iBaseView.onRequestHttpDataSuccess(requestCode, resEntity.getMessage(), resEntity.getResult());
                                     }
-                                }else {
+                                } else {
                                     //获取数据失败
                                     if (iBaseView != null) {
                                         iBaseView.onRequestHttpDataFailed(requestCode, ShopMailError.BUSINESS_ERROR);
@@ -232,9 +238,40 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
      *
      * @return
      */
-    public HashMap<String, String> getParams() {
+    public Map<String, String> getParams() {
+
         return new HashMap<>();
     }
+
+    /**
+     * 获取加密后的Params
+     *
+     * @return
+     */
+    public Map<String, String> getEncryptParamMap() {
+        Map<String, String> params = getParams();
+
+        if (!params.isEmpty()){
+            //转化成treeMap
+            TreeMap<String, String> emptyTreeMap = SignUtil.getEmptyTreeMap();
+            Set<Map.Entry<String, String>> entries = params.entrySet();
+            for (Map.Entry<String, String> entry : entries) {
+                emptyTreeMap.put(entry.getKey(), entry.getValue());
+            }
+
+            //根据getParams()返回的参数, 生成对应的签名
+            String sign = SignUtil.generateSign(emptyTreeMap);
+            params.put("sign", sign);
+            Log.i("Wang", "getEncryptParamMap: "+sign);
+            //进行加密, 利用TreeMap
+            Map<String, String> encryptParamMap = SignUtil.encryptParamsByBase64(params);
+
+            return encryptParamMap;
+        }
+
+       return params;
+    }
+
 
     /**
      * 请求路径

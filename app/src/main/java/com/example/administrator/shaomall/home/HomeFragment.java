@@ -2,9 +2,11 @@ package com.example.administrator.shaomall.home;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,16 +18,17 @@ import com.example.administrator.shaomall.AnimationNestedScrollView;
 import com.example.administrator.shaomall.CommonUtil;
 import com.example.administrator.shaomall.R;
 import com.example.commen.ACache;
+import com.example.commen.ShopMailError;
 import com.example.net.AppNetConfig;
 import com.shaomall.framework.base.BaseMVPFragment;
+import com.shaomall.framework.base.presenter.IBasePresenter;
+import com.shaomall.framework.bean.LoginBean;
 import com.youth.banner.loader.ImageLoader;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends BaseMVPFragment<HomeBean.ResultBean> {
+public class HomeFragment extends BaseMVPFragment<LoginBean> {
     private AnimationNestedScrollView sv_view;
     private LinearLayout ll_search;
     private TextView tv_title;
@@ -48,6 +51,33 @@ public class HomeFragment extends BaseMVPFragment<HomeBean.ResultBean> {
         tv_title = view.findViewById(R.id.search_tv_title);
         searchLayoutParams = (ViewGroup.MarginLayoutParams) ll_search.getLayoutParams();
         titleLayoutParams = (ViewGroup.MarginLayoutParams) tv_title.getLayoutParams();
+
+        Button mBtsign = view.findViewById(R.id.mBtsign);
+        mBtsign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IBasePresenter<LoginBean> homePresenter = new HomePresenter();
+                homePresenter.attachView(HomeFragment.this);
+                homePresenter.doPostHttpRequest(101);
+
+            }
+        });
+
+
+    }
+
+    @Override
+    public void onRequestHttpDataSuccess(int requestCode, String message, LoginBean data) {
+        super.onRequestHttpDataSuccess(requestCode, message, data);
+        toast(message, false);
+        Log.i("login", "onRequestHttpDataSuccess: "+message);
+    }
+
+
+    @Override
+    public void onRequestHttpDataFailed(int requestCode, ShopMailError error) {
+        super.onRequestHttpDataFailed(requestCode, error);
+        toast(error.getErrorMessage(), false);
     }
 
     protected void initData() {

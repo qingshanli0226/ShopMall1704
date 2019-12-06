@@ -34,7 +34,6 @@ public abstract class BaseMVPFragment<T> extends BaseFragment implements IBaseVi
 
 //    protected abstract IBasePresenter<T> setBasePresenter();
 
-
 //    protected abstract void initData(IBasePresenter<T> iBasePresenter);
 
 
