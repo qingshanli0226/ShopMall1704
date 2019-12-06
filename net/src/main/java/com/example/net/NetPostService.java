@@ -24,5 +24,10 @@ public interface NetPostService {
 
     @FormUrlEncoded
     @POST("{path}")
-    Observable<ResponseBody> register(@FieldMap Map<String, String> fieldMap);
+    Observable<ResponseBody> register(@Path("path") String path, @FieldMap Map<String, String> fieldMap);
+
+    @FormUrlEncoded
+    @POST("{path}")
+    Observable<ResponseBody> login(@Path("path") String path, @FieldMap Map<String, String> fieldMap);
+
 }

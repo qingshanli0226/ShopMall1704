@@ -167,20 +167,7 @@ public class StepService extends Service implements SensorEventListener {
     @SuppressLint("NewApi")
     private void updateNotification() {
 
-<<<<<<< HEAD:app/src/main/java/com/example/shopmall/step/StepService.java
-        Intent intent = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-//        channel = new NotificationChannel(this.getPackageName(), "通知记步", NotificationManager.IMPORTANCE_DEFAULT);
-        nbuilder = new Notification.Builder(this);
-        nbuilder.setSmallIcon(R.mipmap.custome_head)
-                .setWhen(System.currentTimeMillis())
-                .setContentTitle("用户您好!")
-                .setContentText("您今天已经走了" + currentStep + "步,每天多运动,开心每一天!!")
-                .setContentIntent(pendingIntent);
-//                .setChannelId(this.getPackageName());
-//        notificationManager.createNotificationChannel(channel);
-=======
+
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, StepManager.getInstance().getIntent(), PendingIntent.FLAG_CANCEL_CURRENT);
 
@@ -195,7 +182,6 @@ public class StepService extends Service implements SensorEventListener {
             nbuilder.setChannelId(this.getPackageName());
             notificationManager.createNotificationChannel(channel);
         }
->>>>>>> one:step/src/main/java/com/example/step/StepService.java
         notificationManager.notify(100, nbuilder.build());
         if (updateUi != null) {
             updateUi.getUpdateStep(currentStep);
@@ -237,23 +223,11 @@ public class StepService extends Service implements SensorEventListener {
     private void initNotification() {
 
         notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-//        channel = new NotificationChannel(this.getPackageName(), "通知记步", NotificationManager.IMPORTANCE_DEFAULT);
-<<<<<<< HEAD:app/src/main/java/com/example/shopmall/step/StepService.java
-        nbuilder = new Notification.Builder(this);
-        nbuilder.setSmallIcon(R.mipmap.custome_head)
-=======
         nbuilder=new NotificationCompat.Builder(this);
-        nbuilder
->>>>>>> one:step/src/main/java/com/example/step/StepService.java
-                .setContentIntent(getDefalutIntent(Notification.FLAG_ONGOING_EVENT))
+        nbuilder.setContentIntent(getDefalutIntent(Notification.FLAG_ONGOING_EVENT))
                 .setPriority(Notification.PRIORITY_DEFAULT)
                 .setWhen(System.currentTimeMillis())
                 .setContentTitle("用户您好!")
-<<<<<<< HEAD:app/src/main/java/com/example/shopmall/step/StepService.java
-                .setContentText("您今天已经走了" + currentStep + "步,每天多运动,开心每一天!");
-//                .setChannelId(this.getPackageName());
-//        notificationManager.createNotificationChannel(channel);
-=======
                 .setOngoing(true)
                 .setSmallIcon(R.mipmap.head)
                 .setContentText("您今天已经走了" + currentStep + "步,每天多运动,开心每一天!");
@@ -263,7 +237,6 @@ public class StepService extends Service implements SensorEventListener {
             nbuilder.setChannelId(this.getPackageName());
             notificationManager.createNotificationChannel(channel);
         }
->>>>>>> one:step/src/main/java/com/example/step/StepService.java
         startForeground(100, nbuilder.build());
 
     }

@@ -13,8 +13,8 @@ public interface IBasePresenter<T> {
 
     void getPostFormData();
 
-    void register(String user, String pwd);
+    void register();
 
-    void login(String user, String pwd);
+    void login();
 
 }

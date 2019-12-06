@@ -44,7 +44,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                             T data = new Gson().fromJson(responseBody.string(), getBeanType());
                             if (baseView != null)
                                 baseView.onGetDataSucess(data);
-                                baseView.onLoadingPage();
+                            baseView.onLoadingPage();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -67,14 +67,8 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
     }
 
     @Override
-    public void register(String user, String pwd) {
-        HashMap<String, String> userMap = new HashMap<>();
-        userMap.put("name", user);
-        userMap.put("password", pwd);
-        String sign = SignUtil.generateSign(userMap);
-        userMap.put("sign", sign);
-        Map<String, String> encryptMap = SignUtil.encryptParamsByBase64(userMap);
-        RetrofitCreator.getNetPostService().register(encryptMap)
+    public void register() {
+        RetrofitCreator.getNetPostService().register(getPath(), getSign())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {
@@ -105,15 +99,16 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                 });
     }
 
+    public Map<String, String> getSign() {
+        HashMap<String, String> query = getQuery();
+        String sign = SignUtil.generateSign(query);
+        query.put("sign", sign);
+        return SignUtil.encryptParamsByBase64(query);
+    }
+
     @Override
-    public void login(String user, String pwd) {
-        HashMap<String, String> userMap = new HashMap<>();
-        userMap.put("name", user);
-        userMap.put("password", pwd);
-        String sign = SignUtil.generateSign(userMap);
-        userMap.put("sign", sign);
-        Map<String, String> encryptMap = SignUtil.encryptParamsByBase64(userMap);
-        RetrofitCreator.getNetPostService().register(encryptMap)
+    public void login() {
+        RetrofitCreator.getNetPostService().login(getPath(), getSign())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {
