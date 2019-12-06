@@ -6,6 +6,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PointF;
 
@@ -25,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.buy.BezierTypeEvaluator;
+import com.example.buy.activity.OrderActivity;
 import com.example.buy.adapter.MyShoppingBasketAdapter;
 import com.example.buy.R;
 import com.example.buy.ShoppingUtils;
@@ -262,24 +264,6 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
 
     protected void setTitleBar() {
         tb_shopping_cart.setCenterText("购物车",18,Color.RED);
-
-        tb_shopping_cart.setTitleClickLisner(new TitleBar.TitleClickLisner() {
-            @Override
-            public void LeftClick() {
-
-            }
-
-            @Override
-            public void RightClick() {
-
-            }
-
-            @Override
-            public void CenterClick() {
-
-            }
-        });
-
     }
 
     @Override
@@ -308,7 +292,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         btn_check_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(getContext(), OrderActivity.class));
             }
         });
     }
