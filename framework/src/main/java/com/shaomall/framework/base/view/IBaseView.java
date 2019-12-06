@@ -19,6 +19,5 @@ public interface IBaseView<T> {
 
     void onRequestHttpDataFailed(int requestCode, ShopMailError error);
 
-
     void loadingPage(int code);
 }

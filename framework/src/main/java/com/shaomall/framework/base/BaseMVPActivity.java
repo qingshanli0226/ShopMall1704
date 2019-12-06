@@ -49,7 +49,7 @@ public abstract class BaseMVPActivity<T> extends BaseActivity implements IBaseVi
     }
 
     @Override
-    public void loadingPage(int code) {
+    public void loadingPage(int codee) {
 
     }
 

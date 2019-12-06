@@ -44,12 +44,12 @@ public abstract class BaseLoginFragment<T> extends BaseMVPFragment<T> implements
     }
 
 
-//    @Override
-//    public void onUserStatus(boolean isLogin, LoginBean userInfo) {
-//ei
+    //    @Override
+    //    public void onUserStatus(boolean isLogin, LoginBean userInfo) {
+    //ei
 
 
-//    }
+    //    }
 
 
     @Override
