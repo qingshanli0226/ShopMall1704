@@ -1,6 +1,7 @@
 package com.example.net;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
@@ -20,4 +21,8 @@ public interface NetPostService {
 
     @POST("{path}")
     Observable<ResponseBody> getJsonData(@Path("path") String path, @Body RequestBody body);
+
+    @FormUrlEncoded
+    @POST("{path}")
+    Observable<ResponseBody> register(@FieldMap Map<String, String> fieldMap);
 }

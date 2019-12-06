@@ -2,6 +2,7 @@ package com.example.framework.base;
 
 import android.util.Log;
 
+import com.example.common.SignUtil;
 import com.example.net.RetrofitCreator;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -9,6 +10,8 @@ import com.google.gson.JsonArray;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -54,6 +57,84 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                             baseView.onGetDataFailed(ErrorUtil.handleError(e));
                             baseView.onStopLoadingPage();
                         }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void register(String user, String pwd) {
+        HashMap<String, String> userMap = new HashMap<>();
+        userMap.put("name", user);
+        userMap.put("password", pwd);
+        String sign = SignUtil.generateSign(userMap);
+        userMap.put("sign", sign);
+        Map<String, String> encryptMap = SignUtil.encryptParamsByBase64(userMap);
+        RetrofitCreator.getNetPostService().register(encryptMap)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseBody>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody body) {
+                        try {
+                            T registerBean = new Gson().fromJson(body.string(), getBeanType());
+                            baseView.onPostDataSucess(registerBean);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void login(String user, String pwd) {
+        HashMap<String, String> userMap = new HashMap<>();
+        userMap.put("name", user);
+        userMap.put("password", pwd);
+        String sign = SignUtil.generateSign(userMap);
+        userMap.put("sign", sign);
+        Map<String, String> encryptMap = SignUtil.encryptParamsByBase64(userMap);
+        RetrofitCreator.getNetPostService().register(encryptMap)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseBody>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody body) {
+                        try {
+                            T loginBean = new Gson().fromJson(body.string(), getBeanType());
+                            baseView.onPostDataSucess(loginBean);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
                     }
 
                     @Override
