@@ -143,5 +143,5 @@ public class AppNetConfig {
     public static final String FINDFORSEND="findForSend";
     //TODO 加载头像 GET BASE_URL+用户的avatar
     //TODO 加载图片 GET BASE_URl_IMAGE+请求到的图片url
-    public static final int CODE_OK=200;
+    public static final String CODE_OK="200";
 }

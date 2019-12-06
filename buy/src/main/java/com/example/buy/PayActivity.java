@@ -2,6 +2,7 @@ package com.example.buy;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -43,24 +44,27 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
         list = bundle.getParcelableArrayList(IntentUtil.GOODS);
         recyclerView.getAdapter().notifyDataSetChanged();
         orderMoney.setText(getMoney());
+
+        List<SendOrdersBean.BodyBean> bodyBeans=new ArrayList<>();
+        for (GoodsBean i:list){
+            bodyBeans.add(new SendOrdersBean.BodyBean(i.getProductName(),i.getProductId()));
+        }
+        //直接发起订单
+        SendOrdersBean sendOrdersBean = new SendOrdersBean(
+                "购买",
+                getMoney(),
+                bodyBeans
+        );
+        Log.e("xxx","发起的订单请求"+sendOrdersBean.toString());
+        sendOrederPresenter=new PostOrderPresenter(sendOrdersBean);
+        sendOrederPresenter.attachView(this);
+        sendOrederPresenter.onHttpPostRequest(CODE_ORDER);
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.payBut) {
-            List<SendOrdersBean.BodyBean> bodyBeans=new ArrayList<>();
-            for (GoodsBean i:list){
-                bodyBeans.add(new SendOrdersBean.BodyBean(i.getProductName(),i.getProductId()));
-            }
-            //直接发起订单
-            SendOrdersBean sendOrdersBean = new SendOrdersBean(
-                    "购买",
-                    getMoney(),
-                    bodyBeans
-            );
-            sendOrederPresenter=new PostOrderPresenter(sendOrdersBean);
-            sendOrederPresenter.attachView(this);
-            sendOrederPresenter.onHttpPostRequest(CODE_ORDER);
+
         }
     }
 
@@ -76,6 +80,7 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
 
     @Override
     public void init() {
+        super.init();
         payBut = findViewById(R.id.payBut);
         orderMoney = findViewById(R.id.orderMoney);
         payMoney = findViewById(R.id.payMoney);
@@ -103,7 +108,8 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
         super.onRequestSuccess(requestCode, data);
         switch (requestCode){
             case CODE_ORDER:
-                if (AppNetConfig.CODE_OK== Integer.valueOf(((GetPayOrderBean)data).getCode())){
+                Log.e("xxx","返回订单的东西"+data.toString());
+                if (((GetPayOrderBean)data).getCode().equals(AppNetConfig.CODE_OK)){
                     //下订单成功
                     //订单号
                     ((GetPayOrderBean)data).getResult().getOutTradeNo();

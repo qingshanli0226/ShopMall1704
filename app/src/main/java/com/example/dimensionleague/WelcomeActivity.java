@@ -133,7 +133,7 @@ public class WelcomeActivity extends BaseNetConnectActivity {
                 index--;
                 Log.i("SSS", "run: welcome线程" + index);
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(1);
                     if (index == 0) {
                         flag = false;
                         handler.sendEmptyMessage(102);

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">buy</string>
+    <string name="buyCheckAll">全选</string>
+    <string name="buyDelete">删除</string>
+    <string name="buyNow">立即购买</string>
+    <string name="buyCart">购物车</string>
+    <string name="buyEditor">编辑</string>
+    <string name="buyPay">支付</string>
+    <string name="buyAdd">加入购物车</string>
+    <string name="buySelectInteger">是否选择积分减免</string>
 </resources>

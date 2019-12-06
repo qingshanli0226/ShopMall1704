@@ -13,6 +13,15 @@ public class SendOrdersBean {
         this.body = body;
     }
 
+    @Override
+    public String toString() {
+        return "SendOrdersBean{" +
+                "subject='" + subject + '\'' +
+                ", totalPrice='" + totalPrice + '\'' +
+                ", body=" + body +
+                '}';
+    }
+
     /**
      * subject : buy
      * totalPrice : 500
@@ -48,6 +57,14 @@ public class SendOrdersBean {
     }
 
     public static class BodyBean {
+        @Override
+        public String toString() {
+            return "BodyBean{" +
+                    "productName='" + productName + '\'' +
+                    ", productId='" + productId + '\'' +
+                    '}';
+        }
+
         public BodyBean(String productName, String productId) {
             this.productName = productName;
             this.productId = productId;

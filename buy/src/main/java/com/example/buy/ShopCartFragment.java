@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +24,7 @@ import com.example.framework.base.BaseNetConnectFragment;
 import com.example.framework.base.BaseRecyclerAdapter;
 import com.example.framework.base.BaseViewHolder;
 import com.example.framework.port.IPresenter;
+import com.example.net.AppNetConfig;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -35,10 +37,10 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
     public final int UPDATA_GOODS=102;
 
     private Button buyBut;
-    private Button delBut;
     private RecyclerView recyclerView;
     private CheckBox checkAll;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private Button editBut;
     //数据和被选择
     ArrayList<GoodsBean> list = new ArrayList<>();
     ArrayList<Boolean> checks = new ArrayList<>();
@@ -47,6 +49,9 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
     IPresenter sendCartPresenter;
     IPresenter goodsPresenter;
     IPresenter upDatePresenter;
+
+    //删除与支付状态
+    boolean delStatus=false;
 
     OnCartListener onCartListener;
 
@@ -57,15 +62,35 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
     @Override
     public void onClick(View v) {
         if (v.getId() == buyBut.getId()) {
-            //支付跳转
-            Intent intent = new Intent(getContext(), PayActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList(IntentUtil.GOODS,list);
-            intent.putExtra(IntentUtil.ORDERS,bundle);
-            startActivity(intent);
-        } else if (v.getId() == delBut.getId()) {
-            //TODO 本来是删除商品,但是莫得接口
-            //随便给个提示好了
+            if (delStatus){
+                for (int i=0;i<checks.size();i++){
+                    if (checks.get(i)){
+                        list.remove(i);
+                    }
+                }
+                recyclerView.getAdapter().notifyDataSetChanged();
+            }else {
+                //支付跳转
+                ArrayList<GoodsBean> goods=new ArrayList<>();
+                for (int i=0;i<checks.size();i++){
+                    if (checks.get(i)){
+                        goods.add(list.get(i));
+                    }
+                }
+                Intent intent = new Intent(getContext(), PayActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList(IntentUtil.GOODS,goods);
+                intent.putExtra(IntentUtil.ORDERS,bundle);
+                startActivity(intent);
+            }
+        } else if(v.getId()==editBut.getId()){
+            if (delStatus){
+                buyBut.setText( getResources().getString(R.string.buyNow));
+                delStatus=false;
+            }else {
+                buyBut.setText( getResources().getString(R.string.buyDelete));
+                delStatus=true;
+            }
         }
     }
 
@@ -73,12 +98,12 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
     public void init(View view) {
         super.init(view);
         buyBut = view.findViewById(R.id.buyBut);
-        delBut = view.findViewById(R.id.delBut);
+        editBut = view.findViewById(R.id.editBut);
         recyclerView = view.findViewById(R.id.recyclerView);
         checkAll = view.findViewById(R.id.checkAll);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         buyBut.setOnClickListener(this);
-        delBut.setOnClickListener(this);
+        editBut.setOnClickListener(this);
         //设置recyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new BaseRecyclerAdapter<GoodsBean>(R.layout.item_goods, list) {
@@ -184,26 +209,32 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
     @Override
     public void onRequestSuccess(int requestCode, Object data) {
         super.onRequestSuccess(requestCode, data);
+        swipeRefreshLayout.setRefreshing(false);
         switch (requestCode){
             case CART_GOODS:
+                Log.e("xxx","购物车获取到的数据"+data.toString());
                 checks.clear();
                 list.clear();
                 recyclerView.getAdapter().notifyDataSetChanged();
-                Gson gson = new Gson();
-                GoodsBean[] goods = gson.fromJson(((GetCartBean) data).getResult(), GoodsBean[].class);
-                list.addAll(Arrays.asList(goods));
-                for (int i=0;i<list.size();i++){
-                    checks.add(false);
+                if (((GetCartBean) data).getCode().equals(AppNetConfig.CODE_OK)){
+                    Gson gson = new Gson();
+                    GoodsBean[] goods = gson.fromJson(((GetCartBean) data).getResult(), GoodsBean[].class);
+                    list.addAll(Arrays.asList(goods));
+                    for (int i=0;i<list.size();i++){
+                        checks.add(false);
+                    }
+                    recyclerView.getAdapter().notifyDataSetChanged();
+                    //每一次刷新购物车都重新检查库存
+                    goodsPresenter=new PostVerifyGoodsPresenter(list);
+                    goodsPresenter.attachView(this);
+                    //监听全局的购物车商品数量
+                    onCartListener.OnCartChangeListener(list.size());
+                }else {
+                    Toast.makeText(getContext(),"获取数据失败",Toast.LENGTH_SHORT).show();
                 }
-                recyclerView.getAdapter().notifyDataSetChanged();
-                swipeRefreshLayout.setRefreshing(false);
-                //每一次刷新购物车都重新检查库存
-                goodsPresenter=new PostVerifyGoodsPresenter(list);
-                goodsPresenter.attachView(this);
-                //监听全局的购物车商品数量
-                onCartListener.OnCartChangeListener(list.size());
                 break;
             case VERIFY_GOODS:
+                Log.e("xxx","购物车的库存数据"+data.toString());
                 GoodsBean[] noGoods = new Gson().fromJson(((GetCartBean) data).getResult(), GoodsBean[].class);
                 Log.e("xxxx","库存刷新后的商品"+noGoods);
                 break;

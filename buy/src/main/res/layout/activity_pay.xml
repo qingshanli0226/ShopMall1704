@@ -12,10 +12,13 @@
         android:id="@+id/head"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/buy_nine">
         <Button
             android:id="@+id/payBut"
-            android:text="支付"
+            android:layout_alignParentBottom="true"
+            android:text="@string/buyPay"
+            android:textColor="@color/buyWhite"
+            android:background="@drawable/buybut"
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -44,8 +47,10 @@
             android:layout_height="wrap_content"/>
         <CheckBox
             android:id="@+id/checkInegra"
+            android:button="@null"
+            android:drawableLeft="@drawable/checkbut"
             android:layout_below="@id/subtractIntegra"
-            android:text="是否选择积分减免"
+            android:text="@string/buySelectInteger"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
