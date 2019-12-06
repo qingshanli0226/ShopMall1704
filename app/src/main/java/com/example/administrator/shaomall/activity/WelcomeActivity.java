@@ -15,7 +15,7 @@ public class WelcomeActivity extends BaseActivity {
     private android.widget.RelativeLayout mWelcomeBackground;
     private android.widget.ImageView mIvWelcomeIcon;
     private android.widget.TextView mTvWelcomeVersion;
-    private boolean isData = false;
+    private volatile boolean isData = false;
     private int count = 0;
 
     @Override
@@ -75,4 +75,6 @@ public class WelcomeActivity extends BaseActivity {
             }
         }, 0, 1000);
     }
+
+
 }

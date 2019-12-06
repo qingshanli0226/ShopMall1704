@@ -1,28 +1,36 @@
-package com.example.administrator.shaomall.home;
+package com.example.administrator.shaomall.home.adapter;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.shaomall.R;
+import com.example.administrator.shaomall.home.HomeBean;
 import com.example.administrator.shaomall.home.adapter.ChannelAdapter;
+import com.example.administrator.shaomall.home.adapter.SeckillRecyclerViewAdapter;
 import com.example.net.AppNetConfig;
+import com.flyco.tablayout.CommonTabLayout;
+import com.shaomall.framework.base.BaseHolder;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class HomeRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -35,7 +43,26 @@ public class HomeRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private final int RECOMMEND = 4;
     private final int HOT = 5;
     private int currentType = BANNER;
+    private TextView timeTv;
+    private boolean isFirst = true;
+    private int dt = 0;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 0) {
+                dt = dt - 1000;
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+               timeTv.setText(format.format(new Date(dt)));
 
+                this.removeMessages(0);
+                this.sendEmptyMessageDelayed(0, 1000);
+                if (dt == 0) {
+                    this.removeMessages(0);
+                }
+            }
+        }
+    };
     public HomeRecycleAdapter(HomeBean.ResultBean data, Context context) {
         this.data = data;
         this.context = context;
@@ -44,13 +71,19 @@ public class HomeRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+
         if (i == BANNER)
             return new BannerViewHolder(LayoutInflater.from(context).inflate(R.layout.item_banner,null));
         else if (i == CHANNEL)
             return new ChannelViewHolder(LayoutInflater.from(context).inflate(R.layout.item_channel,null));
         else if (i == ACT)
             return new ActViewHolder(LayoutInflater.from(context).inflate(R.layout.item_act,null));
-
+        else if (i == SECKILL)
+            return new SeckillViewHolder(LayoutInflater.from(context).inflate(R.layout.item_seckill,null));
+        else if (i == RECOMMEND)
+            return new RecommendViewHolder(LayoutInflater.from(context).inflate(R.layout.item_recommend,null));
+        else if (i == HOT)
+            return new HotViewHolder(LayoutInflater.from(context).inflate(R.layout.item_hot,null));
         return null;
     }
 
@@ -94,13 +127,24 @@ public class HomeRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 ActViewHolder actViewHolder = (ActViewHolder) viewHolder;
                 actViewHolder.setData();
                 break;
-
+            case SECKILL :
+                SeckillViewHolder seckillViewHolder = (SeckillViewHolder) viewHolder;
+                seckillViewHolder.setData();
+                break;
+            case RECOMMEND :
+                RecommendViewHolder recommendViewHolder = (RecommendViewHolder) viewHolder;
+                recommendViewHolder.setData();
+                break;
+            case HOT :
+                HotViewHolder hotViewHolder = (HotViewHolder) viewHolder;
+                hotViewHolder.setData();
+                break;
         }
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 6;
     }
 
     private class BannerViewHolder extends RecyclerView.ViewHolder {
@@ -179,4 +223,58 @@ public class HomeRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         }
     }
+
+        class SeckillViewHolder extends RecyclerView.ViewHolder {
+        private TextView moreText;
+        private  RecyclerView recyclerView;
+            public SeckillViewHolder(@NonNull View itemView) {
+                super(itemView);
+           moreText  =itemView.findViewById(R.id.seckill_item_tv_more);
+           timeTv = itemView.findViewById(R.id.seckill_item_tv_time);
+           recyclerView = itemView.findViewById(R.id.seckill_item_rv);
+            }
+
+            public void setData(){
+        //设置时间
+                if (isFirst)
+                {
+                    dt = Integer.parseInt(data.getSeckill_info().getEnd_time()) - Integer.parseInt(data.getSeckill_info().getStart_time());
+                    isFirst = false;
+                }
+                //设置RecyclerView
+                recyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
+                recyclerView.setAdapter(new SeckillRecyclerViewAdapter(context,data.getSeckill_info()));
+
+                handler.sendEmptyMessageDelayed(0,1000);
+
+            }
+
+
+        }
+    class RecommendViewHolder extends RecyclerView.ViewHolder {
+        private TextView textView;
+        private  GridView gridView;
+        public RecommendViewHolder(@NonNull View itemView) {
+            super(itemView);
+            textView = itemView.findViewById(R.id.home_recommend_tv_more);
+            gridView = itemView.findViewById(R.id.home_recommend_gv);
+
+        }
+        public void setData(){
+            gridView.setAdapter(new RecommendGridViewAdapter(data.getRecommend_info()));
+        }
+    }
+        class HotViewHolder extends RecyclerView.ViewHolder {
+        private TextView textView;
+        private GridView gridView;
+        public HotViewHolder(@NonNull View itemView) {
+                super(itemView);
+            textView = itemView.findViewById(R.id.tv_more_hot);
+            gridView = itemView.findViewById(R.id.gv_hot);
+            }
+
+            public void setData(){
+            gridView.setAdapter(new HotGridViewAdapter(data.getHot_info()));
+            }
+        }
 }

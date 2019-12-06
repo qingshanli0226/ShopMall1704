@@ -39,7 +39,7 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
         }
 
         T data = datas.get(position);
-        holder.setDatas(data);
+         holder.setDatas(data);
         return holder.getRootView();
     }
     protected abstract BaseHolder<T> geHolder();
