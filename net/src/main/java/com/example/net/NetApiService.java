@@ -52,16 +52,6 @@ public interface NetApiService {
     Observable<ResponseBody> addOneProduct(@HeaderMap HashMap<String, String> header, @Url String path, @Body RequestBody body);
 
 
-
-
-
-
-
-
-
-
-
-
     /**
      * 上传文件
      *

@@ -1,11 +1,9 @@
 package com.example.administrator.shaomall;
 
-import android.util.Log;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 
 import com.example.administrator.shaomall.home.HomeBean;
-import com.example.administrator.shaomall.home.HomePresenter;
 import com.example.commen.ACache;
 import com.example.net.AppNetConfig;
 import com.shaomall.framework.base.BaseMVPActivity;

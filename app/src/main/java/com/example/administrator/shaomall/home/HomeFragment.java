@@ -52,16 +52,6 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> {
         searchLayoutParams = (ViewGroup.MarginLayoutParams) ll_search.getLayoutParams();
         titleLayoutParams = (ViewGroup.MarginLayoutParams) tv_title.getLayoutParams();
 
-        Button mBtsign = view.findViewById(R.id.mBtsign);
-        mBtsign.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                IBasePresenter<LoginBean> homePresenter = new HomePresenter();
-                homePresenter.attachView(HomeFragment.this);
-                homePresenter.doPostHttpRequest(101);
-
-            }
-        });
 
 
     }
