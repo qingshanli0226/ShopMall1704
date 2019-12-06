@@ -5,7 +5,6 @@ import com.google.gson.reflect.TypeToken;
 import com.shaomall.framework.base.presenter.BasePresenter;
 
 import java.lang.reflect.Type;
-import java.util.List;
 
 public class HomePresenter extends BasePresenter<HomeBean.ResultBean> {
     @Override

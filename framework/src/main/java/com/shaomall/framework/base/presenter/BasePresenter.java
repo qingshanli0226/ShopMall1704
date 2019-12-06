@@ -183,6 +183,10 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                 });
     }
 
+    @Override
+    public void doAddOneProduct(int requestCode) {
+        
+    }
 
     //设置加载页状态
     private void setLoadingPager(int type) {
