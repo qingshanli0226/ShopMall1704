@@ -1,1 +1,1 @@
-include ':app', ':net', ':commen', ':framework', ':remindsteporgan'
+include ':app', ':net', ':commen', ':framework', ':remindsteporgan', ':shoppingcart'

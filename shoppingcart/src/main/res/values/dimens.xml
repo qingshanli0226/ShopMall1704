@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="shoppingcartLinearLayoutHeight">48dp</dimen>
+    <dimen name="shoppingcartTextHeight">48dp</dimen>
+    <dimen name="shoppingcartLinearLayoutCheckboxHeight">50dp</dimen>
+    <dimen name="shoppingcartCheckBoxMarginLeft">10dp</dimen>
+    <dimen name="shoppingcartCheckBoxMarginRigin">4dp</dimen>
+    <dimen name="shoppingcartCheckBoxminHeight">64dp</dimen>
+    <dimen name="shoppingcartCheckBoxPaddingLeft">10dp</dimen>
+    <dimen name="shoppingcartTextTotalLeft">5dp</dimen>
+    <dimen name="shoppingcartTextTotalTextsize">16sp</dimen>
+    <dimen name="shoppingcartTextTotaltPriceTextSize">16sp</dimen>
+</resources>

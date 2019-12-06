@@ -59,5 +59,6 @@ public class DIYRemind extends View {
         //Paint设置水平居中
         paint.setTextAlign(Paint.Align.CENTER);
         canvas.drawText(step,getWidth()/2,getHeight()/2-offSet,paint);
+
     }
 }

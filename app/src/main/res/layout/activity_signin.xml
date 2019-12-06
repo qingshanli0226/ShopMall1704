@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".login.ui.SigninActivity"
+    android:background="@mipmap/bei"
+    android:orientation="vertical">
+    <com.example.administrator.shaomall.login.diyview.Headportrait
+        android:layout_marginTop="@dimen/loginMarginTop"
+        android:layout_gravity="center"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+    <LinearLayout
+        android:layout_marginTop="@dimen/loginMarginTop"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:textColor="@color/darkturquoise"
+            android:layout_marginLeft="20dp"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:text="用户名:"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <EditText
+
+            android:id="@+id/signinUser"
+            android:textColor="@color/darkturquoise"
+            android:background="@null"
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"/>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/loginMarginTop"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:textColor="@color/darkturquoise"
+            android:layout_marginLeft="20dp"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:text="密码:"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <EditText
+            android:id="@+id/signinPass"
+            android:textColor="@color/darkturquoise"
+            android:background="@null"
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="@dimen/loginMarginTop"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/signinSignin"
+            android:layout_marginRight="45dp"
+            android:textColor="@color/darkturquoise"
+            android:textSize="12dp"
+            android:gravity="right|center"
+            android:text="已有账号?点击前往登录"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+    <com.example.administrator.shaomall.login.diyview.DIYButton
+
+        android:id="@+id/diybutton"
+        android:layout_gravity="center"
+        android:layout_marginTop="55dp"
+        android:layout_width="300dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
+
+    </View>
+</LinearLayout>

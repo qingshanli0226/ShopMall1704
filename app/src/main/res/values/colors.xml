@@ -9,4 +9,8 @@
     <color name="transparent">#00000000</color>
     <color name="text_unselect">#929191</color>
     <color name="colorWhite">#fff</color>
+    <color name="skyblue">#87ceeb</color>
+    <color name="mediumspringgreen">#00fa9a</color>
+    <color name="darkturquoise">#00ced1</color>
+
 </resources>
