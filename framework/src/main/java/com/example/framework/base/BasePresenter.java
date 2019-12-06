@@ -2,6 +2,7 @@ package com.example.framework.base;
 
 import android.util.Log;
 
+import com.example.common.SignUtil;
 import com.example.net.RetrofitCreator;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -9,6 +10,8 @@ import com.google.gson.JsonArray;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -41,7 +44,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                             T data = new Gson().fromJson(responseBody.string(), getBeanType());
                             if (baseView != null)
                                 baseView.onGetDataSucess(data);
-                                baseView.onLoadingPage();
+                            baseView.onLoadingPage();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -54,6 +57,79 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                             baseView.onGetDataFailed(ErrorUtil.handleError(e));
                             baseView.onStopLoadingPage();
                         }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void register() {
+        RetrofitCreator.getNetPostService().register(getPath(), getSign())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseBody>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody body) {
+                        try {
+                            T registerBean = new Gson().fromJson(body.string(), getBeanType());
+                            baseView.onPostDataSucess(registerBean);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    public Map<String, String> getSign() {
+        HashMap<String, String> query = getQuery();
+        String sign = SignUtil.generateSign(query);
+        query.put("sign", sign);
+        return SignUtil.encryptParamsByBase64(query);
+    }
+
+    @Override
+    public void login() {
+        RetrofitCreator.getNetPostService().login(getPath(), getSign())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ResponseBody>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody body) {
+                        try {
+                            T loginBean = new Gson().fromJson(body.string(), getBeanType());
+                            baseView.onPostDataSucess(loginBean);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
                     }
 
                     @Override

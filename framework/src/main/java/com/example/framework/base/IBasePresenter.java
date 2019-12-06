@@ -13,4 +13,8 @@ public interface IBasePresenter<T> {
 
     void getPostFormData();
 
+    void register();
+
+    void login();
+
 }
