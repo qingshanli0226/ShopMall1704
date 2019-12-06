@@ -16,7 +16,6 @@ import java.util.List;
 
 public class HomeFragment extends BaseNetConnectFragment {
     private RecyclerView rv;
-    private TextView tv;
     private HomeAdapter adapter;
     private List<HomeBean.ResultBean> list;
     private  BasePresenter iBasePresenter;
@@ -26,14 +25,12 @@ public class HomeFragment extends BaseNetConnectFragment {
     public void init(View view) {
         super.init(view);
         rv=view.findViewById(R.id.home_rv);
-        tv=view.findViewById(R.id.home_marquee);
         list=new ArrayList<>();
         iBasePresenter=new HomePresenter();
     }
 
     @Override
     public void initDate() {
-        tv.setSelected(true);
         iBasePresenter.attachView(this);
         iBasePresenter.onHttpGetRequest();
 
@@ -56,7 +53,6 @@ public class HomeFragment extends BaseNetConnectFragment {
         if (data!=null){
             adapter=new HomeAdapter(((HomeBean)data).result,getContext());
 // 设置网格布局
-
             rv.setLayoutManager(new GridLayoutManager(getActivity(), 1));
             rv.setAdapter(adapter);
         }else{
