@@ -67,11 +67,15 @@ public class CacheManager {
         return readObject(indexPath);
     }
     public void registerGetDateListener(IHomeReceivedListener listener){
-        this.listener=listener;
+        synchronized (CacheManager.class){
+            this.listener=listener;
+        }
     }
 
     public void unRegisterGetDateListener(){
-        this.listener=null;
+        synchronized (CacheManager.class){
+            this.listener=null;
+        }
     }
     private Object readObject(String indexPath) {
         FileInputStream fis = null;
@@ -115,14 +119,16 @@ public class CacheManager {
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
-                        try {
-                            String string = responseBody.string();
-                            HomeBean homeBean = new Gson().fromJson(string, HomeBean.class);
-                            Log.i("SSS", "onNext: "+string);
-                            writeObject(homeBean);
-                            listener.onHomeDataReceived(homeBean.result);
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                        synchronized (CacheManager.class){
+                            try {
+                                String string = responseBody.string();
+                                HomeBean homeBean = new Gson().fromJson(string, HomeBean.class);
+                                Log.i("SSS", "onNext: "+string);
+                                writeObject(homeBean);
+                                listener.onHomeDataReceived(homeBean.result);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
 
 
@@ -130,7 +136,9 @@ public class CacheManager {
 
                     @Override
                     public void onError(Throwable e) {
-                        listener.onHomeDataError(e.getMessage());
+                       synchronized (CacheManager.class){
+                           listener.onHomeDataError(e.getMessage());
+                       }
                     }
 
                     @Override

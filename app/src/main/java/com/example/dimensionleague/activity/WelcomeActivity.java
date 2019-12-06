@@ -1,11 +1,10 @@
-package com.example.dimensionleague;
+package com.example.dimensionleague.activity;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
@@ -15,9 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.dimensionleague.CacheManager;
+import com.example.dimensionleague.R;
 import com.example.dimensionleague.businessbean.HomeBean;
 import com.example.framework.base.BaseNetConnectActivity;
 import java.util.ArrayList;
@@ -57,16 +57,38 @@ public class WelcomeActivity extends BaseNetConnectActivity {
         CacheManager.getInstance().registerGetDateListener(new CacheManager.IHomeReceivedListener() {
             @Override
             public void onHomeDataReceived(HomeBean.ResultBean homeBean) {
-                isNetOk=true;
+               synchronized (WelcomeActivity.this){
+                   isNetOk=true;
+                   if(index==-1){
+                       //                    跳转到主页面
+                       startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+                       finish();
+                   }
+               }
             }
 
             @Override
             public void onHomeDataError(String s) {
-                isNetOk=false;
-                toast(WelcomeActivity.this,s);
-
+                synchronized (WelcomeActivity.this){
+                    isNetOk=false;
+                    try {
+                        AlertDialog alertDialog = new AlertDialog.Builder(WelcomeActivity.this)
+                                .setTitle("警告")
+                                .setMessage("网络信号不好哟~宝宝卡得要哭了~")
+                                .setPositiveButton("点击重试", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        CacheManager.getInstance().getHomeDate();
+                                    }
+                                }).create();
+                        alertDialog.show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
+
 
         vp.setAdapter(new PagerAdapter() {
             @Override
@@ -101,6 +123,7 @@ public class WelcomeActivity extends BaseNetConnectActivity {
 
         super.onDestroy();
         if (thread != null) {
+
             thread.onClose();
         }
         if (handler != null) {
@@ -131,28 +154,18 @@ public class WelcomeActivity extends BaseNetConnectActivity {
                     }
                     break;
                 case 102:
-                    if (isNetOk) {
-                        //                    跳转到主页面
-                        startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-                    } else {
-                        try {
-                            AlertDialog alertDialog = new AlertDialog.Builder(WelcomeActivity.this)
-                                    .setTitle("警告")
-                                    .setMessage("网络信号不好哟~宝宝卡得要哭了~")
-                                    .setPositiveButton("点击重试", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            CacheManager.getInstance().getHomeDate();
-                                            handler.sendEmptyMessage(102);
-                                        }
-                                    }).create();
-                            alertDialog.show();
-                    } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return;
+                    synchronized (WelcomeActivity.this){
+                        if (isNetOk&&index==-1) {
+                            //                    跳转到主页面
+                            startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+                            finish();
+
+                        } else {
+                            return;
+                        }
+                        break;
                     }
-                    break;
+
                 default:
                     throw new IllegalStateException("Unexpected value: " + msg.what);
             }
@@ -165,6 +178,7 @@ public class WelcomeActivity extends BaseNetConnectActivity {
         @Override
         public void run() {
             while (flag) {
+                synchronized (WelcomeActivity.this){
                 index--;
                 Log.i("SSS", "run: welcome线程" + index);
                 try {
@@ -178,12 +192,15 @@ public class WelcomeActivity extends BaseNetConnectActivity {
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                    break;
                 }
+            }
             }
         }
 
         public void onClose() {
             flag = false;
+            thread.interrupt();
         }
     }
 }

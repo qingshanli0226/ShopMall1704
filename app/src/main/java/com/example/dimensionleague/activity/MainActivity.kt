@@ -1,7 +1,8 @@
-package com.example.dimensionleague
+package com.example.dimensionleague.activity
 
 import androidx.fragment.app.Fragment
 import android.graphics.Color
+import com.example.dimensionleague.R
 import com.example.dimensionleague.home.HomeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import com.example.framework.base.BaseNetConnectActivity
