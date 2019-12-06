@@ -25,18 +25,22 @@
             android:scrollbars="none"
             android:layout_weight="2" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="5">
 
+            <com.example.common.LoadingPage
+                android:id="@+id/lp_classify_loading"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_right"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_toRightOf="@id/lv_left" />
+                android:layout_height="match_parent" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 

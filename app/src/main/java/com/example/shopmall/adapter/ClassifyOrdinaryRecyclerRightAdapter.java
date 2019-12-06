@@ -19,16 +19,16 @@ import com.example.shopmall.bean.ClassifyBean;
 import java.util.ArrayList;
 
 /**
- * 热卖推荐
+ * 常用分类
  */
-public class ClassifyRecyclerRightAdapter extends RecyclerView.Adapter<ClassifyRecyclerRightAdapter.ViewHolder> {
+public class ClassifyOrdinaryRecyclerRightAdapter extends RecyclerView.Adapter<ClassifyOrdinaryRecyclerRightAdapter.ViewHolder> {
 
     private Context mContext;
-    private ArrayList<ClassifyBean.ResultBean.HotProductListBean> hotProductListBeans;
+    private ArrayList<ClassifyBean.ResultBean.ChildBean> childBeans;
 
-    public ClassifyRecyclerRightAdapter(Context mContext, ArrayList<ClassifyBean.ResultBean.HotProductListBean> hotProductListBeans) {
+    public ClassifyOrdinaryRecyclerRightAdapter(Context mContext, ArrayList<ClassifyBean.ResultBean.ChildBean> childBeans) {
         this.mContext = mContext;
-        this.hotProductListBeans = hotProductListBeans;
+        this.childBeans = childBeans;
     }
 
     @NonNull
@@ -39,33 +39,14 @@ public class ClassifyRecyclerRightAdapter extends RecyclerView.Adapter<ClassifyR
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        Glide.with(mContext).load(Constant.BASE_URL_IMAGE + hotProductListBeans.get(position).getFigure()).into(holder.iv_ordinary_right);
-        holder.tv_ordinary_right.setText( "￥" + hotProductListBeans.get(position).getCover_price());
-        holder.tv_ordinary_right.setTextColor(Color.RED);
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                linkedlist.getLinkedlist(position);
-            }
-        });
-
-    }
-
-    Linkedlist linkedlist;
-
-    interface Linkedlist{
-        public void getLinkedlist(int position);
-    }
-
-    public void setLinkedlist(Linkedlist linkedlist) {
-        this.linkedlist = linkedlist;
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Glide.with(mContext).load(Constant.BASE_URL_IMAGE + childBeans.get(position).getPic()).into(holder.iv_ordinary_right);
+        holder.tv_ordinary_right.setText(childBeans.get(position).getName());
     }
 
     @Override
     public int getItemCount() {
-        return hotProductListBeans.size();
+        return childBeans.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

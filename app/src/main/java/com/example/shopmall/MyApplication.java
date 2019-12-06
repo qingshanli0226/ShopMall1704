@@ -19,7 +19,7 @@ public class MyApplication extends Application {
         context = this;
 
         //初始化缓存管理类
-        CaCheManager.getInstance(this).init(this);
+//        CaCheManager.getInstance(this).init(this);
 
 
         //点击通知跳转MainActivity

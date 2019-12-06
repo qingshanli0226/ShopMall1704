@@ -3,13 +3,16 @@ package com.example.shopmall.fragment;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.common.LoadingPage;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseFragment;
 import com.example.framework.base.IBaseView;
@@ -26,6 +29,8 @@ import com.example.shopmall.presenter.IntegerPresenter;
 public class ClassifyFragment extends BaseFragment implements IBaseView<ClassifyBean> {
 
     TitleBar tb_classify;
+    LoadingPage lp_classify_loading;
+
     ListView lv_left;
     RecyclerView rv_right;
     ClassifyLeftAdapter classifyLeftAdapter;
@@ -107,23 +112,12 @@ public class ClassifyFragment extends BaseFragment implements IBaseView<Classify
     @Override
     protected void initView(View view) {
         tb_classify = view.findViewById(R.id.tb_classify);;
+        LoadingPage lp_classify_loading = view.findViewById(R.id.lp_classify_loading);
 
         lv_left = view.findViewById(R.id.lv_left);
         rv_right = view.findViewById(R.id.rv_right);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
-        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                if (position == 0){
-                    return 3;
-                }else {
-                    return 1;
-                }
-            }
-        });
-
-        rv_right.setLayoutManager(gridLayoutManager);
+        rv_right.setLayoutManager(new LinearLayoutManager(getContext()));
 
     }
 
@@ -151,12 +145,17 @@ public class ClassifyFragment extends BaseFragment implements IBaseView<Classify
 
     @Override
     public void onLoadingPage() {
-
+//        lp_classify_loading.start(LoadingPage.LOADING_FAILURE);
+//        lp_classify_loading.setVisibility(View.VISIBLE);
+//        rv_right.setVisibility(View.GONE);
     }
 
     @Override
     public void onStopLoadingPage() {
-
+//        lp_classify_loading.start(LoadingPage.LOADING_FAILURE);
+//        lp_classify_loading.isSucceed();
+//        lp_classify_loading.setVisibility(View.GONE);
+//        rv_right.setVisibility(View.VISIBLE);
     }
 
     @Override
