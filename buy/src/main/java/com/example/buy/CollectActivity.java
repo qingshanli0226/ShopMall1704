@@ -8,10 +8,7 @@ public class CollectActivity extends BaseActivity {
         return R.layout.activity_collect;
     }
 
-    @Override
-    public int getRelativeLayout() {
-        return 0;
-    }
+
 
     @Override
     public void init() {

@@ -1,4 +1,4 @@
-package com.example.dimensionleague.database;
+package com.example.point.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,8 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 public class StepData extends SQLiteOpenHelper {
-    public StepData(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public StepData(@Nullable Context context) {
+        super(context,"StepData",null,2);
     }
 
 

@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="Hello World!"
             />
-        <com.example.dimensionleague.view.StepView
+        <com.example.point.view.StepView
             android:id="@+id/step"
             android:layout_width="200dp"
             android:layout_height="200dp"

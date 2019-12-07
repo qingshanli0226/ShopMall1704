@@ -1,4 +1,4 @@
-package com.example.dimensionleague.activity;
+package com.example.point.activity;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -12,15 +12,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.example.dimensionleague.R;
 import com.example.framework.base.BaseActivity;
+import com.example.point.R;
+import com.example.point.database.StepData;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class PhysicalActivity extends BaseActivity {
@@ -31,7 +31,7 @@ public class PhysicalActivity extends BaseActivity {
     private CheckBox cb_remind;
     private TextView tv_remind_time;
     private Button btn_save;
-
+    private StepData stepData;
     @Override
     public void init() {
         iv_left=findViewById(R.id.iv_left);
