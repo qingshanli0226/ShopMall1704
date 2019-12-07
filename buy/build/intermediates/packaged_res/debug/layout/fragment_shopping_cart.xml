@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    tools:context="com.example.buy.fragment.ShoppingCartFragment">
     tools:context="com.example.buy.com.example.buy.ShoppingCartFragment">
 
     <RelativeLayout

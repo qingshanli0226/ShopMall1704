@@ -11,6 +11,12 @@
 9-->D:\GitHub\ShopMall1704\buy\src\main\AndroidManifest.xml
 10
 11    <application />
-11-->D:\GitHub\ShopMall1704\buy\src\main\AndroidManifest.xml:4:5-32
-12
-13</manifest>
+11-->D:\GitHub\ShopMall1704\buy\src\main\AndroidManifest.xml:4:5-6:19
+12    <application>
+12-->D:\GitHub\ShopMall1704\buy\src\main\AndroidManifest.xml:4:5-6:19
+13        <activity android:name="com.example.buy.activity.OrderActivity" />
+13-->D:\GitHub\ShopMall1704\buy\src\main\AndroidManifest.xml:5:9-60
+13-->D:\GitHub\ShopMall1704\buy\src\main\AndroidManifest.xml:5:19-57
+14    </application>
+15
+16</manifest>

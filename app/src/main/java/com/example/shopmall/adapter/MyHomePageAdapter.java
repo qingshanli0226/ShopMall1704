@@ -33,6 +33,8 @@ import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
+import com.example.framework.base.BaseAdapter;
+
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

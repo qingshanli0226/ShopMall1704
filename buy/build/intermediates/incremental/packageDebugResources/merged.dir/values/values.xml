@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="dpsize_30">30dp</dimen>
-    <dimen name="recyclerimgsize">100dp</dimen>
-    <string name="app_name">buy</string>
-</resources>

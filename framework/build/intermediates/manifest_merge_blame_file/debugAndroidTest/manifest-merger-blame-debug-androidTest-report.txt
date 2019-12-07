@@ -3,24 +3,24 @@
 3    package="com.example.framework.test" >
 4
 5    <uses-sdk
-5-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3341024463734778355.xml:5:5-74
+5-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:5:5-74
 6        android:minSdkVersion="17"
-6-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3341024463734778355.xml:5:15-41
+6-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:5:15-41
 7        android:targetSdkVersion="29" />
-7-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3341024463734778355.xml:5:42-71
+7-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:5:42-71
 8
 9    <instrumentation
-9-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3341024463734778355.xml:11:5-15:76
+9-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:11:5-15:76
 10        android:name="androidx.test.runner.AndroidJUnitRunner"
-10-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3341024463734778355.xml:11:22-76
+10-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:11:22-76
 11        android:functionalTest="false"
-11-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3341024463734778355.xml:14:22-52
+11-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:14:22-52
 12        android:handleProfiling="false"
-12-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3341024463734778355.xml:13:22-53
+12-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:13:22-53
 13        android:label="Tests for com.example.framework.test"
-13-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3341024463734778355.xml:15:22-74
+13-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:15:22-74
 14        android:targetPackage="com.example.framework.test" />
-14-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3341024463734778355.xml:12:22-72
+14-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:12:22-72
 15
 16    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 16-->[__tested_artifact__::framework] D:\GitHub\ShopMall1704\framework\build\intermediates\library_manifest\debug\AndroidManifest.xml:11:5-79
@@ -30,14 +30,14 @@
 17-->[androidx.test:core:1.2.0] C:\Users\bing\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:24:22-69
 18
 19    <application
-19-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3341024463734778355.xml:7:5-9:19
+19-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:7:5-9:19
 20        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 20-->[androidx.core:core:1.1.0] C:\Users\bing\.gradle\caches\transforms-2\files-2.1\46be5df68f9cfe3450f3e9e67d19a9fa\core-1.1.0\AndroidManifest.xml:24:18-86
 21        android:debuggable="true" >
-21-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3341024463734778355.xml:7:18-43
+21-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:7:18-43
 22        <uses-library android:name="android.test.runner" />
-22-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3341024463734778355.xml:8:9-60
-22-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3341024463734778355.xml:8:23-57
+22-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:8:9-60
+22-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:8:23-57
 23
 24        <activity
 24-->[androidx.test:core:1.2.0] C:\Users\bing\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:27:9-33:20

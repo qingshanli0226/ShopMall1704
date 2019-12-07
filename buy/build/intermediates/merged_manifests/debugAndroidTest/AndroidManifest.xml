@@ -21,6 +21,7 @@
         android:debuggable="true" >
         <uses-library android:name="android.test.runner" />
 
+        <activity android:name="com.example.buy.activity.OrderActivity" />
         <activity
             android:name="androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity"
             android:theme="@android:style/Theme" >

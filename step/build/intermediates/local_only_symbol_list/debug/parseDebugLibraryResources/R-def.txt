@@ -1,4 +1,24 @@
 R_DEF: Internal format may change without notice
 local
+color black
+color center_text_color
+color color1
+color color2
+color color3
+color color_one
+color color_three
+color color_two
+color default_color
+color end_color
+color grey
+color other_text_color
+color red
+color start_color
+color yellow
+mipmap arrow
+mipmap arrow_top
+mipmap bluewim
 mipmap head
+mipmap ren
+mipmap runbacks
 string app_name

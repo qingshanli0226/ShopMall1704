@@ -9,5 +9,8 @@
         android:targetSdkVersion="29" />
 
     <application />
+    <application>
+        <activity android:name="com.example.buy.activity.OrderActivity" />
+    </application>
 
 </manifest>
