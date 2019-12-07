@@ -268,7 +268,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
             return encryptParamMap;
         }
-
+        
        return params;
     }
 
