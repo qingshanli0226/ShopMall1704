@@ -111,7 +111,7 @@ public class ClassifyFragment extends BaseFragment implements IBaseView<Classify
 
     @Override
     protected void initView(View view) {
-        tb_classify = view.findViewById(R.id.tb_classify);;
+        tb_classify = view.findViewById(R.id.tb_classify);
         LoadingPage lp_classify_loading = view.findViewById(R.id.lp_classify_loading);
 
         lv_left = view.findViewById(R.id.lv_left);

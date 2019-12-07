@@ -11,6 +11,9 @@ public class Constant {
     //请求图片基本URL
     public static String BASE_URL_IMAGE = BASE_URL + "/atguigu/img/";
 
+    //注册
+    public static String REGISTER_URL= "register";
+
     //小裙子
     public static final String SKIRT_URL = BASE_URL_JSON + "SKIRT_URL.json";
     //上衣
