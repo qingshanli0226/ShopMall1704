@@ -139,7 +139,7 @@ public class HomepageBean implements Serializable {
                 this.list = list;
             }
 
-            public static class ListBean {
+            public static class ListBean implements Serializable{
                 /**
                  * cover_price : 20.00
                  * figure : /1478489000522.png
@@ -277,7 +277,7 @@ public class HomepageBean implements Serializable {
                 this.value = value;
             }
 
-            public static class ValueBean {
+            public static class ValueBean implements Serializable{
                 /**
                  * url : /act20161111?cyc_app=1
                  */
@@ -349,7 +349,7 @@ public class HomepageBean implements Serializable {
                 this.value = value;
             }
 
-            public static class ValueBeanX {
+            public static class ValueBeanX implements Serializable {
                 /**
                  * channel_id : 8
                  */

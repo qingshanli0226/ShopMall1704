@@ -62,7 +62,7 @@ public class OrmUtils {
      * @param value
      * @return
      */
-    public static <T> List<T> getQueryByWhere(Class<T> cla, String field, String[] value) {
+    public static <T> List<T> getQueryByWhere(Class<T> cla, String field, Object[] value) {
         return liteOrm.<T>query(new QueryBuilder(cla).where(field + "=?", value));
     }
 
@@ -78,7 +78,7 @@ public class OrmUtils {
      * @param field
      * @param value
      */
-    public static <T> int deleteWhere(Class<T> cla, String field, String[] value) {
+    public static <T> int deleteWhere(Class<T> cla, String field, Object[] value) {
         return liteOrm.delete(cla, new WhereBuilder(cla).where(field + "!=?", value));
     }
 

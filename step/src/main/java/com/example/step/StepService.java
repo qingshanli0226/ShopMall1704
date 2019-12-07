@@ -11,12 +11,15 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Binder;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -32,6 +35,7 @@ public class StepService extends Service implements SensorEventListener {
 
 
     public static String CURRENT_DATE = "";
+    private static int duration=3000;
     private int systemStep;
     private int previousStep;
     private int currentStep;
@@ -39,13 +43,12 @@ public class StepService extends Service implements SensorEventListener {
 
     private BroadcastReceiver broadcastReceiver;
 
-
     private  NotificationCompat.Builder nbuilder;
     private NotificationChannel channel;
     private NotificationManager notificationManager;
 
 
-//    private TimeCount timeCount;
+    private TimeCount timeCount;
     private UpdateUi updateUi;
 
     @Nullable
@@ -72,7 +75,7 @@ public class StepService extends Service implements SensorEventListener {
             }
         }).start();
 
-//        startTimer();
+        startTimer();
 
 
     }
@@ -81,12 +84,12 @@ public class StepService extends Service implements SensorEventListener {
         this.updateUi = updateUi;
     }
 
-//    private void startTimer() {
-//        if (timeCount == null) {
-//            timeCount = new TimeCount(2000, 1000);
-//        }
-//        timeCount.start();
-//    }
+    private void startTimer() {
+        if (timeCount == null) {
+            timeCount = new TimeCount(duration, 1000);
+        }
+        timeCount.start();
+    }
 
     private void initBoradCast() {
         IntentFilter intentFilter = new IntentFilter();
@@ -107,7 +110,11 @@ public class StepService extends Service implements SensorEventListener {
             public void onReceive(Context context, Intent intent) {
 
                 switch (intent.getAction()) {
+                    case Intent.ACTION_SCREEN_OFF:
+                        duration=30000;
+                        break;
                     case Intent.ACTION_SCREEN_ON:
+                        duration=3000;
                         break;
                     case Intent.ACTION_SHUTDOWN:
                         save();
@@ -155,9 +162,10 @@ public class StepService extends Service implements SensorEventListener {
         Log.e("##day", shopStepBeans.toString());
         if (shopStepBeans.size() == 0 || shopStepBeans.isEmpty()) {
             currentStep = 0;
-        } else if (shopStepBeans.size() == 1) {
+        } else {
             currentStep = Integer.parseInt(shopStepBeans.get(0).getCurrent_step());
         }
+
 
 
         updateNotification();
@@ -168,6 +176,7 @@ public class StepService extends Service implements SensorEventListener {
     @SuppressLint("NewApi")
     private void updateNotification() {
 
+
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, StepManager.getInstance().getIntent(), PendingIntent.FLAG_CANCEL_CURRENT);
 
         nbuilder
@@ -176,6 +185,7 @@ public class StepService extends Service implements SensorEventListener {
                 .setContentText("您今天已经走了" + currentStep + "步,每天多运动,开心每一天!!")
                 .setSmallIcon(R.mipmap.head)
                 .setContentIntent(pendingIntent);
+
 
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
             nbuilder.setChannelId(this.getPackageName());
@@ -222,6 +232,7 @@ public class StepService extends Service implements SensorEventListener {
     private void initNotification() {
 
         notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.head);
         nbuilder=new NotificationCompat.Builder(this);
         nbuilder
                 .setContentIntent(getDefalutIntent(Notification.FLAG_ONGOING_EVENT))
@@ -230,7 +241,9 @@ public class StepService extends Service implements SensorEventListener {
                 .setContentTitle("用户您好!")
                 .setOngoing(true)
                 .setSmallIcon(R.mipmap.head)
-                .setContentText("您今天已经走了" + currentStep + "步,每天多运动,开心每一天!");
+                .setContentText("您今天已经走了" + currentStep + "步,每天多运动,开心每一天!")
+                 .setLargeIcon(bitmap)
+                 .setDefaults(Notification.DEFAULT_ALL);
 
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
              channel = new NotificationChannel(this.getPackageName(), "记步", NotificationManager.IMPORTANCE_DEFAULT);
@@ -272,15 +285,17 @@ public class StepService extends Service implements SensorEventListener {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
             int sensorStep = (int) sensorEvent.values[0];
             if (!isFirst) {
-                systemStep = sensorStep;
                 isFirst = true;
+                systemStep = sensorStep;
             } else {
                 int thisStep = sensorStep - systemStep;
                 int i = thisStep - previousStep;
-                currentStep += i;
+                currentStep += (i);
                 previousStep = thisStep;
-                Log.e("##THIS", systemStep + "--" + sensorStep + "---" + i + "--" + currentStep + "--" + previousStep);
+                Log.e("##THIS", systemStep + "--" + sensorStep + "---" + i + "--" + currentStep + "--" + previousStep+"-this"+thisStep);
             }
+
+
         } else if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
             if (sensorEvent.values[0] == 1.0f) {
                 currentStep++;
@@ -316,25 +331,25 @@ public class StepService extends Service implements SensorEventListener {
         }
     }
 
-//    class TimeCount extends CountDownTimer {
-//
-//        public TimeCount(long millisInFuture, long countDownInterval) {
-//            super(millisInFuture, countDownInterval);
-//        }
-//
-//        @Override
-//        public void onTick(long l) {
-//
-//        }
-//
-//        @Override
-//        public void onFinish() {
-//
-//            timeCount.cancel();
-//            save();
-//            startTimer();
-//        }
-//    }
+    class TimeCount extends CountDownTimer {
+
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long l) {
+
+        }
+
+        @Override
+        public void onFinish() {
+
+            timeCount.cancel();
+            save();
+            startTimer();
+        }
+    }
 
 
 

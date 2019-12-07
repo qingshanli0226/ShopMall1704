@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment;
 import android.graphics.Color;
 import android.view.View;
 
-import com.example.base.BaseFragment;
 import com.example.common.TitleBar;
+import com.example.framework.base.BaseFragment;
 import com.example.shopmall.R;
 
 /**

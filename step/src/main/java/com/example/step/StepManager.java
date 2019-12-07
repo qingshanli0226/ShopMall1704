@@ -1,11 +1,5 @@
 package com.example.step;
 
-
-
-
-
-
-
 /*
   初始化init 开启服务, 注册记步的回调接口 ,在onDestory中注销服务
  */
@@ -17,8 +11,6 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.widget.Toast;
-
-
 import java.util.List;
 
 public class StepManager {
@@ -55,10 +47,17 @@ public class StepManager {
                     public void getUpdateStep(int count) {
                         if(stepManagerListener!=null){
                             stepManagerListener.onStepChange(count);
+                            getGal();
                         }
                     }
                 });
             }
+
+    //根据时间返回数据记录
+//    public List<StepBean> findStep(String date) {
+//        QueryBuilder<StepBean> findDate = stepBeanDao.queryBuilder().where(StepBeanDao.Properties.Data.eq(date));
+//        return findDate.list();
+//    }
 
             @Override
             public void onServiceDisconnected(ComponentName componentName) {
@@ -107,27 +106,15 @@ public class StepManager {
         List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
 
         if(queryAll!=null){
-        for (int i=0;i<queryAll.size();i++){
+        for (int i=0;i<queryAll.size();i++) {
             String current_step = queryAll.get(i).getCurrent_step();
             int i1 = Integer.parseInt(current_step);
-            if(i1>100){
-                int intGal =(int) i1 / 100;
-                int gal = sharedPreferences.getInt("gal", 0);
-                if(gal>0){
-                    gal+=intGal;
-                    SharedPreferences.Editor edit = sharedPreferences.edit();
-                    edit.putInt("gal",gal);
-                    edit.commit();
-                }else{
+            int intGal = (int) i1 / 100;
+            SharedPreferences.Editor edit = sharedPreferences.edit();
+            edit.putInt("gal", intGal);
+            edit.commit();
 
-                }
-
-
-            }else {
-                //步数没有到达要求
-            }
         }
-
         }else{
             Toast.makeText(context, "您目前没有积分,今天运动一下把!", Toast.LENGTH_SHORT).show();
         }
@@ -141,6 +128,7 @@ public class StepManager {
     }
     public interface StepManagerListener{
         void onStepChange(int count);
+
     }
     public void registerListener(StepManagerListener stepManagerListener){
         this.stepManagerListener=stepManagerListener;
