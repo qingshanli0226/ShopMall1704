@@ -264,6 +264,24 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
 
     protected void setTitleBar() {
         tb_shopping_cart.setCenterText("购物车",18,Color.RED);
+
+        tb_shopping_cart.setTitleClickLisner(new TitleBar.TitleClickLisner() {
+            @Override
+            public void LeftClick() {
+
+            }
+
+            @Override
+            public void RightClick() {
+
+            }
+
+            @Override
+            public void CenterClick() {
+
+            }
+        });
+
     }
 
     @Override
@@ -293,6 +311,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), OrderActivity.class));
+
             }
         });
     }

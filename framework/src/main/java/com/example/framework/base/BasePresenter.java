@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -40,6 +39,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         baseView.onStopLoadingPage();
+
                         try {
                             T data = new Gson().fromJson(responseBody.string(), getBeanType());
                             if (baseView != null)

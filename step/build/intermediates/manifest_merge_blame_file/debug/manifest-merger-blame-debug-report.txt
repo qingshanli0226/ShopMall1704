@@ -6,8 +6,14 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="16"
+<<<<<<< HEAD
 8-->F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml
 9        android:targetSdkVersion="29" />
 9-->F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml
+=======
+8-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="29" />
+9-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml
+>>>>>>> one
 10
 11</manifest>

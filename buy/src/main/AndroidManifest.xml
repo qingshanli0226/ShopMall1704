@@ -4,5 +4,6 @@
     <application>
         <activity android:name=".activity.OrderActivity" />
     </application>
+    <application></application>
 
 </manifest>

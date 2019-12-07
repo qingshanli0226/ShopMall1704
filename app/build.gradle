@@ -46,4 +46,7 @@ dependencies {
     implementation files('libs/lite-orm-1.9.2.jar')
     implementation project(path: ':framework')
     implementation project(path: ':buy')
+
+    implementation project(path: ':step')
+
 }
