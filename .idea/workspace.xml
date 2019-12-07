@@ -11,49 +11,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ec6d1f49-8a09-4063-87fd-1c077b9a5f52" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/drawable-anydpi/unchecked.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/drawable-hdpi/unchecked.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/drawable-mdpi/unchecked.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/drawable-xhdpi/unchecked.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/drawable-xxhdpi/unchecked.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/drawable/buybut.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/drawable/cart.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/drawable/checkbut.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/drawable/checked.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/drawable/collect.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/values/colors.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/values/dimens.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/values/styles.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DimensionLeague.iml" beforeDir="false" afterPath="$PROJECT_DIR$/DimensionLeague.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/WelcomeActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/WelcomeActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/buy/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/GoodsActiviy.java" beforeDir="false" afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/GoodsActiviy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/PayActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/PayActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/ShopCartFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/ShopCartFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/databeans/SendOrdersBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/databeans/SendOrdersBean.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/res/layout/activity_goods.xml" beforeDir="false" afterPath="$PROJECT_DIR$/buy/src/main/res/layout/activity_goods.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/res/layout/activity_pay.xml" beforeDir="false" afterPath="$PROJECT_DIR$/buy/src/main/res/layout/activity_pay.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/res/layout/fragment_shopcart.xml" beforeDir="false" afterPath="$PROJECT_DIR$/buy/src/main/res/layout/fragment_shopcart.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/res/layout/item_goods.xml" beforeDir="false" afterPath="$PROJECT_DIR$/buy/src/main/res/layout/item_goods.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/res/layout/popuwindow_goods.xml" beforeDir="false" afterPath="$PROJECT_DIR$/buy/src/main/res/layout/popuwindow_goods.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/buy/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/common/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/framework/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/framework/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/net/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/net/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/net/src/main/java/com/example/net/AppNetConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/net/src/main/java/com/example/net/AppNetConfig.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -64,7 +25,6 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="emulator-5554" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -82,14 +42,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/buy/src/main/java/com/example/buy/GoodsActiviy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="227" column="55" selection-start-line="227" selection-start-column="55" selection-end-line="227" selection-end-column="55" />
+            <state relative-caret-position="271">
+              <caret line="226" selection-start-line="226" selection-end-line="226" />
               <folding>
-                <element signature="e#4664#4868#0" expanded="true" />
-                <element signature="e#4867#4868#0" expanded="true" />
                 <element signature="method#init#0;class#GoodsActiviy#0" />
-                <element signature="e#6978#6979#0" expanded="true" />
-                <element signature="e#7009#7010#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -109,7 +65,7 @@
         <entry file="file://$PROJECT_DIR$/buy/src/main/res/layout/activity_goods.xml">
           <provider editor-type-id="android-designer2" />
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
+            <state relative-caret-position="660">
               <caret line="22" column="40" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
             </state>
           </provider>
@@ -158,8 +114,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-57" />
-    <option name="y" value="20" />
+    <option name="x" value="532" />
+    <option name="y" value="34" />
     <option name="width" value="1316" />
     <option name="height" value="1001" />
   </component>
@@ -168,6 +124,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -392,7 +349,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="AndroidView" />
     </panes>
@@ -403,7 +359,7 @@
     <property name="android.project.structure.last.selected" value="SDK Location" />
     <property name="android.project.structure.proportion" value="0.15524194" />
     <property name="android.sdk.path" value="D:/sdk" />
-    <property name="last_opened_file_path" value="D:/Test" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="not.eligible.for.single.variant.sync" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.17" />
@@ -520,8 +476,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-57" y="20" width="1316" height="1001" extended-state="0" />
-    <editor active="true" />
+    <frame x="532" y="34" width="1316" height="1001" extended-state="0" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="1" />
@@ -534,14 +489,14 @@
       <window_info id="Favorites" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Run" order="0" weight="0.329718" />
       <window_info anchor="bottom" id="TODO" order="1" weight="0.329718" />
-      <window_info anchor="bottom" id="Android Profiler" order="2" />
+      <window_info anchor="bottom" id="Android Profiler" order="2" show_stripe_button="false" />
       <window_info anchor="bottom" id="Find" order="3" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.329718" />
       <window_info anchor="bottom" id="Debug" order="5" weight="0.6732558" />
       <window_info anchor="bottom" id="Flutter Performance" order="6" sideWeight="0.50053304" side_tool="true" weight="0.3286334" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.6453362" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Build" order="9" sideWeight="0.49946696" weight="0.3286334" />
+      <window_info anchor="bottom" id="Build" order="9" sideWeight="0.49946696" weight="0.32871974" />
       <window_info anchor="bottom" id="Logcat" order="10" weight="0.39804772" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
@@ -575,6 +530,20 @@
                 </list>
               </option>
             </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
           </value>
         </entry>
       </map>
@@ -864,11 +833,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/buy/src/main/res/layout/activity_goods.xml">
-      <provider editor-type-id="android-designer2" />
+    <entry file="file://$PROJECT_DIR$/buy/src/main/java/com/example/buy/GoodsActiviy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="22" column="40" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
+        <state relative-caret-position="271">
+          <caret line="226" selection-start-line="226" selection-end-line="226" />
+          <folding>
+            <element signature="method#init#0;class#GoodsActiviy#0" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -880,17 +851,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/buy/src/main/java/com/example/buy/GoodsActiviy.java">
+    <entry file="file://$PROJECT_DIR$/buy/src/main/res/layout/activity_goods.xml">
+      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="227" column="55" selection-start-line="227" selection-start-column="55" selection-end-line="227" selection-end-column="55" />
-          <folding>
-            <element signature="e#4664#4868#0" expanded="true" />
-            <element signature="e#4867#4868#0" expanded="true" />
-            <element signature="method#init#0;class#GoodsActiviy#0" />
-            <element signature="e#6978#6979#0" expanded="true" />
-            <element signature="e#7009#7010#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="660">
+          <caret line="22" column="40" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
         </state>
       </provider>
     </entry>
