@@ -1,7 +1,5 @@
 package com.example.dimensionleague;
 
-import com.example.common.SPUtil;
-import com.example.common.SignUtil;
 import com.example.dimensionleague.userbean.LoginBean;
 import com.example.framework.base.BasePresenter;
 import com.example.net.AppNetConfig;

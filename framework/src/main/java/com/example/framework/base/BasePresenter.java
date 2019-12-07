@@ -1,7 +1,7 @@
 package com.example.framework.base;
 
 import com.example.common.Constant;
-import com.example.common.SignUtil;
+import com.example.common.utils.SignUtil;
 import com.example.framework.port.IPresenter;
 import com.example.framework.port.IView;
 import com.example.net.RetrofitCreator;
@@ -66,7 +66,7 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                         iView.hideLoading();
                         try {
                             T resEntity = new Gson().fromJson(responseBody.string(), getBeanType());
-                            //获取数据成功
+                            //TODO 获取数据成功
                             iView.onRequestSuccess(resEntity);
                         } catch (IOException e) {
                             e.printStackTrace();

@@ -3,14 +3,10 @@ package com.example.framework.base;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.example.common.LoadingPageUtils;
-import com.example.framework.R;
+import com.example.common.utils.LoadingPageUtils;
 import com.example.framework.manager.NetConnectManager;
 import com.example.framework.port.INetConnectListener;
-import com.example.framework.port.IPresenter;
 import com.example.framework.port.IView;
-
-import io.reactivex.Observable;
 
 /**
  * author:李浩帆
