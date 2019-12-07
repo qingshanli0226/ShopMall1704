@@ -18,13 +18,6 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         context = this;
-<<<<<<< HEAD
-
-        //初始化缓存管理类
-//        CaCheManager.getInstance(this).init(this);
-=======
-        //初始化网络连接管理类
->>>>>>> one
 
 
         StepManager.getInstance().init(this);

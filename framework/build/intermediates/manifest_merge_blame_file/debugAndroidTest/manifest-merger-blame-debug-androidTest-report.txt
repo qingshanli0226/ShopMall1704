@@ -3,79 +3,79 @@
 3    package="com.example.framework.test" >
 4
 5    <uses-sdk
-5-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:5:5-74
+5-->F:\Android-7\GitHup\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3842321549377316470.xml:5:5-74
 6        android:minSdkVersion="17"
-6-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:5:15-41
+6-->F:\Android-7\GitHup\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3842321549377316470.xml:5:15-41
 7        android:targetSdkVersion="29" />
-7-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:5:42-71
+7-->F:\Android-7\GitHup\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3842321549377316470.xml:5:42-71
 8
 9    <instrumentation
-9-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:11:5-15:76
+9-->F:\Android-7\GitHup\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3842321549377316470.xml:11:5-15:76
 10        android:name="androidx.test.runner.AndroidJUnitRunner"
-10-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:11:22-76
+10-->F:\Android-7\GitHup\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3842321549377316470.xml:11:22-76
 11        android:functionalTest="false"
-11-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:14:22-52
+11-->F:\Android-7\GitHup\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3842321549377316470.xml:14:22-52
 12        android:handleProfiling="false"
-12-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:13:22-53
+12-->F:\Android-7\GitHup\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3842321549377316470.xml:13:22-53
 13        android:label="Tests for com.example.framework.test"
-13-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:15:22-74
+13-->F:\Android-7\GitHup\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3842321549377316470.xml:15:22-74
 14        android:targetPackage="com.example.framework.test" />
-14-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:12:22-72
+14-->F:\Android-7\GitHup\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3842321549377316470.xml:12:22-72
 15
 16    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-16-->[__tested_artifact__::framework] D:\GitHub\ShopMall1704\framework\build\intermediates\library_manifest\debug\AndroidManifest.xml:11:5-79
-16-->[__tested_artifact__::framework] D:\GitHub\ShopMall1704\framework\build\intermediates\library_manifest\debug\AndroidManifest.xml:11:22-76
+16-->[__tested_artifact__::framework] F:\Android-7\GitHup\ShopMall1704\framework\build\intermediates\library_manifest\debug\AndroidManifest.xml:11:5-79
+16-->[__tested_artifact__::framework] F:\Android-7\GitHup\ShopMall1704\framework\build\intermediates\library_manifest\debug\AndroidManifest.xml:11:22-76
 17    <uses-permission android:name="android.permission.REORDER_TASKS" />
-17-->[androidx.test:core:1.2.0] C:\Users\bing\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:24:5-72
-17-->[androidx.test:core:1.2.0] C:\Users\bing\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:24:22-69
+17-->[androidx.test:core:1.2.0] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:24:5-72
+17-->[androidx.test:core:1.2.0] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:24:22-69
 18
 19    <application
-19-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:7:5-9:19
+19-->F:\Android-7\GitHup\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3842321549377316470.xml:7:5-9:19
 20        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-20-->[androidx.core:core:1.1.0] C:\Users\bing\.gradle\caches\transforms-2\files-2.1\46be5df68f9cfe3450f3e9e67d19a9fa\core-1.1.0\AndroidManifest.xml:24:18-86
+20-->[androidx.core:core:1.1.0] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\46be5df68f9cfe3450f3e9e67d19a9fa\core-1.1.0\AndroidManifest.xml:24:18-86
 21        android:debuggable="true" >
-21-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:7:18-43
+21-->F:\Android-7\GitHup\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3842321549377316470.xml:7:18-43
 22        <uses-library android:name="android.test.runner" />
-22-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:8:9-60
-22-->D:\GitHub\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger5735932063727986949.xml:8:23-57
+22-->F:\Android-7\GitHup\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3842321549377316470.xml:8:9-60
+22-->F:\Android-7\GitHup\ShopMall1704\framework\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3842321549377316470.xml:8:23-57
 23
 24        <activity
-24-->[androidx.test:core:1.2.0] C:\Users\bing\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:27:9-33:20
+24-->[androidx.test:core:1.2.0] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:27:9-33:20
 25            android:name="androidx.test.core.app.InstrumentationActivityInvoker$BootstrapActivity"
-25-->[androidx.test:core:1.2.0] C:\Users\bing\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:28:13-99
+25-->[androidx.test:core:1.2.0] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:28:13-99
 26            android:theme="@android:style/Theme" >
-26-->[androidx.test:core:1.2.0] C:\Users\bing\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:29:13-49
+26-->[androidx.test:core:1.2.0] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:29:13-49
 27            <intent-filter>
-27-->[androidx.test:core:1.2.0] C:\Users\bing\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:30:13-32:29
+27-->[androidx.test:core:1.2.0] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:30:13-32:29
 28                <action android:name="android.intent.action.MAIN" />
-28-->[androidx.test:core:1.2.0] C:\Users\bing\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:31:17-69
-28-->[androidx.test:core:1.2.0] C:\Users\bing\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:31:25-66
+28-->[androidx.test:core:1.2.0] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:31:17-69
+28-->[androidx.test:core:1.2.0] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:31:25-66
 29            </intent-filter>
 30        </activity>
 31        <activity
-31-->[androidx.test:core:1.2.0] C:\Users\bing\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:34:9-40:20
+31-->[androidx.test:core:1.2.0] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:34:9-40:20
 32            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyActivity"
-32-->[androidx.test:core:1.2.0] C:\Users\bing\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:35:13-95
+32-->[androidx.test:core:1.2.0] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:35:13-95
 33            android:theme="@android:style/Theme" >
-33-->[androidx.test:core:1.2.0] C:\Users\bing\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:36:13-49
+33-->[androidx.test:core:1.2.0] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:36:13-49
 34            <intent-filter>
-34-->[androidx.test:core:1.2.0] C:\Users\bing\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:30:13-32:29
+34-->[androidx.test:core:1.2.0] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:30:13-32:29
 35                <action android:name="android.intent.action.MAIN" />
-35-->[androidx.test:core:1.2.0] C:\Users\bing\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:31:17-69
-35-->[androidx.test:core:1.2.0] C:\Users\bing\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:31:25-66
+35-->[androidx.test:core:1.2.0] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:31:17-69
+35-->[androidx.test:core:1.2.0] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:31:25-66
 36            </intent-filter>
 37        </activity>
 38        <activity
-38-->[androidx.test:core:1.2.0] C:\Users\bing\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:41:9-47:20
+38-->[androidx.test:core:1.2.0] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:41:9-47:20
 39            android:name="androidx.test.core.app.InstrumentationActivityInvoker$EmptyFloatingActivity"
-39-->[androidx.test:core:1.2.0] C:\Users\bing\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:42:13-103
+39-->[androidx.test:core:1.2.0] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:42:13-103
 40            android:theme="@android:style/Theme.Dialog" >
-40-->[androidx.test:core:1.2.0] C:\Users\bing\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:43:13-56
+40-->[androidx.test:core:1.2.0] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:43:13-56
 41            <intent-filter>
-41-->[androidx.test:core:1.2.0] C:\Users\bing\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:30:13-32:29
+41-->[androidx.test:core:1.2.0] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:30:13-32:29
 42                <action android:name="android.intent.action.MAIN" />
-42-->[androidx.test:core:1.2.0] C:\Users\bing\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:31:17-69
-42-->[androidx.test:core:1.2.0] C:\Users\bing\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:31:25-66
+42-->[androidx.test:core:1.2.0] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:31:17-69
+42-->[androidx.test:core:1.2.0] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\2d24cab5010b8d288387d00a595f6230\core-1.2.0\AndroidManifest.xml:31:25-66
 43            </intent-filter>
 44        </activity>
 45    </application>
