@@ -4,16 +4,24 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
+import com.example.framework.base.IBaseView;
 import com.example.shopmall.R;
+import com.example.shopmall.bean.LoginBean;
+import com.example.shopmall.presenter.LoginPresenter;
+import com.example.shopmall.presenter.RegisterPresenter;
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements IBaseView<LoginBean> {
 
     TitleBar tb_login;
     Button bt_login;
-    Button bt_register;
+    EditText mName;
+    EditText mPassWord;
+    Button mRegister;
 
     @Override
     protected int setLayout() {
@@ -24,14 +32,16 @@ public class LoginActivity extends BaseActivity {
     public void initView() {
         tb_login = findViewById(R.id.tb_login);
         bt_login = findViewById(R.id.bt_login);
-        bt_register = findViewById(R.id.bt_register);
+        mName = findViewById(R.id.et_login_name);
+        mPassWord = findViewById(R.id.et_login_word);
+        mRegister = findViewById(R.id.bt_login_register);
     }
 
     @Override
     public void initData() {
         tb_login.setBackgroundColor(Color.RED);
         tb_login.setLeftImg(R.drawable.left);
-        tb_login.setCenterText("登录",18,Color.WHITE);
+        tb_login.setCenterText("登录", 18, Color.WHITE);
 
         tb_login.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
@@ -53,16 +63,45 @@ public class LoginActivity extends BaseActivity {
         bt_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                String name = mName.getText().toString();
+                String pwd = mPassWord.getText().toString();
+                LoginPresenter loginPresenter = new LoginPresenter(name, pwd);
+                loginPresenter.attachView(LoginActivity.this);
+                loginPresenter.login();
             }
         });
 
-        bt_register.setOnClickListener(new View.OnClickListener() {
+        mRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
+
+    }
+
+    @Override
+    public void onGetDataSucess(LoginBean data) {
+
+    }
+
+    @Override
+    public void onPostDataSucess(LoginBean data) {
+        Toast.makeText(this, data.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onGetDataFailed(String ErrorMsg) {
+
+    }
+
+    @Override
+    public void onLoadingPage() {
+
+    }
+
+    @Override
+    public void onStopLoadingPage() {
 
     }
 }

@@ -19,13 +19,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.GoodsInfoActivity"></activity>
+        <activity android:name=".activity.GoodsInfoActivity"/>
         <activity android:name=".activity.GoodsListActivity" />
         <activity android:name=".activity.MessageActivity" />
-        <activity android:name=".activity.RegisterActivity" />
-        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.RegisterActivity" >
+
+        </activity>
+        <activity android:name=".activity.LoginActivity" >
+
+        </activity>
         <activity android:name=".activity.IntegralActivity" />
-        <activity android:name=".activity.WelcomeActivity" >
+        <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

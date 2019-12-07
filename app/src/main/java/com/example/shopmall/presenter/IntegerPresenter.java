@@ -11,6 +11,8 @@ public class IntegerPresenter extends BasePresenter {
 
     private String Config;
     private Type type;
+    private HashMap<String, String> query;
+
 
     public IntegerPresenter(String config) {
         Config = config;
@@ -19,6 +21,12 @@ public class IntegerPresenter extends BasePresenter {
     public IntegerPresenter(String config, Type type) {
         Config = config;
         this.type = type;
+    }
+
+    public IntegerPresenter(String config, Type type, HashMap<String, String> query) {
+        Config = config;
+        this.type = type;
+        this.query = query;
     }
 
     @Override
@@ -38,7 +46,7 @@ public class IntegerPresenter extends BasePresenter {
 
     @Override
     protected HashMap<String, String> getQuery() {
-        return new HashMap<>();
+        return query;
     }
 
 }

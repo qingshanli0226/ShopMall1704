@@ -1,5 +1,6 @@
 package com.example.shopmall.activity;
 
+import android.content.IntentFilter;
 import android.graphics.Color;
 
 import com.example.common.TitleBar;
@@ -23,7 +24,7 @@ public class IntegralActivity extends BaseActivity {
     @Override
     public void initData() {
         tb_integral.setBackgroundColor(Color.RED);
-        tb_integral.setCenterText("我的积分",18, Color.WHITE);
+        tb_integral.setCenterText("我的积分", 18, Color.WHITE);
         tb_integral.setLeftImg(R.drawable.left);
 
         tb_integral.setTitleClickLisner(new TitleBar.TitleClickLisner() {

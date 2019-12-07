@@ -44,7 +44,6 @@ import java.util.Map;
 public class ShoppingCartFragment extends BaseFragment implements NumberAddSubView.OnNumberChangeListener {
 
     TitleBar tb_shopping_cart;
-    TextView tv_shopcart_edit;
     ImageView iv_shopping_cart;
     RecyclerView mRecyclerview;
     LinearLayout shoppingcartlayout;
@@ -131,12 +130,6 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     }
 
     private void setSetting() {
-        tv_shopcart_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                settingChanged();
-            }
-        });
     }
 
     private void settingChanged() {
@@ -274,7 +267,6 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         shoppingcartlayout = view.findViewById(R.id.shoppingcartlayout);
         tv_shopcart_total = view.findViewById(R.id.tv_shopcart_total);
         checkbox_all = view.findViewById(R.id.checkbox_all);
-        tv_shopcart_edit = view.findViewById(R.id.tv_shopcart_edit);
         ll_delete = view.findViewById(R.id.ll_delete);
         ll_check_all = view.findViewById(R.id.ll_check_all);
         cb_all = view.findViewById(R.id.cb_all);
