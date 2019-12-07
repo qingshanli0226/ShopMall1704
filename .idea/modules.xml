@@ -3,8 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DimensionLeague.iml" filepath="$PROJECT_DIR$/DimensionLeague.iml" />
-      <module fileurl="file://$PROJECT_DIR$/buy/ShopMall1704-buy.iml" filepath="$PROJECT_DIR$/buy/ShopMall1704-buy.iml" />
-      <module fileurl="file://$PROJECT_DIR$/common/ShopMall1704-common.iml" filepath="$PROJECT_DIR$/common/ShopMall1704-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ShopMall1704.iml" filepath="$PROJECT_DIR$/.idea/ShopMall1704.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/buy/buy.iml" filepath="$PROJECT_DIR$/buy/buy.iml" />
       <module fileurl="file://$PROJECT_DIR$/common/common.iml" filepath="$PROJECT_DIR$/common/common.iml" />

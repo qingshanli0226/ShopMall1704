@@ -27,7 +27,7 @@ public class WelcomeActivity extends BaseNetConnectActivity {
     private int index = 5;
     private int count = 0;
     private Handler handler;
-    private boolean isNetOk = false;
+    private boolean isNetOk = true;
 
     @Override
     public void init() {
@@ -112,9 +112,6 @@ public class WelcomeActivity extends BaseNetConnectActivity {
                     if (count < 3) {
                         vp.setCurrentItem(count);
                         Log.i("SSS", "run: welcomeHandler" + count);
-                    } else {
-                        Log.i("SSS", "run: welcomeHandler" + (count - 3));
-                        vp.setCurrentItem(count - 3);
                     }
                     break;
                 case 102:

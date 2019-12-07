@@ -146,21 +146,6 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
     @Override
     public void initDate() {
 
-    }
 
-//    @Override
-//    public void initDate() {
-//        goodsPresenter.onHttpPostRequest();
-//    }
-//
-//    @Override
-//    public void onHttpPostRequestDataSuccess(Object data) {
-//        list.clear();
-//        recyclerView.getAdapter().notifyDataSetChanged();
-//        Gson gson = new Gson();
-//        GoodsBean[] goods = gson.fromJson(((GetCartBean) data).getResult(), GoodsBean[].class);
-//        list.addAll(Arrays.asList(goods));
-//        recyclerView.getAdapter().notifyDataSetChanged();
-//        swipeRefreshLayout.setRefreshing(false);
-//    }
+    }
 }

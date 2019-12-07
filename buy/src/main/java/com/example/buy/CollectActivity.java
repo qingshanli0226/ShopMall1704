@@ -8,8 +8,6 @@ public class CollectActivity extends BaseActivity {
         return R.layout.activity_collect;
     }
 
-
-
     @Override
     public void init() {
 

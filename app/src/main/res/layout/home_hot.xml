@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/colorLimitGray"
+    android:padding="@dimen/dp_10"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/home_arrow_left_hot" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/hot_good"
+            android:textColor="@color/colorBlank" />
+
+        <TextView
+            android:id="@+id/tv_more_hot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/dp_5"
+            android:drawableRight="@drawable/home_arrow_right"
+            android:gravity="end"
+            android:text="@string/look_more" />
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/home_hot"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1020"
+        android:layout_marginTop="@dimen/dp_10"
+        android:horizontalSpacing="@dimen/dp_10"
+        android:numColumns="2"
+        android:verticalSpacing="@dimen/dp_10" />
+
+</LinearLayout>

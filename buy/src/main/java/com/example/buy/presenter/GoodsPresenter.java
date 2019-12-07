@@ -6,6 +6,9 @@ import com.example.net.AppNetConfig;
 
 import java.lang.reflect.Type;
 
+import io.reactivex.Observable;
+import okhttp3.ResponseBody;
+
 public class GoodsPresenter extends BasePresenter<GoodsBean> {
     @Override
     public Type getBeanType() {
@@ -16,4 +19,5 @@ public class GoodsPresenter extends BasePresenter<GoodsBean> {
     public String getPath() {
         return AppNetConfig.CHECKINVENTORY;
     }
+
 }
