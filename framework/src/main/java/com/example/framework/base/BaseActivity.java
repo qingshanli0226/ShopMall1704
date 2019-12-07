@@ -31,7 +31,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
         setContentView(getLayoutId());
 
         //TODO 沉浸式状态栏
-        ImmersionBar.with(this).init();
+      //  ImmersionBar.with(this).init();
 
         activityInstanceManager = ActivityInstanceManager.getInstance();
         activityInstanceManager.addActivity(this);

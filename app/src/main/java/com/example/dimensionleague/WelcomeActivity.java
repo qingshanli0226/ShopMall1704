@@ -95,6 +95,11 @@ public class WelcomeActivity extends BaseNetConnectActivity {
         return R.layout.activity_welcome;
     }
 
+    @Override
+    public int getRelativeLayout() {
+        return 0;
+    }
+
     private class WelcomeHandler extends Handler {
 
         // 通过复写handlerMessage() 从而确定更新UI的操作

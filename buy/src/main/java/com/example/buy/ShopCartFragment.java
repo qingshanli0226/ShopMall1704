@@ -132,7 +132,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
             @Override
             public void onRefresh() {
                 //下拉刷新购物车数据
-                goodsPresenter.onHttpPostRequest();
+              //  goodsPresenter.onHttpPostRequest();
             }
         });
         //库存检测管理者
@@ -145,17 +145,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
 
     @Override
     public void initDate() {
-        goodsPresenter.onHttpPostRequest();
-    }
 
-//    @Override
-//    public void onHttpRequestDataSuccess(Object data) {
-//        list.clear();
-//        recyclerView.getAdapter().notifyDataSetChanged();
-//        Gson gson = new Gson();
-//        GoodsBean[] goods = gson.fromJson(((GetCartBean) data).getResult(), GoodsBean[].class);
-//        list.addAll(Arrays.asList(goods));
-//        recyclerView.getAdapter().notifyDataSetChanged();
-//        swipeRefreshLayout.setRefreshing(false);
-//    }
+
+    }
 }

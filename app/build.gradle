@@ -33,8 +33,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
-
     implementation 'com.github.forvv231:EasyNavigation:1.0.3'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     implementation 'com.google.code.gson:gson:2.8.0'
@@ -45,4 +43,6 @@ dependencies {
     implementation project(path: ':net')
     implementation project(path: ':framework')
     implementation project(path: ':buy')
+    implementation project(path: ':point')
+
 }

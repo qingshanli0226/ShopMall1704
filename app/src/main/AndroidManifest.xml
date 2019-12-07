@@ -36,19 +36,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <service android:name=".service.StepService" />
-
-        <activity
-            android:name=".activity.StepActivity"
-            android:launchMode="singleInstance"></activity>
         <activity android:name=".MainActivity"></activity>
-        <activity android:name="com.example.buy.GoodsActiviy" />
-        <activity android:name="com.example.buy.PayActivity" />
-        <activity android:name="com.example.buy.ShowOrderActivity" />
-        <activity android:name=".activity.PhysicalActivity" />
-        <activity android:name=".activity.HistoryActivity" />
-        <activity android:name="com.example.framework.base.BaseActivity" />
     </application>
 
 </manifest>

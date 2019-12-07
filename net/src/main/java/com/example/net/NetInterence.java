@@ -1,6 +1,5 @@
 package com.example.net;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -19,12 +18,14 @@ public interface NetInterence {
 
     //GET请求
     @GET("{path}")
-    Observable<ResponseBody> getData(@HeaderMap HashMap<String, String> headers, @Path("path") String path, @QueryMap Map<String, String> params);
+    Observable<ResponseBody> getData(@HeaderMap Map<String, String> headers, @Path("path") String path, @QueryMap Map<String, String> params);
+
 
     //POST请求
    @POST("{path}")
    @FormUrlEncoded
-   Observable<ResponseBody> postData(@HeaderMap HashMap<String, String> headers, @Path("path") String path, @FieldMap Map<String, String> params);
+   Observable<ResponseBody> postData(@HeaderMap Map<String, String> headers, @Path("path") String path, @FieldMap Map<String, String> params);
+
 
    //下载文件
    @Streaming
