@@ -6,7 +6,7 @@ android {
 
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -40,8 +40,13 @@ dependencies {
     api 'com.gyf.immersionbar:immersionbar-components:3.0.0'
 // kotlin扩展（可选）
     api 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
+
     api 'androidx.recyclerview:recyclerview:1.1.0'
     api 'com.google.code.gson:gson:2.8.6'
+
+    api 'androidx.recyclerview:recyclerview:1.0.0'
+    api 'com.jaeger.statusbarutil:library:1.4.0'
+
     implementation project(path: ':net')
     implementation project(path: ':common')
 }

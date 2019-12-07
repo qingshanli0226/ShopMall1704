@@ -30,6 +30,7 @@ class MainActivity : BaseNetConnectActivity() {
         list.add(HomeFragment())
     }
     override fun initDate() {
+        super.init()
         main_easy.selectTextColor(Color.parseColor("#d3217b"))
             .normalTextColor(Color.parseColor("#707070"))
             .selectIconItems(
@@ -55,9 +56,6 @@ class MainActivity : BaseNetConnectActivity() {
             .titleItems(arrayOf("首页", "分类", "发现", "购物车", "我的"))
             .canScroll(true)
             .build()
-
-
-
     }
 }
 

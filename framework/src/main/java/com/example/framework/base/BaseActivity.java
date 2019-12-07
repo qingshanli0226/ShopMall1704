@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,8 @@ import com.example.framework.port.IActivity;
 import com.example.framework.port.INetConnectListener;
 import com.example.framework.port.IView;
 import com.gyf.immersionbar.ImmersionBar;
+import com.jaeger.library.StatusBarUtil;
+
 /**
  * author:李浩帆
  */
@@ -28,7 +31,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
         setContentView(getLayoutId());
 
         //TODO 沉浸式状态栏
-        ImmersionBar.with(this).init();
+      //  ImmersionBar.with(this).init();
 
         activityInstanceManager = ActivityInstanceManager.getInstance();
         activityInstanceManager.addActivity(this);

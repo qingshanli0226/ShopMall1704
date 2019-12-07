@@ -171,6 +171,8 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                     i=isChecked;
                 }
                 recyclerView.getAdapter().notifyDataSetChanged();
+
+              //  goodsPresenter.onHttpPostRequest();
             }
         });
 
