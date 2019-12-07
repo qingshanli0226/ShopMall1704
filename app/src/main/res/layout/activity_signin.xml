@@ -4,14 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     tools:context=".login.ui.SigninActivity"
     android:background="@mipmap/bei"
     android:orientation="vertical">
-    <com.example.administrator.shaomall.login.diyview.Headportrait
+    <RelativeLayout
         android:layout_marginTop="@dimen/loginMarginTop"
-        android:layout_gravity="center"
-        android:layout_width="100dp"
-        android:layout_height="100dp" />
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <com.example.administrator.shaomall.login.diyview.Headportrait
+            android:id="@+id/signinhead"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="0dp" />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:visibility="gone"
+            android:id="@+id/signinPhoto"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            fresco:roundAsCircle="true"
+            fresco:roundedCornerRadius="20dp" />
+    </RelativeLayout>
+
+
     <LinearLayout
         android:layout_marginTop="@dimen/loginMarginTop"
         android:layout_width="match_parent"

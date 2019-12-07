@@ -4,7 +4,17 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    联网的权限:<uses-permission android:name="android.permission.INTERNET"/>
+
+    写SD卡权限:<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    读SD卡权限:<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    读取联系人的权限：<uses-permission android:name="android.permission.READ_CONTACTS"/>
+
+    读取短信的权限： <uses-permission android:name="android.permission.READ_SMS"></uses-permission>
     <application
+        android:name=".init.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -27,13 +37,15 @@
             android:value="2.4" />
 
         <activity android:name=".login.ui.LoginActivity">
+
+        </activity>
+        <activity android:name=".login.ui.SigninActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.ui.SigninActivity"></activity>
     </application>
 
 </manifest>

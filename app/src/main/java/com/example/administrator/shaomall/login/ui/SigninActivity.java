@@ -2,10 +2,7 @@ package com.example.administrator.shaomall.login.ui;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
-import android.graphics.LinearGradient;
-import android.graphics.Shader;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.net.Uri;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -15,12 +12,21 @@ import android.widget.Toast;
 import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.login.Base.SigninBean;
 import com.example.administrator.shaomall.login.diyview.DIYButton;
+import com.example.administrator.shaomall.login.diyview.Headportrait;
 import com.example.administrator.shaomall.login.presenter.SigninPresenter;
 import com.example.commen.ShopMailError;
-import com.shaomall.framework.base.BaseActivity;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.shaomall.framework.base.BaseMVPActivity;
+import com.squareup.picasso.Picasso;
+import com.wyp.avatarstudio.AvatarStudio;
+
+import java.io.File;
 
 public class SigninActivity extends BaseMVPActivity<SigninBean> {
+
+    private Headportrait signinhead;
+    private SimpleDraweeView signinPhoto;
+
 
     private DIYButton diybutton;
     private EditText signinUser;
@@ -35,6 +41,9 @@ public class SigninActivity extends BaseMVPActivity<SigninBean> {
         signinPass = (EditText) findViewById(R.id.signinPass);
         signinSignin = (TextView) findViewById(R.id.signinSignin);
         diybutton = (DIYButton) findViewById(R.id.diybutton);
+        signinhead = (Headportrait) findViewById(R.id.signinhead);
+        signinPhoto = (SimpleDraweeView) findViewById(R.id.signinPhoto);
+
 
 
 
@@ -50,6 +59,29 @@ public class SigninActivity extends BaseMVPActivity<SigninBean> {
     protected void initData() {
         diybutton.setButtomtext("注册");
 
+        //头像
+        signinhead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AvatarStudio.Builder builder = new AvatarStudio.Builder(SigninActivity.this);
+                builder.setTextColor(R.color.darkturquoise);
+                builder.setText("拍照","本地选择","取消");
+                builder.needCrop(true);
+                builder.dimEnabled(true);
+                builder.setOutput(100,100);
+                builder.setAspect(1,1);
+                builder.show(new AvatarStudio.CallBack() {
+                    @Override
+                    public void callback(String uri) {
+                        signinPhoto.setVisibility(View.VISIBLE);
+
+                        signinPhoto.setImageURI(Uri.fromFile(new File(uri)));
+                        signinhead.setVisibility(View.GONE);
+
+                    }
+                });
+            }
+        });
         //判断登录按钮按下和抬起
         diybutton.setOnTouchListener(new View.OnTouchListener() {
             @Override
