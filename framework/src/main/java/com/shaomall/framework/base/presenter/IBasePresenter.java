@@ -15,6 +15,8 @@ public interface IBasePresenter<T> {
 
     void doPostHttpRequest(int requestCode);    //post请求
 
+    void doAddOneProduct(int requestCode);      //添加一个产品到购物车
+
 //    void doUpLoadHttpRequest(int requestCode);  //上传头像
 
 //    void doDownLoadFileHttpRequest(int requestCode); //下载文件

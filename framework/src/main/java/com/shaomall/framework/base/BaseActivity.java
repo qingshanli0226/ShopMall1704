@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.gyf.immersionbar.ImmersionBar;
 import com.shaomall.framework.manager.ActivityInstanceManager;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -18,6 +19,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 获取TAG的activity名称
      */
     protected Activity mActivity;
+    private ImmersionBar immersionBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,6 +27,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         flagFullScreen();
         setContentView(setLayoutId());
         mActivity = this;
+
+        immersionBar = ImmersionBar.with(this);
+        immersionBar.init();
+
         //activity 管理类
         ActivityInstanceManager.addActivity(this);
 
@@ -117,5 +123,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         ActivityInstanceManager.removeActivity(this);
+        if (immersionBar != null){
+            immersionBar.destroy(this, null);
+        }
     }
 }

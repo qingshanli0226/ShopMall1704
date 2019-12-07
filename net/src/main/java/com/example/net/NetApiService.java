@@ -1,10 +1,13 @@
 package com.example.net;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -28,7 +31,7 @@ public interface NetApiService {
      * @return
      */
     @GET("{path}")
-    Observable<ResponseBody> getData(@HeaderMap HashMap<String, String> headers, @Path(value = "path", encoded = true) String path, @QueryMap HashMap<String, String> params);
+    Observable<ResponseBody> getData(@HeaderMap HashMap<String, String> headers, @Path(value = "path", encoded = true) String path, @QueryMap Map<String, String> params);
 
 
     /**
@@ -37,9 +40,17 @@ public interface NetApiService {
      * @param params
      * @return
      */
-    @POST()
+    @POST("{path}")
     @FormUrlEncoded
-    Observable<ResponseBody> postData(@HeaderMap HashMap<String, String> header, @Url() String url, @FieldMap HashMap<String, String> params);
+    Observable<ResponseBody> postData(@HeaderMap HashMap<String, String> header, @Path(value = "path", encoded = true) String url, @FieldMap Map<String, String> params);
+
+
+    /**
+     * 添加一个产品到购物车
+     */
+    @POST
+    Observable<ResponseBody> addOneProduct(@HeaderMap HashMap<String, String> header, @Url String path, @Body RequestBody body);
+
 
     /**
      * 上传文件
