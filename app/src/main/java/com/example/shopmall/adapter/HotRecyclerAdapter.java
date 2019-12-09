@@ -37,26 +37,26 @@ public class HotRecyclerAdapter extends RecyclerView.Adapter<HotRecyclerAdapter.
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         Glide.with(context).load(Constant.BASE_URL_IMAGE + hotInfoBeans.get(position).getFigure()).into(holder.iv_hot);
-        holder.tv_name.setText(hotInfoBeans.get(position).getName());
+        holder.tv_hot_grid_name.setText(hotInfoBeans.get(position).getName());
         holder.tv_price.setText("￥" + hotInfoBeans.get(position).getCover_price());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listelist.getListelist(holder,position);
+                likeliest.getLikeliest(holder,position);
             }
         });
 
     }
 
-    Likeliest listelist;
+    Likeliest likeliest;
 
     interface Likeliest {
-        public void getListelist(ViewHolder holder, int position);
+        public void getLikeliest(ViewHolder holder, int position);
     }
 
-    public void setListelist(Likeliest listelist) {
-        this.listelist = listelist;
+    public void setLikeliest(Likeliest likeliest) {
+        this.likeliest = likeliest;
     }
 
     @Override
@@ -67,14 +67,14 @@ public class HotRecyclerAdapter extends RecyclerView.Adapter<HotRecyclerAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView iv_hot;
-        public TextView tv_name;
+        public TextView tv_hot_grid_name;
         public TextView tv_price;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             iv_hot = itemView.findViewById(R.id.iv_hot);
-            tv_name = itemView.findViewById(R.id.tv_name);
+            tv_hot_grid_name = itemView.findViewById(R.id.tv_hot_grid_name);
             tv_price = itemView.findViewById(R.id.tv_price);
 
         }

@@ -869,12 +869,11 @@ int id tv_empty_cart_tobuy 0x7f0b00b7
 int id tv_left 0x7f0b00b8
 int id tv_price_gov 0x7f0b00b9
 int id tv_right 0x7f0b00ba
-int id tv_shopcart_edit 0x7f0b00bb
-int id tv_shopcart_total 0x7f0b00bc
-int id unchecked 0x7f0b00bd
-int id uniform 0x7f0b00be
-int id up 0x7f0b00bf
-int id wrap_content 0x7f0b00c0
+int id tv_shopcart_total 0x7f0b00bb
+int id unchecked 0x7f0b00bc
+int id uniform 0x7f0b00bd
+int id up 0x7f0b00be
+int id wrap_content 0x7f0b00bf
 int integer abc_config_activityDefaultDur 0x7f0c0001
 int integer abc_config_activityShortDur 0x7f0c0002
 int integer cancel_button_image_alpha 0x7f0c0003

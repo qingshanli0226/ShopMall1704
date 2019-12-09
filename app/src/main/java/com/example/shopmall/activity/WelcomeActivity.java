@@ -40,6 +40,7 @@ public class WelcomeActivity extends BaseActivity implements IBaseView<HomepageB
             if (msg.what == 100){
                 i++;
                 Log.d("####", "handleMessage: " + i);
+                //判断缓存是否有内容
                 HomepageBean cacheBean = CaCheManager.getInstance(MyApplication.getContext()).getCacheBean(MyApplication.getContext());
                 Log.d("####", "handleMessage: " + cacheBean.getMsg());
                 if (i >= 3 &&  cacheBean != null){
@@ -48,7 +49,6 @@ public class WelcomeActivity extends BaseActivity implements IBaseView<HomepageB
                     finish();
                 }
             }
-
         }
     };
 

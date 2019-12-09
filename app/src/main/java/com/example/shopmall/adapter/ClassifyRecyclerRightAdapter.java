@@ -47,20 +47,20 @@ public class ClassifyRecyclerRightAdapter extends RecyclerView.Adapter<ClassifyR
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                linkedlist.getLinkedlist(position);
+                likeliest.getLikeliest(position);
             }
         });
 
     }
 
-    Linkedlist linkedlist;
+    Likeliest likeliest;
 
-    interface Linkedlist{
-        public void getLinkedlist(int position);
+    interface Likeliest {
+        public void getLikeliest(int position);
     }
 
-    public void setLinkedlist(Linkedlist linkedlist) {
-        this.linkedlist = linkedlist;
+    public void setLikeliest(Likeliest likeliest) {
+        this.likeliest = likeliest;
     }
 
     @Override

@@ -57,7 +57,6 @@ id tb_order
 id tb_shopping_cart
 id tv_desc_gov
 id tv_empty_cart_tobuy
-id tv_shopcart_edit
 id tv_shopcart_total
 layout activity_order
 layout empty_cart

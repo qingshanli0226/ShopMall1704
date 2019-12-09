@@ -6,35 +6,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.buy.fragment.ShoppingCartFragment">
-    tools:context="com.example.buy.com.example.buy.ShoppingCartFragment">
 
-    <RelativeLayout
+    <com.example.common.TitleBar
+        android:id="@+id/tb_shopping_cart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="#fff">
-
-        <com.example.common.TitleBar
-            android:id="@+id/tb_shopping_cart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="30dp"
-            android:layout_weight="1"
-            android:text="购物车"
-            android:textColor="#303235"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/tv_shopcart_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:text="编辑"
-            android:textColor="#303235" />
-    </RelativeLayout>
+        android:layout_centerInParent="true" />
 
     <View
         android:layout_width="match_parent"

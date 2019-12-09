@@ -870,7 +870,6 @@ id tv_empty_cart_tobuy
 id tv_left
 id tv_price_gov
 id tv_right
-id tv_shopcart_edit
 id tv_shopcart_total
 id unchecked
 id uniform

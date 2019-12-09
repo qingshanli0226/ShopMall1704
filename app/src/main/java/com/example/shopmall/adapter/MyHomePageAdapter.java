@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -227,6 +228,7 @@ public class MyHomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Log.d("####", "onItemClick: " + position);
                     if (position <= 8) {
                         Intent intent = new Intent(mContext, GoodsListActivity.class);
                         intent.putExtra("position", position);
@@ -438,9 +440,9 @@ public class MyHomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             HotRecyclerAdapter hotRecyclerAdapter = new HotRecyclerAdapter(mContext, hot_info);
             rv_hot.setAdapter(hotRecyclerAdapter);
 
-            hotRecyclerAdapter.setListelist(new HotRecyclerAdapter.Likeliest() {
+            hotRecyclerAdapter.setLikeliest(new HotRecyclerAdapter.Likeliest() {
                 @Override
-                public void getListelist(HotRecyclerAdapter.ViewHolder holder, int position) {
+                public void getLikeliest(HotRecyclerAdapter.ViewHolder holder, int position) {
                     String cover_price = hot_info.get(position).getCover_price();
                     String name = hot_info.get(position).getName();
                     String figure = hot_info.get(position).getFigure();

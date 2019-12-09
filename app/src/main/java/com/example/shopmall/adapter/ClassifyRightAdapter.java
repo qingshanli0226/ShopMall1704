@@ -2,26 +2,17 @@ package com.example.shopmall.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.example.net.Constant;
 import com.example.shopmall.R;
 import com.example.shopmall.activity.GoodsInfoActivity;
 import com.example.shopmall.bean.ClassifyBean;
 import com.example.shopmall.bean.GoodsBean;
-import com.example.shopmall.utils.DensityUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,9 +82,9 @@ public class ClassifyRightAdapter extends RecyclerView.Adapter<RecyclerView.View
             ClassifyRecyclerRightAdapter classifyRecyclerRightAdapter = new ClassifyRecyclerRightAdapter(mContext, (ArrayList<ClassifyBean.ResultBean.HotProductListBean>) resultBeans.get(position).getHot_product_list());
             rv_classify_right.setAdapter(classifyRecyclerRightAdapter);
 
-            classifyRecyclerRightAdapter.setLinkedlist(new ClassifyRecyclerRightAdapter.Linkedlist() {
+            classifyRecyclerRightAdapter.setLikeliest(new ClassifyRecyclerRightAdapter.Likeliest() {
                 @Override
-                public void getLinkedlist(int i) {
+                public void getLikeliest(int i) {
                     String cover_price = resultBeans.get(position).getHot_product_list().get(i).getCover_price();
                     String name = resultBeans.get(position).getHot_product_list().get(i).getName();
                     String figure = resultBeans.get(position).getHot_product_list().get(i).getFigure();

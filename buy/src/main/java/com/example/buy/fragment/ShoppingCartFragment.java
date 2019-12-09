@@ -44,7 +44,6 @@ import java.util.Map;
 public class ShoppingCartFragment extends BaseFragment implements NumberAddSubView.OnNumberChangeListener {
 
     TitleBar tb_shopping_cart;
-    TextView tv_shopcart_edit;
     ImageView iv_shopping_cart;
     RecyclerView mRecyclerview;
     LinearLayout shoppingcartlayout;
@@ -107,7 +106,6 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     protected void initData() {
         initData2();
         setCheckAll();
-        setSetting();
         setDelete();
     }
 
@@ -128,34 +126,6 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
                 myShoppingUtils.setData(data);
             }
         });
-    }
-
-    private void setSetting() {
-        tv_shopcart_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                settingChanged();
-            }
-        });
-    }
-
-    private void settingChanged() {
-        boolean isSetting = myShoppingUtils.getisSetting();
-        if (isSetting) {
-            myShoppingUtils.setisSetting(false);
-            ll_check_all.setVisibility(View.VISIBLE);
-            ll_delete.setVisibility(View.GONE);
-        } else {
-            myShoppingUtils.setisSetting(true);
-            ll_check_all.setVisibility(View.GONE);
-            ll_delete.setVisibility(View.VISIBLE);
-        }
-        setAllUnChecked();
-        cb_all.setChecked(false);
-        checkbox_all.setChecked(false);
-        myShoppingUtils.setAllCount(0);
-        myShoppingBasketAdapter.setAllcount(0);
-        myShoppingBasketAdapter.refresh(myShoppingUtils.getData());
     }
 
     private void setCheckAll() {
@@ -263,7 +233,9 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     }
 
     protected void setTitleBar() {
-        tb_shopping_cart.setCenterText("购物车",18,Color.RED);
+        tb_shopping_cart.setTitleBacKGround(Color.RED);
+        tb_shopping_cart.setCenterText("购物车",18,Color.WHITE);
+        tb_shopping_cart.setRightText("编辑");
 
         tb_shopping_cart.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
@@ -273,7 +245,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
 
             @Override
             public void RightClick() {
-
+                settingChanged();
             }
 
             @Override
@@ -284,6 +256,25 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
 
     }
 
+    private void settingChanged() {
+        boolean isSetting = myShoppingUtils.getisSetting();
+        if (isSetting) {
+            myShoppingUtils.setisSetting(false);
+            ll_check_all.setVisibility(View.VISIBLE);
+            ll_delete.setVisibility(View.GONE);
+        } else {
+            myShoppingUtils.setisSetting(true);
+            ll_check_all.setVisibility(View.GONE);
+            ll_delete.setVisibility(View.VISIBLE);
+        }
+        setAllUnChecked();
+        cb_all.setChecked(false);
+        checkbox_all.setChecked(false);
+        myShoppingUtils.setAllCount(0);
+        myShoppingBasketAdapter.setAllcount(0);
+        myShoppingBasketAdapter.refresh(myShoppingUtils.getData());
+    }
+
     @Override
     protected void initView(View view) {
         tb_shopping_cart = view.findViewById(R.id.tb_shopping_cart);
@@ -292,7 +283,6 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         shoppingcartlayout = view.findViewById(R.id.shoppingcartlayout);
         tv_shopcart_total = view.findViewById(R.id.tv_shopcart_total);
         checkbox_all = view.findViewById(R.id.checkbox_all);
-        tv_shopcart_edit = view.findViewById(R.id.tv_shopcart_edit);
         ll_delete = view.findViewById(R.id.ll_delete);
         ll_check_all = view.findViewById(R.id.ll_check_all);
         cb_all = view.findViewById(R.id.cb_all);

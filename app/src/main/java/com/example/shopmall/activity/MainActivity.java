@@ -1,5 +1,6 @@
 package com.example.shopmall.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 
 import androidx.fragment.app.Fragment;
@@ -17,6 +18,14 @@ import com.example.shopmall.fragment.MineFragment;
 import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity {
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        int intExtra = intent.getIntExtra("", 0);
+        replaceFragment(fragmentArrayList.get(intExtra));
+
+    }
 
     //数据
     private ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
@@ -53,8 +62,6 @@ public class MainActivity extends BaseActivity {
         replaceFragment(fragmentArrayList.get(0));
 
 //        loadingPage.start(LoadingPage.LOADING_FAILURE);
-
-
 
         String[] str = new String[]{"首页","分类","发现","购物车","个人中心"};
 
