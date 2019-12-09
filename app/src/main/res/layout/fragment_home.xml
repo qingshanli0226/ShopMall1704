@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/dp_10"
             android:paddingRight="@dimen/dp_10"
-
+            android:id="@+id/home_et"
             android:paddingTop="@dimen/dp_5"
             android:layout_weight="8"
             android:paddingBottom="@dimen/dp_5"

@@ -4,33 +4,29 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.example.common.LoadingPageUtils;
-import com.example.framework.R;
 import com.example.framework.manager.NetConnectManager;
 import com.example.framework.port.INetConnectListener;
-import com.example.framework.port.IPresenter;
 import com.example.framework.port.IView;
-
-import io.reactivex.Observable;
 
 /**
  * author:李浩帆
  */
 public abstract class BaseNetConnectFragment extends BaseFragment implements IView, INetConnectListener {
 
+    //TODO 网络连接管理类
+    NetConnectManager netConnectManager;
+
     private LoadingPageUtils loadingPage;
     private RelativeLayout relativeLayout;
-    //TODO 网络连接管理类
-    NetConnectManager netConnectManager=NetConnectManager.getInstance();
+
     @Override
     public void init(View view) {
-        relativeLayout = view.findViewById(getRelativeLayout());
-        loadingPage = new LoadingPageUtils(getContext(),relativeLayout);
-    }
-
-    //TODO 一次请求
-    @Override
-    public void onRequestSuccess(Object data) {
-
+        netConnectManager = NetConnectManager.getInstance();
+        netConnectManager.registerNetConnectListener(this);
+        if(getRelativeLayout()!=0){
+            relativeLayout = view.findViewById(getRelativeLayout());
+            loadingPage = new LoadingPageUtils(getContext(),relativeLayout);
+        }
     }
 
     //TODO 网络状态
@@ -43,9 +39,15 @@ public abstract class BaseNetConnectFragment extends BaseFragment implements IVi
         return netConnectManager.isNetType();
     }
 
-    //TODO 多次请求
+
+    @Override
+    public void onRequestSuccess(Object data) {
+
+    }
+
     @Override
     public void onRequestSuccess(int requestCode, Object data) {
+
 
     }
 

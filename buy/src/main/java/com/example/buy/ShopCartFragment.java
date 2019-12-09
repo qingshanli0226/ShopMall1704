@@ -1,32 +1,23 @@
 package com.example.buy;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.buy.databeans.GetCartBean;
 import com.example.buy.databeans.GoodsBean;
 import com.example.buy.presenter.CartPresenter;
 import com.example.buy.presenter.GoodsPresenter;
 import com.example.framework.base.BaseNetConnectFragment;
-import com.example.framework.base.BasePresenter;
 import com.example.framework.base.BaseRecyclerAdapter;
 import com.example.framework.base.BaseViewHolder;
 import com.example.framework.port.IPresenter;
-import com.example.net.AppNetConfig;
-import com.example.net.RetrofitCreator;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 
 public class ShopCartFragment extends BaseNetConnectFragment implements View.OnClickListener {
     private Button buyBut;

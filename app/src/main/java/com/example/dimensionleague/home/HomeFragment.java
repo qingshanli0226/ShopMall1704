@@ -1,7 +1,6 @@
 package com.example.dimensionleague.home;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,9 +11,6 @@ import com.example.dimensionleague.businessbean.HomeBean;
 import com.example.dimensionleague.home.adapter.HomeAdapter;
 import com.example.framework.base.BaseNetConnectFragment;
 import com.example.framework.base.BasePresenter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class HomeFragment extends BaseNetConnectFragment {
     private RecyclerView rv;

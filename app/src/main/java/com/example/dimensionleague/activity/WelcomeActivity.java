@@ -12,6 +12,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -24,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WelcomeActivity extends BaseNetConnectActivity {
-
     private ViewPager vp;
     private Button but;
     private List<Integer> icon;
@@ -37,13 +37,15 @@ public class WelcomeActivity extends BaseNetConnectActivity {
 
     @Override
     public void init() {
+
         super.init();
-        vp = findViewById(R.id.welcome_vp);
-        but = findViewById(R.id.welcome_button);
-        handler = new WelcomeHandler();
-        thread = new MyThread();
-        thread.start();
-        icon = new ArrayList<>();
+           vp = findViewById(R.id.welcome_vp);
+           but = findViewById(R.id.welcome_button);
+           handler = new WelcomeHandler();
+           thread = new MyThread();
+           thread.start();
+           icon = new ArrayList<>();
+           getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
     }
 
@@ -53,24 +55,26 @@ public class WelcomeActivity extends BaseNetConnectActivity {
         icon.add(R.drawable.timg1);
         icon.add(R.drawable.timg2);
         icon.add(R.drawable.timg3);
-        CacheManager.getInstance().getHomeDate();
-        CacheManager.getInstance().registerGetDateListener(new CacheManager.IHomeReceivedListener() {
-            @Override
-            public void onHomeDataReceived(HomeBean.ResultBean homeBean) {
-               synchronized (WelcomeActivity.this){
-                   isNetOk=true;
-                   if(index==-1){
-                       //                    跳转到主页面
-                       startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-                       finish();
-                   }
-               }
-            }
+            CacheManager.getInstance().getHomeDate();
+            CacheManager.getInstance().registerGetDateListener(new CacheManager.IHomeReceivedListener() {
+                @Override
+                public void onHomeDataReceived(HomeBean.ResultBean homeBean) {
+                    synchronized (WelcomeActivity.this) {
+                        isNetOk = true;
+                        if (index == -1) {
+                            //                    跳转到主页面
+                            startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+                            finish();
 
-            @Override
-            public void onHomeDataError(String s) {
-                synchronized (WelcomeActivity.this){
-                    isNetOk=false;
+                        }
+                    }
+                }
+
+                @Override
+                public void onHomeDataError(String s) {
+                    synchronized (WelcomeActivity.this) {
+                        isNetOk = false;
+                    }
                     try {
                         AlertDialog alertDialog = new AlertDialog.Builder(WelcomeActivity.this)
                                 .setTitle("警告")
@@ -85,9 +89,10 @@ public class WelcomeActivity extends BaseNetConnectActivity {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }
+
             }
-        });
+            });
+
 
 
         vp.setAdapter(new PagerAdapter() {
@@ -146,20 +151,22 @@ public class WelcomeActivity extends BaseNetConnectActivity {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 101:
-                    but.setText("" + index + "秒");
-                    count++;
-                    if (count < 3) {
-                        vp.setCurrentItem(count);
-                        Log.i("SSS", "run: welcomeHandler" + count);
+                    synchronized (WelcomeActivity.this){
+                        but.setText("" + index + "秒");
                     }
+                        count++;
+                        if (count < 3) {
+                            vp.setCurrentItem(count);
+                        }
+
                     break;
                 case 102:
                     synchronized (WelcomeActivity.this){
+                    index=-1;
                         if (isNetOk&&index==-1) {
                             //                    跳转到主页面
                             startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
                             finish();
-
                         } else {
                             return;
                         }
@@ -177,24 +184,27 @@ public class WelcomeActivity extends BaseNetConnectActivity {
 
         @Override
         public void run() {
+
             while (flag) {
                 synchronized (WelcomeActivity.this){
                 index--;
-                Log.i("SSS", "run: welcome线程" + index);
+                }
                 try {
                     Thread.sleep(1000);
-                    if (index == 0) {
-                        flag = false;
-                        handler.sendEmptyMessage(102);
-                    } else {
-                        handler.sendEmptyMessage(101);
-                    }
-
+                   synchronized (WelcomeActivity.this){
+                       if (index == 0) {
+                           flag = false;
+                           Log.i("SSS", "run: 跳转主页面的Handler");
+                           handler.sendEmptyMessage(102);
+                       } else {
+                           handler.sendEmptyMessage(101);
+                       }
+                   }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                     break;
                 }
-            }
+
             }
         }
 
