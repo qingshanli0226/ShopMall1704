@@ -46,10 +46,10 @@ public interface NetApiService {
 
 
     /**
-     * 添加一个产品到购物车
+     * 进行json参数请求
      */
     @POST
-    Observable<ResponseBody> addOneProduct(@HeaderMap HashMap<String, String> header, @Url String path, @Body RequestBody body);
+    Observable<ResponseBody> jsonPostData(@HeaderMap HashMap<String, String> header, @Url String path, @Body RequestBody body);
 
 
     /**

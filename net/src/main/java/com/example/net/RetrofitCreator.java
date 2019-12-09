@@ -43,16 +43,16 @@ public class RetrofitCreator {
 
         //定制OkHttpClient，添加拦截器
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(50, TimeUnit.SECONDS)
                 .addInterceptor(loggingInterceptor)
+                .addInterceptor(new Tokenlnterceptor())  //可以进行多次拦截，将添加token的拦截器添加上.
+                .connectTimeout(50, TimeUnit.SECONDS)
                 .build();
-
 
         //Retrofit的使用
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(AppNetConfig.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(AppNetConfig.BASE_URL)
                 .client(okHttpClient)
                 .build();
 

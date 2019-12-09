@@ -4,16 +4,17 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.commen.ACache;
+import com.example.commen.TokenUtil;
 import com.shaomall.framework.bean.LoginBean;
 
 import java.util.LinkedList;
 
 public class UserInfoManager {
-    private        Context                            mContext;
-    private static UserInfoManager                    instance;
-    private        ACache                             aCache;
-    private        SharedPreferences                  sharedPreferences;
-    private        LinkedList<UserInfoStatusListener> userInfoStatusListeners = new LinkedList<>();
+    private Context mContext;
+    private static UserInfoManager instance;
+    private ACache aCache;
+    private SharedPreferences sharedPreferences;
+    private LinkedList<UserInfoStatusListener> userInfoStatusListeners = new LinkedList<>();
 
     private UserInfoManager() {
 
@@ -90,6 +91,7 @@ public class UserInfoManager {
             //通过token值, 判断是否登录
             edit.putString("token", dataBean.getToken());
             edit.apply();
+            TokenUtil.sharedPreferences = sharedPreferences;
 
             //登录状态监听
             for (UserInfoStatusListener listener : userInfoStatusListeners) {

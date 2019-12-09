@@ -3,6 +3,7 @@ package com.example.net;
 public class AppNetConfig {
     //标记是否打印log
     public static final boolean PRINT_LOG = true;
+    public static final String TOKEN = "token";
 
     //服务端
     public static final String BASE_URL = "http://49.233.93.155:8080/";
