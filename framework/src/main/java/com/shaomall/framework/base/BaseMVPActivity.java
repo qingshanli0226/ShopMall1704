@@ -34,6 +34,21 @@ public abstract class BaseMVPActivity<T> extends BaseActivity implements IBaseVi
 //    protected abstract IBasePresenter<T> setBasePresenter();
 
     @Override
+    public void onRequestHttpDataSuccess(String message, T data) {
+
+    }
+
+    @Override
+    public void onRequestHttpDataListSuccess(String message, List<T> data) {
+
+    }
+
+    @Override
+    public void onRequestHttpDataFailed(ShopMailError error) {
+
+    }
+
+    @Override
     public void onRequestHttpDataSuccess(int requestCode, String message, T data) {
 
     }

@@ -38,6 +38,21 @@ public abstract class BaseMVPFragment<T> extends BaseFragment implements IBaseVi
 
 
     @Override
+    public void onRequestHttpDataSuccess(String message, T data) {
+
+    }
+
+    @Override
+    public void onRequestHttpDataListSuccess(String message, List<T> data) {
+
+    }
+
+    @Override
+    public void onRequestHttpDataFailed(ShopMailError error) {
+
+    }
+
+    @Override
     public void onRequestHttpDataSuccess(int requestCode, String message, T data) {
 
     }

@@ -20,11 +20,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.home.HomeBean;
-import com.example.administrator.shaomall.home.adapter.ChannelAdapter;
-import com.example.administrator.shaomall.home.adapter.SeckillRecyclerViewAdapter;
 import com.example.net.AppNetConfig;
-import com.flyco.tablayout.CommonTabLayout;
-import com.shaomall.framework.base.BaseHolder;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
@@ -242,7 +238,7 @@ public class HomeRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     isFirst = false;
                 }
                 //设置RecyclerView
-                recyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
+                recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false));
                 recyclerView.setAdapter(new SeckillRecyclerViewAdapter(context,data.getSeckill_info()));
 
                 handler.sendEmptyMessageDelayed(0,1000);
