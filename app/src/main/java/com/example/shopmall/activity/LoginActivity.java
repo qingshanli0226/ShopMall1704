@@ -95,7 +95,7 @@ public class LoginActivity extends BaseActivity implements IBaseView<LoginBean> 
         String token = result.getToken();
         SharedPreferences token1 = getSharedPreferences("login", Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = token1.edit();
-        edit.putString("getToken", token).apply();
+        edit.putString("getToken", token).apply();//
         Log.e("####", token);
     }
 
