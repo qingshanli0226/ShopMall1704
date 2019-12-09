@@ -89,8 +89,9 @@
         <com.example.step.StepArcView
             android:id="@+id/StepView"
             android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:layout_marginTop="20dp"
             >
 
 
@@ -101,7 +102,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/history_RecyclerView"
         android:layout_width="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="1"
         android:layout_height="0dp">
 
     </androidx.recyclerview.widget.RecyclerView>

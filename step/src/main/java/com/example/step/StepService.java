@@ -118,6 +118,7 @@ public class StepService extends Service implements SensorEventListener {
                         break;
                     case Intent.ACTION_SHUTDOWN:
                         save();
+
                         break;
                     case Intent.ACTION_DATE_CHANGED:
                         Log.e("##DateC", "Dchane");
@@ -127,6 +128,7 @@ public class StepService extends Service implements SensorEventListener {
                     case Intent.ACTION_TIME_CHANGED:
                         Log.e("##TimdChcane", "change");
                         save();
+                        isNewDay();
                         break;
                     case Intent.ACTION_TIME_TICK:
                         Log.e("##TimeC", "Time");
@@ -166,8 +168,14 @@ public class StepService extends Service implements SensorEventListener {
             currentStep = Integer.parseInt(shopStepBeans.get(0).getCurrent_step());
         }
 
-
-
+        int count=0;
+        List<Gal> queryAll = OrmUtils.getQueryAll(Gal.class);
+        for (int i=0;i<queryAll.size();i++){
+            count+=queryAll.get(i).getIntegral();
+            if (updateUi != null) {
+                updateUi.getUpdateStep(currentStep,count);
+            }
+        }
         updateNotification();
     }
 
@@ -175,11 +183,7 @@ public class StepService extends Service implements SensorEventListener {
     //更新通知
     @SuppressLint("NewApi")
     private void updateNotification() {
-
-
-
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, StepManager.getInstance().getIntent(), PendingIntent.FLAG_CANCEL_CURRENT);
-
         nbuilder
                 .setWhen(System.currentTimeMillis())
                 .setContentTitle("用户您好!")
@@ -193,9 +197,17 @@ public class StepService extends Service implements SensorEventListener {
             notificationManager.createNotificationChannel(channel);
         }
         notificationManager.notify(100, nbuilder.build());
-        if (updateUi != null) {
-            updateUi.getUpdateStep(currentStep);
+
+        int count=0;
+        List<Gal> queryAll = OrmUtils.getQueryAll(Gal.class);
+        for (int i=0;i<queryAll.size();i++){
+            count+=queryAll.get(i).getIntegral();
+
+            if (updateUi != null) {
+                updateUi.getUpdateStep(currentStep,count);
+            }
         }
+
 
 
     }
@@ -203,17 +215,27 @@ public class StepService extends Service implements SensorEventListener {
     private void save() {
         List<ShopStepBean> queryByWhere = OrmUtils.getQueryByWhere(ShopStepBean.class, "day", new String[]{CURRENT_DATE});
         if (queryByWhere.size() == 0 || queryByWhere.isEmpty()) {
-
             ShopStepBean shopStepBean = new ShopStepBean();
             shopStepBean.setDate(CURRENT_DATE + "");
             shopStepBean.setCurrent_step(currentStep + "");
             shopStepBean.setYesCurrent(previousStep + "");
             OrmUtils.insert(shopStepBean);
+            Gal gal = new Gal();
+            int i =(int) currentStep / 100;
+            gal.setIntegral(i);
+            OrmUtils.insert(gal);
+
+
         } else if (queryByWhere.size() == 1) {
             ShopStepBean shopStepBean = queryByWhere.get(0);
             shopStepBean.setCurrent_step(currentStep + "");
             shopStepBean.setYesCurrent(previousStep + "");
             OrmUtils.update(shopStepBean);
+            List<Gal> queryAll = OrmUtils.getQueryAll(Gal.class);
+            Gal gal = queryAll.get(0);
+            int i = (int)currentStep / 100;
+            gal.setIntegral(i);
+            OrmUtils.update(gal);
         }
 
         Log.e("##save", queryByWhere.size() + "--" + queryByWhere.toString());
@@ -322,7 +344,7 @@ public class StepService extends Service implements SensorEventListener {
     }
 
     public interface UpdateUi {
-        void getUpdateStep(int count);
+        void getUpdateStep(int count,int ingal);
     }
 
     public class StepBinder extends Binder {

@@ -61,8 +61,8 @@ public class RunView extends SurfaceView {
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
 
-        int newWidth=500;
-        int newHeight=250;
+        int newWidth=450;
+        int newHeight=180;
 
 
         float scaleWidth =(float) newWidth / width;
@@ -93,6 +93,7 @@ public class RunView extends SurfaceView {
         @Override
         public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
 
+            surfaceHolder.unlockCanvasAndPost(canvas);
         }
     };
 
@@ -104,6 +105,7 @@ public class RunView extends SurfaceView {
         if(toleft>mWidth){
             toleft=0;
         }
+
         while (true){
             try {
                 Rect rect = new Rect(toleft, toTop, toleft + mPeople.getWidth() / 10, toTop - mPeople.getHeight());
@@ -151,6 +153,8 @@ public class RunView extends SurfaceView {
 
         }
     }
+
+
 
 
 }

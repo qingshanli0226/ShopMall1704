@@ -17,8 +17,10 @@ public class StepHistoryAdapter extends RecyclerView.Adapter<StepHistoryAdapter.
 
     List<ShopStepBean>stepList;
 
-    public StepHistoryAdapter(List<ShopStepBean> stepHistory) {
+    int mcount;
+    public StepHistoryAdapter(List<ShopStepBean> stepHistory, int count) {
         this.stepList=stepHistory;
+        this.mcount=count;
     }
 
     @NonNull
@@ -32,7 +34,11 @@ public class StepHistoryAdapter extends RecyclerView.Adapter<StepHistoryAdapter.
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
 
         holder.day.setText(stepList.get(position).getDate());
-        holder.count.setText(stepList.get(position).getCurrent_step());
+        holder.count.setText(stepList.get(position).getCurrent_step()+"步");
+        if(position==stepList.size()-1){
+            holder.count.setText(mcount+"步");
+
+        }
 
     }
 

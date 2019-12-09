@@ -20,16 +20,16 @@ public class MyApplication extends Application {
         context = this;
         //初始化网络连接管理类
 
+        ConnectManager.getInstance().init(this);
+        //初始化异常
+        CrashHandler.getInstance(this).init();
 
         StepManager.getInstance().init(this);
         //点击通知跳转MainActivity
         Intent intent = new Intent(this, MainActivity.class);
         StepManager.getInstance().setActivityIntent(intent);
 
-        ConnectManager.getInstance().init(this);
-        //初始化异常
-        CrashHandler.getInstance(this).init();
-        //初始化缓存管理类
+
 
     }
 

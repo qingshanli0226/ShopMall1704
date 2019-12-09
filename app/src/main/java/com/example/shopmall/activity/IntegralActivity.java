@@ -11,6 +11,7 @@ import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.shopmall.R;
 import com.example.shopmall.adapter.StepHistoryAdapter;
+import com.example.step.OrmUtils;
 import com.example.step.RunView;
 import com.example.step.ShopStepBean;
 import com.example.step.StepArcView;
@@ -25,6 +26,8 @@ public class IntegralActivity extends BaseActivity {
     RunView runView;
     StepArcView stepArcView;
     RecyclerView History_recyclerView;
+
+
     @Override
     protected int setLayout() {
         return R.layout.activity_integral;
@@ -70,27 +73,48 @@ public class IntegralActivity extends BaseActivity {
 
 
 
+        List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
+        intergral_Step.setText(queryAll.get(queryAll.size()-1).getCurrent_step()+"");
+        String current_step = queryAll.get(queryAll.size() - 1).getCurrent_step();
+        int i = Integer.parseInt(current_step);
+        stepArcView.setCurrentCount(10000,i);
 
+        int i1 = (int) i / 100;
+        integral.setText(i1+"");
 
-        stepArcView.setCurrentCount(8000,4000);
-        StepManager.getInstance().registerListener(new StepManager.StepManagerListener() {
-            @Override
-            public void onStepChange(int count) {
-                intergral_Step.setText(count+"");
-            }
-        });
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         History_recyclerView.setLayoutManager(linearLayoutManager);
 
-        List<ShopStepBean> stepHistory = StepManager.getInstance().getStepHistory();
-        StepHistoryAdapter stepHistoryAdapter = new StepHistoryAdapter(stepHistory);
-        History_recyclerView.setAdapter(stepHistoryAdapter);
 
 
-        int gal = StepManager.getInstance().getGal();
-        integral.setText(gal+"");
+
+        StepManager.getInstance().registerListener(new StepManager.StepManagerListener() {
+            @Override
+            public void onStepChange(int count) {
+                intergral_Step.setText(count+"");
+              stepArcView.setCurrentCount(10000,count);
+
+
+
+                List<ShopStepBean> stepHistory = StepManager.getInstance().getStepHistory();
+                StepHistoryAdapter stepHistoryAdapter = new StepHistoryAdapter(stepHistory,count);
+                History_recyclerView.setAdapter(stepHistoryAdapter);
+
+            }
+
+            @Override
+            public void onIntegral(int intgal) {
+
+              integral.setText(intgal+"");
+            }
+        });
+
+
+
+
+
 
 
     }

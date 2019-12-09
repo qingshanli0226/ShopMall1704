@@ -22,11 +22,8 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".activity.GoodsInfoActivity"></activity>
-        <activity android:name=".activity.GoodsListActivity" />
         <activity android:name=".activity.MessageActivity" />
-        <activity android:name=".activity.MessageActivity">
 
-        </activity>
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.IntegralActivity" />
@@ -49,6 +46,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name="com.example.step.StepService">
+
+        </service>
     </application>
 
 </manifest>

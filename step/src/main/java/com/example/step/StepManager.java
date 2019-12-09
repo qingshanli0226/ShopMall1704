@@ -10,7 +10,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.IBinder;
-import android.widget.Toast;
+
 import java.util.List;
 
 public class StepManager {
@@ -24,6 +24,7 @@ public class StepManager {
     SharedPreferences sharedPreferences;
 
     private Intent intent;
+
     public static StepManager getInstance() {
         if (stepManager == null) {
             stepManager = new StepManager();
@@ -42,15 +43,22 @@ public class StepManager {
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
 
                 stepService=((StepService.StepBinder)iBinder).getService();
+
                 stepService.registerListener(new StepService.UpdateUi() {
                     @Override
-                    public void getUpdateStep(int count) {
+                    public void getUpdateStep(int count, int ingal) {
+//                        getInterGal();
                         if(stepManagerListener!=null){
                             stepManagerListener.onStepChange(count);
-                            getGal();
+                            stepManagerListener.onIntegral(ingal);
                         }
                     }
+
+
                 });
+
+
+
             }
 
             @Override
@@ -58,6 +66,11 @@ public class StepManager {
 
             }
         };
+
+
+
+
+
         context.bindService(intent,serviceConnection,Context.BIND_AUTO_CREATE);
 
 
@@ -67,7 +80,12 @@ public class StepManager {
         edit.commit();
 
 
+
+
+
+
     }
+
 
 
 
@@ -76,9 +94,6 @@ public class StepManager {
         getIntent();
    }
    public Intent getIntent(){
-//            Activity activity = getActivityStack().get(0);
-//            activity.getClass();
-//            intent = new Intent(context, activity.getClass());
         if(this.intent !=null){
            return this.intent;
 
@@ -86,31 +101,35 @@ public class StepManager {
             return null;
         }
    }
-    public int getGal(){
-        getInterGal();
-        int gal = sharedPreferences.getInt("gal", 0);
-        return gal;
-    }
 
-    public void getInterGal(){
-        List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
 
-        if(queryAll!=null){
-        for (int i=0;i<queryAll.size();i++) {
-            String current_step = queryAll.get(i).getCurrent_step();
-            int i1 = Integer.parseInt(current_step);
-            int intGal = (int) i1 / 100;
-            SharedPreferences.Editor edit = sharedPreferences.edit();
-            edit.putInt("gal", intGal);
-            edit.commit();
 
-        }
-        }else{
-            Toast.makeText(context, "您目前没有积分,今天运动一下把!", Toast.LENGTH_SHORT).show();
-        }
+//    private void saveOrm(int intGal) {
+//
+//        List<Gal> queryAll1 = OrmUtils.getQueryAll(Gal.class);
+//        if(queryAll1.size()==0||queryAll1.isEmpty()){
+//            OrmUtils.createDb(context,"Integral");
+//            Gal gal = new Gal();
+//            gal.setIntegral(intGal);
+//            OrmUtils.insert(gal);
+//            Log.e("##QQSS","888--");
+//        }else if(queryAll1.size()==1){
+//            Gal gal = queryAll1.get(0);
+//            gal.setIntegral(intGal);
+//            OrmUtils.update(gal);
+//            List<Gal> queryAll = OrmUtils.getQueryAll(Gal.class);
+//            Log.e("##Q",queryAll.toString()+"");
+//
+//        }
+//    }
 
-    }
-
+//    public int getIntgerGal(){
+//         int count=0;
+//        for (int i=0;i<OrmUtils.getQueryAll(Gal.class).size();i++){
+//            count+=OrmUtils.getQueryAll(Gal.class).get(i).getIntegral();
+//        }
+//        return count;
+//    }
     //获取历史记录
     public List<ShopStepBean> getStepHistory(){
         List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
@@ -118,6 +137,7 @@ public class StepManager {
     }
     public interface StepManagerListener{
         void onStepChange(int count);
+        void onIntegral(int intgal);
 
     }
     public void registerListener(StepManagerListener stepManagerListener){
