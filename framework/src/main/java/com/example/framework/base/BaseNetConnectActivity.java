@@ -108,4 +108,5 @@ public abstract class BaseNetConnectActivity extends BaseActivity implements IAc
         super.onDestroy();
         netConnectManager.unRegisterNetConnectListener(this);
     }
+
 }

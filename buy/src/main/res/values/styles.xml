@@ -8,4 +8,8 @@
         <item name="android:height">@dimen/buy_four</item>
         <item name="android:width">@dimen/buy_four</item>
     </style>
+    <style name="popAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@animator/pop_enter</item>
+        <item name="android:windowExitAnimation">@animator/pop_exit</item>
+    </style>
 </resources>

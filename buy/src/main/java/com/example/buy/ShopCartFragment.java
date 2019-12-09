@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.buy.activity.PayActivity;
 import com.example.buy.databeans.GetCartBean;
 import com.example.buy.databeans.GoodsBean;
 import com.example.buy.databeans.OkBean;
@@ -148,6 +149,9 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                     public void onClick(View v) {
                         int num = list.get(position).getProductNum();
                         list.get(position).setProductNum(num + 1);
+                        if (list.get(position).getProductNum()>1){
+                            holder.getView(R.id.itemAddBut).setClickable(true);
+                        }
                         upDatePresenter=new PostUpDatePresenter(list.get(position));
                         upDatePresenter.attachView(ShopCartFragment.this);
                         upDatePresenter.onHttpPostRequest(UPDATA_GOODS);
@@ -188,9 +192,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
     @Override
     public void onDestroy() {
         super.onDestroy();
-        sendCartPresenter.detachView();
-        goodsPresenter.detachView();
-        upDatePresenter.detachView();
+        disPreseter(sendCartPresenter,goodsPresenter,upDatePresenter);
     }
 
     @Override
@@ -258,6 +260,14 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
         }
         if (flag){
             checkAll.setChecked(true);
+        }
+    }
+
+    private void disPreseter(IPresenter... iPresenter){
+        for (int i=0;i<iPresenter.length;i++){
+            if (iPresenter[i]!=null){
+                iPresenter[i].detachView();
+            }
         }
     }
 }

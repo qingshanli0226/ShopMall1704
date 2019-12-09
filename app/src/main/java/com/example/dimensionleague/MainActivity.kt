@@ -2,7 +2,7 @@ package com.example.dimensionleague
 
 import androidx.fragment.app.Fragment
 import android.graphics.Color
-import com.example.buy.GoodsActiviy
+import com.example.buy.activity.GoodsActiviy
 import com.example.buy.ShopCartFragment
 import com.example.dimensionleague.home.HomeFragment
 import kotlinx.android.synthetic.main.activity_main.*

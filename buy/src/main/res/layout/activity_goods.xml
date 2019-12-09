@@ -2,20 +2,34 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/buyWhite"
     android:id="@+id/goodsRel">
     <ImageView
         android:id="@+id/goodsImage"
         android:src="@drawable/img"
-        android:scaleType="fitXY"
         android:layout_width="match_parent"
-        android:layout_height="350dp"/>
+        android:layout_height="250dp"/>
     <ImageView
         android:id="@+id/beiImgage"
         android:src="@drawable/img"
-        android:scaleType="fitXY"
         android:layout_width="match_parent"
-        android:layout_height="350dp"/>
+        android:layout_height="250dp"/>
+    <TextView
+        android:id="@+id/goodsTitle"
+        android:textColor="@color/buyPink"
+        android:textSize="@dimen/buy_text_three"
+        android:layout_below="@id/goodsImage"
+        android:text="标题"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <WebView
+        android:id="@+id/webView"
+        android:layout_above="@id/foot"
+        android:layout_below="@id/goodsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
     <RelativeLayout
+        android:id="@+id/foot"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
