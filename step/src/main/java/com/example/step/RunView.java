@@ -98,6 +98,7 @@ public class RunView extends SurfaceView {
     };
 
 
+    //..
     private void MyDraw(){
         int toleft=300;
         int toTop=mHight-50;
