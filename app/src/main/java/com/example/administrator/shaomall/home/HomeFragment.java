@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.example.administrator.shaomall.AnimationNestedScrollView;
 import com.example.administrator.shaomall.home.adapter.HomeRecycleAdapter;
-import com.example.commen.CommonUtil;
+import com.example.commen.util.CommonUtil;
 import com.example.administrator.shaomall.R;
 import com.example.commen.ACache;
 import com.example.commen.ShopMailError;

@@ -6,14 +6,11 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
-import java.util.StringTokenizer;
 import java.util.TreeMap;
 
 public class SignUtil {
@@ -67,11 +64,10 @@ public class SignUtil {
      */
     public static String generateJsonSign(JSONObject object) {
         TreeMap<String, String> params = getEmptyTreeMap();
-
         Iterator<String> keys = object.keys();
+
         while (keys.hasNext()) {
             String key = keys.next();
-
             try {
                 params.put(key, object.get(key).toString());
             } catch (JSONException e) {
@@ -79,19 +75,37 @@ public class SignUtil {
             }
         }
 
-        StringBuffer str = new StringBuffer();
+        StringBuilder str = new StringBuilder();
         for (String key : params.keySet()) {
             String value = params.get(key);
             str.append(key + "=" + value + "&");
         }
 
         str.append("encrypt=md5");
-        String strNew = str.toString().replace("\"", "")
+        String strNew = str.toString();/*.replace("\"", "")
                 .replace(":", "").replace("=", "")
-                .replace(" ", "");
+                .replace(" ", "");*/
         String signValue = stringToMD5(strNew);
         return signValue;
     }
+    public static void encryptJsonParamsByBase64(JSONObject object) {
+        Log.d("LQS str = ", object.toString());
+
+        Iterator<String> iterator = object.keys();
+        while (iterator.hasNext()) {
+            String key = iterator.next();
+
+            String value = null;
+            try {
+                value = object.get(key).toString();
+                String encryptValue = new String(Base64.encode(value.getBytes(), Base64.DEFAULT));
+                object.put(key, encryptValue);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     /**
      * 生成签名

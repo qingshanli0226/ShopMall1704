@@ -1,4 +1,4 @@
-package com.example.commen;
+package com.example.commen.util;
 
 import android.content.Context;
 import android.view.inputmethod.InputMethodManager;
