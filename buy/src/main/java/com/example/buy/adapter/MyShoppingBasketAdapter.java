@@ -25,7 +25,7 @@ public class MyShoppingBasketAdapter extends RecyclerView.Adapter<MyShoppingBask
 
     private List<Map<String, String>> data = new ArrayList<>();
 
-    private int allcount = 0;
+    private double allcount = 0;
     private Context context;
     private NumberAddSubView.OnNumberChangeListener listener;
 
@@ -49,14 +49,14 @@ public class MyShoppingBasketAdapter extends RecyclerView.Adapter<MyShoppingBask
         notifyDataSetChanged();
     }
 
-    public void refresh2(List<Map<String, String>> data, int position, int allcount) {
+    public void refresh2(List<Map<String, String>> data, int position, double allcount) {
         this.data.clear();
         this.data.addAll(data);
         notifyItemChanged(position);
         this.allcount = allcount;
     }
 
-    public void setAllcount(int allcount) {
+    public void setAllcount(double allcount) {
         this.allcount = allcount;
     }
 
@@ -104,36 +104,28 @@ public class MyShoppingBasketAdapter extends RecyclerView.Adapter<MyShoppingBask
             @Override
             public void onClick(View view) {
                 if (holder.cb_gov.isChecked()) {
-
                     int count = x * Integer.parseInt(hashMap.get("price"));
                     allcount += count;
-
                     Message message = Message.obtain();
                     message.what = 100;
-                    message.arg1 = allcount;
                     message.arg2 = position;
-                    message.obj = "true " + x;
+                    message.obj = "true " + x + " " + allcount;
                     handler.sendMessage(message);
 
                     checkedcount++;
                 } else {
-
                     int count = x * Integer.parseInt(hashMap.get("price"));
-                    Log.e("####", allcount + "");
                     allcount -= count;
-
-                    Log.e("####", count + "/" + allcount);
 
                     Message message = Message.obtain();
                     message.what = 100;
-                    message.arg1 = allcount;
                     message.arg2 = position;
-                    message.obj = "false " + x;
+                    message.obj = "false " + x + " " + allcount;
                     handler.sendMessage(message);
 
                     checkedcount--;
                 }
-
+                Log.e("####", checkedcount + "");
                 Message message = Message.obtain();
                 message.what = 200;
                 if (checkedcount == data.size()) {
