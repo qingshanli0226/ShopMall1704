@@ -1,15 +1,15 @@
 package com.example.administrator.shaomall.login.presenter;
 
-import com.example.administrator.shaomall.login.Base.LoginBean;
 import com.example.net.AppNetConfig;
 import com.example.net.ResEntity;
 import com.google.gson.reflect.TypeToken;
 import com.shaomall.framework.base.presenter.BasePresenter;
+import com.shaomall.framework.bean.LoginBean;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
-public class LoginPresenter extends BasePresenter<LoginBean.ResultBean> {
+public class LoginPresenter extends BasePresenter<LoginBean> {
 
 
     String username=null;
@@ -33,7 +33,7 @@ public class LoginPresenter extends BasePresenter<LoginBean.ResultBean> {
 
     @Override
     protected Type getBeanType() {
-        return new TypeToken<ResEntity<LoginBean.ResultBean>>(){}.getType();
+        return new TypeToken<ResEntity<LoginBean>>(){}.getType();
     }
 
     @Override

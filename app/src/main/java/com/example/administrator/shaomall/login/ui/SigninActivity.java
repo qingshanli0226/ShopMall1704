@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.shaomall.R;
-import com.example.administrator.shaomall.login.Base.SigninBean;
 import com.example.administrator.shaomall.login.diyview.DIYButton;
 import com.example.administrator.shaomall.login.diyview.Headportrait;
 import com.example.administrator.shaomall.login.presenter.SigninPresenter;
@@ -22,7 +21,7 @@ import com.wyp.avatarstudio.AvatarStudio;
 
 import java.io.File;
 
-public class SigninActivity extends BaseMVPActivity<SigninBean> {
+public class SigninActivity extends BaseMVPActivity<String> {
 
     private Headportrait signinhead;
     private SimpleDraweeView signinPhoto;
@@ -59,6 +58,12 @@ public class SigninActivity extends BaseMVPActivity<SigninBean> {
     protected void initData() {
         diybutton.setButtomtext("注册");
 
+        signinSignin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         //头像
         signinhead.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +129,7 @@ public class SigninActivity extends BaseMVPActivity<SigninBean> {
     }
 
     @Override
-    public void onRequestHttpDataSuccess(int requestCode, String message, SigninBean data) {
+    public void onRequestHttpDataSuccess(int requestCode, String message, String data) {
         //注册成功
         Toast.makeText(mActivity, ""+message, Toast.LENGTH_SHORT).show();
     }

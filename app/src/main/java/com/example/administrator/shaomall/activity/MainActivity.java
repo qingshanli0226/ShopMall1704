@@ -7,9 +7,9 @@ import android.widget.FrameLayout;
 import com.example.administrator.shaomall.FindFragment;
 import com.example.administrator.shaomall.MineFragment;
 import com.example.administrator.shaomall.R;
-import com.example.administrator.shaomall.ShopCarFragment;
 import com.example.administrator.shaomall.TypeFragment;
 import com.example.administrator.shaomall.home.HomeFragment;
+import com.example.shoppingcart.Ui.Shoppingcart;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
@@ -39,7 +39,7 @@ public class MainActivity extends BaseActivity {
         fragments.add(new HomeFragment());
         fragments.add(new TypeFragment());
         fragments.add(new FindFragment());
-        fragments.add(new ShopCarFragment());
+        fragments.add(new Shoppingcart());
         fragments.add(new MineFragment());
 
     }
