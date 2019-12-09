@@ -1,7 +1,10 @@
 package com.example.shopmall.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -88,6 +91,12 @@ public class LoginActivity extends BaseActivity implements IBaseView<LoginBean> 
     @Override
     public void onPostDataSucess(LoginBean data) {
         Toast.makeText(this, data.getMessage(), Toast.LENGTH_SHORT).show();
+        LoginBean.ResultBean result = data.getResult();
+        String token = result.getToken();
+        SharedPreferences token1 = getSharedPreferences("login", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = token1.edit();
+        edit.putString("getToken", token).apply();
+        Log.e("####", token);
     }
 
     @Override

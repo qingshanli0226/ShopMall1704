@@ -10,6 +10,8 @@ import android.widget.Toast;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IBaseView;
+import com.example.framework.manager.UserBean;
+import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
 import com.example.shopmall.bean.RegisterBean;
 import com.example.shopmall.presenter.IntegerPresenter;
@@ -68,6 +70,10 @@ public class RegisterActivity extends BaseActivity implements IBaseView<Register
             public void onClick(View v) {
                 String name = mName.getText().toString();
                 String pwd = mPassWord.getText().toString();
+                UserBean userBean = new UserBean();
+                userBean.setName(name);
+                userBean.setPassword(pwd);
+                UserManager.getInstance().addUser(userBean);
                 integerPresenter = new RegisterPresenter(name, pwd);
                 integerPresenter.attachView(RegisterActivity.this);
                 integerPresenter.register();
