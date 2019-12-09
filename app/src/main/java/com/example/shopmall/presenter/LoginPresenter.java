@@ -1,33 +1,37 @@
 package com.example.shopmall.presenter;
 
 import com.example.framework.base.BasePresenter;
+import com.example.framework.base.IBasePresenter;
+import com.example.framework.base.IBaseView;
+import com.example.shopmall.bean.LoginBean;
 import com.example.shopmall.bean.RegisterBean;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
-public class RegisterPresenter extends BasePresenter {
+public class LoginPresenter extends BasePresenter<LoginBean> {
+
     private String name;
     private String pwd;
 
-    public RegisterPresenter() {
+    public LoginPresenter() {
     }
 
-    public RegisterPresenter(String name, String pwd) {
+    public LoginPresenter(String name, String pwd) {
         this.name = name;
         this.pwd = pwd;
     }
 
     @Override
     protected Type getBeanType() {
-        return new TypeToken<RegisterBean>() {
+        return new TypeToken<LoginBean>() {
         }.getType();
     }
 
     @Override
     protected String getPath() {
-        return "register";
+        return "login";
     }
 
     @Override
@@ -42,4 +46,5 @@ public class RegisterPresenter extends BasePresenter {
         map.put("password", pwd);
         return map;
     }
+
 }

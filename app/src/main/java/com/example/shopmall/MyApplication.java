@@ -7,6 +7,7 @@ import android.content.Intent;
 
 import com.example.framework.manager.ConnectManager;
 import com.example.framework.manager.CrashHandler;
+import com.example.framework.manager.UserManager;
 import com.example.shopmall.activity.MainActivity;
 import com.example.step.StepManager;
 
@@ -23,7 +24,10 @@ public class MyApplication extends Application {
         StepManager.getInstance().init(this);
         //点击通知跳转MainActivity
         Intent intent = new Intent(this, MainActivity.class);
+
         StepManager.getInstance().setActivityIntent(intent);
+
+        UserManager.getInstance().init(this);
 
         ConnectManager.getInstance().init(this);
         //初始化异常

@@ -106,6 +106,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     protected void initData() {
         initData2();
         setCheckAll();
+        setSetting();
         setDelete();
     }
 
@@ -126,6 +127,28 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
                 myShoppingUtils.setData(data);
             }
         });
+    }
+
+    private void setSetting() {
+    }
+
+    private void settingChanged() {
+        boolean isSetting = myShoppingUtils.getisSetting();
+        if (isSetting) {
+            myShoppingUtils.setisSetting(false);
+            ll_check_all.setVisibility(View.VISIBLE);
+            ll_delete.setVisibility(View.GONE);
+        } else {
+            myShoppingUtils.setisSetting(true);
+            ll_check_all.setVisibility(View.GONE);
+            ll_delete.setVisibility(View.VISIBLE);
+        }
+        setAllUnChecked();
+        cb_all.setChecked(false);
+        checkbox_all.setChecked(false);
+        myShoppingUtils.setAllCount(0);
+        myShoppingBasketAdapter.setAllcount(0);
+        myShoppingBasketAdapter.refresh(myShoppingUtils.getData());
     }
 
     private void setCheckAll() {
@@ -236,7 +259,6 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         tb_shopping_cart.setTitleBacKGround(Color.RED);
         tb_shopping_cart.setCenterText("购物车",18,Color.WHITE);
         tb_shopping_cart.setRightText("编辑");
-
         tb_shopping_cart.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
             public void LeftClick() {
@@ -245,7 +267,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
 
             @Override
             public void RightClick() {
-                settingChanged();
+
             }
 
             @Override
@@ -253,26 +275,6 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
 
             }
         });
-
-    }
-
-    private void settingChanged() {
-        boolean isSetting = myShoppingUtils.getisSetting();
-        if (isSetting) {
-            myShoppingUtils.setisSetting(false);
-            ll_check_all.setVisibility(View.VISIBLE);
-            ll_delete.setVisibility(View.GONE);
-        } else {
-            myShoppingUtils.setisSetting(true);
-            ll_check_all.setVisibility(View.GONE);
-            ll_delete.setVisibility(View.VISIBLE);
-        }
-        setAllUnChecked();
-        cb_all.setChecked(false);
-        checkbox_all.setChecked(false);
-        myShoppingUtils.setAllCount(0);
-        myShoppingBasketAdapter.setAllcount(0);
-        myShoppingBasketAdapter.refresh(myShoppingUtils.getData());
     }
 
     @Override
@@ -301,7 +303,6 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), OrderActivity.class));
-
             }
         });
     }
