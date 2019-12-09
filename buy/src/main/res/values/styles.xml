@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="BuyBut" >
+        <item name="android:textColor">@color/buyWhite</item>
+        <item name="android:background">@drawable/buybut</item>
+    </style>
+    <style name="ImageIcon" >
+        <item name="android:height">@dimen/buy_four</item>
+        <item name="android:width">@dimen/buy_four</item>
+    </style>
+</resources>

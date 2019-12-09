@@ -29,7 +29,7 @@ class ActAdapter(
         val view = ImageView(context)
         view.scaleType = ImageView.ScaleType.FIT_XY
         //绑定数据
-        Glide.with(context).load(image?.get(position)).into(view)
+        Glide.with(context!!).load(image?.get(position)).into(view)
         container.addView(view)
         return view
     }

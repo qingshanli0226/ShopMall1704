@@ -14,6 +14,7 @@
         <ImageView
             android:layout_width="@dimen/dp_50"
             android:layout_height="@dimen/dp_50"
+            android:padding="@dimen/dp_10"
             android:src="@drawable/attention"
             android:id="@+id/find_attention"/>
         <TextView
@@ -26,6 +27,7 @@
         <ImageView
             android:layout_width="@dimen/dp_50"
             android:layout_height="@dimen/dp_50"
+            android:padding="@dimen/dp_10"
             android:src="@drawable/search_which"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/dp_50"
@@ -33,6 +35,7 @@
         <ImageView
             android:layout_width="@dimen/dp_50"
             android:layout_height="@dimen/dp_50"
+            android:padding="@dimen/dp_10"
             android:src="@drawable/message"
             android:layout_alignParentRight="true"
             android:id="@+id/message"/>

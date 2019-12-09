@@ -9,4 +9,5 @@
     <color name="colorLimitGray">#FFBABABA</color>
     <color name="colorRed">#FF1000</color>
     <color name="colorMediumGrey">#788188</color>
+    <color name="color_gradual_purple">#CF00FF</color>
 </resources>

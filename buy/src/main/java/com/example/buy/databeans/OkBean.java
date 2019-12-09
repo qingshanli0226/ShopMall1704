@@ -1,5 +1,8 @@
 package com.example.buy.databeans;
 
+/**
+ * 多种请求后返回的数据
+ * */
 public class OkBean {
     @Override
     public String toString() {

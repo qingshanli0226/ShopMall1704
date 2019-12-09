@@ -3,6 +3,7 @@ package com.example.net;
 public class AppNetConfig {
     //服务器IP
     public static final String IPADDRESS = "49.233.93.155";
+//    public static final String IPADDRESS = "169.254.230.253";
 
     public static final String BASE_URL = "http://" + IPADDRESS + ":8080";
 
@@ -10,7 +11,9 @@ public class AppNetConfig {
     public static final String BASE_URL_JSON="/atguigu/json/";
 
     // 请求图片基本URL
+
     public static final String BASE_URl_IMAGE =BASE_URL +"/atguigu/img";
+
 
     //TODO 使用: BASE_URL_JSON
     //首页  GET 无参数
@@ -143,4 +146,5 @@ public class AppNetConfig {
     public static final String FINDFORSEND="findForSend";
     //TODO 加载头像 GET BASE_URL+用户的avatar
     //TODO 加载图片 GET BASE_URl_IMAGE+请求到的图片url
+    public static final String CODE_OK="200";
 }

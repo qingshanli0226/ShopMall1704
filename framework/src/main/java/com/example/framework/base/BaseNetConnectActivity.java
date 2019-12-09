@@ -1,13 +1,11 @@
 package com.example.framework.base;
 
 import android.widget.RelativeLayout;
-import com.example.common.LoadingPageUtils;
+import com.example.common.utils.LoadingPageUtils;
 import com.example.framework.manager.NetConnectManager;
 import com.example.framework.port.IActivity;
 import com.example.framework.port.INetConnectListener;
 import com.example.framework.port.IView;
-
-import io.reactivex.Observable;
 
 public abstract class BaseNetConnectActivity extends BaseActivity implements IActivity, IView, INetConnectListener {
 
@@ -46,6 +44,7 @@ public abstract class BaseNetConnectActivity extends BaseActivity implements IAc
         return netConnectManager.isNetType();
     }
 
+
     //TODO 请求到单数据
     @Override
     public void onRequestSuccess(Object data) {
@@ -55,6 +54,7 @@ public abstract class BaseNetConnectActivity extends BaseActivity implements IAc
     //TODO 请求到单数据
     @Override
     public void onRequestSuccess(int requestCode, Object data) {
+
 
     }
 

@@ -25,4 +25,5 @@ public interface IView<T> {
     void onRequestSuccess(int requestCode, T data);
     //TODO 获取RelativeLayoutId
     int getRelativeLayout();
+
 }

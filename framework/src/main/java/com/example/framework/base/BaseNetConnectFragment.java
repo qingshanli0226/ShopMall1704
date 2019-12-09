@@ -2,8 +2,7 @@ package com.example.framework.base;
 
 import android.view.View;
 import android.widget.RelativeLayout;
-
-import com.example.common.LoadingPageUtils;
+import com.example.common.utils.LoadingPageUtils;
 import com.example.framework.manager.NetConnectManager;
 import com.example.framework.port.INetConnectListener;
 import com.example.framework.port.IView;

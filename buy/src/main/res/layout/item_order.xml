@@ -8,15 +8,29 @@
         android:layout_height="100dp"/>
     <TextView
         android:id="@+id/orderTitle"
-        android:text="123215456"
+        android:text="标题"
         android:layout_toRightOf="@id/orderImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/orderBut"
-        android:text="删除"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
+    <TextView
+        android:id="@+id/orderNum"
+        android:text="数量"
+        android:layout_below="@+id/orderTitle"
+        android:layout_toRightOf="@id/orderImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/orderMoney"
+        android:text="单个价格"
+        android:layout_below="@id/orderNum"
+        android:layout_toRightOf="@id/orderImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/orderAllMoney"
+        android:text="总价"
+        android:layout_below="@id/orderMoney"
+        android:layout_toRightOf="@id/orderImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </RelativeLayout>

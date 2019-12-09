@@ -12,10 +12,12 @@ import com.example.dimensionleague.home.adapter.HomeAdapter;
 import com.example.framework.base.BaseNetConnectFragment;
 import com.example.framework.base.BasePresenter;
 
+import java.util.ArrayList;
+
 public class HomeFragment extends BaseNetConnectFragment {
     private RecyclerView rv;
     private HomeAdapter adapter;
-    private HomeBean.ResultBean list;
+    private HomeBean.ResultBean list =new HomeBean.ResultBean();;
     private  BasePresenter iBasePresenter;
 
 
@@ -30,9 +32,11 @@ public class HomeFragment extends BaseNetConnectFragment {
     public void initDate() {
 //        iBasePresenter.attachView(this);
 //        iBasePresenter.onHttpGetRequest();
-        Log.d("sss", "initDate: "+((HomeBean) CacheManager.getInstance().getHomeBeanData()).result);
-        list=(((HomeBean) CacheManager.getInstance().getHomeBeanData()).result );
-        adapter=new HomeAdapter(list,getContext());
+       if(CacheManager.getInstance().getHomeBeanData()!=null){
+           list=(((HomeBean) CacheManager.getInstance().getHomeBeanData()).result );
+       }
+       adapter=new HomeAdapter(list,getContext());
+
 // 设置网格布局
         rv.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         rv.setAdapter(adapter);

@@ -2,7 +2,9 @@ package com.example.dimensionleague.activity
 
 import androidx.fragment.app.Fragment
 import android.graphics.Color
+
 import com.example.dimensionleague.R
+import com.example.buy.ShopCartFragment
 import com.example.dimensionleague.home.HomeFragment
 import com.example.dimensionleague.type.TypeFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -25,10 +27,11 @@ class MainActivity : BaseNetConnectActivity() {
         list.add(HomeFragment())
         list.add(TypeFragment())
         list.add(HomeFragment())
-        list.add(HomeFragment())
+        list.add(ShopCartFragment())
         list.add(HomeFragment())
     }
     override fun initDate() {
+        super.init()
         main_easy.selectTextColor(Color.parseColor("#d3217b"))
             .normalTextColor(Color.parseColor("#707070"))
             .selectIconItems(
@@ -54,7 +57,6 @@ class MainActivity : BaseNetConnectActivity() {
             .titleItems(arrayOf("首页", "分类", "发现", "购物车", "我的"))
             .canScroll(true)
             .build()
-
     }
 }
 
