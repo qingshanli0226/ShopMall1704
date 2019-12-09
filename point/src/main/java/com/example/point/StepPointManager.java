@@ -1,24 +1,20 @@
 package com.example.point;
 
-import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.example.point.activity.StepActivity;
 import com.example.point.service.StepService;
-import com.squareup.leakcanary.LeakCanary;
 
 public class StepPointManager {
-    public  static   StepPointManager stepPointManager;
+    public  static StepPointManager stepPointManager;
     private Context context;
     private StepService stepService;
-    private int step=0;
+    private int step;
+
     public StepPointManager(Context context) {
         this.context = context;
     }
@@ -30,13 +26,7 @@ public class StepPointManager {
         return stepPointManager;
     }
     public void init(){
-        if (LeakCanary.isInAnalyzerProcess(context)) {
-// This process is dedicated to LeakCanary for heap analysis.
-// You should not init your app in this process.
 
-            return;
-        }
-        LeakCanary.install((Application) this.context);
 
         Intent intent = new Intent(context, StepService.class);
         context.startService(intent);
@@ -48,14 +38,13 @@ public class StepPointManager {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
 
-                StepService stepService = ((StepService.StepBinder) iBinder).getService();
-                initStep(stepService.getStepCount());
-
+                 stepService = ((StepService.StepBinder) iBinder).getService();
                 stepService.registerCallback(new StepService.UpdateUiCallBack() {
                     @Override
                     public void updateUi(int stepCount) {
-                        initStep(stepCount);
-                        Log.i("updateUi", "updateUi: "+stepCount);
+                        if(getStepListener!=null){
+                            getStepListener.setStep(stepCount);
+                        }
                     }
                 });
 
@@ -66,11 +55,22 @@ public class StepPointManager {
 
         }
     };
-    public void  initStep(int step){
-        this.step=step;
+    private  GetStepListener getStepListener;
+    public void addGetStepListener(GetStepListener getStepListener){
+        this.getStepListener=getStepListener;
     }
-
-    public int getStep(){
-        return step;
+//    public void  initStep(int step){
+//        this.step=step;
+//    }
+//
+//    public int getStep(){
+//        return step;
+//    }
+    public interface GetStepListener{
+        void setStep(int step);
+    }
+    public void unRegisterLisener(){
+        this.getStepListener=null;
+        context.unbindService(connection);
     }
 }

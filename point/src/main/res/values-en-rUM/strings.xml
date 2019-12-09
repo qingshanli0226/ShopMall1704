@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Time the yuan</string>
+    <string name="history">No history!</string>
+    <string name="physical">Exercise steps daily</string>
+    <string name="remind">remind</string>
+    <string name="remind_time">reminder time</string>
+    <string name="save">save</string>
+
+    <string name="supports">The device supports step counting</string>
+    <string name="plan">Set an exercise plan</string>
+    <string name="history_step">View historical steps</string>
+    <string name="exercise_plan">exercise plan</string>
+
+</resources>

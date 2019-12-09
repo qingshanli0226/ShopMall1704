@@ -9,8 +9,7 @@
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/wzy_currdate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+           style="@style/w_wrap"
             android:layout_marginLeft="50dp"
             android:text="TextView"
             android:layout_weight="1"
@@ -19,8 +18,7 @@
 
         <TextView
             android:id="@+id/wzy_step"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+           style="@style/w_wrap"
             android:layout_marginRight="50dp"
             android:textSize="18sp"
             android:text="TextView"

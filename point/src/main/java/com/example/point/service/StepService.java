@@ -25,7 +25,6 @@ import android.os.IBinder;
 import android.os.Message;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,11 +49,15 @@ public class StepService extends Service implements SensorEventListener {
     private static String CURRENT_DATE = "";
     //每次打开APP时是否获取系统的步数
     private boolean hasData=false;
+    /**
+     * 保存记步计时器
+     */
+    private TimeCount time;
     //当前所走的步数
     private int CURRENT_STEP;
     //IBinder对象，向Activity传递数据的桥梁
     private StepBinder stepBinder = new StepBinder();
-    private int stepCount=0;
+    private int stepCount;
     //计步器管理
     private SensorManager sensorManager;
     private  SQLiteDatabase database;
@@ -63,33 +66,36 @@ public class StepService extends Service implements SensorEventListener {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
-            if (msg.what==0){
+            if (msg.what==1){
                 save();
             }
         }
     };
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-            int stepValue = (int) sensorEvent.values[0];//得到系统返回的计步数据
-            if (!hasData){
-                if (stepCount==0){
-                }else {
-                    //获取APP打开到现在的总步数=本次系统回调的总步数-APP打开之前已有的步数
-                    int thisStepCount = stepValue - stepCount;
-                    //总步数=现有的步数+本次有效步数
-                    CURRENT_STEP += (thisStepCount);
-                    CURRENT_STEP+=1;
-                    stepCount=stepValue;
-                    Log.i("previousStepCount", "stepCount: "+stepCount);
-                    Log.i("previousStepCount", "previousStepCount: "+previousStepCount);
-                    Log.i("previousStepCount", "CURRENT_STEP: "+CURRENT_STEP);
-                }
-                hasData=true;
-            }else {
-                CURRENT_STEP++;
-                stepCount=stepValue;
-            }
-
+        int stepValue = (int) sensorEvent.values[0];//得到系统返回的计步数据
+        if (!hasData) {
+            hasData = true;
+            stepCount = stepValue;
+        } else {
+            //获取APP打开到现在的总步数=本次系统回调的总步数-APP打开之前已有的步数
+            int thisStepCount = stepValue - stepCount;
+            //本次有效步数=（APP打开后所记录的总步数-上一次APP打开后所记录的总步数）
+            int thisStep = thisStepCount - previousStepCount;
+            //总步数=现有的步数+本次有效步数
+            CURRENT_STEP += (thisStep);
+            //记录最后一次APP打开到现在的总步数
+            previousStepCount = thisStepCount;
+        }
+    }
+    /**
+     * 开始保存记步数据
+     */
+    private void startTimeCount() {
+        if (time == null) {
+            time = new TimeCount(duration, 1000);
+        }
+        time.start();
     }
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
@@ -113,6 +119,8 @@ public class StepService extends Service implements SensorEventListener {
         builder=new Notification.Builder(this);
         service = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         builder=new Notification.Builder(this);
+
+
         initNotification();//已经调好
         initTodayData();//已经调好
         initBroadcastReceiver();
@@ -122,17 +130,19 @@ public class StepService extends Service implements SensorEventListener {
                 startStepDetector();
             }
         }).start();
+
+        startTimeCount();
     }
     //获取传感器的实例
     private void startStepDetector() {
         sensorManager=(SensorManager) this
                 .getSystemService(Context.SENSOR_SERVICE);
         Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-        Sensor defaultSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
-        if (sensor!=null){
-            sensorManager.registerListener(StepService.this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
-            Log.i("TYPE_STEP_COUNTER", "TYPE_STEP_COUNTER: ");
+        if (sensor != null) {
+            sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
+        Sensor ctor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
+        sensorManager.registerListener(this, ctor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     private void initBroadcastReceiver() {
@@ -175,15 +185,13 @@ public class StepService extends Service implements SensorEventListener {
                 } else if (Intent.ACTION_DATE_CHANGED.equals(action)) {//日期变化步数重置为0
                     Log.i("receive", " 日期改变");
                     isNewDay();
-                } else if (Intent.ACTION_TIME_CHANGED.equals(action)) {
-                    Log.i("receive", " 时间改变");
-                } else if (Intent.ACTION_TIME_TICK.equals(action)) {//日期变化步数重置为0
+                }else if (Intent.ACTION_TIME_TICK.equals(action)) {//日期变化步数重置为0
                     Log.i("receive", " 时间变动");
                     isCall();
                     save();
                     isNewDay();
                 }
-                else if (Intent.ACTION_BOOT_COMPLETED.equals(action)) {//日期变化步数重置为0
+                else if (Intent.ACTION_BOOT_COMPLETED.equals(action)) {
                     Intent StartIntent = new Intent(context, StepActivity.class);
                     StartIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(StartIntent);
@@ -203,7 +211,7 @@ public class StepService extends Service implements SensorEventListener {
         //判断一下存储的日期是否是今天 和当前步数是否超过锻炼步数 是否有开启提现
         if (isremind&&CURRENT_STEP<stepi &&time.equals(new SimpleDateFormat("HH:mm").format(new Date()))){
             Log.i("监听提现用户锻炼", " 监听提现用户锻炼");
-            builder.setContentTitle("今日步数" + CURRENT_STEP + " 步")
+            builder.setContentTitle("更新今日步数" + CURRENT_STEP + " 步")
                     .setContentText("距离目标还差" + (stepi - CURRENT_STEP) + "步，加油！")
                     .setTicker(getResources().getString(R.string.app_name) + "提醒您开始锻炼了")//通知首次出现在通知栏，带上升动画效果的
                     .setWhen(System.currentTimeMillis())//通知产生的时间，会在通知信息里显示
@@ -221,6 +229,7 @@ public class StepService extends Service implements SensorEventListener {
     //初始化当天的步数
     private void initTodayData() {
         CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis())+"";//今日日期
+        Log.i("initTodayData", "initTodayData: "+CURRENT_DATE);
         //查询数据库
         Cursor step = database.query("step", null, null, null, null, null, null);
         int b = step.getCount();
@@ -256,9 +265,10 @@ public class StepService extends Service implements SensorEventListener {
             while (step.moveToNext()) {
                 String stepString = step.getString(step.getColumnIndex("curr_date"));
                 //如果数据库已经有了今天的日期   我们直接进行更新数据库中的步数即可
+                Log.i("stepString", " stepString"+stepString);
                 if (stepString.equals(CURRENT_DATE)) {
                     ContentValues values = new ContentValues();
-                    values.put("number", CURRENT_STEP);
+                    values.put("number", stepCount);
                     Log.i("ContentValues", " ContentValues");
                     database.update("step", values, "curr_date=?", new String[]{CURRENT_DATE});
                 }
@@ -304,8 +314,8 @@ public class StepService extends Service implements SensorEventListener {
     }
     // 获取当前步数
     public int getStepCount() {
-        Log.i("getStepCount", " getStepCount"+CURRENT_STEP);
-        return CURRENT_STEP;
+        Log.i("getStepCount", " getStepCount"+stepCount);
+        return stepCount;
     }
 
     @Nullable
@@ -335,5 +345,26 @@ public class StepService extends Service implements SensorEventListener {
         super.onDestroy();
         unregisterReceiver(mBatInfoReceiver);
         sensorManager.unregisterListener(this);
+    }
+
+
+    class TimeCount extends CountDownTimer {
+
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long l) {
+
+        }
+
+        @Override
+        public void onFinish() {
+
+            time.cancel();
+            save();
+            startTimeCount();
+        }
     }
 }

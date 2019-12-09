@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">次元联盟</string>
+    <string name="history">没有历史记录!</string>
+    <string name="physical">每日锻炼步数</string>
+    <string name="remind">提醒</string>
+    <string name="remind_time">提醒时间</string>
+    <string name="save">保存</string>
+
+    <string name="supports">该设备支持计步</string>
+    <string name="plan">设置锻炼计划</string>
+    <string name="history_step">查看历史步数</string>
+    <string name="exercise_plan">锻炼计划</string>
+
 </resources>

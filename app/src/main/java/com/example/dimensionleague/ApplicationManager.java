@@ -1,13 +1,16 @@
 package com.example.dimensionleague;
 
+import android.annotation.TargetApi;
 import android.app.Application;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
+import android.os.Build;
 import android.widget.Toast;
 
 import com.example.framework.manager.NetConnectManager;
+import com.example.point.StepIsSupport;
 import com.example.point.StepPointManager;
-import com.example.point.service.StepService;
 
 
 /**
@@ -18,9 +21,15 @@ public class ApplicationManager extends Application {
     public void onCreate() {
         super.onCreate();
         NetConnectManager.getInstance().init(this);
-        StepPointManager.getInstance(this).init();
 
 
+       //支持计步的话就开启服务-否则就什么也不做
+        if (new StepIsSupport().isSupportStepCountSensor(this)) {
+            StepPointManager.getInstance(this).init();
+        } else {
 
+        }
     }
+
+
 }

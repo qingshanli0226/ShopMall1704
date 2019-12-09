@@ -2,22 +2,18 @@ package com.example.point.activity;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.Message;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,16 +24,14 @@ import androidx.annotation.RequiresApi;
 
 import com.example.framework.base.BaseActivity;
 import com.example.point.R;
+import com.example.point.StepIsSupport;
 import com.example.point.StepPointManager;
 import com.example.point.view.StepView;
-import com.example.point.service.StepService;
 
-public class StepActivity extends BaseActivity {
+public class StepActivity extends BaseActivity   {
     private TextView tv_isSupport;
     private StepView stepView;
     private TextView time;
-    private SensorManager sensorManager;
-    private Sensor countSensor;
     private int i=0;//循环的初始值
     private  int v=1;//获取当前步数
     private  int stepInt;
@@ -54,7 +48,7 @@ public class StepActivity extends BaseActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
+           }
                 //当前步数大于从服务里面获取的步数退出
                 else{
                     break;
@@ -77,7 +71,6 @@ public class StepActivity extends BaseActivity {
             //当前时间
             if (msg.what==0){
                 boolean b = DateFormat.is24HourFormat(StepActivity.this);
-
                 if (b) {
                     CharSequence charSequence = DateFormat.format("dd-MM HH:mm:ss", System.currentTimeMillis());
                     time.setText("时间" + charSequence);
@@ -90,7 +83,13 @@ public class StepActivity extends BaseActivity {
             }
             //计步弧度的走动
             else if (msg.what==1){
-                v= StepPointManager.getInstance(StepActivity.this).getStep();
+                StepPointManager.getInstance(StepActivity.this).addGetStepListener(new StepPointManager.GetStepListener() {
+                    @Override
+                    public void setStep(int step) {
+                      v=step;
+                    }
+                });
+                Log.i("wzy", "handleMessage: "+v);
                 stepView.setCurrentCount(stepInt,i);
                 Log.i("wzy", "run: "+i);
             }
@@ -167,10 +166,10 @@ public class StepActivity extends BaseActivity {
             }
         }).start();
 
-        if (isSupportStepCountSensor(this)) {
+        if (new StepIsSupport().isSupportStepCountSensor(this)) {
             tv_isSupport.setText("计步中...");
+
         } else {
-            Toast.makeText(this, "" + isSupportStepCountSensor(this), Toast.LENGTH_SHORT).show();
             tv_isSupport.setText("该设备不支持计步");
         }
     }
@@ -181,19 +180,6 @@ public class StepActivity extends BaseActivity {
 
         return R.layout.step_activity;
     }
-    //这边只是通过获取传感器实例该设备是否支持计步
-    //为了给用户一个视觉提醒
-    //具体实现在计步服务里面
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    public boolean isSupportStepCountSensor(Context context) {
-        // 获取传感器管理器的实例
-        sensorManager = (SensorManager) context
-                .getSystemService(context.SENSOR_SERVICE);
-
-        countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-        Sensor detectorSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
-        return countSensor != null || detectorSensor != null;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,5 +187,18 @@ public class StepActivity extends BaseActivity {
         init();
         initDate();
     }
+
+    //调用moveTaskToBack可以让程序退出到后台运行，false表示只对主界面生效，true表示任何界面都可以生效。
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(false);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+
+    }
+
+
 
 }

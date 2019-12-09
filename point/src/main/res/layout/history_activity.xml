@@ -1,24 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    style="@style/w_match">
     <include layout="@layout/title_toolbar"></include>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv"
+           android:layout_marginTop="10dp"
+            android:layout_marginLeft="30dp"
+            android:text="从"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            style="@style/w_wrap">
+        </TextView>
+
+        <EditText
+            android:hint="开始日期"
+            android:id="@+id/start"
+            android:layout_toRightOf="@+id/tv"
+            style="@style/history_edit"></EditText>
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_toRightOf="@+id/start"
+            android:layout_margin="10dp"
+            android:text="到"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            style="@style/w_wrap">
+        </TextView>
+        <EditText
+            android:hint="结束日期"
+            android:id="@+id/stop"
+            style="@style/history_edit"
+            android:layout_toRightOf="@+id/tv1"
+          ></EditText>
+    </RelativeLayout>
+    <View
+        android:background="@android:color/darker_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"></View>
+    <RelativeLayout
+        style="@style/w_match">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/history_re"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+            style="@style/w_match"></androidx.recyclerview.widget.RecyclerView>
         <TextView
             android:layout_centerInParent="true"
             android:visibility="gone"
             android:textSize="25sp"
             android:textColor="@android:color/black"
             android:id="@+id/recently"
-            android:layout_width="wrap_content"
-            android:text="没有历史记录!"
-            android:layout_height="wrap_content"></TextView>
+            android:text="@string/history"
+            style="@style/w_wrap"></TextView>
     </RelativeLayout>
 
 </LinearLayout>
