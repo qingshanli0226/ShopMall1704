@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.shopmall">
+    package="com.example.shopmall"
+    tools:ignore="MissingVersion">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -18,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:targetApi="donut">
         <activity android:name=".activity.GoodsInfoActivity" />
         <activity android:name=".activity.GoodsListActivity" />
         <activity android:name=".activity.MessageActivity" />
@@ -28,8 +30,7 @@
         <activity
             android:name=".activity.LoginActivity"
             android:launchMode="singleTask">
-
-        </activity>>
+        </activity>
         <activity android:name=".activity.HistoryActivity" />
         <activity
             android:name=".activity.IntegralActivity"
