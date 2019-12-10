@@ -10,13 +10,13 @@ import android.view.View;
 
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
-import com.example.framework.base.IBaseView;
+import com.example.framework.base.IGetBaseView;
 import com.example.net.Constant;
 import com.example.shopmall.R;
 import com.example.shopmall.bean.ClassifyBean;
 import com.example.shopmall.presenter.IntegerPresenter;
 
-public class GoodsListActivity extends BaseActivity implements IBaseView<GoodsListActivity> {
+public class GoodsListActivity extends BaseActivity implements IGetBaseView {
 
     TitleBar tb_goods_list;
     RecyclerView rv_goods_list;
@@ -36,7 +36,7 @@ public class GoodsListActivity extends BaseActivity implements IBaseView<GoodsLi
         tb_goods_list = findViewById(R.id.tb_goods_list);
         rv_goods_list = findViewById(R.id.rv_goods_list);
 
-        rv_goods_list.setLayoutManager(new GridLayoutManager(this,2));
+        rv_goods_list.setLayoutManager(new GridLayoutManager(this, 2));
 
     }
 
@@ -44,7 +44,7 @@ public class GoodsListActivity extends BaseActivity implements IBaseView<GoodsLi
     public void initData() {
         tb_goods_list.setTitleBacKGround(Color.RED);
         tb_goods_list.setLeftImg(R.drawable.left);
-        tb_goods_list.setCenterText("商品内容",18,Color.WHITE);
+        tb_goods_list.setCenterText("商品内容", 18, Color.WHITE);
 
         tb_goods_list.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
@@ -66,32 +66,17 @@ public class GoodsListActivity extends BaseActivity implements IBaseView<GoodsLi
 
     private void getDataPresenter(String url) {
         integerPresenter = new IntegerPresenter(url, ClassifyBean.class);
-        integerPresenter.attachView(this);
+        integerPresenter.attachGetView(this);
         integerPresenter.getGetData();
     }
 
     @Override
-    public void onGetDataSucess(GoodsListActivity data) {
-
-    }
-
-    @Override
-    public void onPostDataSucess(GoodsListActivity data) {
+    public void onGetDataSucess(Object data) {
 
     }
 
     @Override
     public void onGetDataFailed(String ErrorMsg) {
-
-    }
-
-    @Override
-    public void onLoadingPage() {
-
-    }
-
-    @Override
-    public void onStopLoadingPage() {
 
     }
 }

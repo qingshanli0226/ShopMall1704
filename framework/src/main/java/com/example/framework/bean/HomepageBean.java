@@ -1,4 +1,4 @@
-package com.example.shopmall.bean;
+package com.example.framework.bean;
 
 import java.io.Serializable;
 import java.util.List;

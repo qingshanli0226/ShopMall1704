@@ -3,6 +3,7 @@ package com.example.framework.manager;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.framework.bean.UserBean;
 import com.example.framework.greendao.DaoMaster;
 import com.example.framework.greendao.DaoSession;
 import com.example.framework.greendao.UserBeanDao;

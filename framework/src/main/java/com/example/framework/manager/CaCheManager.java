@@ -1,4 +1,4 @@
-package com.example.shopmall;
+package com.example.framework.manager;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -8,8 +8,8 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.example.common.ACache;
-import com.example.framework.manager.ConnectManager;
-import com.example.shopmall.bean.HomepageBean;
+import com.example.framework.bean.HomepageBean;
+import com.example.framework.service.ShopService;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -106,7 +106,7 @@ public class CaCheManager {
     }
 
     //管理类初始化
-    void init(Context context) {
+    public void init(Context context) {
         Intent intent = new Intent(context, ShopService.class);
         context.startService(intent);
         context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);

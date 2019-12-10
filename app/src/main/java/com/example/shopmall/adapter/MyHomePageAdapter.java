@@ -28,7 +28,7 @@ import com.example.shopmall.R;
 import com.example.shopmall.activity.GoodsInfoActivity;
 import com.example.shopmall.activity.GoodsListActivity;
 import com.example.shopmall.bean.GoodsBean;
-import com.example.shopmall.bean.HomepageBean;
+import com.example.framework.bean.HomepageBean;
 import com.example.shopmall.utils.AlphaPageTransformer;
 import com.example.shopmall.utils.ScaleInTransformer;
 import com.youth.banner.Banner;
