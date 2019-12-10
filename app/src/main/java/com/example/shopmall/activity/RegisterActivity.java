@@ -16,7 +16,7 @@ import com.example.shopmall.bean.RegisterBean;
 import com.example.shopmall.presenter.RegisterPresenter;
 
 public class RegisterActivity extends BaseActivity implements IPostBaseView<RegisterBean> {
-
+    //
     TitleBar mTitleBar;
     EditText mName;
     EditText mPassWord;
