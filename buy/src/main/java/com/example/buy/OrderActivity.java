@@ -80,13 +80,13 @@ public class OrderActivity extends BaseNetConnectActivity {
         switch (type){
             case ALL:
                 //先请求待支付,然后请求待发货
-                payOrder.onHttpGetRequest(CODE_ALL);
+                payOrder.doHttpGetRequest(CODE_ALL);
                 break;
             case WAIT_PAY:
-                payOrder.onHttpGetRequest(CODE_PAY);
+                payOrder.doHttpGetRequest(CODE_PAY);
                 break;
             case WAIT_SEND:
-                watiOrder.onHttpGetRequest(CODE_WAIT);
+                watiOrder.doHttpGetRequest(CODE_WAIT);
                 break;
         }
     }
@@ -97,7 +97,7 @@ public class OrderActivity extends BaseNetConnectActivity {
         switch (requestCode){
             case CODE_ALL:
                 list.add((GetOrderBean) data);
-                watiOrder.onHttpPostRequest(CODE_ALL);
+                watiOrder.doHttpPostRequest(CODE_ALL);
                 break;
             case CODE_PAY:
                 list.clear();

@@ -139,7 +139,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                         }
                         upDatePresenter=new PostUpDatePresenter(list.get(position));
                         upDatePresenter.attachView(ShopCartFragment.this);
-                        upDatePresenter.onHttpPostRequest(UPDATA_GOODS);
+                        upDatePresenter.doHttpPostRequest(UPDATA_GOODS);
                     }
                 });
                 //加按钮
@@ -150,7 +150,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                         list.get(position).setProductNum(num + 1);
                         upDatePresenter=new PostUpDatePresenter(list.get(position));
                         upDatePresenter.attachView(ShopCartFragment.this);
-                        upDatePresenter.onHttpPostRequest(UPDATA_GOODS);
+                        upDatePresenter.doHttpPostRequest(UPDATA_GOODS);
                     }
                 });
             }
@@ -160,7 +160,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
             @Override
             public void onRefresh() {
                 //下拉刷新购物车数据
-                sendCartPresenter.onHttpGetRequest(CART_GOODS);
+                sendCartPresenter.doHttpGetRequest(CART_GOODS);
             }
         });
         //全选监听
@@ -172,7 +172,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                 }
                 recyclerView.getAdapter().notifyDataSetChanged();
 
-              //  goodsPresenter.onHttpPostRequest();
+              //  goodsPresenter.doHttpPostRequest();
             }
         });
 
@@ -182,7 +182,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
 
     @Override
     public void initDate() {
-        sendCartPresenter.onHttpGetRequest(CART_GOODS);
+        sendCartPresenter.doHttpGetRequest(CART_GOODS);
     }
 
     @Override
@@ -218,7 +218,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                 checks.clear();
                 list.clear();
                 recyclerView.getAdapter().notifyDataSetChanged();
-                if (((GetCartBean) data).getCode().equals(AppNetConfig.CODE_OK)){
+                if (!((GetCartBean) data).getCode().equals(AppNetConfig.CODE_OK)){
                     Gson gson = new Gson();
                     GoodsBean[] goods = gson.fromJson(((GetCartBean) data).getResult(), GoodsBean[].class);
                     list.addAll(Arrays.asList(goods));

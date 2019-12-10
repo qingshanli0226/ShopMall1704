@@ -22,7 +22,7 @@ class MainActivity : BaseNetConnectActivity() {
 
     override fun init() {
         super.init()
-        startActivity(GoodsActiviy::class.java,null)
+//        startActivity(GoodsActiviy::class.java,null)
         list.add(HomeFragment())
         list.add(HomeFragment())
         list.add(HomeFragment())

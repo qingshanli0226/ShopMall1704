@@ -2,8 +2,8 @@ package com.example.net;
 //网络地址   测试token   bad9ae9d-7888-4730-b9bb-48f2a082d0acAND1575470247110
 public class AppNetConfig {
     //服务器IP
-//    public static final String IPADDRESS = "49.233.93.155";
-    public static final String IPADDRESS = "169.254.230.253";
+    public static final String IPADDRESS = "49.233.93.155";
+//    public static final String IPADDRESS = "169.254.230.253";
 
     public static final String BASE_URL = "http://" + IPADDRESS + ":8080";
 

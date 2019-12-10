@@ -58,7 +58,7 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
         Log.e("xxx","发起的订单请求"+sendOrdersBean.toString());
         sendOrederPresenter=new PostOrderPresenter(sendOrdersBean);
         sendOrederPresenter.attachView(this);
-        sendOrederPresenter.onHttpPostRequest(CODE_ORDER);
+        sendOrederPresenter.doHttpPostRequest(CODE_ORDER);
     }
 
     @Override

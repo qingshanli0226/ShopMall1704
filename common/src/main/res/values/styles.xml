@@ -19,4 +19,11 @@
         <item name="android:textColor">@color/colorBlack</item>
         <item name="android:textSize">@dimen/page_text_size</item>
     </style>
+<!--    登录注册的EditView下划线-->
+    <style name="LoginRegisterLine">
+        <item name="android:layout_marginTop">@dimen/dp_ten</item>
+        <item name="android:background">@color/color_line</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/px_one</item>
+    </style>
 </resources>

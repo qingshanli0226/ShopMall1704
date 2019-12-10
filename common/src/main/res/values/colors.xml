@@ -2,4 +2,11 @@
 <resources>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
+    <color name="color_line">#C4B9B9</color>
+    <color name="color_red">#FF0000</color>
+    <color name="color_red_center">#FF371F</color>
+    <color name="color_red_end">#FF5D2D</color>
+    <color name="color_pink_start">#FF8C8C</color>
+    <color name="color_pink_center">#FFA4A4</color>
+    <color name="color_pink_end">#FFAD9A</color>
 </resources>

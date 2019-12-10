@@ -4,25 +4,17 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Path;
-import android.graphics.PathMeasure;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.buy.databeans.GoodsBean;
@@ -182,7 +174,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
     private void verifyNumber() {
         verifyOnePresenter = new PostVerifyOnePresenter(goods.getProductId(), goods.getProductNum());
         verifyOnePresenter.attachView(this);
-        verifyOnePresenter.onHttpPostRequest(VERIFY_ONE);
+        verifyOnePresenter.doHttpPostRequest(VERIFY_ONE);
     }
 
     @Override
@@ -232,7 +224,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
                 popupWindow.dismiss();
                 animatorSet.start();
                 addCartPresenter = new PostAddCartPresenter(goods);
-                addCartPresenter.onHttpPostRequest(ADD_CART);
+                addCartPresenter.doHttpPostRequest(ADD_CART);
             }
         });
         popupWindow.setContentView(view);

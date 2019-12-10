@@ -3,19 +3,13 @@ package com.example.framework.base;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.framework.R;
 import com.example.framework.manager.ActivityInstanceManager;
-import com.example.framework.manager.NetConnectManager;
 import com.example.framework.port.IActivity;
-import com.example.framework.port.INetConnectListener;
-import com.example.framework.port.IView;
-import com.gyf.immersionbar.ImmersionBar;
-import com.jaeger.library.StatusBarUtil;
 
 /**
  * author:李浩帆
@@ -31,7 +25,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
         setContentView(getLayoutId());
 
         //TODO 沉浸式状态栏
-      //  ImmersionBar.with(this).init();
+        //  ImmersionBar.with(this).init();
 
         activityInstanceManager = ActivityInstanceManager.getInstance();
         activityInstanceManager.addActivity(this);
@@ -48,6 +42,14 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
             intent.putExtra("data",bundle);
         }
         startActivity(intent);
+        //TODO 添加入场动画以及退场动画
+        overridePendingTransition(R.anim.slide_to_left_in,R.anim.slide_to_left_out);
+    }
+
+    //TODO finish的入场退场动画
+    public void finishActivity(){
+        finish();
+        overridePendingTransition(R.anim.slide_to_right_in,R.anim.slide_to_right_out);
     }
 
     //TODO 销毁所有的activity
@@ -65,4 +67,5 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
         activityInstanceManager.removeActivity(this);
 
     }
+
 }

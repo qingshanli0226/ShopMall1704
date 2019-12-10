@@ -4,9 +4,9 @@ package com.example.framework.manager;
  * author:李浩帆
  */
 public enum ErrorManager {
-    //TODO 网络相关错误，从1000开始
-    HTTP_ERROR(1001, "网络错误"),
-    HTTP_SOCKET_TIME_OUT_ERROR(1002, "网络连接超时错误"),
+    //TODO 用户登录注册错误信息
+    USER_NOT_REGISTER(1001, "用户没有注册,无法登录"),
+    USER_REGISTERED(1002, "用户已经注册,请直接登录"),
     //解析相关错误，从2000开始
     JSON_ERROR(2001, "数据格式不对"),
     //文件相关错误，从3000开始

@@ -117,7 +117,9 @@ public class WelcomeActivity extends BaseNetConnectActivity {
                 case 102:
                     if (isNetOk) {
                         //                    跳转到主页面
-                        startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+//                        startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+                        startActivity(MainActivity.class,null);
+                        finish();
                     } else {
                         Toast.makeText(WelcomeActivity.this, "您的网络状态不佳, 请检查", Toast.LENGTH_LONG).show();
                         handler.sendEmptyMessageDelayed(102, 5000);
@@ -138,7 +140,7 @@ public class WelcomeActivity extends BaseNetConnectActivity {
                 index--;
                 Log.i("SSS", "run: welcome线程" + index);
                 try {
-                    Thread.sleep(1);
+                    Thread.sleep(1000);
                     if (index == 0) {
                         flag = false;
                         handler.sendEmptyMessage(102);
