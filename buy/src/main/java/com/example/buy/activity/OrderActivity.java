@@ -14,6 +14,8 @@ import com.example.common.IntentUtil;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.base.BaseRecyclerAdapter;
 import com.example.framework.base.BaseViewHolder;
+import com.example.framework.listener.OnOrderListener;
+import com.example.framework.manager.OrderManager;
 import com.example.framework.port.IPresenter;
 
 import java.util.ArrayList;
@@ -26,10 +28,11 @@ public class OrderActivity extends BaseNetConnectActivity {
     public final static String WAIT_PAY="待支付订单";
     public final static String WAIT_SEND="待发货订单";
 
-    //网络请求码   待支付 待发货
+    //网络请求码 全部  待支付 待发货 第二次
     public final static int CODE_ALL=200;
     public final static int CODE_PAY=201;
     public final static int CODE_WAIT=202;
+    public final static int CODE_All_TWO=203;
 
     private RecyclerView recyclerView;
     private TextView showOrderType;
@@ -53,17 +56,7 @@ public class OrderActivity extends BaseNetConnectActivity {
     public void init() {
         recyclerView=findViewById(R.id.recyclerView);
         showOrderType=findViewById(R.id.showOrderType);
-        payOrder=new GetPayOrderPresenter();
-        watiOrder=new GetWaitOrderPresenter();
-        //http://49.233.93.155:8080  updateMoney  money=1333
-        //获取传递过来的数据,然后进行订单类型的显示
 
-        payOrder.attachView(this);
-        watiOrder.attachView(this);
-    }
-
-    @Override
-    public void initDate() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new BaseRecyclerAdapter<GetOrderBean>(R.layout.item_order, list) {
             @Override
@@ -73,6 +66,19 @@ public class OrderActivity extends BaseNetConnectActivity {
                 ((TextView)holder.getView(R.id.orderMoney)).setText(list.get(position).getTotalPrice());
             }
         });
+
+    }
+
+    @Override
+    public void initDate() {
+        payOrder=new GetPayOrderPresenter();
+        watiOrder=new GetWaitOrderPresenter();
+        //http://49.233.93.155:8080  updateMoney  money=1333
+        //获取传递过来的数据,然后进行订单类型的显示
+
+        payOrder.attachView(this);
+        watiOrder.attachView(this);
+
     }
 
     @Override
@@ -102,15 +108,21 @@ public class OrderActivity extends BaseNetConnectActivity {
         switch (requestCode){
             case CODE_ALL:
                 list.add((GetOrderBean) data);
-                watiOrder.doHttpPostRequest(CODE_ALL);
+                watiOrder.doHttpPostRequest(CODE_All_TWO);
                 break;
             case CODE_PAY:
                 list.clear();
                 list.add((GetOrderBean) data);
+                OrderManager.getInstance().updatePayOrederNum(list.size());
                 break;
             case CODE_WAIT:
                 list.clear();
                 list.add((GetOrderBean) data);
+                OrderManager.getInstance().updateWaitOrederNum(list.size());
+                break;
+            case CODE_All_TWO:
+                list.add((GetOrderBean) data);
+                OrderManager.getInstance().updateAllOrederNum(list.size());
                 break;
         }
     }

@@ -26,9 +26,19 @@ public class OrderManager {
     public void unregister(OnOrderListener onOrderListener){
         listeners.remove(onOrderListener);
     }
-    public void updataCartNum(int num){
+    public void updateWaitOrederNum(int num){
         for (int i=0;i<listeners.size();i++){
-            listeners.get(i).shopCartNumChange(num);
+            listeners.get(i).waitOrderChange(num);
+        }
+    }
+    public void updateAllOrederNum(int num){
+        for (int i=0;i<listeners.size();i++){
+            listeners.get(i).allOrderChange(num);
+        }
+    }
+    public void updatePayOrederNum(int num){
+        for (int i=0;i<listeners.size();i++){
+            listeners.get(i).payOrderChange(num);
         }
     }
 }
