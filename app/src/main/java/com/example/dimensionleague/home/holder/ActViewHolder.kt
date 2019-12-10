@@ -8,6 +8,7 @@ import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import com.example.dimensionleague.businessbean.HomeBean
 import com.example.dimensionleague.home.adapter.ActAdapter
+import com.example.net.AppNetConfig
 import kotlinx.android.synthetic.main.home_act.view.*
 
 class ActViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -18,7 +19,7 @@ class ActViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
         var imageList:ArrayList<String> = ArrayList()
         for (i in act_info){
-//            imageList.add("${Constants.BASE_URl_IMAGE}${i.icon_url}")
+            imageList.add("${AppNetConfig.BASE_URl_IMAGE}${i.icon_url}")
         }
         with(itemView){
             home_act_viewpager.pageMargin = 20

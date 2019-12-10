@@ -1,8 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:ignore="NamespaceTypo">
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical">
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:background="@color/colorRed"
+           android:layout_height="@dimen/dp_150">
+           <ImageView
+               android:src="@mipmap/ic_launcher_round"
+               android:layout_width="@dimen/dp_50"
+               android:layout_marginLeft="@dimen/dp_35"
+               android:layout_marginTop="@dimen/dp_40"
+               android:layout_height="@dimen/dp_50"
+               android:id="@+id/mine_img"/>
+           <TextView
+               android:id="@+id/mine_user_name"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_toRightOf="@id/mine_img"
+               android:layout_centerVertical="true"
+               android:layout_marginLeft="@dimen/dp_15"
+               android:textColor="@color/colorWhite"
+               android:text="@string/mine_login"/>
+       </RelativeLayout>
+       <androidx.recyclerview.widget.RecyclerView
+           android:id="@+id/mine_rv_h"
+           android:layout_width="match_parent"
+           android:background="@color/colorWhite"
+           android:layout_height="wrap_content"/>
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+       <androidx.recyclerview.widget.RecyclerView
+           android:id="@+id/mine_rv_v"
+           android:layout_width="match_parent"
+           android:background="@color/colorWhite"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="@dimen/dp_10"/>
+
+
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="@dimen/dp_45"
+           android:drawableStart="@drawable/love"
+           android:padding="@dimen/dp_10"
+           fresco:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+           android:layout_gravity="center_horizontal"
+           android:textSize="@dimen/sp_20"
+           android:text="猜你喜欢"/>
+
+
+       <androidx.recyclerview.widget.RecyclerView
+           android:id="@+id/mine_rv_recommend"
+           android:layout_width="match_parent"
+           fresco:layout_behavior="@string/bottom_sheet_behavior"
+           android:layout_height="match_parent"/>
+   </LinearLayout>
+
+</ScrollView>

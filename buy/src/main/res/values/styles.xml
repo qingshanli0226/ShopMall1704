@@ -8,4 +8,5 @@
         <item name="android:height">@dimen/buy_four</item>
         <item name="android:width">@dimen/buy_four</item>
     </style>
+
 </resources>

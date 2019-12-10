@@ -11,7 +11,9 @@ public class AppNetConfig {
     public static final String BASE_URL_JSON="/atguigu/json/";
 
     // 请求图片基本URL
-    public static final String BASE_URl_IMAGE ="/atguigu/img";
+
+    public static final String BASE_URl_IMAGE =BASE_URL +"/atguigu/img";
+
 
     //TODO 使用: BASE_URL_JSON
     //首页  GET 无参数

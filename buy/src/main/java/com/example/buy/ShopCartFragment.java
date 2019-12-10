@@ -1,14 +1,13 @@
 package com.example.buy;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.os.Bundle;
+import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.Toast;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -24,10 +23,9 @@ import com.example.framework.base.BaseNetConnectFragment;
 import com.example.framework.base.BaseRecyclerAdapter;
 import com.example.framework.base.BaseViewHolder;
 import com.example.framework.port.IPresenter;
+import java.util.ArrayList;
 import com.example.net.AppNetConfig;
 import com.google.gson.Gson;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ShopCartFragment extends BaseNetConnectFragment implements View.OnClickListener {

@@ -78,7 +78,7 @@ class HomeAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        Log.d("lhf","position:--"+position.toString())
+        Log.d("SSS","position:--"+position.toString())
         when(position){
             BANNER -> currentType = BANNER
             CHANNEL -> currentType = CHANNEL
@@ -87,7 +87,7 @@ class HomeAdapter(
             RECOMMEND -> currentType = RECOMMEND
             HOT -> currentType = HOT
         }
-        Log.d("lhf","currenType"+currentType.toString())
+        Log.d("SSS","currenType"+currentType.toString())
         return currentType
     }
 

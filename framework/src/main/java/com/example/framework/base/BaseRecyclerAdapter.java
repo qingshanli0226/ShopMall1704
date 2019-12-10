@@ -19,7 +19,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseVi
     //TODO ViewHolder的布局ID
     private int layoutId;
     //TODO 数据集合
-    private ArrayList<T> dateList;
+    public ArrayList<T> dateList;
     //TODO 点击事件
     private IClickListener clickListener;
 

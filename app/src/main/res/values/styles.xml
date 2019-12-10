@@ -7,4 +7,23 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <style name="StyleRoundButton">
+        <item name="android:layout_height">@dimen/dp_50</item>
+        <item name="android:layout_width">@dimen/dp_50</item>
+        <item name="android:padding">@dimen/dp_10</item>
+    </style>
+
+    <style name="StyleEdit">
+        <item name="android:layout_width">@dimen/dp_0</item>
+        <item name="android:paddingLeft">@dimen/dp_10</item>
+        <item name="android:paddingRight">@dimen/dp_10</item>
+        <item name="android:paddingTop">@dimen/dp_5</item>
+        <item name="android:paddingBottom">@dimen/dp_5</item>
+        <item name="android:layout_weight">8</item>
+        <item name="android:drawableLeft">@drawable/search</item>
+        <item name="android:background">@drawable/round</item>
+        <item name="android:drawableRight">@drawable/camera</item>
+
+    </style>
 </resources>

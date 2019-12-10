@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.dimensionleague.activity.MainActivity;
 import com.example.framework.base.BaseNetConnectActivity;
 import java.util.ArrayList;
 import java.util.List;
@@ -116,8 +117,6 @@ public class WelcomeActivity extends BaseNetConnectActivity {
                     break;
                 case 102:
                     if (isNetOk) {
-                        //                    跳转到主页面
-//                        startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
                         startActivity(MainActivity.class,null);
                         finish();
                     } else {

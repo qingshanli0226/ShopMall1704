@@ -20,15 +20,10 @@ class RecommendAdapter(
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
         lateinit var views:View
         lateinit var holder:ViewHolder
-        if(view==null){
-            views = LayoutInflater.from(parent!!.context).inflate(R.layout.home_recommend,parent,false)
+            views = LayoutInflater.from(parent!!.context).inflate(R.layout.home_recommend_item,parent,false)
             holder = ViewHolder(views)
             views.setTag(holder)
-        }else{
-            views = view
-            holder = views.getTag() as ViewHolder
-        }
-//        Glide.with(parent!!.context).load("${AppNetConfig.BASE_URl_IMAGE}${recommendInfo!!.get(position).figure}").into(holder.iv_recommend)
+        Glide.with(parent!!.context).load("${AppNetConfig.BASE_URl_IMAGE}${recommendInfo!!.get(position).figure}").into(holder.iv_recommend)
         holder.tv_name.text = recommendInfo?.get(position)?.name
         holder.tv_price.text = "${recommendInfo?.get(position)?.cover_price}￥"
         return views
