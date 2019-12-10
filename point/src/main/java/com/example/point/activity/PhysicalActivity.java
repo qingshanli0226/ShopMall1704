@@ -11,10 +11,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.framework.base.BaseActivity;
 import com.example.point.R;
-import com.example.point.database.StepData;
+import com.example.point.view.AnimationButton;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -30,8 +31,7 @@ public class PhysicalActivity extends BaseActivity {
     private EditText tv_step_number;
     private CheckBox cb_remind;
     private TextView tv_remind_time;
-    private Button btn_save;
-    private StepData stepData;
+    private AnimationButton btn_save;
     @Override
     public void init() {
         iv_left=findViewById(R.id.iv_left);
@@ -40,7 +40,7 @@ public class PhysicalActivity extends BaseActivity {
         tv_step_number=findViewById(R.id.tv_step_number);
         cb_remind=findViewById(R.id.cb_remind);
         tv_remind_time=findViewById(R.id.tv_remind_time);
-        btn_save=findViewById(R.id.btn_save);
+        btn_save=findViewById(R.id.save);
     }
 
     @Override
@@ -54,10 +54,16 @@ public class PhysicalActivity extends BaseActivity {
                 finish();
             }
         });
-        //保存锻炼计划
-        btn_save.setOnClickListener(new View.OnClickListener() {
+        btn_save.setAnimationButtonListener(new AnimationButton.AnimationButtonListener() {
             @Override
-            public void onClick(View view) {
+            public void onClickListener() {
+                btn_save.start();
+            }
+
+            @Override
+            public void animationFinish() {
+                Toast.makeText(PhysicalActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+                btn_save.reset();
                 String s = tv_step_number.getText().toString();
                 int i = Integer.parseInt(s);
                 //存储设置的每日锻炼步数
@@ -73,6 +79,7 @@ public class PhysicalActivity extends BaseActivity {
                 finish();
             }
         });
+
         //选择锻炼的时间
         tv_remind_time.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +121,5 @@ public class PhysicalActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         init();
         initDate();
-
     }
 }

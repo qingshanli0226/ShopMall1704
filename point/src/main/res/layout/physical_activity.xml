@@ -96,14 +96,15 @@
                 android:textSize="18sp" />
         </LinearLayout>
     </LinearLayout>
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+         <com.example.point.view.AnimationButton
+          android:layout_centerHorizontal="true"
+             android:layout_marginTop="150dp"
+             android:id="@+id/save"
+             android:layout_width="200dp"
+             android:layout_height="50dp"/>
+     </RelativeLayout>
 
-    <Button
-        android:id="@+id/btn_save"
-      style="@style/w_wrap"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        android:background="@mipmap/btn_submit_bg"
-        android:text="@string/save"
-        android:textColor="#ffffff"
-        android:textSize="18dp" />
 </LinearLayout>

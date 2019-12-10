@@ -4,8 +4,8 @@ import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.example.buy.databeans.StepBean;
 import com.example.point.R;
+import com.example.point.service.StepBean;
 
 import java.util.List;
 
@@ -16,6 +16,6 @@ public class StepItemAdpter extends BaseQuickAdapter<StepBean, BaseViewHolder> {
 
     @Override
     protected void convert(BaseViewHolder helper, StepBean item) {
-        helper.setText(R.id.wzy_currdate,"时间"+item.getCURR_date()).setText(R.id.wzy_step,item.getStep()+"步");
+        helper.setText(R.id.wzy_currdate,"时间"+item.getCurr_date()).setText(R.id.wzy_step,item.getStep()+"步");
     }
 }

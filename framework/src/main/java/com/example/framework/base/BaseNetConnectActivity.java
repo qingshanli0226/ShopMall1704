@@ -1,7 +1,7 @@
 package com.example.framework.base;
 
 import android.widget.RelativeLayout;
-import com.example.common.LoadingPageUtils;
+import com.example.common.utils.LoadingPageUtils;
 import com.example.framework.manager.NetConnectManager;
 import com.example.framework.port.IActivity;
 import com.example.framework.port.INetConnectListener;
@@ -19,15 +19,20 @@ public abstract class BaseNetConnectActivity extends BaseActivity implements IAc
     public void init() {
         netConnectManager = NetConnectManager.getInstance();
         netConnectManager.registerNetConnectListener(this);
-        relativeLayout = findViewById(getRelativeLayout());
-        loadingPage = new LoadingPageUtils(this,relativeLayout);
+        if(getRelativeLayout()!=0){
+            relativeLayout = findViewById(getRelativeLayout());
+            loadingPage = new LoadingPageUtils(this,relativeLayout);
+        }
     }
 
     @Override
     public void initDate() {
 
     }
-
+    @Override
+    public int getRelativeLayout() {
+        return 0;
+    }
 
     //TODO 网络状态
     public boolean isConnectStatus(){
@@ -39,15 +44,17 @@ public abstract class BaseNetConnectActivity extends BaseActivity implements IAc
         return netConnectManager.isNetType();
     }
 
-    //TODO get请求到的数据默认实现
+
+    //TODO 请求到单数据
     @Override
-    public void onHttpGetRequestDataSuccess(int requestCode,Object data) {
+    public void onRequestSuccess(Object data) {
 
     }
 
-    //TODO post请求到的数据默认实现
+    //TODO 请求到单数据
     @Override
-    public void onHttpPostRequestDataSuccess(int requestCode,Object data) {
+    public void onRequestSuccess(int requestCode, Object data) {
+
 
     }
 

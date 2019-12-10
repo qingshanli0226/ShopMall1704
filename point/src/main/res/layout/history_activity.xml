@@ -3,13 +3,22 @@
     android:orientation="vertical"
     style="@style/w_match">
     <include layout="@layout/title_toolbar"></include>
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <Spinner
+            style="@style/Widget.AppCompat.DropDownItem.Spinner"
+            android:layout_margin="@dimen/dp_10"
+            android:background="@drawable/edit_background"
+            android:entries="@array/spinner"
+            android:id="@+id/history_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></Spinner>
         <TextView
             android:id="@+id/tv"
-           android:layout_marginTop="10dp"
-            android:layout_marginLeft="30dp"
+           android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_10"
             android:text="从"
             android:textSize="20sp"
             android:textColor="@android:color/black"
@@ -17,26 +26,30 @@
         </TextView>
 
         <EditText
-            android:hint="开始日期"
             android:id="@+id/start"
+            style="@style/history_edit"
+            android:layout_marginLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/tv"
-            style="@style/history_edit"></EditText>
+            android:hint="开始日期"></EditText>
         <TextView
             android:id="@+id/tv1"
-            android:layout_toRightOf="@+id/start"
             android:layout_margin="10dp"
             android:text="到"
             android:textSize="20sp"
             android:textColor="@android:color/black"
             style="@style/w_wrap">
         </TextView>
+
         <EditText
-            android:hint="结束日期"
             android:id="@+id/stop"
             style="@style/history_edit"
-            android:layout_toRightOf="@+id/tv1"
-          ></EditText>
-    </RelativeLayout>
+            android:layout_marginLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="结束日期"></EditText>
+    </LinearLayout>
     <View
         android:background="@android:color/darker_gray"
         android:layout_width="match_parent"

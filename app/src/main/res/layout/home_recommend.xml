@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dp_10">
+
+        <ImageView
+            android:layout_width="@dimen/dp_25"
+            android:layout_height="@dimen/dp_25"
+            android:src="@drawable/home_arrow_left_new" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:text="@string/new_goods_recommend"
+            android:textColor="@color/colorBlank" />
+
+        <TextView
+            android:id="@+id/home_recommend_tv_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/dp_5"
+            android:drawableRight="@drawable/home_arrow_right"
+            android:gravity="end"
+            android:text="@string/look_more" />
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/home_recommend_gv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_380"
+        android:gravity="center"
+        android:numColumns="3"></GridView>
+</LinearLayout>

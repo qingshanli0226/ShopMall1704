@@ -1,12 +1,8 @@
 package com.example.point.activity;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,7 +13,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -25,8 +20,10 @@ import androidx.annotation.RequiresApi;
 import com.example.framework.base.BaseActivity;
 import com.example.point.R;
 import com.example.point.StepIsSupport;
-import com.example.point.StepPointManager;
+import com.example.point.stepmanager.StepPointManager;
 import com.example.point.view.StepView;
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.PushAgent;
 
 public class StepActivity extends BaseActivity   {
     private TextView tv_isSupport;
@@ -35,33 +32,6 @@ public class StepActivity extends BaseActivity   {
     private int i=0;//循环的初始值
     private  int v=1;//获取当前步数
     private  int stepInt;
-    private Runnable runnable=new Runnable() {
-        @Override
-        public void run() {
-            while (true){
-                //当前步数小于从服务里面获取的步数
-                if (i<v){
-                    handler.sendEmptyMessage(1);
-                    try {
-                Thread.sleep(100);
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-           }
-                //当前步数大于从服务里面获取的步数退出
-                else{
-                    break;
-                }
-                i++;
-                //当前步数大于锻炼里面的步数
-                if (i>stepInt){
-                    //如果大于设置的锻炼步数就退出
-                   break;
-                }
-            }
-        }
-    };
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -79,22 +49,7 @@ public class StepActivity extends BaseActivity   {
                     CharSequence charSequence = DateFormat.format("dd-MM hh:mm:ss aa", System.currentTimeMillis());
                     time.setText("时间" + charSequence);
                 }
-                new Thread(runnable).start();
             }
-            //计步弧度的走动
-            else if (msg.what==1){
-                StepPointManager.getInstance(StepActivity.this).addGetStepListener(new StepPointManager.GetStepListener() {
-                    @Override
-                    public void setStep(int step) {
-                      v=step;
-                    }
-                });
-                Log.i("wzy", "handleMessage: "+v);
-                stepView.setCurrentCount(stepInt,i);
-                Log.i("wzy", "run: "+i);
-            }
-
-
         }
     };
     private ImageView iv_left;
@@ -114,7 +69,6 @@ public class StepActivity extends BaseActivity   {
         tv_data = (TextView) findViewById(R.id.tv_data);
 
         physical.setText("计步页");
-
         SharedPreferences step = getSharedPreferences("Step", MODE_PRIVATE);
         stepInt = step.getInt("step", 3000);
 
@@ -168,13 +122,17 @@ public class StepActivity extends BaseActivity   {
 
         if (new StepIsSupport().isSupportStepCountSensor(this)) {
             tv_isSupport.setText("计步中...");
-
+            StepPointManager.getInstance(this).addGetStepListener(new StepPointManager.GetStepListener() {
+                @Override
+                public void onsetStep(int step) {
+                  stepView.setCurrentCount(stepInt,step);
+                    Log.i("wzy", "onsetStep: "+stepInt+"   "+step);
+                }
+            });
         } else {
             tv_isSupport.setText("该设备不支持计步");
         }
     }
-
-
     @Override
     public int getLayoutId() {
 

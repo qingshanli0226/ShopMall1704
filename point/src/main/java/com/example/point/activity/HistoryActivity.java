@@ -2,9 +2,8 @@ package com.example.point.activity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.DatePicker;
@@ -15,16 +14,15 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.buy.databeans.StepBean;
 import com.example.framework.base.BaseActivity;
 import com.example.point.R;
 import com.example.point.StepIsSupport;
-import com.example.point.StepPointManager;
 import com.example.point.adpter.StepItemAdpter;
-import com.example.point.database.StepData;
+import com.example.point.service.StepBean;
+import com.example.point.stepmanager.DaoManager;
 
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class HistoryActivity extends BaseActivity {
 
@@ -33,14 +31,12 @@ public class HistoryActivity extends BaseActivity {
     private ImageView iv_right;
     private RecyclerView history_re;
     private TextView recently;
-    private ArrayList<StepBean> stepList;
-    private StepData stepData;
     private StepItemAdpter stepItemAdpter;//展示数据的适配器
     private TextView start;
     private TextView stop;
     private DatePickerDialog dateDialog;
     private int year, monthOfYear, dayOfMonth;
-
+    private   List<StepBean> beans;
     @Override
     public void init() {
         iv_left = findViewById(R.id.iv_left);
@@ -50,8 +46,6 @@ public class HistoryActivity extends BaseActivity {
         start = findViewById(R.id.start);
         stop = findViewById(R.id.stop);
         recently = (TextView) findViewById(R.id.recently);
-        stepList=new ArrayList<>();
-        stepData=new StepData(this);
         // 通过Calendar对象来获取年、月、日、时、分的信息
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(calendar.YEAR);
@@ -102,6 +96,7 @@ public class HistoryActivity extends BaseActivity {
                         Toast.makeText(HistoryActivity.this, "输入不能为空!", Toast.LENGTH_SHORT).show();
                     }else {
                         getSQdataArea(start.getText().toString(),stop.getText().toString());
+
                     }
 
                     return true;
@@ -173,20 +168,10 @@ public class HistoryActivity extends BaseActivity {
     }
 
     public void  getSQdata(){
-        SQLiteDatabase database = stepData.getWritableDatabase();
-        //  database.execSQL("delete  from step")
-        //支持计步的话就开启服务-否则就什么也不做
+        //支持计步的话就查找历史记录-否则就什么也不做
         if (new StepIsSupport().isSupportStepCountSensor(this)) {
-
-            //查询数据库
-            Cursor step = database.query("step", null, null, null, null, null, null);
-            while (step.moveToNext()){
-                String stepString = step.getString(step.getColumnIndex("curr_date"));
-                int number = step.getInt(step.getColumnIndex("number"));
-                StepBean bean = new StepBean(stepString,number);
-                stepList.add(bean);
-            }
-            stepItemAdpter = new StepItemAdpter(stepList);
+           beans = new DaoManager(this).loadStepBean();
+            stepItemAdpter = new StepItemAdpter(beans);
             history_re.setAdapter(stepItemAdpter);
         } else {
             //如果数据库中没有日期数据  我们就让列表隐藏 将展示没有历史记录的控件显示
@@ -196,31 +181,27 @@ public class HistoryActivity extends BaseActivity {
     }
     //区间记录
     public void  getSQdataArea(String start,String stop){
-        SQLiteDatabase database = stepData.getWritableDatabase();
-        //  database.execSQL("delete  from step")
-        //支持计步的话就开启服务-否则就什么也不做
+        //支持计步的话就获取-否则就什么也不做
         if (new StepIsSupport().isSupportStepCountSensor(this)) {
-            Cursor cursor = database.rawQuery(" select * from  step where curr_date >='" + start + "' and curr_date<='" + stop + "'", null);
-            if (cursor.getCount()!=0){
-                stepList.clear();
-                while (cursor.moveToNext()){
-                    String stepString = cursor.getString(cursor.getColumnIndex("curr_date"));
-                    int number = cursor.getInt(cursor.getColumnIndex("number"));
-                    StepBean bean = new StepBean(stepString,number);
-                    stepList.add(bean);
+            beans.clear();
+            beans = new DaoManager(this).areaStepBean(start, stop);
+            Log.i("getSQdataArea", "getSQdataArea: "+beans.size());
+            if (beans.size()>0){
+                for (StepBean stepBean:beans) {
+                    Log.i("getSQdataArea", "getSQdataArea:"+stepBean.getCurr_date());
                 }
-                stepItemAdpter.notifyDataSetChanged();
+                stepItemAdpter = new StepItemAdpter(beans);
+                history_re.setAdapter(stepItemAdpter);
             }else {
                 //如果数据库中没有日期数据  我们就让列表隐藏 将展示没有历史记录的控件显示
                 history_re.setVisibility(View.GONE);
                 recently.setVisibility(View.VISIBLE);
+                Log.i("getSQdataArea", "getSQdataArea: aaaaa");
             }
-
         } else {
             //如果数据库中没有日期数据  我们就让列表隐藏 将展示没有历史记录的控件显示
             history_re.setVisibility(View.GONE);
             recently.setVisibility(View.VISIBLE);
         }
     }
-
 }

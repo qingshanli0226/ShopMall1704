@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WelcomeActivity">
+    tools:context=".activity.WelcomeActivity">
     <androidx.viewpager.widget.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,7 +16,8 @@
         android:focusable="false"
         android:background="@drawable/roundness"
         android:layout_alignParentRight="true"
-        android:layout_margin="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_30"
         android:textSize="@dimen/sp_12"
         android:textColor="@color/colorWhite"
         android:text="5秒"/>

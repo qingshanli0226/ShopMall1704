@@ -3,8 +3,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/shopCartRel">
+    <RelativeLayout
+        android:id="@+id/cartHead"
+        android:background="#E0FA3D2F"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/buy_five">
+        <TextView
+            android:textSize="@dimen/buy_text_two"
+            android:textColor="@color/buyWhite"
+            android:layout_centerInParent="true"
+            android:text="@string/buyCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/editBut"
+            android:textSize="@dimen/buy_text_of"
+            android:textColor="@color/buyWhite"
+            android:text="@string/buyEditor"
+            android:background="@null"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
+        android:layout_below="@+id/cartHead"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <androidx.recyclerview.widget.RecyclerView
@@ -18,19 +41,17 @@
         android:layout_height="wrap_content">
         <CheckBox
             android:id="@+id/checkAll"
-            android:text="全选"
+            android:button="@null"
+            android:drawableLeft="@drawable/checkbut"
+            android:text="@string/buyCheckAll"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <Button
-            android:id="@+id/delBut"
-            android:text="删除"
-            android:layout_toRightOf="@id/checkAll"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <Button
             android:id="@+id/buyBut"
-            android:text="立即购买"
+            android:textColor="@color/buyWhite"
+            android:background="@drawable/buybut"
+            android:text="@string/buyNow"
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

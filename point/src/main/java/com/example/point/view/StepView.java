@@ -1,5 +1,6 @@
 package com.example.point.view;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -120,15 +121,32 @@ public class StepView extends View {
         float scalePrevious = (float) Integer.valueOf(stepNumber) / totalStepNum;
         /**换算成弧度最后要到达的角度的长度-->弧长*/
         float previousAngleLength = scalePrevious * angleLength;
+
         /**所走步数占用总共步数的百分比*/
         float scale = (float) currentCounts / totalStepNum;
         /**换算成弧度最后要到达的角度的长度-->弧长*/
-        currentAngleLength = scale * angleLength;
+         currentAngleLength = scale * angleLength;
+        /**开始执行动画*/
+        setAnimation(0, currentAngleLength, animationLength);
 
-       stepNumber = String.valueOf(currentCounts);
-       postInvalidate();
+        stepNumber = String.valueOf(currentCounts);
         setTextSize(currentCounts);
     }
+    private void setAnimation(float start, float current, int length) {
+        ValueAnimator progressAnimator = ValueAnimator.ofFloat(start, current);
+        progressAnimator.setDuration(length);
+        progressAnimator.setTarget(currentAngleLength);
+        progressAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                /**每次在初始值和结束值之间产生的一个平滑过渡的值，逐步去更新进度*/
+                currentAngleLength = (float) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
+        progressAnimator.start();
+    }
+
     /**
      * 设置文本大小,防止步数特别大之后放不下，将字体大小动态设置
      *

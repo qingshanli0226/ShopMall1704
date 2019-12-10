@@ -6,7 +6,7 @@ android {
 
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -21,7 +21,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -37,10 +40,20 @@ dependencies {
     api 'com.gyf.immersionbar:immersionbar-components:3.0.0'
 // kotlin扩展（可选）
     api 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
+
+    api 'androidx.recyclerview:recyclerview:1.1.0'
+    api 'com.google.code.gson:gson:2.8.6'
+
     api 'androidx.recyclerview:recyclerview:1.0.0'
-    implementation 'com.google.code.gson:gson:2.8.0'
+    api 'com.jaeger.statusbarutil:library:1.4.0'
+
     implementation project(path: ':net')
     implementation project(path: ':common')
-
+    //PushSDK必须依赖基础组件库，所以需要加入对应依赖
+    api 'com.umeng.umsdk:common:2.1.0'
+//PushSDK必须依赖utdid库，所以需要加入对应依赖
+    api 'com.umeng.umsdk:utdid:1.1.5.3'
+//PushSDK
+    api 'com.umeng.umsdk:push:6.0.1'
 
 }

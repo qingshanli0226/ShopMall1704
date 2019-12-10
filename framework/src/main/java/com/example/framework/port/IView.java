@@ -1,5 +1,8 @@
 package com.example.framework.port;
 
+import io.reactivex.Observable;
+import okhttp3.ResponseBody;
+
 /**
  * author:李浩帆
  */
@@ -16,10 +19,11 @@ public interface IView<T> {
     void showEmpty();
     //TODO 隐藏无网络页面
     void hideEmpty();
-    //TODO 返回get请求数据
-    void onHttpGetRequestDataSuccess(int requestCode,T data);
-    //TODO 返回post请求数据
-    void onHttpPostRequestDataSuccess(int requestCode,T data);
+    //TODO 请求单数据成功
+    void onRequestSuccess(T data);
+    //TODO 请求多数据成功
+    void onRequestSuccess(int requestCode, T data);
     //TODO 获取RelativeLayoutId
     int getRelativeLayout();
+
 }

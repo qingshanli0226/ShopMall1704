@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinner">
+        <item>月份</item>
+        <item>日期</item>
+        <item>小时</item>
+        <item>分钟</item>
+    </string-array>
+</resources>

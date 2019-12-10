@@ -4,6 +4,8 @@
     android:layout_height="wrap_content">
     <CheckBox
         android:id="@+id/itemCheck"
+        android:button="@null"
+        android:drawableLeft="@drawable/checkbut"
         android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

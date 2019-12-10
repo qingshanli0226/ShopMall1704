@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,9 @@ import com.example.framework.port.IActivity;
 import com.example.framework.port.INetConnectListener;
 import com.example.framework.port.IView;
 import com.gyf.immersionbar.ImmersionBar;
+import com.jaeger.library.StatusBarUtil;
+import com.umeng.message.PushAgent;
+
 /**
  * author:李浩帆
  */
@@ -26,7 +30,8 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
-
+        //：该方法是【友盟+】Push后台进行日活统计及多维度推送的必调用方法，请务必调用！
+        PushAgent.getInstance(this).onAppStart();
         //TODO 沉浸式状态栏
       //  ImmersionBar.with(this).init();
 
