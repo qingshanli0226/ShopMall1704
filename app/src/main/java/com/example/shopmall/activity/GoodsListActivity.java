@@ -79,6 +79,6 @@ public class GoodsListActivity extends BaseActivity implements IGetBaseView {
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
-        
+
     }
 }

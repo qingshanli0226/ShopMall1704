@@ -17,8 +17,6 @@ import com.example.shopmall.activity.MessageActivity;
 import com.example.shopmall.adapter.MyHomePageAdapter;
 import com.example.framework.bean.HomepageBean;
 
-
-
 /**
  * A simple {@link Fragment} subclass.
  */
