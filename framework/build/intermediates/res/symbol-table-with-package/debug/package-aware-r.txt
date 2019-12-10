@@ -858,6 +858,12 @@ layout select_dialog_singlechoice_material
 layout succees_layout
 layout support_simple_spinner_dropdown_item
 layout titlebar_layout
+mipmap arrow
+mipmap arrow_top
+mipmap bluewim
+mipmap head
+mipmap ren
+mipmap runbacks
 string abc_action_bar_home_description
 string abc_action_bar_up_description
 string abc_action_menu_overflow_description

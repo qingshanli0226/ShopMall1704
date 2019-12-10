@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="date">
+        <item>12小时之内</item>
+        <item>三天之内</item>
+        <item>一周之内</item>
+        <item>一月之内</item>
+    </string-array>
+</resources>

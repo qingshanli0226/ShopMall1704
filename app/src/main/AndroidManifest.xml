@@ -21,7 +21,6 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.HistoryActivity"></activity>
         <activity android:name=".activity.GoodsInfoActivity"></activity>
         <activity android:name=".activity.MessageActivity" />
 
@@ -30,9 +29,6 @@
 
 
 
-        <activity android:name=".activity.IntegralActivity"
-            android:screenOrientation="portrait"
-            />
 
 
 
@@ -55,9 +51,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name="com.example.step.StepService">
 
-        </service>
     </application>
 
 </manifest>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.IntegralActivity"
+    tools:context="com.example.step.Ui.IntegralActivity"
     android:orientation="vertical">
 
     <com.example.common.TitleBar
@@ -103,7 +103,7 @@
         </TextView>
 
 
-        <com.example.step.StepArcView
+        <com.example.step.CustomView.StepArcView
             android:id="@+id/StepView"
             android:layout_width="300dp"
             android:layout_height="300dp"
@@ -112,7 +112,7 @@
             android:gravity="center"
             >
 
-        </com.example.step.StepArcView>
+        </com.example.step.CustomView.StepArcView>
 
     </LinearLayout>
 
@@ -123,12 +123,12 @@
 <!--        android:layout_height="0dp">-->
 
 <!--    </androidx.recyclerview.widget.RecyclerView>-->
-    <com.example.step.RunView
+    <com.example.step.CustomView.RunView
         android:id="@+id/runView"
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:layout_height="0dp">
 
-    </com.example.step.RunView>
+    </com.example.step.CustomView.RunView>
 
 </LinearLayout>

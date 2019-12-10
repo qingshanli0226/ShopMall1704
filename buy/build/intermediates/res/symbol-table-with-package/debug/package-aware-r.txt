@@ -936,12 +936,16 @@ layout select_dialog_singlechoice_material
 layout succees_layout
 layout support_simple_spinner_dropdown_item
 layout titlebar_layout
+mipmap arrow
+mipmap arrow_top
+mipmap bluewim
 mipmap checkbox_selected
 mipmap checkbox_unselected
 mipmap custome_head
 mipmap empty_cart
 mipmap goods_add_btn
 mipmap goods_sub_btn
+mipmap head
 mipmap home_arrow_right
 mipmap ic_launcher
 mipmap ic_launcher_round
@@ -955,6 +959,8 @@ mipmap new_order_status_shouhuo
 mipmap new_user_icon
 mipmap new_user_icon_background
 mipmap new_user_setting
+mipmap ren
+mipmap runbacks
 mipmap user_channel_icon_address
 mipmap user_channel_icon_callcenter
 mipmap user_channel_icon_collect

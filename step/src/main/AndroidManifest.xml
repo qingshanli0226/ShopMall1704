@@ -1,7 +1,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.step"
-
     >
+
+    <application >
+        <activity android:name=".Ui.HistoryActivity"></activity>
+        <activity android:name=".Ui.IntegralActivity"
+            android:screenOrientation="portrait"
+            >
+
+        </activity>
+
+        <service android:name="com.example.framework.StepService">
+
+        </service>
+    </application>
 
 
 </manifest>
