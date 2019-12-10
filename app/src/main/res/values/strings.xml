@@ -3,4 +3,9 @@
     <string name="message">消息</string>
     <string name="app_name_vertical">邵\n华\n商\n城</string>
     <string name="welcome_version">测试版本</string>
+    <string name="loginUserTextVIewText">用户名:</string>
+    <string name="loginLoginSigninTextViewText">没有账号?点击前往注册</string>
+    <string name="signinUserTextViewText">用户名:</string>
+    <string name="signinPassWordText">密码:</string>
+    <string name="singinSiginTextViewText">已有账号?点击前往登录</string>
 </resources>

@@ -3,17 +3,20 @@ package com.example.administrator.shaomall.activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.example.administrator.shaomall.FindFragment;
 import com.example.administrator.shaomall.MineFragment;
 import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.TypeFragment;
 import com.example.administrator.shaomall.home.HomeFragment;
+import com.example.administrator.shaomall.login.ui.LoginActivity;
 import com.example.shoppingcart.Ui.Shoppingcart;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.shaomall.framework.base.BaseActivity;
+import com.shaomall.framework.manager.UserInfoManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +57,23 @@ public class MainActivity extends BaseActivity {
         mMainTab.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
-                switchFragment(fragments.get(position));
+                if (position==3){
+                    //判断登录
+                    UserInfoManager instance = UserInfoManager.getInstance();
+                    boolean login = instance.isLogin();
+                    if (login){
+                        //已经登录了
+                        switchFragment(fragments.get(position));
+
+                    }else {
+                        //还没有登录
+                        toClass(LoginActivity.class);
+                    }
+                }else {
+                    switchFragment(fragments.get(position));
+                }
+
+
             }
 
             @Override

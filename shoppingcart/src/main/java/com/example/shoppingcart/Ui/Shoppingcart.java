@@ -1,7 +1,9 @@
 package com.example.shoppingcart.Ui;
 
+import android.os.UserManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -18,19 +20,23 @@ import com.example.shoppingcart.R;
 import com.example.shoppingcart.presenter.ShoppingcartPresenter;
 import com.shaomall.framework.base.BaseActivity;
 import com.shaomall.framework.base.BaseMVPFragment;
+import com.shaomall.framework.manager.UserInfoManager;
 
-public class Shoppingcart extends BaseMVPFragment<ShoppingCartBean> {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Shoppingcart extends BaseMVPFragment<String> {
     private LinearLayout topBar;
     private TextView title;
     private RecyclerView listview;
-
+    ArrayList<ShoppingCartBean> arr=new ArrayList<>();
 
     private CheckBox allChekbox;
     private TextView tvTotalPrice;
     private TextView tvDelete;
     private TextView tvGoToPay;
     ShoppingcartPresenter presenter;
-
+    RvAdp rvAdp;
 
 
     @Override
@@ -54,7 +60,22 @@ public class Shoppingcart extends BaseMVPFragment<ShoppingCartBean> {
 
     @Override
     protected void initData() {
+        //网络请求
         presenter.doGetHttpRequest(200);
+        rvAdp=new RvAdp(arr,getContext());
+        listview.setLayoutManager(new LinearLayoutManager(getContext()));
+        listview.setAdapter(rvAdp);
+
+        rvAdp.setHuidiao(new RvAdp.Huidiao() {
+            @Override
+            public void hui(int i) {
+
+                Toast.makeText(mContext, ""+i, Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
     }
 
     @Override
@@ -64,9 +85,12 @@ public class Shoppingcart extends BaseMVPFragment<ShoppingCartBean> {
     }
 
 
+
     @Override
-    public void onRequestHttpDataSuccess(int requestCode, String message, ShoppingCartBean data) {
-        Toast.makeText(mContext, ""+message, Toast.LENGTH_SHORT).show();
-        Log.d("SSH:",data.getResult());
+    public void onRequestHttpDataSuccess(int requestCode, String message, String data) {
+
+            Log.d("SSH:",data);
+            rvAdp.notifyDataSetChanged();
+
     }
 }

@@ -1,5 +1,7 @@
 package com.example.net;
 
+import android.util.Log;
+
 import com.example.commen.TokenUtil;
 
 import java.io.IOException;
@@ -15,7 +17,7 @@ public class Tokenlnterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request(); //去拿到request请求对象
         Request newRequest = null;
-
+        Log.d("SSH:", "intercept: "+TokenUtil.getToken());
         if (TokenUtil.getToken() != null){
             //在请求头部添加一个keyvalue形式的参数，将token值添加进去.
             newRequest = request.newBuilder().addHeader(AppNetConfig.TOKEN, TokenUtil.getToken()).build();

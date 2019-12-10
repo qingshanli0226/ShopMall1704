@@ -120,7 +120,7 @@ public class SigninActivity extends BaseMVPActivity<String> {
                         presenter.setUsername(username);
                         presenter.setPassword(password);
                         presenter.doPostHttpRequest(100);
-
+                        finish();
                     }
                 }
                 return false;

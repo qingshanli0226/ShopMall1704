@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
     <View
@@ -20,21 +22,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="4dp"
+            android:layout_marginLeft="@dimen/cartMarginLeft"
+            android:layout_marginRight="@dimen/cartMarginRight"
             android:checkMark="?android:attr/listChoiceIndicatorMultiple"
             android:gravity="center"
-            android:minHeight="64dp"
-            android:minWidth="32dp"
+            android:minHeight="@dimen/cartminHeight"
+            android:minWidth="@dimen/cartminWidth"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:visibility="visible" />
 
         <ImageView
             android:id="@+id/iv_adapter_list_pic"
-            android:layout_width="85dp"
-            android:layout_height="85dp"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="13dp"
+            android:layout_width="@dimen/cartImageViewWidth"
+            android:layout_height="@dimen/cartImageViewHeight"
+            android:layout_marginBottom="@dimen/cartImageViewMarginBottom"
+            android:layout_marginTop="@dimen/cartImageViewMarginTop"
             android:scaleType="centerCrop"
             />
 
@@ -42,24 +44,24 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="13dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginLeft="@dimen/cartRelativeLayoutMarginLeft"
+            android:layout_marginTop="@dimen/cartRelativeLayoutMarginTop">
 
             <TextView
                 android:id="@+id/tv_goods_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="@dimen/cartgoodsnameMarginRight"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="@color/grey_color1"
-                android:textSize="14sp" />
+                android:textSize="@dimen/cartgoodsnameTextSize" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="@dimen/cartRelativeLayoutMarginBottom"
                 android:orientation="horizontal">
 
                 <TextView
@@ -69,7 +71,7 @@
                     android:layout_centerVertical="true"
                     android:singleLine="true"
                     android:textColor="@color/orange_color"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/cartTextViewpriceTextSize"
                     android:textStyle="bold" />
 
                 <TextView
@@ -77,47 +79,48 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/carttypeTextViewMarginLeft"
                     android:layout_toRightOf="@+id/tv_goods_price"
                     android:singleLine="true"
                     android:textColor="@color/grey_color3"
-                    android:textSize="10sp" />
+                    android:textSize="@dimen/carttypeTextViewTextSize"
+                    tools:ignore="SmallSp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginRight="@dimen/cartLinearLayoutMarginRight"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/tv_reduce"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="@dimen/cartReduceTextVIewWidth"
+                        android:layout_height="@dimen/cartReduceTextVIewheight"
                         android:gravity="center"
-                        android:text="一"
+                        android:text="@string/cartReduceTextVIewText"
                         android:textColor="@color/grey_color1"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/cartReduceTextVIewSize" />
 
                     <TextView
                         android:id="@+id/tv_num"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="@dimen/cartNumTextVIewWidth"
+                        android:layout_height="@dimen/cartNumTextVIewHeight"
                          android:gravity="center"
                         android:singleLine="true"
-                        android:text="1"
+                        android:text="@string/cartNumTextVIewText"
                         android:textColor="@color/grey_color1"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/cartNumTextVIewTextSize" />
 
                     <TextView
                         android:id="@+id/tv_add"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="@dimen/cartAddTextVIewWidth"
+                        android:layout_height="@dimen/cartAddTextVIewHeight"
                         android:gravity="center"
                         android:text="+"
                         android:textColor="@color/grey_color1"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/cartAddTextVIewTextSize" />
                 </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>

@@ -227,7 +227,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
                             } else { //不是列表
                                 ResEntity<T> resEntity = new Gson().fromJson(string, getBeanType());
-                                //                                T resEntity = new Gson().fromJson(string, getBeanType());
+                                //  T resEntity = new Gson().fromJson(string, getBeanType());
 
                                 if (resEntity.getCode() == 200) { //数据请求成功
                                     if (iBaseView != null) {

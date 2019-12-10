@@ -2,4 +2,27 @@
 <resources>
     <dimen name="welcome_version_size">18sp</dimen>
     <dimen name="loginMarginTop">20dp</dimen>
+    <dimen name="loginLinearLayoutHeight">100dp</dimen>
+    <dimen name="loginUserTextMarginLeft">20dp</dimen>
+    <dimen name="loginUserTextViewSize">20sp</dimen>
+    <dimen name="loginPassWordTextviewMarginLeft">20dp</dimen>
+    <dimen name="loginPassWordTextviewTextSize">20sp</dimen>
+    <dimen name="loginLoginSigninTextViewMarginRight">45dp</dimen>
+    <dimen name="loginLoginSigninTextViewTextSize">12sp</dimen>
+    <dimen name="loginDiyMarginTop">55dp</dimen>
+    <dimen name="loginDiyWidth">300dp</dimen>
+    <dimen name="signinRelativeLayoutHeight">100dp</dimen>
+    <dimen name="signinHeadWidth">100dp</dimen>
+    <dimen name="signinHeadHeight">100dp</dimen>
+    <dimen name="signinFacebookWidth">100dp</dimen>
+    <dimen name="signinFacebookHeight">100dp</dimen>
+    <dimen name="signinFacebookRadius">20dp</dimen>
+    <dimen name="signinUserTextViewMarginLeft">20dp</dimen>
+    <dimen name="signinUserTextViewTextSize">20sp</dimen>
+    <dimen name="signinPassWordMarginLeft">20dp</dimen>
+    <dimen name="signinPassWordTextSize">20sp</dimen>
+    <dimen name="singinSiginTextViewMarginRight">45dp</dimen>
+    <dimen name="singinSiginTextViewTextSize">12sp</dimen>
+    <dimen name="signinDiyMarginTop">55dp</dimen>
+    <dimen name="signinDiyWidth">300dp</dimen>
 </resources>

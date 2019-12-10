@@ -33,8 +33,18 @@ public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Myhodler myhodler, int i) {
+    public void onBindViewHolder(@NonNull final Myhodler myhodler, final int i) {
+        Picasso.with(context).load(arr.get(i).getUrl());
+        myhodler.tvGoodsName.setText(arr.get(i).getProductName());
+        myhodler.tvGoodsPrice.setText(arr.get(i).getProductId());
+        myhodler.tvNum.setText(arr.get(i).getProductNum());
+        myhodler.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                huidiao.hui(i);
 
+            }
+        });
     }
 
     @Override
@@ -66,6 +76,18 @@ public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler> {
             tvAdd = (TextView)  itemView.findViewById(R.id.tv_add);
 
         }
+    }
+    public interface Huidiao{
+       void hui(int i);
+    }
+    Huidiao huidiao;
+
+    public Huidiao getHuidiao() {
+        return huidiao;
+    }
+
+    public void setHuidiao(Huidiao huidiao) {
+        this.huidiao = huidiao;
     }
 }
 

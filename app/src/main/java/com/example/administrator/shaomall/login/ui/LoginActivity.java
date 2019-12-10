@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.shaomall.R;
+import com.example.administrator.shaomall.activity.MainActivity;
 import com.example.administrator.shaomall.login.diyview.DIYButton;
 import com.example.administrator.shaomall.login.presenter.LoginPresenter;
 import com.example.commen.ShopMailError;
@@ -96,6 +97,7 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
                         presenter.setUsername(username);
                         presenter.setPassname(password);
                         presenter.doPostHttpRequest(100);
+                        toClass(MainActivity.class);
                     }
             }
                 return false;
