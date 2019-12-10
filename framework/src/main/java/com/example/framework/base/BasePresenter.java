@@ -1,11 +1,8 @@
 package com.example.framework.base;
 
-import android.util.Log;
-
 import com.example.common.SignUtil;
 import com.example.net.RetrofitCreator;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -17,14 +14,15 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
 //网络下载
 public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
-    private IBaseView<T> baseView;
+    private IGetBaseView<T> iGetBaseView;
+    private IPostBaseView<T> iPostBaseView;
+    private ILoadView iLoadView;
 
     @Override
     public void getGetData() {
@@ -34,17 +32,16 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        baseView.onLoadingPage();
+                        if (iLoadView!=null)
+                        iLoadView.onLoadingPage();
                     }
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
-                        baseView.onStopLoadingPage();
                         try {
                             T data = new Gson().fromJson(responseBody.string(), getBeanType());
-                            if (baseView != null)
-                                baseView.onGetDataSucess(data);
-                            baseView.onLoadingPage();
+                            if (iGetBaseView != null)
+                                iGetBaseView.onGetDataSucess(data);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -52,36 +49,37 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("####", "" + e.getMessage());
-                        if (baseView != null) {
-                            baseView.onGetDataFailed(ErrorUtil.handleError(e));
-                            baseView.onStopLoadingPage();
-                        }
+                        if (iGetBaseView != null)
+                            iGetBaseView.onGetDataFailed(ErrorUtil.handleError(e));
                     }
 
                     @Override
                     public void onComplete() {
-
+                        if (iLoadView != null)
+                            iLoadView.onStopLoadingPage();
                     }
                 });
     }
 
+
     @Override
-    public void register() {
+    public void getCipherTextData() {
         RetrofitCreator.getNetPostService().register(getPath(), getSign())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        if (iLoadView != null)
+                            iLoadView.onLoadingPage();
                     }
 
                     @Override
                     public void onNext(ResponseBody body) {
                         try {
-                            T registerBean = new Gson().fromJson(body.string(), getBeanType());
-                            baseView.onPostDataSucess(registerBean);
+                            T cipherTextData = new Gson().fromJson(body.string(), getBeanType());
+                            if (iPostBaseView != null)
+                                iPostBaseView.onPostDataSucess(cipherTextData);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -89,76 +87,35 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        if (iPostBaseView != null)
+                            iPostBaseView.onPostDataFailed(ErrorUtil.handleError(e));
                     }
 
                     @Override
                     public void onComplete() {
-
+                        if (iLoadView != null)
+                            iLoadView.onStopLoadingPage();
                     }
                 });
     }
-
-    public Map<String, String> getSign() {
-        TreeMap<String, String> emptyTreeMap = SignUtil.getEmptyTreeMap();
-        HashMap<String, String> query = getQuery();
-        emptyTreeMap.putAll(query);
-        String sign = SignUtil.generateSign(query);
-        query.put("sign", sign);
-        return SignUtil.encryptParamsByBase64(query);
-    }
-
-    @Override
-    public void login() {
-        RetrofitCreator.getNetPostService().login(getPath(), getSign())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResponseBody>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(ResponseBody body) {
-                        try {
-                            T data = new Gson().fromJson(body.string(), getBeanType());
-                            baseView.onPostDataSucess(data);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
-    }
-
-    protected abstract Type getBeanType();
 
     @Override
     public void getPostFormData() {
-        RetrofitCreator.getNetPostService().getFormData(getPath(), getHeader(), getQuery())
+        RetrofitCreator.getNetPostService().getFormData(getPath(), getHeader(), getParam())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        if (iLoadView != null)
+                            iLoadView.onLoadingPage();
                     }
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         try {
-                            if (baseView != null)
-                                baseView.onPostDataSucess((T) responseBody.string());
+                            if (iPostBaseView != null)
+                                iPostBaseView.onPostDataSucess((T) responseBody.string());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -166,36 +123,35 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("####", "" + e.getMessage());
-                        if (baseView != null) {
-                            baseView.onGetDataFailed(ErrorUtil.handleError(e));
-                        }
+                        if (iPostBaseView != null)
+                            iPostBaseView.onPostDataFailed(ErrorUtil.handleError(e));
                     }
 
                     @Override
                     public void onComplete() {
-
+                        if (iLoadView != null)
+                            iLoadView.onStopLoadingPage();
                     }
                 });
     }
 
     @Override
     public void getPostJsonData() {
-        RequestBody requestBody = RequestBody.create(MediaType.parse(getType()), getJsonArray().toString());
-        RetrofitCreator.getNetPostService().getJsonData(getPath(), requestBody)
+        RetrofitCreator.getNetPostService().getJsonData(getPath(), getRequestBody())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        if (iLoadView != null)
+                            iLoadView.onLoadingPage();
                     }
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         try {
-                            if (baseView != null)
-                                baseView.onPostDataSucess((T) responseBody.string());
+                            if (iPostBaseView != null)
+                                iPostBaseView.onPostDataSucess((T) responseBody.string());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -203,44 +159,63 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("####", "" + e.getMessage());
-                        if (baseView != null) {
-                            baseView.onGetDataFailed(ErrorUtil.handleError(e));
-                        }
+                        if (iPostBaseView != null)
+                            iPostBaseView.onPostDataFailed(ErrorUtil.handleError(e));
                     }
 
                     @Override
                     public void onComplete() {
-
+                        if (iLoadView != null)
+                            iLoadView.onStopLoadingPage();
                     }
                 });
     }
 
-    private JsonArray getJsonArray() {
+    private RequestBody getRequestBody() {
         return null;
     }
 
-    private String getType() {
-        return null;
-    }
+    //返回数据类型
+    protected abstract Type getBeanType();
 
+    //返回必传参数
     protected abstract String getPath();
 
+    //返回请求头
     protected abstract HashMap<String, String> getHeader();
 
-    protected abstract HashMap<String, String> getQuery();
+    //返回请求参数
+    protected abstract HashMap<String, String> getParam();
 
-    //绑定
-    @Override
-    public void attachView(IBaseView<T> baseView) {
-        this.baseView = baseView;
+    private Map<String, String> getSign() {
+        TreeMap<String, String> emptyTreeMap = SignUtil.getEmptyTreeMap();
+        HashMap<String, String> query = getParam();
+        emptyTreeMap.putAll(query);
+        String sign = SignUtil.generateSign(query);
+        query.put("sign", sign);
+        return SignUtil.encryptParamsByBase64(query);
     }
 
     //解绑
     @Override
     public void detachView() {
-        this.baseView = null;
+        this.iGetBaseView = null;
+        this.iPostBaseView = null;
+        this.iLoadView = null;
     }
 
+    @Override
+    public void attachGetView(IGetBaseView<T> iGetBaseView) {
+        this.iGetBaseView = iGetBaseView;
+    }
 
+    @Override
+    public void attachPostView(IPostBaseView<T> iPostBaseView) {
+        this.iPostBaseView = iPostBaseView;
+    }
+
+    @Override
+    public void attachLoadView(ILoadView iLoadView) {
+        this.iLoadView = iLoadView;
+    }
 }

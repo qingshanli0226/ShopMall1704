@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
+import com.example.framework.manager.CaCheManager;
 import com.example.framework.manager.ConnectManager;
 import com.example.framework.manager.CrashHandler;
 import com.example.framework.manager.UserManager;
@@ -21,8 +22,6 @@ public class MyApplication extends Application {
 
         //初始化缓存管理类
         CaCheManager.getInstance(this).init(this);
-
-
         //点击通知跳转MainActivity
         Intent intent = new Intent(this, MainActivity.class);
         UserManager.getInstance().init(this);

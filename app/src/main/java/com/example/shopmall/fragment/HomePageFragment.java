@@ -10,13 +10,13 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.common.TitleBar;
-import com.example.shopmall.CaCheManager;
+import com.example.framework.manager.CaCheManager;
 import com.example.framework.base.BaseFragment;
 import com.example.shopmall.R;
 
 import com.example.shopmall.activity.MessageActivity;
 import com.example.shopmall.adapter.MyHomePageAdapter;
-import com.example.shopmall.bean.HomepageBean;
+import com.example.framework.bean.HomepageBean;
 
 
 /**

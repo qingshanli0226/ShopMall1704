@@ -37,7 +37,7 @@ public class RegisterPresenter extends BasePresenter<RegisterBean> {
     }
 
     @Override
-    protected HashMap<String, String> getQuery() {
+    protected HashMap<String, String> getParam() {
         HashMap<String, String> map = new HashMap<>();
         map.put("name", name);
         map.put("password", pwd);

@@ -12,7 +12,7 @@ import android.widget.ListView;
 
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseFragment;
-import com.example.framework.base.IBaseView;
+import com.example.framework.base.IGetBaseView;
 import com.example.net.Constant;
 import com.example.shopmall.R;
 import com.example.shopmall.adapter.ClassifyLeftAdapter;
@@ -23,7 +23,7 @@ import com.example.shopmall.presenter.IntegerPresenter;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ClassifyFragment extends BaseFragment implements IBaseView<ClassifyBean> {
+public class ClassifyFragment extends BaseFragment implements IGetBaseView<ClassifyBean> {
 
     TitleBar tb_classify;
     ListView lv_left;
@@ -100,7 +100,7 @@ public class ClassifyFragment extends BaseFragment implements IBaseView<Classify
 
     private void getDataPresenter(String url) {
         integerPresenter = new IntegerPresenter(url,ClassifyBean.class);
-        integerPresenter.attachView(this);
+        integerPresenter.attachGetView(this);
         integerPresenter.getGetData();
     }
 
@@ -140,30 +140,13 @@ public class ClassifyFragment extends BaseFragment implements IBaseView<Classify
     }
 
     @Override
-    public void onPostDataSucess(ClassifyBean data) {
-
-    }
-
-    @Override
     public void onGetDataFailed(String ErrorMsg) {
-
-    }
-
-    @Override
-    public void onLoadingPage() {
-
-    }
-
-    @Override
-    public void onStopLoadingPage() {
 
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         integerPresenter.detachView();
-
     }
 }

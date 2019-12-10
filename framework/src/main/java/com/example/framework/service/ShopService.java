@@ -1,14 +1,12 @@
-package com.example.shopmall;
+package com.example.framework.service;
 
-import android.app.DownloadManager;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 
-import com.example.common.ACache;
+import com.example.framework.bean.HomepageBean;
 import com.example.net.RetrofitCreator;
-import com.example.shopmall.bean.HomepageBean;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -29,7 +27,7 @@ public class ShopService extends Service {
         return new MyBinder();
     }
 
-    class MyBinder extends Binder {
+    public class MyBinder extends Binder {
         public ShopService getService() {
             return ShopService.this;
         }
