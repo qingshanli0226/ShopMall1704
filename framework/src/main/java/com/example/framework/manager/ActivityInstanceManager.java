@@ -17,6 +17,7 @@ public class ActivityInstanceManager {
     //TODO 私有化对象
     private static ActivityInstanceManager instanceManager;
 
+
     //TODO 私有化构造
     private ActivityInstanceManager() {}
 

@@ -1,38 +1,43 @@
 package com.example.dimensionleague.home;
 import android.view.View;
-import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+import com.example.dimensionleague.CacheManager;
 import com.example.dimensionleague.R;
-import com.example.dimensionleague.businessbean.HomeBean;
+import com.example.common.HomeBean;
+import com.example.dimensionleague.home.adapter.HomeAdapter;
 import com.example.framework.base.BaseNetConnectFragment;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.framework.base.BasePresenter;
 
 public class HomeFragment extends BaseNetConnectFragment {
     private RecyclerView rv;
-    private TextView tv;
-    private List<HomeBean.ResultBean> list;
+    private HomeAdapter adapter;
+    private HomeBean.ResultBean list =new HomeBean.ResultBean();;
+    private  BasePresenter iBasePresenter;
 
 
     @Override
     public void init(View view) {
         super.init(view);
         rv=view.findViewById(R.id.home_rv);
-        tv=view.findViewById(R.id.home_marquee);
-        list=new ArrayList<>();
+        iBasePresenter=new HomePresenter();
     }
 
     @Override
     public void initDate() {
-        tv.setSelected(true);
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+//        iBasePresenter.attachView(this);
+//        iBasePresenter.doHttpGetRequest();
+//        Log.e("SSS",CacheManager.getInstance().getHomeBeanData().toString());
+       if(CacheManager.getInstance().getHomeBeanData()!=null){
+           list=(((HomeBean) CacheManager.getInstance().getHomeBeanData()).getResult() );
+       }
+       adapter=new HomeAdapter(list,getContext());
+
+// 设置网格布局
+        rv.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+        rv.setAdapter(adapter);
 
     }
 
@@ -45,5 +50,16 @@ public class HomeFragment extends BaseNetConnectFragment {
     @Override
     public int getRelativeLayout() {
         return 0;
+    }
+
+    @Override
+    public void onRequestSuccess(Object data) {
+        if (data!=null){
+            adapter=new HomeAdapter(((HomeBean)data).getResult(),getContext());
+// 设置网格布局
+            rv.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+            rv.setAdapter(adapter);
+        }else{
+        }
     }
 }

@@ -30,25 +30,25 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
 
     //TODO get获取单数据
     @Override
-    public void onHttpGetRequest(){
+    public void doHttpGetRequest(){
         getDate(RetrofitCreator.getNetInterence().getData(getHeaders(), getPath(), getParams()));
     }
 
     //TODO post获取单数据
     @Override
-    public void onHttpPostRequest() {
+    public void doHttpPostRequest() {
         getDate(RetrofitCreator.getNetInterence().postData(getHeaders(), getPath(), signEncrypt()));
     }
 
     //TODO get获取多数据
     @Override
-    public void onHttpGetRequest(final int requestCode){
+    public void doHttpGetRequest(final int requestCode){
         getDate(requestCode,RetrofitCreator.getNetInterence().getData(getHeaders(), getPath(), getParams()));
     }
 
     //TODO post获取多数据
     @Override
-    public void onHttpPostRequest(final int requestCode) {
+    public void doHttpPostRequest(final int requestCode) {
         getDate(requestCode,RetrofitCreator.getNetInterence().postData(getHeaders(), getPath(), signEncrypt()));
     }
 

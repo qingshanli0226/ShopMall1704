@@ -8,4 +8,5 @@
     <string name="buyAdd">加入购物车</string>
     <string name="buySelectInteger">是否选择积分减免</string>
     <string name="buyNum">数量:</string>
+    <string name="buySure">确定</string>
 </resources>

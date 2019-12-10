@@ -49,11 +49,8 @@
             android:layout_height="wrap_content"/>
         <Button
             android:id="@+id/buyBut"
-            android:textColor="@color/buyWhite"
-            android:background="@drawable/buybut"
+            style="@style/BuyBut"
             android:text="@string/buyNow"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_alignParentRight="true"/>
     </RelativeLayout>
 </RelativeLayout>

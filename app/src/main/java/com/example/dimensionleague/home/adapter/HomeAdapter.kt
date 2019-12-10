@@ -6,12 +6,9 @@ import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.widget.ImageView
-import com.bumptech.glide.Glide
 import com.example.dimensionleague.R
-import com.example.dimensionleague.businessbean.HomeBean
+import com.example.common.HomeBean
 import com.example.dimensionleague.home.holder.*
-import kotlinx.android.synthetic.main.home_banner.view.*
 
 
 class HomeAdapter(
@@ -78,7 +75,7 @@ class HomeAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        Log.d("lhf","position:--"+position.toString())
+        Log.d("SSS","position:--"+position.toString())
         when(position){
             BANNER -> currentType = BANNER
             CHANNEL -> currentType = CHANNEL
@@ -87,7 +84,7 @@ class HomeAdapter(
             RECOMMEND -> currentType = RECOMMEND
             HOT -> currentType = HOT
         }
-        Log.d("lhf","currenType"+currentType.toString())
+        Log.d("SSS","currenType"+currentType.toString())
         return currentType
     }
 

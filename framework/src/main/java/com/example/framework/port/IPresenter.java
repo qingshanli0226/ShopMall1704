@@ -12,13 +12,13 @@ public interface IPresenter<T> {
     //TODO 结束时销毁
     void detachView();
     //TODO Get请求数据单类型
-    void onHttpGetRequest();
+    void doHttpGetRequest();
     //TODO post请求数据单类型
-    void onHttpPostRequest();
+    void doHttpPostRequest();
     //TODO Get请求数据多类型
-    void onHttpGetRequest(int requestCode);
+    void doHttpGetRequest(int requestCode);
     //TODO post请求数据多类型
-    void onHttpPostRequest(int requestCode);
+    void doHttpPostRequest(int requestCode);
     //TODO 发起请求
     void getDate(Observable<ResponseBody> data);
     //TODO 发起请求

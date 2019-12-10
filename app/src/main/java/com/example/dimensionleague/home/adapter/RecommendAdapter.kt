@@ -1,36 +1,42 @@
 package com.example.dimensionleague.home.adapter
 
+import android.content.Intent
+import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.bumptech.glide.Glide
+import com.example.buy.activity.GoodsActiviy
+import com.example.common.IntentUtil
 import com.example.dimensionleague.R
-import com.example.dimensionleague.businessbean.HomeBean
+import com.example.common.HomeBean
 import com.example.net.AppNetConfig
 import kotlinx.android.synthetic.main.home_recommend_item.view.*
 
 class RecommendAdapter(
-    recommendInfo:List<HomeBean.ResultBean.RecommendInfoBean>
+    recommendInfo:List<HomeBean.ResultBean.SeckillInfoBean.ListBean>
 ) : BaseAdapter() {
-    var recommendInfo:List<HomeBean.ResultBean.RecommendInfoBean>? = null
+    var recommendInfo:List<HomeBean.ResultBean.SeckillInfoBean.ListBean>? = null
     init {
         this.recommendInfo = recommendInfo
     }
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
         lateinit var views:View
         lateinit var holder:ViewHolder
-        if(view==null){
-            views = LayoutInflater.from(parent!!.context).inflate(R.layout.home_recommend,parent,false)
+            views = LayoutInflater.from(parent!!.context).inflate(R.layout.home_recommend_item,parent,false)
             holder = ViewHolder(views)
             views.setTag(holder)
-        }else{
-            views = view
-            holder = views.getTag() as ViewHolder
-        }
-//        Glide.with(parent!!.context).load("${AppNetConfig.BASE_URl_IMAGE}${recommendInfo!!.get(position).figure}").into(holder.iv_recommend)
+        Glide.with(parent!!.context).load("${AppNetConfig.BASE_URl_IMAGE}${recommendInfo!!.get(position).figure}").into(holder.iv_recommend)
         holder.tv_name.text = recommendInfo?.get(position)?.name
         holder.tv_price.text = "${recommendInfo?.get(position)?.cover_price}￥"
+        //跳转
+        views.setOnClickListener { v->
+            val intent = Intent(views.context, GoodsActiviy::class.java)
+            intent.putExtra(IntentUtil.SHOW_GOOD, recommendInfo!![position])
+            views.context.startActivity(intent)
+        }
         return views
     }
 

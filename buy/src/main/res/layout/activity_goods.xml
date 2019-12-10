@@ -4,30 +4,52 @@
     android:layout_height="match_parent"
     android:background="@color/buyWhite"
     android:id="@+id/goodsRel">
-    <ImageView
-        android:id="@+id/goodsImage"
-        android:src="@drawable/img"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"/>
-    <ImageView
-        android:id="@+id/beiImgage"
-        android:src="@drawable/img"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"/>
-    <TextView
-        android:id="@+id/goodsTitle"
-        android:textColor="@color/buyPink"
-        android:textSize="@dimen/buy_text_three"
-        android:layout_below="@id/goodsImage"
-        android:text="标题"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <WebView
-        android:id="@+id/webView"
+    <ScrollView
         android:layout_above="@id/foot"
-        android:layout_below="@id/goodsTitle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/goodsImage"
+                android:src="@drawable/img"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/buy_two_hun"/>
+            <ImageView
+                android:id="@+id/beiImgage"
+                android:src="@drawable/img"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/buy_two_hun"/>
+            <TextView
+                android:id="@+id/goodsTitle"
+                android:textColor="@color/buyPink"
+                android:textSize="@dimen/buy_text_three"
+                android:layout_below="@id/goodsImage"
+                android:text="标题"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/goodsOldPrice"
+                android:layout_below="@id/goodsTitle"
+                android:text="¥:++++"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/goodsNewPrice"
+                android:layout_below="@id/goodsOldPrice"
+                android:text="¥:++++"
+                android:textSize="@dimen/buy_text_two"
+                android:textColor="@color/buyPink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <WebView
+                android:id="@+id/webView"
+                android:layout_below="@id/goodsNewPrice"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </RelativeLayout>
+    </ScrollView>
     <RelativeLayout
         android:id="@+id/foot"
         android:layout_alignParentBottom="true"
@@ -44,20 +66,22 @@
             android:src="@drawable/cart"
             android:layout_height="@dimen/buy_four"
             android:layout_width="@dimen/buy_four"/>
+        <TextView
+            android:id="@+id/redNum"
+            android:text="5"
+            style="@style/RedDotView"
+            android:layout_alignRight="@id/cartBut"
+            android:layout_alignTop="@id/cartBut"/>
         <Button
             android:id="@+id/joinCartBut"
             style="@style/BuyBut"
             android:layout_toLeftOf="@id/goPayBut"
-            android:text="@string/buyAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:text="@string/buyAdd"/>
         <Button
             android:id="@+id/goPayBut"
             android:layout_alignParentRight="true"
             android:text="@string/buyNow"
-            style="@style/BuyBut"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            style="@style/BuyBut"/>
     </RelativeLayout>
 
 </RelativeLayout>

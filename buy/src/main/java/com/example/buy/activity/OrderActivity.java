@@ -51,6 +51,8 @@ public class OrderActivity extends BaseNetConnectActivity {
 
     @Override
     public void init() {
+        recyclerView=findViewById(R.id.recyclerView);
+        showOrderType=findViewById(R.id.showOrderType);
         payOrder=new GetPayOrderPresenter();
         watiOrder=new GetWaitOrderPresenter();
         //http://49.233.93.155:8080  updateMoney  money=1333
@@ -66,7 +68,9 @@ public class OrderActivity extends BaseNetConnectActivity {
         recyclerView.setAdapter(new BaseRecyclerAdapter<GetOrderBean>(R.layout.item_order, list) {
             @Override
             public void onBind(BaseViewHolder holder, int position) {
-
+                ((TextView)holder.getView(R.id.orderTitle)).setText(list.get(position).getSubject());
+                ((TextView)holder.getView(R.id.orderNum)).setText(list.get(position).getBody());
+                ((TextView)holder.getView(R.id.orderMoney)).setText(list.get(position).getTotalPrice());
             }
         });
     }
@@ -81,13 +85,13 @@ public class OrderActivity extends BaseNetConnectActivity {
         switch (type){
             case ALL:
                 //先请求待支付,然后请求待发货
-                payOrder.onHttpGetRequest(CODE_ALL);
+                payOrder.doHttpGetRequest(CODE_ALL);
                 break;
             case WAIT_PAY:
-                payOrder.onHttpGetRequest(CODE_PAY);
+                payOrder.doHttpGetRequest(CODE_PAY);
                 break;
             case WAIT_SEND:
-                watiOrder.onHttpGetRequest(CODE_WAIT);
+                watiOrder.doHttpGetRequest(CODE_WAIT);
                 break;
         }
     }
@@ -98,7 +102,7 @@ public class OrderActivity extends BaseNetConnectActivity {
         switch (requestCode){
             case CODE_ALL:
                 list.add((GetOrderBean) data);
-                watiOrder.onHttpPostRequest(CODE_ALL);
+                watiOrder.doHttpPostRequest(CODE_ALL);
                 break;
             case CODE_PAY:
                 list.clear();

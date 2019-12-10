@@ -17,11 +17,8 @@
             android:id="@+id/payBut"
             android:layout_alignParentBottom="true"
             android:text="@string/buyPay"
-            android:textColor="@color/buyWhite"
-            android:background="@drawable/buybut"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            style="@style/BuyBut"
+            android:layout_alignParentRight="true"/>
         <TextView
             android:id="@+id/integralNow"
             android:text="拥有的积分数"

@@ -21,16 +21,16 @@ public interface NetInterence {
 
     //GET请求
     @GET("{path}")
-    Observable<ResponseBody> getData(@HeaderMap Map<String, String> headers, @Path("path") String path, @QueryMap Map<String, String> params);
+    Observable<ResponseBody> getData(@HeaderMap Map<String, String> headers,@Path(value = "path", encoded = true) String path, @QueryMap Map<String, String> params);
 
     //POST请求
    @POST("{path}")
    @FormUrlEncoded
-   Observable<ResponseBody> postData(@HeaderMap Map<String, String> headers, @Path("path") String path, @FieldMap Map<String, String> params);
+   Observable<ResponseBody> postData(@HeaderMap Map<String, String> headers, @Path(value = "path", encoded = true) String path, @FieldMap Map<String, String> params);
 
     //POST JSON
     @POST("getOrderInfo")
-    Observable<ResponseBody> postJsonData(@HeaderMap Map<String, String> headers, @Path("path") String path,@Body Object object);
+    Observable<ResponseBody> postJsonData(@HeaderMap Map<String, String> headers, @Path(value = "path", encoded = true) String path,@Body Object object);
     //下载文件
    @Streaming
    @GET

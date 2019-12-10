@@ -45,13 +45,13 @@ public class ceshiActivity extends BaseNetConnectActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registerBeanIPresenter.onHttpPostRequest(1001);
+                registerBeanIPresenter.doHttpPostRequest(1001);
             }
         });
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                iPresenter.onHttpPostRequest(1002);
+                iPresenter.doHttpPostRequest(1002);
             }
         });
 

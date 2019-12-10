@@ -43,23 +43,12 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/popuNum"
         android:text="+" />
-    <Button
-        android:id="@+id/popuAddCart"
-        android:layout_toLeftOf="@id/popuSure"
-        android:layout_alignParentBottom="true"
-        android:text="@string/buyAdd"
-        style="@style/BuyBut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/popuSure"
-        android:layout_alignParentRight="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/buyNow"
+        android:text="@string/buySure"
         style="@style/BuyBut"/>
 
 </RelativeLayout>

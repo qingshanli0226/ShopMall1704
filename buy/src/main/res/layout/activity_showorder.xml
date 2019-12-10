@@ -6,7 +6,7 @@
     <TextView
         android:id="@+id/showOrderType"
         android:gravity="center"
-        android:textSize="20sp"
+        android:textSize="@dimen/buy_text_two"
         android:text="订单"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

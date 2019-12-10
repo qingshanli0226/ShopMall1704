@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="buy_five">50dp</dimen>
+    <dimen name="buy_two_hun">250dp</dimen>
     <dimen name="buy_seven">70dp</dimen>
     <dimen name="buy_nine">90dp</dimen>
     <dimen name="buy_four">40dp</dimen>
@@ -12,4 +13,6 @@
     <dimen name="buy_two">20dp</dimen>
     <dimen name="buy_tf">25dp</dimen>
     <dimen name="buy_three">30dp</dimen>
+    <dimen name="buy_thf">35dp</dimen>
+    <dimen name="buy_one_hund">100dp</dimen>
 </resources>
