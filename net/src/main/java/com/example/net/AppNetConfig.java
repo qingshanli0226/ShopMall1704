@@ -8,13 +8,40 @@ public class AppNetConfig {
     public static final String BASE_URL = "http://49.233.93.155:8080/";
 
     ////////////////////////////////////////////
-    // 请求Json数据基本URL
+    //商品接口
+
+    // 1.请求Json数据基本URL
     public static final String BASE_URL_JSON = BASE_URL+"atguigu/json/";
-    // 请求图片基本URL
+
+    //2.请求图片基本URL
     public static final String BASE_URl_IMAGE = BASE_URL+"atguigu/img";
 //    http://49.233.93.155:8080/atguigu/img  /1478770583834.png
-    //主页Fragment路径
+
+    //3.主页Fragment路径
     public static final String HOME_URL ="atguigu/json/HOME_URL.json";
+
+    //小裙子
+    public static final String SKIRT_URL = BASE_URL_JSON + "SKIRT_URL.json";
+    //上衣
+    public static final String JACKET_URL = BASE_URL_JSON + "JACKET_URL.json";
+    //下装(裤子)
+    public static final String PANTS_URL = BASE_URL_JSON + "PANTS_URL.json";
+    //外套
+    public static final String OVERCOAT_URL = BASE_URL_JSON + "OVERCOAT_URL.json";
+    //配件
+    public static final String ACCESSORY_URL = BASE_URL_JSON + "ACCESSORY_URL.json";
+    //包包
+    public static final String BAG_URL = BASE_URL_JSON + "BAG_URL.json";
+    //装扮
+    public static final String DRESS_UP_URL = BASE_URL_JSON + "DRESS_UP_URL.json";
+    //居家宅品
+    public static final String HOME_PRODUCTS_URL = BASE_URL_JSON + "HOME_PRODUCTS_URL.json";
+    //办公文具
+    public static final String STATIONERY_URL = BASE_URL_JSON + "STATIONERY_URL.json";
+    //数码周边
+    public static final String DIGIT_URL = BASE_URL_JSON +  "DIGIT_URL.json";
+    //游戏专区
+    public static final String GAME_URL = BASE_URL_JSON + "GAME_URL.json";
 
     //User 处理接口
     //1. 注册接口处理 post
@@ -90,9 +117,7 @@ public class AppNetConfig {
     //22. 查找待发货的订单 get
     public static final String FIND_FOR_SEND = "findForSend";
 
-    //首页数据Code
-    public static final int HOME_DATA_CODE = 100;
 
-    //acache 首页数据 Key
-    public static final String KEY_HOME_DATA = "Home_Data";
+
+
 }

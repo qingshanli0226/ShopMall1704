@@ -1,4 +1,4 @@
-package com.example.commen;
+package com.shaomall.framework.manager;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

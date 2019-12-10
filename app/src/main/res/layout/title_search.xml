@@ -92,7 +92,7 @@
 
     </RelativeLayout>
 
-    <com.example.administrator.shaomall.AnimationNestedScrollView
+    <com.example.commen.view.AnimationNestedScrollView
         android:id="@+id/search_sv_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -108,6 +108,6 @@
 
         </LinearLayout>
 
-    </com.example.administrator.shaomall.AnimationNestedScrollView>
+    </com.example.commen.view.AnimationNestedScrollView>
 
 </RelativeLayout>

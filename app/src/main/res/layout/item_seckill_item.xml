@@ -18,8 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:gravity="center_horizontal"
-        android:text="￥102.00"
-        android:textColor="#ff4c4c"
+        android:textColor="@color/colorMoney"
         android:textSize="15sp" />
 
     <RelativeLayout
@@ -32,13 +31,11 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="￥159.00"
-            android:textColor="#9a9a9a" />
+            android:textColor="@color/colorDiscount" />
 
         <View
-            android:layout_width="70dp"
-            android:layout_height="1dp"
+         style="@style/SplitLineGoods"
             android:layout_centerInParent="true"
-            android:background="@color/gray_dark_bg" />
+          />
     </RelativeLayout>
 </LinearLayout>

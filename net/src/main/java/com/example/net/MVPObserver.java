@@ -1,6 +1,6 @@
 package com.example.net;
 
-import com.example.commen.ErrorUtil;
+import com.example.commen.util.ErrorUtil;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;

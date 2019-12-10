@@ -11,10 +11,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.TextView;
 
-import com.example.commen.SPUtils;
 import com.example.remindsteporgan.Base.Bean;
 import com.example.remindsteporgan.Util.ScreenBroadcastListener;
 import com.example.remindsteporgan.Util.ScreenManager;

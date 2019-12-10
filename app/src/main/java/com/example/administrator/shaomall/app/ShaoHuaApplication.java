@@ -1,11 +1,11 @@
-package com.example.administrator.shaomall;
+package com.example.administrator.shaomall.app;
 
 import android.app.Application;
 import android.content.Context;
 
 import com.example.administrator.shaomall.cache.CacheManager;
 import com.example.commen.ACache;
-import com.example.commen.NetConnetMannager;
+import com.shaomall.framework.manager.NetConnetMannager;
 import com.shaomall.framework.manager.UserInfoManager;
 
 public class ShaoHuaApplication extends Application {

@@ -8,9 +8,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.administrator.shaomall.AnimationNestedScrollView;
+import com.example.commen.Constants;
+import com.example.commen.view.AnimationNestedScrollView;
 import com.example.administrator.shaomall.home.adapter.HomeRecycleAdapter;
-import com.example.commen.CommonUtil;
+import com.example.commen.util.CommonUtil;
 import com.example.administrator.shaomall.R;
 import com.example.commen.ACache;
 import com.example.commen.ShopMailError;
@@ -61,7 +62,7 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> {
     protected void initData() {
         setTitle();
         ACache aCache = ACache.get(mContext);
-        HomeBean.ResultBean data = (HomeBean.ResultBean) aCache.getAsObject(AppNetConfig.KEY_HOME_DATA);
+        HomeBean.ResultBean data = (HomeBean.ResultBean) aCache.getAsObject(Constants.KEY_HOME_DATA);
 
         if (data != null) {
             mHomeRecycler.setLayoutManager(new LinearLayoutManager(getContext()));

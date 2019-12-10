@@ -8,7 +8,7 @@ import com.example.administrator.shaomall.FindFragment;
 import com.example.administrator.shaomall.MineFragment;
 import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.ShopCarFragment;
-import com.example.administrator.shaomall.TypeFragment;
+import com.example.administrator.shaomall.type.TypeFragment;
 import com.example.administrator.shaomall.home.HomeFragment;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
@@ -27,7 +27,6 @@ public class MainActivity extends BaseActivity {
     private ArrayList<CustomTabEntity> tabEntities = new ArrayList<>();
     private Fragment currentFragment = new Fragment();
     private List<Fragment> fragments = new ArrayList<>();
-
     @Override
     public int setLayoutId() {
         return R.layout.activity_main;

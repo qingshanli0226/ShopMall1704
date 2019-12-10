@@ -1,4 +1,6 @@
-package com.example.commen;
+package com.example.commen.util;
+
+import com.example.commen.ShopMailError;
 
 import org.json.JSONException;
 

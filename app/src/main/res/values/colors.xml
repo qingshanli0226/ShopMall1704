@@ -4,9 +4,12 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="red_light">#ffff4040</color>
-    <color name="gray_dark_bg">#ffbababa</color>
-    <color name="transparent">#00000000</color>
-    <color name="text_unselect">#929191</color>
+    <color name="colorRedLight">#ffff4040</color>
+    <color name="colorGrayBg">#ffbababa</color>
+    <color name="colorTransparent">#00000000</color>
     <color name="colorWhite">#fff</color>
+    <color name="colorBlack">#000</color>
+    <color name="colorMoney">#ff4242</color>
+    <color name="colorDiscount">#9a9a9a</color>
+    <color name="colorGrayTitle">#788188</color>
 </resources>

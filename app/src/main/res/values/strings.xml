@@ -3,4 +3,11 @@
     <string name="message">消息</string>
     <string name="app_name_vertical">邵\n华\n商\n城</string>
     <string name="welcome_version">测试版本</string>
+    <string name="current_version">当前版本:</string>
+    <string name="search_hint">  这是搜索框</string>
+    <string name="home_item_title">这里都是买的棒棒哒</string>
+    <string name="look_more">查看更多</string>
+    <string name="recommend_title">邵华推荐</string>
+    <string name="skill_title">邵华秒杀 距·结束</string>
+    <string name="type_sort">常用分类</string>
 </resources>

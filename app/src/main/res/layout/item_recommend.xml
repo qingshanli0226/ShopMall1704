@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="邵华推荐"
+                android:text="@string/recommend_title"
                 android:textColor="#000" />
 
             <TextView
@@ -37,7 +37,7 @@
                 android:drawablePadding="5dp"
                 android:drawableRight="@drawable/home_arrow_right"
                 android:gravity="end"
-                android:text="查看更多" />
+                android:text="@string/look_more" />
         </LinearLayout>
 
         <GridView
