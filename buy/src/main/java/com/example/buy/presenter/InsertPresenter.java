@@ -39,7 +39,7 @@ public class InsertPresenter extends BasePresenter {
     }
 
     @Override
-    protected HashMap<String, String> getQuery() {
-        return new HashMap<>();
+    protected HashMap<String, String> getParam() {
+        return null;
     }
 }

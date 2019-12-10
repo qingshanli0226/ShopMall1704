@@ -6,19 +6,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
 import com.example.common.LoadingPage;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseFragment;
-import com.example.framework.base.IBaseView;
+import com.example.framework.base.IGetBaseView;
 import com.example.net.Constant;
 import com.example.shopmall.R;
 import com.example.shopmall.adapter.ClassifyLeftAdapter;
@@ -29,7 +23,7 @@ import com.example.shopmall.presenter.IntegerPresenter;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ClassifyFragment extends BaseFragment implements IBaseView<ClassifyBean> {
+public class ClassifyFragment extends BaseFragment implements IGetBaseView<ClassifyBean> {
 
     TitleBar tb_classify;
     LoadingPage lp_classify_loading;
@@ -108,7 +102,7 @@ public class ClassifyFragment extends BaseFragment implements IBaseView<Classify
 
     private void getDataPresenter(String url) {
         integerPresenter = new IntegerPresenter(url,ClassifyBean.class);
-        integerPresenter.attachView(this);
+        integerPresenter.attachGetView(this);
         integerPresenter.getGetData();
     }
 
@@ -137,35 +131,12 @@ public class ClassifyFragment extends BaseFragment implements IBaseView<Classify
     }
 
     @Override
-    public void onPostDataSucess(ClassifyBean data) {
-
-    }
-
-    @Override
     public void onGetDataFailed(String ErrorMsg) {
 
     }
-
-    @Override
-    public void onLoadingPage() {
-//        lp_classify_loading.start(LoadingPage.LOADING_FAILURE);
-//        lp_classify_loading.setVisibility(View.VISIBLE);
-//        rv_right.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onStopLoadingPage() {
-//        lp_classify_loading.start(LoadingPage.LOADING_FAILURE);
-//        lp_classify_loading.isSucceed();
-//        lp_classify_loading.setVisibility(View.GONE);
-//        rv_right.setVisibility(View.VISIBLE);
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         integerPresenter.detachView();
-
     }
 }

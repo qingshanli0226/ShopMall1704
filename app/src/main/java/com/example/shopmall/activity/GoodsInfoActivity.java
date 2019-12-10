@@ -17,7 +17,7 @@ import com.example.buy.presenter.InsertPresenter;
 import com.example.common.BottomBar;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
-import com.example.framework.base.IBaseView;
+import com.example.framework.base.IGetBaseView;
 import com.example.framework.manager.ShoppingManager;
 import com.example.shopmall.R;
 import com.example.shopmall.adapter.GoodsInfoAdapter;
@@ -27,7 +27,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GoodsInfoActivity extends BaseActivity implements IBaseView {
+public class GoodsInfoActivity extends BaseActivity implements IGetBaseView {
 
     TitleBar tb_goods_info;
     RecyclerView rv_goods_info;
@@ -108,7 +108,7 @@ public class GoodsInfoActivity extends BaseActivity implements IBaseView {
             @Override
             public void onClick(View view) {
                 String token = ShoppingManager.getInstance().getToken(GoodsInfoActivity.this);
-                addOneProduct.attachView(GoodsInfoActivity.this);
+                addOneProduct.attachGetView(GoodsInfoActivity.this);
                 HashMap<String, String> hashMap = new HashMap<>();
                 hashMap.put("token", token);
                 addOneProduct = new InsertPresenter("addOneProduct", InsertBean.class, hashMap);
@@ -149,22 +149,7 @@ public class GoodsInfoActivity extends BaseActivity implements IBaseView {
     }
 
     @Override
-    public void onPostDataSucess(Object data) {
-
-    }
-
-    @Override
     public void onGetDataFailed(String ErrorMsg) {
-
-    }
-
-    @Override
-    public void onLoadingPage() {
-
-    }
-
-    @Override
-    public void onStopLoadingPage() {
 
     }
 }

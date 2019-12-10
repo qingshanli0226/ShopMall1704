@@ -1,8 +1,6 @@
 package com.example.shopmall.presenter;
 
 import com.example.framework.base.BasePresenter;
-import com.example.shopmall.bean.HomepageBean;
-import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -45,7 +43,7 @@ public class IntegerPresenter extends BasePresenter {
     }
 
     @Override
-    protected HashMap<String, String> getQuery() {
+    protected HashMap<String, String> getParam() {
         return query;
     }
 

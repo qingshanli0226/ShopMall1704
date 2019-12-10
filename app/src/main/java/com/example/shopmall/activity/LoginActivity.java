@@ -12,16 +12,15 @@ import android.widget.Toast;
 
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
-import com.example.framework.base.IBaseView;
+import com.example.framework.base.IPostBaseView;
 import com.example.shopmall.R;
 import com.example.shopmall.bean.LoginBean;
 import com.example.shopmall.presenter.LoginPresenter;
-import com.example.shopmall.presenter.RegisterPresenter;
 
-public class LoginActivity extends BaseActivity implements IBaseView<LoginBean> {
+public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBean> {
 
-    TitleBar tb_login;
-    Button bt_login;
+    TitleBar mTitleBar;
+    Button mLogin;
     EditText mName;
     EditText mPassWord;
     Button mRegister;
@@ -33,8 +32,8 @@ public class LoginActivity extends BaseActivity implements IBaseView<LoginBean> 
 
     @Override
     public void initView() {
-        tb_login = findViewById(R.id.tb_login);
-        bt_login = findViewById(R.id.bt_login);
+        mTitleBar = findViewById(R.id.tb_login);
+        mLogin = findViewById(R.id.bt_login);
         mName = findViewById(R.id.et_login_name);
         mPassWord = findViewById(R.id.et_login_word);
         mRegister = findViewById(R.id.bt_login_register);
@@ -42,11 +41,11 @@ public class LoginActivity extends BaseActivity implements IBaseView<LoginBean> 
 
     @Override
     public void initData() {
-        tb_login.setBackgroundColor(Color.RED);
-        tb_login.setLeftImg(R.drawable.left);
-        tb_login.setCenterText("登录", 18, Color.WHITE);
+        mTitleBar.setBackgroundColor(Color.RED);
+        mTitleBar.setLeftImg(R.drawable.left);
+        mTitleBar.setCenterText("登录", 18, Color.WHITE);
 
-        tb_login.setTitleClickLisner(new TitleBar.TitleClickLisner() {
+        mTitleBar.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
             public void LeftClick() {
                 finish();
@@ -63,14 +62,14 @@ public class LoginActivity extends BaseActivity implements IBaseView<LoginBean> 
             }
         });
 
-        bt_login.setOnClickListener(new View.OnClickListener() {
+        mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String name = mName.getText().toString();
                 String pwd = mPassWord.getText().toString();
                 LoginPresenter loginPresenter = new LoginPresenter(name, pwd);
-                loginPresenter.attachView(LoginActivity.this);
-                loginPresenter.login();
+                loginPresenter.attachPostView(LoginActivity.this);
+                loginPresenter.getCipherTextData();
             }
         });
 
@@ -80,11 +79,6 @@ public class LoginActivity extends BaseActivity implements IBaseView<LoginBean> 
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
-
-    }
-
-    @Override
-    public void onGetDataSucess(LoginBean data) {
 
     }
 
@@ -100,17 +94,7 @@ public class LoginActivity extends BaseActivity implements IBaseView<LoginBean> 
     }
 
     @Override
-    public void onGetDataFailed(String ErrorMsg) {
-
-    }
-
-    @Override
-    public void onLoadingPage() {
-
-    }
-
-    @Override
-    public void onStopLoadingPage() {
+    public void onPostDataFailed(String ErrorMsg) {
 
     }
 }
