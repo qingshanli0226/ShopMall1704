@@ -2,6 +2,7 @@ package com.example.common.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 import com.example.common.Constant;
 
@@ -30,13 +31,13 @@ public class SPUtil {
 
     //TODO 是否登录
     public static boolean isLogin(){
-        return sp.getBoolean(Constant.IS_LOGIN,false);
+        return TextUtils.isEmpty(getToken());
     }
 
     //TODO 退出登录
     public static void logout(){
         SharedPreferences.Editor edit = sp.edit();
-        edit.putBoolean(Constant.IS_LOGIN,false);
+        edit.putString(Constant.TOKEN,"");
         edit.apply();
     }
 

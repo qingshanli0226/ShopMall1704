@@ -1,4 +1,4 @@
-package com.example.dimensionleague;
+package com.example.dimensionleague.login.presenter;
 
 import com.example.dimensionleague.userbean.LoginBean;
 import com.example.framework.base.BasePresenter;
@@ -8,7 +8,16 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ceshiPresenter extends BasePresenter<LoginBean> {
+/**
+ * author:李浩帆.
+ */
+public class LoginPresenter extends BasePresenter<LoginBean> {
+
+    Map<String,String> map;
+
+    public LoginPresenter(Map<String, String> map) {
+        this.map = map;
+    }
 
     @Override
     public Type getBeanType() {
@@ -22,9 +31,6 @@ public class ceshiPresenter extends BasePresenter<LoginBean> {
 
     @Override
     public Map<String, String> getParams() {
-        Map<String, String> params = new HashMap<>();
-        params.put("name","li222");
-        params.put("password","li222");
-        return params;
+        return map;
     }
 }

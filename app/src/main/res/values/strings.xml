@@ -10,4 +10,6 @@
     <string name="seckill_today">今日闪购 距·结束</string>
     <string name="hot_buy">热卖推荐</string>
     <string name="common_type">常用分类</string>
+    <string name="mine_login"><![CDATA[登录/注册>]]></string>
+    <string name="mine_look">看相似</string>
 </resources>

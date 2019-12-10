@@ -109,6 +109,7 @@ public class OrderActivity extends BaseNetConnectActivity {
             case CODE_ALL:
                 list.add((GetOrderBean) data);
                 watiOrder.doHttpPostRequest(CODE_All_TWO);
+                watiOrder.doHttpPostRequest(CODE_ALL);
                 break;
             case CODE_PAY:
                 list.clear();

@@ -1,5 +1,7 @@
 package com.example.framework.base;
 
+import android.util.Log;
+
 import com.example.common.Constant;
 import com.example.common.utils.SignUtil;
 import com.example.framework.port.IPresenter;
@@ -71,12 +73,16 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                             iView.onRequestSuccess(resEntity);
                         } catch (IOException e) {
                             e.printStackTrace();
+                            iView.showError();
+
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         iView.hideLoading();
+                        iView.showError();
+                        Log.d("lhf",e.getMessage());
                     }
 
                     @Override

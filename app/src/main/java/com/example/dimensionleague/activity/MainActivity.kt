@@ -7,6 +7,7 @@ import android.graphics.Color
 import com.example.dimensionleague.R
 import com.example.buy.ShopCartFragment
 import com.example.dimensionleague.home.HomeFragment
+import com.example.dimensionleague.mine.MineFragment
 import com.example.dimensionleague.type.TypeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import com.example.framework.base.BaseNetConnectActivity
@@ -32,7 +33,7 @@ class MainActivity : BaseNetConnectActivity() {
         list.add(TypeFragment())
         list.add(HomeFragment())
         list.add(ShopCartFragment())
-        list.add(HomeFragment())
+        list.add(MineFragment())
     }
     override fun initDate() {
         super.init()

@@ -186,17 +186,16 @@ public class WelcomeActivity extends BaseNetConnectActivity {
         public void run() {
 
             while (flag) {
-                synchronized (WelcomeActivity.this){
-                index--;
-                }
                 try {
                     Thread.sleep(1000);
                    synchronized (WelcomeActivity.this){
+                       index--;
                        if (index == 0) {
                            flag = false;
                            Log.i("SSS", "run: 跳转主页面的Handler");
                            handler.sendEmptyMessage(102);
                        } else {
+                           Log.i("SSS", "run: index="+index);
                            handler.sendEmptyMessage(101);
                        }
                    }
