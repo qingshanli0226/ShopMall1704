@@ -1,9 +1,10 @@
-package com.example.administrator.shaomall;
+package com.example.administrator.shaomall.mine;
 
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.DrawableContainer;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,12 +13,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.login.ui.LoginActivity;
 import com.shaomall.framework.base.BaseMVPFragment;
 import com.shaomall.framework.bean.LoginBean;
 import com.shaomall.framework.manager.UserInfoManager;
-
-import static com.example.administrator.shaomall.R.mipmap.ic_launcher_round;
 
 public class MineFragment extends BaseMVPFragment implements View.OnClickListener, UserInfoManager.UserInfoStatusListener {
     private android.widget.ImageView mIvHeader;
@@ -66,7 +66,7 @@ public class MineFragment extends BaseMVPFragment implements View.OnClickListene
     public void onClick(View v) {
 
         //判断是否登录, 未登录时,跳转登录界面
-        if (!userInfoManager.isLogin()){
+        if (!userInfoManager.isLogin()) {
             toClass(LoginActivity.class); //跳转用户登录界面
             return;
         }
@@ -85,7 +85,7 @@ public class MineFragment extends BaseMVPFragment implements View.OnClickListene
         //判断是否处于登录状态
         if (userInfoManager.isLogin()) {
             mTvPoint.setVisibility(View.VISIBLE);
-            mTvPoint.setVisibility(View.VISIBLE);
+            mBtLogout.setVisibility(View.VISIBLE);
 
             LoginBean loginBean = userInfoManager.readUserInfo();
             Object address = loginBean.getAddress();    //获取地址
@@ -94,26 +94,36 @@ public class MineFragment extends BaseMVPFragment implements View.OnClickListene
             Object money = loginBean.getMoney();    //得到钱
             String name = loginBean.getName();      //得到名字
             Object phone = loginBean.getPhone();    //取得电话
-            Object point = loginBean.getPoint();    //获得积分
+            String point = (String) loginBean.getPoint();    //获得积分
 
+            Log.d("QS", "setUserData: " + avatar);
             //设置头像
-            Glide.with(mContext).load(avatar).apply(RequestOptions.circleCropTransform()).into(mIvHeader);
+            //http://img5.imgtn.bdimg.com/it/u=1441588315,1666293982&fm=26&gp=0.jpg 默认头像
+            if (avatar == null) {
+                avatar = "http://img5.imgtn.bdimg.com/it/u=1441588315,1666293982&fm=26&gp=0.jpg";
+                Glide.with(mContext).load(avatar).apply(RequestOptions.circleCropTransform()).into(mIvHeader);
+            }else {
+                Glide.with(mContext).load(avatar).apply(RequestOptions.circleCropTransform()).into(mIvHeader);
+            }
             //这是昵称
             mTvUserName.setText(name);
             //设置积分
-            mTvPoint.setText(point.toString());
+            if (point == null) {
+                point = "0";
+            }
+            mTvPoint.setText("积分: " + point);
 
         } else {
             mTvPoint.setVisibility(View.GONE);
-            mTvPoint.setVisibility(View.GONE);
+            mBtLogout.setVisibility(View.GONE);
         }
     }
 
     @Override
     public void onUserStatus(boolean isLogin, LoginBean userInfo) {
-        if (isLogin){
+        if (isLogin) {
             setUserData();
-        }else {
+        } else {
             mIvHeader.setImageResource(R.drawable.app_icon);
             mTvUserName.setText(R.string.app_fragment_mine_tv_text_user_name);
             mTvPoint.setVisibility(View.GONE);

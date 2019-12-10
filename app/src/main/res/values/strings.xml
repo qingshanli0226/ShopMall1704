@@ -3,5 +3,5 @@
     <string name="message">消息</string>
     <string name="app_name_vertical">邵\n华\n商\n城</string>
     <string name="welcome_version">测试版本</string>
-    <string name="app_fragment_mine_tv_text_user_name">登录/注册</string>
+    <string name="app_fragment_mine_tv_text_user_name">登录/注册 ></string>
 </resources>

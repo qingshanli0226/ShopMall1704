@@ -50,10 +50,6 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
         diybutton.setButtomtext("登录");
 
 
-
-
-
-
         loginSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

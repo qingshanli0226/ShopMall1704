@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.widget.FrameLayout;
 
 import com.example.administrator.shaomall.FindFragment;
-import com.example.administrator.shaomall.MineFragment;
+import com.example.administrator.shaomall.mine.MineFragment;
 import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.TypeFragment;
 import com.example.administrator.shaomall.home.HomeFragment;

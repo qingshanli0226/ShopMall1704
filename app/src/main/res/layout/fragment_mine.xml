@@ -7,13 +7,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="#6af">
+        android:layout_height="168dp"
+        android:background="#6af"
+        android:paddingTop="20dp">
 
         <LinearLayout
             android:id="@+id/ll_header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_alignParentTop="true"
             android:orientation="horizontal">
 
@@ -32,7 +33,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="12dp"
-                android:drawableRight="@drawable/ic_action_right"
                 android:gravity="center"
                 android:text="@string/app_fragment_mine_tv_text_user_name"
                 android:textColor="#fff" />
@@ -51,17 +51,17 @@
                 android:layout_marginRight="18dp"
                 android:gravity="center"
                 android:text="积分: "
-                android:visibility="gone"
-                android:textColor="#FFF" />
+                android:textColor="#FFF"
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_below="@+id/ll_header"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="18dp"
             android:background="#fa6"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <LinearLayout
