@@ -39,15 +39,17 @@
                 android:textSize="24sp"
                 android:textColor="@color/colorWhite"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="  步"
-                android:textSize="20sp"
-                android:textColor="@color/colorWhite"/>
-
         </LinearLayout>
 
+        <Spinner
+            android:id="@+id/Integral_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center"
+            >
+
+        </Spinner>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -69,12 +71,8 @@
                 android:textSize="24sp"
                 android:textColor="@color/colorWhite"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="  积分"
-                android:textSize="20sp"
-                android:textColor="@color/colorWhite"/>
+
+
 
         </LinearLayout>
 
@@ -86,26 +84,45 @@
         android:orientation="vertical"
         android:layout_weight="3">
 
+        <TextClock
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="20dp"
+            >
+        </TextClock>
+        <TextView
+            android:id="@+id/find_History"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查看历史记录"
+            android:layout_gravity="right"
+            android:layout_marginRight="15dp"
+            >
+
+        </TextView>
+
+
         <com.example.step.StepArcView
             android:id="@+id/StepView"
             android:layout_width="300dp"
-            android:layout_height="match_parent"
+            android:layout_height="300dp"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
             >
-
 
         </com.example.step.StepArcView>
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/history_RecyclerView"
-        android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp">
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/history_RecyclerView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_weight="1"-->
+<!--        android:layout_height="0dp">-->
 
-    </androidx.recyclerview.widget.RecyclerView>
+<!--    </androidx.recyclerview.widget.RecyclerView>-->
     <com.example.step.RunView
         android:id="@+id/runView"
         android:layout_width="match_parent"
