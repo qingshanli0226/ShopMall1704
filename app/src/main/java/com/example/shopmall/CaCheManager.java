@@ -25,7 +25,7 @@ public class CaCheManager {
         this.context = context;
     }
 
-    public static CaCheManager getInstance (Context context) {
+    public static CaCheManager getInstance(Context context) {
         if (caCheManager == null) {
             return new CaCheManager(context);
         }
@@ -59,12 +59,14 @@ public class CaCheManager {
                 public void onConnect() {//有网的情况下
                     shopService.getHttpData();//执行服务中的网络请求
                 }
+
                 @Override
                 public void onDisConnect() {
 
                 }
             });
         }
+
         @Override
         public void onServiceDisconnected(ComponentName name) {
 
@@ -76,25 +78,25 @@ public class CaCheManager {
     }
 
     //注册回调接口
-    public void registerListener (IDataRecivedListener iDataRecivedListener){
+    public void registerListener(IDataRecivedListener iDataRecivedListener) {
         if (!iDataRecivedListeners.contains(iDataRecivedListener)) {
             iDataRecivedListeners.add(iDataRecivedListener);
         }
     }
 
-    public void unregisterListener (IDataRecivedListener iDataRecivedListener){
+    public void unregisterListener(IDataRecivedListener iDataRecivedListener) {
         iDataRecivedListeners.remove(iDataRecivedListener);
     }
 
     //把bean类存储到sp中
-    public void savaBean (HomepageBean homepageBean){
+    public void savaBean(HomepageBean homepageBean) {
         Log.e("####", homepageBean.toString());
         ACache aCache = ACache.get(context);
         aCache.put("HomepageBean", homepageBean);
     }
 
     //获取存储到sp中的bean类
-    public HomepageBean getCacheBean (Context context){
+    public HomepageBean getCacheBean(Context context) {
         ACache aCache = ACache.get(context);
         HomepageBean homepageBean = (HomepageBean) aCache.getAsObject("HomepageBean");
         if (homepageBean != null) {
@@ -104,11 +106,9 @@ public class CaCheManager {
     }
 
     //管理类初始化
-    public void init (Context context){
-        this.context = context;
+    void init(Context context) {
         Intent intent = new Intent(context, ShopService.class);
         context.startService(intent);
         context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 }
-

@@ -26,6 +26,7 @@ public class RunView extends SurfaceView {
     private int picPostion=0;
 
 
+    private boolean isRunning=true;
 
 
 
@@ -61,8 +62,8 @@ public class RunView extends SurfaceView {
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
 
-        int newWidth=500;
-        int newHeight=250;
+        int newWidth=450;
+        int newHeight=180;
 
 
         float scaleWidth =(float) newWidth / width;
@@ -79,6 +80,9 @@ public class RunView extends SurfaceView {
         @Override
         public void surfaceCreated(SurfaceHolder surfaceHolder) {
             new Thread(runnable).start();
+            isRunning=true;
+
+
 
         }
 
@@ -93,10 +97,14 @@ public class RunView extends SurfaceView {
         @Override
         public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
 
+            isRunning=false;
+
+
         }
     };
 
 
+    //..
     private void MyDraw(){
         int toleft=300;
         int toTop=mHight-50;
@@ -104,37 +112,42 @@ public class RunView extends SurfaceView {
         if(toleft>mWidth){
             toleft=0;
         }
-        while (true){
+
+        while (isRunning==true){
             try {
                 Rect rect = new Rect(toleft, toTop, toleft + mPeople.getWidth() / 10, toTop - mPeople.getHeight());
 
+
                 canvas=holder.lockCanvas();
-                if(canvas!=null){
+                synchronized (RunView.class){
+                    if(canvas!=null){
 
-                    canvas.drawBitmap(background,null,new Rect(0,0,mWidth,mHight),paint);
+                        canvas.drawBitmap(background,null,new Rect(0,0,mWidth,mHight),paint);
 
-                    canvas.save();
-                    canvas.clipRect(rect);
+                        canvas.save();
+                        canvas.clipRect(rect);
 
-                    postionLeft= toleft-picPostion* mPeople.getWidth()/10;
+                        postionLeft= toleft-picPostion* mPeople.getWidth()/10;
 
-                     if(postionLeft<=mWidth){
-                         toleft+=30;
-                        Thread.sleep(20);
+                        if(postionLeft<=mWidth){
+                            toleft+=30;
+                            Thread.sleep(30);
 
-                    }else {
-                         toleft=10;
-                         canvas.drawRect(rect,paint);
-                     }
+                        }else {
+                            toleft=10;
+                            canvas.drawRect(rect,paint);
+                        }
 
-                    canvas.drawBitmap(mPeople,postionLeft,toTop-mPeople.getHeight(),paint);
-                    canvas.restore();
+                        canvas.drawBitmap(mPeople,postionLeft,toTop-mPeople.getHeight(),paint);
+                        canvas.restore();
 
 
-                    picPostion++;
-                    if(picPostion>9) {
-                        picPostion = 0;
-                    }
+                        picPostion++;
+                        if(picPostion>9) {
+                            picPostion = 0;
+                        }
+                }
+
                 }
             }catch (Exception e){
                 e.printStackTrace();
@@ -151,6 +164,8 @@ public class RunView extends SurfaceView {
 
         }
     }
+
+
 
 
 }

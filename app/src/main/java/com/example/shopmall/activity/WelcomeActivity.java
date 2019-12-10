@@ -49,6 +49,7 @@ public class WelcomeActivity extends BaseActivity implements IBaseView<HomepageB
                     finish();
                 }
             }
+
         }
     };
 

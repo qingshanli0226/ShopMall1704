@@ -20,6 +20,9 @@ public class MyApplication extends Application {
         super.onCreate();
         context = this;
 
+        ConnectManager.getInstance().init(this);
+        //初始化异常
+        CrashHandler.getInstance(this).init();
 
         StepManager.getInstance().init(this);
         //点击通知跳转MainActivity
@@ -33,6 +36,7 @@ public class MyApplication extends Application {
         //初始化异常
         CrashHandler.getInstance(this).init();
         //初始化缓存管理类
+
 
     }
 

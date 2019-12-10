@@ -12,6 +12,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.common.LoadingPage;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseFragment;
 import com.example.framework.base.IBaseView;
