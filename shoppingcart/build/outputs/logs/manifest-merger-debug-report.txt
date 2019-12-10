@@ -1,0 +1,43 @@
+-- Merging decision tree log ---
+manifest
+ADDED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-9:12
+INJECTED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-9:12
+INJECTED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-9:12
+INJECTED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-9:12
+INJECTED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-9:12
+INJECTED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-9:12
+INJECTED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-9:12
+	package
+		ADDED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:3:5-39
+		INJECTED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml
+		INJECTED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml
+		ADDED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-9:12
+		INJECTED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml
+		ADDED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-9:12
+		INJECTED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:11-69
+application
+ADDED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:5:5-7:19
+activity#com.example.shoppingcart.Ui.Shoppingcart
+ADDED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:6:9-62
+	android:name
+		ADDED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:6:19-50
+uses-sdk
+INJECTED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml
+INJECTED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml
+INJECTED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml
+INJECTED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml
+		ADDED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml
+		INJECTED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml
+		ADDED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml
+		INJECTED from F:\AndroidGitProject\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml
