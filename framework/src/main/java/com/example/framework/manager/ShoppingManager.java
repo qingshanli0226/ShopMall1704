@@ -1,18 +1,33 @@
-package com.example.buy;
+package com.example.framework.manager;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ShoppingUtils {
+public class ShoppingManager {
 
-    private static ShoppingUtils shoppingUtils;
-    double allCount = 0;
-    boolean isSetting = false;
+    private static ShoppingManager shoppingManager;
+    private double allCount = 0;
+    private boolean isSetting = false;
     private List<Map<String, String>> data = new ArrayList<>();
     private List<Map<String, String>> data2 = new ArrayList<>();
 
-    public ShoppingUtils() {
+    public ShoppingManager() {
+    }
+
+    public static ShoppingManager getInstance() {
+        if (shoppingManager == null) {
+            synchronized (ShoppingManager.class) {
+                if (shoppingManager == null) {
+                    shoppingManager = new ShoppingManager();
+                }
+            }
+        }
+
+        return shoppingManager;
     }
 
     public List<Map<String, String>> getBuyThings() {
@@ -21,18 +36,6 @@ public class ShoppingUtils {
 
     public void setBuyThings(List<Map<String, String>> data2) {
         this.data2 = data2;
-    }
-
-    public static ShoppingUtils getInstance() {
-        if (shoppingUtils == null) {
-            synchronized (ShoppingUtils.class) {
-                if (shoppingUtils == null) {
-                    shoppingUtils = new ShoppingUtils();
-                }
-            }
-        }
-
-        return shoppingUtils;
     }
 
     public double getAllMoney() {
@@ -102,6 +105,12 @@ public class ShoppingUtils {
         data2.clear();
         allCount = 0;
         isSetting = false;
+    }
+
+    public String getToken(Context context) {
+        SharedPreferences getToken = context.getSharedPreferences("login", Context.MODE_PRIVATE);
+        String getToken1 = getToken.getString("getToken", null);
+        return getToken1;
     }
 
     public void joinintoShoppingCart(Map<String, String> map) {

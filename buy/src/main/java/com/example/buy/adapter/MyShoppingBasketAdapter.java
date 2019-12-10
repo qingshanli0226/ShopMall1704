@@ -4,9 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,15 +13,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.buy.R;
 import com.example.common.NumberAddSubView;
+import com.example.framework.base.BaseAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class MyShoppingBasketAdapter extends RecyclerView.Adapter<MyShoppingBasketAdapter.ViewHolder> {
+public class MyShoppingBasketAdapter extends BaseAdapter<Map<String, String>, MyShoppingBasketAdapter.ViewHolder> {
 
-    private List<Map<String, String>> data = new ArrayList<>();
 
     private double allcount = 0;
     private Context context;
@@ -43,16 +41,8 @@ public class MyShoppingBasketAdapter extends RecyclerView.Adapter<MyShoppingBask
         this.checkedcount = checkedcount;
     }
 
-    public void refresh(List<Map<String, String>> data) {
-        this.data.clear();
-        this.data.addAll(data);
-        notifyDataSetChanged();
-    }
-
     public void refresh2(List<Map<String, String>> data, int position, double allcount) {
-        this.data.clear();
-        this.data.addAll(data);
-        notifyItemChanged(position);
+        reFreshOneLine(data, position);
         this.allcount = allcount;
     }
 
@@ -60,21 +50,18 @@ public class MyShoppingBasketAdapter extends RecyclerView.Adapter<MyShoppingBask
         this.allcount = allcount;
     }
 
-    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(com.example.buy.R.layout.item_shop_cart, parent, false);
-
+    protected ViewHolder getViewHolder(View view, int viewType) {
         return new ViewHolder(view);
     }
 
     @Override
-    public int getItemCount() {
-        return data.size();
+    protected int getLayout(int viewType) {
+        return R.layout.item_shop_cart;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+    protected void onBindHolder(final ViewHolder holder, final List<Map<String, String>> data, final int position) {
         final Map<String, String> hashMap = data.get(position);
         Glide.with(context)
                 .load(hashMap.get("img"))
@@ -105,7 +92,9 @@ public class MyShoppingBasketAdapter extends RecyclerView.Adapter<MyShoppingBask
             public void onClick(View view) {
                 if (holder.cb_gov.isChecked()) {
                     int count = x * Integer.parseInt(hashMap.get("price"));
+//                    Log.e("####",allcount+"");
                     allcount += count;
+//                    Log.e("####",count+"/"+allcount);
                     Message message = Message.obtain();
                     message.what = 100;
                     message.arg2 = position;
@@ -128,6 +117,7 @@ public class MyShoppingBasketAdapter extends RecyclerView.Adapter<MyShoppingBask
                 Log.e("####", checkedcount + "");
                 Message message = Message.obtain();
                 message.what = 200;
+
                 if (checkedcount == data.size()) {
                     message.arg1 = 0;
                     handler.sendMessage(message);
@@ -137,8 +127,13 @@ public class MyShoppingBasketAdapter extends RecyclerView.Adapter<MyShoppingBask
                 }
             }
         });
-
     }
+
+    @Override
+    protected int getViewType(int position) {
+        return 0;
+    }
+
 
     class ViewHolder extends RecyclerView.ViewHolder {
 

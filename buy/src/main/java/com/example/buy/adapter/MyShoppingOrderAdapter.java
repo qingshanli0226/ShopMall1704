@@ -12,14 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.buy.R;
+import com.example.framework.base.BaseAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class MyShoppingOrderAdapter extends RecyclerView.Adapter<MyShoppingOrderAdapter.ViewHolder> {
+public class MyShoppingOrderAdapter extends BaseAdapter<Map<String, String>, MyShoppingOrderAdapter.ViewHolder> {
 
-    private List<Map<String, String>> data = new ArrayList<>();
 
     private Context context;
 
@@ -27,21 +27,18 @@ public class MyShoppingOrderAdapter extends RecyclerView.Adapter<MyShoppingOrder
         this.context = context;
     }
 
-    public void refresh(List<Map<String, String>> data) {
-        this.data.clear();
-        this.data.addAll(data);
-        notifyDataSetChanged();
-    }
-
-    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shop_order, parent, false);
+    protected ViewHolder getViewHolder(View view, int viewType) {
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    protected int getLayout(int viewType) {
+        return R.layout.item_shop_order;
+    }
+
+    @Override
+    protected void onBindHolder(ViewHolder holder, List<Map<String, String>> data, int position) {
         Map<String, String> map = data.get(position);
         Glide.with(context)
                 .load(map.get("img"))
@@ -60,9 +57,10 @@ public class MyShoppingOrderAdapter extends RecyclerView.Adapter<MyShoppingOrder
     }
 
     @Override
-    public int getItemCount() {
-        return data.size();
+    protected int getViewType(int position) {
+        return 0;
     }
+
 
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView iv_gov = itemView.findViewById(R.id.iv_gov);

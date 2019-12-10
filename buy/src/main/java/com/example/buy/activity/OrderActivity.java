@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alipay.sdk.app.EnvUtils;
 import com.alipay.sdk.app.PayTask;
 import com.example.buy.R;
-import com.example.buy.ShoppingUtils;
+import com.example.framework.manager.ShoppingManager;
 import com.example.buy.adapter.MyShoppingOrderAdapter;
 import com.example.buy.pay.AuthResult;
 import com.example.buy.pay.PayResult;
@@ -55,9 +55,12 @@ public class OrderActivity extends BaseActivity {
     TextView tv_shopcart_total;
     RecyclerView rv_order;
     Button btn_pay;
-    ShoppingUtils shoppingUtils;
+
+
+    ShoppingManager shoppingManager;
     private List<Map<String, String>> data;
     private MyShoppingOrderAdapter myShoppingOrderAdapter;
+
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @SuppressWarnings("unused")
@@ -79,7 +82,7 @@ public class OrderActivity extends BaseActivity {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         showAlert(OrderActivity.this, getString(R.string.pay_failed) + payResult);
                     }
-                    shoppingUtils.initializeDatas();
+                    shoppingManager.initializeDatas();
                     finish();
                     break;
                 }
@@ -224,7 +227,7 @@ public class OrderActivity extends BaseActivity {
     }
 
     private void setAllMoney() {
-        allMoney = shoppingUtils.getAllMoney();
+        allMoney = shoppingManager.getAllMoney();
         String s = "" + allMoney;
         if (s.contains(".")) {
             tv_shopcart_total.setText("￥" + allMoney);
@@ -234,8 +237,8 @@ public class OrderActivity extends BaseActivity {
     }
 
     private void initShoppingData() {
-        shoppingUtils = ShoppingUtils.getInstance();
-        data = shoppingUtils.getBuyThings();
-        myShoppingOrderAdapter.refresh(data);
+        shoppingManager = ShoppingManager.getInstance();
+        data = shoppingManager.getBuyThings();
+        myShoppingOrderAdapter.reFresh(data);
     }
 }

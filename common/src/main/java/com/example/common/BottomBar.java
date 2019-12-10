@@ -124,4 +124,8 @@ public class BottomBar extends LinearLayout {
         //监听点击下标
         void tapItemClick(int i);
     }
+
+    public void setCheckedItem(int position) {
+        radioButtons[position].setChecked(true);
+    }
 }
