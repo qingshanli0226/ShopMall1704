@@ -118,9 +118,6 @@
         </com.example.step.CustomView.StepArcView>
 
     </LinearLayout>
-<<<<<<< HEAD
-    <com.example.step.RunView
-=======
 
 <!--    <androidx.recyclerview.widget.RecyclerView-->
 <!--        android:id="@+id/history_RecyclerView"-->
@@ -130,7 +127,6 @@
 
 <!--    </androidx.recyclerview.widget.RecyclerView>-->
     <com.example.step.CustomView.RunView
->>>>>>> bing
         android:id="@+id/runView"
         android:layout_width="match_parent"
         android:layout_weight="1"
