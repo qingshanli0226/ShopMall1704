@@ -105,7 +105,6 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
     public void onRequestHttpDataFailed(int requestCode, ShopMailError error) {
         //登录失败
         Toast.makeText(mActivity, ""+error.getErrorMessage(), Toast.LENGTH_SHORT).show();
-
     }
 
     @Override

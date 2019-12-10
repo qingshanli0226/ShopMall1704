@@ -231,7 +231,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
                                 if (resEntity.getCode() == 200) { //数据请求成功
                                     if (iBaseView != null) {
-                                        iBaseView.onRequestHttpDataSuccess("", resEntity.getResult());
+                                        iBaseView.onRequestHttpDataSuccess(resEntity.getMessage(), resEntity.getResult());
                                     }
                                 } else {
                                     //获取数据失败
@@ -298,7 +298,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
                                 if (resEntity.getCode() == 200) { //数据请求成功
                                     if (iBaseView != null) {
-                                        iBaseView.onRequestHttpDataSuccess(requestCode, "", resEntity.getResult());
+                                        iBaseView.onRequestHttpDataSuccess(requestCode, resEntity.getMessage(), resEntity.getResult());
                                     }
                                 } else {
                                     //获取数据失败

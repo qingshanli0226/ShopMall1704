@@ -14,12 +14,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.shaomall.R;
+import com.example.administrator.shaomall.login.presenter.LoginPresenter;
 import com.example.administrator.shaomall.login.ui.LoginActivity;
 import com.shaomall.framework.base.BaseMVPFragment;
+import com.shaomall.framework.base.presenter.IBasePresenter;
 import com.shaomall.framework.bean.LoginBean;
 import com.shaomall.framework.manager.UserInfoManager;
 
-public class MineFragment extends BaseMVPFragment implements View.OnClickListener, UserInfoManager.UserInfoStatusListener {
+public class MineFragment extends BaseMVPFragment<String> implements View.OnClickListener, UserInfoManager.UserInfoStatusListener {
     private android.widget.ImageView mIvHeader;
     private android.widget.TextView mTvUserName;
     private android.widget.TextView mTvProductAttention;
@@ -29,6 +31,7 @@ public class MineFragment extends BaseMVPFragment implements View.OnClickListene
     private android.widget.Button mBtLogout;
     private TextView mTvPoint;
     private UserInfoManager userInfoManager;
+    private IBasePresenter logoutPresenter;
 
     @Override
     public int setLayoutId() {
@@ -41,6 +44,7 @@ public class MineFragment extends BaseMVPFragment implements View.OnClickListene
         //注册登录监听
         UserInfoManager.getInstance().registerUserInfoStatusListener(this);
 
+
         mIvHeader = (ImageView) view.findViewById(R.id.iv_header);
         mTvUserName = (TextView) view.findViewById(R.id.tv_userName);
         mTvProductAttention = (TextView) view.findViewById(R.id.tv_productAttention);
@@ -52,6 +56,7 @@ public class MineFragment extends BaseMVPFragment implements View.OnClickListene
 
         mIvHeader.setOnClickListener(this);
         mTvUserName.setOnClickListener(this);
+        mBtLogout.setOnClickListener(this);
     }
 
     @Override
@@ -78,7 +83,19 @@ public class MineFragment extends BaseMVPFragment implements View.OnClickListene
             case R.id.tv_userName:
                 toast("点击了用户名", false);
                 break;
+
+            case R.id.bt_logout: //退出登录
+                setLogout();
+                break;
         }
+    }
+
+    private void setLogout() {
+        if (logoutPresenter == null){
+            logoutPresenter = new LogOutPresenter();
+            logoutPresenter.attachView(this);
+        }
+        logoutPresenter.doPostHttpRequest(); //退出登录
     }
 
     private void setUserData() {
@@ -98,7 +115,6 @@ public class MineFragment extends BaseMVPFragment implements View.OnClickListene
 
             Log.d("QS", "setUserData: " + avatar);
             //设置头像
-            //http://img5.imgtn.bdimg.com/it/u=1441588315,1666293982&fm=26&gp=0.jpg 默认头像
             if (avatar == null) {
                 avatar = "http://img5.imgtn.bdimg.com/it/u=1441588315,1666293982&fm=26&gp=0.jpg";
                 Glide.with(mContext).load(avatar).apply(RequestOptions.circleCropTransform()).into(mIvHeader);
@@ -120,6 +136,13 @@ public class MineFragment extends BaseMVPFragment implements View.OnClickListene
     }
 
     @Override
+    public void onRequestHttpDataSuccess(String message, String data) {
+        super.onRequestHttpDataSuccess(message, data);
+        toast(message+": "+data, false);
+        UserInfoManager.getInstance().unLogout();
+    }
+
+    @Override
     public void onUserStatus(boolean isLogin, LoginBean userInfo) {
         if (isLogin) {
             setUserData();
@@ -127,7 +150,13 @@ public class MineFragment extends BaseMVPFragment implements View.OnClickListene
             mIvHeader.setImageResource(R.drawable.app_icon);
             mTvUserName.setText(R.string.app_fragment_mine_tv_text_user_name);
             mTvPoint.setVisibility(View.GONE);
-            mTvPoint.setVisibility(View.GONE);
+            mBtLogout.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        UserInfoManager.getInstance().unRegisterUserInfoStatusListener(this);
     }
 }
