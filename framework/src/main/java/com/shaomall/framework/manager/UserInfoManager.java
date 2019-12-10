@@ -35,6 +35,7 @@ public class UserInfoManager {
         this.mContext = context;
         this.aCache = aCache;
         sharedPreferences = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+
     }
 
 

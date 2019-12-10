@@ -1,6 +1,6 @@
 package com.example.administrator.shaomall.login.presenter;
 
-import com.example.administrator.shaomall.login.Base.SigninBean;
+
 import com.example.net.AppNetConfig;
 import com.example.net.ResEntity;
 import com.google.gson.reflect.TypeToken;
@@ -9,7 +9,7 @@ import com.shaomall.framework.base.presenter.BasePresenter;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
-public class SigninPresenter extends BasePresenter<SigninBean> {
+public class SigninPresenter extends BasePresenter<String> {
     String username=null;
     String password=null;
 
@@ -31,7 +31,7 @@ public class SigninPresenter extends BasePresenter<SigninBean> {
 
     @Override
     protected Type getBeanType() {
-        return new TypeToken<ResEntity<SigninBean>>(){}.getType();
+        return new TypeToken<ResEntity<String>>(){}.getType();
     }
 
     @Override

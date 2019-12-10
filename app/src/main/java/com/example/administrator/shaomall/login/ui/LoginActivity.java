@@ -1,11 +1,9 @@
 package com.example.administrator.shaomall.login.ui;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
-import android.graphics.Shader;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -13,16 +11,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.administrator.shaomall.R;
-import com.example.administrator.shaomall.login.Base.LoginBean;
 import com.example.administrator.shaomall.login.diyview.DIYButton;
 import com.example.administrator.shaomall.login.presenter.LoginPresenter;
 import com.example.commen.ShopMailError;
-import com.shaomall.framework.base.BaseActivity;
 import com.shaomall.framework.base.BaseMVPActivity;
+import com.shaomall.framework.bean.LoginBean;
+import com.shaomall.framework.manager.UserInfoManager;
 
-public class LoginActivity extends BaseMVPActivity<LoginBean.ResultBean> {
+public class LoginActivity extends BaseMVPActivity<LoginBean> {
     private DIYButton diybutton;
-    LinearGradient linearGradient;
+
     private EditText loginUser;
     private EditText loginPass;
     private TextView loginSignin;
@@ -35,6 +33,10 @@ public class LoginActivity extends BaseMVPActivity<LoginBean.ResultBean> {
         loginSignin = (TextView) findViewById(R.id.loginSignin);
         presenter=new LoginPresenter();
         presenter.attachView(this);
+
+
+
+
     }
 
     @Override
@@ -76,6 +78,7 @@ public class LoginActivity extends BaseMVPActivity<LoginBean.ResultBean> {
                     diybutton.invalidate();
                 }else if (event.getAction()==MotionEvent.ACTION_UP){
                     //这是抬起时的颜色
+
                     int colorStart = getResources().getColor(R.color.mediumspringgreen);
                     //false抬起
                     diybutton.setType(false);
@@ -93,7 +96,6 @@ public class LoginActivity extends BaseMVPActivity<LoginBean.ResultBean> {
                         presenter.setUsername(username);
                         presenter.setPassname(password);
                         presenter.doPostHttpRequest(100);
-
                     }
             }
                 return false;
@@ -103,12 +105,17 @@ public class LoginActivity extends BaseMVPActivity<LoginBean.ResultBean> {
 
     @Override
     public void onRequestHttpDataFailed(int requestCode, ShopMailError error) {
+        //登录失败
         Toast.makeText(mActivity, ""+error.getErrorMessage(), Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
-    public void onRequestHttpDataSuccess(int requestCode, String message, LoginBean.ResultBean data) {
-
+    public void onRequestHttpDataSuccess(int requestCode, String message, LoginBean data) {
+        //登录成功
         Toast.makeText(mActivity, ""+message, Toast.LENGTH_SHORT).show();
+        UserInfoManager instance = UserInfoManager.getInstance();
+        instance.saveUserInfo(data);
+        finish();
     }
 }
