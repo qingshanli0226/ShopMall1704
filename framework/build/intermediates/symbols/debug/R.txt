@@ -857,6 +857,12 @@ int layout select_dialog_singlechoice_material 0x7f0e0029
 int layout succees_layout 0x7f0e002a
 int layout support_simple_spinner_dropdown_item 0x7f0e002b
 int layout titlebar_layout 0x7f0e002c
+int mipmap arrow 0x7f100001
+int mipmap arrow_top 0x7f100002
+int mipmap bluewim 0x7f100003
+int mipmap head 0x7f100004
+int mipmap ren 0x7f100005
+int mipmap runbacks 0x7f100006
 int string abc_action_bar_home_description 0x7f140001
 int string abc_action_bar_up_description 0x7f140002
 int string abc_action_menu_overflow_description 0x7f140003

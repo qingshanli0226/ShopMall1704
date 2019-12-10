@@ -19,12 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.example.framework.bean.HomepageBean;
 import com.example.net.Constant;
 import com.example.shopmall.R;
 import com.example.shopmall.activity.GoodsInfoActivity;
 import com.example.shopmall.activity.GoodsListActivity;
 import com.example.shopmall.bean.GoodsBean;
-import com.example.shopmall.bean.HomepageBean;
 import com.example.shopmall.utils.AlphaPageTransformer;
 import com.example.shopmall.utils.ScaleInTransformer;
 import com.youth.banner.Banner;
@@ -100,7 +100,7 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == BANNER){
-            return new BannerViewHolder(mLayoutInflater.inflate(R.layout.layout_banner,parent,false));
+            return new BannerViewHolder(mLayoutInflater.inflate(R.layout.item_banner,parent,false));
         }else if (viewType == CHANNEL){
             return new ChannelViewHolder(mLayoutInflater.inflate(R.layout.item_channel,parent,false));
         }else if (viewType == ACT){

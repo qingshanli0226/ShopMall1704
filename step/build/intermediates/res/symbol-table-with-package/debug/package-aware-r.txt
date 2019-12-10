@@ -23,6 +23,7 @@ anim btn_radio_to_off_mtrl_ring_outer_path_animation
 anim btn_radio_to_on_mtrl_dot_group_animation
 anim btn_radio_to_on_mtrl_ring_outer_animation
 anim btn_radio_to_on_mtrl_ring_outer_path_animation
+array date
 attr actionBarDivider
 attr actionBarItemBackground
 attr actionBarPopupTheme
@@ -145,6 +146,11 @@ attr editTextColor
 attr editTextStyle
 attr elevation
 attr expandActivityOverflowButtonDrawable
+attr fastScrollEnabled
+attr fastScrollHorizontalThumbDrawable
+attr fastScrollHorizontalTrackDrawable
+attr fastScrollVerticalThumbDrawable
+attr fastScrollVerticalTrackDrawable
 attr firstBaselineToTopHeight
 attr font
 attr fontFamily
@@ -174,6 +180,7 @@ attr isLightTheme
 attr itemPadding
 attr lastBaselineToBottomHeight
 attr layout
+attr layoutManager
 attr lineHeight
 attr listChoiceBackgroundIndicator
 attr listChoiceIndicatorMultipleAnimated
@@ -193,12 +200,16 @@ attr listPreferredItemPaddingStart
 attr logo
 attr logoDescription
 attr maxButtonHeight
+attr maxValue
 attr measureWithLargestChild
 attr menu
+attr minValue
 attr multiChoiceItemLayout
 attr navigationContentDescription
 attr navigationIcon
 attr navigationMode
+attr numberAddBackground
+attr numberSubBackground
 attr numericModifiers
 attr overlapAnchor
 attr paddingBottomNoButtons
@@ -220,6 +231,8 @@ attr radioButtonStyle
 attr ratingBarStyle
 attr ratingBarStyleIndicator
 attr ratingBarStyleSmall
+attr recyclerViewStyle
+attr reverseLayout
 attr searchHintIcon
 attr searchIcon
 attr searchViewStyle
@@ -231,11 +244,13 @@ attr showDividers
 attr showText
 attr showTitle
 attr singleChoiceItemLayout
+attr spanCount
 attr spinBars
 attr spinnerDropDownItemStyle
 attr spinnerStyle
 attr splitTrack
 attr srcCompat
+attr stackFromEnd
 attr state_above_anchor
 attr subMenuArrow
 attr submitBackground
@@ -289,6 +304,7 @@ attr track
 attr trackTint
 attr trackTintMode
 attr ttcIndex
+attr value
 attr viewInflaterClass
 attr voiceIcon
 attr windowActionBar
@@ -402,6 +418,7 @@ color switch_thumb_normal_material_dark
 color switch_thumb_normal_material_light
 color tooltip_background_dark
 color tooltip_background_light
+color white
 color yellow
 dimen abc_action_bar_content_inset_material
 dimen abc_action_bar_content_inset_with_nav
@@ -490,6 +507,9 @@ dimen compat_notification_large_icon_max_height
 dimen compat_notification_large_icon_max_width
 dimen disabled_alpha_material_dark
 dimen disabled_alpha_material_light
+dimen fastscroll_default_thickness
+dimen fastscroll_margin
+dimen fastscroll_minimum_range
 dimen highlight_alpha_material_colored
 dimen highlight_alpha_material_dark
 dimen highlight_alpha_material_light
@@ -497,6 +517,9 @@ dimen hint_alpha_material_dark
 dimen hint_alpha_material_light
 dimen hint_pressed_alpha_material_dark
 dimen hint_pressed_alpha_material_light
+dimen item_touch_helper_max_drag_scroll_per_frame
+dimen item_touch_helper_swipe_escape_max_velocity
+dimen item_touch_helper_swipe_escape_velocity
 dimen notification_action_icon_size
 dimen notification_action_text_size
 dimen notification_big_circle_margin
@@ -512,6 +535,7 @@ dimen notification_small_icon_size_as_large
 dimen notification_subtext_size
 dimen notification_top_pad
 dimen notification_top_pad_large_text
+dimen step_tvSize
 dimen tooltip_corner_radius
 dimen tooltip_horizontal_padding
 dimen tooltip_margin
@@ -614,6 +638,12 @@ drawable btn_radio_off_mtrl
 drawable btn_radio_off_to_on_mtrl_animation
 drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
+drawable left
+drawable loading_anim
+drawable loading_four
+drawable loading_one
+drawable loading_three
+drawable loading_two
 drawable notification_action_background
 drawable notification_bg
 drawable notification_bg_low
@@ -626,8 +656,12 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable timg
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
+id Integral_integral
+id Integral_step
+id StepView
 id accessibility_action_clickable_span
 id accessibility_custom_action_0
 id accessibility_custom_action_1
@@ -684,6 +718,8 @@ id add
 id alertTitle
 id async
 id blocking
+id btn_add
+id btn_sub
 id buttonPanel
 id checkbox
 id checked
@@ -698,18 +734,28 @@ id dialog_button
 id edit_query
 id expand_activities_button
 id expanded_menu
+id find_History
 id forever
 id group_divider
+id history_RecyclerView
+id history_Spinner
 id home
 id icon
 id icon_group
 id image
 id info
 id italic
+id item_touch_helper_previous_elevation
+id iv_center
+id iv_failure
+id iv_left
+id iv_right
+id iv_succeed
 id line1
 id line3
 id listMode
 id list_item
+id ll_bottombar
 id message
 id multiply
 id none
@@ -723,8 +769,16 @@ id parentPanel
 id progress_circular
 id progress_horizontal
 id radio
+id rb_five
+id rb_four
+id rb_one
+id rb_three
+id rb_two
+id rg
 id right_icon
 id right_side
+id rl_title
+id runView
 id screen
 id scrollIndicatorDown
 id scrollIndicatorUp
@@ -746,6 +800,8 @@ id split_action_bar
 id src_atop
 id src_in
 id src_over
+id step_item_count
+id step_item_day
 id submenuarrow
 id submit_area
 id tabMode
@@ -757,6 +813,8 @@ id tag_screen_reader_focusable
 id tag_transition_group
 id tag_unhandled_key_event_manager
 id tag_unhandled_key_listeners
+id tb_history
+id tb_integral
 id text
 id text2
 id textSpacerNoButtons
@@ -766,6 +824,11 @@ id title
 id titleDividerNoCustom
 id title_template
 id topPanel
+id tv_center
+id tv_count
+id tv_left
+id tv_price_gov
+id tv_right
 id unchecked
 id uniform
 id up
@@ -810,17 +873,25 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_history
+layout activity_integral
+layout bottombar_layout
 layout custom_dialog
+layout failure_layout
 layout notification_action
 layout notification_action_tombstone
 layout notification_template_custom_big
 layout notification_template_icon_group
 layout notification_template_part_chronometer
 layout notification_template_part_time
+layout number_add_sub_layout
 layout select_dialog_item_material
 layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material
+layout step_adapter_item
+layout succees_layout
 layout support_simple_spinner_dropdown_item
+layout titlebar_layout
 mipmap arrow
 mipmap arrow_top
 mipmap bluewim
@@ -855,8 +926,11 @@ string abc_shareactionprovider_share_with
 string abc_shareactionprovider_share_with_application
 string abc_toolbar_collapse_description
 string app_name
+string findHistory
+string integralName
 string search_menu_title
 string status_bar_notification_info_overflow
+string stepName
 style AlertDialog_AppCompat
 style AlertDialog_AppCompat_Light
 style Animation_AppCompat_Dialog
@@ -1235,9 +1309,11 @@ styleable ListPopupWindow android_dropDownHorizontalOffset android_dropDownVerti
 styleable MenuGroup android_checkableBehavior android_enabled android_id android_menuCategory android_orderInCategory android_visible
 styleable MenuItem actionLayout actionProviderClass actionViewClass alphabeticModifiers android_alphabeticShortcut android_checkable android_checked android_enabled android_icon android_id android_menuCategory android_numericShortcut android_onClick android_orderInCategory android_title android_titleCondensed android_visible contentDescription iconTint iconTintMode numericModifiers showAsAction tooltipText
 styleable MenuView android_headerBackground android_horizontalDivider android_itemBackground android_itemIconDisabledAlpha android_itemTextAppearance android_verticalDivider android_windowAnimationStyle preserveIconSpacing subMenuArrow
+styleable NumberAddSubView maxValue minValue numberAddBackground numberSubBackground value
 styleable PopupWindow android_popupAnimationStyle android_popupBackground overlapAnchor
 styleable PopupWindowBackgroundState state_above_anchor
 styleable RecycleListView paddingBottomNoButtons paddingTopNoTitle
+styleable RecyclerView android_clipToPadding android_descendantFocusability android_orientation fastScrollEnabled fastScrollHorizontalThumbDrawable fastScrollHorizontalTrackDrawable fastScrollVerticalThumbDrawable fastScrollVerticalTrackDrawable layoutManager reverseLayout spanCount stackFromEnd
 styleable SearchView android_focusable android_imeOptions android_inputType android_maxWidth closeIcon commitIcon defaultQueryHint goIcon iconifiedByDefault layout queryBackground queryHint searchHintIcon searchIcon submitBackground suggestionRowLayout voiceIcon
 styleable Spinner android_dropDownWidth android_entries android_popupBackground android_prompt popupTheme
 styleable StateListDrawable android_constantSize android_dither android_enterFadeDuration android_exitFadeDuration android_variablePadding android_visible

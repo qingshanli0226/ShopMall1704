@@ -5,7 +5,18 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="16"
+        android:minSdkVersion="17"
         android:targetSdkVersion="29" />
+
+    <application>
+        <activity android:name="com.example.step.Ui.HistoryActivity" />
+        <activity
+            android:name="com.example.step.Ui.IntegralActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <service android:name="com.example.framework.StepService" >
+        </service>
+    </application>
 
 </manifest>

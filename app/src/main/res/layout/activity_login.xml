@@ -26,15 +26,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:text="用户名："
+                android:layout_marginStart="@dimen/login_mStart_30"
+                android:text="@string/login_name"
                 android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/et_login_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="30dp" />
+                android:layout_marginEnd="@dimen/login_mEnd_30" />
 
         </LinearLayout>
 
@@ -45,15 +45,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:text="密码："
-                android:textSize="20sp" />
+                android:layout_marginStart="@dimen/login_mStart_50"
+                android:text="@string/login_pwd"
+                android:textSize="@dimen/login_text_20" />
 
             <EditText
                 android:id="@+id/et_login_word"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="30dp"
+                android:layout_marginEnd="@dimen/login_mEnd_30"
                 android:inputType="textPassword"
                 android:maxLength="10"
                 android:maxLines="1"/>
@@ -69,16 +69,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorRed"
-                android:text="登录"
+                android:text="@string/login_text"
                 android:textColor="@color/colorWhite" />
 
             <Button
                 android:id="@+id/bt_login_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginStart="@dimen/login_mStart_30"
                 android:backgroundTint="@color/colorGreen"
-                android:text="注册"
+                android:text="@string/login_register_text"
                 android:textColor="@color/colorWhite" />
 
         </LinearLayout>

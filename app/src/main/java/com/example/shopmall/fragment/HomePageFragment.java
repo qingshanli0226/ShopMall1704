@@ -1,31 +1,22 @@
 package com.example.shopmall.fragment;
 
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.common.TitleBar;
-import com.example.shopmall.CaCheManager;
+import com.example.framework.manager.CaCheManager;
 import com.example.framework.base.BaseFragment;
 import com.example.shopmall.R;
-
 import com.example.shopmall.activity.MessageActivity;
 import com.example.shopmall.adapter.HomePageAdapter;
-import com.example.shopmall.bean.HomepageBean;
+import com.example.framework.bean.HomepageBean;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class HomePageFragment extends BaseFragment{
-
-    //http://49.233.93.155:8080/application/json
-    //http://www.qubaobei.com/ios/cf/dish_list.php?stage_id=1&limit=10&page=1
 
     TitleBar tb_homepage;
     RecyclerView rv_home_page;

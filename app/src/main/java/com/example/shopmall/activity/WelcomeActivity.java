@@ -13,23 +13,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.framework.base.BaseActivity;
-import com.example.framework.base.IBaseView;
+import com.example.framework.base.IGetBaseView;
+import com.example.framework.bean.HomepageBean;
+import com.example.framework.manager.CaCheManager;
 import com.example.framework.manager.ConnectManager;
 
 import com.example.net.Constant;
-import com.example.shopmall.CaCheManager;
 import com.example.shopmall.MyApplication;
 import com.example.shopmall.R;
-import com.example.shopmall.bean.HomepageBean;
-import com.example.shopmall.handler.BigTask;
-import com.example.shopmall.handler.LittleCache;
-import com.example.shopmall.handler.LittleInt;
 import com.example.shopmall.presenter.IntegerPresenter;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class WelcomeActivity extends BaseActivity implements IBaseView<HomepageBean> {
+public class WelcomeActivity extends BaseActivity implements IGetBaseView<HomepageBean> {
 
     public ImageView iv_welcome;
     public int i = 0;
@@ -65,6 +62,7 @@ public class WelcomeActivity extends BaseActivity implements IBaseView<HomepageB
                     finish();
                 }
             }
+
         }
     };
 
@@ -84,12 +82,16 @@ public class WelcomeActivity extends BaseActivity implements IBaseView<HomepageB
         objectAnimator.setDuration(3000);
         objectAnimator.start();
 
+
+
         boolean connectStatus = ConnectManager.getInstance().getConnectStatus();
         if (connectStatus) {
             Toast.makeText(this, "有网络连接", Toast.LENGTH_SHORT).show();
+
             IntegerPresenter integerPresenter = new IntegerPresenter(Constant.HOME_URL, HomepageBean.class);
-            integerPresenter.attachView(this);
+            integerPresenter.attachGetView(this);
             integerPresenter.getGetData();
+
             timer = new Timer(true);
             timer.schedule(new TimerTask() {
                 @Override
@@ -174,22 +176,7 @@ public class WelcomeActivity extends BaseActivity implements IBaseView<HomepageB
     }
 
     @Override
-    public void onPostDataSucess(HomepageBean data) {
-
-    }
-
-    @Override
     public void onGetDataFailed(String ErrorMsg) {
-
-    }
-
-    @Override
-    public void onLoadingPage() {
-
-    }
-
-    @Override
-    public void onStopLoadingPage() {
 
     }
 }

@@ -7,12 +7,13 @@ import android.graphics.Color;
 import androidx.fragment.app.Fragment;
 
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseFragment;
 import com.example.shopmall.R;
-import com.example.shopmall.activity.IntegralActivity;
+import com.example.step.Ui.IntegralActivity;
 import com.example.shopmall.activity.LoginActivity;
 
 
@@ -24,6 +25,7 @@ public class MineFragment extends BaseFragment {
     TitleBar tb_mine;
     private TextView tv_user_score;
     private TextView tv_username;
+    private ImageButton imageButton;
 
     @Override
     protected void initData() {
@@ -63,6 +65,9 @@ public class MineFragment extends BaseFragment {
             }
         });
 
+
+
+
     }
 
     @Override
@@ -70,7 +75,9 @@ public class MineFragment extends BaseFragment {
         tb_mine = view.findViewById(R.id.tb_mine);
         tv_user_score = view.findViewById(R.id.tv_user_score);
         tv_username = view.findViewById(R.id.tv_username);
+        imageButton=view.findViewById(R.id.ib_user_icon_avator);
     }
+
 
     @Override
     protected int setLayout() {

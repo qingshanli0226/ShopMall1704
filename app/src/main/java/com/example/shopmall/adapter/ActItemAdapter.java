@@ -12,8 +12,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
+import com.example.framework.bean.HomepageBean;
 import com.example.net.Constant;
-import com.example.shopmall.bean.HomepageBean;
 
 import java.util.ArrayList;
 import java.util.List;

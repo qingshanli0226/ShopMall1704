@@ -1,10 +1,7 @@
 package com.example.shopmall.presenter;
 
 import com.example.framework.base.BasePresenter;
-import com.example.framework.base.IBasePresenter;
-import com.example.framework.base.IBaseView;
 import com.example.shopmall.bean.LoginBean;
-import com.example.shopmall.bean.RegisterBean;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -40,7 +37,7 @@ public class LoginPresenter extends BasePresenter<LoginBean> {
     }
 
     @Override
-    protected HashMap<String, String> getQuery() {
+    protected HashMap<String, String> getParam() {
         HashMap<String, String> map = new HashMap<>();
         map.put("name", name);
         map.put("password", pwd);

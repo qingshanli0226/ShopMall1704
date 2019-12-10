@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">step</string>
+
+    <string name="stepName">步数</string>
+    <string name="integralName">积分</string>
+    <string name="findHistory">查看历史记录</string>
+
 </resources>

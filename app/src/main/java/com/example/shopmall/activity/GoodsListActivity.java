@@ -1,18 +1,16 @@
 package com.example.shopmall.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.view.View;
 
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
-import com.example.framework.base.IBaseView;
+import com.example.framework.base.IGetBaseView;
+import com.example.framework.bean.HomepageBean;
 import com.example.net.Constant;
 import com.example.shopmall.R;
 import com.example.shopmall.adapter.GoodsListAdapter;
@@ -23,7 +21,7 @@ import com.example.shopmall.presenter.IntegerPresenter;
 
 import java.util.ArrayList;
 
-public class GoodsListActivity extends BaseActivity implements IBaseView<GoodsListBean> {
+public class GoodsListActivity extends BaseActivity implements IGetBaseView<GoodsListBean> {
 
     TitleBar tb_goods_list;
     RecyclerView rv_goods_list;
@@ -80,7 +78,7 @@ public class GoodsListActivity extends BaseActivity implements IBaseView<GoodsLi
 
     private void getDataPresenter(String url) {
         integerPresenter = new IntegerPresenter(url, GoodsListBean.class);
-        integerPresenter.attachView(this);
+        integerPresenter.attachGetView(this);
         integerPresenter.getGetData();
     }
 
@@ -92,22 +90,12 @@ public class GoodsListActivity extends BaseActivity implements IBaseView<GoodsLi
     }
 
     @Override
-    public void onPostDataSucess(GoodsListBean data) {
-
-    }
-
-    @Override
     public void onGetDataFailed(String ErrorMsg) {
 
     }
 
     @Override
-    public void onLoadingPage() {
-
-    }
-
-    @Override
-    public void onStopLoadingPage() {
+    public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 }
