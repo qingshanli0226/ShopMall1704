@@ -1,5 +1,6 @@
 package com.example.administrator.shaomall.home.holder;
 
+import android.os.HandlerThread;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,6 +28,18 @@ public class ChannelViewHolder extends BaseHolder<HomeBean.ResultBean.ChannelInf
         HomeBean.ResultBean.ChannelInfoBean datas = this.getDatas();
         Glide.with(ShaoHuaApplication.context).load(AppNetConfig.BASE_URl_IMAGE+datas.getImage()).into(mChannelItemIv);
         mChannelItemTv.setText(datas.getChannel_name());
+//        Thread.interrupted();
+//
+//        Thread thread = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        });
+//
+//        thread.isInterrupted();
+
+
     }
 
     private void initView(View view) {

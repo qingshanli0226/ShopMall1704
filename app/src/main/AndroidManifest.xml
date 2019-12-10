@@ -30,6 +30,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <!--        主界面-->
         <activity android:name=".activity.MainActivity" />
         <!--        登录-->
@@ -42,6 +43,7 @@
 
         <!--        服务-->
         <service android:name=".cache.CacheService" />
+
         <!--适配华为（huawei）刘海屏-->
         <meta-data
             android:name="android.notch_support"

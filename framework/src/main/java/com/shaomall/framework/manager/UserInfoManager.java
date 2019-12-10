@@ -93,7 +93,6 @@ public class UserInfoManager {
             edit.putString("token", dataBean.getToken());
             edit.apply();
 
-
             //登录状态监听
             for (UserInfoStatusListener listener : userInfoStatusListeners) {
                 listener.onUserStatus(isLogin(), readUserInfo());

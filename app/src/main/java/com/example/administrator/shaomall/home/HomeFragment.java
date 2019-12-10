@@ -68,15 +68,6 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> {
             mHomeRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
             mHomeRecycler.setAdapter(new HomeRecycleAdapter(data,getContext()));
         }
-
-//
-//        CacheManager.getInstance().registerListener(new CacheManager.IHomeReceivedListener() {
-//            @Override
-//            public void onHomeDataReceived(HomeBean.ResultBean homeBean) {
-//                Log.i("lw", "onHomeDataReceived: "+homeBean.getBanner_info().size());
-//                setBanenr(homeBean.getBanner_info());
-//            }
-//        });
     }
 
 
