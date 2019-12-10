@@ -2,7 +2,7 @@ package com.shaomall.framework.base.presenter;
 
 import android.util.Log;
 
-import com.example.commen.ErrorUtil;
+import com.example.commen.util.ErrorUtil;
 import com.example.commen.LoadingPageConfig;
 import com.example.commen.ShopMailError;
 import com.example.net.MVPObserver;

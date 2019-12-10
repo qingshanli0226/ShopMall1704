@@ -3,12 +3,10 @@ package com.example.administrator.shaomall.activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.FrameLayout;
-import android.widget.Toast;
-
 import com.example.administrator.shaomall.FindFragment;
 import com.example.administrator.shaomall.MineFragment;
 import com.example.administrator.shaomall.R;
-import com.example.administrator.shaomall.TypeFragment;
+import com.example.administrator.shaomall.type.TypeFragment;
 import com.example.administrator.shaomall.home.HomeFragment;
 import com.example.administrator.shaomall.login.ui.LoginActivity;
 import com.example.shoppingcart.Ui.Shoppingcart;
@@ -30,7 +28,6 @@ public class MainActivity extends BaseActivity {
     private ArrayList<CustomTabEntity> tabEntities = new ArrayList<>();
     private Fragment currentFragment = new Fragment();
     private List<Fragment> fragments = new ArrayList<>();
-
     @Override
     public int setLayoutId() {
         return R.layout.activity_main;

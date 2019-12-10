@@ -8,7 +8,7 @@ import com.shaomall.framework.base.BaseMVPFragment;
 public class FindFragment extends BaseMVPFragment {
     @Override
     public int setLayoutId() {
-        return 0;
+        return R.layout.fragment_find;
     }
 
     @Override

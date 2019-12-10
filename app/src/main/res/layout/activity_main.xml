@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/main_tab"
-        app:tl_textUnselectColor="@color/text_unselect"
+        app:tl_textUnselectColor="@color/colorGrayTitle"
         app:tl_textSelectColor="@android:color/holo_red_light"
         />
 

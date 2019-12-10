@@ -9,7 +9,8 @@ import android.util.Log;
 
 import com.example.administrator.shaomall.home.HomeBean;
 import com.example.commen.ACache;
-import com.example.commen.NetConnetMannager;
+import com.example.commen.Constants;
+import com.shaomall.framework.manager.NetConnetMannager;
 
 import com.example.net.AppNetConfig;
 
@@ -90,12 +91,12 @@ public class CacheManager {
 
     private void saveLocal(HomeBean.ResultBean bean) {
         //把Bean存储到ACache
-        mAcache.put(AppNetConfig.KEY_HOME_DATA, bean);
+        mAcache.put(Constants.KEY_HOME_DATA, bean);
     }
 
     //获取缓存的bean
     public HomeBean.ResultBean getHomeBean() {
-        HomeBean.ResultBean acache = (HomeBean.ResultBean) mAcache.getAsObject(AppNetConfig.KEY_HOME_DATA);
+        HomeBean.ResultBean acache = (HomeBean.ResultBean) mAcache.getAsObject(Constants.KEY_HOME_DATA);
         return acache;
     }
 
