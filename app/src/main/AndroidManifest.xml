@@ -28,6 +28,15 @@
         <activity
             android:name=".activity.LoginActivity"
             android:launchMode="singleTask">
+<<<<<<< HEAD
+=======
+
+        </activity>
+
+
+
+
+>>>>>>> one
 
         </activity>
 

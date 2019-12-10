@@ -13,14 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.net.Constant;
 import com.example.shopmall.R;
-import com.example.shopmall.bean.HomepageBean;
+import com.example.framework.bean.HomepageBean;
 
 import java.util.List;
 
-
-/**
- * Created by Administrator on 2016/9/29.
- */
 public class SeckillRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
@@ -51,22 +47,22 @@ public class SeckillRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         private ImageView ivFigure;
-        private TextView tvCoverPrice;
-        private TextView tvOriginPrice;
+        private TextView tv_cover_price_seckill;
+        private TextView tv_origin_price_seckill;
         private LinearLayout ll_root;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             ivFigure = (ImageView) itemView.findViewById(R.id.iv_figure);
-            tvCoverPrice = (TextView) itemView.findViewById(R.id.tv_cover_price);
-            tvOriginPrice = (TextView) itemView.findViewById(R.id.tv_origin_price);
+            tv_cover_price_seckill = (TextView) itemView.findViewById(R.id.tv_cover_price_seckill);
+            tv_origin_price_seckill = (TextView) itemView.findViewById(R.id.tv_origin_price_seckill);
             ll_root = (LinearLayout) itemView.findViewById(R.id.ll_root);
         }
 
         public void setData(final int position) {
             HomepageBean.ResultBean.SeckillInfoBean.ListBean listBean = list.get(position);
-            tvCoverPrice.setText("￥" + listBean.getCover_price());
-            tvOriginPrice.setText("￥" + listBean.getOrigin_price());
+            tv_cover_price_seckill.setText("￥" + listBean.getCover_price());
+            tv_origin_price_seckill.setText("￥" + listBean.getOrigin_price());
             Glide.with(mContext)
                     .load(Constant.BASE_URL_IMAGE +listBean.getFigure())
                     .into(ivFigure);

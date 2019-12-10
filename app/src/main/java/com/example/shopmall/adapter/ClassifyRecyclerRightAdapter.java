@@ -12,11 +12,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.net.Constant;
 import com.example.shopmall.R;
 import com.example.shopmall.bean.ClassifyBean;
 
 import java.util.ArrayList;
 
+/**
+ * 热卖推荐
+ */
 public class ClassifyRecyclerRightAdapter extends RecyclerView.Adapter<ClassifyRecyclerRightAdapter.ViewHolder> {
 
     private Context mContext;
@@ -35,10 +39,28 @@ public class ClassifyRecyclerRightAdapter extends RecyclerView.Adapter<ClassifyR
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Glide.with(mContext).load(hotProductListBeans.get(position).getFigure()).into(holder.iv_ordinary_right);
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        Glide.with(mContext).load(Constant.BASE_URL_IMAGE + hotProductListBeans.get(position).getFigure()).into(holder.iv_ordinary_right);
         holder.tv_ordinary_right.setText( "￥" + hotProductListBeans.get(position).getCover_price());
         holder.tv_ordinary_right.setTextColor(Color.RED);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                likeliest.getLikeliest(position);
+            }
+        });
+
+    }
+
+    Likeliest likeliest;
+
+    interface Likeliest {
+        public void getLikeliest(int position);
+    }
+
+    public void setLikeliest(Likeliest likeliest) {
+        this.likeliest = likeliest;
     }
 
     @Override

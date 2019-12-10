@@ -13,10 +13,10 @@
         android:layout_width="180dp"
         android:layout_height="180dp"
         android:layout_gravity="center"
-        android:background="@drawable/new_img_loading_2" />
+        android:background="@drawable/bluemao" />
 
     <TextView
-        android:id="@+id/tv_name"
+        android:id="@+id/tv_hot_grid_name"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

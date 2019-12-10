@@ -1,18 +1,18 @@
 package com.example.shopmall.fragment;
 
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.graphics.Color;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import com.example.common.LoadingPage;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseFragment;
-import com.example.framework.base.IBaseView;
+import com.example.framework.base.IGetBaseView;
 import com.example.net.Constant;
 import com.example.shopmall.R;
 import com.example.shopmall.adapter.ClassifyLeftAdapter;
@@ -23,9 +23,11 @@ import com.example.shopmall.presenter.IntegerPresenter;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ClassifyFragment extends BaseFragment implements IBaseView<ClassifyBean> {
+public class ClassifyFragment extends BaseFragment implements IGetBaseView<ClassifyBean> {
 
     TitleBar tb_classify;
+    LoadingPage lp_classify_loading;
+
     ListView lv_left;
     RecyclerView rv_right;
     ClassifyLeftAdapter classifyLeftAdapter;
@@ -100,30 +102,19 @@ public class ClassifyFragment extends BaseFragment implements IBaseView<Classify
 
     private void getDataPresenter(String url) {
         integerPresenter = new IntegerPresenter(url,ClassifyBean.class);
-        integerPresenter.attachView(this);
+        integerPresenter.attachGetView(this);
         integerPresenter.getGetData();
     }
 
     @Override
     protected void initView(View view) {
-        tb_classify = view.findViewById(R.id.tb_classify);;
+        tb_classify = view.findViewById(R.id.tb_classify);
+        LoadingPage lp_classify_loading = view.findViewById(R.id.lp_classify_loading);
 
         lv_left = view.findViewById(R.id.lv_left);
         rv_right = view.findViewById(R.id.rv_right);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
-        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                if (position == 0){
-                    return 3;
-                }else {
-                    return 1;
-                }
-            }
-        });
-
-        rv_right.setLayoutManager(gridLayoutManager);
+        rv_right.setLayoutManager(new LinearLayoutManager(getContext()));
 
     }
 
@@ -140,30 +131,12 @@ public class ClassifyFragment extends BaseFragment implements IBaseView<Classify
     }
 
     @Override
-    public void onPostDataSucess(ClassifyBean data) {
-
-    }
-
-    @Override
     public void onGetDataFailed(String ErrorMsg) {
 
     }
-
-    @Override
-    public void onLoadingPage() {
-
-    }
-
-    @Override
-    public void onStopLoadingPage() {
-
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         integerPresenter.detachView();
-
     }
 }

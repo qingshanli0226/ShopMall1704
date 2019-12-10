@@ -3,4 +3,28 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_name">用户名：</string>
+    <string name="login_pwd">密码：</string>
+    <string name="login_text">登录</string>
+    <string name="login_register_text">注册</string>
+    <string name="register_name">用户名：</string>
+    <string name="register_pwd">密码：</string>
+    <string name="register_text">注册</string>
+    <string name="mine_text">登录/注册</string>
+    <string name="mine_indent_text">我的订单</string>
+    <string name="look_all_indent">查看全部订单</string>
+    <string name="obligation_text">待付款</string>
+    <string name="drop_shipping">待发货</string>
+    <string name="wait_for_receiving">待收获</string>
+    <string name="off_the_stocks">已完成</string>
+    <string name="after_sale_text">售后/退款</string>
+    <string name="address_text">收货地址</string>
+    <string name="mine_collect">我的收藏</string>
+    <string name="mine_coupon">我的优惠券</string>
+    <string name="mine_integral">我的积分</string>
+    <string name="mine_prize">我的奖品</string>
+    <string name="mine_ticket">我的电子票</string>
+    <string name="mine_share">邀请分享</string>
+    <string name="mine_service_center">客服中心</string>
+    <string name="mine_feedback">服务反馈</string>
 </resources>

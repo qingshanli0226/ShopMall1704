@@ -1,7 +1,7 @@
 package com.example.shopmall.presenter;
 
 import com.example.framework.base.BasePresenter;
-import com.example.shopmall.bean.HomepageBean;
+import com.example.framework.bean.HomepageBean;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -26,7 +26,7 @@ public class WelcomePresenter extends BasePresenter<HomepageBean> {
     }
 
     @Override
-    protected HashMap<String, String> getQuery() {
+    protected HashMap<String, String> getParam() {
         return new HashMap<>();
     }
 }

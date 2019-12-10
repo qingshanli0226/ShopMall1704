@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.net.Constant;
 import com.example.shopmall.R;
-import com.example.shopmall.bean.HomepageBean;
+import com.example.framework.bean.HomepageBean;
 
 import java.util.List;
 
@@ -49,7 +49,7 @@ public class HotGridViewAdapter extends BaseAdapter {
             convertView = View.inflate(mContext, R.layout.item_hot_grid_view, null);
             viewHolder = new ViewHolder();
             viewHolder.iv_hot = convertView.findViewById(R.id.iv_hot);
-            viewHolder.tv_name = convertView.findViewById(R.id.tv_name);
+            viewHolder.tv_name = convertView.findViewById(R.id.tv_hot_grid_name);
             viewHolder.tv_price = convertView.findViewById(R.id.tv_price);
             convertView.setTag(viewHolder);
         } else {

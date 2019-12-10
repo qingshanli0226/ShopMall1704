@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="main_height_0dp">0dp</dimen>
+    <dimen name="itegral_height_50">50dp</dimen>
+    <dimen name="common_height_0">0dp</dimen>
+    <dimen name="common_width_0">0dp</dimen>
+    <dimen name="integral_text_20sp">20sp</dimen>
+    <dimen name="integral_text_24sp">24sp</dimen>
+    <dimen name="login_mStart_30">30dp</dimen>
+    <dimen name="login_mEnd_30">30dp</dimen>
+    <dimen name="login_mStart_50">50dp</dimen>
+    <dimen name="login_text_20">20sp</dimen>
+    <dimen name="register_text_20">20sp</dimen>
+    <dimen name="register_mStart_30">30dp</dimen>
+    <dimen name="register_mEnd_30">30dp</dimen>
+    <dimen name="register_mStart_50">50dp</dimen>
+    <dimen name="mine_height_170">170dp</dimen>
+    <dimen name="mine_width_50">50dp</dimen>
+    <dimen name="mine_height_50">50dp</dimen>
+    <dimen name="mine_mStart_110">110dp</dimen>
+    <dimen name="mine_mStart_105">105dp</dimen>
+    <dimen name="mine_mTop_60">60dp</dimen>
+    <dimen name="mine_height_8">8dp</dimen>
+    <dimen name="mine_pad_10">10dp</dimen>
+    <dimen name="mine_mStart_45">45dp</dimen>
+    <dimen name="integral_mEnd_10">10dp</dimen>
+</resources>

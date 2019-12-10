@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-
+apply plugin: 'org.greenrobot.greendao'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -21,7 +21,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
+}
+greendao {
+    schemaVersion 1  //数据库版本
+    daoPackage 'com.example.framework.greendao' //包名
+    targetGenDir 'src/main/java' //存放greendao库生成文件的目录
 }
 
 dependencies {
@@ -33,4 +37,8 @@ dependencies {
     implementation project(path: ':common')
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation project(path: ':net')
+    implementation 'org.greenrobot:greendao:3.2.2'
+    // 需要加密数据库的话添加这个
+    implementation 'net.zetetic:android-database-sqlcipher:3.5.6'
+
 }

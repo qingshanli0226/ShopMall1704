@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.net.Constant;
 import com.example.shopmall.R;
-import com.example.shopmall.bean.HomepageBean;
+import com.example.framework.bean.HomepageBean;
 
 import java.util.List;
 
@@ -48,7 +48,7 @@ public class RecommendGridViewAdapter extends BaseAdapter {
             convertView = View.inflate(mContext, R.layout.item_recommend_grid_view, null);
             viewHolder = new ViewHolder();
             viewHolder.ivRecommend = convertView.findViewById(R.id.iv_recommend);
-            viewHolder.tv_name = convertView.findViewById(R.id.tv_name);
+            viewHolder.tv_recommend_name = convertView.findViewById(R.id.tv_recommend_name);
             viewHolder.tv_price = convertView.findViewById(R.id.tv_price);
             convertView.setTag(viewHolder);
         } else {
@@ -59,14 +59,14 @@ public class RecommendGridViewAdapter extends BaseAdapter {
         Glide.with(mContext)
                 .load(Constant.BASE_URL_IMAGE +recommendInfoBean.getFigure())
                 .into(viewHolder.ivRecommend);
-        viewHolder.tv_name.setText(recommendInfoBean.getName());
+        viewHolder.tv_recommend_name.setText(recommendInfoBean.getName());
         viewHolder.tv_price.setText("￥" + recommendInfoBean.getCover_price());
         return convertView;
     }
 
     static class ViewHolder {
         ImageView ivRecommend;
-        TextView tv_name;
+        TextView tv_recommend_name;
         TextView tv_price;
     }
 }

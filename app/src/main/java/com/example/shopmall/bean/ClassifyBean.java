@@ -114,6 +114,19 @@ public class ClassifyBean {
             this.hot_product_list = hot_product_list;
         }
 
+        @Override
+        public String toString() {
+            return "ResultBean{" +
+                    "p_catalog_id='" + p_catalog_id + '\'' +
+                    ", parent_id='" + parent_id + '\'' +
+                    ", name='" + name + '\'' +
+                    ", pic='" + pic + '\'' +
+                    ", is_deleted='" + is_deleted + '\'' +
+                    ", child=" + child +
+                    ", hot_product_list=" + hot_product_list +
+                    '}';
+        }
+
         public static class ChildBean {
             /**
              * p_catalog_id : 10
@@ -167,6 +180,17 @@ public class ClassifyBean {
 
             public void setIs_deleted(String is_deleted) {
                 this.is_deleted = is_deleted;
+            }
+
+            @Override
+            public String toString() {
+                return "ChildBean{" +
+                        "p_catalog_id='" + p_catalog_id + '\'' +
+                        ", parent_id='" + parent_id + '\'' +
+                        ", name='" + name + '\'' +
+                        ", pic='" + pic + '\'' +
+                        ", is_deleted='" + is_deleted + '\'' +
+                        '}';
             }
         }
 

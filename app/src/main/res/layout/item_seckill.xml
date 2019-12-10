@@ -10,10 +10,10 @@
         android:id="@+id/iv_figure"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:background="@drawable/new_img_loading_2" />
+        android:background="@drawable/bluemao" />
 
     <TextView
-        android:id="@+id/tv_cover_price"
+        android:id="@+id/tv_cover_price_seckill"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -28,7 +28,7 @@
         android:layout_marginTop="2dp">
 
         <TextView
-            android:id="@+id/tv_origin_price"
+            android:id="@+id/tv_origin_price_seckill"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"

@@ -12,20 +12,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.framework.base.BaseActivity;
-import com.example.framework.base.IBaseView;
+import com.example.framework.base.IGetBaseView;
+import com.example.framework.bean.HomepageBean;
+import com.example.framework.manager.CaCheManager;
 import com.example.framework.manager.ConnectManager;
 
 import com.example.net.Constant;
-import com.example.shopmall.CaCheManager;
 import com.example.shopmall.MyApplication;
 import com.example.shopmall.R;
-import com.example.shopmall.bean.HomepageBean;
 import com.example.shopmall.presenter.IntegerPresenter;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class WelcomeActivity extends BaseActivity implements IBaseView<HomepageBean> {
+public class WelcomeActivity extends BaseActivity implements IGetBaseView {
 
     public ImageView iv_welcome;
     public int i = 0;
@@ -40,6 +40,7 @@ public class WelcomeActivity extends BaseActivity implements IBaseView<HomepageB
             if (msg.what == 100){
                 i++;
                 Log.d("####", "handleMessage: " + i);
+                //判断缓存是否有内容
                 HomepageBean cacheBean = CaCheManager.getInstance(MyApplication.getContext()).getCacheBean(MyApplication.getContext());
                 Log.d("####", "handleMessage: " + cacheBean.getMsg());
                 if (i >= 3 &&  cacheBean != null){
@@ -69,7 +70,7 @@ public class WelcomeActivity extends BaseActivity implements IBaseView<HomepageB
         objectAnimator.start();
 
         IntegerPresenter integerPresenter = new IntegerPresenter(Constant.HOME_URL, HomepageBean.class);
-        integerPresenter.attachView(this);
+        integerPresenter.attachGetView(this);
         integerPresenter.getGetData();
 
         boolean connectStatus = ConnectManager.getInstance().getConnectStatus();
@@ -92,27 +93,12 @@ public class WelcomeActivity extends BaseActivity implements IBaseView<HomepageB
     }
 
     @Override
-    public void onGetDataSucess(HomepageBean data) {
-        CaCheManager.getInstance(this).savaBean(data);
-    }
-
-    @Override
-    public void onPostDataSucess(HomepageBean data) {
+    public void onGetDataSucess(Object data) {
 
     }
 
     @Override
     public void onGetDataFailed(String ErrorMsg) {
-
-    }
-
-    @Override
-    public void onLoadingPage() {
-
-    }
-
-    @Override
-    public void onStopLoadingPage() {
 
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -26,7 +28,7 @@ import com.example.shopmall.R;
 import com.example.shopmall.activity.GoodsInfoActivity;
 import com.example.shopmall.activity.GoodsListActivity;
 import com.example.shopmall.bean.GoodsBean;
-import com.example.shopmall.bean.HomepageBean;
+import com.example.framework.bean.HomepageBean;
 import com.example.shopmall.utils.AlphaPageTransformer;
 import com.example.shopmall.utils.ScaleInTransformer;
 import com.youth.banner.Banner;
@@ -226,6 +228,7 @@ public class MyHomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Log.d("####", "onItemClick: " + position);
                     if (position <= 8) {
                         Intent intent = new Intent(mContext, GoodsListActivity.class);
                         intent.putExtra("position", position);
@@ -420,30 +423,26 @@ public class MyHomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     class HotViewHolder extends RecyclerView.ViewHolder {
 
         public TextView tv_more_hot;
-//        public GridView gv_hot;
         public RecyclerView rv_hot;
         public Context mContext;
 
         public HotViewHolder(@NonNull View itemView, Context mContext) {
             super(itemView);
             tv_more_hot = itemView.findViewById(R.id.tv_more_hot);
-//            gv_hot = itemView.findViewById(R.id.gv_hot);
             rv_hot = itemView.findViewById(R.id.rv_hot);
-            rv_hot.setLayoutManager(new GridLayoutManager(mContext,2));
+//            rv_hot.setLayoutManager(new GridLayoutManager(mContext,2));
+            rv_hot.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
             this.mContext = mContext;
 
         }
 
         public void setData(final List<HomepageBean.ResultBean.HotInfoBean> hot_info) {
-//            HotGridViewAdapter adapter = new HotGridViewAdapter(mContext, hot_info);
-//            gv_hot.setAdapter(adapter);
-
             HotRecyclerAdapter hotRecyclerAdapter = new HotRecyclerAdapter(mContext, hot_info);
             rv_hot.setAdapter(hotRecyclerAdapter);
 
-            hotRecyclerAdapter.setListelist(new HotRecyclerAdapter.Likeliest() {
+            hotRecyclerAdapter.setLikeliest(new HotRecyclerAdapter.Likeliest() {
                 @Override
-                public void getListelist(HotRecyclerAdapter.ViewHolder holder, int position) {
+                public void getLikeliest(HotRecyclerAdapter.ViewHolder holder, int position) {
                     String cover_price = hot_info.get(position).getCover_price();
                     String name = hot_info.get(position).getName();
                     String figure = hot_info.get(position).getFigure();
@@ -455,23 +454,6 @@ public class MyHomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     mContext.startActivity(intent);
                 }
             });
-
-            //点击事件
-//            gv_hot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                @Override
-//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                    // Toast.makeText(mContext, "position:" + position, Toast.LENGTH_SHORT).show();
-//                    String cover_price = hot_info.get(position).getCover_price();
-//                    String name = hot_info.get(position).getName();
-//                    String figure = hot_info.get(position).getFigure();
-//                    String product_id = hot_info.get(position).getProduct_id();
-//                    GoodsBean goodsBean = new GoodsBean(name, cover_price, figure, product_id);
-//
-//                    Intent intent = new Intent(mContext, GoodsInfoActivity.class);
-//                    intent.putExtra(GOODS_BEAN, goodsBean);
-//                    mContext.startActivity(intent);
-//                }
-//            });
         }
     }
 

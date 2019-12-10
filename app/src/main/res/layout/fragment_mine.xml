@@ -17,7 +17,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <com.example.common.TitleBar
@@ -27,232 +27,232 @@
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="170dp"
-                    android:background="#f00">
+                    android:layout_height="@dimen/mine_height_170"
+                    android:background="@color/mine_back_color">
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="170dp"
+                        android:layout_height="@dimen/mine_height_170"
                         android:background="@mipmap/new_user_icon_background" />
 
                     <ImageButton
                         android:id="@+id/ib_user_icon_avator"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="110dp"
+                        android:layout_width="@dimen/mine_width_50"
+                        android:layout_height="@dimen/mine_height_50"
+                        android:layout_marginStart="@dimen/mine_mStart_110"
                         android:background="@mipmap/new_user_icon" />
 
                     <TextView
                         android:id="@+id/tv_username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="105dp"
-                        android:layout_marginTop="60dp"
-                        android:text="登录/注册"
-                        android:textColor="#fff" />
+                        android:layout_marginStart="@dimen/mine_mStart_105"
+                        android:layout_marginTop="@dimen/mine_mTop_60"
+                        android:text="@string/mine_text"
+                        android:textColor="@color/color_white" />
                 </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="8dp"
-                    android:background="#eee" />
+                    android:layout_height="@dimen/mine_height_8"
+                    android:background="@color/mine_color_gray" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp">
+                    android:padding="@dimen/mine_pad_10">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="我的订单"
-                        android:textColor="#5d5d5d" />
+                        android:text="@string/mine_indent_text"
+                        android:textColor="@color/colorTintBlack" />
 
                     <TextView
                         android:id="@+id/tv_all_order"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:drawableRight="@mipmap/home_arrow_right"
-                        android:text="查看全部订单"
+                        android:layout_alignParentEnd="true"
+                        android:drawableEnd="@mipmap/home_arrow_right"
+                        android:text="@string/look_all_indent"
                         android:textColor="#5d5d5d" />
                 </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#eee" />
+                    android:background="@color/colorGray" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp">
+                    android:padding="@dimen/mine_pad_10">
 
                     <TextView
                         android:id="@+id/tv_user_pay"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawablePadding="10dp"
+                        android:drawablePadding="@dimen/mine_pad_10"
                         android:drawableTop="@mipmap/new_order_status_fukuan"
                         android:gravity="center"
-                        android:text="待付款"
-                        android:textColor="#5d5d5d" />
+                        android:text="@string/obligation_text"
+                        android:textColor="@color/color_5d5d" />
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/common_width_0"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawablePadding="10dp"
+                        android:drawablePadding="@dimen/mine_pad_10"
                         android:drawableTop="@mipmap/new_order_status_fahuo"
                         android:gravity="center"
-                        android:text="待发货"
-                        android:textColor="#5d5d5d" />
+                        android:text="@string/drop_shipping"
+                        android:textColor="@color/color_5d5d" />
 
                     <TextView
                         android:id="@+id/tv_user_receive"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawablePadding="10dp"
+                        android:drawablePadding="@dimen/mine_pad_10"
                         android:drawableTop="@mipmap/new_order_status_shouhuo"
                         android:gravity="center"
-                        android:text="待收获"
-                        android:textColor="#5d5d5d" />
+                        android:text="@string/wait_for_receiving"
+                        android:textColor="@color/color_5d5d" />
 
                     <TextView
                         android:id="@+id/tv_user_finish"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/common_width_0"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawablePadding="10dp"
+                        android:drawablePadding="@dimen/mine_pad_10"
                         android:drawableTop="@mipmap/icon_order_status_finish"
                         android:gravity="center"
-                        android:text="已完成"
-                        android:textColor="#5d5d5d" />
+                        android:text="@string/off_the_stocks"
+                        android:textColor="@color/color_5d5d" />
 
                     <TextView
                         android:id="@+id/tv_user_drawback"
-                        android:layout_width="0dp"
+                        android:layout_width="@dimen/common_width_0"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawablePadding="10dp"
+                        android:drawablePadding="@dimen/mine_pad_10"
                         android:drawableTop="@mipmap/new_order_status_help"
                         android:gravity="center"
-                        android:text="售后/退款"
-                        android:textColor="#5d5d5d" />
+                        android:text="@string/after_sale_text"
+                        android:textColor="@color/color_5d5d" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="8dp"
-                    android:background="#eee" />
+                    android:layout_height="@dimen/mine_height_8"
+                    android:background="@color/color_back_eee" />
 
                 <TextView
                     android:id="@+id/tv_user_location"
                     style="@style/TextStyle"
-                    android:drawableLeft="@mipmap/user_channel_icon_address"
-                    android:text="收货地址" />
+                    android:drawableStart="@mipmap/user_channel_icon_address"
+                    android:text="@string/address_text" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="45dp"
-                    android:background="#eee" />
+                    android:layout_marginStart="@dimen/mine_mStart_45"
+                    android:background="@color/color_back_eee" />
 
                 <TextView
                     android:id="@+id/tv_user_collect"
                     style="@style/TextStyle"
-                    android:drawableLeft="@mipmap/user_channel_icon_collect"
-                    android:text="我的收藏" />
+                    android:drawableStart="@mipmap/user_channel_icon_collect"
+                    android:text="@string/mine_collect" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="45dp"
-                    android:background="#eee" />
+                    android:layout_marginStart="@dimen/mine_mStart_45"
+                    android:background="@color/color_back_eee" />
 
                 <TextView
                     android:id="@+id/tv_user_coupon"
                     style="@style/TextStyle"
-                    android:drawableLeft="@mipmap/user_channel_icon_coupon"
-                    android:text="我的优惠券" />
+                    android:drawableStart="@mipmap/user_channel_icon_coupon"
+                    android:text="@string/mine_coupon" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="45dp"
-                    android:background="#eee" />
+                    android:layout_marginStart="@dimen/mine_mStart_45"
+                    android:background="@color/color_back_eee" />
 
                 <TextView
                     android:id="@+id/tv_user_score"
                     style="@style/TextStyle"
-                    android:drawableLeft="@mipmap/user_channel_icon_score"
-                    android:text="我的积分" />
+                    android:drawableStart="@mipmap/user_channel_icon_score"
+                    android:text="@string/mine_integral" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="45dp"
-                    android:background="#eee" />
+                    android:layout_marginStart="@dimen/mine_mStart_45"
+                    android:background="@color/color_back_eee" />
 
                 <TextView
                     android:id="@+id/tv_user_prize"
                     style="@style/TextStyle"
-                    android:drawableLeft="@mipmap/user_channel_icon_prize"
-                    android:text="我的奖品" />
+                    android:drawableStart="@mipmap/user_channel_icon_prize"
+                    android:text="@string/mine_prize" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="45dp"
-                    android:background="#eee" />
+                    android:layout_marginStart="@dimen/mine_mStart_45"
+                    android:background="@color/color_back_eee" />
 
                 <TextView
                     android:id="@+id/tv_user_ticket"
                     style="@style/TextStyle"
-                    android:drawableLeft="@mipmap/user_icon_ticket"
-                    android:text="我的电子票" />
+                    android:drawableStart="@mipmap/user_icon_ticket"
+                    android:text="@string/mine_ticket" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="8dp"
-                    android:background="#eee" />
+                    android:layout_height="@dimen/mine_height_8"
+                    android:background="@color/color_back_eee" />
 
                 <TextView
                     android:id="@+id/tv_user_invitation"
                     style="@style/TextStyle"
-                    android:drawableLeft="@mipmap/user_channel_icon_invitation"
-                    android:text="邀请分享" />
+                    android:drawableStart="@mipmap/user_channel_icon_invitation"
+                    android:text="@string/mine_share" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="45dp"
-                    android:background="#eee" />
+                    android:layout_marginStart="@dimen/mine_mStart_45"
+                    android:background="@color/color_back_eee" />
 
                 <TextView
                     android:id="@+id/tv_user_callcenter"
                     style="@style/TextStyle"
-                    android:drawableLeft="@mipmap/user_channel_icon_callcenter"
-                    android:text="客服中心" />
+                    android:drawableStart="@mipmap/user_channel_icon_callcenter"
+                    android:text="@string/mine_service_center" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="45dp"
+                    android:layout_marginStart="@dimen/mine_mStart_45"
                     android:background="#eee" />
 
                 <TextView
                     android:id="@+id/tv_user_feedback"
                     style="@style/TextStyle"
-                    android:drawableLeft="@mipmap/user_channel_icon_feedback"
-                    android:text="服务反馈" />
+                    android:drawableStart="@mipmap/user_channel_icon_feedback"
+                    android:text="@string/mine_feedback" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="8dp"
-                    android:background="#eee" />
+                    android:layout_height="@dimen/mine_height_8"
+                    android:background="@color/color_back_eee" />
             </LinearLayout>
 
         </ScrollView>
