@@ -19,38 +19,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-<<<<<<< HEAD
+
         <activity android:name=".activity.GoodsInfoActivity" />
         <activity android:name=".activity.GoodsListActivity" />
-=======
-        <activity android:name=".activity.GoodsInfoActivity"></activity>
->>>>>>> bing
+
         <activity android:name=".activity.MessageActivity" />
         <activity android:name=".activity.RegisterActivity">
 
-<<<<<<< HEAD
+
         </activity>
         <activity
             android:name=".activity.LoginActivity"
             android:launchMode="singleTask">
 
-        </activity>>
-        <activity android:name=".activity.HistoryActivity" />
+        </activity>
+        <activity android:name="com.example.step.Ui.HistoryActivity" />
         <activity
-            android:name=".activity.IntegralActivity"
+            android:name="com.example.step.Ui.IntegralActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.WelcomeActivity">
-=======
-        <activity android:name=".activity.RegisterActivity" />
-        <activity android:name=".activity.LoginActivity" />
-
-
-
-
 
 
         <activity android:name=".activity.WelcomeActivity" >
->>>>>>> bing
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -67,10 +57,7 @@
             android:launchMode="singleTask">
 
         </activity>
-<<<<<<< HEAD
-=======
 
->>>>>>> bing
     </application>
 
 </manifest>
