@@ -1,4 +1,4 @@
-package com.example.shopmall.adapter;
+package com.example.step.Adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.shopmall.R;
-import com.example.step.ShopStepBean;
+import com.example.step.R;
+import com.example.common.ShopStepBean;
 
 import java.util.List;
 

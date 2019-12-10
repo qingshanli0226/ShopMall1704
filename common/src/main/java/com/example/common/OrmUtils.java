@@ -1,4 +1,4 @@
-package com.example.step;
+package com.example.common;
 
 import android.content.Context;
 

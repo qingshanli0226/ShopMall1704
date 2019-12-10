@@ -1,4 +1,4 @@
-package com.example.step;
+package com.example.common;
 
 import com.litesuits.orm.db.annotation.Column;
 import com.litesuits.orm.db.annotation.PrimaryKey;
@@ -16,6 +16,16 @@ public class ShopStepBean {
     String current_step;
     @Column("yesCurrent")
     String yesCurrent;
+    @Column("integral")
+    int integral;
+
+    public int getIntegral() {
+        return integral;
+    }
+
+    public void setIntegral(int integral) {
+        this.integral = integral;
+    }
 
     public int getId() {
         return id;
@@ -56,6 +66,7 @@ public class ShopStepBean {
                 ", date='" + date + '\'' +
                 ", current_step='" + current_step + '\'' +
                 ", yesCurrent='" + yesCurrent + '\'' +
+                ", integral=" + integral +
                 '}';
     }
 }

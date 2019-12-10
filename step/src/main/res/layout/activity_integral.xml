@@ -10,16 +10,16 @@
     <com.example.common.TitleBar
         android:id="@+id/tb_integral"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/itegral_height_50" />
+        android:layout_height="50dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/common_height_0"
-        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
         android:background="@drawable/timg">
 
         <LinearLayout
-            android:layout_width="@dimen/common_width_0"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center">
@@ -27,33 +27,22 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/integral_text_20sp"
-                android:textColor="@color/colorWhite"/>
+                android:text="@string/stepName"
+                android:textSize="20sp"
+                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/Integral_step"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/integral_text_24sp"
-                android:textColor="@color/colorWhite"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/integral_text_20sp"
-                android:textColor="@color/colorWhite"/>
+                android:textSize="@dimen/step_tvSize"
+                android:textColor="@color/white"/>
+
         </LinearLayout>
 
-        <Spinner
-            android:id="@+id/Integral_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/integral_mEnd_10"
-            android:layout_gravity="center"
-            >
 
-        </Spinner>
         <LinearLayout
-            android:layout_width="@dimen/common_width_0"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center">
@@ -61,21 +50,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/integral_text_20sp"
-                android:textColor="@color/colorWhite"/>
+                android:text="@string/integralName"
+                android:textSize="20sp"
+                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/Integral_integral"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/integral_text_24sp"
-                android:textColor="@color/colorWhite"/>
+                android:textSize="@dimen/step_tvSize"
+                android:textColor="@color/white"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/integral_text_20sp"
-                android:textColor="@color/colorWhite"/>
+
+
 
         </LinearLayout>
 
@@ -83,8 +70,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_height="@dimen/common_height_0"
         android:layout_weight="3">
 
         <TextClock
@@ -98,7 +85,7 @@
             android:id="@+id/find_History"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="查看历史记录"
+            android:text="@string/findHistory"
             android:layout_gravity="right"
             android:layout_marginRight="15dp"
             >
@@ -118,19 +105,8 @@
         </com.example.step.CustomView.StepArcView>
 
     </LinearLayout>
-<<<<<<< HEAD
-    <com.example.step.RunView
-=======
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/history_RecyclerView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_weight="1"-->
-<!--        android:layout_height="0dp">-->
-
-<!--    </androidx.recyclerview.widget.RecyclerView>-->
     <com.example.step.CustomView.RunView
->>>>>>> bing
         android:id="@+id/runView"
         android:layout_width="match_parent"
         android:layout_weight="1"

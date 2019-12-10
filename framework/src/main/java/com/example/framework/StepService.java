@@ -1,4 +1,4 @@
-package com.example.step;
+package com.example.framework;
 
 
 import android.annotation.SuppressLint;
@@ -10,7 +10,6 @@ import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Sensor;
@@ -26,6 +25,10 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+
+import com.example.common.OrmUtils;
+import com.example.common.ShopStepBean;
+import com.example.framework.manager.StepManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -92,19 +95,6 @@ public class StepService extends Service implements SensorEventListener {
     }
 
     private void initBoradCast() {
-        IntentFilter intentFilter = new IntentFilter();
-
-        //屏幕熄灭,屏幕亮开
-        intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
-        intentFilter.addAction(Intent.ACTION_SCREEN_ON);
-        //关机
-        intentFilter.addAction(Intent.ACTION_SHUTDOWN);
-        //时间和日期的监听
-        intentFilter.addAction(Intent.ACTION_DATE_CHANGED);
-        intentFilter.addAction(Intent.ACTION_TIME_CHANGED);
-        intentFilter.addAction(Intent.ACTION_TIME_TICK);
-
-
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -117,22 +107,18 @@ public class StepService extends Service implements SensorEventListener {
                         duration=3000;
                         break;
                     case Intent.ACTION_SHUTDOWN:
-                        save();
-
+                        StepManager.getInstance().save(CURRENT_DATE,currentStep,previousStep);
                         break;
                     case Intent.ACTION_DATE_CHANGED:
-                        Log.e("##DateC", "Dchane");
-                        save();
+                        StepManager.getInstance().save(CURRENT_DATE,currentStep,previousStep);
                         isNewDay();
                         break;
                     case Intent.ACTION_TIME_CHANGED:
-                        Log.e("##TimdChcane", "change");
-                        save();
+                        StepManager.getInstance().save(CURRENT_DATE,currentStep,previousStep);
                         isNewDay();
                         break;
                     case Intent.ACTION_TIME_TICK:
-                        Log.e("##TimeC", "Time");
-                        save();
+                        StepManager.getInstance().save(CURRENT_DATE,currentStep,previousStep);
                         isNewDay();
                         break;
 
@@ -143,7 +129,7 @@ public class StepService extends Service implements SensorEventListener {
         };
 
         if (broadcastReceiver != null) {
-            registerReceiver(broadcastReceiver, intentFilter);
+            registerReceiver(broadcastReceiver, StepManager.getInstance().getIntentFliter());
         }
 
     }
@@ -169,7 +155,7 @@ public class StepService extends Service implements SensorEventListener {
         }
 
         int count=0;
-        List<Gal> queryAll = OrmUtils.getQueryAll(Gal.class);
+        List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
         for (int i=0;i<queryAll.size();i++){
             count+=queryAll.get(i).getIntegral();
             if (updateUi != null) {
@@ -197,12 +183,10 @@ public class StepService extends Service implements SensorEventListener {
             notificationManager.createNotificationChannel(channel);
         }
         notificationManager.notify(100, nbuilder.build());
-
         int count=0;
-        List<Gal> queryAll = OrmUtils.getQueryAll(Gal.class);
+        List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
         for (int i=0;i<queryAll.size();i++){
             count+=queryAll.get(i).getIntegral();
-
             if (updateUi != null) {
                 updateUi.getUpdateStep(currentStep,count);
             }
@@ -212,36 +196,7 @@ public class StepService extends Service implements SensorEventListener {
 
     }
 
-    private void save() {
-        List<ShopStepBean> queryByWhere = OrmUtils.getQueryByWhere(ShopStepBean.class, "day", new String[]{CURRENT_DATE});
-        if (queryByWhere.size() == 0 || queryByWhere.isEmpty()) {
-            ShopStepBean shopStepBean = new ShopStepBean();
-            shopStepBean.setDate(CURRENT_DATE + "");
-            shopStepBean.setCurrent_step(currentStep + "");
-            shopStepBean.setYesCurrent(previousStep + "");
-            OrmUtils.insert(shopStepBean);
-            Gal gal = new Gal();
-            int i =(int) currentStep / 100;
-            gal.setIntegral(i);
-            OrmUtils.insert(gal);
 
-
-        } else if (queryByWhere.size() == 1) {
-            ShopStepBean shopStepBean = queryByWhere.get(0);
-            shopStepBean.setCurrent_step(currentStep + "");
-            shopStepBean.setYesCurrent(previousStep + "");
-            OrmUtils.update(shopStepBean);
-            List<Gal> queryAll = OrmUtils.getQueryAll(Gal.class);
-            Gal gal = queryAll.get(0);
-            int i = (int)currentStep / 100;
-            gal.setIntegral(i);
-            OrmUtils.update(gal);
-        }
-
-        Log.e("##save", queryByWhere.size() + "--" + queryByWhere.toString());
-
-
-    }
 
     //获取今天的日期
     private String getTodayDate() {
@@ -253,7 +208,6 @@ public class StepService extends Service implements SensorEventListener {
     //实时通知
     @SuppressLint("NewApi")
     private void initNotification() {
-
         notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.head);
         nbuilder=new NotificationCompat.Builder(this);
@@ -368,7 +322,7 @@ public class StepService extends Service implements SensorEventListener {
         public void onFinish() {
 
             timeCount.cancel();
-            save();
+            StepManager.getInstance().save(CURRENT_DATE,currentStep,previousStep);
             startTimer();
         }
     }

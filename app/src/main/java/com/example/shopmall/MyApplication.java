@@ -10,7 +10,7 @@ import com.example.framework.manager.ConnectManager;
 import com.example.framework.manager.CrashHandler;
 import com.example.framework.manager.UserManager;
 import com.example.shopmall.activity.MainActivity;
-import com.example.step.StepManager;
+import com.example.framework.manager.StepManager;
 
 public class MyApplication extends Application {
 
@@ -33,7 +33,11 @@ public class MyApplication extends Application {
 
         StepManager.getInstance().setActivityIntent(intent);
 
+<<<<<<< HEAD
         UserManager.getInstance().init(this);
+=======
+//        UserManager.getInstance().init(this);
+>>>>>>> bing
 
         ConnectManager.getInstance().init(this);
         //初始化异常

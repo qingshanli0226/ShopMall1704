@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="date">
+        <item>12小时之内</item>
+        <item>三天之内</item>
+        <item>一周之内</item>
+        <item>一月之内</item>
+    </string-array>
     <color name="black">#000000</color>
     <color name="center_text_color">#0f92f1</color>
     <color name="color1">#4df0a5</color>
@@ -14,6 +20,11 @@
     <color name="other_text_color">#62b2cc</color>
     <color name="red">#EE2C2C</color>
     <color name="start_color">#69cfe5</color>
+    <color name="white">#ffffff</color>
     <color name="yellow">#fd9c06</color>
+    <dimen name="step_tvSize">24sp</dimen>
     <string name="app_name">step</string>
+    <string name="findHistory">查看历史记录</string>
+    <string name="integralName">积分</string>
+    <string name="stepName">步数</string>
 </resources>

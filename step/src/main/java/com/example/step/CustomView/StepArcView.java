@@ -1,4 +1,4 @@
-package com.example.step;
+package com.example.step.CustomView;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -17,6 +17,8 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.RequiresApi;
+
+import com.example.step.R;
 
 public class StepArcView extends View {
     /**

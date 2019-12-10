@@ -10,8 +10,12 @@
 
     <Spinner
         android:id="@+id/history_Spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="90dip"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dialog"
+        android:layout_gravity="right"
+
+        >
 
     </Spinner>
     <androidx.recyclerview.widget.RecyclerView

@@ -1,4 +1,4 @@
-package com.example.step;
+package com.example.step.CustomView;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,6 +11,8 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import com.example.step.R;
 
 public class RunView extends SurfaceView {
 
@@ -51,7 +53,7 @@ public class RunView extends SurfaceView {
         paint.setColor(Color.BLACK);
 
         BitmapFactory.Options options = new BitmapFactory.Options();
-        background=BitmapFactory.decodeResource(getResources(),R.mipmap.bluewim,options);
+        background=BitmapFactory.decodeResource(getResources(), R.mipmap.bluewim,options);
         mPeople=changeBitmapSize();
 
     }
