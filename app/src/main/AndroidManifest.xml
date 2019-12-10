@@ -6,9 +6,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"></uses-permission>
-    <uses-permission android:name="android.permission.BODY_SENSORS"></uses-permission>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
 
 
     <application
@@ -19,20 +18,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.GoodsInfoActivity"></activity>
+        <activity android:name=".activity.GoodsInfoActivity" />
+        <activity android:name=".activity.GoodsListActivity" />
         <activity android:name=".activity.MessageActivity" />
+        <activity android:name=".activity.RegisterActivity">
 
-        <activity android:name=".activity.RegisterActivity" />
-        <activity android:name=".activity.LoginActivity" />
+        </activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:launchMode="singleTask">
 
+        </activity>
 
-
-
-
-
-        <activity android:name=".activity.WelcomeActivity" >
+        <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,17 +40,14 @@
         </activity>
 
         <service
-            android:name=".ShopService"
+            android:name="com.example.framework.service.ShopService"
             android:enabled="true"
             android:exported="true" />
-        <activity android:name=".activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTask">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
