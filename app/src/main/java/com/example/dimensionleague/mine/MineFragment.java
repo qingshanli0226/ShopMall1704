@@ -66,7 +66,7 @@ public class MineFragment extends BaseNetConnectFragment {
         list.add(new MineBean(R.drawable.mine_bean, "我的积分"));
         list.add(new MineBean(R.drawable.mine_white, "白条"));
         list.add(new MineBean(R.drawable.mine_discounts, "优惠券"));
-        list.add(new MineBean(R.drawable.mine_borrow, "金条借款"));
+        list.add(new MineBean(R.drawable.mine_run, "运动"));
         list.add(new MineBean(R.drawable.mine_wallet, "我的钱包"));
         homePresenter.attachView(this);
         homePresenter.onHttpGetRequest();
