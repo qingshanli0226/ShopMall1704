@@ -35,6 +35,7 @@ public class UserInfoManager {
         this.mContext = context;
         this.aCache = aCache;
         sharedPreferences = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        TokenUtil.sharedPreferences = sharedPreferences;
     }
 
 
@@ -91,7 +92,6 @@ public class UserInfoManager {
             //通过token值, 判断是否登录
             edit.putString("token", dataBean.getToken());
             edit.apply();
-            TokenUtil.sharedPreferences = sharedPreferences;
 
             //登录状态监听
             for (UserInfoStatusListener listener : userInfoStatusListeners) {
