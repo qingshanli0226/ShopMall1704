@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.Message;
 import android.util.Log;
 import android.widget.ImageView;
@@ -20,6 +21,9 @@ import com.example.shopmall.CaCheManager;
 import com.example.shopmall.MyApplication;
 import com.example.shopmall.R;
 import com.example.shopmall.bean.HomepageBean;
+import com.example.shopmall.handler.BigTask;
+import com.example.shopmall.handler.LittleCache;
+import com.example.shopmall.handler.LittleInt;
 import com.example.shopmall.presenter.IntegerPresenter;
 
 import java.util.Timer;
@@ -30,6 +34,18 @@ public class WelcomeActivity extends BaseActivity implements IBaseView<HomepageB
     public ImageView iv_welcome;
     public int i = 0;
     public Timer timer;
+
+//    private HandlerThread handlerThread = new HandlerThread("sync");
+//    private Handler syncHandler;
+//
+//    private HandlerThread handlerThreadInt = new HandlerThread("littleInt");
+//    private Handler littleInt;
+//
+//    private HandlerThread handlerThreadCache = new HandlerThread("littleCache");
+//    private Handler littleCache;
+//
+//    private BigTask bigTaskInt = new BigTask();
+//    private BigTask bigTaskCache = new BigTask();
 
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler(){
@@ -68,14 +84,12 @@ public class WelcomeActivity extends BaseActivity implements IBaseView<HomepageB
         objectAnimator.setDuration(3000);
         objectAnimator.start();
 
-        IntegerPresenter integerPresenter = new IntegerPresenter(Constant.HOME_URL, HomepageBean.class);
-        integerPresenter.attachView(this);
-        integerPresenter.getGetData();
-
         boolean connectStatus = ConnectManager.getInstance().getConnectStatus();
         if (connectStatus) {
             Toast.makeText(this, "有网络连接", Toast.LENGTH_SHORT).show();
-
+            IntegerPresenter integerPresenter = new IntegerPresenter(Constant.HOME_URL, HomepageBean.class);
+            integerPresenter.attachView(this);
+            integerPresenter.getGetData();
             timer = new Timer(true);
             timer.schedule(new TimerTask() {
                 @Override
@@ -84,12 +98,75 @@ public class WelcomeActivity extends BaseActivity implements IBaseView<HomepageB
                 }
             },1000,1000);
 
+//            handlerThread.start();
+//            handlerThreadInt.start();
+//            handlerThreadCache.start();
+//
+//            syncHandler = new Handler(handlerThread.getLooper()){
+//                @Override
+//                public void handleMessage(@NonNull Message msg) {
+//                    super.handleMessage(msg);
+//
+//                    if (msg.what == 100){
+//                        Log.d("####", "handleMessage: 开始");
+//                        littleInt.post(bigTaskInt.getLittleInt());
+//                        littleCache.post(bigTaskCache.getLittleCache());
+//                    }
+//
+//                }
+//            };
+//
+//            littleInt = new Handler(littleInt.getLooper());
+//            littleCache = new Handler(littleCache.getLooper());
+//
+//            initLittleTask();
+//
+//            syncHandler.sendEmptyMessage(100);
+
         } else {
             Toast.makeText(this, "无网络连接", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
             finish();
         }
+
     }
+
+//    //初始化任务
+//    private void initLittleTask() {
+//        bigTaskInt.setLittleInt(new LittleInt(){
+//            @Override
+//            public void run() {
+//                super.run();
+//
+//                i++;
+//                Log.d("####", "run: " + i);
+//                if (i >= 3){
+//                    if (bigTaskCache.getFinishFlag() == 1){
+//                        startActivity(new Intent(WelcomeActivity.this,MainActivity.class));
+//                        finish();
+//                    }else {
+//                        run();
+//                    }
+//                }else {
+//                    run();
+//                }
+//
+//            }
+//        });
+//
+//        bigTaskCache.setLittleCache(new LittleCache(){
+//            @Override
+//            public void run() {
+//                super.run();
+//                HomepageBean cacheBean = CaCheManager.getInstance(WelcomeActivity.this).getCacheBean(WelcomeActivity.this);
+//                Log.d("####", "run: " + cacheBean.getMsg());
+//                if (cacheBean != null){
+//                    bigTaskCache.incFinishFlag();
+//                }
+//
+//            }
+//        });
+//    }
 
     @Override
     public void onGetDataSucess(HomepageBean data) {

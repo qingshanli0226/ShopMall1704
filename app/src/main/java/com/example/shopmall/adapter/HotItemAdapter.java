@@ -17,28 +17,28 @@ import com.example.shopmall.bean.HomepageBean;
 
 import java.util.List;
 
-public class HotRecyclerAdapter extends RecyclerView.Adapter<HotRecyclerAdapter.ViewHolder> {
+public class HotItemAdapter extends RecyclerView.Adapter<HotItemAdapter.ViewHolder> {
 
     private Context context;
-    private List<HomepageBean.ResultBean.HotInfoBean> hotInfoBeans;
+    private List<HomepageBean.ResultBean.HotInfoBean> hot_info_bean;
 
-    public HotRecyclerAdapter(Context context, List<HomepageBean.ResultBean.HotInfoBean> hotInfoBeans) {
+    public HotItemAdapter(Context context, List<HomepageBean.ResultBean.HotInfoBean> hot_info_bean) {
         this.context = context;
-        this.hotInfoBeans = hotInfoBeans;
+        this.hot_info_bean = hot_info_bean;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_hot_grid_view, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_hot_inflate, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        Glide.with(context).load(Constant.BASE_URL_IMAGE + hotInfoBeans.get(position).getFigure()).into(holder.iv_hot);
-        holder.tv_hot_grid_name.setText(hotInfoBeans.get(position).getName());
-        holder.tv_price.setText("￥" + hotInfoBeans.get(position).getCover_price());
+        Glide.with(context).load(Constant.BASE_URL_IMAGE + hot_info_bean.get(position).getFigure()).into(holder.iv_hot_figure);
+        holder.tv_hot_name.setText(hot_info_bean.get(position).getName());
+        holder.tv_hot_cover_price.setText("￥" + hot_info_bean.get(position).getCover_price());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,21 +61,21 @@ public class HotRecyclerAdapter extends RecyclerView.Adapter<HotRecyclerAdapter.
 
     @Override
     public int getItemCount() {
-        return hotInfoBeans.size();
+        return hot_info_bean.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView iv_hot;
-        public TextView tv_hot_grid_name;
-        public TextView tv_price;
+        private ImageView iv_hot_figure;
+        private TextView tv_hot_name;
+        private TextView tv_hot_cover_price;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            iv_hot = itemView.findViewById(R.id.iv_hot);
-            tv_hot_grid_name = itemView.findViewById(R.id.tv_hot_grid_name);
-            tv_price = itemView.findViewById(R.id.tv_price);
+            iv_hot_figure = itemView.findViewById(R.id.iv_hot_figure);
+            tv_hot_name = itemView.findViewById(R.id.tv_hot_name);
+            tv_hot_cover_price = itemView.findViewById(R.id.tv_hot_cover_price);
 
         }
     }

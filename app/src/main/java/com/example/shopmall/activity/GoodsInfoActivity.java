@@ -56,7 +56,7 @@ public class GoodsInfoActivity extends BaseActivity {
         tb_goods_info.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
             public void LeftClick() {
-
+                finish();
             }
 
             @Override

@@ -23,36 +23,36 @@ import java.util.ArrayList;
  */
 public class ClassifyOrdinaryRecyclerRightAdapter extends RecyclerView.Adapter<ClassifyOrdinaryRecyclerRightAdapter.ViewHolder> {
 
-    private Context mContext;
-    private ArrayList<ClassifyBean.ResultBean.ChildBean> childBeans;
+    private Context context;
+    private ArrayList<ClassifyBean.ResultBean.ChildBean> child_bean;
 
-    public ClassifyOrdinaryRecyclerRightAdapter(Context mContext, ArrayList<ClassifyBean.ResultBean.ChildBean> childBeans) {
-        this.mContext = mContext;
-        this.childBeans = childBeans;
+    public ClassifyOrdinaryRecyclerRightAdapter(Context context, ArrayList<ClassifyBean.ResultBean.ChildBean> child_bean) {
+        this.context = context;
+        this.child_bean = child_bean;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_ordinary_right, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_ordinary_right, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Glide.with(mContext).load(Constant.BASE_URL_IMAGE + childBeans.get(position).getPic()).into(holder.iv_ordinary_right);
-        holder.tv_ordinary_right.setText(childBeans.get(position).getName());
+        Glide.with(context).load(Constant.BASE_URL_IMAGE + child_bean.get(position).getPic()).into(holder.iv_ordinary_right);
+        holder.tv_ordinary_right.setText(child_bean.get(position).getName());
     }
 
     @Override
     public int getItemCount() {
-        return childBeans.size();
+        return child_bean.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView iv_ordinary_right;
-        public TextView tv_ordinary_right;
+        private ImageView iv_ordinary_right;
+        private TextView tv_ordinary_right;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

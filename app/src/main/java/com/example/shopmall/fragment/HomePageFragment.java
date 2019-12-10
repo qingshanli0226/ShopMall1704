@@ -15,7 +15,7 @@ import com.example.framework.base.BaseFragment;
 import com.example.shopmall.R;
 
 import com.example.shopmall.activity.MessageActivity;
-import com.example.shopmall.adapter.MyHomePageAdapter;
+import com.example.shopmall.adapter.HomePageAdapter;
 import com.example.shopmall.bean.HomepageBean;
 
 
@@ -54,8 +54,8 @@ public class HomePageFragment extends BaseFragment{
             }
         });
         HomepageBean cacheBean = new CaCheManager(getContext()).getCacheBean(getContext());
-        MyHomePageAdapter myHomePageAdapter = new MyHomePageAdapter(getContext(), cacheBean);
-        rv_home_page.setAdapter(myHomePageAdapter);
+        HomePageAdapter homePageAdapter = new HomePageAdapter(getContext(), cacheBean);
+        rv_home_page.setAdapter(homePageAdapter);
     }
 
     @Override

@@ -19,18 +19,18 @@ import java.util.ArrayList;
 
 public class GoodsInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Context mContext;
+    private Context context;
     private ArrayList<GoodsBean> list_goods;
 
-    public GoodsInfoAdapter(Context mContext, ArrayList<GoodsBean> list_goods) {
-        this.mContext = mContext;
+    public GoodsInfoAdapter(Context context, ArrayList<GoodsBean> list_goods) {
+        this.context = context;
         this.list_goods = list_goods;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new GoodsInfoViewHolder(LayoutInflater.from(mContext).inflate(R.layout.layout_goods_info, parent, false),mContext);
+        return new GoodsInfoViewHolder(LayoutInflater.from(context).inflate(R.layout.layout_goods_info, parent, false));
     }
 
     @Override
@@ -46,12 +46,12 @@ public class GoodsInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     class GoodsInfoViewHolder extends RecyclerView.ViewHolder {
 
-        public WebView wb_figure_goods_info;
-        public TextView tv_goods_name;
-        public TextView tv_cover_price;
-        public WebView wb_atguigu_goods_info;
+        private WebView wb_figure_goods_info;
+        private TextView tv_goods_name;
+        private TextView tv_cover_price;
+        private WebView wb_atguigu_goods_info;
 
-        public GoodsInfoViewHolder(@NonNull View itemView, Context mContext) {
+        public GoodsInfoViewHolder(@NonNull View itemView) {
             super(itemView);
 
             wb_figure_goods_info = itemView.findViewById(R.id.wb_figure_goods_info);
@@ -60,8 +60,7 @@ public class GoodsInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             wb_atguigu_goods_info = itemView.findViewById(R.id.wb_atguigu_goods_info);
         }
 
-
-        public void setData(final ArrayList<GoodsBean> list_goods, final int position) {
+        private void setData(final ArrayList<GoodsBean> list_goods, final int position) {
             //图片WebView
             wb_figure_goods_info.loadUrl(Constant.BASE_URL_IMAGE + list_goods.get(position).getFigure());
 

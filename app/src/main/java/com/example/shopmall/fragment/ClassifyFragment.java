@@ -30,10 +30,10 @@ public class ClassifyFragment extends BaseFragment implements IBaseView<Classify
     TitleBar tb_classify;
     LoadingPage lp_classify_loading;
 
-    ListView lv_left;
-    RecyclerView rv_right;
-    ClassifyLeftAdapter classifyLeftAdapter;
-    ClassifyRightAdapter classifyRightAdapter;
+    RecyclerView rv_classify_left;
+    RecyclerView rv_classify_right;
+    ClassifyLeftAdapter classify_left_adapter;
+    ClassifyRightAdapter classify_right_adapter;
 
     IntegerPresenter integerPresenter;
 
@@ -66,38 +66,28 @@ public class ClassifyFragment extends BaseFragment implements IBaseView<Classify
         });
 
         if (isFirst){
-            classifyLeftAdapter = new ClassifyLeftAdapter(getContext());
-            lv_left.setAdapter(classifyLeftAdapter);
+            classify_left_adapter = new ClassifyLeftAdapter(getContext());
+            rv_classify_left.setAdapter(classify_left_adapter);
         }
 
         getDataPresenter(urls[0]);
 
-        initListener(classifyLeftAdapter);
+        initListener();
 
     }
 
-    private void initListener(final ClassifyLeftAdapter adapter) {
-        lv_left.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    private void initListener() {
+        classify_left_adapter.setLikeliest(new ClassifyLeftAdapter.Likeliest() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                adapter.changeSelected(i);
-                if (i != 0){
+            public void getLikeliest(int position) {
+                classify_left_adapter.changeSelected(position);
+                if (position != 0){
                     isFirst = false;
                 }
-                getDataPresenter(urls[i]);
-                classifyLeftAdapter.notifyDataSetChanged();
-            }
-        });
+                getDataPresenter(urls[position]);
+                classify_left_adapter.notifyDataSetChanged();
 
-        lv_left.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                classifyLeftAdapter.changeSelected(i);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+                classify_left_adapter.changeSelected(position);
             }
         });
     }
@@ -113,10 +103,11 @@ public class ClassifyFragment extends BaseFragment implements IBaseView<Classify
         tb_classify = view.findViewById(R.id.tb_classify);
         LoadingPage lp_classify_loading = view.findViewById(R.id.lp_classify_loading);
 
-        lv_left = view.findViewById(R.id.lv_left);
-        rv_right = view.findViewById(R.id.rv_right);
+        rv_classify_left = view.findViewById(R.id.rv_classify_left);
+        rv_classify_right = view.findViewById(R.id.rv_classify_right);
 
-        rv_right.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv_classify_left.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv_classify_right.setLayoutManager(new LinearLayoutManager(getContext()));
 
     }
 
@@ -127,8 +118,8 @@ public class ClassifyFragment extends BaseFragment implements IBaseView<Classify
 
     @Override
     public void onGetDataSucess(ClassifyBean data) {
-        classifyRightAdapter = new ClassifyRightAdapter(getContext(), data.getResult());
-        rv_right.setAdapter(classifyRightAdapter);
+        classify_right_adapter = new ClassifyRightAdapter(getContext(), data.getResult());
+        rv_classify_right.setAdapter(classify_right_adapter);
 
     }
 

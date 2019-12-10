@@ -15,10 +15,10 @@ import java.util.List;
 
 public class StepHistoryAdapter extends RecyclerView.Adapter<StepHistoryAdapter.MyHolder> {
 
-    List<ShopStepBean>stepList;
+    List<ShopStepBean> shop_step_bean;
 
     public StepHistoryAdapter(List<ShopStepBean> stepHistory) {
-        this.stepList=stepHistory;
+        this.shop_step_bean=stepHistory;
     }
 
     @NonNull
@@ -31,19 +31,20 @@ public class StepHistoryAdapter extends RecyclerView.Adapter<StepHistoryAdapter.
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
 
-        holder.day.setText(stepList.get(position).getDate());
-        holder.count.setText(stepList.get(position).getCurrent_step());
+        holder.day.setText(shop_step_bean.get(position).getDate());
+        holder.count.setText(shop_step_bean.get(position).getCurrent_step());
 
     }
 
     @Override
     public int getItemCount() {
-        return stepList.size();
+        return shop_step_bean.size();
     }
 
     class MyHolder extends RecyclerView.ViewHolder{
 
-        TextView day,count;
+        private TextView day;
+        private TextView count;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);

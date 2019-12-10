@@ -17,8 +17,8 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <ListView
-            android:id="@+id/lv_left"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_classify_left"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="#11000000"
@@ -36,7 +36,7 @@
                 android:layout_height="match_parent" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_right"
+                android:id="@+id/rv_classify_right"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
