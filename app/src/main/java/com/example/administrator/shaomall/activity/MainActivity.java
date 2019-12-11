@@ -44,7 +44,7 @@ public class MainActivity extends BaseActivity {
         fragments.add(new FindFragment());
         fragments.add(new Shoppingcart());
         fragments.add(new MineFragment());
-
+        toClass(com.example.remindsteporgan.MainActivity.class);
     }
 
     private void setTab() {

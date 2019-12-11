@@ -1,7 +1,5 @@
 package com.example.shoppingcart.Ui;
 
-import android.os.UserManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,21 +7,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.commen.ShopMailError;
 import com.example.shoppingcart.Adapter.RvAdp;
-import com.example.shoppingcart.Base.ShoppingCartBean;
+import com.example.shoppingcart.bean.ShoppingCartBean;
 import com.example.shoppingcart.R;
 import com.example.shoppingcart.presenter.ShoppingcartPresenter;
-import com.shaomall.framework.base.BaseActivity;
 import com.shaomall.framework.base.BaseMVPFragment;
-import com.shaomall.framework.manager.UserInfoManager;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Shoppingcart extends BaseMVPFragment<String> {
     private LinearLayout topBar;
@@ -90,6 +84,7 @@ public class Shoppingcart extends BaseMVPFragment<String> {
     public void onRequestHttpDataSuccess(int requestCode, String message, String data) {
 
             Log.d("SSH:",data);
+
             rvAdp.notifyDataSetChanged();
 
     }

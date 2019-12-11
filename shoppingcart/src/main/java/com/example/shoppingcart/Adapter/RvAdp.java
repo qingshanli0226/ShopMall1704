@@ -10,7 +10,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.shoppingcart.Base.ShoppingCartBean;
+import com.example.shoppingcart.bean.ShoppingCartBean;
 import com.example.shoppingcart.R;
 import com.squareup.picasso.Picasso;
 
