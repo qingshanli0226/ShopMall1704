@@ -1,22 +1,26 @@
 package com.example.step.Ui;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.common.OrmUtils;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
-import com.example.common.OrmUtils;
+import com.example.framework.bean.ShopStepBean;
 import com.example.step.R;
 import com.example.step.CustomView.RunView;
-import com.example.common.ShopStepBean;
 import com.example.step.CustomView.StepArcView;
 import com.example.framework.manager.StepManager;
+import com.litesuits.orm.LiteOrm;
 
 import java.util.List;
 
@@ -31,6 +35,7 @@ public class IntegralActivity extends BaseActivity {
    ArrayAdapter<String> stringArrayAdapter;
    TextView tvHistory;
 
+   boolean isFirst=false;
     @Override
     protected int setLayout() {
         return R.layout.activity_integral;
@@ -74,7 +79,11 @@ public class IntegralActivity extends BaseActivity {
             }
         });
 
-
+//        List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
+//        intergral_Step.setText(queryAll.get(queryAll.size()-1).getCurrent_step()+"");
+//        String current_step = queryAll.get(queryAll.size() -1).getCurrent_step();
+//        int i = Integer.parseInt(current_step);
+//        stepArcView.setCurrentCount(10000,i);
 
         tvHistory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,13 +92,15 @@ public class IntegralActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-        //当前步数和积分
-        List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
-        intergral_Step.setText(queryAll.get(queryAll.size()-1).getCurrent_step()+"");
-        String current_step = queryAll.get(queryAll.size() - 1).getCurrent_step();
-        int i = Integer.parseInt(current_step);
-        stepArcView.setCurrentCount(10000,i);
 
+
+
+
+
+
+
+
+        //当前步数和积分
 
 
 
@@ -98,6 +109,8 @@ public class IntegralActivity extends BaseActivity {
         StepManager.getInstance().registerListener(new StepManager.StepManagerListener() {
             @Override
             public void onStepChange(int count) {
+
+                
                 intergral_Step.setText(count+"");
                 stepArcView.setCurrentCount(10000,count);
 
@@ -109,6 +122,7 @@ public class IntegralActivity extends BaseActivity {
               integral.setText(intgal+"");
             }
         });
+
 
 
 

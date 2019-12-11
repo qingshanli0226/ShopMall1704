@@ -535,7 +535,13 @@ dimen notification_small_icon_size_as_large
 dimen notification_subtext_size
 dimen notification_top_pad
 dimen notification_top_pad_large_text
-dimen step_tvSize
+dimen stepView_height
+dimen stepView_weight
+dimen step_margin20
+dimen step_paddingLeft
+dimen step_tvSize20
+dimen step_tvSize24
+dimen titleBar_height
 dimen tooltip_corner_radius
 dimen tooltip_horizontal_padding
 dimen tooltip_margin
@@ -802,6 +808,7 @@ id src_in
 id src_over
 id step_item_count
 id step_item_day
+id step_item_time
 id submenuarrow
 id submit_area
 id tabMode

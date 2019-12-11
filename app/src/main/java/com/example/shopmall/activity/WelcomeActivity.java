@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -25,7 +26,7 @@ import com.example.shopmall.presenter.IntegerPresenter;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class WelcomeActivity extends BaseActivity implements IGetBaseView {
+public class WelcomeActivity extends BaseActivity implements IGetBaseView<HomepageBean> {
 
     public ImageView iv_welcome;
     public int i = 0;
@@ -65,17 +66,20 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView {
 
     @Override
     public void initData() {
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(iv_welcome,"Alpha",0,1);
         objectAnimator.setDuration(3000);
         objectAnimator.start();
 
-        IntegerPresenter integerPresenter = new IntegerPresenter(Constant.HOME_URL, HomepageBean.class);
-        integerPresenter.attachGetView(this);
-        integerPresenter.getGetData();
-
         boolean connectStatus = ConnectManager.getInstance().getConnectStatus();
         if (connectStatus) {
             Toast.makeText(this, "有网络连接", Toast.LENGTH_SHORT).show();
+
+            IntegerPresenter integerPresenter = new IntegerPresenter(Constant.HOME_URL, HomepageBean.class);
+            integerPresenter.attachGetView(this);
+            integerPresenter.getGetData();
 
             timer = new Timer(true);
             timer.schedule(new TimerTask() {
@@ -90,11 +94,12 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView {
             startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
             finish();
         }
+
     }
 
     @Override
-    public void onGetDataSucess(Object data) {
-
+    public void onGetDataSucess(HomepageBean data) {
+        CaCheManager.getInstance(this).savaBean(data);
     }
 
     @Override

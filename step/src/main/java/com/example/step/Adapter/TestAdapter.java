@@ -8,22 +8,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.framework.bean.ShopStepBean;
 import com.example.framework.bean.ShopStepTimeRealBean;
 import com.example.step.R;
-import com.example.framework.bean.ShopStepBean;
 
 import java.util.List;
 
-public class StepHistoryAdapter extends RecyclerView.Adapter<StepHistoryAdapter.MyHolder> {
+public class TestAdapter extends RecyclerView.Adapter<TestAdapter.MyHolder>  {
 
-    List<ShopStepBean>stepList;
+    private List<ShopStepTimeRealBean> shopStepTimeRealBeans;
 
-    int mcount;
-    public StepHistoryAdapter(List<ShopStepBean> stepHistory, int count) {
-        this.stepList=stepHistory;
-        this.mcount=count;
+    public TestAdapter(List<ShopStepTimeRealBean> threeList) {
+        this.shopStepTimeRealBeans=threeList;
     }
-
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -33,20 +30,14 @@ public class StepHistoryAdapter extends RecyclerView.Adapter<StepHistoryAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
-
-
-            holder.day.setText(stepList.get(position).getDate());
-            holder.count.setText(stepList.get(position).getCurrent_step()+"步");
-            holder.time.setText(stepList.get(position).getTime());
-        if(position==stepList.size()-1){
-            holder.count.setText(mcount+"步");
-        }
-
+        holder.day.setText(shopStepTimeRealBeans.get(position).getDate());
+        holder.time.setText(shopStepTimeRealBeans.get(position).getTime());
+        holder.count.setText(shopStepTimeRealBeans.get(position).getCurrentStep()+"步");
     }
 
     @Override
     public int getItemCount() {
-            return stepList.size();
+        return shopStepTimeRealBeans.size();
     }
 
     class MyHolder extends RecyclerView.ViewHolder{

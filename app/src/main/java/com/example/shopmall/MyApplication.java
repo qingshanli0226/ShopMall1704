@@ -36,10 +36,7 @@ public class MyApplication extends Application {
         UserManager.getInstance().init(this);
 //        UserManager.getInstance().init(this);
 
-        ConnectManager.getInstance().init(this);
-        //初始化异常
-        CrashHandler.getInstance(this).init();
-        //初始化缓存管理类
+
 
 
     }
