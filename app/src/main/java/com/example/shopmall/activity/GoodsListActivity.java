@@ -46,7 +46,7 @@ public class GoodsListActivity extends BaseActivity implements IGetBaseView {
         tb_goods_list.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
             public void LeftClick() {
-
+                finish();
             }
 
             @Override

@@ -1,7 +1,7 @@
 package com.example.shopmall.presenter;
 
 import com.example.framework.base.BasePresenter;
-import com.example.shopmall.bean.LoginBean;
+import com.example.framework.bean.LoginBean;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -33,7 +33,7 @@ public class LoginPresenter extends BasePresenter<LoginBean> {
 
     @Override
     protected HashMap<String, String> getHeader() {
-        return null;
+        return new HashMap<>();
     }
 
     @Override

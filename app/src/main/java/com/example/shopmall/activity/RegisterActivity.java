@@ -9,8 +9,6 @@ import android.widget.Toast;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IPostBaseView;
-import com.example.framework.bean.UserBean;
-import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
 import com.example.shopmall.bean.RegisterBean;
 import com.example.shopmall.presenter.RegisterPresenter;
@@ -65,13 +63,11 @@ public class RegisterActivity extends BaseActivity implements IPostBaseView<Regi
             public void onClick(View v) {
                 String name = mName.getText().toString();
                 String pwd = mPassWord.getText().toString();
-                UserBean userBean = new UserBean();
-                userBean.setName(name);
-                userBean.setPassword(pwd);
-                UserManager.getInstance().addUser(userBean);
                 integerPresenter = new RegisterPresenter(name, pwd);
                 integerPresenter.attachPostView(RegisterActivity.this);
                 integerPresenter.getCipherTextData();
+                mName.setText("");
+                mPassWord.setText("");
             }
         });
 
@@ -81,10 +77,14 @@ public class RegisterActivity extends BaseActivity implements IPostBaseView<Regi
     @Override
     public void onPostDataSucess(RegisterBean data) {
         Toast.makeText(this, data.getMessage(), Toast.LENGTH_SHORT).show();
+        if (data.getResult().equals("注册成功")) {
+            finish();
+        }
     }
 
     @Override
     public void onPostDataFailed(String ErrorMsg) {
-
+        mName.setText("");
+        mPassWord.setText("");
     }
 }

@@ -30,18 +30,16 @@ public class HomePageFragment extends BaseFragment{
         tb_homepage.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
             public void LeftClick() {
-                Log.e("####", "左边");
+
             }
 
             @Override
             public void RightClick() {
-                Log.e("####", "右边");
                 startActivity(new Intent(getContext(), MessageActivity.class));
             }
 
             @Override
             public void CenterClick() {
-                Log.e("####", "中间");
             }
         });
         HomepageBean cacheBean = new CaCheManager(getContext()).getCacheBean(getContext());

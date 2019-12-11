@@ -1,16 +1,22 @@
 package com.example.buy.presenter;
 
+import com.example.buy.bean.InsertBean;
 import com.example.framework.base.BasePresenter;
+
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
-public class InsertPresenter extends BasePresenter {
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+
+public class InsertPresenter extends BasePresenter<InsertBean> {
 
     private String Config;
     private Type type;
     private HashMap<String, String> head;
-
+    private String s;
 
     public InsertPresenter(String config, Type type, HashMap<String, String> head) {
         Config = config;
@@ -18,9 +24,11 @@ public class InsertPresenter extends BasePresenter {
         this.head = head;
     }
 
-    public InsertPresenter(String config, Type type) {
-        Config = config;
+    public InsertPresenter(String config, Type type, HashMap<String, String> hashMap, String s) {
+        this.Config = config;
         this.type = type;
+        this.head = hashMap;
+        this.s = s;
     }
 
     @Override
@@ -40,6 +48,12 @@ public class InsertPresenter extends BasePresenter {
 
     @Override
     protected HashMap<String, String> getParam() {
-        return null;
+        return new HashMap<>();
+    }
+
+    @Override
+    protected RequestBody getRequestBody() {
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), s);
+        return body;
     }
 }

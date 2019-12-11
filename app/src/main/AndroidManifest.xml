@@ -21,7 +21,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="donut">
-        <activity android:name=".activity.GoodsInfoActivity" />
+        <activity android:name=".activity.GoodsInfoActivity" >
+
+        </activity>
         <activity android:name=".activity.GoodsListActivity" />
         <activity android:name=".activity.MessageActivity" />
         <activity android:name=".activity.RegisterActivity">
@@ -36,11 +38,7 @@
             android:name=".activity.IntegralActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activity.WelcomeActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <service
@@ -50,8 +48,11 @@
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
-
 </manifest>

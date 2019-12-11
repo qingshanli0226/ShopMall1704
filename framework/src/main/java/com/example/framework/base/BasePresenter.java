@@ -1,5 +1,7 @@
 package com.example.framework.base;
 
+import android.util.Log;
+
 import com.example.common.SignUtil;
 import com.example.net.RetrofitCreator;
 import com.google.gson.Gson;
@@ -32,8 +34,8 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        if (iLoadView!=null)
-                        iLoadView.onLoadingPage();
+                        if (iLoadView != null)
+                            iLoadView.onLoadingPage();
                     }
 
                     @Override
@@ -60,9 +62,10 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                     }
                 });
     }
+
     @Override
     public void getCipherTextData() {
-        RetrofitCreator.getNetPostService().register(getPath(), getSign())
+        RetrofitCreator.getNetPostService().getFormData(getPath(), getHeader(), getSign())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {
@@ -85,6 +88,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.e("####", e.getMessage());
                         if (iPostBaseView != null)
                             iPostBaseView.onPostDataFailed(ErrorUtil.handleError(e));
                     }
@@ -135,7 +139,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
     @Override
     public void getPostJsonData() {
-        RetrofitCreator.getNetPostService().getJsonData(getPath(), getRequestBody())
+        RetrofitCreator.getNetPostService().getJsonData(getHeader(), getPath(), getRequestBody())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {
@@ -148,8 +152,9 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         try {
+                            T data = new Gson().fromJson(responseBody.string(), getBeanType());
                             if (iPostBaseView != null)
-                                iPostBaseView.onPostDataSucess((T) responseBody.string());
+                                iPostBaseView.onPostDataSucess(data);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -157,6 +162,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.e("####", e.getMessage());
                         if (iPostBaseView != null)
                             iPostBaseView.onPostDataFailed(ErrorUtil.handleError(e));
                     }
@@ -169,7 +175,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                 });
     }
 
-    private RequestBody getRequestBody() {
+    protected RequestBody getRequestBody() {
         return null;
     }
 

@@ -30,6 +30,7 @@ public class RetrofitCreator {
     private static NetGetService createNetGetService() {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
 
         OkHttpClient httpClient = new OkHttpClient.Builder()
                 .connectTimeout(1000, TimeUnit.SECONDS)
@@ -46,9 +47,9 @@ public class RetrofitCreator {
     }
 
     private static NetPostService createNetPostService() {
-
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.HEADERS);
 
         OkHttpClient httpClient = new OkHttpClient.Builder()
                 .connectTimeout(1000, TimeUnit.SECONDS)
