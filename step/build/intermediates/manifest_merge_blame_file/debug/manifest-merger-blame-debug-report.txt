@@ -6,26 +6,26 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="17"
-8-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml
+8-->E:\GitLearn\ShopMall1704\step\src\main\AndroidManifest.xml
 9        android:targetSdkVersion="29" />
-9-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml
+9-->E:\GitLearn\ShopMall1704\step\src\main\AndroidManifest.xml
 10
 11    <application>
-11-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:5:5-16:19
+11-->E:\GitLearn\ShopMall1704\step\src\main\AndroidManifest.xml:5:5-16:19
 12        <activity android:name="com.example.step.Ui.HistoryActivity" />
-12-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:6:9-65
-12-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:6:19-53
+12-->E:\GitLearn\ShopMall1704\step\src\main\AndroidManifest.xml:6:9-65
+12-->E:\GitLearn\ShopMall1704\step\src\main\AndroidManifest.xml:6:19-53
 13        <activity
-13-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:7:9-11:20
+13-->E:\GitLearn\ShopMall1704\step\src\main\AndroidManifest.xml:7:9-11:20
 14            android:name="com.example.step.Ui.IntegralActivity"
-14-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:7:19-54
+14-->E:\GitLearn\ShopMall1704\step\src\main\AndroidManifest.xml:7:19-54
 15            android:screenOrientation="portrait" >
-15-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:8:13-49
+15-->E:\GitLearn\ShopMall1704\step\src\main\AndroidManifest.xml:8:13-49
 16        </activity>
 17
 18        <service android:name="com.example.framework.StepService" >
-18-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:13:9-15:19
-18-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:13:18-66
+18-->E:\GitLearn\ShopMall1704\step\src\main\AndroidManifest.xml:13:9-15:19
+18-->E:\GitLearn\ShopMall1704\step\src\main\AndroidManifest.xml:13:18-66
 19        </service>
 20    </application>
 21
