@@ -50,7 +50,6 @@
             android:layout_weight="1"
             android:layout_height="match_parent" />
         <EditText
-
             android:id="@+id/signinUser"
             android:textColor="@color/darkturquoise"
             android:background="@null"

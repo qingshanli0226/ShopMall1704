@@ -1,6 +1,7 @@
 package com.shaomall.framework.base.presenter;
 
 import android.util.Log;
+
 import com.alibaba.fastjson.JSONObject;
 import com.example.commen.util.ErrorUtil;
 import com.example.commen.LoadingPageConfig;

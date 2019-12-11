@@ -2,11 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.administrator.shaomall">
     <!-- 联网的权限: -->
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- 写SD卡权限: -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 读SD卡权限: -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 读取联系人的权限： -->
-    <uses-permission android:name="android.permission.READ_CONTACTS" /> <!-- 读取短信的权限： -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 写SD卡权限: -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 读SD卡权限: -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- 读取联系人的权限： -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- 读取短信的权限： -->
     <uses-permission android:name="android.permission.READ_SMS" />
+
 
     <application
         android:name=".app.ShaoHuaApplication"
@@ -29,6 +34,7 @@
         <activity
             android:name=".activity.WelcomeActivity"
             android:supportsPictureInPicture="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -68,5 +74,6 @@
         <meta-data
             android:name="android.max_aspect"
             android:value="2.4" />
+
     </application>
 </manifest>

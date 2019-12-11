@@ -3,96 +3,103 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login.LoginActivity"
     android:background="@mipmap/bei"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".login.LoginActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/loginLinearLayoutHeight">
 
     </LinearLayout>
+
     <LinearLayout
-        android:layout_marginTop="@dimen/loginMarginTop"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/loginMarginTop"
         android:layout_weight="1"
         android:orientation="horizontal">
 
-            <TextView
-                android:textColor="@color/darkturquoise"
-                android:layout_marginLeft="@dimen/loginUserTextMarginLeft"
-                android:textSize="@dimen/loginUserTextViewSize"
-                android:gravity="center"
-                android:text="@string/loginUserTextVIewText"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent" />
-            <EditText
-                android:id="@+id/loginUser"
-                android:textColor="@color/darkturquoise"
-                android:background="@null"
-                android:textCursorDrawable="@drawable/cursor_color"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"/>
-
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginTop="@dimen/loginMarginTop"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-            <TextView
-                android:textColor="@color/darkturquoise"
-                android:layout_marginLeft="@dimen/loginPassWordTextviewMarginLeft"
-                android:textSize="@dimen/loginPassWordTextviewTextSize"
-                android:gravity="center"
-                android:text="密码:"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent" />
-            <EditText
-                android:id="@+id/loginPass"
-                android:textColor="@color/darkturquoise"
-                android:background="@null"
-                android:textCursorDrawable="@drawable/cursor_color"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"/>
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="@dimen/loginMarginTop"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
         <TextView
-            android:id="@+id/loginSignin"
-            android:layout_marginRight="@dimen/loginLoginSigninTextViewMarginRight"
-            android:textColor="@color/darkturquoise"
-            android:textSize="@dimen/loginLoginSigninTextViewTextSize"
-            android:gravity="right|center"
-            android:text="@string/loginLoginSigninTextViewText"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_marginLeft="@dimen/loginUserTextMarginLeft"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/loginUserTextVIewText"
+            android:textColor="@color/darkturquoise"
+            android:textSize="@dimen/loginUserTextViewSize" />
+
+        <EditText
+            android:id="@+id/loginUser"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@null"
+            android:textColor="@color/darkturquoise"
+            android:textCursorDrawable="@drawable/cursor_color" />
+
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/loginMarginTop"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/loginPassWordTextviewMarginLeft"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="密码:"
+            android:textColor="@color/darkturquoise"
+            android:textSize="@dimen/loginPassWordTextviewTextSize" />
+
+        <EditText
+            android:id="@+id/loginPass"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@null"
+            android:textColor="@color/darkturquoise"
+            android:textCursorDrawable="@drawable/cursor_color" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/loginMarginTop"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/loginSignin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/loginLoginSigninTextViewMarginRight"
+            android:layout_weight="1"
+            android:gravity="right|center"
+            android:text="@string/loginLoginSigninTextViewText"
+            android:textColor="@color/darkturquoise"
+            android:textSize="@dimen/loginLoginSigninTextViewTextSize" />
+
+    </LinearLayout>
+
     <com.example.administrator.shaomall.login.diyview.DIYButton
 
         android:id="@+id/diybutton"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/loginDiyMarginTop"
         android:layout_width="@dimen/loginDiyWidth"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/loginDiyMarginTop"
+        android:layout_weight="1" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"

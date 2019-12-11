@@ -10,7 +10,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.shoppingcart.Base.ShoppingCartBean;
+import com.example.shoppingcart.bean.ShoppingCartBean;
 import com.example.shoppingcart.R;
 import com.squareup.picasso.Picasso;
 
@@ -34,10 +34,11 @@ public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler> {
 
     @Override
     public void onBindViewHolder(@NonNull final Myhodler myhodler, final int i) {
-        Picasso.with(context).load(arr.get(i).getUrl());
+        Picasso.with(context).load(arr.get(i).getUrl()).into(myhodler.ivAdapterListPic);
         myhodler.tvGoodsName.setText(arr.get(i).getProductName());
-        myhodler.tvGoodsPrice.setText(arr.get(i).getProductId());
+        myhodler.tvGoodsPrice.setText(arr.get(i).getProductPrice());
         myhodler.tvNum.setText(arr.get(i).getProductNum());
+
         myhodler.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,6 +47,7 @@ public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler> {
             }
         });
     }
+
 
     @Override
     public int getItemCount() {

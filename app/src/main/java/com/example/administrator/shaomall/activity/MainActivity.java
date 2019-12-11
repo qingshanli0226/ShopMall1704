@@ -9,7 +9,7 @@ import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.type.TypeFragment;
 import com.example.administrator.shaomall.home.HomeFragment;
 import com.example.administrator.shaomall.login.LoginActivity;
-import com.example.shoppingcart.Ui.Shoppingcart;
+import com.example.shoppingcart.Ui.ShoppingcartActivity;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
@@ -39,9 +39,8 @@ public class MainActivity extends BaseActivity {
         fragments.add(new HomeFragment());
         fragments.add(new TypeFragment());
         fragments.add(new FindFragment());
-        fragments.add(new Shoppingcart());
+        fragments.add(new ShoppingcartActivity());
         fragments.add(new MineFragment());
-
     }
 
     private void setTab() {
@@ -57,11 +56,9 @@ public class MainActivity extends BaseActivity {
                 if (position==3){
                     //判断登录
                     UserInfoManager instance = UserInfoManager.getInstance();
-                    boolean login = instance.isLogin();
-                    if (login){
+                    if (instance.isLogin()){
                         //已经登录了
                         switchFragment(fragments.get(position));
-
                     }else {
                         //还没有登录
                         toClass(LoginActivity.class);

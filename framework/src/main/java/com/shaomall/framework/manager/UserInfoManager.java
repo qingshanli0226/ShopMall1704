@@ -142,4 +142,6 @@ public class UserInfoManager {
     public interface UserInfoStatusListener {
         void onUserStatus(boolean isLogin, LoginBean userInfo);//用户登录状态
     }
+
+
 }

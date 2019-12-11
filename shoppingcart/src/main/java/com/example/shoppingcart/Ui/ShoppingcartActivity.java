@@ -3,7 +3,6 @@ package com.example.shoppingcart.Ui;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -12,19 +11,20 @@ import android.widget.Toast;
 
 import com.example.commen.util.ShopMailError;
 import com.example.shoppingcart.Adapter.RvAdp;
-import com.example.shoppingcart.Base.ShoppingCartBean;
+import com.example.shoppingcart.bean.ShoppingCartBean;
 import com.example.shoppingcart.R;
 import com.example.shoppingcart.presenter.ShoppingcartPresenter;
 import com.shaomall.framework.base.BaseMVPFragment;
+import com.shaomall.framework.manager.UserInfoManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Shoppingcart extends BaseMVPFragment<ShoppingCartBean> {
+public class ShoppingcartActivity extends BaseMVPFragment<ShoppingCartBean> {
     private LinearLayout topBar;
     private TextView title;
     private RecyclerView listview;
-    ArrayList<ShoppingCartBean> arr=new ArrayList<>();
+    ArrayList<ShoppingCartBean> arr = new ArrayList<>();
 
     private CheckBox allChekbox;
     private TextView tvTotalPrice;
@@ -49,15 +49,13 @@ public class Shoppingcart extends BaseMVPFragment<ShoppingCartBean> {
         tvTotalPrice = (TextView) view.findViewById(R.id.tv_total_price);
         tvDelete = (TextView) view.findViewById(R.id.tv_delete);
         tvGoToPay = (TextView) view.findViewById(R.id.tv_go_to_pay);
-        presenter=new ShoppingcartPresenter();
+        presenter = new ShoppingcartPresenter();
         presenter.attachView(this);
+        rvAdp = new RvAdp(arr, getContext());
     }
 
     @Override
     protected void initData() {
-        //网络请求
-        presenter.doGetHttpRequest(200);
-        rvAdp=new RvAdp(arr,getContext());
         listview.setLayoutManager(new LinearLayoutManager(getContext()));
         listview.setAdapter(rvAdp);
 
@@ -65,24 +63,30 @@ public class Shoppingcart extends BaseMVPFragment<ShoppingCartBean> {
             @Override
             public void hui(int i) {
 
-                Toast.makeText(mContext, ""+i, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "" + i, Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
     @Override
-    public void onRequestHttpDataFailed(int requestCode, ShopMailError error) {
-        Toast.makeText(mContext, ""+error.getErrorMessage(), Toast.LENGTH_SHORT).show();
-
+    public void onStart() {
+        super.onStart();
+        if (UserInfoManager.getInstance().isLogin()) {
+            //网络请求
+            presenter.doGetHttpRequest();
+        }
     }
 
 
     @Override
-    public void onRequestHttpDataListSuccess(int requestCode, String message, List<ShoppingCartBean> data) {
+    public void onRequestHttpDataFailed(ShopMailError error) {
+        Toast.makeText(mContext, "" + error.getErrorMessage(), Toast.LENGTH_SHORT).show();
+    }
 
-        Log.d("SSH:",data.toString());
+    @Override
+    public void onRequestHttpDataListSuccess(String message, List<ShoppingCartBean> data) {
+        arr.clear();
+        arr.addAll(data);
         rvAdp.notifyDataSetChanged();
     }
 }

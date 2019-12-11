@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.example.remindsteporgan.Base.Bean;
@@ -26,59 +27,162 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity  implements SensorEventListener {
 
     private TextView tv1;
+    private TextView historySteps;
+
+
+
+    //TODO 获取当前系统的时间
+    Calendar calendar=Calendar.getInstance();
+    //TODO 这个是获取天数
+    int day = calendar.get(Calendar.DAY_OF_MONTH);
 
     float X;
     BeanDao beanDao;
-    //ss
-    float y=0;
 
+    //TODO 加的步数
     float plus=0;
-    int daychange;
-    Sensor defaultSensor;
+
+
+    //TODO 传感器
     private SensorManager sm;
+    //TODO 定义的数据库
     DaoSession dao;
+    //TODO SP存储
     SharedPreferences sp;
+    private CallbackIntegralListener callbackIntegralListener=null;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.remindactivity_main);
         tv1 = (TextView) this.findViewById(R.id.tv1);
-
-
-
-
-
-        //实例化数据库
+        historySteps = (TextView) findViewById(R.id.historySteps);
+        sp=getSharedPreferences("ssh",0);
+        //TODO 实例化数据库
         DaoMaster.DevOpenHelper openHelper=new DaoMaster.DevOpenHelper(this,"ssh");
         SQLiteDatabase writableDatabase = openHelper.getWritableDatabase();
         DaoMaster daoMaster = new DaoMaster(writableDatabase);
         dao = daoMaster.newSession();
-        //添加
-        //daoSession.insert()
+        beanDao = dao.getBeanDao();
 
-        sp=getSharedPreferences("ssh",0);
-        String type = sp.getString("type", "");
-        if (type.equals("")){
-            //第一次运行不管
-        }else {
-            //已经不是第一次运行
-            //step代表和上一次运行相差了多少步
-            int step = sp.getInt("step", 0);
-            plus=step;
-        }
-
-        //系统保活
-        Keep_alice();
 
 
 
         sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         // 计步统计
-        sm.registerListener(this, sm.getDefaultSensor(Sensor.TYPE_STEP_COUNTER), SensorManager.SENSOR_DELAY_NORMAL);
-        // 单次计步
-        sm.registerListener(this, sm.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR), SensorManager.SENSOR_DELAY_NORMAL);
+        sm.registerListener(this, sm.getDefaultSensor(Sensor.TYPE_STEP_COUNTER),
+                SensorManager.SENSOR_DELAY_NORMAL);
 
+
+    }
+
+
+
+
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if(event.sensor.getType() == Sensor.TYPE_STEP_COUNTER){
+
+            //TODo 获取到系统里的步数
+            X = event.values[0];
+            //TODO 如果是新的一天就吧X的值给y然后减去让他归零
+            long y = sp.getLong("y", 0);
+            Log.d("SSSH:",y+"");
+            if (y==0){
+                //TODO 第一次运行让他等于系统计步器的数量然后可以减去本身让这一天的值等于0
+                SharedPreferences.Editor edit = sp.edit();
+                edit.putLong("y", (long) X);
+                edit.apply();
+                y= (long) X;
+            }else {
+                //TODO 判断天数是否改变了
+                int daychange = sp.getInt("daychange", 0);
+                //TODO 还是同一天没有归零
+                if (daychange==0){
+                    //TODO 说明是第一次运行
+
+                    SharedPreferences.Editor edit = sp.edit();
+                    edit.putInt("daychange",day);
+                    edit.apply();
+                }else {
+                    //TODO 不是第一次运行了
+                    if (daychange==day){
+                        //TODO 还是同一天
+                        //TODO step代表和上一次运行相差了多少步
+                        //long step = sp.getLong("step", 0);
+                        //TODO 这个是算出程序没有运行期间走了多少步
+                        //plus=X-step;
+                    }else {
+                        //TODO 不是同一天了
+                        daychange=day;
+                        SharedPreferences.Editor edit = sp.edit();
+                        edit.putLong("y",0);
+                        edit.putLong("step",0);
+                        edit.apply();
+                    }
+                }
+            }
+
+
+            tv1.setText("今天走了"+(X-y+plus)+"步");
+
+
+
+
+            if (callbackIntegralListener!=null){
+                callbackIntegralListener.onCallbacksIntegral((int) (X-y+plus));
+            }
+
+        }
+    }
+
+    /**
+     * 注册监听
+     * @param callbackIntegralListener
+     */
+    public void registerCallbackIntegralListener(CallbackIntegralListener callbackIntegralListener) {
+        this.callbackIntegralListener=callbackIntegralListener;
+    }
+
+    /**
+     * 注销监听
+     * @param callbackIntegralListener
+     */
+    public void unRegisterCallbackIntegralListener(CallbackIntegralListener callbackIntegralListener) {
+        if (callbackIntegralListener!=null){
+            this.callbackIntegralListener=null;
+        }
+    }
+
+    interface CallbackIntegralListener {
+        void onCallbacksIntegral(int Integral);
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        //TODO 获取当前系统的时间
+        Calendar calendar=Calendar.getInstance();
+        //TODO 这个是获取小时
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        //TODO 这个是获取天
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        //TODO greendao添加语句
+        beanDao.insert(new Bean((long) (plus),day+""));
+        SharedPreferences sp=getSharedPreferences("ssh",0);
+        SharedPreferences.Editor edit = sp.edit();
+        //TODO 退出前提交一个退出前的步数方便下次打开做计算期间相差多少步
+        edit.putLong("step", (long) X);
+        edit.putString("type","0");
+        edit.apply();
 
     }
 
@@ -96,75 +200,5 @@ public class MainActivity extends AppCompatActivity  implements SensorEventListe
                 screenManager.startActivity();
             }
         });
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        if(event.sensor.getType() == Sensor.TYPE_STEP_COUNTER){
-            //获取当前系统的时间
-            Calendar calendar=Calendar.getInstance();
-
-            X = event.values[0];
-            if (y==0){
-                y=X;
-            }else {
-
-            }
-            if (daychange==0){
-                //说明是第一次运行
-                SharedPreferences.Editor edit = sp.edit();
-                edit.putInt("step", (int) X);
-                //这个是获取天数
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
-                daychange=day;
-            }else {
-                //不是第一次运行了
-
-                //greendao查询语句
-                List<Bean> where_time = beanDao.queryRaw("where time = ?",daychange+"");
-
-                //查找出最新的
-                if (where_time==null){
-                    //这个说明就是新一天的数据
-
-                }else {
-                    //还是当天的数据
-                    SharedPreferences.Editor edit = sp.edit();
-                    edit.putInt("step",0);
-
-                }
-
-            }
-            tv1.setText("COUNTER："+(X-y+plus));
-
-
-
-            beanDao = dao.getBeanDao();
-
-
-
-
-        }
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        //获取当前系统的时间
-        Calendar calendar=Calendar.getInstance();
-        //这个是获取小时
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        //这个是获取天
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        //greendao添加语句
-        beanDao.insert(new Bean((long) (X-y+plus),day+""));
-
     }
 }
