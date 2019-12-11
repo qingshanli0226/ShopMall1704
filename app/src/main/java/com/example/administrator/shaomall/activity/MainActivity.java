@@ -9,7 +9,7 @@ import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.type.TypeFragment;
 import com.example.administrator.shaomall.home.HomeFragment;
 import com.example.administrator.shaomall.login.ui.LoginActivity;
-import com.example.shoppingcart.Ui.Shoppingcart;
+import com.example.shoppingcart.Ui.ShoppingcartActivity;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
@@ -39,9 +39,9 @@ public class MainActivity extends BaseActivity {
         fragments.add(new HomeFragment());
         fragments.add(new TypeFragment());
         fragments.add(new FindFragment());
-        fragments.add(new Shoppingcart());
+        fragments.add(new ShoppingcartActivity());
         fragments.add(new MineFragment());
-
+        toClass(com.example.remindsteporgan.MainActivity.class);
     }
 
     private void setTab() {

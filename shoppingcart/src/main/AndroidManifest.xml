@@ -3,7 +3,7 @@
     package="com.example.shoppingcart">
 
     <application>
-        <activity android:name=".Ui.Shoppingcart"></activity>
+        <activity android:name=".Ui.PaymentActivity"></activity>
     </application>
 
 </manifest>

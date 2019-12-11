@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -26,8 +26,8 @@
             android:layout_marginRight="@dimen/cartMarginRight"
             android:checkMark="?android:attr/listChoiceIndicatorMultiple"
             android:gravity="center"
-            android:minHeight="@dimen/cartminHeight"
             android:minWidth="@dimen/cartminWidth"
+            android:minHeight="@dimen/cartminHeight"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:visibility="visible" />
 
@@ -35,10 +35,9 @@
             android:id="@+id/iv_adapter_list_pic"
             android:layout_width="@dimen/cartImageViewWidth"
             android:layout_height="@dimen/cartImageViewHeight"
-            android:layout_marginBottom="@dimen/cartImageViewMarginBottom"
             android:layout_marginTop="@dimen/cartImageViewMarginTop"
-            android:scaleType="centerCrop"
-            />
+            android:layout_marginBottom="@dimen/cartImageViewMarginBottom"
+            android:scaleType="centerCrop" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -107,7 +106,7 @@
                         android:id="@+id/tv_num"
                         android:layout_width="@dimen/cartNumTextVIewWidth"
                         android:layout_height="@dimen/cartNumTextVIewHeight"
-                         android:gravity="center"
+                        android:gravity="center"
                         android:singleLine="true"
                         android:text="@string/cartNumTextVIewText"
                         android:textColor="@color/grey_color1"

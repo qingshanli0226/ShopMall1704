@@ -950,6 +950,7 @@ id expanded_menu
 id forever
 id gone
 id group_divider
+id historySteps
 id home
 id icon
 id icon_group
@@ -1073,6 +1074,7 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_payment
 layout activity_shoopingcart
 layout cart
 layout live

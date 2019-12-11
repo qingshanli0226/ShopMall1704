@@ -276,6 +276,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                             //数据请求成功
                             setLoadingPager(LoadingPageConfig.STATE_SUCCESS_CODE);
                             String string = responseBody.string();
+                            Log.d("SSH:",string);
                             //判断数据是否是列表
                             if (isList()) {
                                 ResEntity<List<T>> resEntityList = new Gson().fromJson(string, getBeanType());

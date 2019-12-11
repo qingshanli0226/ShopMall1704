@@ -1,5 +1,6 @@
 package com.shaomall.framework.base;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -57,6 +58,8 @@ public abstract class BaseMVPActivity<T> extends BaseActivity implements IBaseVi
     public void onRequestHttpDataListSuccess(int requestCode, String message, List<T> data) {
 
     }
+
+
 
     @Override
     public void onRequestHttpDataFailed(int requestCode, ShopMailError error) {

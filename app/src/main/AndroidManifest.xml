@@ -12,6 +12,7 @@
     <!--    读取短信的权限：-->
     <uses-permission android:name="android.permission.READ_SMS" />
 
+
     <application
         android:name=".app.ShaoHuaApplication"
         android:allowBackup="true"
@@ -21,6 +22,7 @@
         android:theme="@style/AppTheme"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true">
+
 
         <!--        欢迎界面-->
         <activity android:name=".activity.WelcomeActivity">
@@ -55,5 +57,6 @@
         <meta-data
             android:name="android.max_aspect"
             android:value="2.4" />
+
     </application>
 </manifest>

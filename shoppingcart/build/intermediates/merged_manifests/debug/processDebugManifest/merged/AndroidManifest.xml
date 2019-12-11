@@ -9,7 +9,7 @@
         android:targetSdkVersion="29" />
 
     <application>
-        <activity android:name="com.example.shoppingcart.Ui.Shoppingcart" />
+        <activity android:name="com.example.shoppingcart.Ui.PaymentActivity" />
     </application>
 
 </manifest>

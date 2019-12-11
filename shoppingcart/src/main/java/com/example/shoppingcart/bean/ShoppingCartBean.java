@@ -1,19 +1,21 @@
-package com.example.shoppingcart.Base;
+package com.example.shoppingcart.bean;
 
 public class ShoppingCartBean {
 
 
     /**
-     * productId : 1512
-     * productNum : 1
-     * productName : 衬衫
+     * productId : 3571
+     * productNum : 4
+     * productName : 【INFANTA.婴梵塔】学院风尖领外套/大衣
      * url : http://www.baidu.com
+     * productPrice : 98.00
      */
 
     private String productId;
-    private int productNum;
+    private String productNum;
     private String productName;
     private String url;
+    private String productPrice;
 
     public String getProductId() {
         return productId;
@@ -23,11 +25,11 @@ public class ShoppingCartBean {
         this.productId = productId;
     }
 
-    public int getProductNum() {
+    public String getProductNum() {
         return productNum;
     }
 
-    public void setProductNum(int productNum) {
+    public void setProductNum(String productNum) {
         this.productNum = productNum;
     }
 
@@ -45,5 +47,13 @@ public class ShoppingCartBean {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(String productPrice) {
+        this.productPrice = productPrice;
     }
 }
