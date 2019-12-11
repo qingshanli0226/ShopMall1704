@@ -38,6 +38,10 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
 
+        <activity android:name=".register.activity.RegisterActivity"></activity>
+        <activity android:name=".login.activity.LoginActivity">
+        </activity>
+
         <activity android:name=".activity.WelcomeActivity">
 
         </activity>
@@ -45,7 +49,6 @@
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
-
         </activity>
     </application>
 

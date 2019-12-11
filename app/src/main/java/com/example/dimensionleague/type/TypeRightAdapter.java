@@ -1,6 +1,7 @@
 package com.example.dimensionleague.type;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +9,10 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.buy.activity.GoodsActiviy;
+import com.example.common.IntentUtil;
 import com.example.dimensionleague.R;
-import com.example.dimensionleague.typebean.TypeBean;
+import com.example.common.TypeBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +48,7 @@ public class TypeRightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         OrdinaryViewHolder ordinaryViewHolder = (OrdinaryViewHolder) holder;
         ordinaryViewHolder.setData(resultBeans,position);
+
     }
 
     @Override
@@ -85,10 +89,9 @@ public class TypeRightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     String name = resultBeans.get(position).getHot_product_list().get(i).getName();
                     String figure = resultBeans.get(position).getHot_product_list().get(i).getFigure();
                     String product_id = resultBeans.get(position).getHot_product_list().get(i).getProduct_id();
-//                    GoodsBean goodsBean = new GoodsBean(name, cover_price, figure, product_id);
-//                    Intent intent = new Intent(mContext,GoodsInfoActivity.class);
-//                    intent.putExtra("goods_bean",goodsBean);
-//                    mContext.startActivity(intent);
+
+
+
                 }
             });
 

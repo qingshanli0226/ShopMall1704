@@ -1,6 +1,6 @@
 package com.example.dimensionleague.type;
 
-import com.example.dimensionleague.typebean.TypeBean;
+import com.example.common.TypeBean;
 import com.example.framework.base.BasePresenter;
 import com.example.net.AppNetConfig;
 

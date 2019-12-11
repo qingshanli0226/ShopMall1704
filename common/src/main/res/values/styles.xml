@@ -19,4 +19,22 @@
         <item name="android:textColor">@color/colorBlack</item>
         <item name="android:textSize">@dimen/page_text_size</item>
     </style>
+    <!--    小红点-->
+    <style name="RedDotView">
+        <item name="android:layout_height">15dp</item>
+        <item name="android:layout_width">15dp</item>
+        <item name="android:textColor">@color/colorRed</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/reddot</item>
+        <item name="android:layout_marginTop">5dp</item>
+    </style>
+<!--    登录注册的EditView下划线-->
+    <style name="LoginRegisterLine">
+        <item name="android:layout_marginTop">@dimen/dp_ten</item>
+        <item name="android:background">@color/color_line</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/px_one</item>
+    </style>
 </resources>

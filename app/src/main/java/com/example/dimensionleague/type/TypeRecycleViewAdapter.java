@@ -1,6 +1,7 @@
 package com.example.dimensionleague.type;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.buy.activity.GoodsActiviy;
+import com.example.common.IntentUtil;
 import com.example.dimensionleague.R;
-import com.example.dimensionleague.typebean.TypeBean;
+import com.example.common.TypeBean;
 import com.example.net.AppNetConfig;
 
 import java.util.ArrayList;
@@ -44,6 +47,16 @@ public class TypeRecycleViewAdapter extends RecyclerView.Adapter<TypeRecycleView
             @Override
             public void onClick(View view) {
                 linkedlist.getLinkedlist(position);
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent =new Intent(holder.itemView.getContext(), GoodsActiviy.class);
+                        intent.putExtra(IntentUtil.SHOW_GOOD,hotProductListBeans.get(position));
+                        holder.itemView.getContext().startActivity(intent);
+                    }
+                });
+
             }
         });
 

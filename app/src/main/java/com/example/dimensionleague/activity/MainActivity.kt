@@ -1,16 +1,21 @@
 package com.example.dimensionleague.activity
 
+import android.content.Intent
 import androidx.fragment.app.Fragment
 import android.graphics.Color
 
 import com.example.dimensionleague.R
 import com.example.buy.ShopCartFragment
 import com.example.dimensionleague.home.HomeFragment
+import com.example.dimensionleague.mine.MineFragment
 import com.example.dimensionleague.type.TypeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import com.example.framework.base.BaseNetConnectActivity
+import com.example.framework.listener.OnShopCartListener
+import com.example.framework.manager.CartManager
 
 class MainActivity : BaseNetConnectActivity() {
+    lateinit var listenter:OnShopCartListener
     override fun getRelativeLayout(): Int {
         return R.id.main_relative
     }
@@ -28,7 +33,7 @@ class MainActivity : BaseNetConnectActivity() {
         list.add(TypeFragment())
         list.add(HomeFragment())
         list.add(ShopCartFragment())
-        list.add(HomeFragment())
+        list.add(MineFragment())
     }
     override fun initDate() {
         super.init()
@@ -57,6 +62,16 @@ class MainActivity : BaseNetConnectActivity() {
             .titleItems(arrayOf("首页", "分类", "发现", "购物车", "我的"))
             .canScroll(true)
             .build()
+        //注册监听,监听购物车数量
+        listenter= OnShopCartListener { num->
+            main_easy.setMsgPointCount(3,num)
+        }
+        CartManager.getInstance().registerListener(listenter)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        CartManager.getInstance().unregister(listenter)
     }
 }
 

@@ -3,7 +3,7 @@ package com.example.dimensionleague.home.holder
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dimensionleague.businessbean.HomeBean
+import com.example.common.HomeBean
 import com.example.dimensionleague.home.adapter.ChannelAdapter
 import kotlinx.android.synthetic.main.home_channel.view.*
 

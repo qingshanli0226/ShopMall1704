@@ -10,9 +10,8 @@
         android:layout_height="match_parent"
         android:id="@+id/welcome_vp"/>
     <Button
-        android:layout_width="@dimen/dp_50"
-        android:layout_height="50dp"
         android:id="@+id/welcome_button"
+        style="@style/StyleRoundButton"
         android:focusable="false"
         android:background="@drawable/roundness"
         android:layout_alignParentRight="true"

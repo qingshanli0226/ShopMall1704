@@ -8,12 +8,11 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dimensionleague.R
-import com.example.dimensionleague.businessbean.HomeBean
+import com.example.common.HomeBean
 import com.example.net.AppNetConfig
 import com.youth.banner.Banner
 import com.youth.banner.BannerConfig
 import com.youth.banner.loader.ImageLoader
-import kotlinx.android.synthetic.main.home_banner.view.*
 
 class BannerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

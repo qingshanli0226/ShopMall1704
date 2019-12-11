@@ -1,6 +1,7 @@
 package com.example.dimensionleague.type;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.buy.activity.GoodsActiviy;
+import com.example.common.IntentUtil;
 import com.example.dimensionleague.R;
-import com.example.dimensionleague.typebean.TypeBean;
+import com.example.common.TypeBean;
 import com.example.net.AppNetConfig;
 
 import java.util.ArrayList;
@@ -38,6 +41,8 @@ public class TypeChildRecycleAdapter  extends RecyclerView.Adapter<TypeChildRecy
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Glide.with(mContext).load(AppNetConfig.BASE_URl_IMAGE + childBeans.get(position).getPic()).into(holder.iv_ordinary_right);
         holder.tv_ordinary_right.setText(childBeans.get(position).getName());
+
+
     }
 
     @Override

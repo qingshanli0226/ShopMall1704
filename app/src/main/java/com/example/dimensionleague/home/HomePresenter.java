@@ -1,6 +1,6 @@
 package com.example.dimensionleague.home;
 
-import com.example.dimensionleague.businessbean.HomeBean;
+import com.example.common.HomeBean;
 import com.example.framework.base.BasePresenter;
 import com.example.net.AppNetConfig;
 

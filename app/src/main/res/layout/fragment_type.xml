@@ -21,16 +21,8 @@
             android:padding="@dimen/dp_5"
             android:src="@drawable/scan_code"/>
         <EditText
-            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_10"
-            android:paddingTop="@dimen/dp_5"
-            android:layout_weight="8"
-            android:paddingBottom="@dimen/dp_5"
-            android:drawableLeft="@drawable/search"
-            android:background="@drawable/round"
-            android:drawableRight="@drawable/camera"
+            style="@style/StyleEdit"
             android:hint="@string/top_hint"/>
         <ImageView
             android:layout_width="@dimen/dp_40"

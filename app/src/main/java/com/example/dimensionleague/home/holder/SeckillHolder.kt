@@ -8,11 +8,9 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dimensionleague.businessbean.HomeBean
+import com.example.common.HomeBean
 import com.example.dimensionleague.home.adapter.SeckillAdapter
-import com.youth.banner.WeakHandler
 import kotlinx.android.synthetic.main.home_seckill.view.*
-import kotlinx.android.synthetic.main.home_seckill_item.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 

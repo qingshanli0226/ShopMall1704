@@ -19,7 +19,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.example.dimensionleague.CacheManager;
 import com.example.dimensionleague.R;
-import com.example.dimensionleague.businessbean.HomeBean;
+import com.example.common.HomeBean;
 import com.example.framework.base.BaseNetConnectActivity;
 import java.util.ArrayList;
 import java.util.List;
@@ -186,17 +186,16 @@ public class WelcomeActivity extends BaseNetConnectActivity {
         public void run() {
 
             while (flag) {
-                synchronized (WelcomeActivity.this){
-                index--;
-                }
                 try {
                     Thread.sleep(1000);
                    synchronized (WelcomeActivity.this){
+                       index--;
                        if (index == 0) {
                            flag = false;
                            Log.i("SSS", "run: 跳转主页面的Handler");
                            handler.sendEmptyMessage(102);
                        } else {
+                           Log.i("SSS", "run: index="+index);
                            handler.sendEmptyMessage(101);
                        }
                    }

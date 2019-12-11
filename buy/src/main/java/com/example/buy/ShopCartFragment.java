@@ -8,13 +8,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.Toast;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.buy.activity.PayActivity;
 import com.example.buy.databeans.GetCartBean;
 import com.example.buy.databeans.GoodsBean;
 import com.example.buy.databeans.OkBean;
+import com.example.framework.manager.CartManager;
 import com.example.buy.presenter.GetCartPresenter;
 import com.example.buy.presenter.PostUpDatePresenter;
 import com.example.buy.presenter.PostVerifyGoodsPresenter;
@@ -51,16 +54,11 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
     //删除与支付状态
     boolean delStatus=false;
 
-    OnCartListener onCartListener;
-
-    public void setOnCartListener(OnCartListener onCartListener) {
-        this.onCartListener = onCartListener;
-    }
-
     @Override
     public void onClick(View v) {
         if (v.getId() == buyBut.getId()) {
             if (delStatus){
+                //删除
                 for (int i=0;i<checks.size();i++){
                     if (checks.get(i)){
                         list.remove(i);
@@ -78,10 +76,11 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                 Intent intent = new Intent(getContext(), PayActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putParcelableArrayList(IntentUtil.GOODS,goods);
-                intent.putExtra(IntentUtil.ORDERS,bundle);
+                intent.putExtra(IntentUtil.ORDERS,goods);
                 startActivity(intent);
             }
         } else if(v.getId()==editBut.getId()){
+            //编辑
             if (delStatus){
                 buyBut.setText( getResources().getString(R.string.buyNow));
                 delStatus=false;
@@ -100,8 +99,10 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
         recyclerView = view.findViewById(R.id.recyclerView);
         checkAll = view.findViewById(R.id.checkAll);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+
         buyBut.setOnClickListener(this);
         editBut.setOnClickListener(this);
+
         //设置recyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new BaseRecyclerAdapter<GoodsBean>(R.layout.item_goods, list) {
@@ -146,6 +147,9 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                     public void onClick(View v) {
                         int num = list.get(position).getProductNum();
                         list.get(position).setProductNum(num + 1);
+                        if (list.get(position).getProductNum()>1){
+                            holder.getView(R.id.itemAddBut).setClickable(true);
+                        }
                         upDatePresenter=new PostUpDatePresenter(list.get(position));
                         upDatePresenter.attachView(ShopCartFragment.this);
                         upDatePresenter.doHttpPostRequest(UPDATA_GOODS);
@@ -186,9 +190,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
     @Override
     public void onDestroy() {
         super.onDestroy();
-        sendCartPresenter.detachView();
-        goodsPresenter.detachView();
-        upDatePresenter.detachView();
+        disPreseter(sendCartPresenter,goodsPresenter,upDatePresenter);
     }
 
     @Override
@@ -202,21 +204,21 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
     }
 
     @Override
-    public void onRequestSuccess(Object data) {
-        super.onRequestSuccess(data);
+    public void hideLoading() {
+        super.hideLoading();
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void onRequestSuccess(int requestCode, Object data) {
         super.onRequestSuccess(requestCode, data);
-        swipeRefreshLayout.setRefreshing(false);
         switch (requestCode){
             case CART_GOODS:
                 Log.e("xxx","购物车获取到的数据"+data.toString());
                 checks.clear();
                 list.clear();
                 recyclerView.getAdapter().notifyDataSetChanged();
-                if (((GetCartBean) data).getCode().equals(AppNetConfig.CODE_OK)){
+                if (!((GetCartBean) data).getCode().equals(AppNetConfig.CODE_OK)){
                     Gson gson = new Gson();
                     GoodsBean[] goods = gson.fromJson(((GetCartBean) data).getResult(), GoodsBean[].class);
                     list.addAll(Arrays.asList(goods));
@@ -227,8 +229,8 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                     //每一次刷新购物车都重新检查库存
                     goodsPresenter=new PostVerifyGoodsPresenter(list);
                     goodsPresenter.attachView(this);
-                    //监听全局的购物车商品数量
-                    onCartListener.OnCartChangeListener(list.size());
+                    //更新商品数量
+                    CartManager.getInstance().updataCartNum(list.size());
                 }else {
                     Toast.makeText(getContext(),"获取数据失败",Toast.LENGTH_SHORT).show();
                 }
@@ -245,8 +247,8 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                 break;
         }
     }
+    //判断全选
     private void judgeCheckAll(){
-        //判断全选
         boolean flag=true;
         for (boolean i:checks){
             if (!i){
@@ -256,6 +258,14 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
         }
         if (flag){
             checkAll.setChecked(true);
+        }
+    }
+
+    private void disPreseter(IPresenter... iPresenter){
+        for (int i=0;i<iPresenter.length;i++){
+            if (iPresenter[i]!=null){
+                iPresenter[i].detachView();
+            }
         }
     }
 }

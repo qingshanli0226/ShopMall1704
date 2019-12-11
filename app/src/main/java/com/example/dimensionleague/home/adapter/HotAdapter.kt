@@ -1,19 +1,24 @@
 package com.example.dimensionleague.home.adapter
 
+import android.content.Intent
+import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.bumptech.glide.Glide
+import com.example.buy.activity.GoodsActiviy
 import com.example.dimensionleague.R
-import com.example.dimensionleague.businessbean.HomeBean
+import com.example.common.HomeBean
+import com.example.common.IntentUtil
 import com.example.net.AppNetConfig
 import kotlinx.android.synthetic.main.home_hot_item.view.*
 
 class HotAdapter (
-    hotInfo: List<HomeBean.ResultBean.HotInfoBean>
+    hotInfo: List<HomeBean.ResultBean.SeckillInfoBean.ListBean>
 ): BaseAdapter() {
-    var hotInfo:List<HomeBean.ResultBean.HotInfoBean>? = null
+    var hotInfo:List<HomeBean.ResultBean.SeckillInfoBean.ListBean>? = null
     init {
         this.hotInfo = hotInfo
     }
@@ -26,6 +31,12 @@ class HotAdapter (
         Glide.with(constan!!.context).load(AppNetConfig.BASE_URl_IMAGE+hotInfo?.get(posion)?.figure).into(viewholder.iv_hot)
         viewholder.tv_name.text = hotInfo?.get(posion)?.name
         viewholder.tv_price.text = "${hotInfo?.get(posion)?.cover_price}￥"
+        //跳转
+        view.setOnClickListener { v->
+            val intent = Intent(view.context, GoodsActiviy::class.java)
+            intent.putExtra(IntentUtil.SHOW_GOOD, hotInfo!![posion])
+            view.context.startActivity(intent)
+        }
         return view
     }
 

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dimensionleague.R;
-import com.example.dimensionleague.typebean.TypeBean;
+import com.example.common.TypeBean;
 import com.example.framework.base.BaseNetConnectFragment;
 import com.example.net.AppNetConfig;
 

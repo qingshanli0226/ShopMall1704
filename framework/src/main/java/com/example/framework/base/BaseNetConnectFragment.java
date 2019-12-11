@@ -5,6 +5,7 @@ import android.widget.RelativeLayout;
 import com.example.common.utils.LoadingPageUtils;
 import com.example.framework.manager.NetConnectManager;
 import com.example.framework.port.INetConnectListener;
+import com.example.framework.port.IPresenter;
 import com.example.framework.port.IView;
 
 /**

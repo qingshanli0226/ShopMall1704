@@ -1,12 +1,8 @@
 package com.example.dimensionleague.home.holder
 
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.PagerAdapter
-import com.bumptech.glide.Glide
-import com.example.dimensionleague.businessbean.HomeBean
+import com.example.common.HomeBean
 import com.example.dimensionleague.home.adapter.ActAdapter
 import com.example.net.AppNetConfig
 import kotlinx.android.synthetic.main.home_act.view.*

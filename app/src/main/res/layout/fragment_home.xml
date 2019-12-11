@@ -17,17 +17,8 @@
         android:layout_marginTop="@dimen/dp_15"
         android:id="@+id/linear">
         <EditText
-            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_10"
-            android:id="@+id/home_et"
-            android:paddingTop="@dimen/dp_5"
-            android:layout_weight="8"
-            android:paddingBottom="@dimen/dp_5"
-            android:drawableLeft="@drawable/search"
-            android:background="@drawable/round"
-            android:drawableRight="@drawable/camera"
+            style="@style/StyleEdit"
             android:hint="@string/top_hint"/>
         <TextView
             android:layout_width="wrap_content"

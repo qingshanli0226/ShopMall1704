@@ -36,4 +36,9 @@ public class PostVerifyOnePresenter extends BasePresenter {
     public String getPath() {
         return AppNetConfig.CHECKONPRODUCTINVENTORY;
     }
+
+    @Override
+    public void detachView() {
+        super.detachView();
+    }
 }
