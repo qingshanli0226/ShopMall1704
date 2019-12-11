@@ -22,9 +22,8 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        int intExtra = intent.getIntExtra("", 0);
-        replaceFragment(fragmentArrayList.get(intExtra));
-
+        int intExtra = intent.getIntExtra("replacefragment", 0);
+        bottomBar.setCheckedItem(intExtra);
     }
 
     //数据
@@ -106,8 +105,6 @@ public class MainActivity extends BaseActivity {
 
         //更新当前正在显示的fragment
         currentFragment = fragment;
-
-
 
     }
 

@@ -46,7 +46,9 @@
             android:name="com.example.framework.service.ShopService"
             android:enabled="true"
             android:exported="true" />
-        <activity android:name=".activity.MainActivity">
+        <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTask">
 
         </activity>
     </application>

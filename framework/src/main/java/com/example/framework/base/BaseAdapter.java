@@ -22,6 +22,12 @@ public abstract class BaseAdapter<T, V extends RecyclerView.ViewHolder> extends 
         notifyDataSetChanged();
     }
 
+    public void reFreshOneLine(List<T> newList, int position) {
+        dataList.clear();
+        dataList.addAll(newList);
+        notifyItemChanged(position);
+    }
+
     @NonNull
     @Override
     public V onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -38,11 +44,11 @@ public abstract class BaseAdapter<T, V extends RecyclerView.ViewHolder> extends 
     @Override
     public void onBindViewHolder(@NonNull V holder, int position) {
         //绑定holder,根据不通过的position来给不同的布局绑定数据
-        onBindHolder(holder, dataList.get(position), position);
+        onBindHolder(holder, dataList, position);
     }
 
     //绑定布局
-    protected abstract void onBindHolder(V holder, T t, int type);
+    protected abstract void onBindHolder(V holder, List<T> data, int type);
 
     //返回不同的布局类型
     @Override

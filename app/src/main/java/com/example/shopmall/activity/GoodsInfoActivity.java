@@ -12,17 +12,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.buy.bean.InsertBean;
+import com.example.buy.presenter.InsertPresenter;
 import com.example.common.BottomBar;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
+import com.example.framework.base.IGetBaseView;
+import com.example.framework.manager.ShoppingManager;
 import com.example.shopmall.R;
 import com.example.shopmall.adapter.GoodsInfoAdapter;
 import com.example.shopmall.bean.GoodsBean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class GoodsInfoActivity extends BaseActivity {
+public class GoodsInfoActivity extends BaseActivity implements IGetBaseView<InsertBean> {
 
     TitleBar tb_goods_info;
     RecyclerView rv_goods_info;
@@ -30,6 +35,8 @@ public class GoodsInfoActivity extends BaseActivity {
     Button bt_goods_info;
 
     ArrayList<GoodsBean> list_goods = new ArrayList<>();
+
+    private InsertPresenter addOneProduct;
 
     @Override
     protected int setLayout() {
@@ -100,6 +107,12 @@ public class GoodsInfoActivity extends BaseActivity {
         bt_goods_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String token = ShoppingManager.getInstance().getToken(GoodsInfoActivity.this);
+                addOneProduct.attachGetView(GoodsInfoActivity.this);
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put("token", token);
+                addOneProduct = new InsertPresenter("addOneProduct", InsertBean.class, hashMap);
+                addOneProduct.getGetData();
 
             }
         });
@@ -115,6 +128,9 @@ public class GoodsInfoActivity extends BaseActivity {
 
     //购物车
     private void shoppingcart() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("replacefragment", 3);
+        startActivity(intent);
     }
 
     //收藏
@@ -127,4 +143,13 @@ public class GoodsInfoActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void onGetDataSucess(InsertBean data) {
+
+    }
+
+    @Override
+    public void onGetDataFailed(String ErrorMsg) {
+
+    }
 }
