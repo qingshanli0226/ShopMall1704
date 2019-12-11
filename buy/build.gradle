@@ -37,5 +37,6 @@ dependencies {
     implementation project(path: ':common')
     implementation project(path: ':net')
     implementation files('libs\\alipaySdk-15.6.8-20191021122514.aar')
+    implementation 'com.alibaba:fastjson:1.2.56'
 
 }

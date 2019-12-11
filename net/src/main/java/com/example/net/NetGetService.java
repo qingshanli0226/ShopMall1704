@@ -18,7 +18,7 @@ public interface NetGetService {
     Observable<ResponseBody> getGetData(@Path("path") String path, @HeaderMap HashMap<String, String> headMap, @QueryMap HashMap<String, String> queryMap);
 
     @GET
-    Observable<ResponseBody> getGetData(@Url String path);
+    Observable<ResponseBody> getGetData(@Url String path, @HeaderMap HashMap<String, String> headMap);
 
 
 }

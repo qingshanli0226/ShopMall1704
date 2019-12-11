@@ -6,23 +6,30 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.buy.bean.InsertBean;
 import com.example.buy.presenter.InsertPresenter;
 import com.example.common.BottomBar;
+import com.example.common.SignUtil;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
-import com.example.framework.base.IGetBaseView;
+import com.example.framework.base.IPostBaseView;
 import com.example.framework.manager.ShoppingManager;
+import com.example.net.Constant;
 import com.example.shopmall.R;
 import com.example.shopmall.adapter.GoodsInfoAdapter;
 import com.example.shopmall.bean.GoodsBean;
+
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GoodsInfoActivity extends BaseActivity implements IGetBaseView {
+public class GoodsInfoActivity extends BaseActivity implements IPostBaseView {
 
     TitleBar tb_goods_info;
     RecyclerView rv_goods_info;
@@ -98,27 +105,38 @@ public class GoodsInfoActivity extends BaseActivity implements IGetBaseView {
             }
         });
 
-        //加入购物车
-        bt_goods_info.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String token = ShoppingManager.getInstance().getToken(GoodsInfoActivity.this);
-                addOneProduct.attachGetView(GoodsInfoActivity.this);
-                HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put("token", token);
-                addOneProduct = new InsertPresenter("addOneProduct", InsertBean.class, hashMap);
-                addOneProduct.getGetData();
-
-            }
-        });
 
         Intent intent = getIntent();
-        GoodsBean goods_bean = (GoodsBean) intent.getSerializableExtra("goods_bean");
+        final GoodsBean goods_bean = (GoodsBean) intent.getSerializableExtra("goods_bean");
         list_goods.add(goods_bean);
 
         GoodsInfoAdapter goodsInfoAdapter = new GoodsInfoAdapter(this, list_goods);
         rv_goods_info.setAdapter(goodsInfoAdapter);
 
+        //加入购物车
+        bt_goods_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String token = ShoppingManager.getInstance().getToken(GoodsInfoActivity.this);
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put("token", token);
+
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("productId", goods_bean.getProduct_id());
+                jsonObject.put("productNum", goods_bean.getNumber());
+                jsonObject.put("productName", goods_bean.getName());
+                jsonObject.put("url", Constant.BASE_URL_IMAGE + goods_bean.getFigure());
+                jsonObject.put("productPrice", goods_bean.getCover_price());
+                jsonObject.put("sign", SignUtil.generateJsonSign(jsonObject));
+
+                SignUtil.encryptJsonParamsByBase64(jsonObject);
+
+                addOneProduct = new InsertPresenter("addOneProduct", InsertBean.class, hashMap, jsonObject);
+                addOneProduct.getPostJsonData();
+                addOneProduct.attachPostView(GoodsInfoActivity.this);
+
+            }
+        });
     }
 
     //购物车
@@ -139,12 +157,12 @@ public class GoodsInfoActivity extends BaseActivity implements IGetBaseView {
     }
 
     @Override
-    public void onGetDataSucess(Object data) {
+    public void onPostDataSucess(Object data) {
 
     }
 
     @Override
-    public void onGetDataFailed(String ErrorMsg) {
-
+    public void onPostDataFailed(String ErrorMsg) {
+        Log.d("####", ErrorMsg);
     }
 }

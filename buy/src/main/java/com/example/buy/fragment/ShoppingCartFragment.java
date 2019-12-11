@@ -33,6 +33,9 @@ import com.example.buy.BezierTypeEvaluator;
 import com.example.buy.activity.OrderActivity;
 import com.example.buy.adapter.MyShoppingBasketAdapter;
 import com.example.buy.R;
+import com.example.buy.bean.ShoppingCartBean;
+import com.example.buy.presenter.ShoppingCartPresenter;
+import com.example.framework.base.IGetBaseView;
 import com.example.framework.manager.ShoppingManager;
 import com.example.common.NumberAddSubView;
 import com.example.common.TitleBar;
@@ -46,7 +49,7 @@ import java.util.Map;
 /**
  * 购物车页面
  */
-public class ShoppingCartFragment extends BaseFragment implements NumberAddSubView.OnNumberChangeListener {
+public class ShoppingCartFragment extends BaseFragment implements NumberAddSubView.OnNumberChangeListener, IGetBaseView<ShoppingCartBean> {
 
     TitleBar tb_shopping_cart;
     ImageView iv_shopping_cart;
@@ -93,11 +96,9 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         if (!isSetting) {
             allCount = Double.parseDouble(s[2]);
             myShoppingManager.setAllCount(allCount);
-            if (s[2].contains(".")) {
-                tv_shopcart_total.setText("￥" + allCount + "0");
-            } else {
-                tv_shopcart_total.setText("￥" + allCount + ".00");
-            }
+
+            tv_shopcart_total.setText("￥" + allCount);
+
         }
 
 
@@ -120,13 +121,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         if (flag == 0) {
             flag = 1;
         } else {
-            setAllUnChecked();
-
-            myShoppingBasketAdapter.reFresh(myShoppingManager.getData());
-            checkbox_all.setChecked(false);
-            tv_shopcart_total.setText("￥0.00");
-
-            judgeNumberisZero();
+            initData2();
         }
     }
 
@@ -143,10 +138,6 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     @Override
     protected void initData() {
         initData2();
-        judgeNumberisZero();
-        setCheckAll();
-        setSetting();
-        setDelete();
     }
 
     private void setDelete() {
@@ -284,12 +275,8 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
                     setAllUnChecked();
                 }
                 double allCount = myShoppingManager.getAllCount();
-                String s = "" + allCount;
-                if (s.contains(".")) {
-                    tv_shopcart_total.setText("￥" + allCount + "0");
-                } else {
-                    tv_shopcart_total.setText("￥" + allCount + ".00");
-                }
+
+                tv_shopcart_total.setText("￥" + allCount);
 
 
                 myShoppingBasketAdapter.reFresh(myShoppingManager.getData());
@@ -340,19 +327,29 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     }
 
     private void initData2() {
-        List<Map<String, String>> data = myShoppingManager.getData();
-        for (int i = 0; i < 10; i++) {
+//        List<Map<String, String>> data = myShoppingManager.getData();
+//        for (int i = 0; i < 10; i++) {
+//
+//            Map<String, String> map = new HashMap<>();
+//            map.put("img", "http://www.qubaobei.com//ios//cf//uploadfile//132//9//8289.jpg");
+//            map.put("title", "大虾" + i);
+//            map.put("price", 10 + i + "");
+//            map.put("ischecked", "false");
+//            map.put("num", "1");
+//            data.add(map);
+//        }
 
-            Map<String, String> map = new HashMap<>();
-            map.put("img", "http://www.qubaobei.com//ios//cf//uploadfile//132//9//8289.jpg");
-            map.put("title", "大虾" + i);
-            map.put("price", 10 + i + "");
-            map.put("ischecked", "false");
-            map.put("num", "1");
-            data.add(map);
-        }
-        myShoppingBasketAdapter.reFresh(data);
-        myShoppingManager.setData(data);
+        String token = ShoppingManager.getInstance().getToken(getContext());
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("token", token);
+
+        ShoppingCartPresenter presenter = new ShoppingCartPresenter("getShortcartProducts", ShoppingCartBean.class, hashMap);
+        presenter.attachGetView(this);
+        presenter.getGetData();
+
+
+//        myShoppingBasketAdapter.reFresh(data);
+//        myShoppingManager.setData(data);
     }
 
     protected void setTitleBar() {
@@ -434,12 +431,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
 
         if (ischecked) {
             allCount += Integer.parseInt(price);
-            String s = "" + allCount;
-            if (s.contains(".")) {
-                tv_shopcart_total.setText("￥" + allCount + "0");
-            } else {
-                tv_shopcart_total.setText("￥" + allCount + ".00");
-            }
+            tv_shopcart_total.setText("￥" + allCount);
             myShoppingBasketAdapter.setAllcount(allCount);
             myShoppingManager.setAllCount(allCount);
         }
@@ -465,12 +457,9 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
 
         if (ischecked) {
             allCount -= Integer.parseInt(price);
-            String s = "" + allCount;
-            if (s.contains(".")) {
-                tv_shopcart_total.setText("￥" + allCount + "0");
-            } else {
-                tv_shopcart_total.setText("￥" + allCount + ".00");
-            }
+
+            tv_shopcart_total.setText("￥" + allCount);
+
             myShoppingBasketAdapter.setAllcount(allCount);
             myShoppingManager.setAllCount(allCount);
         }
@@ -552,5 +541,38 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         set.play(objectAnimatorX).with(objectAnimatorY).after(valueAnimator);
         set.setDuration(800);
         set.start();
+    }
+
+    @Override
+    public void onGetDataSucess(ShoppingCartBean data) {
+        List<Map<String, String>> data2 = new ArrayList<>();
+        List<ShoppingCartBean.ResultBean> result = data.getResult();
+        for (int i = 0; i < result.size(); i++) {
+            ShoppingCartBean.ResultBean resultBean = result.get(i);
+
+            Map<String, String> map = new HashMap<>();
+            map.put("img", resultBean.getUrl());
+            map.put("title", resultBean.getProductName());
+            map.put("price", resultBean.getProductPrice());
+            map.put("ischecked", "false");
+            map.put("num", resultBean.getProductNum());
+            data2.add(map);
+        }
+        myShoppingBasketAdapter.reFresh(data2);
+        myShoppingManager.setData(data2);
+        judgeNumberisZero();
+        setCheckAll();
+        setSetting();
+        setDelete();
+
+        setAllUnChecked();
+
+        checkbox_all.setChecked(false);
+        tv_shopcart_total.setText("￥0.00");
+    }
+
+    @Override
+    public void onGetDataFailed(String ErrorMsg) {
+
     }
 }
