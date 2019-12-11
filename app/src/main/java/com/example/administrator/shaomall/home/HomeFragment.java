@@ -14,8 +14,7 @@ import com.example.administrator.shaomall.home.adapter.HomeRecycleAdapter;
 import com.example.commen.util.CommonUtil;
 import com.example.administrator.shaomall.R;
 import com.example.commen.ACache;
-import com.example.commen.ShopMailError;
-import com.example.net.AppNetConfig;
+import com.example.commen.util.ShopMailError;
 import com.shaomall.framework.base.BaseMVPFragment;
 import com.shaomall.framework.bean.LoginBean;
 
@@ -40,9 +39,6 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> {
         tv_title = view.findViewById(R.id.search_tv_title);
         searchLayoutParams = (ViewGroup.MarginLayoutParams) ll_search.getLayoutParams();
         titleLayoutParams = (ViewGroup.MarginLayoutParams) tv_title.getLayoutParams();
-
-
-
     }
 
     @Override

@@ -42,14 +42,14 @@ public class HomeRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private TextView timeTv;
     private boolean isFirst = true;
     private int dt = 0;
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             if (msg.what == 0) {
                 dt = dt - 1000;
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-               timeTv.setText(format.format(new Date(dt)));
+                timeTv.setText(format.format(new Date(dt)));
 
                 this.removeMessages(0);
                 this.sendEmptyMessageDelayed(0, 1000);
@@ -59,6 +59,7 @@ public class HomeRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             }
         }
     };
+
     public HomeRecycleAdapter(HomeBean.ResultBean data, Context context) {
         this.data = data;
         this.context = context;
@@ -69,17 +70,17 @@ public class HomeRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
         if (i == BANNER)
-            return new BannerViewHolder(LayoutInflater.from(context).inflate(R.layout.item_banner,null));
+            return new BannerViewHolder(LayoutInflater.from(context).inflate(R.layout.item_banner, null));
         else if (i == CHANNEL)
-            return new ChannelViewHolder(LayoutInflater.from(context).inflate(R.layout.item_channel,null));
+            return new ChannelViewHolder(LayoutInflater.from(context).inflate(R.layout.item_channel, null));
         else if (i == ACT)
-            return new ActViewHolder(LayoutInflater.from(context).inflate(R.layout.item_act,null));
+            return new ActViewHolder(LayoutInflater.from(context).inflate(R.layout.item_act, null));
         else if (i == SECKILL)
-            return new SeckillViewHolder(LayoutInflater.from(context).inflate(R.layout.item_seckill,null));
+            return new SeckillViewHolder(LayoutInflater.from(context).inflate(R.layout.item_seckill, null));
         else if (i == RECOMMEND)
-            return new RecommendViewHolder(LayoutInflater.from(context).inflate(R.layout.item_recommend,null));
+            return new RecommendViewHolder(LayoutInflater.from(context).inflate(R.layout.item_recommend, null));
         else if (i == HOT)
-            return new HotViewHolder(LayoutInflater.from(context).inflate(R.layout.item_hot,null));
+            return new HotViewHolder(LayoutInflater.from(context).inflate(R.layout.item_hot, null));
         return null;
     }
 
@@ -110,28 +111,28 @@ public class HomeRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-        switch (getItemViewType(i)){
-            case BANNER :
+        switch (getItemViewType(i)) {
+            case BANNER:
                 BannerViewHolder bannerViewHolder = (BannerViewHolder) viewHolder;
                 bannerViewHolder.setData();
                 break;
-            case CHANNEL :
+            case CHANNEL:
                 ChannelViewHolder channelViewHolder = (ChannelViewHolder) viewHolder;
                 channelViewHolder.setData();
                 break;
-            case ACT :
+            case ACT:
                 ActViewHolder actViewHolder = (ActViewHolder) viewHolder;
                 actViewHolder.setData();
                 break;
-            case SECKILL :
+            case SECKILL:
                 SeckillViewHolder seckillViewHolder = (SeckillViewHolder) viewHolder;
                 seckillViewHolder.setData();
                 break;
-            case RECOMMEND :
+            case RECOMMEND:
                 RecommendViewHolder recommendViewHolder = (RecommendViewHolder) viewHolder;
                 recommendViewHolder.setData();
                 break;
-            case HOT :
+            case HOT:
                 HotViewHolder hotViewHolder = (HotViewHolder) viewHolder;
                 hotViewHolder.setData();
                 break;
@@ -145,11 +146,13 @@ public class HomeRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private class BannerViewHolder extends RecyclerView.ViewHolder {
         private Banner banner;
+
         public BannerViewHolder(@NonNull View itemView) {
             super(itemView);
             banner = itemView.findViewById(R.id.home_item_banner);
         }
-        public void setData(){
+
+        public void setData() {
             final List<String> images = new ArrayList<>();
             for (int i = 0; i < data.getBanner_info().size(); i++) {
                 images.add(AppNetConfig.BASE_URl_IMAGE + data.getBanner_info().get(i).getImage());
@@ -168,25 +171,29 @@ public class HomeRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private class ChannelViewHolder extends RecyclerView.ViewHolder {
         private GridView gridView;
+
         public ChannelViewHolder(@NonNull View itemView) {
             super(itemView);
             gridView = itemView.findViewById(R.id.home_channel_gv);
         }
-        public void setData(){
+
+        public void setData() {
             gridView.setAdapter(new ChannelAdapter(data.getChannel_info()));
         }
     }
 
-    class ActViewHolder extends RecyclerView.ViewHolder{
+    class ActViewHolder extends RecyclerView.ViewHolder {
         private ViewPager viewPager;
+
         public ActViewHolder(@NonNull View itemView) {
             super(itemView);
             viewPager = itemView.findViewById(R.id.home_act_vp);
         }
-        public void setData(){
+
+        public void setData() {
             viewPager.setPageMargin(20);
             viewPager.setOffscreenPageLimit(3);
-//            viewPager.setPageTransformer(true, new AlphaPageTransformer(new ScaleInTransformer()));
+            //            viewPager.setPageTransformer(true, new AlphaPageTransformer(new ScaleInTransformer()));
 
             viewPager.setAdapter(new PagerAdapter() {
                 @Override
@@ -220,57 +227,66 @@ public class HomeRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
-        class SeckillViewHolder extends RecyclerView.ViewHolder {
+    class SeckillViewHolder extends RecyclerView.ViewHolder {
         private TextView moreText;
-        private  RecyclerView recyclerView;
-            public SeckillViewHolder(@NonNull View itemView) {
-                super(itemView);
-           moreText  =itemView.findViewById(R.id.seckill_item_tv_more);
-           timeTv = itemView.findViewById(R.id.seckill_item_tv_time);
-           recyclerView = itemView.findViewById(R.id.seckill_item_rv);
+        private RecyclerView recyclerView;
+
+        public SeckillViewHolder(@NonNull View itemView) {
+            super(itemView);
+            moreText = itemView.findViewById(R.id.seckill_item_tv_more);
+            timeTv = itemView.findViewById(R.id.seckill_item_tv_time);
+            recyclerView = itemView.findViewById(R.id.seckill_item_rv);
+        }
+
+        public void setData() {
+            //设置时间
+            if (isFirst) {
+                dt = Integer.parseInt(data.getSeckill_info().getEnd_time()) - Integer.parseInt(data.getSeckill_info().getStart_time());
+                isFirst = false;
             }
+            //设置RecyclerView
+            recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+            recyclerView.setAdapter(new SeckillRecyclerViewAdapter(context, data.getSeckill_info()));
 
-            public void setData(){
-        //设置时间
-                if (isFirst)
-                {
-                    dt = Integer.parseInt(data.getSeckill_info().getEnd_time()) - Integer.parseInt(data.getSeckill_info().getStart_time());
-                    isFirst = false;
-                }
-                //设置RecyclerView
-                recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false));
-                recyclerView.setAdapter(new SeckillRecyclerViewAdapter(context,data.getSeckill_info()));
-
-                handler.sendEmptyMessageDelayed(0,1000);
-
-            }
-
+            handler.sendEmptyMessageDelayed(0, 1000);
 
         }
+
+
+    }
+
     class RecommendViewHolder extends RecyclerView.ViewHolder {
         private TextView textView;
-        private  GridView gridView;
+        private GridView gridView;
+
         public RecommendViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.home_recommend_tv_more);
             gridView = itemView.findViewById(R.id.home_recommend_gv);
-
         }
-        public void setData(){
-            gridView.setAdapter(new RecommendGridViewAdapter(data.getRecommend_info()));
+
+        public void setData() {
+            RecommendGridViewAdapter gridViewAdapter = new RecommendGridViewAdapter(data.getRecommend_info());
+            gridView.setAdapter(gridViewAdapter);
+
+
+
+
         }
     }
-        class HotViewHolder extends RecyclerView.ViewHolder {
+
+    class HotViewHolder extends RecyclerView.ViewHolder {
         private TextView textView;
         private GridView gridView;
+
         public HotViewHolder(@NonNull View itemView) {
-                super(itemView);
+            super(itemView);
             textView = itemView.findViewById(R.id.tv_more_hot);
             gridView = itemView.findViewById(R.id.gv_hot);
-            }
-
-            public void setData(){
-            gridView.setAdapter(new HotGridViewAdapter(data.getHot_info()));
-            }
         }
+
+        public void setData() {
+            gridView.setAdapter(new HotGridViewAdapter(data.getHot_info()));
+        }
+    }
 }

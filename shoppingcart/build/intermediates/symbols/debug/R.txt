@@ -1134,12 +1134,7 @@ int string shoopingcartTextViewText 0x7f15002d
 int string shoopingcartdeleteText 0x7f15002e
 int string shoopingcartsumText 0x7f15002f
 int string shoopingcartzeroText 0x7f150030
-int string shoppingcartTextText 0x7f150031
-int string shoppingcartTextTotalText 0x7f150032
-int string shoppingcartTextTotaltGoToPayText 0x7f150033
-int string shoppingcartTextTotaltPriceText 0x7f150034
-int string shoppingcartTextTotaltdeleteText 0x7f150035
-int string status_bar_notification_info_overflow 0x7f150036
+int string status_bar_notification_info_overflow 0x7f150031
 int style AlertDialog_AppCompat 0x7f160001
 int style AlertDialog_AppCompat_Light 0x7f160002
 int style Animation_AppCompat_Dialog 0x7f160003

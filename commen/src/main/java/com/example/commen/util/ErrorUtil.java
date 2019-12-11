@@ -1,7 +1,5 @@
 package com.example.commen.util;
 
-import com.example.commen.ShopMailError;
-
 import org.json.JSONException;
 
 import java.net.HttpRetryException;

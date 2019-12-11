@@ -1,32 +1,26 @@
 -- Merging decision tree log ---
 manifest
-ADDED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-9:12
-INJECTED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-9:12
-INJECTED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-9:12
-INJECTED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-9:12
-INJECTED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-9:12
-INJECTED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-9:12
-INJECTED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-9:12
+ADDED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-4:12
+INJECTED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-4:12
+INJECTED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-4:12
+INJECTED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-4:12
+INJECTED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-4:12
+INJECTED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-4:12
+INJECTED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-4:12
 	package
 		ADDED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:3:5-39
 		INJECTED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml
 		INJECTED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml
-		ADDED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-9:12
+		ADDED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-4:12
 		INJECTED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml
-		ADDED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-9:12
+		ADDED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:1-4:12
 		INJECTED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:11-69
-application
-ADDED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:5:5-7:19
-activity#com.example.shoppingcart.Ui.Shoppingcart
-ADDED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:6:9-62
-	android:name
-		ADDED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:6:19-50
 uses-sdk
 INJECTED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from E:\DemoOne\GitHubShop\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml

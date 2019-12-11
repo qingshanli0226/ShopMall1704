@@ -1,6 +1,7 @@
 package com.example.administrator.shaomall.type.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.administrator.shaomall.R;
+import com.example.administrator.shaomall.goodsinfo.GoodsInfoActivity;
+import com.example.administrator.shaomall.goodsinfo.bean.GoodsInfoBean;
 import com.example.administrator.shaomall.type.TypeBean;
 import com.example.commen.util.DensityUtil;
 import com.example.net.AppNetConfig;
@@ -114,7 +117,7 @@ public class TypeRightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         public void setData(TypeBean.ChildBean childBean, final int position) {
             //加载图片
             Glide.with(mContext)
-                    .load(AppNetConfig.BASE_URl_IMAGE +childBean.getPic())
+                    .load(AppNetConfig.BASE_URl_IMAGE + childBean.getPic())
                     .into(iv_ordinary_right);
             //设置名称
             tv_ordinary_right.setText(childBean.getName());
@@ -177,28 +180,27 @@ public class TypeRightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
                 myLinear.setTag(i);
-//                //点击事件
-//                myLinear.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        int i = (int) myLinear.getTag();
-//
-//                        String cover_price = hot_product_list.get(i).getCover_price();
-//                        String name = hot_product_list.get(i).getName();
-//                        String figure = hot_product_list.get(i).getFigure();
-//                        String product_id = hot_product_list.get(i).getProduct_id();
-//                        GoodsBean goodsBean = new GoodsBean(name, cover_price, figure, product_id);
-//
-//                        Intent intent = new Intent(mContext, GoodsInfoActivity.class);
-//                        intent.putExtra("goods_bean", goodsBean);
-//                        mContext.startActivity(intent);
-//                        // Toast.makeText(mContext, "position" + i, Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-                //         }
+                //点击事件
+                myLinear.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int i = (int) myLinear.getTag();
+                        TypeBean.HotProductListBean listBean = hot_product_list.get(i);
+                        //                        String cover_price = listBean.getCover_price();
+                        //                        String name = listBean.getName();
+                        //                        String figure = listBean.getFigure();
+                        //                        String product_id = listBean.getProduct_id();
 
+                        GoodsInfoBean goodsInfoBean = new GoodsInfoBean(listBean.getProduct_id(), listBean.getName(), listBean.getCover_price(), null, listBean.getFigure());
+                        Intent intent = new Intent(mContext, GoodsInfoActivity.class);
+                        intent.putExtra("goodsInfo", goodsInfoBean);
+                        mContext.startActivity(intent);
+                        // Toast.makeText(mContext, "position" + i, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         }
-
     }
+
 }
+

@@ -8,7 +8,7 @@ import com.example.administrator.shaomall.mine.MineFragment;
 import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.type.TypeFragment;
 import com.example.administrator.shaomall.home.HomeFragment;
-import com.example.administrator.shaomall.login.ui.LoginActivity;
+import com.example.administrator.shaomall.login.LoginActivity;
 import com.example.shoppingcart.Ui.Shoppingcart;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;

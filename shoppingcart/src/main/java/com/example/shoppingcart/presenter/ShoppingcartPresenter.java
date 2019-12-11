@@ -13,12 +13,12 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 
-public class ShoppingcartPresenter extends BasePresenter<String> {
+public class ShoppingcartPresenter extends BasePresenter<ShoppingCartBean> {
 
     @Override
     protected Type getBeanType() {
 
-        return new TypeToken<ResEntity<String>>(){}.getType();
+        return new TypeToken<ResEntity<List<ShoppingCartBean>>>() {}.getType();
     }
 
     @Override
@@ -26,18 +26,9 @@ public class ShoppingcartPresenter extends BasePresenter<String> {
         return AppNetConfig.GET_SHORTCART_PRODUCTS_URL;
     }
 
-//    @Override
-//    public HashMap<String, String> getHeaderParams() {
-//        HashMap<String,String> map = new HashMap<String,String>();
-//        map.put("token",UserInfoManager.getInstance().getToken());
-//
-//        return map;
-//
-//    }
 
     @Override
     protected boolean isList() {
-        return false;
-
+        return true;
     }
 }

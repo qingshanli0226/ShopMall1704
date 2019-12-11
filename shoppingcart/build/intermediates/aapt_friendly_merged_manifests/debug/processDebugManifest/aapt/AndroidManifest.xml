@@ -8,8 +8,4 @@
         android:minSdkVersion="15"
         android:targetSdkVersion="29" />
 
-    <application>
-        <activity android:name="com.example.shoppingcart.Ui.Shoppingcart" />
-    </application>
-
 </manifest>

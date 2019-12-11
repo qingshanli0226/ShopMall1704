@@ -1135,11 +1135,6 @@ string shoopingcartTextViewText
 string shoopingcartdeleteText
 string shoopingcartsumText
 string shoopingcartzeroText
-string shoppingcartTextText
-string shoppingcartTextTotalText
-string shoppingcartTextTotaltGoToPayText
-string shoppingcartTextTotaltPriceText
-string shoppingcartTextTotaltdeleteText
 string status_bar_notification_info_overflow
 style AlertDialog_AppCompat
 style AlertDialog_AppCompat_Light

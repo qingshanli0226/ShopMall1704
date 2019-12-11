@@ -3,8 +3,7 @@ package com.example.net.sign;
 import android.util.Base64;
 import android.util.Log;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.alibaba.fastjson.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -64,15 +63,11 @@ public class SignUtil {
      */
     public static String generateJsonSign(JSONObject object) {
         TreeMap<String, String> params = getEmptyTreeMap();
-        Iterator<String> keys = object.keys();
+        Iterator<String> keys = object.keySet().iterator();
 
         while (keys.hasNext()) {
             String key = keys.next();
-            try {
-                params.put(key, object.get(key).toString());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            params.put(key, object.get(key).toString());
         }
 
         StringBuilder str = new StringBuilder();
@@ -88,21 +83,17 @@ public class SignUtil {
         String signValue = stringToMD5(strNew);
         return signValue;
     }
+
     public static void encryptJsonParamsByBase64(JSONObject object) {
         Log.d("LQS str = ", object.toString());
 
-        Iterator<String> iterator = object.keys();
+        Iterator<String> iterator = object.keySet().iterator();
         while (iterator.hasNext()) {
             String key = iterator.next();
 
-            String value = null;
-            try {
-                value = object.get(key).toString();
-                String encryptValue = new String(Base64.encode(value.getBytes(), Base64.DEFAULT));
-                object.put(key, encryptValue);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            String value = object.get(key).toString();
+            String encryptValue = new String(Base64.encode(value.getBytes(), Base64.DEFAULT));
+            object.put(key, encryptValue);
         }
     }
 

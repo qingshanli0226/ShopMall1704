@@ -3,11 +3,9 @@ package com.shaomall.framework.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.example.commen.ShopMailError;
-import com.shaomall.framework.base.presenter.IBasePresenter;
+import com.example.commen.util.ShopMailError;
 import com.shaomall.framework.base.view.IBaseView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseMVPFragment<T> extends BaseFragment implements IBaseView<T> {

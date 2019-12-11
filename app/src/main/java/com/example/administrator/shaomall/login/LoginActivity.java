@@ -1,9 +1,7 @@
-package com.example.administrator.shaomall.login.ui;
+package com.example.administrator.shaomall.login;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.LinearGradient;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -14,7 +12,7 @@ import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.activity.MainActivity;
 import com.example.administrator.shaomall.login.diyview.DIYButton;
 import com.example.administrator.shaomall.login.presenter.LoginPresenter;
-import com.example.commen.ShopMailError;
+import com.example.commen.util.ShopMailError;
 import com.shaomall.framework.base.BaseMVPActivity;
 import com.shaomall.framework.bean.LoginBean;
 import com.shaomall.framework.manager.UserInfoManager;

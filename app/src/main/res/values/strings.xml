@@ -17,7 +17,5 @@
     <string name="signinPassWordText">密码:</string>
     <string name="singinSiginTextViewText">已有账号?点击前往登录</string>
     <string name="app_fragment_mine_tv_text_user_name">登录/注册 ></string>
-
-
-
+    <string name="app_framgent_mine_tv_text_shop_default">- -</string>
 </resources>

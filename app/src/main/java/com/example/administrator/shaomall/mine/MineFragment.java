@@ -1,21 +1,16 @@
 package com.example.administrator.shaomall.mine;
 
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.DrawableContainer;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.QuickContactBadge;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.shaomall.R;
-import com.example.administrator.shaomall.login.presenter.LoginPresenter;
-import com.example.administrator.shaomall.login.ui.LoginActivity;
+import com.example.administrator.shaomall.login.LoginActivity;
 import com.shaomall.framework.base.BaseMVPFragment;
 import com.shaomall.framework.base.presenter.IBasePresenter;
 import com.shaomall.framework.bean.LoginBean;
@@ -40,10 +35,9 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
-        userInfoManager = UserInfoManager.getInstance(); //用户信息管理类
         //注册登录监听
         UserInfoManager.getInstance().registerUserInfoStatusListener(this);
-
+        userInfoManager = UserInfoManager.getInstance(); //用户信息管理类
 
         mIvHeader = (ImageView) view.findViewById(R.id.iv_header);
         mTvUserName = (TextView) view.findViewById(R.id.tv_userName);
@@ -54,9 +48,14 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         mBtLogout = (Button) view.findViewById(R.id.bt_logout);
         mTvPoint = (TextView) view.findViewById(R.id.tv_point);
 
-        mIvHeader.setOnClickListener(this);
-        mTvUserName.setOnClickListener(this);
-        mBtLogout.setOnClickListener(this);
+        mIvHeader.setOnClickListener(this);             //用户头像
+        mTvUserName.setOnClickListener(this);           //用户名称
+        mTvProductAttention.setOnClickListener(this);   //商品关注
+        mTvShopAttention.setOnClickListener(this);      //店铺关注
+        mTvFavoriteContent.setOnClickListener(this);    //喜欢的内容
+        mTvBrowsingHistory.setOnClickListener(this);    //浏览记录
+        mBtLogout.setOnClickListener(this);             //退出登录
+        mTvPoint.setOnClickListener(this);              //运动积分
     }
 
     @Override
@@ -87,15 +86,22 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
             case R.id.bt_logout: //退出登录
                 setLogout();
                 break;
+            default:
+                toast("点击了其它", false);
         }
     }
 
+    /**
+     * 退出登录功能
+     */
     private void setLogout() {
-        if (logoutPresenter == null){
+        if (logoutPresenter == null) {
             logoutPresenter = new LogOutPresenter();
             logoutPresenter.attachView(this);
         }
-        logoutPresenter.doPostHttpRequest(); //退出登录
+        if (userInfoManager.isLogin()) {
+            logoutPresenter.doPostHttpRequest(); //请求退出登录链接
+        }
     }
 
     private void setUserData() {
@@ -118,7 +124,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
             if (avatar == null) {
                 avatar = "http://img5.imgtn.bdimg.com/it/u=1441588315,1666293982&fm=26&gp=0.jpg";
                 Glide.with(mContext).load(avatar).apply(RequestOptions.circleCropTransform()).into(mIvHeader);
-            }else {
+            } else {
                 Glide.with(mContext).load(avatar).apply(RequestOptions.circleCropTransform()).into(mIvHeader);
             }
             //这是昵称
@@ -138,8 +144,8 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
     @Override
     public void onRequestHttpDataSuccess(String message, String data) {
         super.onRequestHttpDataSuccess(message, data);
-        toast(message+": "+data, false);
         UserInfoManager.getInstance().unLogout();
+        toast(message + ": " + data, false);
     }
 
     @Override

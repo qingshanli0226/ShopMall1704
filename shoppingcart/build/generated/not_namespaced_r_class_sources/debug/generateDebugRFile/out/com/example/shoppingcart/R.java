@@ -1184,12 +1184,7 @@ public final class R {
         public static int shoopingcartdeleteText = 0x7f15002e;
         public static int shoopingcartsumText = 0x7f15002f;
         public static int shoopingcartzeroText = 0x7f150030;
-        public static int shoppingcartTextText = 0x7f150031;
-        public static int shoppingcartTextTotalText = 0x7f150032;
-        public static int shoppingcartTextTotaltGoToPayText = 0x7f150033;
-        public static int shoppingcartTextTotaltPriceText = 0x7f150034;
-        public static int shoppingcartTextTotaltdeleteText = 0x7f150035;
-        public static int status_bar_notification_info_overflow = 0x7f150036;
+        public static int status_bar_notification_info_overflow = 0x7f150031;
     }
     public static final class style {
         private style() {}

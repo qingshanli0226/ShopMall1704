@@ -254,7 +254,6 @@
     <dimen name="shoppingcartTextTotalLeft">5dp</dimen>
     <dimen name="shoppingcartTextTotalTextsize">16sp</dimen>
     <dimen name="shoppingcartTextTotaltPriceTextSize">16sp</dimen>
-    <string name="app_name">shoppingcart</string>
     <string name="cartNumTextVIewText">1</string>
     <string name="cartReduceTextVIewText">一</string>
     <string name="shoopingcartPayText">付款(0)</string>
@@ -262,9 +261,4 @@
     <string name="shoopingcartdeleteText">删除</string>
     <string name="shoopingcartsumText">合计:</string>
     <string name="shoopingcartzeroText">￥0.00</string>
-    <string name="shoppingcartTextText">购物车</string>
-    <string name="shoppingcartTextTotalText">合计:</string>
-    <string name="shoppingcartTextTotaltGoToPayText">付款(0)</string>
-    <string name="shoppingcartTextTotaltPriceText">￥0.00</string>
-    <string name="shoppingcartTextTotaltdeleteText">删除</string>
 </resources>

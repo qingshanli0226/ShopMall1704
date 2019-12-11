@@ -1,4 +1,4 @@
-package com.example.administrator.shaomall.login.ui;
+package com.example.administrator.shaomall.login;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
@@ -13,10 +13,9 @@ import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.login.diyview.DIYButton;
 import com.example.administrator.shaomall.login.diyview.Headportrait;
 import com.example.administrator.shaomall.login.presenter.SigninPresenter;
-import com.example.commen.ShopMailError;
+import com.example.commen.util.ShopMailError;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.shaomall.framework.base.BaseMVPActivity;
-import com.squareup.picasso.Picasso;
 import com.wyp.avatarstudio.AvatarStudio;
 
 import java.io.File;

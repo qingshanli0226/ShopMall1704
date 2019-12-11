@@ -888,7 +888,7 @@ public final class R {
         public static int abc_toolbar_collapse_description = 0x7f150027;
         public static int app_name = 0x7f150028;
         public static int search_menu_title = 0x7f15002b;
-        public static int status_bar_notification_info_overflow = 0x7f150036;
+        public static int status_bar_notification_info_overflow = 0x7f150031;
     }
     public static final class style {
         private style() {}
