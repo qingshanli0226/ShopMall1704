@@ -228,7 +228,6 @@ public class MyHomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Log.d("####", "onItemClick: " + position);
                     if (position <= 8) {
                         Intent intent = new Intent(mContext, GoodsListActivity.class);
                         intent.putExtra("position", position);
@@ -295,7 +294,6 @@ public class MyHomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
                 @Override
                 public void onPageSelected(int position) {
-//                    Toast.makeText(mContext, "position:" + position, Toast.LENGTH_SHORT).show();
                 }
 
                 @Override

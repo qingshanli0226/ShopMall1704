@@ -95,17 +95,6 @@ public class IntegralActivity extends BaseActivity {
         String current_step = queryAll.get(queryAll.size() - 1).getCurrent_step();
         int i = Integer.parseInt(current_step);
         stepArcView.setCurrentCount(10000,i);
-
-//        int i1 = (int) i / 100;
-//        integral.setText(i1+"");
-
-
-        //设置历史记录
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-//        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//        History_recyclerView.setLayoutManager(linearLayoutManager);
-
-
         //获取日期
         List<ShopStepBean> queryAll1 = OrmUtils.getQueryAll(ShopStepBean.class);
         final List<String> mlistDate=new ArrayList<>();
@@ -145,12 +134,6 @@ public class IntegralActivity extends BaseActivity {
             public void onStepChange(int count) {
                 intergral_Step.setText(count+"");
                 stepArcView.setCurrentCount(10000,count);
-//                List<ShopStepBean> stepHistory = StepManager.getInstance().getStepHistory();
-//                StepHistoryAdapter stepHistoryAdapter = new StepHistoryAdapter(stepHistory,count);
-//                History_recyclerView.setAdapter(stepHistoryAdapter);
-
-
-
 
             }
 
@@ -160,12 +143,5 @@ public class IntegralActivity extends BaseActivity {
               integral.setText(intgal+"");
             }
         });
-
-
-
-
-
-
-
     }
 }

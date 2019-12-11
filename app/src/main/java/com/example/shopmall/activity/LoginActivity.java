@@ -13,8 +13,10 @@ import android.widget.Toast;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IPostBaseView;
+import com.example.framework.bean.ResultBean;
+import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
-import com.example.shopmall.bean.LoginBean;
+import com.example.framework.bean.LoginBean;
 import com.example.shopmall.presenter.LoginPresenter;
 
 public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBean> {
@@ -70,6 +72,8 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
                 LoginPresenter loginPresenter = new LoginPresenter(name, pwd);
                 loginPresenter.attachPostView(LoginActivity.this);
                 loginPresenter.getCipherTextData();
+                mName.setText("");
+                mPassWord.setText("");
             }
         });
 
@@ -85,16 +89,21 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
     @Override
     public void onPostDataSucess(LoginBean data) {
         Toast.makeText(this, data.getMessage(), Toast.LENGTH_SHORT).show();
-        LoginBean.ResultBean result = data.getResult();
+        ResultBean result = data.getResult();
         String token = result.getToken();
-        SharedPreferences token1 = getSharedPreferences("login", Context.MODE_PRIVATE);
-        SharedPreferences.Editor edit = token1.edit();
-        edit.putString("getToken", token).apply();//
-        Log.e("####", token);
+        if (data.getMessage().equals("登录成功")) {
+            UserManager.getInstance().setActiveUser(result);
+            UserManager.getInstance().addUser(result);
+            SharedPreferences token1 = getSharedPreferences("login", Context.MODE_PRIVATE);
+            SharedPreferences.Editor edit = token1.edit();
+            edit.putString("getToken", token).apply();
+            finish();
+        }
     }
 
     @Override
     public void onPostDataFailed(String ErrorMsg) {
-
+        mPassWord.setText("");
+        mName.setText("");
     }
 }

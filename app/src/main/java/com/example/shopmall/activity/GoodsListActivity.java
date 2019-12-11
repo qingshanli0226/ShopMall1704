@@ -1,12 +1,9 @@
 package com.example.shopmall.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
-import android.os.Bundle;
-import android.view.View;
 
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
@@ -49,7 +46,7 @@ public class GoodsListActivity extends BaseActivity implements IGetBaseView {
         tb_goods_list.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
             public void LeftClick() {
-
+                finish();
             }
 
             @Override
@@ -77,6 +74,10 @@ public class GoodsListActivity extends BaseActivity implements IGetBaseView {
 
     @Override
     public void onGetDataFailed(String ErrorMsg) {
+
+    }
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 }

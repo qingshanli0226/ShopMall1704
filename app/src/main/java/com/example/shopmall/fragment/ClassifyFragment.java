@@ -9,9 +9,7 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
 import com.example.common.LoadingPage;
-
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseFragment;
 import com.example.framework.base.IGetBaseView;
@@ -136,7 +134,6 @@ public class ClassifyFragment extends BaseFragment implements IGetBaseView<Class
     public void onGetDataFailed(String ErrorMsg) {
 
     }
-
     @Override
     public void onDestroy() {
         super.onDestroy();

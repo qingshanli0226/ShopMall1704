@@ -27,7 +27,7 @@ public class WelcomePresenter extends BasePresenter<HomepageBean> {
 
     @Override
     protected HashMap<String, String> getParam() {
-        return null;
+        return new HashMap<>();
     }
 
 }

@@ -35,4 +35,12 @@ public class InsertBean {
     public void setResult(String result) {
         this.result = result;
     }
+    @Override
+    public String toString() {
+        return "InsertBean{" +
+                "code='" + code + '\'' +
+                ", message='" + message + '\'' +
+                ", result='" + result + '\'' +
+                '}';
+    }
 }
