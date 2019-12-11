@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'org.greenrobot.greendao'
-//添加依赖库
 
 apply plugin: 'kotlin-android-extensions'
 android {
@@ -17,6 +16,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
+
     }
 
     buildTypes {
@@ -41,12 +41,10 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation project(path: ':framework')
-    implementation project(path: ':buy')
     implementation project(path: ':common')
     implementation project(path: ':net')
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     implementation 'org.greenrobot:greendao:3.2.2' // 添加库
-
 
 
 //

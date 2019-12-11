@@ -37,6 +37,7 @@ public class HistoryActivity extends BaseActivity {
     private DatePickerDialog dateDialog;
     private int year, monthOfYear, dayOfMonth;
     private   List<StepBean> beans;
+
     @Override
     public void init() {
         iv_left = findViewById(R.id.iv_left);
@@ -185,18 +186,15 @@ public class HistoryActivity extends BaseActivity {
         if (new StepIsSupport().isSupportStepCountSensor(this)) {
             beans.clear();
             beans = new DaoManager(this).areaStepBean(start, stop);
-            Log.i("getSQdataArea", "getSQdataArea: "+beans.size());
             if (beans.size()>0){
-                for (StepBean stepBean:beans) {
-                    Log.i("getSQdataArea", "getSQdataArea:"+stepBean.getCurr_date());
-                }
+                history_re.setVisibility(View.VISIBLE);
+                recently.setVisibility(View.GONE);
                 stepItemAdpter = new StepItemAdpter(beans);
                 history_re.setAdapter(stepItemAdpter);
             }else {
                 //如果数据库中没有日期数据  我们就让列表隐藏 将展示没有历史记录的控件显示
                 history_re.setVisibility(View.GONE);
                 recently.setVisibility(View.VISIBLE);
-                Log.i("getSQdataArea", "getSQdataArea: aaaaa");
             }
         } else {
             //如果数据库中没有日期数据  我们就让列表隐藏 将展示没有历史记录的控件显示

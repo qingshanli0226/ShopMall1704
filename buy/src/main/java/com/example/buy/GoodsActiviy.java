@@ -26,6 +26,7 @@ import com.example.common.IntentUtil;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.port.IPresenter;
 import com.example.net.AppNetConfig;
+import com.example.point.activity.StepActivity;
 import com.google.gson.Gson;
 
 /**
@@ -93,7 +94,6 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
 
         } else if (v.getId() == collectBut.getId()) {
             //本地sp存储收藏的商品的信息
-
         }
     }
     //加入购物车动画

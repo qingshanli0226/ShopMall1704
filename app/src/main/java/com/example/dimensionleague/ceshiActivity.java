@@ -1,5 +1,6 @@
 package com.example.dimensionleague;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -52,6 +53,7 @@ public class ceshiActivity extends BaseNetConnectActivity {
             @Override
             public void onClick(View v) {
                 iPresenter.doHttpPostRequest(1002);
+
             }
         });
 

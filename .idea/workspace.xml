@@ -6,125 +6,15 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="注册" />
     <option name="TOOL_WINDOW_LOG_LEVEL" value="info" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="57e2fe1a-7b8d-4e5b-83e5-bb90b89cb851" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/CacheManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/MineApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/MineFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/RegisterPresenter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/activity/MainActivity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/activity/WelcomeActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/businessbean/HomeBean.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/ceshiActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/ceshiPresenter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/home/HomeFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/home/HomePresenter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/home/adapter/ActAdapter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/home/adapter/ChannelAdapter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/home/adapter/HomeAdapter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/home/adapter/HotAdapter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/home/adapter/RecommendAdapter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/home/adapter/SeckillAdapter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/home/holder/ActViewHolder.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/home/holder/BannerViewHolder.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/home/holder/ChannelHolder.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/home/holder/HotViewHolder.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/home/holder/RecommendHolder.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/home/holder/SeckillHolder.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/type/TypeChildRecycleAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/type/TypeFragment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/type/TypePresenter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/type/TypeRecycleViewAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/type/TypeRightAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/type/TypeTagAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/typebean/TypeBean.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/attention.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/background.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/background_gray.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/background_which.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/camera.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/home_arrow_left_flash.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/home_arrow_left_hot.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/home_arrow_left_new.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/home_arrow_right.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/round.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/scan_code.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/search.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/search_which.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/setting.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/time_shape.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_ceshi.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/find_item.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_mine.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/home_act.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/home_channel.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/home_channel_item.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/home_hot.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/home_hot_item.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/home_recommend.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/home_recommend_item.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/home_seckill.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/home_seckill_item.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/type_right_rv.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/type_rv_right.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/type_tag_left.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/OnCartListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/OnIntegraListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/OnOrderListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/OrderActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/databeans/GetCheckGoodsBean.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/databeans/GetOrderBean.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/databeans/GetPayOrderBean.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/databeans/SendOrdersBean.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/databeans/ShowGoodsBean.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/presenter/GetCartPresenter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/presenter/GetPayOrderPresenter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/presenter/GetWaitOrderPresenter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/presenter/PostAddCartPresenter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/presenter/PostOrderPresenter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/presenter/PostUpDatePresenter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/presenter/PostVerifyGoodsPresenter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/presenter/PostVerifyOnePresenter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/drawable-anydpi/unchecked.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/drawable-hdpi/unchecked.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/drawable-mdpi/unchecked.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/drawable-xhdpi/unchecked.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/drawable-xxhdpi/unchecked.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/drawable/buybut.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/drawable/cart.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/drawable/checkbut.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/drawable/checked.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/drawable/collect.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/layout/item_pay.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/layout/popuwindow_goods.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/values/colors.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/values/dimens.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/buy/src/main/res/values/styles.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/example/common/IntentUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/example/common/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/example/common/manager/AccountManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/example/common/port/IAccountCallBack.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/example/common/utils/LoadingPageUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/example/common/utils/Md5Util.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/example/common/utils/SPUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/example/common/utils/SignUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/example/common/view/HomeTopBar.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/res/layout/ceshi.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/framework/src/main/java/com/example/framework/manager/ErrorHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/point/src/main/java/com/example/point/DaoMaster.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/point/src/main/java/com/example/point/DaoSession.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/point/src/main/java/com/example/point/StepBeanDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/point/src/main/java/com/example/point/activity/IntegralActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/point/src/main/java/com/example/point/service/StepBean.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/point/src/main/java/com/example/point/stepmanager/DaoManager.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/point/src/main/java/com/example/point/stepmanager/StepPointManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/point/src/main/java/com/example/point/view/AnimationButton.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/point/src/main/res/layout/integral_activity.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/point/src/main/res/values/values.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/point/src/main/res/mipmap-xxhdpi/cengai.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/point/src/main/res/mipmap-xxhdpi/right.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/point/src/main/res/mipmap-xxhdpi/wu.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/point/src/main/res/mipmap-xxhdpi/wzy.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -132,93 +22,21 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DimensionLeague.iml" beforeDir="false" afterPath="$PROJECT_DIR$/DimensionLeague.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/ApplicationManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/HomeFragment.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/MainActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/WelcomeActivity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/userbean/RegisterBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/userbean/RegisterBean.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/roundness.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/roundness.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_welcome.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_welcome.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_find.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_find.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_my.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_type.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_type.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/home_banner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/home_banner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/home_circlebutton.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/ceshiActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/ceshiActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/home/adapter/HomeAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/home/adapter/HomeAdapter.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/buy/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/buy/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/buy/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/CollectActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/CollectActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/GoodsActiviy.java" beforeDir="false" afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/GoodsActiviy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/OrderManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/PayActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/PayActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/ShopCartFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/ShopCartFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/ShowOrderActivity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/databeans/AddCartBean.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/databeans/CheckGoodsBean.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/databeans/GoodsBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/databeans/GoodsBean.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/databeans/OkBean.java" beforeDir="false" afterPath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/databeans/OkBean.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/databeans/OkOrderBean.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/databeans/OrderBean.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/databeans/PayGoodsBean.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/databeans/StepBean.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/databeans/WaitPayBean.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/presenter/CartPresenter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/java/com/example/buy/presenter/GoodsPresenter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/res/layout/activity_goods.xml" beforeDir="false" afterPath="$PROJECT_DIR$/buy/src/main/res/layout/activity_goods.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/res/layout/activity_pay.xml" beforeDir="false" afterPath="$PROJECT_DIR$/buy/src/main/res/layout/activity_pay.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/res/layout/activity_showorder.xml" beforeDir="false" afterPath="$PROJECT_DIR$/buy/src/main/res/layout/activity_showorder.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/res/layout/fragment_shopcart.xml" beforeDir="false" afterPath="$PROJECT_DIR$/buy/src/main/res/layout/fragment_shopcart.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/res/layout/item_goods.xml" beforeDir="false" afterPath="$PROJECT_DIR$/buy/src/main/res/layout/item_goods.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/res/layout/item_order.xml" beforeDir="false" afterPath="$PROJECT_DIR$/buy/src/main/res/layout/item_order.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buy/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/buy/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/common/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/example/common/Constant.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/example/common/Constant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/example/common/LoadingPageUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/example/common/SPUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/framework/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/framework/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/framework/src/main/java/com/example/framework/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/framework/src/main/java/com/example/framework/base/BaseActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/framework/src/main/java/com/example/framework/base/BaseActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/framework/src/main/java/com/example/framework/base/BaseNetConnectActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/framework/src/main/java/com/example/framework/base/BaseNetConnectActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/framework/src/main/java/com/example/framework/base/BaseNetConnectFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/framework/src/main/java/com/example/framework/base/BaseNetConnectFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/framework/src/main/java/com/example/framework/base/BasePresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/framework/src/main/java/com/example/framework/base/BasePresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/framework/src/main/java/com/example/framework/base/BaseViewHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/framework/src/main/java/com/example/framework/base/BaseViewHolder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/framework/src/main/java/com/example/framework/manager/UserManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/framework/src/main/java/com/example/framework/port/IPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/framework/src/main/java/com/example/framework/port/IPresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/framework/src/main/java/com/example/framework/port/IUserCallBack.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/framework/src/main/java/com/example/framework/port/IView.java" beforeDir="false" afterPath="$PROJECT_DIR$/framework/src/main/java/com/example/framework/port/IView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/net/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/net/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/net/src/main/java/com/example/net/AppNetConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/net/src/main/java/com/example/net/AppNetConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/net/src/main/java/com/example/net/NetInterence.java" beforeDir="false" afterPath="$PROJECT_DIR$/net/src/main/java/com/example/net/NetInterence.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/net/src/main/java/com/example/net/RetrofitCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/net/src/main/java/com/example/net/RetrofitCreator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/net/src/main/java/com/example/net/TokenInterceptor.java" beforeDir="false" afterPath="$PROJECT_DIR$/net/src/main/java/com/example/net/TokenInterceptor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/framework/src/main/java/com/example/framework/manager/StepManager.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/point/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/point/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/point/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/point/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/point/src/main/java/com/example/point/StepPointManager.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/point/src/main/java/com/example/point/activity/HistoryActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/point/src/main/java/com/example/point/activity/HistoryActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/point/src/main/java/com/example/point/activity/PhysicalActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/point/src/main/java/com/example/point/activity/PhysicalActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/point/src/main/java/com/example/point/activity/IntegralActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/point/src/main/java/com/example/point/activity/IntegralActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/point/src/main/java/com/example/point/activity/StepActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/point/src/main/java/com/example/point/activity/StepActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/point/src/main/java/com/example/point/adpter/StepItemAdpter.java" beforeDir="false" afterPath="$PROJECT_DIR$/point/src/main/java/com/example/point/adpter/StepItemAdpter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/point/src/main/java/com/example/point/database/StepData.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/point/src/main/java/com/example/point/service/StepService.java" beforeDir="false" afterPath="$PROJECT_DIR$/point/src/main/java/com/example/point/service/StepService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/point/src/main/java/com/example/point/view/StepView.java" beforeDir="false" afterPath="$PROJECT_DIR$/point/src/main/java/com/example/point/view/StepView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/point/src/main/res/layout/history_activity.xml" beforeDir="false" afterPath="$PROJECT_DIR$/point/src/main/res/layout/history_activity.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/point/src/main/res/layout/physical_activity.xml" beforeDir="false" afterPath="$PROJECT_DIR$/point/src/main/res/layout/physical_activity.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/point/src/main/res/values/styles.xml" beforeDir="false" afterPath="$PROJECT_DIR$/point/src/main/res/values/styles.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/two.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/point/src/main/java/com/example/point/stepmanager/DaoManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/point/src/main/java/com/example/point/stepmanager/DaoManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/point/src/main/res/layout/integral_activity.xml" beforeDir="false" afterPath="$PROJECT_DIR$/point/src/main/res/layout/integral_activity.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -245,49 +63,79 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/point/src/main/java/com/example/point/service/StepService.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/home/HomeFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="100" column="9" selection-start-line="100" selection-start-column="9" selection-end-line="100" selection-end-column="9" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#3585#3716#0" expanded="true" />
-                <element signature="e#3715#3716#0" expanded="true" />
-                <element signature="e#12006#12007#0" expanded="true" />
-                <element signature="e#12154#12155#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="57">
+              <caret line="16" column="43" selection-start-line="16" selection-start-column="43" selection-end-line="16" selection-end-column="43" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/point/src/main/res/values/styles.xml">
+        <entry file="file://$PROJECT_DIR$/framework/src/main/java/com/example/framework/base/BaseNetConnectFragment.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="418">
-              <caret line="22" column="35" selection-start-line="22" selection-start-column="35" selection-end-line="22" selection-end-column="35" />
+              <caret line="27" column="9" lean-forward="true" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/point/src/main/java/com/example/point/activity/HistoryActivity.java">
+        <entry file="file://$PROJECT_DIR$/framework/src/main/java/com/example/framework/base/BaseActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2019">
-              <caret line="55" column="13" lean-forward="true" selection-start-line="55" selection-start-column="13" selection-end-line="55" selection-end-column="13" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#5785#5786#0" expanded="true" />
-                <element signature="e#5833#5834#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="190">
+              <caret line="26" column="52" lean-forward="true" selection-start-line="26" selection-start-column="52" selection-end-line="26" selection-end-column="52" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/ceshiActivity.java">
+        <entry file="file://$PROJECT_DIR$/framework/src/main/java/com/example/framework/base/BaseNetConnectActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="456">
+              <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/framework/src/main/java/com/example/framework/port/INetConnectListener.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="76">
-              <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+              <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/businessbean/HomeBean.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="266">
+              <caret line="18" column="22" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/point/src/main/res/layout/integral_activity.xml">
+          <provider editor-type-id="android-designer2" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="114">
+              <caret line="15" column="45" lean-forward="true" selection-start-line="15" selection-start-column="45" selection-end-line="15" selection-end-column="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/point/src/main/res/mipmap-xxhdpi/wzy.jpg">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/home/adapter/HomeAdapter.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="616">
+              <caret line="92" column="4" selection-start-line="92" selection-start-column="4" selection-end-line="92" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -295,66 +143,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/CacheManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="451">
-              <caret line="63" column="5" selection-start-line="63" selection-start-column="5" selection-end-line="63" selection-end-column="5" />
+            <state relative-caret-position="19">
+              <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/point/src/main/java/com/example/point/activity/IntegralActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="23" column="43" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#182#183#0" expanded="true" />
-                <element signature="e#206#207#0" expanded="true" />
-                <element signature="e#564#565#0" expanded="true" />
-                <element signature="e#586#587#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/point/src/main/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="444">
-              <caret line="39" column="89" lean-forward="true" selection-start-line="39" selection-start-column="89" selection-end-line="39" selection-end-column="89" />
-            </state>
-          </provider>
-          <provider editor-type-id="android-manifest" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/point/src/main/res/layout/integral_activity.xml">
-          <provider editor-type-id="android-designer2" />
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="4" column="34" selection-start-line="4" selection-start-column="34" selection-end-line="4" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/point/src/main/res/layout/title_toolbar.xml">
-          <provider editor-type-id="android-designer2" />
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="8" column="24" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/MineApplication.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="451">
-              <caret line="66" lean-forward="true" selection-start-line="66" selection-end-line="66" />
             </state>
           </provider>
         </entry>
@@ -394,31 +187,36 @@
         <option value="$PROJECT_DIR$/point/src/main/res/layout/physical_activity.xml" />
         <option value="$PROJECT_DIR$/point/src/main/java/com/example/point/view/StepView.java" />
         <option value="$PROJECT_DIR$/point/src/main/java/com/example/point/stepmanager/StepPointManager.java" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/build.gradle" />
-        <option value="$PROJECT_DIR$/point/build.gradle" />
         <option value="$PROJECT_DIR$/framework/build.gradle" />
-        <option value="$PROJECT_DIR$/point/src/main/java/com/example/point/activity/StepActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/framework/src/main/java/com/example/framework/base/BaseActivity.java" />
-        <option value="$PROJECT_DIR$/point/src/main/java/com/example/point/activity/HistoryActivity.java" />
         <option value="$PROJECT_DIR$/framework/src/main/java/com/example/framework/port/IPresenter.java" />
-        <option value="$PROJECT_DIR$/point/src/main/java/com/example/point/stepmanager/DaoManager.kt" />
         <option value="$PROJECT_DIR$/point/src/main/res/values/values.xml" />
         <option value="$PROJECT_DIR$/point/src/main/res/layout/history_activity.xml" />
         <option value="$PROJECT_DIR$/point/src/main/res/values/styles.xml" />
-        <option value="$PROJECT_DIR$/point/src/main/java/com/example/point/service/StepService.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/MineApplication.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/CacheManager.java" />
-        <option value="$PROJECT_DIR$/point/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/point/src/main/res/layout/integral_activity.xml" />
+        <option value="$PROJECT_DIR$/point/src/main/java/com/example/point/activity/StepActivity.java" />
         <option value="$PROJECT_DIR$/point/src/main/java/com/example/point/activity/IntegralActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/point/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/ceshiActivity.java" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/point/build.gradle" />
+        <option value="$PROJECT_DIR$/buy/build.gradle" />
+        <option value="$PROJECT_DIR$/buy/src/main/java/com/example/buy/GoodsActiviy.java" />
+        <option value="$PROJECT_DIR$/point/src/main/java/com/example/point/stepmanager/DaoManager.kt" />
+        <option value="$PROJECT_DIR$/point/src/main/java/com/example/point/activity/HistoryActivity.java" />
+        <option value="$PROJECT_DIR$/point/src/main/java/com/example/point/service/StepService.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/home/adapter/HomeAdapter.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/home/HomeFragment.java" />
+        <option value="$PROJECT_DIR$/point/src/main/res/layout/integral_activity.xml" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="154" />
-    <option name="y" value="120" />
+    <option name="x" value="38" />
+    <option name="y" value="328" />
     <option name="width" value="1612" />
     <option name="height" value="889" />
   </component>
@@ -427,6 +225,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
@@ -469,6 +269,61 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="dimensionleague" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DimensionLeague" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ShopMall1704" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="dimensionleague" type="462c0819:PsiDirectoryNode" />
+              <item name="home" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DimensionLeague" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ShopMall1704" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="framework" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="DimensionLeague" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ShopMall1704" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="framework" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DimensionLeague" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ShopMall1704" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="framework" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DimensionLeague" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ShopMall1704" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="framework" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DimensionLeague" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ShopMall1704" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="framework" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="framework" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DimensionLeague" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ShopMall1704" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="framework" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="framework" type="462c0819:PsiDirectoryNode" />
+              <item name="base" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="DimensionLeague" type="b2602c69:ProjectViewProjectNode" />
@@ -523,7 +378,7 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="point" type="462c0819:PsiDirectoryNode" />
-              <item name="stepmanager" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="DimensionLeague" type="b2602c69:ProjectViewProjectNode" />
@@ -532,15 +387,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="res" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DimensionLeague" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ShopMall1704" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="point" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="res" type="462c0819:PsiDirectoryNode" />
-              <item name="drawable" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="DimensionLeague" type="b2602c69:ProjectViewProjectNode" />
@@ -558,21 +404,19 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="res" type="462c0819:PsiDirectoryNode" />
-              <item name="values" type="462c0819:PsiDirectoryNode" />
+              <item name="mipmap-xxhdpi" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="VBJDU18A24012061" />
     <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2019-12-10T11:36:42.698Z" />
     <property name="android.sdk.path" value="D:/AndroidSDK" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../DemoGreenDao2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/point/src/main/res/mipmap-xxhdpi" />
     <property name="not.eligible.for.single.variant.sync" value="true" />
     <property name="project.structure.last.edited" value="SDK Location" />
     <property name="project.structure.proportion" value="0.17" />
@@ -582,11 +426,17 @@
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
       <recent name="com.example.point.stepmanager" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Demo\ShopMall1704\point\src\main\res\mipmap-xxhdpi" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.example.point" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.example.point.view" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Demo\ShopMall1704\point\src\main\res\mipmap-xxhdpi" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -686,11 +536,11 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="154" y="120" width="1612" height="889" extended-state="0" />
+    <frame x="38" y="328" width="1612" height="889" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.49838188" visible="true" weight="0.39884022" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.49838188" visible="true" weight="0.39304122" />
       <window_info id="Structure" order="2" sideWeight="0.50161815" side_tool="true" weight="0.32995737" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Build Variants" order="4" side_tool="true" />
@@ -698,16 +548,16 @@
       <window_info id="Designer" order="6" />
       <window_info id="Resources Explorer" order="7" weight="0.32995737" />
       <window_info id="Capture Tool" order="8" />
-      <window_info anchor="bottom" id="Find" weight="0.329718" />
       <window_info anchor="bottom" id="Run" order="0" sideWeight="0.4989339" weight="0.329718" />
-      <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.49946696" weight="0.29501083" />
+      <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.49946696" visible="true" weight="0.3602649" />
       <window_info anchor="bottom" id="TODO" order="2" weight="0.329718" />
       <window_info anchor="bottom" id="Debug" order="3" />
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.329718" />
       <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.5010661" side_tool="true" weight="0.329718" />
       <window_info anchor="bottom" id="Version Control" order="6" weight="0.329718" />
-      <window_info anchor="bottom" id="Build" order="7" weight="0.16160521" />
+      <window_info anchor="bottom" id="Build" order="7" weight="0.13665944" />
       <window_info anchor="bottom" id="Android Profiler" order="8" weight="0.96746206" />
+      <window_info anchor="bottom" id="Find" order="9" weight="0.329718" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Gradle" order="2" />
@@ -717,220 +567,66 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/local.properties">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/settings.gradle">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gradlew.bat">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gradlew">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/activity/MainActivity.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2413">
-          <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
+        <state relative-caret-position="-321">
+          <caret line="12" column="6" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/point/proguard-rules.pro">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/activity/WelcomeActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="3" column="1" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/res/drawable/cb_plan_selector.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/res/drawable/edit_background.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/res/mipmap-xxhdpi/arrow_back_white.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/res/mipmap-xxhdpi/bg_create_group.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/res/mipmap-xxhdpi/btn_submit_bg.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/java/com/example/point/database/StepData.java" />
-    <entry file="jar://D:/AndroidSDK/platforms/android-29/android.jar!/android/os/Binder.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#3021#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/java/com/example/point/DaoMaster.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/java/com/example/point/StepBeanDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/java/com/example/point/DaoSession.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/ApplicationManager.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/MineFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/res/layout/physical_activity.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1938">
-          <caret line="102" column="47" selection-start-line="102" selection-start-column="47" selection-end-line="102" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/java/com/example/point/StepIsSupport.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/java/com/example/point/view/AnimationButton.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="269" column="32" selection-start-line="269" selection-start-column="32" selection-end-line="269" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/java/com/example/point/service/StepBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/java/com/example/point/DaoMaster.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/java/com/example/point/view/StepView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="20" column="37" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/java/com/example/point/adpter/StepItemAdpter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="54" column="50" selection-start-line="54" selection-start-column="50" selection-end-line="54" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="9" column="9" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/framework/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="42" selection-start-line="42" selection-end-line="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/java/com/example/point/activity/PhysicalActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1250">
+        <state relative-caret-position="-2375">
           <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/framework/src/main/java/com/example/framework/base/BaseActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/userbean/UpdateMoneyBean.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-277">
-          <caret line="26" column="52" lean-forward="true" selection-start-line="26" selection-start-column="52" selection-end-line="26" selection-end-column="52" />
+        <state relative-caret-position="38">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/java/com/example/point/stepmanager/StepPointManager.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/userbean/UploadBean.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="58">
-          <caret line="43" selection-start-line="43" selection-end-line="43" />
+        <state relative-caret-position="38">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/java/com/example/point/activity/StepActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/userbean/UpdatePointBean.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="817">
-          <caret line="70" column="32" selection-start-line="70" selection-start-column="32" selection-end-line="70" selection-end-column="32" />
+        <state relative-caret-position="209">
+          <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/typebean/TypeBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-266">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/net/src/main/java/com/example/net/NetInterence.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="95">
-          <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-manifest" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/RegisterPresenter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <caret line="19" column="17" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/java/com/example/point/StepBeanDao.java">
+    <entry file="file://$PROJECT_DIR$/net/src/main/java/com/example/net/RetrofitCreator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="425">
+          <caret line="31" column="46" selection-start-line="31" selection-start-column="46" selection-end-line="31" selection-end-column="46" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/framework/src/main/java/com/example/framework/port/IFragment.java">
+    <entry file="file://$PROJECT_DIR$/net/src/main/java/com/example/net/AppNetConfig.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+        <state relative-caret-position="-1463">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -941,82 +637,184 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/point/consumer-rules.pro">
+    <entry file="file://$PROJECT_DIR$/framework/src/main/java/com/example/framework/port/IView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/framework/src/main/java/com/example/framework/port/IClickListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/framework/src/main/java/com/example/framework/manager/StepManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/framework/src/main/java/com/example/framework/port/IActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/framework/src/main/java/com/example/framework/manager/OrderManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/framework/src/main/java/com/example/framework/manager/ErrorManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/framework/src/main/java/com/example/framework/manager/NetConnectManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2031">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/RegisterPresenter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="26" column="29" selection-start-line="26" selection-start-column="21" selection-end-line="26" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/userbean/LoginBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/userbean/LoginOutBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/point/src/main/java/com/example/point/activity/IntegralActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="61" column="13" selection-start-line="61" selection-start-column="13" selection-end-line="61" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1886#2031#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DimensionLeague.iml">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gradle.properties">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/ceshiActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="55" selection-start-line="55" selection-end-line="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="572">
+          <caret line="55" selection-start-line="55" selection-end-line="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="40" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/buy/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="3" column="47" selection-start-line="3" selection-start-column="47" selection-end-line="3" selection-end-column="60" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/point/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="328">
+          <caret line="45" column="58" selection-start-line="45" selection-start-column="42" selection-end-line="45" selection-end-column="58" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="665">
+          <caret line="35" selection-start-line="35" selection-end-line="35" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/point/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="426">
-          <caret line="50" selection-start-line="50" selection-end-line="50" />
+        <state relative-caret-position="496">
+          <caret line="44" selection-start-line="44" selection-end-line="44" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/buy/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="496">
+          <caret line="36" column="40" selection-start-line="36" selection-start-column="40" selection-end-line="36" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/buy/src/main/java/com/example/buy/OrderActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/buy/src/main/java/com/example/buy/GoodsActiviy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2187">
+          <caret line="241" lean-forward="true" selection-start-line="241" selection-end-line="241" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/buy/src/main/java/com/example/buy/OnOrderListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/point/src/main/java/com/example/point/stepmanager/DaoManager.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="47" column="22" selection-start-line="47" selection-start-column="22" selection-end-line="47" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/res/values/values.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="3" column="16" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/res/layout/history_activity.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="46" column="32" selection-start-line="46" selection-start-column="32" selection-end-line="46" selection-end-column="32" />
-          <folding>
-            <element signature="e#430#444#0" expanded="true" />
-            <element signature="e#782#796#0" expanded="true" />
-            <element signature="e#827#841#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="22" column="35" selection-start-line="22" selection-start-column="35" selection-end-line="22" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/ceshiActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/java/com/example/point/service/StepService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="100" column="9" selection-start-line="100" selection-start-column="9" selection-end-line="100" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3585#3716#0" expanded="true" />
-            <element signature="e#3715#3716#0" expanded="true" />
-            <element signature="e#12006#12007#0" expanded="true" />
-            <element signature="e#12154#12155#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/MineApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
-          <caret line="66" lean-forward="true" selection-start-line="66" selection-end-line="66" />
+        <state relative-caret-position="274">
+          <caret line="59" column="45" selection-start-line="59" selection-start-column="45" selection-end-line="59" selection-end-column="45" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/point/src/main/java/com/example/point/activity/HistoryActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2019">
-          <caret line="55" column="13" lean-forward="true" selection-start-line="55" selection-start-column="13" selection-end-line="55" selection-end-column="13" />
+        <state relative-caret-position="3211">
+          <caret line="190" column="50" selection-start-line="190" selection-start-column="50" selection-end-line="190" selection-end-column="50" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#5785#5786#0" expanded="true" />
@@ -1025,51 +823,101 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/point/src/main/res/layout/step_activity.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/point/src/main/res/layout/history_activity.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/point/src/main/java/com/example/point/DaoSession.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/point/src/main/java/com/example/point/service/StepService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="204" column="46" lean-forward="true" selection-start-line="204" selection-start-column="46" selection-end-line="204" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml">
+      <provider editor-type-id="android-designer2" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-607" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/home/adapter/HomeAdapter.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="616">
+          <caret line="92" column="4" selection-start-line="92" selection-start-column="4" selection-end-line="92" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/CacheManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
-          <caret line="63" column="5" selection-start-line="63" selection-start-column="5" selection-end-line="63" selection-end-column="5" />
+        <state relative-caret-position="19">
+          <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/AndroidManifest.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/businessbean/HomeBean.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="39" column="89" lean-forward="true" selection-start-line="39" selection-start-column="89" selection-end-line="39" selection-end-column="89" />
+        <state relative-caret-position="266">
+          <caret line="18" column="22" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="22" />
         </state>
       </provider>
-      <provider editor-type-id="android-manifest" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/dimensionleague/home/HomeFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="16" column="43" selection-start-line="16" selection-start-column="43" selection-end-line="16" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/framework/src/main/java/com/example/framework/port/INetConnectListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/framework/src/main/java/com/example/framework/base/BaseNetConnectFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="27" column="9" lean-forward="true" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/framework/src/main/java/com/example/framework/base/BaseActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="26" column="52" lean-forward="true" selection-start-line="26" selection-start-column="52" selection-end-line="26" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/framework/src/main/java/com/example/framework/base/BaseNetConnectActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/point/src/main/res/mipmap-xxhdpi/wzy.jpg">
+      <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/point/src/main/res/layout/integral_activity.xml">
       <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="34" selection-start-line="4" selection-start-column="34" selection-end-line="4" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/res/layout/title_toolbar.xml">
-      <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" column="24" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/point/src/main/java/com/example/point/activity/IntegralActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="23" column="43" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#182#183#0" expanded="true" />
-            <element signature="e#206#207#0" expanded="true" />
-            <element signature="e#564#565#0" expanded="true" />
-            <element signature="e#586#587#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="114">
+          <caret line="15" column="45" lean-forward="true" selection-start-line="15" selection-start-column="45" selection-end-line="15" selection-end-column="45" />
         </state>
       </provider>
     </entry>
