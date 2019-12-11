@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.buy.R;
 import com.example.buy.databeans.GetPayOrderBean;
 import com.example.buy.databeans.GoodsBean;
@@ -41,17 +42,25 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
     protected void onStart() {
         super.onStart();
         Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra(IntentUtil.ORDERS);
-        if (bundle!=null){
-            list = bundle.getParcelableArrayList(IntentUtil.GOODS);
-            recyclerView.getAdapter().notifyDataSetChanged();
-            orderMoney.setText(getMoney());
-        }
+        list = intent.getParcelableArrayListExtra(IntentUtil.ORDERS);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(new BaseRecyclerAdapter<GoodsBean>(R.layout.item_pay, list) {
+            @Override
+            public void onBind(BaseViewHolder holder, final int position) {
+                holder.getImageView(R.id.itemPayImg,AppNetConfig.BASE_URl_IMAGE+list.get(position).getUrl());
+                holder.getTextView(R.id.itemPayTitle, list.get(position).getProductName());
+                holder.getTextView(R.id.itemPayNum, list.get(position).getProductNum() + "");
+                holder.getTextView(R.id.itemPayPrice, list.get(position).getProductId());
+            }
+        });
+        recyclerView.getAdapter().notifyDataSetChanged();
+        orderMoney.setText(getMoney());
 
         List<SendOrdersBean.BodyBean> bodyBeans=new ArrayList<>();
         for (GoodsBean i:list){
             bodyBeans.add(new SendOrdersBean.BodyBean(i.getProductName(),i.getProductId()));
         }
+
         //直接发起订单
         SendOrdersBean sendOrdersBean = new SendOrdersBean(
                 "购买",
@@ -59,9 +68,10 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
                 bodyBeans
         );
         Log.e("xxx","发起的订单请求"+sendOrdersBean.toString());
+
         sendOrederPresenter=new PostOrderPresenter(sendOrdersBean);
         sendOrederPresenter.attachView(this);
-        sendOrederPresenter.doHttpPostRequest(CODE_ORDER);
+        sendOrederPresenter.doHttpPostJSONRequest(CODE_ORDER);
     }
 
     @Override
@@ -89,15 +99,7 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
         payMoney = findViewById(R.id.payMoney);
         recyclerView = findViewById(R.id.recyclerView);
         //http://49.233.93.155:8080  updateMoney  money=1333
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(new BaseRecyclerAdapter<GoodsBean>(R.layout.item_pay, list) {
-            @Override
-            public void onBind(BaseViewHolder holder, final int position) {
-                holder.getTextView(R.id.itemTitle, list.get(position).getProductName());
-                holder.getTextView(R.id.itemNum, list.get(position).getProductNum() + "");
-                holder.getTextView(R.id.itemPrice, list.get(position).getProductId());
-            }
-        });
+
         payBut.setOnClickListener(this);
     }
 
@@ -125,7 +127,7 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
     private String getMoney(){
         int sum=0;
         for (GoodsBean i:list){
-            sum+=Integer.valueOf(i.getProductId())*i.getProductNum();
+            sum+=Float.valueOf(i.getProductPrice());
         }
         return sum+"";
     }

@@ -31,7 +31,7 @@ public class SPUtil {
 
     //TODO 是否登录
     public static boolean isLogin(){
-        return TextUtils.isEmpty(getToken());
+        return !TextUtils.isEmpty(getToken());
     }
 
     //TODO 退出登录

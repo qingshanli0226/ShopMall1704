@@ -2,8 +2,9 @@
 <resources>
     <color name="buyWhite">#FFF</color>
     <color name="buyAlpha">#00FFFFFF</color>
-    <color name="buyRed">#FF0000</color>
+    <color name="buyRed">#F32A2A</color>
     <color name="buyBlacak">#000000</color>
     <color name="buyGray">#F3F3F3</color>
     <color name="buyPink">#E0E24C81</color>
+    <color name="buyLittlePink">#4DF5DBE7</color>
 </resources>

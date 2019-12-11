@@ -28,14 +28,26 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_below="@+id/cartHead"
+        android:layout_above="@id/buyFoot"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
+            android:background="@color/colorWhite"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    <TextView
+        android:id="@+id/nullGoods"
+        android:visibility="gone"
+        android:text="购物车空空如也"
+        android:layout_below="@+id/cartHead"
+        android:layout_above="@id/buyFoot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
     <RelativeLayout
+        android:background="@color/colorWhite"
+        android:id="@+id/buyFoot"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

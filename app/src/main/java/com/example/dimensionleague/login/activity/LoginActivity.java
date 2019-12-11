@@ -58,11 +58,11 @@ public class LoginActivity extends BaseNetConnectActivity implements IButtonEnab
     @Override
     public void init() {
         super.init();
-        login_back = (ImageView) findViewById(R.id.login_back);
-        user_name = (EditText) findViewById(R.id.user_name);
-        password = (EditText) findViewById(R.id.password);
-        password_check = (CheckBox) findViewById(R.id.password_check);
-        forget_password = (TextView) findViewById(R.id.forget_password);
+        login_back = findViewById(R.id.login_back);
+        user_name = findViewById(R.id.user_name);
+        password = findViewById(R.id.password);
+        password_check = findViewById(R.id.password_check);
+        forget_password = findViewById(R.id.forget_password);
         btn_login = findViewById(R.id.btn_login);
         user_register = findViewById(R.id.user_register);
 

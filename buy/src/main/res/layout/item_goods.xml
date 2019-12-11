@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/buy_one"
+    android:background="@drawable/goodscolor">
     <CheckBox
         android:id="@+id/itemCheck"
         android:button="@null"
@@ -12,29 +14,40 @@
     <ImageView
         android:id="@+id/itemImg"
         android:layout_toRightOf="@id/itemCheck"
-        android:layout_width="100dp"
-        android:layout_height="100dp"/>
+        android:layout_width="@dimen/buy_one_hund"
+        android:layout_height="@dimen/buy_one_hund"/>
     <TextView
         android:id="@+id/itemTitle"
         android:text="标题"
+        android:textColor="@color/buyPink"
+        android:textSize="@dimen/buy_text_two"
+        android:maxLines="1"
         android:layout_toRightOf="@id/itemImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
+        android:id="@+id/reTe"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/itemImg"
+        android:text="¥"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
         android:id="@+id/itemPrice"
-        android:layout_marginRight="80dp"
+        android:textColor="@color/buyRed"
+        android:layout_toRightOf="@id/reTe"
         android:layout_below="@id/itemTitle"
-        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:text="价格"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/itemNum"
-        android:layout_marginTop="50dp"
+        android:layout_alignTop="@id/itemAddBut"
         android:text="数量"
+        android:layout_toLeftOf="@id/itemAddBut"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/itemPrice" />
+        android:layout_height="wrap_content" />
     <Button
         android:id="@+id/itemDelBut"
         android:background="@null"
@@ -47,10 +60,10 @@
         android:layout_height="20dp"/>
     <Button
         android:id="@+id/itemAddBut"
+        android:layout_alignParentRight="true"
         android:background="@null"
         android:textStyle="bold"
         android:layout_margin="10dp"
-        android:layout_toRightOf="@id/itemNum"
         android:layout_below="@id/itemPrice"
         android:text="+"
         android:layout_width="20dp"

@@ -35,5 +35,8 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     api 'com.github.bumptech.glide:glide:4.1.1'
+    api 'com.google.code.gson:gson:2.8.6'
+//    "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"    //两个
+    api 'com.alibaba:fastjson:1.1.71.android'
 
 }

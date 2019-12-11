@@ -3,28 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <ImageView
-        android:id="@+id/itemImg"
+        android:id="@+id/itemPayImg"
         android:layout_width="100dp"
         android:layout_height="100dp"/>
     <TextView
-        android:id="@+id/itemTitle"
+        android:id="@+id/itemPayTitle"
         android:text="标题"
-        android:layout_toRightOf="@id/itemImg"
+        android:layout_toRightOf="@id/itemPayImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
-        android:id="@+id/itemPrice"
+        android:id="@+id/itemPayPrice"
         android:layout_marginRight="80dp"
-        android:layout_below="@id/itemTitle"
+        android:layout_below="@id/itemPayTitle"
         android:layout_alignParentRight="true"
         android:text="价格"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
-        android:id="@+id/itemNum"
+        android:id="@+id/itemPayNum"
         android:layout_marginTop="50dp"
         android:text="数量"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/itemPrice" />
+        android:layout_alignLeft="@id/itemPayPrice" />
 </RelativeLayout>

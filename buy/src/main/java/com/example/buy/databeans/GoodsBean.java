@@ -12,11 +12,12 @@ import android.os.Parcelable;
  * */
 public class GoodsBean implements Parcelable {
 
-    public GoodsBean(String productId, int productNum, String productName, String url) {
+    public GoodsBean(String productId, int productNum, String productName, String url, String productPrice) {
         this.productId = productId;
         this.productNum = productNum;
         this.productName = productName;
         this.url = url;
+        this.productPrice = productPrice;
     }
 
     @Override
@@ -26,6 +27,7 @@ public class GoodsBean implements Parcelable {
                 ", productNum=" + productNum +
                 ", productName='" + productName + '\'' +
                 ", url='" + url + '\'' +
+                ", productPrice='" + productPrice + '\'' +
                 '}';
     }
 
@@ -34,12 +36,14 @@ public class GoodsBean implements Parcelable {
      * productNum : 1
      * productName : 衬衫
      * url : http://www.baidu.com
+     * productPrice : 20
      */
 
     private String productId;
     private int productNum;
     private String productName;
     private String url;
+    private String productPrice;
 
     public String getProductId() {
         return productId;
@@ -73,6 +77,14 @@ public class GoodsBean implements Parcelable {
         this.url = url;
     }
 
+    public String getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(String productPrice) {
+        this.productPrice = productPrice;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -84,6 +96,7 @@ public class GoodsBean implements Parcelable {
         dest.writeInt(this.productNum);
         dest.writeString(this.productName);
         dest.writeString(this.url);
+        dest.writeString(this.productPrice);
     }
 
     protected GoodsBean(Parcel in) {
@@ -91,6 +104,7 @@ public class GoodsBean implements Parcelable {
         this.productNum = in.readInt();
         this.productName = in.readString();
         this.url = in.readString();
+        this.productPrice = in.readString();
     }
 
     public static final Parcelable.Creator<GoodsBean> CREATOR = new Parcelable.Creator<GoodsBean>() {

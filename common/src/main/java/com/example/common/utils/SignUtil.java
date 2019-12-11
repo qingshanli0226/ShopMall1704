@@ -3,8 +3,10 @@ package com.example.common.utils;
 import android.util.Base64;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSONObject;
+
 import org.json.JSONException;
-import org.json.JSONObject;
+
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -25,6 +27,22 @@ public class SignUtil {
         });
         return treeMap;
     }
+
+    public static void encryptJsonParamsByBase64(JSONObject object) {
+        Log.d("LQS str = ", object.toString());
+
+        Iterator<String> iterator = object.keySet().iterator();
+        while (iterator.hasNext()) {
+            String key = iterator.next();
+
+            String value = object.get(key).toString();
+            String encryptValue = new String(Base64.encode(value.getBytes(), Base64.DEFAULT));
+            object.put(key, encryptValue);
+
+        }
+        Log.d("LQS str = ", object.toString());
+    }
+
 
     public static TreeMap<String, String> encryptParamsByBase64(Map<String, String> params) {
         TreeMap<String, String> encryptedParams;
@@ -53,15 +71,11 @@ public class SignUtil {
     //对json数据的验签
     public static String generateJsonSign(JSONObject object) {
         TreeMap<String, String> params = getEmptyTreeMap();
-        Iterator<String> keys = object.keys();
+        Iterator<String> keys = object.keySet().iterator();
         while (keys.hasNext()) {
             String key = keys.next();
-            try {
-                params.put(key, object.get(key).toString());
-                Log.d("LHF = ", object.get(key).toString());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            params.put(key, object.get(key).toString());
+            Log.d("LHF = ", object.get(key).toString());
         }
 
         StringBuilder str = new StringBuilder();
@@ -70,9 +84,10 @@ public class SignUtil {
             str.append(key + "=" + value + "&");
         }
         str.append("encrypt=md5");
-        String strNew = str.toString().replace("\"", "")
-                .replace(":", "").replace("=", "")
-                .replace(" ", "");
+        String strNew = str.toString();
+//                .replace("\"", "")
+//                .replace(":", "").replace("=", "")
+//                .replace(" ", "");
         String signValue = stringToMD5(strNew);
         Log.d("LHF str new = ", strNew);
         Log.d("LHF signvalue = ", signValue);
