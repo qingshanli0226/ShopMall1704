@@ -22,6 +22,7 @@
 
         <activity android:name=".activity.GoodsInfoActivity" />
         <activity android:name=".activity.GoodsListActivity" />
+
         <activity android:name=".activity.MessageActivity" />
         <activity android:name=".activity.RegisterActivity">
 

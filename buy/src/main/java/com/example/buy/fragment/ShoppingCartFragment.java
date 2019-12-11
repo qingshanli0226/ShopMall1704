@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.Button;
@@ -29,14 +30,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.buy.BezierTypeEvaluator;
 import com.example.buy.activity.OrderActivity;
 import com.example.buy.adapter.MyShoppingBasketAdapter;
 import com.example.buy.R;
+import com.example.buy.bean.InsertBean;
+import com.example.buy.bean.ShoppingCartBean;
+import com.example.buy.presenter.InsertPresenter;
+import com.example.buy.presenter.ShoppingCartPresenter;
+import com.example.common.SignUtil;
+import com.example.framework.base.IGetBaseView;
+import com.example.framework.base.IPostBaseView;
 import com.example.framework.manager.ShoppingManager;
 import com.example.common.NumberAddSubView;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseFragment;
+import com.example.net.Constant;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,7 +56,7 @@ import java.util.Map;
 /**
  * 购物车页面
  */
-public class ShoppingCartFragment extends BaseFragment implements NumberAddSubView.OnNumberChangeListener {
+public class ShoppingCartFragment extends BaseFragment implements NumberAddSubView.OnNumberChangeListener, IGetBaseView<ShoppingCartBean>, IPostBaseView {
 
     TitleBar tb_shopping_cart;
     ImageView iv_shopping_cart;
@@ -85,6 +95,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         }
     };
     private ShoppingManager myShoppingManager;
+    private InsertPresenter addOneProduct;
 
     protected void setCheck(Message msg) {
         boolean isSetting = myShoppingManager.getisSetting();
@@ -93,16 +104,15 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         if (!isSetting) {
             allCount = Double.parseDouble(s[2]);
             myShoppingManager.setAllCount(allCount);
-            if (s[2].contains(".")) {
-                tv_shopcart_total.setText("￥" + allCount + "0");
-            } else {
-                tv_shopcart_total.setText("￥" + allCount + ".00");
-            }
+
+            tv_shopcart_total.setText("￥" + allCount + "0");
+
         }
 
 
         List<Map<String, String>> data = myShoppingManager.getData();
         Map<String, String> map = data.get(msg.arg2);
+        map.put("id", map.get("id"));
         map.put("img", map.get("img"));
         map.put("title", map.get("title"));
         map.put("price", map.get("price"));
@@ -120,13 +130,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         if (flag == 0) {
             flag = 1;
         } else {
-            setAllUnChecked();
-
-            myShoppingBasketAdapter.reFresh(myShoppingManager.getData());
-            checkbox_all.setChecked(false);
-            tv_shopcart_total.setText("￥0.00");
-
-            judgeNumberisZero();
+            initData2();
         }
     }
 
@@ -143,7 +147,6 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     @Override
     protected void initData() {
         initData2();
-        judgeNumberisZero();
         setCheckAll();
         setSetting();
         setDelete();
@@ -252,6 +255,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
                 if (cb_all.isChecked()) {
                     for (int i = 0; i < data.size(); i++) {
                         Map<String, String> map = data.get(i);
+                        map.put("id", map.get("id"));
                         map.put("img", map.get("img"));
                         map.put("title", map.get("title"));
                         map.put("price", map.get("price"));
@@ -262,6 +266,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
                 } else {
                     for (int i = 0; i < data.size(); i++) {
                         Map<String, String> map = data.get(i);
+                        map.put("id", map.get("id"));
                         map.put("img", map.get("img"));
                         map.put("title", map.get("title"));
                         map.put("price", map.get("price"));
@@ -284,13 +289,8 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
                     setAllUnChecked();
                 }
                 double allCount = myShoppingManager.getAllCount();
-                String s = "" + allCount;
-                if (s.contains(".")) {
-                    tv_shopcart_total.setText("￥" + allCount + "0");
-                } else {
-                    tv_shopcart_total.setText("￥" + allCount + ".00");
-                }
 
+                tv_shopcart_total.setText("￥" + allCount + "0");
 
                 myShoppingBasketAdapter.reFresh(myShoppingManager.getData());
                 myShoppingBasketAdapter.setAllcount(allCount);
@@ -302,6 +302,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         List<Map<String, String>> data = myShoppingManager.getData();
         for (int i = 0; i < data.size(); i++) {
             Map<String, String> map = data.get(i);
+            map.put("id", map.get("id"));
             map.put("img", map.get("img"));
             map.put("title", map.get("title"));
             map.put("price", map.get("price"));
@@ -320,6 +321,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         List<Map<String, String>> data = myShoppingManager.getData();
         for (int i = 0; i < data.size(); i++) {
             Map<String, String> map = data.get(i);
+            map.put("id", map.get("id"));
             map.put("img", map.get("img"));
             map.put("title", map.get("title"));
             map.put("price", map.get("price"));
@@ -330,7 +332,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
 
             if (ischecked.equals("false")) {
                 double allCount = myShoppingManager.getAllCount();
-                allCount += Integer.parseInt(map.get("price")) * Integer.parseInt(map.get("num"));
+                allCount += Double.parseDouble(map.get("price")) * Integer.parseInt(map.get("num"));
                 myShoppingManager.setAllCount(allCount);
             }
 
@@ -340,19 +342,29 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     }
 
     private void initData2() {
-        List<Map<String, String>> data = myShoppingManager.getData();
-        for (int i = 0; i < 10; i++) {
+//        List<Map<String, String>> data = myShoppingManager.getData();
+//        for (int i = 0; i < 10; i++) {
+//
+//            Map<String, String> map = new HashMap<>();
+//            map.put("img", "http://www.qubaobei.com//ios//cf//uploadfile//132//9//8289.jpg");
+//            map.put("title", "大虾" + i);
+//            map.put("price", 10 + i + "");
+//            map.put("ischecked", "false");
+//            map.put("num", "1");
+//            data.add(map);
+//        }
 
-            Map<String, String> map = new HashMap<>();
-            map.put("img", "http://www.qubaobei.com//ios//cf//uploadfile//132//9//8289.jpg");
-            map.put("title", "大虾" + i);
-            map.put("price", 10 + i + "");
-            map.put("ischecked", "false");
-            map.put("num", "1");
-            data.add(map);
-        }
-        myShoppingBasketAdapter.reFresh(data);
-        myShoppingManager.setData(data);
+        String token = ShoppingManager.getInstance().getToken(getContext());
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("token", token);
+
+        ShoppingCartPresenter presenter = new ShoppingCartPresenter("getShortcartProducts", ShoppingCartBean.class, hashMap);
+        presenter.attachGetView(this);
+        presenter.getGetData();
+
+
+//        myShoppingBasketAdapter.reFresh(data);
+//        myShoppingManager.setData(data);
     }
 
     protected void setTitleBar() {
@@ -421,6 +433,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
 
         List<Map<String, String>> data = myShoppingManager.getData();
         Map<String, String> map = data.get(postion);
+        map.put("id", map.get("id"));
         map.put("img", map.get("img"));
         map.put("title", map.get("title"));
         map.put("price", map.get("price"));
@@ -432,14 +445,11 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         double allCount = myShoppingManager.getAllCount();
         myShoppingBasketAdapter.refresh2(data, postion, allCount);
 
+//        refreshNumber(postion);
+
         if (ischecked) {
-            allCount += Integer.parseInt(price);
-            String s = "" + allCount;
-            if (s.contains(".")) {
-                tv_shopcart_total.setText("￥" + allCount + "0");
-            } else {
-                tv_shopcart_total.setText("￥" + allCount + ".00");
-            }
+            allCount += Double.parseDouble(price);
+            tv_shopcart_total.setText("￥" + allCount + "0");
             myShoppingBasketAdapter.setAllcount(allCount);
             myShoppingManager.setAllCount(allCount);
         }
@@ -451,6 +461,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         List<Map<String, String>> data = myShoppingManager.getData();
 
         Map<String, String> map = data.get(postion);
+        map.put("id", map.get("id"));
         map.put("img", map.get("img"));
         map.put("title", map.get("title"));
         map.put("price", map.get("price"));
@@ -463,17 +474,40 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         double allCount = myShoppingManager.getAllCount();
         myShoppingBasketAdapter.refresh2(data, postion, allCount);
 
+//        refreshNumber(postion);
         if (ischecked) {
-            allCount -= Integer.parseInt(price);
-            String s = "" + allCount;
-            if (s.contains(".")) {
-                tv_shopcart_total.setText("￥" + allCount + "0");
-            } else {
-                tv_shopcart_total.setText("￥" + allCount + ".00");
-            }
+            allCount -= Double.parseDouble(price);
+
+            tv_shopcart_total.setText("￥" + allCount + "0");
+
             myShoppingBasketAdapter.setAllcount(allCount);
             myShoppingManager.setAllCount(allCount);
         }
+    }
+
+    public void refreshNumber(int position) {
+        String token = ShoppingManager.getInstance().getToken(getContext());
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("token", token);
+
+        List<Map<String, String>> data = myShoppingManager.getData();
+
+        Map<String, String> map = data.get(position);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("productId", map.get("id"));
+        jsonObject.put("productNum", map.get("num"));
+        jsonObject.put("productName", map.get("title"));
+        jsonObject.put("url", map.get("img"));
+        jsonObject.put("productPrice", map.get("price"));
+        jsonObject.put("sign", SignUtil.generateJsonSign(jsonObject));
+
+        SignUtil.encryptJsonParamsByBase64(jsonObject);
+
+        addOneProduct = new InsertPresenter("updateProductNum", InsertBean.class, hashMap, jsonObject);
+        addOneProduct.attachPostView(this);
+        addOneProduct.getPostJsonData();
+
     }
 
     public void add(final View view) {
@@ -494,9 +528,9 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         PointF controllF = new PointF();
 
         startF.x = startPosition[0];
-        startF.y = startPosition[1] - recyclerPosition[1] + tb_shopping_cart.getHeight() + 60;
+        startF.y = startPosition[1] - recyclerPosition[1] + tb_shopping_cart.getHeight();
         endF.x = endPosition[0];
-        endF.y = endPosition[1] - recyclerPosition[1] + tb_shopping_cart.getHeight() + 60;
+        endF.y = endPosition[1] - recyclerPosition[1] + tb_shopping_cart.getHeight();
         controllF.x = endF.x;
         controllF.y = startF.y;
 
@@ -552,5 +586,45 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         set.play(objectAnimatorX).with(objectAnimatorY).after(valueAnimator);
         set.setDuration(800);
         set.start();
+    }
+
+    @Override
+    public void onGetDataSucess(ShoppingCartBean data) {
+        List<Map<String, String>> data2 = new ArrayList<>();
+        List<ShoppingCartBean.ResultBean> result = data.getResult();
+        Log.e("####size", result.size() + "");
+        for (int i = 0; i < result.size(); i++) {
+            ShoppingCartBean.ResultBean resultBean = result.get(i);
+
+            Map<String, String> map = new HashMap<>();
+            map.put("id", resultBean.getProductId());
+            map.put("img", resultBean.getUrl());
+            map.put("title", resultBean.getProductName());
+            map.put("price", resultBean.getProductPrice());
+            map.put("ischecked", "false");
+            map.put("num", resultBean.getProductNum());
+            data2.add(map);
+        }
+        myShoppingBasketAdapter.reFresh(data2);
+        myShoppingManager.setData(data2);
+        judgeNumberisZero();
+
+        checkbox_all.setChecked(false);
+        tv_shopcart_total.setText("￥0.00");
+    }
+
+    @Override
+    public void onGetDataFailed(String ErrorMsg) {
+
+    }
+
+    @Override
+    public void onPostDataSucess(Object data) {
+        initData2();
+    }
+
+    @Override
+    public void onPostDataFailed(String ErrorMsg) {
+
     }
 }
