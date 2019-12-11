@@ -33,16 +33,6 @@ ADDED from D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:7:9-15:20
 		ADDED from D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:8:13-49
 	android:name
 		ADDED from D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:7:19-54
-intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:10:13-14:29
-action#android.intent.action.MAIN
-ADDED from D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:11:17-69
-	android:name
-		ADDED from D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:11:25-66
-category#android.intent.category.LAUNCHER
-ADDED from D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:13:17-77
-	android:name
-		ADDED from D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:13:27-74
 service#com.example.framework.service.StepService
 ADDED from D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:17:9-19:19
 	android:name

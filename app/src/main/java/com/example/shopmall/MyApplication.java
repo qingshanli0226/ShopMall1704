@@ -34,7 +34,6 @@ public class MyApplication extends Application {
         StepManager.getInstance().setActivityIntent(intent);
 
         UserManager.getInstance().init(this);
-//        UserManager.getInstance().init(this);
 
 
 

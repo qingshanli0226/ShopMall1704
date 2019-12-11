@@ -20,7 +20,7 @@ public interface NetPostService {
     Observable<ResponseBody> getFormData(@Path("path") String path, @HeaderMap HashMap<String, String> headMap, @FieldMap HashMap<String, String> fieldMap);
 
     @POST("{path}")
-    Observable<ResponseBody> getJsonData(@Path("path") String path, @Body RequestBody body);
+    Observable<ResponseBody> getJsonData(@Path("path") String path, @HeaderMap HashMap<String, String> header, @Body RequestBody body);
 
     @FormUrlEncoded
     @POST("{path}")
