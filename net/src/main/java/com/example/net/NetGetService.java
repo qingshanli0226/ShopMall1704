@@ -20,5 +20,4 @@ public interface NetGetService {
     @GET
     Observable<ResponseBody> getGetData(@Url String path);
 
-
 }
