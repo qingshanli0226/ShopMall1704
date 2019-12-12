@@ -4,11 +4,15 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,21 +25,23 @@ import com.example.step.CustomView.RunView;
 import com.example.step.CustomView.StepArcView;
 import com.example.framework.manager.StepManager;
 import com.litesuits.orm.LiteOrm;
+import com.litesuits.orm.db.assit.SQLiteHelper;
 
 import java.util.List;
+
 
 public class IntegralActivity extends BaseActivity {
 
     TitleBar tb_integral;
     TextView intergral_Step,integral;
     RunView runView;
-    StepArcView stepArcView;
+    StepArcView step_ArcView;
     RecyclerView History_recyclerView;
 
-   ArrayAdapter<String> stringArrayAdapter;
    TextView tvHistory;
 
    boolean isFirst=false;
+    SharedPreferences preferences;
     @Override
     protected int setLayout() {
         return R.layout.activity_integral;
@@ -43,11 +49,12 @@ public class IntegralActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        Toast.makeText(this, "Create", Toast.LENGTH_SHORT).show();
         tb_integral = findViewById(R.id.tb_integral);
         intergral_Step=findViewById(R.id.Integral_step);
         integral=findViewById(R.id.Integral_integral);
         runView=findViewById(R.id.runView);
-        stepArcView=findViewById(R.id.StepView);
+        step_ArcView=findViewById(R.id.StepView);
         History_recyclerView=findViewById(R.id.history_RecyclerView);
         tvHistory=findViewById(R.id.find_History);
     }
@@ -55,7 +62,6 @@ public class IntegralActivity extends BaseActivity {
     @SuppressLint({"NewApi", "ResourceAsColor", "ResourceType"})
     @Override
     public void initData() {
-
 
         tb_integral.setBackgroundColor(getResources().getInteger(R.color.color2));
         tb_integral.setCenterText("我的积分",18, Color.WHITE);
@@ -79,11 +85,8 @@ public class IntegralActivity extends BaseActivity {
             }
         });
 
-//        List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
-//        intergral_Step.setText(queryAll.get(queryAll.size()-1).getCurrent_step()+"");
-//        String current_step = queryAll.get(queryAll.size() -1).getCurrent_step();
-//        int i = Integer.parseInt(current_step);
-//        stepArcView.setCurrentCount(10000,i);
+
+
 
         tvHistory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,10 +100,8 @@ public class IntegralActivity extends BaseActivity {
 
 
 
-
-
-
         //当前步数和积分
+
 
 
 
@@ -110,9 +111,8 @@ public class IntegralActivity extends BaseActivity {
             @Override
             public void onStepChange(int count) {
 
-                
                 intergral_Step.setText(count+"");
-                stepArcView.setCurrentCount(10000,count);
+                step_ArcView.setCurrentCount(10000,count);
 
             }
 
@@ -128,6 +128,21 @@ public class IntegralActivity extends BaseActivity {
 
 
 
+
+
+    }
+
+
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+                   List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
+                   intergral_Step.setText(queryAll.get(queryAll.size()-1).getCurrent_step()+"");
+                   String current_step = queryAll.get(queryAll.size() -1).getCurrent_step();
+                    int i = Integer.parseInt(current_step);
+                    step_ArcView.setCurrentCount(10000,i);
 
 
     }

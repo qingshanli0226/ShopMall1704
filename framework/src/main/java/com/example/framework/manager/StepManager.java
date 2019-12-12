@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.text.format.Time;
@@ -20,6 +21,8 @@ import com.example.framework.bean.ShopStepBean;
 import com.example.framework.bean.ShopStepTimeRealBean;
 import com.example.framework.greendao.DaoMaster;
 import com.example.framework.greendao.DaoSession;
+import com.example.framework.greendao.FirstStepBean;
+import com.example.framework.greendao.FirstStepBeanDao;
 import com.example.framework.greendao.ShopStepTimeRealBeanDao;
 import com.example.framework.service.StepService;
 
@@ -40,7 +43,7 @@ public class StepManager {
     List<StepIntegalListener> IntegalListeners=new ArrayList<>();
     private Intent intent;
     ShopStepTimeRealBeanDao realBeanDao;
-    private static final String SQL_DISTINCT="SELECT DISTINCT"+ShopStepTimeRealBeanDao.Properties.Time+"FROM"+ShopStepTimeRealBeanDao.TABLENAME;
+    FirstStepBeanDao firstStepBeanDao;
 
     public static StepManager getInstance() {
         if (stepManager == null) {
@@ -70,9 +73,12 @@ public class StepManager {
                             stepManagerListeners.get(i).onStepChange(count);
                         }
 
-                        for (int i =0;i<IntegalListeners.size();i++){
-                            IntegalListeners.get(i).onIntegral(ingal);
+                        if(IntegalListeners.size()>0){
+                            for (int i =0;i<IntegalListeners.size();i++){
+                                IntegalListeners.get(i).onIntegral(ingal);
+                            }
                         }
+
 
                     }
 
@@ -97,19 +103,38 @@ public class StepManager {
         DaoSession daoSession = daoMaster.newSession();
         realBeanDao = daoSession.getShopStepTimeRealBeanDao();
 
+//        SQLiteDatabase sqLiteDatabase = new DaoMaster.DevOpenHelper(context, "first.db", null).getWritableDatabase();
+//        DaoMaster daoMaster1 = new DaoMaster(sqLiteDatabase);
+//        DaoSession daoSession1 = daoMaster1.newSession();
+//        firstStepBeanDao = daoSession1.getFirstStepBeanDao();
+
+
+
+
+
     }
 
 
 
+    public int  getFirstStep(){
+        for (int i=0;i<firstStepBeanDao.queryBuilder().list().size();i++){
+            if(firstStepBeanDao.queryBuilder().list().get(i).getFirst()==1){
+                return 1;
+            }
+        }
+        return 0;
+    }
+    public void saveFirstStep(int firsts){
+        FirstStepBean firstStep = new FirstStepBean(null, firsts);
+        firstStepBeanDao.insert(firstStep);
+    }
 
     public void saveReal(String time,String date,int current){
         ShopStepTimeRealBean shopStepTimeRealBean = new ShopStepTimeRealBean(null, time, date, current);
         realBeanDao.insertOrReplace(shopStepTimeRealBean);
     }
     public List<ShopStepTimeRealBean> getReal(){
-
-
-        return realBeanDao.queryBuilder().list();
+        return realBeanDao.queryBuilder().distinct().list();
     }
 
     public boolean isThisMonth(long time){
@@ -168,20 +193,7 @@ public class StepManager {
         }
         return list;
     }
-    //是否本周
-//    public boolean isThisWeek(long time){
-//        Calendar calendar = Calendar.getInstance();
-//        int currentWeek = calendar.get(Calendar.WEEK_OF_YEAR);
-//        calendar.setTime(new Date(time));
-//        int targetWeek = calendar.get(Calendar.WEEK_OF_YEAR);
-//        if(targetWeek==currentWeek){
-//            Log.e("Show","True");
-//            return true;
-//        }
-//        Log.e("Show","False"+currentWeek+"--"+targetWeek);
-//        return false;
-//
-//    }
+
     //是否在 0.0 -0.0时间段
     public boolean isCurrentTimeRange(int beginHour,int beginMin,int endHour,int endMin){
         boolean result=false;

@@ -65,6 +65,13 @@ public class MineFragment extends BaseFragment {
             }
         });
 
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
 
 
 

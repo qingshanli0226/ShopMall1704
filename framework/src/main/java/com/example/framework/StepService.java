@@ -38,7 +38,7 @@ public class StepService extends Service implements SensorEventListener {
 
 
     public static String CURRENT_DATE = "";
-    private static int duration=3000;
+    private static int duration=1500;
     private int systemStep;
     private int previousStep;
     private int currentStep;
@@ -78,7 +78,7 @@ public class StepService extends Service implements SensorEventListener {
             }
         }).start();
 
-        startTimer();
+//        startTimer();
 
 
     }
@@ -104,7 +104,7 @@ public class StepService extends Service implements SensorEventListener {
                         duration=30000;
                         break;
                     case Intent.ACTION_SCREEN_ON:
-                        duration=3000;
+                        duration=1000;
                         break;
                     case Intent.ACTION_SHUTDOWN:
                         StepManager.getInstance().save(CURRENT_DATE,currentStep,previousStep);
@@ -147,7 +147,6 @@ public class StepService extends Service implements SensorEventListener {
         CURRENT_DATE = getTodayDate();
         OrmUtils.createDb(this, "DbStep");
         List<ShopStepBean> shopStepBeans = OrmUtils.getQueryByWhere(ShopStepBean.class, "day", new String[]{CURRENT_DATE});
-        Log.e("##day", shopStepBeans.toString());
         if (shopStepBeans.size() == 0 || shopStepBeans.isEmpty()) {
             currentStep = 0;
         } else {
@@ -156,6 +155,7 @@ public class StepService extends Service implements SensorEventListener {
 
         int count=0;
         List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
+
         for (int i=0;i<queryAll.size();i++){
             count+=queryAll.get(i).getIntegral();
             if (updateUi != null) {
@@ -226,6 +226,16 @@ public class StepService extends Service implements SensorEventListener {
             nbuilder.setChannelId(this.getPackageName());
             notificationManager.createNotificationChannel(channel);
         }
+        int count=0;
+        List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
+        Log.e("##datsss",count+"");
+        for (int i=0;i<queryAll.size();i++){
+            count+=queryAll.get(i).getIntegral();
+            if (updateUi != null) {
+                Log.e("Count",count+"");
+                updateUi.getUpdateStep(currentStep,count);
+            }
+        }
         startForeground(100, nbuilder.build());
 
     }
@@ -265,19 +275,24 @@ public class StepService extends Service implements SensorEventListener {
                 systemStep = sensorStep;
             } else {
                 int thisStep = sensorStep - systemStep;
-                int i = thisStep - previousStep;
-                currentStep += (i);
+                int is = thisStep - previousStep;
+                currentStep += (is);
                 previousStep = thisStep;
-                Log.e("##THIS", systemStep + "--" + sensorStep + "---" + i + "--" + currentStep + "--" + previousStep+"-this"+thisStep);
+                Log.e("##THIS", systemStep + "--" + sensorStep + "---" + is+ "--" + currentStep + "--" + previousStep+"-this"+thisStep);
+
+
             }
 
 
         } else if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
             if (sensorEvent.values[0] == 1.0f) {
                 currentStep++;
+
             }
 
         }
+
+
         updateNotification();
 
 

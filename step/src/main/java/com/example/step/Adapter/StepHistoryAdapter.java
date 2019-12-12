@@ -38,9 +38,9 @@ public class StepHistoryAdapter extends RecyclerView.Adapter<StepHistoryAdapter.
             holder.day.setText(stepList.get(position).getDate());
             holder.count.setText(stepList.get(position).getCurrent_step()+"步");
             holder.time.setText(stepList.get(position).getTime());
-        if(position==stepList.size()-1){
+           if(position==stepList.size()-1){
             holder.count.setText(mcount+"步");
-        }
+            }
 
     }
 
