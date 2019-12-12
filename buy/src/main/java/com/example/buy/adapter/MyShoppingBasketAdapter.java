@@ -91,7 +91,7 @@ public class MyShoppingBasketAdapter extends BaseAdapter<Map<String, String>, My
             @Override
             public void onClick(View view) {
                 if (holder.cb_gov.isChecked()) {
-                    int count = x * Integer.parseInt(hashMap.get("price"));
+                    double count = x * Double.parseDouble(hashMap.get("price"));
 //                    Log.e("####",allcount+"");
                     allcount += count;
 //                    Log.e("####",count+"/"+allcount);
@@ -103,7 +103,7 @@ public class MyShoppingBasketAdapter extends BaseAdapter<Map<String, String>, My
 
                     checkedcount++;
                 } else {
-                    int count = x * Integer.parseInt(hashMap.get("price"));
+                    double count = x * Double.parseDouble(hashMap.get("price"));
                     allcount -= count;
 
                     Message message = Message.obtain();

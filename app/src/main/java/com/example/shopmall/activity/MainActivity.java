@@ -6,9 +6,12 @@ import android.graphics.drawable.Drawable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.buy.bean.ShoppingCartBean;
 import com.example.buy.fragment.ShoppingCartFragment;
+import com.example.buy.presenter.ShoppingCartPresenter;
 import com.example.common.BottomBar;
 import com.example.framework.base.BaseActivity;
+import com.example.framework.manager.ShoppingManager;
 import com.example.shopmall.R;
 import com.example.shopmall.fragment.ClassifyFragment;
 import com.example.shopmall.fragment.HomePageFragment;
@@ -16,6 +19,7 @@ import com.example.shopmall.fragment.HorizontalFragment;
 import com.example.shopmall.fragment.MineFragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainActivity extends BaseActivity {
 
@@ -24,6 +28,10 @@ public class MainActivity extends BaseActivity {
         super.onNewIntent(intent);
         int intExtra = intent.getIntExtra("replacefragment", 0);
         bbMain.setCheckedItem(intExtra);
+
+        if (intExtra == 3) {
+            refreshShoppingCartData();
+        }
     }
 
     //数据
@@ -69,8 +77,22 @@ public class MainActivity extends BaseActivity {
             @Override
             public void tapItemClick(int i) {
                 replaceFragment(fragmentArrayList.get(i));
+
+                if (i == 3) {
+                    refreshShoppingCartData();
+                }
             }
         });
+    }
+
+    public void refreshShoppingCartData() {
+        String token = ShoppingManager.getInstance().getToken(MainActivity.this);
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("token", token);
+
+        ShoppingCartPresenter presenter = new ShoppingCartPresenter("getShortcartProducts", ShoppingCartBean.class, hashMap);
+        presenter.attachGetView((ShoppingCartFragment) fragmentArrayList.get(3));
+        presenter.getGetData();
     }
 
     private void replaceFragment(Fragment fragment) {

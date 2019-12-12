@@ -139,7 +139,7 @@ public class NumberAddSubView extends LinearLayout implements View.OnClickListen
 
     public void setPrice(String price) {
         mPrice = price;
-        tv_price.setText("￥" + price + ".00");
+        tv_price.setText("￥" + price);
     }
 
     private void subNumber() {

@@ -22,19 +22,19 @@ import com.example.shopmall.activity.LoginActivity;
  */
 public class MineFragment extends BaseFragment {
 
-    private TitleBar tb_mine;
-    private TextView tv_user_score;
-    private TextView tv_username;
-    private ImageButton ib_user_icon_avator;
+    private TitleBar tbMine;
+    private TextView tvUserScore;
+    private TextView tvUsername;
+    private ImageButton ibUserIconAvator;
 
     @Override
     protected void initData() {
-        tb_mine.setTitleBacKGround(Color.RED);
-        tb_mine.setCenterText("个人中心",18, Color.WHITE);
-        tb_mine.setLeftImg(R.mipmap.new_message_icon);
-        tb_mine.setRightImg(R.mipmap.new_user_setting);
+        tbMine.setTitleBacKGround(Color.RED);
+        tbMine.setCenterText("个人中心",18, Color.WHITE);
+        tbMine.setLeftImg(R.mipmap.new_message_icon);
+        tbMine.setRightImg(R.mipmap.new_user_setting);
 
-        tb_mine.setTitleClickLisner(new TitleBar.TitleClickLisner() {
+        tbMine.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
             public void LeftClick() {
 
@@ -51,14 +51,14 @@ public class MineFragment extends BaseFragment {
             }
         });
 
-        tv_user_score.setOnClickListener(new View.OnClickListener() {
+        tvUserScore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), IntegralActivity.class));
             }
         });
 
-        tv_username.setOnClickListener(new View.OnClickListener() {
+        tvUsername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), LoginActivity.class));
@@ -72,10 +72,10 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        tb_mine = view.findViewById(R.id.tb_mine);
-        tv_user_score = view.findViewById(R.id.tv_user_score);
-        tv_username = view.findViewById(R.id.tv_username);
-        ib_user_icon_avator=view.findViewById(R.id.ib_user_icon_avator);
+        tbMine = view.findViewById(R.id.tb_mine);
+        tvUserScore = view.findViewById(R.id.tv_user_score);
+        tvUsername = view.findViewById(R.id.tv_username);
+        ibUserIconAvator =view.findViewById(R.id.ib_user_icon_avator);
     }
 
 

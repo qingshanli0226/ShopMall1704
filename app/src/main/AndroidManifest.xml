@@ -19,10 +19,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
         <activity android:name=".activity.GoodsInfoActivity" />
         <activity android:name=".activity.GoodsListActivity" />
+
         <activity android:name=".activity.MessageActivity" />
         <activity android:name=".activity.RegisterActivity">
+
 
         </activity>
         <activity
@@ -31,12 +34,14 @@
 
         </activity>
 
-
-
-
+        <activity android:name="com.example.step.Ui.HistoryActivity" />
+        <activity
+            android:name="com.example.step.Ui.IntegralActivity"
+            android:screenOrientation="portrait" />
 
 
         <activity android:name=".activity.WelcomeActivity" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,6 +58,7 @@
             android:launchMode="singleTask">
 
         </activity>
+
     </application>
 
 </manifest>
