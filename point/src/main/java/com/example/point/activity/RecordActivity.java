@@ -45,7 +45,7 @@ public class RecordActivity extends BaseActivity {
         Intent intent = getIntent();
         String curr_date = intent.getStringExtra("curr_date");
         int step = intent.getIntExtra("step", 0);
-        record_tv.setText("\t\t\t\t今天是"+curr_date+",今天一共走\n了"+step+"步。\n"+"\t\t\t\t这天获取了"+(step/100)+"积分,消耗\n了"+
+        record_tv.setText("\t\t\t\t今天是"+curr_date+",您今天一共\n走了"+step+"步。\n"+"\t\t\t\t这天获取了"+(step/100)+"积分,消耗\n了"+
                 (step/70)+"卡路里,继续努力!");
         // 下划线
         record_tv.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);

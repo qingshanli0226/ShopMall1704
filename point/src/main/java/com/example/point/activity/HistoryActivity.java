@@ -176,17 +176,18 @@ public class HistoryActivity extends BaseActivity {
         history_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-               if (i==1){
+               if (i==0){
                     start.setHint("开始日期");
                     stop.setHint("结束日期");
                 }
-                else if (i==2){
+                else if (i==1){
                     start.setHint("开始小时");
                     stop.setHint("结束小时");
                 }
-                else if (i==3){
+                else if (i==2){
                     start.setHint("开始分钟");
-                    stop.setHint("结束分钟");                }
+                    stop.setHint("结束分钟");
+                }
             }
 
             @Override
