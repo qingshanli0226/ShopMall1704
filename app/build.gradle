@@ -49,8 +49,8 @@ dependencies {
     implementation project(path: ':framework')
     implementation project(path: ':buy')
     implementation project(path: ':point')
-
     implementation 'com.umeng.umsdk:analytics:8.0.0'
     implementation 'com.umeng.umsdk:common:2.0.0'
     implementation 'com.umeng.umsdk:utdid:1.1.5.3'
+
 }

@@ -1,5 +1,6 @@
 package com.example.dimensionleague.mine;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,12 +22,15 @@ import java.util.List;
 public class MineFragment extends BaseNetConnectFragment implements IAccountCallBack {
 
     private RecyclerView rvList,rvChannel,rvRecommend;
+    private ImageView img;
+    private TextView name;
+
     private MineRecycleViewAdapter listAdapter;
     private MineRecycleAdapter channelAdapter;
-    private ImageView img;
-    private HomePresenter homePresenter;
-    private TextView name;
     private MineRecommendAdapter recommendAdapter;
+
+    private HomePresenter homePresenter;
+
     private List<MineBean> list;
     private List<HomeBean.ResultBean.ChannelInfoBean> channelList;
     private List<HomeBean.ResultBean.SeckillInfoBean.ListBean> recommendlList;
@@ -37,18 +41,27 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
     @Override
     public void init(View view) {
         super.init(view);
-        list=new ArrayList<>();
-        channelList=new ArrayList<>();
-        recommendlList=new ArrayList<>();
         rvList=view.findViewById(R.id.mine_rv_h);
         rvChannel=view.findViewById(R.id.mine_rv_v);
         rvRecommend=view.findViewById(R.id.mine_rv_recommend);
         name=view.findViewById(R.id.mine_user_name);
         img =view.findViewById(R.id.mine_img);
+
+        list=new ArrayList<>();
+        channelList=new ArrayList<>();
+        recommendlList=new ArrayList<>();
         homePresenter=new HomePresenter();
 
         //TODO 给 更多 页面进行注册监听
         accountManager.registerUserCallBack(this);
+
+        name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -80,7 +93,6 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
             @Override
             public void onClick(View v) {
                 startActivity(LoginActivity.class,null);
-
             }
         });
     }
@@ -88,7 +100,7 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
     private void ifUser() {
 //        判断是否登录
         if(AccountManager.getInstance().isLogin()){
-            //登录
+//            //登录
             name.setText(AccountManager.getInstance().user.getName());
             if (AccountManager.getInstance().user.getAvatar()!=null){
                 Glide.with(getContext()).load(AccountManager.getInstance().user.getAvatar()).into(img);

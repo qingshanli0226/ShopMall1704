@@ -7,12 +7,16 @@ import android.widget.CheckBox;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.bumptech.glide.Glide;
+import com.example.buy.activity.GoodsActiviy;
 import com.example.buy.activity.PayActivity;
 import com.example.buy.databeans.GetCartBean;
 import com.example.buy.databeans.GoodsBean;
@@ -25,6 +29,7 @@ import com.example.common.IntentUtil;
 import com.example.framework.base.BaseNetConnectFragment;
 import com.example.framework.base.BaseRecyclerAdapter;
 import com.example.framework.base.BaseViewHolder;
+import com.example.framework.port.IClickListener;
 import com.example.framework.port.IPresenter;
 import java.util.ArrayList;
 import com.example.net.AppNetConfig;
@@ -42,6 +47,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
     private CheckBox checkAll;
     private SwipeRefreshLayout swipeRefreshLayout;
     private Button editBut;
+    private TextView nullGoods;
     //数据和被选择
     ArrayList<GoodsBean> list = new ArrayList<>();
     ArrayList<Boolean> checks = new ArrayList<>();
@@ -51,20 +57,24 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
     IPresenter goodsPresenter;
     IPresenter upDatePresenter;
 
-    //删除与支付状态
+    //删除与支付状态   全选状态
     boolean delStatus=false;
+    boolean checkStatus=false;
+
 
     @Override
     public void onClick(View v) {
         if (v.getId() == buyBut.getId()) {
             if (delStatus){
                 //删除
-                for (int i=0;i<checks.size();i++){
+                for (int i=checks.size()-1;i>-1;i--){
                     if (checks.get(i)){
                         list.remove(i);
                     }
                 }
                 recyclerView.getAdapter().notifyDataSetChanged();
+                buyBut.setText("立即购买");
+                delStatus=false;
             }else {
                 //支付跳转
                 ArrayList<GoodsBean> goods=new ArrayList<>();
@@ -74,8 +84,6 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                     }
                 }
                 Intent intent = new Intent(getContext(), PayActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putParcelableArrayList(IntentUtil.GOODS,goods);
                 intent.putExtra(IntentUtil.ORDERS,goods);
                 startActivity(intent);
             }
@@ -99,46 +107,56 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
         recyclerView = view.findViewById(R.id.recyclerView);
         checkAll = view.findViewById(R.id.checkAll);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        nullGoods = view.findViewById(R.id.nullGoods);
 
         buyBut.setOnClickListener(this);
         editBut.setOnClickListener(this);
 
         //设置recyclerView
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(new BaseRecyclerAdapter<GoodsBean>(R.layout.item_goods, list) {
+        BaseRecyclerAdapter<GoodsBean> adapter = new BaseRecyclerAdapter<GoodsBean>(R.layout.item_goods, list) {
             @Override
             public void onBind(BaseViewHolder holder, final int position) {
                 holder.getTextView(R.id.itemTitle, list.get(position).getProductName());
                 holder.getTextView(R.id.itemNum, list.get(position).getProductNum() + "");
                 holder.getTextView(R.id.itemPrice, list.get(position).getProductId());
                 CheckBox itemCheck = (CheckBox) holder.getView(R.id.itemCheck);
+                //点击图片跳转
+                holder.getImageView(R.id.itemImg,
+                        AppNetConfig.BASE_URl_IMAGE + list.get(position).getUrl())
+                        .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getContext(), GoodsActiviy.class);
+                        intent.putExtra(IntentUtil.SHOW_GOOD,list.get(position));
+                        getContext().startActivity(intent);
+                    }
+                });
 
-                for (boolean i:checks){
+                for (boolean i : checks) {
                     itemCheck.setChecked(i);
                 }
                 //被选中
                 itemCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        checks.set(position,isChecked);
+                        checks.set(position, isChecked);
                         judgeCheckAll();
                     }
                 });
                 //减按钮
-                if (list.get(position).getProductNum()==1) {
-                    holder.getView(R.id.itemDelBut).setClickable(false);
-                }
+
                 holder.getView(R.id.itemDelBut).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int num = list.get(position).getProductNum();
-                        list.get(position).setProductNum(num - 1);
-                        if (list.get(position).getProductNum()== 1) {
-                            v.setClickable(false);
+                        if (list.get(position).getProductNum() <= 1) {
+
+                        }else {
+                            int num = list.get(position).getProductNum();
+                            list.get(position).setProductNum(num - 1);
+                            upDatePresenter = new PostUpDatePresenter(list.get(position));
+                            upDatePresenter.attachView(ShopCartFragment.this);
+                            upDatePresenter.doHttpPostJSONRequest(UPDATA_GOODS);
                         }
-                        upDatePresenter=new PostUpDatePresenter(list.get(position));
-                        upDatePresenter.attachView(ShopCartFragment.this);
-                        upDatePresenter.doHttpPostRequest(UPDATA_GOODS);
                     }
                 });
                 //加按钮
@@ -147,16 +165,21 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                     public void onClick(View v) {
                         int num = list.get(position).getProductNum();
                         list.get(position).setProductNum(num + 1);
-                        if (list.get(position).getProductNum()>1){
-                            holder.getView(R.id.itemAddBut).setClickable(true);
-                        }
-                        upDatePresenter=new PostUpDatePresenter(list.get(position));
+                        upDatePresenter = new PostUpDatePresenter(list.get(position));
                         upDatePresenter.attachView(ShopCartFragment.this);
-                        upDatePresenter.doHttpPostRequest(UPDATA_GOODS);
+                        upDatePresenter.doHttpPostJSONRequest(UPDATA_GOODS);
                     }
                 });
             }
+        };
+        adapter.setClickListener(new IClickListener() {
+            @Override
+            public void onClickListener(int position) {
+
+            }
         });
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(adapter);
         //下拉刷新
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -169,12 +192,30 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
         checkAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                for (boolean i:checks){
-                    i=isChecked;
-                }
-                recyclerView.getAdapter().notifyDataSetChanged();
+                /**
+                 * 状态true 选true   不动作
+                 * 状态false 选true   全部选中
+                 * 状态true 选false    全部取消
+                 * 状态false 选false   没有被全选那不可能取消全选  不存在
+                 * * */
 
-              //  goodsPresenter.doHttpPostRequest();
+                if (isChecked){
+                    if (!checkStatus){
+                        for (int i=0;i<checks.size();i++){
+                            checks.set(i, true);
+                        }
+                        recyclerView.getAdapter().notifyDataSetChanged();
+                    }
+                }else {
+                    if (checkStatus){
+                        for (int i=0;i<checks.size();i++){
+                            checks.set(i, false);
+                        }
+                        recyclerView.getAdapter().notifyDataSetChanged();
+                    }
+                }
+
+
             }
         });
 
@@ -184,6 +225,12 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
 
     @Override
     public void initDate() {
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         sendCartPresenter.doHttpGetRequest(CART_GOODS);
     }
 
@@ -210,55 +257,73 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
     }
 
     @Override
+    public void showLoading() {
+
+    }
+
+    @Override
     public void onRequestSuccess(int requestCode, Object data) {
         super.onRequestSuccess(requestCode, data);
         switch (requestCode){
             case CART_GOODS:
-                Log.e("xxx","购物车获取到的数据"+data.toString());
+                if (data==null){
+                    swipeRefreshLayout.setVisibility(View.GONE);
+                    nullGoods.setVisibility(View.VISIBLE);
+                }else {
+                    swipeRefreshLayout.setVisibility(View.VISIBLE);
+                    nullGoods.setVisibility(View.GONE);
+                }
                 checks.clear();
                 list.clear();
                 recyclerView.getAdapter().notifyDataSetChanged();
                 if (((GetCartBean) data).getCode().equals(AppNetConfig.CODE_OK)){
-                    Gson gson = new Gson();
-                    GoodsBean[] goods = gson.fromJson(((GetCartBean) data).getResult(), GoodsBean[].class);
-                    list.addAll(Arrays.asList(goods));
-                    for (int i=0;i<list.size();i++){
-                        checks.add(false);
+                    if (((GetCartBean) data).getResult()==null){
+                        swipeRefreshLayout.setVisibility(View.GONE);
+                        nullGoods.setVisibility(View.VISIBLE);
+                    }else {
+                        swipeRefreshLayout.setVisibility(View.VISIBLE);
+                        nullGoods.setVisibility(View.GONE);
+                        list.addAll(((GetCartBean) data).getResult());
+                        for (int i=0;i<list.size();i++){
+                            checks.add(false);
+                        }
+                        recyclerView.getAdapter().notifyDataSetChanged();
+                        //每一次刷新购物车都重新检查库存
+                        goodsPresenter=new PostVerifyGoodsPresenter(list);
+                        goodsPresenter.attachView(this);
+                        //更新商品数量
+                        CartManager.getInstance().updataCartNum(list.size());
                     }
-                    recyclerView.getAdapter().notifyDataSetChanged();
-                    //每一次刷新购物车都重新检查库存
-                    goodsPresenter=new PostVerifyGoodsPresenter(list);
-                    goodsPresenter.attachView(this);
-                    //更新商品数量
-                    CartManager.getInstance().updataCartNum(list.size());
                 }else {
                     Toast.makeText(getContext(),"获取数据失败",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case VERIFY_GOODS:
-                Log.e("xxx","购物车的库存数据"+data.toString());
-                GoodsBean[] noGoods = new Gson().fromJson(((GetCartBean) data).getResult(), GoodsBean[].class);
-                Log.e("xxxx","库存刷新后的商品"+noGoods);
+
                 break;
             case UPDATA_GOODS:
-                if (Integer.valueOf(((OkBean)data).getCode())!=200){
+                if (((OkBean)data).getCode().equals(AppNetConfig.CODE_OK)){
                     //更新失败
+                    sendCartPresenter.doHttpGetRequest(CART_GOODS);
                 }
                 break;
         }
     }
     //判断全选
-    private void judgeCheckAll(){
-        boolean flag=true;
+    private synchronized void judgeCheckAll(){
+        /**
+         *  默认状态为全选
+         *  每选择一个判断是否全部选中
+         * 有一个为false  全选状态为false  取消全选
+         * */
+        checkStatus=true;
         for (boolean i:checks){
             if (!i){
-                flag=i;
+                checkStatus= false;
                 break;
             }
         }
-        if (flag){
-            checkAll.setChecked(true);
-        }
+        checkAll.setChecked(checkStatus);
     }
 
     private void disPreseter(IPresenter... iPresenter){

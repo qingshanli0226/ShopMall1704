@@ -1,24 +1,26 @@
 package com.example.buy.databeans;
 
+import java.util.List;
+
 public class GetCartBean {
     @Override
     public String toString() {
         return "GetCartBean{" +
                 "code='" + code + '\'' +
                 ", message='" + message + '\'' +
-                ", result='" + result + '\'' +
+                ", result=" + result +
                 '}';
     }
 
     /**
      * code : 200
      * message : 请求成功
-     * result : [{"productId":"1512","productNum":1,"productName":"衬衫","url":"http://www.baidu.com"}]
+     * result : [{"productId":"1512","productName":"衬衫","productNum":"2","url":"http://www.baidu.com","productPrice":"20"}]
      */
 
     private String code;
     private String message;
-    private String result;
+    private List<GoodsBean> result;
 
     public String getCode() {
         return code;
@@ -36,11 +38,11 @@ public class GetCartBean {
         this.message = message;
     }
 
-    public String getResult() {
+    public List<GoodsBean> getResult() {
         return result;
     }
 
-    public void setResult(String result) {
+    public void setResult(List<GoodsBean> result) {
         this.result = result;
     }
 

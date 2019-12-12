@@ -42,7 +42,6 @@ dependencies {
     api 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
 
     api 'androidx.recyclerview:recyclerview:1.1.0'
-    api 'com.google.code.gson:gson:2.8.6'
 
     api 'androidx.recyclerview:recyclerview:1.0.0'
     api 'com.jaeger.statusbarutil:library:1.4.0'

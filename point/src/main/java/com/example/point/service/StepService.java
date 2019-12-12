@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -183,6 +184,11 @@ public class StepService extends Service implements SensorEventListener {
                     Intent StartIntent = new Intent(context, StepActivity.class);
                     StartIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(StartIntent);
+                } else if (Intent.ACTION_TIME_CHANGED.equals(action)) {
+                    //时间变化步数重置为0
+                    isCall();
+                    save();
+                    isNewDay();
                 }
             }
         };
@@ -251,8 +257,12 @@ public class StepService extends Service implements SensorEventListener {
         }
     }
     private void initNotification() {
+        //设置点击跳转
+        Intent hangIntent = new Intent(this, StepActivity.class);
+        PendingIntent hangPendingIntent = PendingIntent.getActivity(this, 0, hangIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         builder.setContentTitle(getResources().getString(R.string.app_name))
                 .setContentText("今日步数" + CURRENT_STEP + " 步")
+                .setContentIntent(hangPendingIntent)
                 .setWhen(System.currentTimeMillis())//通知产生的时间，会在通知信息里显示
                 .setAutoCancel(false)//设置这个标志当用户单击面板就可以让通知将自动取消
                 .setOngoing(true)//ture，设置他为一个正在进行的通知。他们通常是用来表示一个后台任务,用户积极参与(如播放音乐)或以某种方式正在等待,因此占用设备(如一个文件下载,同步操作,主动网络连接)
@@ -269,8 +279,12 @@ public class StepService extends Service implements SensorEventListener {
     }
 
     private void updateNotification() {
+        //设置点击跳转
+        Intent hangIntent = new Intent(this, StepActivity.class);
+        PendingIntent hangPendingIntent = PendingIntent.getActivity(this, 0, hangIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         builder.setContentTitle(getResources().getString(R.string.app_name))
                 .setContentText("今日步数" + CURRENT_STEP + " 步")
+                .setContentIntent(hangPendingIntent)
                 .setWhen(System.currentTimeMillis())//通知产生的时间，会在通知信息里显示
                 .setAutoCancel(false)//设置这个标志当用户单击面板就可以让通知将自动取消
                 .setOngoing(true)//ture，设置他为一个正在进行的通知。他们通常是用来表示一个后台任务,用户积极参与(如播放音乐)或以某种方式正在等待,因此占用设备(如一个文件下载,同步操作,主动网络连接)

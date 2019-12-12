@@ -2,12 +2,16 @@ package com.example.framework.base;
 
 import android.util.Log;
 
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
 import com.example.common.Constant;
+import com.example.common.TypeBean;
 import com.example.common.utils.SignUtil;
 import com.example.framework.port.IPresenter;
 import com.example.framework.port.IView;
 import com.example.net.RetrofitCreator;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -20,6 +24,8 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
 /**
@@ -53,6 +59,17 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
     public void doHttpPostRequest(final int requestCode) {
         getDate(requestCode, RetrofitCreator.getNetInterence().postData(getHeaders(), getPath(), signEncrypt()));
     }
+    //TODO postJson数据
+    @Override
+    public void doHttpPostJSONRequest() {
+        getDate(RetrofitCreator.getNetInterence().postJsonData(getPath(),signJsonEncrypt()));
+    }
+
+    //TODO postJson数据
+    @Override
+    public void doHttpPostJSONRequest(int requestCode) {
+        getDate(requestCode,RetrofitCreator.getNetInterence().postJsonData(getPath(),signJsonEncrypt()));
+    }
 
     @Override
     public void getDate(Observable<ResponseBody> data) {
@@ -74,7 +91,6 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                         } catch (IOException e) {
                             e.printStackTrace();
                             iView.showError();
-
                         }
                     }
 
@@ -83,6 +99,7 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                         iView.hideLoading();
                         iView.showError();
                         Log.d("lhf", e.getMessage());
+                        Log.e("xxxx","错误"+e.toString());
                     }
 
                     @Override
@@ -122,6 +139,7 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                     @Override
                     public void onError(Throwable e) {
                         iView.hideLoading();
+                        Log.e("xxxx","错误"+e.toString());
                     }
 
                     @Override
@@ -147,9 +165,17 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
         return new HashMap<>();
     }
 
-    //TODO 上传Json数据
-    public Object getJsonParams() {
+    //
+    public JSONObject getJsonParams() {
         return null;
+    }
+
+    //
+    public Object signJsonEncrypt(){
+        JSONObject params = getJsonParams();
+        params.put(Constant.SIGN,SignUtil.generateJsonSign(params));
+        SignUtil.encryptJsonParamsByBase64(params);
+        return params;
     }
 
     //TODO 加签加密
