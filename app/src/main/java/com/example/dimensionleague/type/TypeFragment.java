@@ -21,7 +21,6 @@ public class TypeFragment extends BaseNetConnectFragment {
     private TypePresenter typePresenter;
     private TypeTagAdapter tagAdapter;
     private List<String> typeURL;
-
     private TypeRightAdapter rightAdapter;
     @Override
     public int getLayoutId() {
@@ -98,7 +97,11 @@ public class TypeFragment extends BaseNetConnectFragment {
 
     @Override
     public int getRelativeLayout() {
-        return R.id.type_Relative;
+        return 0;
+    }
+
+    @Override
+    public void hideLoading() {
     }
 
     @Override
@@ -112,6 +115,5 @@ public class TypeFragment extends BaseNetConnectFragment {
 
     @Override
     public void showLoading() {
-
     }
 }
