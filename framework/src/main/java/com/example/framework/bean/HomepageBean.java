@@ -458,4 +458,13 @@ public class HomepageBean implements Serializable {
             }
         }
     }
+
+    @Override
+    public String toString() {
+        return "HomepageBean{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                ", result=" + result +
+                '}';
+    }
 }

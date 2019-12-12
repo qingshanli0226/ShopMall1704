@@ -4,7 +4,7 @@
     android:id="@+id/shoppingcartlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.buy.fragment.ShoppingCartFragment">
+    tools:mContext="com.example.buy.fragment.ShoppingCartFragment">
 
     <RelativeLayout
         android:id="@+id/rl_head"

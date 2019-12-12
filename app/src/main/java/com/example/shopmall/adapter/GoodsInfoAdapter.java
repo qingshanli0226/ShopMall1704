@@ -1,9 +1,7 @@
 package com.example.shopmall.adapter;
 
-import android.content.Context;
-import android.view.LayoutInflater;
+import android.annotation.SuppressLint;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -12,78 +10,74 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.framework.base.BaseAdapter;
 import com.example.net.Constant;
 import com.example.shopmall.R;
 import com.example.shopmall.bean.GoodsBean;
-import java.util.ArrayList;
+import java.util.List;
 
-public class GoodsInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class GoodsInfoAdapter extends BaseAdapter<GoodsBean,GoodsInfoAdapter.ViewHolder> {
 
-    private Context mContext;
-    private ArrayList<GoodsBean> list_goods;
-
-    public GoodsInfoAdapter(Context mContext, ArrayList<GoodsBean> list_goods) {
-        this.mContext = mContext;
-        this.list_goods = list_goods;
-    }
-
-    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new GoodsInfoViewHolder(LayoutInflater.from(mContext).inflate(R.layout.layout_goods_info, parent, false),mContext);
+    protected GoodsInfoAdapter.ViewHolder getViewHolder(View view, int viewType) {
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder,int position) {
-        GoodsInfoViewHolder goodsInfoViewHolder = (GoodsInfoViewHolder) holder;
-        goodsInfoViewHolder.setData(list_goods,position);
+    protected int getLayout(int viewType) {
+        return R.layout.item_goods_info_inflate;
     }
 
     @Override
-    public int getItemCount() {
-        return list_goods.size();
+    protected void onBindHolder(GoodsInfoAdapter.ViewHolder holder, List<GoodsBean> goodsBeans, int position) {
+        holder.setData(goodsBeans,position);
     }
 
-    class GoodsInfoViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    protected int getViewType(int position) {
+        return 0;
+    }
 
-        public WebView wb_figure_goods_info;
-        public TextView tv_goods_name;
-        public TextView tv_cover_price;
-        public WebView wb_atguigu_goods_info;
+    class ViewHolder extends RecyclerView.ViewHolder {
 
-        public GoodsInfoViewHolder(@NonNull View itemView, Context mContext) {
+        private WebView wbFigureGoodsInfo;
+        private TextView tvGoodsName;
+        private TextView tvCoverPrice;
+        private WebView wbAtguiguGoodsInfo;
+
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            wb_figure_goods_info = itemView.findViewById(R.id.wb_figure_goods_info);
-            tv_goods_name = itemView.findViewById(R.id.tv_goods_name);
-            tv_cover_price = itemView.findViewById(R.id.tv_cover_price);
-            wb_atguigu_goods_info = itemView.findViewById(R.id.wb_atguigu_goods_info);
+            wbFigureGoodsInfo = itemView.findViewById(R.id.wb_figure_goods_info);
+            tvGoodsName = itemView.findViewById(R.id.tv_goods_name);
+            tvCoverPrice = itemView.findViewById(R.id.tv_cover_price);
+            wbAtguiguGoodsInfo = itemView.findViewById(R.id.wb_atguigu_goods_info);
         }
 
-
-        public void setData(final ArrayList<GoodsBean> list_goods, final int position) {
+        @SuppressLint("SetTextI18n")
+        private void setData(final List<GoodsBean> goodsBeans, final int position) {
             //图片WebView
-            wb_figure_goods_info.loadUrl(Constant.BASE_URL_IMAGE + list_goods.get(position).getFigure());
+            wbFigureGoodsInfo.loadUrl(Constant.BASE_URL_IMAGE + goodsBeans.get(position).getFigure());
 
-            wb_figure_goods_info.setWebViewClient(new WebViewClient() {
+            wbFigureGoodsInfo.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                    view.loadUrl(list_goods.get(position).getCover_price());
+                    view.loadUrl(goodsBeans.get(position).getCover_price());
                     return true;
                 }
             });
 
-            tv_goods_name.setText(list_goods.get(position).getName());
+            tvGoodsName.setText(goodsBeans.get(position).getName());
 
-            tv_cover_price.setText("￥" + list_goods.get(position).getCover_price());
+            tvCoverPrice.setText("￥" + goodsBeans.get(position).getCover_price());
 
             //详情WebView
-            wb_atguigu_goods_info.loadUrl("http://www.atguigu.com");
+            wbAtguiguGoodsInfo.loadUrl("http://www.atguigu.com");
 
-            wb_atguigu_goods_info.setWebViewClient(new WebViewClient() {
+            wbAtguiguGoodsInfo.setWebViewClient(new WebViewClient() {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                    view.loadUrl(list_goods.get(position).getCover_price());
+                    view.loadUrl(goodsBeans.get(position).getCover_price());
                     return true;
                 }
             });

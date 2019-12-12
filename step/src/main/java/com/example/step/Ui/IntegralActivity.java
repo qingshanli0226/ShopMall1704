@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import com.example.common.ShopStepBean;
 import com.example.step.CustomView.StepArcView;
 import com.example.framework.manager.StepManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class IntegralActivity extends BaseActivity {
@@ -89,8 +91,16 @@ public class IntegralActivity extends BaseActivity {
         String current_step = queryAll.get(queryAll.size() - 1).getCurrent_step();
         int i = Integer.parseInt(current_step);
         stepArcView.setCurrentCount(10000,i);
+        //获取日期
+        List<ShopStepBean> queryAll1 = OrmUtils.getQueryAll(ShopStepBean.class);
+        final List<String> mlistDate=new ArrayList<>();
+        for (int j=0;j<queryAll1.size();j++){
+            String date = queryAll1.get(j).getDate();
+            mlistDate.add(date);
+        }
 
-
+        //下拉框
+       stringArrayAdapter= new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mlistDate);
 
 
 
@@ -109,12 +119,5 @@ public class IntegralActivity extends BaseActivity {
               integral.setText(intgal+"");
             }
         });
-
-
-
-
-
-
-
     }
 }

@@ -9,18 +9,18 @@ import android.widget.Toast;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IPostBaseView;
-import com.example.framework.bean.UserBean;
 import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
 import com.example.shopmall.bean.RegisterBean;
 import com.example.shopmall.presenter.RegisterPresenter;
 
 public class RegisterActivity extends BaseActivity implements IPostBaseView<RegisterBean> {
-    TitleBar mTitleBar;
-    EditText mName;
-    EditText mPassWord;
-    Button mRegister;
-    RegisterPresenter integerPresenter;
+
+    private TitleBar tbRegister;
+    private EditText etName;
+    private EditText etWord;
+    private Button btRegister;
+    private RegisterPresenter integerPresenter;
 
     @Override
     protected int setLayout() {
@@ -29,20 +29,20 @@ public class RegisterActivity extends BaseActivity implements IPostBaseView<Regi
 
     @Override
     public void initView() {
-        mTitleBar = findViewById(R.id.tb_register);
-        mName = findViewById(R.id.et_name);
-        mPassWord = findViewById(R.id.et_word);
-        mRegister = findViewById(R.id.bt_register);
+        tbRegister = findViewById(R.id.tb_register);
+        etName = findViewById(R.id.et_name);
+        etWord = findViewById(R.id.et_word);
+        btRegister = findViewById(R.id.bt_register);
     }
 
     @Override
     public void initData() {
 
-        mTitleBar.setBackgroundColor(Color.RED);
-        mTitleBar.setLeftImg(R.drawable.left);
-        mTitleBar.setCenterText("注册", 18, Color.WHITE);
+        tbRegister.setBackgroundColor(Color.RED);
+        tbRegister.setLeftImg(R.drawable.left);
+        tbRegister.setCenterText("注册", 18, Color.WHITE);
 
-        mTitleBar.setTitleClickLisner(new TitleBar.TitleClickLisner() {
+        tbRegister.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
             public void LeftClick() {
                 finish();
@@ -60,18 +60,16 @@ public class RegisterActivity extends BaseActivity implements IPostBaseView<Regi
         });
 
 
-        mRegister.setOnClickListener(new View.OnClickListener() {
+        btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = mName.getText().toString();
-                String pwd = mPassWord.getText().toString();
-                UserBean userBean = new UserBean();
-                userBean.setName(name);
-                userBean.setPassword(pwd);
-                UserManager.getInstance().addUser(userBean);
+                String name = etName.getText().toString();
+                String pwd = etWord.getText().toString();
                 integerPresenter = new RegisterPresenter(name, pwd);
                 integerPresenter.attachPostView(RegisterActivity.this);
                 integerPresenter.getCipherTextData();
+                etName.setText("");
+                etWord.setText("");
             }
         });
 
@@ -81,10 +79,14 @@ public class RegisterActivity extends BaseActivity implements IPostBaseView<Regi
     @Override
     public void onPostDataSucess(RegisterBean data) {
         Toast.makeText(this, data.getMessage(), Toast.LENGTH_SHORT).show();
+        if (data.getResult().equals("注册成功")) {
+            finish();
+        }
     }
 
     @Override
     public void onPostDataFailed(String ErrorMsg) {
-
+        etName.setText("");
+        etWord.setText("");
     }
 }

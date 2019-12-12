@@ -2,85 +2,71 @@ package com.example.shopmall.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.framework.base.BaseAdapter;
 import com.example.shopmall.R;
 import com.example.shopmall.activity.GoodsInfoActivity;
 import com.example.shopmall.bean.ClassifyBean;
 import com.example.shopmall.bean.GoodsBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
-public class ClassifyRightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ClassifyRightAdapter extends BaseAdapter<ClassifyBean.ResultBean,ClassifyRightAdapter.ViewHolder> {
+
     private Context mContext;
-    //热卖商品列表的数据
-    private List<ClassifyBean.ResultBean> resultBeans;
-    //热卖
-    public static final int HOT = 0;
-    //普通的
-    public static final int ORDINARY = 1;
 
-    //当前的类型
-    public int currentType;
-
-    private final LayoutInflater mLayoutInflater;
-
-    public ClassifyRightAdapter(Context mContext, List<ClassifyBean.ResultBean> result) {
+    public ClassifyRightAdapter(Context mContext) {
         this.mContext = mContext;
-        this.resultBeans = result;
-        mLayoutInflater = LayoutInflater.from(mContext);
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    protected ViewHolder getViewHolder(View view, int viewType) {
+        return new ViewHolder(view);
+    }
 
-        return new OrdinaryViewHolder(mLayoutInflater.inflate(R.layout.item_classify_right, parent,false), mContext);
+    @Override
+    protected int getLayout(int viewType) {
+        return R.layout.item_classify_right_inflate;
+    }
+
+    @Override
+    protected void onBindHolder(ClassifyRightAdapter.ViewHolder holder, List<ClassifyBean.ResultBean> resultBeans, int position) {
+
+        holder.setData(resultBeans,position);
 
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            OrdinaryViewHolder ordinaryViewHolder = (OrdinaryViewHolder) holder;
-            ordinaryViewHolder.setData(resultBeans,position);
-    }
-
-    @Override
-    public int getItemViewType(int position) {
+    protected int getViewType(int position) {
         return position;
     }
 
-    @Override
-    public int getItemCount() {
-        return resultBeans.size();
-    }
+    class ViewHolder extends RecyclerView.ViewHolder {
 
-    class OrdinaryViewHolder extends RecyclerView.ViewHolder {
-        public Context mContext;
-        public RecyclerView rv_classify_right;
-        public RecyclerView rv_ordinary_right;
+        private RecyclerView rvClassifyRightInflate;
+        private RecyclerView rvOrdinaryRightInflate;
 
-        public OrdinaryViewHolder(View itemView, final Context mContext) {
+        public ViewHolder(View itemView) {
             super(itemView);
-            this.mContext = mContext;
-            rv_classify_right = itemView.findViewById(R.id.rv_classify_right);
-            rv_classify_right.setLayoutManager(new GridLayoutManager(mContext,3));
+            rvClassifyRightInflate = itemView.findViewById(R.id.rv_classify_right_inflate);
+            rvClassifyRightInflate.setLayoutManager(new GridLayoutManager(mContext,3));
 
-            rv_ordinary_right = itemView.findViewById(R.id.rv_ordinary_right);
-            rv_ordinary_right.setLayoutManager(new GridLayoutManager(mContext,3));
+            rvOrdinaryRightInflate = itemView.findViewById(R.id.rv_ordinary_right_inflate);
+            rvOrdinaryRightInflate.setLayoutManager(new GridLayoutManager(mContext,3));
 
         }
 
-        public void setData(final List<ClassifyBean.ResultBean> resultBeans, final int position) {
+        private void setData(final List<ClassifyBean.ResultBean> resultBeans, final int position) {
 
-            ClassifyRecyclerRightAdapter classifyRecyclerRightAdapter = new ClassifyRecyclerRightAdapter(mContext, (ArrayList<ClassifyBean.ResultBean.HotProductListBean>) resultBeans.get(position).getHot_product_list());
-            rv_classify_right.setAdapter(classifyRecyclerRightAdapter);
+            //热卖的
+            ClassifyRecyclerRightAdapter classifyRecyclerRightAdapter = new ClassifyRecyclerRightAdapter(mContext);
+            classifyRecyclerRightAdapter.reFresh(resultBeans.get(position).getHot_product_list());
+            rvClassifyRightInflate.setAdapter(classifyRecyclerRightAdapter);
 
             classifyRecyclerRightAdapter.setLikeliest(new ClassifyRecyclerRightAdapter.Likeliest() {
                 @Override
@@ -96,9 +82,10 @@ public class ClassifyRightAdapter extends RecyclerView.Adapter<RecyclerView.View
                 }
             });
 
-
-            ClassifyOrdinaryRecyclerRightAdapter classifyOrdinaryRecyclerRightAdapter = new ClassifyOrdinaryRecyclerRightAdapter(mContext, (ArrayList<ClassifyBean.ResultBean.ChildBean>) resultBeans.get(position).getChild());
-            rv_ordinary_right.setAdapter(classifyOrdinaryRecyclerRightAdapter);
+            //普通的
+            ClassifyOrdinaryRecyclerRightAdapter classifyOrdinaryRecyclerRightAdapter = new ClassifyOrdinaryRecyclerRightAdapter(mContext);
+            classifyOrdinaryRecyclerRightAdapter.reFresh(resultBeans.get(position).getChild());
+            rvOrdinaryRightInflate.setAdapter(classifyOrdinaryRecyclerRightAdapter);
         }
 
     }
