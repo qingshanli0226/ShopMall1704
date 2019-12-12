@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.framework.R;
-import com.example.framework.port.IClickListener;
+import com.example.framework.port.OnClickItemListener;
 
-import java.util.ArrayList;
+import java.util.List;
+
 /**
  * author:李浩帆
  */
@@ -19,16 +19,16 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseVi
     //TODO ViewHolder的布局ID
     private int layoutId;
     //TODO 数据集合
-    public ArrayList<T> dateList;
+    public List<T> dateList;
     //TODO 点击事件
-    private IClickListener clickListener;
+    private OnClickItemListener clickListener;
 
-    public void setClickListener(IClickListener clickListener) {
+    public void setClickListener(OnClickItemListener clickListener) {
         this.clickListener = clickListener;
     }
 
     //TODO 构造
-    public BaseRecyclerAdapter(int layoutId, ArrayList<T> dateList) {
+    public BaseRecyclerAdapter(int layoutId, List<T> dateList) {
         this.layoutId = layoutId;
         this.dateList = dateList;
     }

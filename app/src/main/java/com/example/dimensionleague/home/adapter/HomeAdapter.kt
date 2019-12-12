@@ -85,8 +85,7 @@ class HomeAdapter(
         }
         return currentType
     }
-
-
+    
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         println("lhf holder--${holder is ChannelHolder}")
         if (getItemViewType(position)==BANNER) {

@@ -1,4 +1,4 @@
-package com.example.common.manager;
+package com.example.framework.manager;
 
 import com.example.common.port.IAccountCallBack;
 import com.example.common.User;

@@ -1,23 +1,12 @@
 package com.example.buy.presenter;
 
-import android.util.Log;
-
 import com.alibaba.fastjson.JSONException;
 import com.example.buy.databeans.GoodsBean;
 import com.example.buy.databeans.OkBean;
-import com.example.common.manager.AccountManager;
 import com.example.framework.base.BasePresenter;
 import com.example.net.AppNetConfig;
-import com.google.gson.Gson;
-
 import com.alibaba.fastjson.JSONObject;
-
 import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Map;
-
-import okhttp3.Request;
-import okhttp3.RequestBody;
 
 /**
  * 商品P层   GoodsActiviy  向服务器申请加入购物车

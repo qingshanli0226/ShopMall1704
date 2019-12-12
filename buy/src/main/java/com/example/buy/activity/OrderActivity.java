@@ -1,6 +1,7 @@
 package com.example.buy.activity;
 
 import android.content.Intent;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -56,8 +57,9 @@ public class OrderActivity extends BaseNetConnectActivity {
 
     @Override
     public void init() {
-        recyclerView = findViewById(R.id.recyclerView);
-        showOrderType = findViewById(R.id.showOrderType);
+        super.init();
+        recyclerView=findViewById(R.id.recyclerView);
+        showOrderType=findViewById(R.id.showOrderType);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new BaseRecyclerAdapter<GetOrderBean>(R.layout.item_order, list) {
@@ -68,6 +70,7 @@ public class OrderActivity extends BaseNetConnectActivity {
                 ((TextView) holder.getView(R.id.orderMoney)).setText(list.get(position).getTotalPrice());
             }
         });
+
 
     }
 
@@ -80,7 +83,6 @@ public class OrderActivity extends BaseNetConnectActivity {
 
         payOrder.attachView(this);
         watiOrder.attachView(this);
-
     }
 
     @Override
@@ -107,10 +109,11 @@ public class OrderActivity extends BaseNetConnectActivity {
     @Override
     public void onRequestSuccess(int requestCode, Object data) {
         super.onRequestSuccess(requestCode, data);
+        Log.e("xxx","订单数据:"+((GetOrderBean) data).toString());
         switch (requestCode) {
             case CODE_ALL:
                 list.add((GetOrderBean) data);
-                watiOrder.doHttpPostRequest(CODE_All_TWO);
+                watiOrder.doHttpGetRequest(CODE_All_TWO);
                 break;
             case CODE_PAY:
                 list.clear();
@@ -128,6 +131,7 @@ public class OrderActivity extends BaseNetConnectActivity {
                 break;
         }
     }
+
 
     @Override
     protected void onDestroy() {

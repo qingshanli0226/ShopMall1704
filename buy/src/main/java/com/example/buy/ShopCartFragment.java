@@ -4,18 +4,14 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.os.Bundle;
-import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.bumptech.glide.Glide;
 import com.example.buy.activity.GoodsActiviy;
 import com.example.buy.activity.PayActivity;
 import com.example.buy.databeans.GetCartBean;
@@ -23,21 +19,17 @@ import com.example.buy.databeans.GoodsBean;
 import com.example.buy.databeans.OkBean;
 import com.example.framework.manager.CartManager;
 import com.example.buy.presenter.GetCartPresenter;
-import com.example.buy.presenter.PostUpDatePresenter;
-import com.example.buy.presenter.PostVerifyGoodsPresenter;
+import com.example.buy.presenter.PostUpDateCartPresenter;
 import com.example.common.IntentUtil;
 import com.example.framework.base.BaseNetConnectFragment;
 import com.example.framework.base.BaseRecyclerAdapter;
 import com.example.framework.base.BaseViewHolder;
-import com.example.framework.port.IClickListener;
+import com.example.framework.port.OnClickItemListener;
 import com.example.framework.port.IPresenter;
 
 import java.util.ArrayList;
 
 import com.example.net.AppNetConfig;
-import com.google.gson.Gson;
-
-import java.util.Arrays;
 
 public class ShopCartFragment extends BaseNetConnectFragment implements View.OnClickListener {
 
@@ -150,14 +142,8 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                 holder.getView(R.id.itemDelBut).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (list.get(position).getProductNum() <= 1) {
-
-                        } else {
-                            int num = list.get(position).getProductNum();
-                            list.get(position).setProductNum(num - 1);
-                            upDatePresenter = new PostUpDatePresenter(list.get(position));
-                            upDatePresenter.attachView(ShopCartFragment.this);
-                            upDatePresenter.doHttpPostJSONRequest(UPDATA_GOODS);
+                        if (list.get(position).getProductNum() > 1) {
+                            upDateNum(position,list.get(position).getProductNum()-1);
                         }
                     }
                 });
@@ -165,16 +151,12 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                 holder.getView(R.id.itemAddBut).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int num = list.get(position).getProductNum();
-                        list.get(position).setProductNum(num + 1);
-                        upDatePresenter = new PostUpDatePresenter(list.get(position));
-                        upDatePresenter.attachView(ShopCartFragment.this);
-                        upDatePresenter.doHttpPostJSONRequest(UPDATA_GOODS);
+                        upDateNum(position,list.get(position).getProductNum()+1);
                     }
                 });
             }
         };
-        adapter.setClickListener(new IClickListener() {
+        adapter.setClickListener(new OnClickItemListener() {
             @Override
             public void onClickListener(int position) {
 
@@ -336,5 +318,12 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                 iPresenter[i].detachView();
             }
         }
+    }
+    //更新单个数量
+    private void upDateNum(int goodsPosition,int goodsNum){
+        list.get(goodsPosition).setProductNum(goodsNum);
+        upDatePresenter = new PostUpDateCartPresenter(list.get(goodsPosition));
+        upDatePresenter.attachView(ShopCartFragment.this);
+        upDatePresenter.doHttpPostJSONRequest(UPDATA_GOODS);
     }
 }

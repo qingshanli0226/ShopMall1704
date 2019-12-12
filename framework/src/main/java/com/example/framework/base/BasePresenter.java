@@ -2,16 +2,15 @@ package com.example.framework.base;
 
 import android.util.Log;
 
-import com.alibaba.fastjson.JSONException;
+import com.example.common.code.Constant;
+import com.example.common.code.ErrorCode;
 import com.alibaba.fastjson.JSONObject;
-import com.example.common.Constant;
-import com.example.common.TypeBean;
 import com.example.common.utils.SignUtil;
+import com.example.framework.manager.ErrorDisposeManager;
 import com.example.framework.port.IPresenter;
 import com.example.framework.port.IView;
 import com.example.net.RetrofitCreator;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -24,8 +23,6 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
 /**
@@ -38,7 +35,7 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
 
     //TODO get获取单数据
     @Override
-    public void doHttpGetRequest(){
+    public void doHttpGetRequest() {
         getDate(RetrofitCreator.getNetInterence().getData(getHeaders(), getPath(), getParams()));
     }
 
@@ -50,25 +47,26 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
 
     //TODO get获取多数据
     @Override
-    public void doHttpGetRequest(final int requestCode){
-        getDate(requestCode,RetrofitCreator.getNetInterence().getData(getHeaders(), getPath(), getParams()));
+    public void doHttpGetRequest(final int requestCode) {
+        getDate(requestCode, RetrofitCreator.getNetInterence().getData(getHeaders(), getPath(), getParams()));
     }
 
     //TODO post获取多数据
     @Override
     public void doHttpPostRequest(final int requestCode) {
-        getDate(requestCode,RetrofitCreator.getNetInterence().postData(getHeaders(), getPath(), signEncrypt()));
+        getDate(requestCode, RetrofitCreator.getNetInterence().postData(getHeaders(), getPath(), signEncrypt()));
     }
+
     //TODO postJson数据
     @Override
     public void doHttpPostJSONRequest() {
-        getDate(RetrofitCreator.getNetInterence().postJsonData(getPath(),signJsonEncrypt()));
+        getDate(RetrofitCreator.getNetInterence().postJsonData(getPath(), signJsonEncrypt()));
     }
 
     //TODO postJson数据
     @Override
     public void doHttpPostJSONRequest(int requestCode) {
-        getDate(requestCode,RetrofitCreator.getNetInterence().postJsonData(getPath(),signJsonEncrypt()));
+        getDate(requestCode, RetrofitCreator.getNetInterence().postJsonData(getPath(), signJsonEncrypt()));
     }
 
     @Override
@@ -78,12 +76,16 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        iView.showLoading();
+                        try {
+                            iView.showLoading();
+                        } catch (Exception e) {
+                            ErrorDisposeManager.HandlerError(e);
+                            throw new RuntimeException(e.getMessage());
+                        }
                     }
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
-                        iView.hideLoading();
                         try {
                             T resEntity = new Gson().fromJson(responseBody.string(), getBeanType());
                             //TODO 获取数据成功
@@ -91,14 +93,28 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                         } catch (IOException e) {
                             e.printStackTrace();
                             iView.showError();
+                            ErrorDisposeManager.HandlerError(e);
                         }
                     }
 
+
                     @Override
                     public void onError(Throwable e) {
+                        try {
+                            iView.hideLoading();
+                            iView.showError();
+                            iView.onHttpRequestDataFailed(6001, ErrorCode.HTTP_ERROR);
+                            ErrorDisposeManager.HandlerError(e);
+                            Log.d("lhf", e.getMessage());
+                        } catch (Exception e1) {
+                            ErrorDisposeManager.HandlerError(e1);
+                            throw new RuntimeException(e1.getMessage());
+                        }
+
                         iView.hideLoading();
                         iView.showError();
-                        Log.e("xxxx","错误"+e.toString());
+                        Log.d("lhf", e.getMessage());
+                        Log.e("xxxx", "错误" + e.toString());
                     }
 
                     @Override
@@ -115,26 +131,39 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        iView.showLoading();
+                        try {
+                            iView.showLoading();
+                        } catch (Exception e1) {
+                            ErrorDisposeManager.HandlerError(e1);
+                            throw new RuntimeException(e1.getMessage());
+                        }
                     }
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         iView.hideLoading();
                         try {
-                            T resEntity = new Gson().fromJson(responseBody.string(), getBeanType());
-                            iView.onRequestSuccess(requestCode,resEntity);
+                            String string = responseBody.string();
+//                            Log.e("xxxx","请求到的各种数据:"+string);
+                            T resEntity = new Gson().fromJson(string, getBeanType());
+                            iView.onRequestSuccess(requestCode, resEntity);
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            ErrorDisposeManager.HandlerError(e);
+                            throw new RuntimeException(e.getMessage());
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        iView.hideLoading();
-                        Log.e("xxxx","错误"+e.toString());
+                        try {
+                            iView.hideLoading();
+                            iView.onHttpRequestDataFailed(6001, ErrorCode.HTTP_ERROR);
+                            ErrorDisposeManager.HandlerError(e);
+                        } catch (Exception e1) {
+                            ErrorDisposeManager.HandlerError(e1);
+                            throw new RuntimeException(e1.getMessage());
+                        }
                     }
-
                     @Override
                     public void onComplete() {
 
@@ -162,19 +191,20 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
     public JSONObject getJsonParams() {
         return null;
     }
+
     //
-    public Object signJsonEncrypt(){
+    public Object signJsonEncrypt() {
         JSONObject params = getJsonParams();
-        params.put(Constant.SIGN,SignUtil.generateJsonSign(params));
+        params.put(Constant.SIGN, SignUtil.generateJsonSign(params));
         SignUtil.encryptJsonParamsByBase64(params);
         return params;
     }
 
     //TODO 加签加密
-    public Map<String,String> signEncrypt(){
+    public Map<String, String> signEncrypt() {
         Map<String, String> params = getParams();
         String sign = SignUtil.generateSign(params);
-        params.put(Constant.SIGN,sign);
+        params.put(Constant.SIGN, sign);
         TreeMap<String, String> treeMap = SignUtil.encryptParamsByBase64(params);
         return treeMap;
     }

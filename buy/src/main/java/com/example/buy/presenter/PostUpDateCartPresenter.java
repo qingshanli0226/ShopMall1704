@@ -12,10 +12,10 @@ import java.lang.reflect.Type;
 /**
  * 购物车P层  ShopCartFragment  更新购物车数量
  */
-public class PostUpDatePresenter extends BasePresenter<GoodsBean> {
+public class PostUpDateCartPresenter extends BasePresenter<GoodsBean> {
     GoodsBean goodsBean;
 
-    public PostUpDatePresenter(GoodsBean goodsBean) {
+    public PostUpDateCartPresenter(GoodsBean goodsBean) {
         this.goodsBean = goodsBean;
     }
 

@@ -1,5 +1,6 @@
 package com.example.dimensionleague.login.activity;
 
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -10,9 +11,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.common.Constant;
+import com.example.common.code.Constant;
 import com.example.common.User;
-import com.example.common.manager.AccountManager;
+import com.example.framework.manager.AccountManager;
 import com.example.common.port.IButtonEnabledListener;
 import com.example.dimensionleague.R;
 import com.example.dimensionleague.login.presenter.LoginPresenter;
@@ -21,7 +22,6 @@ import com.example.dimensionleague.userbean.LoginBean;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.base.BaseTextWatcher;
 import com.example.framework.port.IPresenter;
-import com.example.net.AppNetConfig;
 
 import java.util.HashMap;
 
@@ -101,6 +101,20 @@ public class LoginActivity extends BaseNetConnectActivity implements IButtonEnab
         });
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String userName = intent.getStringExtra("userName");
+        String password = intent.getStringExtra("password");
+        this.user_name.setText(userName);
+        this.password.setText(password);
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put(Constant.KEY_USERNAME,userName);
+        hashMap.put(Constant.KEY_PASSWORD,password);
+        loginPresenter = new LoginPresenter(hashMap);
+        loginPresenter.attachView(this);
+        loginPresenter.doHttpPostRequest();
+    }
 
     @Override
     public void onRequestSuccess(Object data) {
@@ -108,9 +122,14 @@ public class LoginActivity extends BaseNetConnectActivity implements IButtonEnab
         Log.d("lhf", "onRequestSuccess: "+loginBean.toString());
         LoginBean.ResultBean result = loginBean.getResult();
         if(loginBean.getCode().equals(Constant.CODE_OK)){
-            accountManager.setUser(new User());
+            LoginBean.ResultBean bean = loginBean.getResult();
+            //TODO 将用户信息存储到本地
+            accountManager.setUser(new User(bean.getName(),bean.getPassword(),bean.getEmail(),bean.getPhone(),bean.getPoint(),bean.getAddress(),bean.getMoney(),bean.getAvatar()));
+            //TODO 将Token存储
             accountManager.saveToken(result.getToken());
+            //TODO 通知别的页面用户已登录
             accountManager.notifyLogin();
+            finishActivity();
         }
     }
 

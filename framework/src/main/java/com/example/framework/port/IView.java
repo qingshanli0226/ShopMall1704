@@ -1,5 +1,7 @@
 package com.example.framework.port;
 
+import com.example.common.code.ErrorCode;
+
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 
@@ -25,5 +27,6 @@ public interface IView<T> {
     void onRequestSuccess(int requestCode, T data);
     //TODO 获取RelativeLayoutId
     int getRelativeLayout();
-
+    //TODO 返回错误信息
+    void onHttpRequestDataFailed(int requestCode, ErrorCode error);
 }

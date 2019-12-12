@@ -1,5 +1,7 @@
 package com.example.dimensionleague.home;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,12 +19,28 @@ public class HomeFragment extends BaseNetConnectFragment {
     private HomeBean.ResultBean list =new HomeBean.ResultBean();
     private  BasePresenter iBasePresenter;
 
+    private int type =0;
+    public HomeFragment(int i) {
+        super();
+        this.type=i;
 
+    }
+
+//    无参构造
+    public HomeFragment() {
+        super();
+
+    }
     @Override
     public void init(View view) {
         super.init(view);
         rv=view.findViewById(R.id.home_rv);
         iBasePresenter=new HomePresenter();
+//        判断type值来显示隐藏搜索框
+        if (type==1) {
+            LinearLayout layout = view.findViewById(R.id.linear);
+            layout.setVisibility(View.GONE);
+        }
     }
 
     @Override

@@ -9,6 +9,7 @@
     </style>
 
     <style name="StyleRoundButton">
+        <item name="android:scaleType">fitXY</item>
         <item name="android:layout_height">@dimen/dp_50</item>
         <item name="android:layout_width">@dimen/dp_50</item>
         <item name="android:padding">@dimen/dp_10</item>

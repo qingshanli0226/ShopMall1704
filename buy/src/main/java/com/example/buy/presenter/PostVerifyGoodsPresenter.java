@@ -1,8 +1,10 @@
 package com.example.buy.presenter;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.buy.databeans.GetCheckGoodsBean;
 import com.example.buy.databeans.GoodsBean;
+import com.example.common.utils.SignUtil;
 import com.example.framework.base.BasePresenter;
 import com.example.net.AppNetConfig;
 import com.google.gson.Gson;
@@ -27,8 +29,17 @@ public class PostVerifyGoodsPresenter extends BasePresenter<GetCheckGoodsBean> {
     }
 
     @Override
-    public JSONObject getJsonParams() {
-        return new JSONObject();
+    public Object signJsonEncrypt() {
+        String[] strs=new String[list.size()];
+        for (int i=0;i<list.size();i++){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("productId",list.get(i).getProductId());
+            jsonObject.put("productNum",list.get(i).getProductNum());
+            jsonObject.put("productName",list.get(i).getProductName());
+            jsonObject.put("url",list.get(i).getUrl());
+            strs[i]= SignUtil.generateJsonSign(jsonObject);
+        }
+        return strs;
     }
 
     @Override

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
-import com.example.common.Constant;
+import com.example.common.code.Constant;
 
 /**
  * author:李浩帆
@@ -39,17 +39,5 @@ public class SPUtil {
         SharedPreferences.Editor edit = sp.edit();
         edit.putString(Constant.TOKEN,"");
         edit.apply();
-    }
-
-    //TODO 存储注册签名
-    public static void setSign(String sign){
-        SharedPreferences.Editor edit = sp.edit();
-        edit.putString(Constant.SIGN,sign);
-        edit.apply();
-    }
-
-    //TODO 获取签名
-    public static String getSign(){
-        return sp.getString(Constant.SIGN,"");
     }
 }

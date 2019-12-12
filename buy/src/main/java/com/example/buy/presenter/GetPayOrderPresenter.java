@@ -8,7 +8,7 @@ import java.lang.reflect.Type;
 /**
  * 订单P层  OrderActivity  待支付订单
  * */
-public class GetPayOrderPresenter extends BasePresenter {
+public class GetPayOrderPresenter extends BasePresenter<GetOrderBean> {
     @Override
     public Type getBeanType() {
         return GetOrderBean.class;

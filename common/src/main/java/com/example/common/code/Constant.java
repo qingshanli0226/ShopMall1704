@@ -1,4 +1,4 @@
-package com.example.common;
+package com.example.common.code;
 
 /**
  * author:李浩帆
