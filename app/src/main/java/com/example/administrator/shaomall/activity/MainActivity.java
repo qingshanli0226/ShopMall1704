@@ -45,6 +45,7 @@ public class MainActivity extends BaseActivity {
         fragments.add(new FindFragment());
         fragments.add(new ShoppingcartActivity());
         fragments.add(new MineFragment());
+
     }
 
     private void setTab() {
