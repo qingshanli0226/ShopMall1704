@@ -1,12 +1,14 @@
 package com.example.dimensionleague.activity
 
-import android.content.Intent
 import androidx.fragment.app.Fragment
 import android.graphics.Color
+import android.widget.Toast
 
 import com.example.dimensionleague.R
 import com.example.buy.ShopCartFragment
+
 import com.example.dimensionleague.find.FindFragment
+import com.example.framework.manager.AccountManager
 import com.example.dimensionleague.home.HomeFragment
 import com.example.dimensionleague.mine.MineFragment
 import com.example.dimensionleague.type.TypeFragment
@@ -16,7 +18,7 @@ import com.example.framework.listener.OnShopCartListener
 import com.example.framework.manager.CartManager
 
 class MainActivity : BaseNetConnectActivity() {
-    lateinit var listenter:OnShopCartListener
+    lateinit var listener:OnShopCartListener
     override fun getRelativeLayout(): Int {
         return R.id.main_relative
     }
@@ -30,6 +32,13 @@ class MainActivity : BaseNetConnectActivity() {
 
     override fun init() {
         super.init()
+        val bundle = intent!!.getBundleExtra("data")
+        val isAutoLogin = bundle.getBoolean("isAutoLogin")
+        if(!isAutoLogin){
+            Toast.makeText(this,"登录超时,请重新登录",Toast.LENGTH_SHORT).show()
+        }else{
+            AccountManager.getInstance().notifyLogin()
+        }
         list.add(HomeFragment())
         list.add(TypeFragment())
         list.add(FindFragment())
@@ -64,15 +73,15 @@ class MainActivity : BaseNetConnectActivity() {
             .canScroll(true)
             .build()
         //注册监听,监听购物车数量
-        listenter= OnShopCartListener { num->
+        listener= OnShopCartListener { num->
             main_easy.setMsgPointCount(3,num)
         }
-        CartManager.getInstance().registerListener(listenter)
+        CartManager.getInstance().registerListener(listener)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        CartManager.getInstance().unregister(listenter)
+        CartManager.getInstance().unregister(listener)
     }
 }
 

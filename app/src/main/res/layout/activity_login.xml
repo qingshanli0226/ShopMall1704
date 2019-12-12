@@ -38,6 +38,7 @@
         android:padding="@dimen/dp_20"
         android:orientation="vertical">
         <EditText
+            android:inputType="text"
             android:id="@+id/user_name"
             android:layout_marginTop="@dimen/dp_10"
             android:layout_width="match_parent"
@@ -50,6 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <EditText
+                android:singleLine="true"
                 android:id="@+id/password"
                 android:layout_weight="9"
                 android:inputType="textPassword"

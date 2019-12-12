@@ -23,5 +23,7 @@ public interface IPresenter<T> {
     void getDate(Observable<ResponseBody> data);
     //TODO 发起请求
     void getDate(int requestCode,Observable<ResponseBody> data);
-
+    //
+    void doHttpPostJSONRequest();
+    void doHttpPostJSONRequest(int requestCode);
 }

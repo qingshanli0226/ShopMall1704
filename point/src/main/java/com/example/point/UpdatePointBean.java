@@ -1,4 +1,4 @@
-package com.example.dimensionleague.userbean;
+package com.example.point;
 
 public class UpdatePointBean {
 

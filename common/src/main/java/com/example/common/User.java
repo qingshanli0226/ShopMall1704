@@ -26,6 +26,17 @@ public class User {
     private Object avatar;
     private String token;
 
+    public User(String name, String password, Object email, Object phone, Object point, Object address, Object money, Object avatar) {
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.phone = phone;
+        this.point = point;
+        this.address = address;
+        this.money = money;
+        this.avatar = avatar;
+    }
+
     public String getId() {
         return id;
     }

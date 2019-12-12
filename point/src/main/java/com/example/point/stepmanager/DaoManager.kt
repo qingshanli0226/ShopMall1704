@@ -55,11 +55,21 @@ class DaoManager {
         if (start_date.size==0 || stop_date.size==0){
 
         }else{
+            //获取两个日期之间的ID
             val start_id = start_date.get(0).id
             val stop_id = stop_date.get(0).id
-            var list:MutableList<StepBean> = stepBeanDao.queryBuilder().where(
-                StepBeanDao.Properties.Id.between(start_id,stop_id)).build().list()
-            return list
+
+            if(start_id<stop_id){
+                //根据ID去查询区间
+                var list:MutableList<StepBean> = stepBeanDao.queryBuilder().orderDesc(StepBeanDao.Properties.Id).where(
+                    StepBeanDao.Properties.Id.between(start_id,stop_id)).build().list()
+                return list
+            }else{
+                var list:MutableList<StepBean> = stepBeanDao.queryBuilder().orderDesc(StepBeanDao.Properties.Id).where(
+                    StepBeanDao.Properties.Id.between(stop_id,start_id)).build().list()
+                return list
+            }
+
         }
         var list:MutableList<StepBean> = mutableListOf()
         return  list

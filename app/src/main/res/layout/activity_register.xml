@@ -5,6 +5,7 @@
     android:id="@+id/register_layout"
     android:background="@color/colorWhite">
     <RelativeLayout
+        android:layout_marginTop="@dimen/dp_20"
         android:id="@+id/rlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,6 +31,7 @@
         android:padding="@dimen/dp_20"
         android:orientation="vertical">
         <EditText
+            android:inputType="text"
             android:id="@+id/user_name"
             android:layout_marginTop="@dimen/dp_10"
             android:layout_width="match_parent"

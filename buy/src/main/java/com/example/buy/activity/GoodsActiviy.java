@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.drawable.ColorDrawable;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,13 +31,14 @@ import com.example.buy.databeans.OkBean;
 import com.example.framework.listener.OnShopCartListener;
 import com.example.framework.manager.CartManager;
 import com.example.buy.presenter.PostAddCartPresenter;
-import com.example.buy.presenter.PostVerifyOnePresenter;
 import com.example.common.HomeBean;
 import com.example.common.IntentUtil;
 import com.example.common.TypeBean;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.port.IPresenter;
 import com.example.net.AppNetConfig;
+
+import java.util.ArrayList;
 
 /**
  * 商品详情页
@@ -84,32 +84,42 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         try {
             showGoodsBean = intent.getParcelableExtra(IntentUtil.SHOW_GOOD);
             if (showGoodsBean != null) {
-                goodsTitle.setText(showGoodsBean.getName());
-//                goodsOldPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG );
-                goodsOldPrice.setText("");
-                goodsNewPrice.setText("¥" + showGoodsBean.getCover_price());
-                Glide.with(this)
-                        .load(AppNetConfig.BASE_URl_IMAGE + showGoodsBean.getFigure())
-                        .into(beiImgage);
-                Glide.with(this)
-                        .load(AppNetConfig.BASE_URl_IMAGE + showGoodsBean.getFigure())
-                        .into(goodsImage);
+                goods = new GoodsBean(
+                        showGoodsBean.getProduct_id(),
+                        1,
+                        showGoodsBean.getName(),
+                        showGoodsBean.getFigure(),
+                        showGoodsBean.getCover_price()
+                );
+
             }
         } catch (Exception e) {
-            showGoodsTwoBean = intent.getParcelableExtra(IntentUtil.SHOW_GOOD);
-            if (showGoodsTwoBean != null) {
-                goodsTitle.setText(showGoodsTwoBean.getName());
-//                goodsOldPrice.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG );
-                goodsOldPrice.setText("");
-                goodsNewPrice.setText("¥" + showGoodsTwoBean.getCover_price());
-                Glide.with(this)
-                        .load(AppNetConfig.BASE_URl_IMAGE + showGoodsTwoBean.getFigure())
-                        .into(beiImgage);
-                Glide.with(this)
-                        .load(AppNetConfig.BASE_URl_IMAGE + showGoodsTwoBean.getFigure())
-                        .into(goodsImage);
+            try {
+                showGoodsTwoBean = intent.getParcelableExtra(IntentUtil.SHOW_GOOD);
+                if (showGoodsTwoBean != null) {
+                    goods = new GoodsBean(
+                            showGoodsTwoBean.getProduct_id(),
+                            1,
+                            showGoodsTwoBean.getName(),
+                            showGoodsTwoBean.getFigure(),
+                            showGoodsTwoBean.getCover_price()
+                    );
+                }
+            } catch (Exception e2) {
+                goods = intent.getParcelableExtra(IntentUtil.SHOW_GOOD);
             }
         }
+        goodsTitle.setText(goods.getProductName());
+        goodsOldPrice.setText("");
+        goodsNewPrice.setText(goods.getProductPrice());
+        Glide.with(this)
+                .load(AppNetConfig.BASE_URl_IMAGE + goods.getUrl())
+                .into(beiImgage);
+        Glide.with(this)
+                .load(AppNetConfig.BASE_URl_IMAGE + goods.getUrl())
+                .into(goodsImage);
+
+
         webView.loadUrl("http://www.baidu.com");
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -124,7 +134,11 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
     public void onClick(View v) {
         if (v.getId() == goPayBut.getId()) {
             //携带商品数据跳转到支付页  并结束页面
-            startActivity(PayActivity.class, null);
+            Intent intent = new Intent(this, PayActivity.class);
+            ArrayList<GoodsBean> goodList=new ArrayList<>();
+            goodList.add(goods);
+            intent.putExtra(IntentUtil.ORDERS,goodList);
+            startActivity(intent);
             finish();
         } else if (v.getId() == joinCartBut.getId()) {
             //加入购物车  弹窗
@@ -255,18 +269,11 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         popuSure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (showGoodsBean == null) {
-                    goods = new GoodsBean(null, 0, null, null);
-                } else {
-                    goods = new GoodsBean(
-                            showGoodsBean.getProduct_id(),
-                            Integer.valueOf(popuNum.getText().toString()),
-                            showGoodsBean.getName(),
-                            showGoodsBean.getFigure());
-                }
+                //强制将Float转为int
+                goods.setProductNum(((int)((float)Float.valueOf(goodsNewPrice.getText().toString()))));
                 addCartPresenter = new PostAddCartPresenter(goods);
                 addCartPresenter.attachView(GoodsActiviy.this);
-                addCartPresenter.doHttpPostRequest();
+                addCartPresenter.doHttpPostJSONRequest();
             }
         });
         //消失监听
@@ -282,6 +289,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         popupWindow.setHeight(600);
 
     }
+
     //设置背景透明度
     private void setBackAlph(float num) {
         WindowManager.LayoutParams attributes = getWindow().getAttributes();
@@ -352,11 +360,11 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         onShopCartListener = new OnShopCartListener() {
             @Override
             public void shopCartNumChange(int num) {
-                redNum.setText(num + "");
+                setRed(num);
             }
         };
         CartManager.getInstance().registerListener(onShopCartListener);
-
+        setRed(CartManager.getInstance().getCartNum());
 
 //        class NameViewModel : ViewModel() {    // 这里new了一个MutableLiveData，它是LiveData的实现类，LiveData是抽象的，很明显不能被new
 //            val currentName: LiveData<String> by lazy {
@@ -377,11 +385,20 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
 
     @Override
     protected void onDestroy() {
-        if (addCartPresenter!= null) {
+        if (addCartPresenter != null) {
             addCartPresenter.detachView();
         }
         CartManager.getInstance().unregister(onShopCartListener);
         super.onDestroy();
+    }
+
+    private void setRed(int num) {
+        redNum.setText(num + "");
+        if (Integer.valueOf(redNum.getText().toString()) == 0) {
+            redNum.setVisibility(View.GONE);
+        } else {
+            redNum.setVisibility(View.VISIBLE);
+        }
     }
 
 }

@@ -1,5 +1,7 @@
 package com.example.dimensionleague.type;
 
+import android.util.Log;
+
 import com.example.common.TypeBean;
 import com.example.framework.base.BasePresenter;
 import com.example.net.AppNetConfig;

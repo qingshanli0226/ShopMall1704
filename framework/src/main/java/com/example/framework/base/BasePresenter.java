@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.common.code.Constant;
 import com.example.common.code.ErrorCode;
+import com.alibaba.fastjson.JSONObject;
 import com.example.common.utils.SignUtil;
 import com.example.framework.manager.ErrorDisposeManager;
 import com.example.framework.port.IPresenter;
@@ -34,7 +35,7 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
 
     //TODO get获取单数据
     @Override
-    public void doHttpGetRequest(){
+    public void doHttpGetRequest() {
         getDate(RetrofitCreator.getNetInterence().getData(getHeaders(), getPath(), getParams()));
     }
 
@@ -46,14 +47,26 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
 
     //TODO get获取多数据
     @Override
-    public void doHttpGetRequest(final int requestCode){
-        getDate(requestCode,RetrofitCreator.getNetInterence().getData(getHeaders(), getPath(), getParams()));
+    public void doHttpGetRequest(final int requestCode) {
+        getDate(requestCode, RetrofitCreator.getNetInterence().getData(getHeaders(), getPath(), getParams()));
     }
 
     //TODO post获取多数据
     @Override
     public void doHttpPostRequest(final int requestCode) {
-        getDate(requestCode,RetrofitCreator.getNetInterence().postData(getHeaders(), getPath(), signEncrypt()));
+        getDate(requestCode, RetrofitCreator.getNetInterence().postData(getHeaders(), getPath(), signEncrypt()));
+    }
+
+    //TODO postJson数据
+    @Override
+    public void doHttpPostJSONRequest() {
+        getDate(RetrofitCreator.getNetInterence().postJsonData(getPath(), signJsonEncrypt()));
+    }
+
+    //TODO postJson数据
+    @Override
+    public void doHttpPostJSONRequest(int requestCode) {
+        getDate(requestCode, RetrofitCreator.getNetInterence().postJsonData(getPath(), signJsonEncrypt()));
     }
 
     @Override
@@ -65,7 +78,7 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                     public void onSubscribe(Disposable d) {
                         try {
                             iView.showLoading();
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             ErrorDisposeManager.HandlerError(e);
                             throw new RuntimeException(e.getMessage());
                         }
@@ -74,16 +87,16 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         try {
-                                T resEntity = new Gson().fromJson(responseBody.string(), getBeanType());
-                                //TODO 获取数据成功
-                                iView.onRequestSuccess(resEntity);
-
-                            } catch (IOException e) {
+                            T resEntity = new Gson().fromJson(responseBody.string(), getBeanType());
+                            //TODO 获取数据成功
+                            iView.onRequestSuccess(resEntity);
+                        } catch (IOException e) {
+                            e.printStackTrace();
                             iView.showError();
                             ErrorDisposeManager.HandlerError(e);
-                            throw new RuntimeException(e.getMessage());
-                            }
+                        }
                     }
+
 
                     @Override
                     public void onError(Throwable e) {
@@ -92,12 +105,16 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                             iView.showError();
                             iView.onHttpRequestDataFailed(6001, ErrorCode.HTTP_ERROR);
                             ErrorDisposeManager.HandlerError(e);
-                            Log.d("lhf",e.getMessage());
-                        }catch (Exception e1){
+                            Log.d("lhf", e.getMessage());
+                        } catch (Exception e1) {
                             ErrorDisposeManager.HandlerError(e1);
                             throw new RuntimeException(e1.getMessage());
                         }
 
+                        iView.hideLoading();
+                        iView.showError();
+                        Log.d("lhf", e.getMessage());
+                        Log.e("xxxx", "错误" + e.toString());
                     }
 
                     @Override
@@ -116,7 +133,7 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                     public void onSubscribe(Disposable d) {
                         try {
                             iView.showLoading();
-                        }catch (Exception e1){
+                        } catch (Exception e1) {
                             ErrorDisposeManager.HandlerError(e1);
                             throw new RuntimeException(e1.getMessage());
                         }
@@ -126,9 +143,15 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         iView.hideLoading();
+
                         try {
-                            T resEntity = new Gson().fromJson(responseBody.string(), getBeanType());
-                            iView.onRequestSuccess(requestCode,resEntity);
+                            String string = responseBody.string();
+                            try {
+                                T resEntity = new Gson().fromJson(string, getBeanType());
+                                iView.onRequestSuccess(requestCode, resEntity);
+                            } catch (Exception e) {
+
+                            }
                         } catch (IOException e) {
                             ErrorDisposeManager.HandlerError(e);
                             throw new RuntimeException(e.getMessage());
@@ -142,11 +165,10 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                             iView.hideLoading();
                             iView.onHttpRequestDataFailed(6001, ErrorCode.HTTP_ERROR);
                             ErrorDisposeManager.HandlerError(e);
-                        }catch (Exception e1){
+                        } catch (Exception e1) {
                             ErrorDisposeManager.HandlerError(e1);
                             throw new RuntimeException(e1.getMessage());
                         }
-
                     }
 
                     @Override
@@ -172,15 +194,24 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
         return new HashMap<>();
     }
 
-    //TODO 上传Json数据
-    public Object getJsonParams() {
+    //
+    public JSONObject getJsonParams() {
         return null;
     }
+
+    //
+    public Object signJsonEncrypt() {
+        JSONObject params = getJsonParams();
+        params.put(Constant.SIGN, SignUtil.generateJsonSign(params));
+        SignUtil.encryptJsonParamsByBase64(params);
+        return params;
+    }
+
     //TODO 加签加密
-    public Map<String,String> signEncrypt(){
+    public Map<String, String> signEncrypt() {
         Map<String, String> params = getParams();
         String sign = SignUtil.generateSign(params);
-        params.put(Constant.SIGN,sign);
+        params.put(Constant.SIGN, sign);
         TreeMap<String, String> treeMap = SignUtil.encryptParamsByBase64(params);
         return treeMap;
     }

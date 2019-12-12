@@ -31,7 +31,7 @@ public class SPUtil {
 
     //TODO 是否登录
     public static boolean isLogin(){
-        return TextUtils.isEmpty(getToken());
+        return !TextUtils.isEmpty(getToken());
     }
 
     //TODO 退出登录
@@ -39,17 +39,5 @@ public class SPUtil {
         SharedPreferences.Editor edit = sp.edit();
         edit.putString(Constant.TOKEN,"");
         edit.apply();
-    }
-
-    //TODO 存储注册签名
-    public static void setSign(String sign){
-        SharedPreferences.Editor edit = sp.edit();
-        edit.putString(Constant.SIGN,sign);
-        edit.apply();
-    }
-
-    //TODO 获取签名
-    public static String getSign(){
-        return sp.getString(Constant.SIGN,"");
     }
 }

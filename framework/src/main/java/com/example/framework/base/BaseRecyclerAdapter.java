@@ -7,10 +7,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.framework.R;
-import com.example.framework.port.IClickListener;
+import com.example.framework.port.OnClickItemListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,9 +21,9 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseVi
     //TODO 数据集合
     public List<T> dateList;
     //TODO 点击事件
-    private IClickListener clickListener;
+    private OnClickItemListener clickListener;
 
-    public void setClickListener(IClickListener clickListener) {
+    public void setClickListener(OnClickItemListener clickListener) {
         this.clickListener = clickListener;
     }
 

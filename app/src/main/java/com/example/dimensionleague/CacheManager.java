@@ -3,12 +3,10 @@ package com.example.dimensionleague;
 import android.content.Context;
 import android.os.Parcel;
 import android.util.Log;
-
 import com.example.common.HomeBean;
 import com.example.net.AppNetConfig;
 import com.example.net.RetrofitCreator;
 import com.google.gson.Gson;
-
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,7 +14,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
-
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -186,6 +183,8 @@ public class CacheManager {
                     }
                 });
     }
+
+
 
     public interface IHomeReceivedListener {
         void onHomeDataReceived(HomeBean.ResultBean homeBean);

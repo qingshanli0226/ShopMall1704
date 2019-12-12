@@ -1,5 +1,6 @@
 package com.example.dimensionleague.login.activity;
 
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,7 +13,7 @@ import android.widget.TextView;
 
 import com.example.common.code.Constant;
 import com.example.common.User;
-import com.example.common.manager.AccountManager;
+import com.example.framework.manager.AccountManager;
 import com.example.common.port.IButtonEnabledListener;
 import com.example.dimensionleague.R;
 import com.example.dimensionleague.login.presenter.LoginPresenter;
@@ -57,11 +58,11 @@ public class LoginActivity extends BaseNetConnectActivity implements IButtonEnab
     @Override
     public void init() {
         super.init();
-        login_back = (ImageView) findViewById(R.id.login_back);
-        user_name = (EditText) findViewById(R.id.user_name);
-        password = (EditText) findViewById(R.id.password);
-        password_check = (CheckBox) findViewById(R.id.password_check);
-        forget_password = (TextView) findViewById(R.id.forget_password);
+        login_back = findViewById(R.id.login_back);
+        user_name = findViewById(R.id.user_name);
+        password = findViewById(R.id.password);
+        password_check = findViewById(R.id.password_check);
+        forget_password = findViewById(R.id.forget_password);
         btn_login = findViewById(R.id.btn_login);
         user_register = findViewById(R.id.user_register);
 
@@ -100,6 +101,20 @@ public class LoginActivity extends BaseNetConnectActivity implements IButtonEnab
         });
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String userName = intent.getStringExtra("userName");
+        String password = intent.getStringExtra("password");
+        this.user_name.setText(userName);
+        this.password.setText(password);
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put(Constant.KEY_USERNAME,userName);
+        hashMap.put(Constant.KEY_PASSWORD,password);
+        loginPresenter = new LoginPresenter(hashMap);
+        loginPresenter.attachView(this);
+        loginPresenter.doHttpPostRequest();
+    }
 
     @Override
     public void onRequestSuccess(Object data) {
@@ -107,9 +122,14 @@ public class LoginActivity extends BaseNetConnectActivity implements IButtonEnab
         Log.d("lhf", "onRequestSuccess: "+loginBean.toString());
         LoginBean.ResultBean result = loginBean.getResult();
         if(loginBean.getCode().equals(Constant.CODE_OK)){
-            accountManager.setUser(new User());
+            LoginBean.ResultBean bean = loginBean.getResult();
+            //TODO 将用户信息存储到本地
+            accountManager.setUser(new User(bean.getName(),bean.getPassword(),bean.getEmail(),bean.getPhone(),bean.getPoint(),bean.getAddress(),bean.getMoney(),bean.getAvatar()));
+            //TODO 将Token存储
             accountManager.saveToken(result.getToken());
+            //TODO 通知别的页面用户已登录
             accountManager.notifyLogin();
+            finishActivity();
         }
     }
 

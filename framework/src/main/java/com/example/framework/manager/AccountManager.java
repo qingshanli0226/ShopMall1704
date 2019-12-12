@@ -1,4 +1,4 @@
-package com.example.common.manager;
+package com.example.framework.manager;
 
 import com.example.common.port.IAccountCallBack;
 import com.example.common.User;
@@ -12,7 +12,6 @@ import java.util.List;
  */
 public class AccountManager {
 
-    private SPUtil spUtil;
     private List<IAccountCallBack> list = new ArrayList<>();
 
     //TODO 缓存一份用户信息
@@ -36,12 +35,12 @@ public class AccountManager {
 
     //TODO 是否登录
     public boolean isLogin(){
-        return spUtil.isLogin();
+        return SPUtil.isLogin();
     }
 
     //TODO 退出登录
     public void logout(){
-        spUtil.logout();
+        SPUtil.logout();
     }
 
     public void setUser(User user){
@@ -54,12 +53,12 @@ public class AccountManager {
 
     //TODO 登录成功存入token
     public void saveToken(String token){
-        spUtil.saveToken(token);
+        SPUtil.saveToken(token);
     }
 
     //TODO 获取token
     public String getToken(){
-        return spUtil.getToken();
+        return SPUtil.getToken();
     }
 
     //TODO 页面需要用到用户信息

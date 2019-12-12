@@ -68,6 +68,7 @@ public class StepActivity extends BaseActivity   {
 
         tv_data = (TextView) findViewById(R.id.tv_data);
 
+
         physical.setText("计步页");
         SharedPreferences step = getSharedPreferences("Step", MODE_PRIVATE);
         stepInt = step.getInt("step", 3000);

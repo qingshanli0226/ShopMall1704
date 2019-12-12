@@ -5,6 +5,7 @@ import com.example.framework.listener.OnShopCartListener;
 import java.util.LinkedList;
 
 public class CartManager {
+    private int num=0;
     LinkedList<OnShopCartListener> listeners=new LinkedList<>();
 
     private static CartManager cartManager=new CartManager();
@@ -22,9 +23,13 @@ public class CartManager {
     public void unregister(OnShopCartListener onShopCartListener){
         listeners.remove(onShopCartListener);
     }
-    public void updataCartNum(int num){
+    public void updataCartNum(int newNum){
+        num=newNum;
         for (int i=0;i<listeners.size();i++){
             listeners.get(i).shopCartNumChange(num);
         }
+    }
+    public int getCartNum(){
+        return num;
     }
 }

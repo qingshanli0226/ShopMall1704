@@ -17,6 +17,7 @@ import com.example.framework.base.BaseViewHolder;
 import com.example.framework.listener.OnOrderListener;
 import com.example.framework.manager.OrderManager;
 import com.example.framework.port.IPresenter;
+import com.example.net.AppNetConfig;
 
 import java.util.ArrayList;
 /**

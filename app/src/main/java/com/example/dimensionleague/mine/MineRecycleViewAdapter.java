@@ -34,19 +34,6 @@ public class MineRecycleViewAdapter extends BaseRecyclerAdapter<MineBean>  {
     public void onBind(com.example.framework.base.BaseViewHolder holder, int position) {
         holder.getTextView(R.id.mine_rcv_name,dateList.get(position).getTitle());
         holder.getImageView(R.id.mine_rcv_img,dateList.get(position).getImg());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemListener.onClickItem(position);
-            }
-        });
-    }
-    interface OnClickItemListener {
-        void onClickItem(int position);
-    };
-    private OnClickItemListener itemListener;
-    public void setOnClickItemListener(OnClickItemListener itemListener){
-        this.itemListener=itemListener;
-    }
 
+    }
 }

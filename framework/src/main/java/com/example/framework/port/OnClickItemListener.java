@@ -1,5 +1,5 @@
 package com.example.framework.port;
 
-public interface IClickListener {
+public interface OnClickItemListener {
     void onClickListener(int position);
 }
