@@ -6,9 +6,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.example.framework.base.BaseAdapter;
 import com.example.framework.bean.HomepageBean;
 import com.example.net.Constant;
 import com.example.shopmall.R;
@@ -37,42 +36,98 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HomePageAdapter extends BaseAdapter<HomepageBean.ResultBean,RecyclerView.ViewHolder> {
 
-    public static final String GOODS_BEAN = "goods_bean";
+    private static final String GOODS_BEAN = "goods_bean";
 
     //上下文
-    private Context context;
-
-    //数据Bean对象
-    private HomepageBean homepage_bean;
+    private Context mContext;
 
     //五种类型
     //横幅广告
-    public static final int BANNER = 0;
+    private static final int BANNER = 0;
     //频道
-    public static final int CHANNEL = 1;
+    private static final int CHANNEL = 1;
     //活动
-    public static final int ACT = 2;
+    private static final int ACT = 2;
     //秒杀
-    public static final int SECKILL = 3;
+    private static final int SECKILL = 3;
     //推荐
-    public static final int RECOMMEND = 4;
+    private static final int RECOMMEND = 4;
     //热卖
-    public static final int HOT = 5;
+    private static final int HOT = 5;
 
     //当前类型
-    public int currentType = BANNER;
-    private final LayoutInflater mLayoutInflater;
+    private int currentType = BANNER;
 
-    public HomePageAdapter(Context context, HomepageBean homepage_bean) {
-        this.context = context;
-        this.homepage_bean = homepage_bean;
-        mLayoutInflater = LayoutInflater.from(context);
+    public HomePageAdapter(Context mContext) {
+        this.mContext = mContext;
     }
 
     @Override
-    public int getItemViewType(int position) {
+    protected RecyclerView.ViewHolder getViewHolder(View view, int viewType) {
+        if (viewType == BANNER){
+            return new BannerViewHolder(view);
+        }else if (viewType == CHANNEL){
+            return new ChannelViewHolder(view);
+        }else if (viewType == ACT){
+            return new ActViewHolder(view);
+        }else if (viewType == SECKILL){
+            return new SeckillViewHolder(view);
+        }else if (viewType == RECOMMEND){
+            return new RecommendViewHolder(view);
+        }else if (viewType == HOT){
+            return new HotViewHolder(view);
+        }
+
+        return null;
+
+    }
+
+    @Override
+    protected int getLayout(int viewType) {
+        if (viewType == BANNER){
+            return R.layout.item_banner;
+        }else if (viewType == CHANNEL){
+            return R.layout.item_channel;
+        }else if (viewType == ACT){
+            return R.layout.item_act;
+        }else if (viewType == SECKILL){
+            return R.layout.item_seckill;
+        }else if (viewType == RECOMMEND){
+            return R.layout.item_recommend;
+        }else if (viewType == HOT){
+            return R.layout.item_hot;
+        }
+        return 0;
+    }
+
+    @Override
+    protected void onBindHolder(RecyclerView.ViewHolder holder, List<HomepageBean.ResultBean> resultBeans, int position) {
+        HomepageBean.ResultBean resultBean = resultBeans.get(0);
+        if (getViewType(position) == BANNER){
+            BannerViewHolder bannerViewHolder = (BannerViewHolder) holder;
+            bannerViewHolder.setData(resultBean.getBanner_info());
+        }else if (getViewType(position) == CHANNEL){
+            ChannelViewHolder channelViewHolder = (ChannelViewHolder) holder;
+            channelViewHolder.setData(resultBean.getChannel_info());
+        }else if (getViewType(position) == ACT){
+            ActViewHolder actViewHolder = (ActViewHolder) holder;
+            actViewHolder.setData(resultBean.getAct_info());
+        }else if (getViewType(position) == SECKILL){
+            SeckillViewHolder seckillViewHolder = (SeckillViewHolder) holder;
+            seckillViewHolder.setData(resultBean.getSeckill_info());
+        }else if (getViewType(position) == RECOMMEND){
+            RecommendViewHolder recommendViewHolder = (RecommendViewHolder) holder;
+            recommendViewHolder.setData(resultBean.getRecommend_info());
+        }else if (getViewType(position) == HOT){
+            HotViewHolder hotViewHolder = (HotViewHolder) holder;
+            hotViewHolder.setData(resultBean.getHot_info());
+        }
+    }
+
+    @Override
+    protected int getViewType(int position) {
         switch (position){
             case BANNER:
                 currentType = BANNER;
@@ -96,48 +151,6 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return currentType;
     }
 
-    @NonNull
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType == BANNER){
-            return new BannerViewHolder(mLayoutInflater.inflate(R.layout.item_banner,parent,false));
-        }else if (viewType == CHANNEL){
-            return new ChannelViewHolder(mLayoutInflater.inflate(R.layout.item_channel,parent,false));
-        }else if (viewType == ACT){
-            return new ActViewHolder(mLayoutInflater.inflate(R.layout.item_act,parent,false));
-        }else if (viewType == SECKILL){
-            return new SeckillViewHolder(mLayoutInflater.inflate(R.layout.item_seckill,parent,false));
-        }else if (viewType == RECOMMEND){
-            return new RecommendViewHolder(mLayoutInflater.inflate(R.layout.item_recommend,parent,false));
-        }else if (viewType == HOT){
-            return new HotViewHolder(mLayoutInflater.inflate(R.layout.item_hot,parent,false));
-        }
-        return null;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (getItemViewType(position) == BANNER){
-            BannerViewHolder bannerViewHolder = (BannerViewHolder) holder;
-            bannerViewHolder.setData(homepage_bean.getResult().getBanner_info());
-        }else if (getItemViewType(position) == CHANNEL){
-            ChannelViewHolder channelViewHolder = (ChannelViewHolder) holder;
-            channelViewHolder.setData(homepage_bean.getResult().getChannel_info());
-        }else if (getItemViewType(position) == ACT){
-            ActViewHolder actViewHolder = (ActViewHolder) holder;
-            actViewHolder.setData(homepage_bean.getResult().getAct_info());
-        }else if (getItemViewType(position) == SECKILL){
-            SeckillViewHolder seckillViewHolder = (SeckillViewHolder) holder;
-            seckillViewHolder.setData(homepage_bean.getResult().getSeckill_info());
-        }else if (getItemViewType(position) == RECOMMEND){
-            RecommendViewHolder recommendViewHolder = (RecommendViewHolder) holder;
-            recommendViewHolder.setData(homepage_bean.getResult().getRecommend_info());
-        }else if (getItemViewType(position) == HOT){
-            HotViewHolder hotViewHolder = (HotViewHolder) holder;
-            hotViewHolder.setData(homepage_bean.getResult().getHot_info());
-        }
-    }
-
     @Override
     public int getItemCount() {
         return 6;
@@ -154,19 +167,19 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             bn_ner = itemView.findViewById(R.id.bn_ner);
         }
 
-        public void setData(final List<HomepageBean.ResultBean.BannerInfoBean> banner_info_bean) {
+        public void setData(final List<HomepageBean.ResultBean.BannerInfoBean> bannerInfoBeans) {
             bn_ner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
             ArrayList<String> images = new ArrayList<>();
-            for (int i = 0; i < banner_info_bean.size(); i++) {
-                images.add(Constant.BASE_URL_IMAGE + banner_info_bean.get(i).getImage());
+            for (int i = 0; i < bannerInfoBeans.size(); i++) {
+                images.add(Constant.BASE_URL_IMAGE + bannerInfoBeans.get(i).getImage());
             }
             bn_ner.setImageLoader(new ImageLoad());
             bn_ner.setImages(images);
             bn_ner.setOnBannerListener(new OnBannerListener() {
                 @Override
                 public void OnBannerClick(int position) {
-                    if (position - 1 < banner_info_bean.size()){
-                        int option = banner_info_bean.get(position - 1).getOption();
+                    if (position - 1 < bannerInfoBeans.size()){
+                        int option = bannerInfoBeans.get(position - 1).getOption();
                         String product_id = "";
                         String name = "";
                         String cover_price = "";
@@ -200,19 +213,20 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     //Channel
     class ChannelViewHolder extends RecyclerView.ViewHolder {
 
-        public RecyclerView rv_channel;
+        private RecyclerView rv_channel;
 
         public ChannelViewHolder(@NonNull View itemView) {
             super(itemView);
 
             rv_channel = itemView.findViewById(R.id.rv_channel);
 
-            rv_channel.setLayoutManager(new GridLayoutManager(context,5));
+            rv_channel.setLayoutManager(new GridLayoutManager(mContext,5));
 
         }
 
-        public void setData(List<HomepageBean.ResultBean.ChannelInfoBean> channel_info_bean) {
-            ChannelItemAdapter channel_item_adapter = new ChannelItemAdapter(context,channel_info_bean);
+        public void setData(List<HomepageBean.ResultBean.ChannelInfoBean> channelInfoBeans) {
+            ChannelItemAdapter channel_item_adapter = new ChannelItemAdapter(mContext);
+            channel_item_adapter.reFresh(channelInfoBeans);
             rv_channel.setAdapter(channel_item_adapter);
 
             channel_item_adapter.setLikeliest(new ChannelItemAdapter.Likeliest() {
@@ -220,9 +234,9 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 public void getLikeliest(int position) {
                     Log.d("####", "onItemClick: " + position);
                     if (position <= 8) {
-                        Intent intent = new Intent(context, GoodsListActivity.class);
+                        Intent intent = new Intent(mContext, GoodsListActivity.class);
                         intent.putExtra("position", position);
-                        context.startActivity(intent);
+                        mContext.startActivity(intent);
                     }
                 }
             });
@@ -232,25 +246,26 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     //Act ViewPager切换
     class ActViewHolder extends RecyclerView.ViewHolder {
 
-        public ViewPager vp_act;
+        private ViewPager vp_act;
+
         public ActViewHolder(@NonNull View itemView) {
             super(itemView);
 
             vp_act = itemView.findViewById(R.id.vp_act);
         }
 
-        public void setData(final List<HomepageBean.ResultBean.ActInfoBean> act_info_bean) {
+        public void setData(final List<HomepageBean.ResultBean.ActInfoBean> actInfoBeans) {
             vp_act.setPageMargin(20);
             vp_act.setOffscreenPageLimit(3);
             vp_act.setPageTransformer(true, new AlphaPageTransformer(new ScaleInTransformer()));
 
-            ActItemAdapter act_adapter = new ActItemAdapter(context,act_info_bean);
+            ActItemAdapter act_adapter = new ActItemAdapter(mContext,actInfoBeans);
 
             vp_act.setAdapter(act_adapter);
         }
     }
 
-    private TextView tv_seckill_time;
+    private TextView tvSeckillTime;
     private boolean isFirst = true;
     private int dt;
 
@@ -261,7 +276,7 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             if (msg.what == 0) {
                 dt = dt - 1000;
                 SimpleDateFormat sd = new SimpleDateFormat("HH:mm:ss");
-                tv_seckill_time.setText(sd.format(new Date(dt)));
+                tvSeckillTime.setText(sd.format(new Date(dt)));
 
                 handler.removeMessages(0);
                 handler.sendEmptyMessageDelayed(0, 1000);
@@ -276,28 +291,29 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     //Seckill
     class SeckillViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tv_seckill_more;
-        public RecyclerView rv_seckill;
+        private TextView tvSeckillMore;
+        private RecyclerView rvSeckill;
 
         public SeckillViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tv_seckill_time = itemView.findViewById(R.id.tv_seckill_time);
-            tv_seckill_more = itemView.findViewById(R.id.tv_seckill_more);
-            rv_seckill = itemView.findViewById(R.id.rv_seckill);
+            tvSeckillTime = itemView.findViewById(R.id.tv_seckill_time);
+            tvSeckillMore = itemView.findViewById(R.id.tv_seckill_more);
+            rvSeckill = itemView.findViewById(R.id.rv_seckill);
         }
 
-        public void setData(final HomepageBean.ResultBean.SeckillInfoBean seckill_info_bean) {
+        public void setData(final HomepageBean.ResultBean.SeckillInfoBean seckillInfoBean) {
             //设置时间
             if (isFirst) {
-                dt = (int) (Integer.parseInt(seckill_info_bean.getEnd_time()) - (Integer.parseInt(seckill_info_bean.getStart_time())));
+                dt = (int) (Integer.parseInt(seckillInfoBean.getEnd_time()) - (Integer.parseInt(seckillInfoBean.getStart_time())));
                 isFirst = false;
             }
 
             //设置RecyclerView
-            rv_seckill.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-            SeckillItemAdapter seckill_item_adapter = new SeckillItemAdapter(context, seckill_info_bean.getList());
-            rv_seckill.setAdapter(seckill_item_adapter);
+            rvSeckill.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+            SeckillItemAdapter seckill_item_adapter = new SeckillItemAdapter(mContext);
+            seckill_item_adapter.reFresh(seckillInfoBean.getList());
+            rvSeckill.setAdapter(seckill_item_adapter);
 
             //倒计时
             handler.sendEmptyMessageDelayed(0, 1000);
@@ -306,15 +322,15 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             seckill_item_adapter.setLikeliest(new SeckillItemAdapter.Likeliest() {
                 @Override
                 public void getLikeliest(int position) {
-                    HomepageBean.ResultBean.SeckillInfoBean.ListBean listBean = seckill_info_bean.getList().get(position);
+                    HomepageBean.ResultBean.SeckillInfoBean.ListBean listBean = seckillInfoBean.getList().get(position);
                     String name = listBean.getName();
                     String cover_price = listBean.getCover_price();
                     String figure = listBean.getFigure();
                     String product_id = listBean.getProduct_id();
                     GoodsBean goodsBean = new GoodsBean(name, cover_price, figure, product_id);
-                    Intent intent = new Intent(context, GoodsInfoActivity.class);
+                    Intent intent = new Intent(mContext, GoodsInfoActivity.class);
                     intent.putExtra(GOODS_BEAN, goodsBean);
-                    context.startActivity(intent);
+                    mContext.startActivity(intent);
                 }
             });
         }
@@ -323,35 +339,36 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     //Recommend
     class RecommendViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tv_recommend_more;
-        private RecyclerView rv_recommend;
+        private TextView tvRecommendMore;
+        private RecyclerView rvRecommend;
 
         public RecommendViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tv_recommend_more = itemView.findViewById(R.id.tv_recommend_more);
-            rv_recommend = itemView.findViewById(R.id.rv_recommend);
+            tvRecommendMore = itemView.findViewById(R.id.tv_recommend_more);
+            rvRecommend = itemView.findViewById(R.id.rv_recommend);
 
-            rv_recommend.setLayoutManager(new GridLayoutManager(context,3));
+            rvRecommend.setLayoutManager(new GridLayoutManager(mContext,3));
 
         }
 
-        private void setData(final List<HomepageBean.ResultBean.RecommendInfoBean> recommend_info_bean) {
-            RecommendItemAdapter recommend_item_adapter = new RecommendItemAdapter(context, recommend_info_bean);
-            rv_recommend.setAdapter(recommend_item_adapter);
+        private void setData(final List<HomepageBean.ResultBean.RecommendInfoBean> recommendInfoBeans) {
+            RecommendItemAdapter recommend_item_adapter = new RecommendItemAdapter(mContext);
+            recommend_item_adapter.reFresh(recommendInfoBeans);
+            rvRecommend.setAdapter(recommend_item_adapter);
 
             //点击事件
             recommend_item_adapter.setLikeliest(new RecommendItemAdapter.Likeliest() {
                 @Override
                 public void getLikeliest(int position) {
-                    String cover_price = recommend_info_bean.get(position).getCover_price();
-                    String name = recommend_info_bean.get(position).getName();
-                    String figure = recommend_info_bean.get(position).getFigure();
-                    String product_id = recommend_info_bean.get(position).getProduct_id();
+                    String cover_price = recommendInfoBeans.get(position).getCover_price();
+                    String name = recommendInfoBeans.get(position).getName();
+                    String figure = recommendInfoBeans.get(position).getFigure();
+                    String product_id = recommendInfoBeans.get(position).getProduct_id();
                     GoodsBean goodsBean = new GoodsBean(name, cover_price, figure, product_id);
-                    Intent intent = new Intent(context, GoodsInfoActivity.class);
+                    Intent intent = new Intent(mContext, GoodsInfoActivity.class);
                     intent.putExtra(GOODS_BEAN, goodsBean);
-                    context.startActivity(intent);
+                    mContext.startActivity(intent);
                 }
             });
         }
@@ -360,32 +377,33 @@ public class HomePageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     //Hot
     class HotViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tv_more_hot;
-        public RecyclerView rv_hot;
+        private TextView tvMoreHot;
+        private RecyclerView rvHot;
 
         public HotViewHolder(@NonNull View itemView) {
             super(itemView);
-            tv_more_hot = itemView.findViewById(R.id.tv_more_hot);
-            rv_hot = itemView.findViewById(R.id.rv_hot);
-            rv_hot.setLayoutManager(new GridLayoutManager(context,2));
+            tvMoreHot = itemView.findViewById(R.id.tv_more_hot);
+            rvHot = itemView.findViewById(R.id.rv_hot);
+            rvHot.setLayoutManager(new GridLayoutManager(mContext,2));
 
         }
 
-        public void setData(final List<HomepageBean.ResultBean.HotInfoBean> hot_info) {
-            HotItemAdapter hot_item_adapter = new HotItemAdapter(context, hot_info);
-            rv_hot.setAdapter(hot_item_adapter);
+        public void setData(final List<HomepageBean.ResultBean.HotInfoBean> hotInfoBeans) {
+            HotItemAdapter hotItemAdapter = new HotItemAdapter(mContext);
+            hotItemAdapter.reFresh(hotInfoBeans);
+            rvHot.setAdapter(hotItemAdapter);
 
-            hot_item_adapter.setLikeliest(new HotItemAdapter.Likeliest() {
+            hotItemAdapter.setLikeliest(new HotItemAdapter.Likeliest() {
                 @Override
-                public void getLikeliest(HotItemAdapter.ViewHolder holder, int position) {
-                    String cover_price = hot_info.get(position).getCover_price();
-                    String name = hot_info.get(position).getName();
-                    String figure = hot_info.get(position).getFigure();
-                    String product_id = hot_info.get(position).getProduct_id();
+                public void getLikeliest(int position) {
+                    String cover_price = hotInfoBeans.get(position).getCover_price();
+                    String name = hotInfoBeans.get(position).getName();
+                    String figure = hotInfoBeans.get(position).getFigure();
+                    String product_id = hotInfoBeans.get(position).getProduct_id();
                     GoodsBean goodsBean = new GoodsBean(name, cover_price, figure, product_id);
-                    Intent intent = new Intent(context, GoodsInfoActivity.class);
+                    Intent intent = new Intent(mContext, GoodsInfoActivity.class);
                     intent.putExtra(GOODS_BEAN, goodsBean);
-                    context.startActivity(intent);
+                    mContext.startActivity(intent);
                 }
             });
         }

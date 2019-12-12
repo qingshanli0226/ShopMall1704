@@ -16,11 +16,12 @@ import com.example.shopmall.bean.RegisterBean;
 import com.example.shopmall.presenter.RegisterPresenter;
 
 public class RegisterActivity extends BaseActivity implements IPostBaseView<RegisterBean> {
-    TitleBar mTitleBar;
-    EditText mName;
-    EditText mPassWord;
-    Button mRegister;
-    RegisterPresenter integerPresenter;
+
+    private TitleBar tbRegister;
+    private EditText etName;
+    private EditText etWord;
+    private Button btRegister;
+    private RegisterPresenter integerPresenter;
 
     @Override
     protected int setLayout() {
@@ -29,20 +30,20 @@ public class RegisterActivity extends BaseActivity implements IPostBaseView<Regi
 
     @Override
     public void initView() {
-        mTitleBar = findViewById(R.id.tb_register);
-        mName = findViewById(R.id.et_name);
-        mPassWord = findViewById(R.id.et_word);
-        mRegister = findViewById(R.id.bt_register);
+        tbRegister = findViewById(R.id.tb_register);
+        etName = findViewById(R.id.et_name);
+        etWord = findViewById(R.id.et_word);
+        btRegister = findViewById(R.id.bt_register);
     }
 
     @Override
     public void initData() {
 
-        mTitleBar.setBackgroundColor(Color.RED);
-        mTitleBar.setLeftImg(R.drawable.left);
-        mTitleBar.setCenterText("注册", 18, Color.WHITE);
+        tbRegister.setBackgroundColor(Color.RED);
+        tbRegister.setLeftImg(R.drawable.left);
+        tbRegister.setCenterText("注册", 18, Color.WHITE);
 
-        mTitleBar.setTitleClickLisner(new TitleBar.TitleClickLisner() {
+        tbRegister.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
             public void LeftClick() {
                 finish();
@@ -60,11 +61,11 @@ public class RegisterActivity extends BaseActivity implements IPostBaseView<Regi
         });
 
 
-        mRegister.setOnClickListener(new View.OnClickListener() {
+        btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = mName.getText().toString();
-                String pwd = mPassWord.getText().toString();
+                String name = etName.getText().toString();
+                String pwd = etWord.getText().toString();
                 UserBean userBean = new UserBean();
                 userBean.setName(name);
                 userBean.setPassword(pwd);

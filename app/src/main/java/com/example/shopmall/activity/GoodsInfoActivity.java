@@ -8,10 +8,12 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.example.buy.bean.InsertBean;
 import com.example.buy.presenter.InsertPresenter;
 import com.example.common.BottomBar;
+import com.example.common.LoadingPage;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IGetBaseView;
@@ -21,17 +23,25 @@ import com.example.shopmall.adapter.GoodsInfoAdapter;
 import com.example.shopmall.bean.GoodsBean;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
+/**
+ * 商品详情
+ */
 public class GoodsInfoActivity extends BaseActivity implements IGetBaseView {
 
-    TitleBar tb_goods_info;
-    RecyclerView rv_goods_info;
-    BottomBar bb_goods_info;
-    Button bt_goods_info;
+    private TitleBar tbGoodsInfo;
+    private RecyclerView rvGoods_info;
+    private BottomBar bbGoodsInfo;
+    private Button btGoodsInfo;
 
-    ArrayList<GoodsBean> list_goods = new ArrayList<>();
+    private LoadingPage lpLoadingPageGoodsInfo;
+    private LinearLayout llGoodsInfo;
 
-    private InsertPresenter addOneProduct;
+    private ArrayList<GoodsBean> listGoods = new ArrayList<>();
+
+    private InsertPresenter insertPresenter;
 
     @Override
     protected int setLayout() {
@@ -40,22 +50,38 @@ public class GoodsInfoActivity extends BaseActivity implements IGetBaseView {
 
     @Override
     public void initView() {
-        tb_goods_info = findViewById(R.id.tb_goods_info);
-        rv_goods_info = findViewById(R.id.rv_goods_info);
-        bb_goods_info = findViewById(R.id.bb_goods_info);
-        bt_goods_info = findViewById(R.id.bt_goods_info);
+        tbGoodsInfo = findViewById(R.id.tb_goods_info);
+        rvGoods_info = findViewById(R.id.rv_goods_info);
+        bbGoodsInfo = findViewById(R.id.bb_goods_info);
+        btGoodsInfo = findViewById(R.id.bt_goods_info);
+        lpLoadingPageGoodsInfo = findViewById(R.id.lp_loadingPage_goods_info);
+        llGoodsInfo = findViewById(R.id.ll_goods_info);
 
-        rv_goods_info.setLayoutManager(new LinearLayoutManager(this));
-        list_goods.clear();
+        rvGoods_info.setLayoutManager(new LinearLayoutManager(this));
+        listGoods.clear();
     }
 
     @Override
     public void initData() {
-        tb_goods_info.setTitleBacKGround(Color.RED);
-        tb_goods_info.setCenterText("商品详情",18,Color.WHITE);
-        tb_goods_info.setLeftImg(R.drawable.left);
 
-        tb_goods_info.setTitleClickLisner(new TitleBar.TitleClickLisner() {
+        lpLoadingPageGoodsInfo.start(LoadingPage.LOADING_SUCCEED);
+        lpLoadingPageGoodsInfo.setVisibility(View.VISIBLE);
+        llGoodsInfo.setVisibility(View.GONE);
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                lpLoadingPageGoodsInfo.isSucceed();
+                llGoodsInfo.setVisibility(View.VISIBLE);
+            }
+        },1000);
+
+        tbGoodsInfo.setTitleBacKGround(Color.RED);
+        tbGoodsInfo.setCenterText("商品详情",18,Color.WHITE);
+        tbGoodsInfo.setLeftImg(R.drawable.left);
+
+        tbGoodsInfo.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
             public void LeftClick() {
                 finish();
@@ -77,11 +103,11 @@ public class GoodsInfoActivity extends BaseActivity implements IGetBaseView {
         final Drawable collect = getResources().getDrawable(R.drawable.collect);
         final Drawable shoppingcart = getResources().getDrawable(R.drawable.shoppingcart);
         Drawable[] drawables = new Drawable[]{mine,collect,shoppingcart};
-        bb_goods_info.setBottombarName(strs);
-        bb_goods_info.setTapDrables(drawables);
+        bbGoodsInfo.setBottombarName(strs);
+        bbGoodsInfo.setTapDrables(drawables);
 
         //底部导航
-        bb_goods_info.setOnTapListener(new BottomBar.OnTapListener() {
+        bbGoodsInfo.setOnTapListener(new BottomBar.OnTapListener() {
             @Override
             public void tapItemClick(int i) {
                 switch (i){
@@ -99,25 +125,26 @@ public class GoodsInfoActivity extends BaseActivity implements IGetBaseView {
         });
 
         //加入购物车
-        bt_goods_info.setOnClickListener(new View.OnClickListener() {
+        btGoodsInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String token = ShoppingManager.getInstance().getToken(GoodsInfoActivity.this);
-                addOneProduct.attachGetView(GoodsInfoActivity.this);
+                insertPresenter.attachGetView(GoodsInfoActivity.this);
                 HashMap<String, String> hashMap = new HashMap<>();
                 hashMap.put("token", token);
-                addOneProduct = new InsertPresenter("addOneProduct", InsertBean.class, hashMap);
-                addOneProduct.getGetData();
+                insertPresenter = new InsertPresenter("addOneProduct", InsertBean.class, hashMap);
+                insertPresenter.getGetData();
 
             }
         });
 
         Intent intent = getIntent();
         GoodsBean goods_bean = (GoodsBean) intent.getSerializableExtra("goods_bean");
-        list_goods.add(goods_bean);
+        listGoods.add(goods_bean);
 
-        GoodsInfoAdapter goodsInfoAdapter = new GoodsInfoAdapter(this, list_goods);
-        rv_goods_info.setAdapter(goodsInfoAdapter);
+        GoodsInfoAdapter goods_info_adapter = new GoodsInfoAdapter();
+        goods_info_adapter.reFresh(listGoods);
+        rvGoods_info.setAdapter(goods_info_adapter);
 
     }
 

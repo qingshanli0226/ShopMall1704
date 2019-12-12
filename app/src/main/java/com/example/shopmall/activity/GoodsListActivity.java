@@ -2,7 +2,6 @@ package com.example.shopmall.activity;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,25 +9,19 @@ import android.graphics.Color;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IGetBaseView;
-import com.example.framework.bean.HomepageBean;
 import com.example.net.Constant;
 import com.example.shopmall.R;
 import com.example.shopmall.adapter.GoodsListAdapter;
-import com.example.shopmall.bean.ClassifyBean;
-import com.example.shopmall.bean.GoodsBean;
 import com.example.shopmall.bean.GoodsListBean;
 import com.example.shopmall.presenter.IntegerPresenter;
 
-import java.util.ArrayList;
-
+/**
+ * 商品内容
+ */
 public class GoodsListActivity extends BaseActivity implements IGetBaseView<GoodsListBean> {
 
-    TitleBar tb_goods_list;
-    RecyclerView rv_goods_list;
-
-    IntegerPresenter integerPresenter;
-
-    private ArrayList<GoodsListBean.ResultBean.PageDataBean> page_data_beans = new ArrayList<>();
+    private TitleBar tbGoodsList;
+    private RecyclerView rvGoodsList;
 
     private String[] urls = new String[]{Constant.CLOSE_STORE, Constant.GAME_STORE, Constant.COMIC_STORE, Constant.COSPLAY_STORE,
             Constant.GUFENG_STORE, Constant.STICK_STORE, Constant.WENJU_STORE, Constant.FOOD_STORE, Constant.SHOUSHI_STORE,};
@@ -40,10 +33,10 @@ public class GoodsListActivity extends BaseActivity implements IGetBaseView<Good
 
     @Override
     public void initView() {
-        tb_goods_list = findViewById(R.id.tb_goods_list);
-        rv_goods_list = findViewById(R.id.rv_goods_list);
+        tbGoodsList = findViewById(R.id.tb_goods_list);
+        rvGoodsList = findViewById(R.id.rv_goods_list);
 
-        rv_goods_list.setLayoutManager(new GridLayoutManager(this,2));
+        rvGoodsList.setLayoutManager(new GridLayoutManager(this,2));
 
     }
 
@@ -54,11 +47,11 @@ public class GoodsListActivity extends BaseActivity implements IGetBaseView<Good
         int position = intent.getIntExtra("position", 0);
         getDataPresenter(urls[position]);
 
-        tb_goods_list.setTitleBacKGround(Color.RED);
-        tb_goods_list.setLeftImg(R.drawable.left);
-        tb_goods_list.setCenterText("商品内容",18,Color.WHITE);
+        tbGoodsList.setTitleBacKGround(Color.RED);
+        tbGoodsList.setLeftImg(R.drawable.left);
+        tbGoodsList.setCenterText("商品内容",18,Color.WHITE);
 
-        tb_goods_list.setTitleClickLisner(new TitleBar.TitleClickLisner() {
+        tbGoodsList.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
             public void LeftClick() {
                 finish();
@@ -76,17 +69,19 @@ public class GoodsListActivity extends BaseActivity implements IGetBaseView<Good
         });
     }
 
+    //网络获取商品内容数据
     private void getDataPresenter(String url) {
-        integerPresenter = new IntegerPresenter(url, GoodsListBean.class);
+        IntegerPresenter integerPresenter = new IntegerPresenter(url, GoodsListBean.class);
         integerPresenter.attachGetView(this);
         integerPresenter.getGetData();
     }
 
+    //显示从网络获取到的数据
     @Override
     public void onGetDataSucess(GoodsListBean data) {
-        page_data_beans = (ArrayList<GoodsListBean.ResultBean.PageDataBean>) data.getResult().getPage_data();
-        GoodsListAdapter goodsListAdapter = new GoodsListAdapter(this, page_data_beans);
-        rv_goods_list.setAdapter(goodsListAdapter);
+        GoodsListAdapter goodsListAdapter = new GoodsListAdapter(this);
+        goodsListAdapter.reFresh(data.getResult().getPage_data());
+        rvGoodsList.setAdapter(goodsListAdapter);
     }
 
     @Override

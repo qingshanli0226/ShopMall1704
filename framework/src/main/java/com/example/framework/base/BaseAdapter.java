@@ -31,7 +31,7 @@ public abstract class BaseAdapter<T, V extends RecyclerView.ViewHolder> extends 
     @NonNull
     @Override
     public V onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(getLayout(viewType), null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(getLayout(viewType), parent,false);
         return getViewHolder(view, viewType);
     }
 
@@ -60,6 +60,7 @@ public abstract class BaseAdapter<T, V extends RecyclerView.ViewHolder> extends 
 
     @Override
     public int getItemCount() {
+
         return dataList.size();
     }
 

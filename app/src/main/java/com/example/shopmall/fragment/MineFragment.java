@@ -22,10 +22,10 @@ import com.example.shopmall.activity.LoginActivity;
  */
 public class MineFragment extends BaseFragment {
 
-    TitleBar tb_mine;
+    private TitleBar tb_mine;
     private TextView tv_user_score;
     private TextView tv_username;
-    private ImageButton imageButton;
+    private ImageButton ib_user_icon_avator;
 
     @Override
     protected void initData() {
@@ -75,7 +75,7 @@ public class MineFragment extends BaseFragment {
         tb_mine = view.findViewById(R.id.tb_mine);
         tv_user_score = view.findViewById(R.id.tv_user_score);
         tv_username = view.findViewById(R.id.tv_username);
-        imageButton=view.findViewById(R.id.ib_user_icon_avator);
+        ib_user_icon_avator=view.findViewById(R.id.ib_user_icon_avator);
     }
 
 

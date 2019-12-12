@@ -5,32 +5,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.bumptech.glide.Glide;
 import com.example.framework.bean.HomepageBean;
 import com.example.net.Constant;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ActItemAdapter extends PagerAdapter {
 
-    private Context context;
-    private List<HomepageBean.ResultBean.ActInfoBean> act_info_bean;
+    private Context mContext;
+    private List<HomepageBean.ResultBean.ActInfoBean> actInfoBeans;
 
-    public ActItemAdapter(Context context, List<HomepageBean.ResultBean.ActInfoBean> act_info_bean) {
-        this.context = context;
-        this.act_info_bean = act_info_bean;
+    public ActItemAdapter(Context mContext, List<HomepageBean.ResultBean.ActInfoBean> actInfoBeans) {
+        this.mContext = mContext;
+        this.actInfoBeans = actInfoBeans;
     }
 
     @Override
     public int getCount() {
-        return act_info_bean.size();
+        return actInfoBeans.size();
     }
 
     @Override
@@ -40,10 +35,10 @@ public class ActItemAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        ImageView view = new ImageView(context);
+        ImageView view = new ImageView(mContext);
         view.setScaleType(ImageView.ScaleType.FIT_XY);
         //绑定数据
-        Glide.with(context).load(Constant.BASE_URL_IMAGE + act_info_bean.get(position).getIcon_url()).into(view);
+        Glide.with(mContext).load(Constant.BASE_URL_IMAGE + actInfoBeans.get(position).getIcon_url()).into(view);
         container.addView(view);
         return view;
     }

@@ -19,11 +19,11 @@ import com.example.shopmall.presenter.LoginPresenter;
 
 public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBean> {
 
-    TitleBar mTitleBar;
-    Button mLogin;
-    EditText mName;
-    EditText mPassWord;
-    Button mRegister;
+    private TitleBar tbLogin;
+    private Button btLogin;
+    private EditText etLoginName;
+    private EditText etLoginWord;
+    private Button btLoginRegister;
 
     @Override
     protected int setLayout() {
@@ -32,20 +32,20 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
 
     @Override
     public void initView() {
-        mTitleBar = findViewById(R.id.tb_login);
-        mLogin = findViewById(R.id.bt_login);
-        mName = findViewById(R.id.et_login_name);
-        mPassWord = findViewById(R.id.et_login_word);
-        mRegister = findViewById(R.id.bt_login_register);
+        tbLogin = findViewById(R.id.tb_login);
+        btLogin = findViewById(R.id.bt_login);
+        etLoginName = findViewById(R.id.et_login_name);
+        etLoginWord = findViewById(R.id.et_login_word);
+        btLoginRegister = findViewById(R.id.bt_login_register);
     }
 
     @Override
     public void initData() {
-        mTitleBar.setBackgroundColor(Color.RED);
-        mTitleBar.setLeftImg(R.drawable.left);
-        mTitleBar.setCenterText("登录", 18, Color.WHITE);
+        tbLogin.setBackgroundColor(Color.RED);
+        tbLogin.setLeftImg(R.drawable.left);
+        tbLogin.setCenterText("登录", 18, Color.WHITE);
 
-        mTitleBar.setTitleClickLisner(new TitleBar.TitleClickLisner() {
+        tbLogin.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
             public void LeftClick() {
                 finish();
@@ -62,18 +62,18 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
             }
         });
 
-        mLogin.setOnClickListener(new View.OnClickListener() {
+        btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = mName.getText().toString();
-                String pwd = mPassWord.getText().toString();
+                String name = etLoginName.getText().toString();
+                String pwd = etLoginWord.getText().toString();
                 LoginPresenter loginPresenter = new LoginPresenter(name, pwd);
                 loginPresenter.attachPostView(LoginActivity.this);
                 loginPresenter.getCipherTextData();
             }
         });
 
-        mRegister.setOnClickListener(new View.OnClickListener() {
+        btLoginRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
