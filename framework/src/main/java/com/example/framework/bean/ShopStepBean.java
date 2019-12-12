@@ -1,4 +1,4 @@
-package com.example.common;
+package com.example.framework.bean;
 
 import com.litesuits.orm.db.annotation.Column;
 import com.litesuits.orm.db.annotation.PrimaryKey;

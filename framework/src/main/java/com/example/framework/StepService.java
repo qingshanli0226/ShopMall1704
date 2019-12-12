@@ -27,7 +27,7 @@ import androidx.core.app.NotificationCompat;
 
 
 import com.example.common.OrmUtils;
-import com.example.common.ShopStepBean;
+import com.example.framework.bean.ShopStepBean;
 import com.example.framework.manager.StepManager;
 
 import java.text.SimpleDateFormat;

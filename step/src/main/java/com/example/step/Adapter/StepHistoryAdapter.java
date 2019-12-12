@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.common.ShopStepBean;
+import com.example.framework.bean.ShopStepBean;
 import com.example.step.R;
 
 import java.util.List;

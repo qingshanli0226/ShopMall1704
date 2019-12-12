@@ -13,7 +13,7 @@ import android.os.IBinder;
 
 
 import com.example.common.OrmUtils;
-import com.example.common.ShopStepBean;
+import com.example.framework.bean.ShopStepBean;
 import com.example.framework.StepService;
 
 import java.util.ArrayList;

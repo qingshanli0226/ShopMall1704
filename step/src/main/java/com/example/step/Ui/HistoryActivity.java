@@ -16,7 +16,7 @@ import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.step.Adapter.StepHistoryAdapter;
 import com.example.step.R;
-import com.example.common.ShopStepBean;
+import com.example.framework.bean.ShopStepBean;
 import com.example.framework.manager.StepManager;
 
 import java.util.List;

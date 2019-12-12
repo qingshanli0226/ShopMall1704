@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,7 +13,7 @@ import com.example.framework.base.BaseActivity;
 import com.example.common.OrmUtils;
 import com.example.step.R;
 import com.example.step.CustomView.RunView;
-import com.example.common.ShopStepBean;
+import com.example.framework.bean.ShopStepBean;
 import com.example.step.CustomView.StepArcView;
 import com.example.framework.manager.StepManager;
 
@@ -30,7 +28,6 @@ public class IntegralActivity extends BaseActivity {
     StepArcView stepArcView;
     RecyclerView History_recyclerView;
 
-   ArrayAdapter<String> stringArrayAdapter;
    TextView tvHistory;
 
     @Override
@@ -99,8 +96,6 @@ public class IntegralActivity extends BaseActivity {
             mlistDate.add(date);
         }
 
-        //下拉框
-       stringArrayAdapter= new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mlistDate);
 
 
 
