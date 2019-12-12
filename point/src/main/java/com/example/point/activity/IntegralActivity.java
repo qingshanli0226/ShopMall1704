@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.framework.base.BaseActivity;
 import com.example.point.R;
 import com.example.point.service.StepBean;
@@ -59,6 +60,7 @@ public class IntegralActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 finish();
+
             }
         });
 
