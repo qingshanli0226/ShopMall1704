@@ -1,17 +1,22 @@
 package com.example.shopmall.fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 
 import androidx.fragment.app.Fragment;
 
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseFragment;
+import com.example.net.Constant;
 import com.example.shopmall.R;
 import com.example.step.Ui.IntegralActivity;
 import com.example.shopmall.activity.LoginActivity;
@@ -30,9 +35,10 @@ public class MineFragment extends BaseFragment {
     @Override
     protected void initData() {
         tbMine.setTitleBacKGround(Color.RED);
-        tbMine.setCenterText("个人中心",18, Color.WHITE);
+        tbMine.setCenterText("个人中心", 18, Color.WHITE);
         tbMine.setLeftImg(R.mipmap.new_message_icon);
         tbMine.setRightImg(R.mipmap.new_user_setting);
+
 
         tbMine.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
@@ -65,9 +71,18 @@ public class MineFragment extends BaseFragment {
             }
         });
 
-
-
-
+        ibUserIconAvator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
+                boolean isLogin = sharedPreferences.getBoolean("isLogin", false);
+                if (isLogin) {
+                    
+                } else {
+                    Toast.makeText(getContext(), "请先登录账号", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override
@@ -75,9 +90,8 @@ public class MineFragment extends BaseFragment {
         tbMine = view.findViewById(R.id.tb_mine);
         tvUserScore = view.findViewById(R.id.tv_user_score);
         tvUsername = view.findViewById(R.id.tv_username);
-        ibUserIconAvator =view.findViewById(R.id.ib_user_icon_avator);
+        ibUserIconAvator = view.findViewById(R.id.ib_user_icon_avator);
     }
-
 
     @Override
     protected int setLayout() {

@@ -96,7 +96,9 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
             UserManager.getInstance().addUser(result);
             SharedPreferences token1 = getSharedPreferences("login", Context.MODE_PRIVATE);
             SharedPreferences.Editor edit = token1.edit();
-            edit.putString("getToken", token).apply();
+            edit.putBoolean("isLogin", true);
+            edit.putString("getToken", token);
+            edit.apply();
             finish();
         }
     }
