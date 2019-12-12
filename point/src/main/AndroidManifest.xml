@@ -44,7 +44,12 @@
             android:launchMode="singleInstance">
 
         </activity>
-
+        <activity android:name=".activity.RecordActivity"
+            android:launchMode="singleInstance">
+        </activity>
+        <activity android:name=".activity.IntegralActivity"
+            android:launchMode="singleInstance">
+        </activity>
     </application>
 
 
