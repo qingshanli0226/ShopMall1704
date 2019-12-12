@@ -1,53 +1,53 @@
 -- Merging decision tree log ---
 manifest
-ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-19:12
-INJECTED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-19:12
-INJECTED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-19:12
-INJECTED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-19:12
-INJECTED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-19:12
-INJECTED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-19:12
-INJECTED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-19:12
+ADDED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-19:12
+INJECTED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-19:12
+INJECTED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-19:12
+INJECTED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-19:12
+INJECTED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-19:12
+INJECTED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-19:12
+INJECTED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-19:12
 	package
-		ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:2:5-31
-		INJECTED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml
-		INJECTED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml
+		ADDED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:2:5-31
+		INJECTED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml
+		INJECTED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml
 	android:versionName
-		INJECTED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml
-		ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-19:12
-		INJECTED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml
+		INJECTED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml
+		ADDED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-19:12
+		INJECTED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml
 	android:versionCode
-		INJECTED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml
-		ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-19:12
-		INJECTED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml
+		INJECTED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml
+		ADDED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-19:12
+		INJECTED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:1:11-69
+		ADDED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:1:11-69
 application
-ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:5:5-16:19
+ADDED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:5:5-16:19
 activity#com.example.step.Ui.HistoryActivity
-ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:6:9-65
+ADDED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:6:9-65
 	android:name
-		ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:6:19-53
+		ADDED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:6:19-53
 activity#com.example.step.Ui.IntegralActivity
-ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:7:9-11:20
+ADDED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:7:9-11:20
 	android:screenOrientation
-		ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:8:13-49
+		ADDED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:8:13-49
 	android:name
-		ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:7:19-54
+		ADDED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:7:19-54
 service#com.example.framework.StepService
-ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:13:9-15:19
+ADDED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:13:9-15:19
 	android:name
-		ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:13:18-66
+		ADDED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:13:18-66
 uses-sdk
-INJECTED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml
-INJECTED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml
-INJECTED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml
-INJECTED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml
+INJECTED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml
+INJECTED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml
+INJECTED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml
+INJECTED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml
-		ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml
-		INJECTED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml
+		INJECTED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml
+		ADDED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml
+		INJECTED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml
-		ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml
-		INJECTED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml
+		INJECTED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml
+		ADDED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml
+		INJECTED from D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml

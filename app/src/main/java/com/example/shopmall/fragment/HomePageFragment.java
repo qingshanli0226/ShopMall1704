@@ -3,7 +3,6 @@ package com.example.shopmall.fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -38,7 +37,7 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
     @Override
     protected void initData() {
         tbHomepage.setTitleBacKGround(Color.RED);
-        tbHomepage.setCenterText("首页",18,Color.WHITE);
+        tbHomepage.setCenterText("首页", 18, Color.WHITE);
         tbHomepage.setRightImg(R.mipmap.new_message_icon);
 
         tbHomepage.setTitleClickLisner(new TitleBar.TitleClickLisner() {
@@ -49,24 +48,24 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
 
             @Override
             public void RightClick() {
-                //消息
                 startActivity(new Intent(getContext(), MessageActivity.class));
             }
 
             @Override
             public void CenterClick() {
-
             }
         });
 
         //从缓存中获取数据
         HomepageBean cacheBean = new CaCheManager(getContext()).getCacheBean(getContext());
         List<HomepageBean.ResultBean> resultBeans = new ArrayList<>();
-        resultBeans.clear();
-        resultBeans.add(cacheBean.getResult());
-        HomePageAdapter home_page_adapter = new HomePageAdapter(getContext());
-        home_page_adapter.reFresh(resultBeans);
-        rvHomePage.setAdapter(home_page_adapter);
+        if (resultBeans != null) {
+            resultBeans.clear();
+            resultBeans.add(cacheBean.getResult());
+            HomePageAdapter home_page_adapter = new HomePageAdapter(getContext());
+            home_page_adapter.reFresh(resultBeans);
+            rvHomePage.setAdapter(home_page_adapter);
+        }
 
         //检查是否有网络
         boolean connectStatus = ConnectManager.getInstance().getConnectStatus();
@@ -115,7 +114,7 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
             public void run() {
                 lpLoadingPageHomePage.start(LoadingPage.LOADING_FAILURE);
             }
-        },1000);
+        }, 1000);
     }
 
     //开始显示loadingPage
@@ -135,6 +134,6 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
                 lpLoadingPageHomePage.isSucceed();
                 llHomePage.setVisibility(View.VISIBLE);
             }
-        },1000);
+        }, 1000);
     }
 }
