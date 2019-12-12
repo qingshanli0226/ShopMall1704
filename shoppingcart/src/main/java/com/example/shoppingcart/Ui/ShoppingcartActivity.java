@@ -33,7 +33,6 @@ public class ShoppingcartActivity extends BaseMVPFragment<ShoppingCartBean> {
     ShoppingcartPresenter presenter;
     RvAdp rvAdp;
 
-
     @Override
     public int setLayoutId() {
         return R.layout.activity_shoopingcart;

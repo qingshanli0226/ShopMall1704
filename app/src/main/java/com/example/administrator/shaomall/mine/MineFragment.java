@@ -11,12 +11,16 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.login.LoginActivity;
+import com.example.commen.util.ShopMailError;
+import com.example.net.AppNetConfig;
+import com.example.remindsteporgan.RemindActivity;
 import com.shaomall.framework.base.BaseMVPFragment;
 import com.shaomall.framework.base.presenter.IBasePresenter;
 import com.shaomall.framework.bean.LoginBean;
+import com.shaomall.framework.manager.PointManager;
 import com.shaomall.framework.manager.UserInfoManager;
 
-public class MineFragment extends BaseMVPFragment<String> implements View.OnClickListener, UserInfoManager.UserInfoStatusListener {
+public class MineFragment extends BaseMVPFragment<String> implements View.OnClickListener, UserInfoManager.UserInfoStatusListener, PointManager.CallbackIntegralListener {
     private android.widget.ImageView mIvHeader;
     private android.widget.TextView mTvUserName;
     private android.widget.TextView mTvProductAttention;
@@ -27,6 +31,8 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
     private TextView mTvPoint;
     private UserInfoManager userInfoManager;
     private IBasePresenter logoutPresenter;
+    private String point;
+    private PointUpLoadPresenter pointUpLoadPresenter;
 
     @Override
     public int setLayoutId() {
@@ -38,6 +44,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         //注册登录监听
         UserInfoManager.getInstance().registerUserInfoStatusListener(this);
         userInfoManager = UserInfoManager.getInstance(); //用户信息管理类
+
 
         mIvHeader = (ImageView) view.findViewById(R.id.iv_header);
         mTvUserName = (TextView) view.findViewById(R.id.tv_userName);
@@ -63,6 +70,9 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         super.initData();
         //展示用户信息
         setUserData();
+
+        //积分更新
+        PointManager.getInstance().registerCallbackIntegralListener(this);
     }
 
 
@@ -71,7 +81,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
 
         //判断是否登录, 未登录时,跳转登录界面
         if (!userInfoManager.isLogin()) {
-            toClass(LoginActivity.class); //跳转用户登录界面
+            toClass(LoginActivity.class, 4); //跳转用户登录界面
             return;
         }
 
@@ -86,9 +96,20 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
             case R.id.bt_logout: //退出登录
                 setLogout();
                 break;
+            case R.id.tv_point: //积分系统
+                setPoint();
+                break;
             default:
                 toast("点击了其它", false);
         }
+    }
+
+    /**
+     * 跳转积分界面
+     */
+    private void setPoint() {
+        //        mTvPoint.setText();
+        toClass(RemindActivity.class);
     }
 
     /**
@@ -100,7 +121,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
             logoutPresenter.attachView(this);
         }
         if (userInfoManager.isLogin()) {
-            logoutPresenter.doPostHttpRequest(); //请求退出登录链接
+            logoutPresenter.doPostHttpRequest(AppNetConfig.REQUEST_CODE_LOGOUT); //请求退出登录链接
         }
     }
 
@@ -117,7 +138,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
             Object money = loginBean.getMoney();    //得到钱
             String name = loginBean.getName();      //得到名字
             Object phone = loginBean.getPhone();    //取得电话
-            String point = (String) loginBean.getPoint();    //获得积分
+            point = (String) loginBean.getPoint();  //获得积分
 
             Log.d("QS", "setUserData: " + avatar);
             //设置头像
@@ -141,13 +162,12 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         }
     }
 
-    @Override
-    public void onRequestHttpDataSuccess(String message, String data) {
-        super.onRequestHttpDataSuccess(message, data);
-        UserInfoManager.getInstance().unLogout();
-        toast(message + ": " + data, false);
-    }
 
+    /**
+     * 用户状态监听
+     * @param isLogin
+     * @param userInfo
+     */
     @Override
     public void onUserStatus(boolean isLogin, LoginBean userInfo) {
         if (isLogin) {
@@ -160,9 +180,51 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         }
     }
 
+    /**
+     * 步数换算 积分更新
+     *
+     * @param pointNum
+     */
+    @Override
+    public void onCallbacksIntegral(int pointNum) {
+        int pointSum = pointNum + Integer.getInteger(point);
+        mTvPoint.setText("积分: " + pointSum);
+
+
+        //上传当前积分数量
+        if (pointUpLoadPresenter != null) {
+            pointUpLoadPresenter = new PointUpLoadPresenter();
+            pointUpLoadPresenter.attachView(this);
+        }
+        pointUpLoadPresenter.setPointSum(pointSum);
+        //上传积分
+        pointUpLoadPresenter.doPostHttpRequest(AppNetConfig.REQUEST_CODE_UPLOAD_POINT);
+    }
+
+    @Override
+    public void onRequestHttpDataSuccess(int requestCode, String message, String data) {
+        super.onRequestHttpDataSuccess(requestCode, message, data);
+        if (requestCode == AppNetConfig.REQUEST_CODE_LOGOUT){
+            UserInfoManager.getInstance().unLogout();
+            toast(message + ": " + data, false);
+        }
+        if (requestCode == AppNetConfig.REQUEST_CODE_UPLOAD_POINT){
+            mTvPoint.setText("积分: "+data);
+        }
+    }
+
+    @Override
+    public void onRequestHttpDataFailed(int requestCode, ShopMailError error) {
+        super.onRequestHttpDataFailed(requestCode, error);
+        if (requestCode == AppNetConfig.REQUEST_CODE_LOGOUT){
+            toast(error.getErrorMessage(), false);
+        }
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         UserInfoManager.getInstance().unRegisterUserInfoStatusListener(this);
+        PointManager.getInstance().unRegisterCallbackIntegralListener(this);
     }
 }

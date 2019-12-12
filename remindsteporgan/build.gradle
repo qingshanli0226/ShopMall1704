@@ -39,4 +39,5 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.2.2'
     // 添加库
     implementation project(':commen')
+    implementation project(path: ':framework')
 }

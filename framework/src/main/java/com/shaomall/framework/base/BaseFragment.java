@@ -77,6 +77,17 @@ public abstract class BaseFragment extends Fragment {
     }
 
     /**
+     * 可以传送下标
+     * @param clazz
+     * @param index
+     */
+    protected void toClass(Class<? extends Activity> clazz, int index) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("index", index);
+        toClass(clazz, bundle);
+    }
+
+    /**
      * Intent带值跳转
      *
      * @param clazz

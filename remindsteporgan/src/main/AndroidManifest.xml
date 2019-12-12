@@ -3,7 +3,7 @@
     package="com.example.remindsteporgan">
 
     <application>
-        <activity android:name=".MainActivity">
+        <activity android:name=".RemindActivity">
 
         </activity>
         <service android:name=".Util.LiveService"

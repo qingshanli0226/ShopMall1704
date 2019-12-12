@@ -1,8 +1,10 @@
 package com.example.administrator.shaomall.goodsinfo
 
+import android.webkit.WebViewClient
 import com.alibaba.fastjson.JSONObject
 import com.bumptech.glide.Glide
 import com.example.administrator.shaomall.R
+import com.example.administrator.shaomall.activity.MainActivity
 import com.example.administrator.shaomall.goodsinfo.bean.GoodsInfoBean
 import com.example.administrator.shaomall.login.LoginActivity
 import com.example.commen.util.ShopMailError
@@ -40,10 +42,27 @@ class GoodsInfoActivity : BaseMVPActivity<String>() {
         //商品价格
         mTvGoodInfoPrice.text = "￥ " + goodsInfo.goodsPrice
 
+        //展示商品详情
+        mWbGoodInfoMore.loadUrl(AppNetConfig.BASE_URl_IMAGE+goodsInfo.pic)
+        mWbGoodInfoMore.webViewClient = WebViewClient()
+        val settings = mWbGoodInfoMore.settings
+        settings.javaScriptEnabled = true //允许使用js
+
+
+        //点击进入购物车
+        mTvFGoodInfoCart.setOnClickListener {
+            toClass(MainActivity::class.java, 3)//跳转到购物车
+        }
+
+
+
+
+
 
         //点击加入购物车
         mBtnGoodInfoAddcart.setOnClickListener {
             if (!UserInfoManager.getInstance().isLogin) {
+
                 toast("请登录", false)
                 toClass(LoginActivity::class.java)
             } else {
@@ -77,7 +96,13 @@ class GoodsInfoActivity : BaseMVPActivity<String>() {
      * 网络请求失败回调
      */
     override fun onRequestHttpDataFailed(error: ShopMailError?) {
+        if (error != null) {
+            if(error.errorCode == ShopMailError.ERROR_NOT_LOGIN.errorCode){
+                UserInfoManager.getInstance().unLogout()
+            }
+        }
         toast("${error!!.errorMessage}", false)
+        println("1233: ${UserInfoManager.getInstance().token}")
     }
 
     companion object {

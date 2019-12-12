@@ -1,6 +1,7 @@
 package com.example.administrator.shaomall.login;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ import com.example.administrator.shaomall.login.presenter.LoginPresenter;
 import com.example.commen.util.ShopMailError;
 import com.shaomall.framework.base.BaseMVPActivity;
 import com.shaomall.framework.bean.LoginBean;
+import com.shaomall.framework.manager.ActivityInstanceManager;
 import com.shaomall.framework.manager.UserInfoManager;
 
 public class LoginActivity extends BaseMVPActivity<LoginBean> {
@@ -32,8 +34,6 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
         loginSignin = (TextView) findViewById(R.id.loginSignin);
         presenter = new LoginPresenter();
         presenter.attachView(this);
-
-
     }
 
     @Override
@@ -101,7 +101,14 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
     public void onRequestHttpDataFailed(int requestCode, ShopMailError error) {
         //登录失败
         Toast.makeText(mActivity, ""+error.getErrorMessage(), Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ActivityInstanceManager.removeActivity(this);
+
+        toClass(MainActivity.class, 0); //返回首页
     }
 
     @Override
@@ -110,6 +117,20 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
         Toast.makeText(mActivity, "" + message, Toast.LENGTH_SHORT).show();
         UserInfoManager instance = UserInfoManager.getInstance();
         instance.saveUserInfo(data);
-        finish();
+
+        setNewActivity();
+    }
+
+    /**
+     * 跳转界面
+     */
+    private void setNewActivity(){
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null){
+            int index = bundle.getInt("index");
+            toClass(MainActivity.class, index);
+        }else {
+            toClass(MainActivity.class);
+        }
     }
 }

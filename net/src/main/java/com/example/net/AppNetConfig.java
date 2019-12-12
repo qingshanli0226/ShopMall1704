@@ -7,19 +7,28 @@ public class AppNetConfig {
 
     //服务端
     public static final String BASE_URL = "http://49.233.93.155:8080/";
+//    public static final String BASE_URL = "http://169.254.230.253:8080/";
+
+    public static final int REQUEST_CODE_LOGOUT = 0x000; //退出登录
+    public static final int REQUEST_CODE_UPLOAD_POINT = 0x001; //上传积分请求码
+
+
+
+
+
 
     ////////////////////////////////////////////
     //商品接口
 
     // 1.请求Json数据基本URL
-    public static final String BASE_URL_JSON = BASE_URL+"atguigu/json/";
+    public static final String BASE_URL_JSON = BASE_URL + "atguigu/json/";
 
     //2.请求图片基本URL
-    public static final String BASE_URl_IMAGE = BASE_URL+"atguigu/img";
-//    http://49.233.93.155:8080/atguigu/img  /1478770583834.png
+    public static final String BASE_URl_IMAGE = BASE_URL + "atguigu/img";
+    //    http://49.233.93.155:8080/atguigu/img  /1478770583834.png
 
     //3.主页Fragment路径
-    public static final String HOME_URL ="atguigu/json/HOME_URL.json";
+    public static final String HOME_URL = "atguigu/json/HOME_URL.json";
 
     //小裙子
     public static final String SKIRT_URL = BASE_URL_JSON + "SKIRT_URL.json";
@@ -40,7 +49,7 @@ public class AppNetConfig {
     //办公文具
     public static final String STATIONERY_URL = BASE_URL_JSON + "STATIONERY_URL.json";
     //数码周边
-    public static final String DIGIT_URL = BASE_URL_JSON +  "DIGIT_URL.json";
+    public static final String DIGIT_URL = BASE_URL_JSON + "DIGIT_URL.json";
     //游戏专区
     public static final String GAME_URL = BASE_URL_JSON + "GAME_URL.json";
 
@@ -51,10 +60,8 @@ public class AppNetConfig {
     //2. 登录接口处理 post
     public static final String LOGIN_URL = "login";
 
-
     //3. 自动登录接口 post
     public static final String AUTO_LOGIN_URL = "autoLogin";
-
 
     //4. 更新用户绑定的电话 post
     public static final String UPDATE_PHONE_URL = "updatePhone";
@@ -117,8 +124,4 @@ public class AppNetConfig {
 
     //22. 查找待发货的订单 get
     public static final String FIND_FOR_SEND = "findForSend";
-
-
-
-
 }

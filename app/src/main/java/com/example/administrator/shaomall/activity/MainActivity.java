@@ -1,8 +1,11 @@
 package com.example.administrator.shaomall.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.FrameLayout;
+
 import com.example.administrator.shaomall.FindFragment;
 import com.example.administrator.shaomall.mine.MineFragment;
 import com.example.administrator.shaomall.R;
@@ -28,6 +31,7 @@ public class MainActivity extends BaseActivity {
     private ArrayList<CustomTabEntity> tabEntities = new ArrayList<>();
     private Fragment currentFragment = new Fragment();
     private List<Fragment> fragments = new ArrayList<>();
+
     @Override
     public int setLayoutId() {
         return R.layout.activity_main;
@@ -53,33 +57,47 @@ public class MainActivity extends BaseActivity {
         mMainTab.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
-                if (position==3){
-                    //判断登录
-                    UserInfoManager instance = UserInfoManager.getInstance();
-                    if (instance.isLogin()){
-                        //已经登录了
-                        switchFragment(fragments.get(position));
-                    }else {
-                        //还没有登录
-                        toClass(LoginActivity.class);
-                    }
-                }else {
-                    switchFragment(fragments.get(position));
-                }
-
-
+                showTabSelect(position);
             }
 
             @Override
             public void onTabReselect(int position) {
 
+                showTabSelect(position);
             }
         });
+    }
+
+    private void showTabSelect(int position) {
+        if (position == 3) {
+            //判断登录
+            UserInfoManager instance = UserInfoManager.getInstance();
+            if (instance.isLogin()) {
+                //已经登录了
+                switchFragment(fragments.get(position));
+
+            } else {
+                //还没有登录
+                toClass(LoginActivity.class, position);
+            }
+        } else {
+            switchFragment(fragments.get(position));
+        }
     }
 
     @Override
     protected void initData() {
         setTab();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            int index = bundle.getInt("index");
+            switchFragment(fragments.get(index));
+        }
     }
 
     private void switchFragment(Fragment targetFragment) {
@@ -98,19 +116,23 @@ public class MainActivity extends BaseActivity {
         private int icon;
         private int unicon;
         private String title;
+
         public TabData(int icon, int unicon, String title) {
             this.icon = icon;
             this.unicon = unicon;
             this.title = title;
         }
+
         @Override
         public String getTabTitle() {
             return title;
         }
+
         @Override
         public int getTabSelectedIcon() {
             return icon;
         }
+
         @Override
         public int getTabUnselectedIcon() {
             return unicon;

@@ -45,7 +45,7 @@ public class WelcomeActivity extends BaseActivity {
             @Override
             public void onHomeDataReceived(HomeBean.ResultBean homeBean) {
                 isData=true;
-//                toClass(MainActivity.class);
+//                toClass(RemindActivity.class);
             }
         });
         TimeThread();

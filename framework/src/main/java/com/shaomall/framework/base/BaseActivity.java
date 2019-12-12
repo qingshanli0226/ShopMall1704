@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.gyf.immersionbar.ImmersionBar;
 import com.shaomall.framework.manager.ActivityInstanceManager;
+import com.shaomall.framework.manager.UserInfoManager;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -40,10 +41,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void flagFullScreen() {
     }
-    protected abstract void initView();
 
     @LayoutRes
     protected abstract int setLayoutId();
+
+    protected abstract void initView();
 
     protected abstract void initData();
 
@@ -66,6 +68,18 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected void toClass(Class<? extends Activity> clazz) {
         toClass(clazz, null);
+    }
+
+    /**
+     * 可以传送下标
+     *
+     * @param clazz
+     * @param index
+     */
+    protected void toClass(Class<? extends Activity> clazz, int index) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("index", index);
+        toClass(clazz, bundle);
     }
 
     /**
@@ -123,7 +137,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         ActivityInstanceManager.removeActivity(this);
-        if (immersionBar != null){
+        if (immersionBar != null) {
             immersionBar.destroy(this, null);
         }
     }
