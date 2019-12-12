@@ -32,8 +32,7 @@
                 android:textSize="@dimen/sp_30"/>
             <ImageView
                 style="@style/StyleRoundButton"
-                android:padding="@dimen/dp_10"
-                android:src="@drawable/search_which"
+                android:src="@drawable/find_search"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/dp_50"
                 />
