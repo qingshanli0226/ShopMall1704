@@ -32,7 +32,7 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
 
     //TODO get获取单数据
     @Override
-    public void doHttpGetRequest(){
+    public void doHttpGetRequest() {
         getDate(RetrofitCreator.getNetInterence().getData(getHeaders(), getPath(), getParams()));
     }
 
@@ -44,14 +44,14 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
 
     //TODO get获取多数据
     @Override
-    public void doHttpGetRequest(final int requestCode){
-        getDate(requestCode,RetrofitCreator.getNetInterence().getData(getHeaders(), getPath(), getParams()));
+    public void doHttpGetRequest(final int requestCode) {
+        getDate(requestCode, RetrofitCreator.getNetInterence().getData(getHeaders(), getPath(), getParams()));
     }
 
     //TODO post获取多数据
     @Override
     public void doHttpPostRequest(final int requestCode) {
-        getDate(requestCode,RetrofitCreator.getNetInterence().postData(getHeaders(), getPath(), signEncrypt()));
+        getDate(requestCode, RetrofitCreator.getNetInterence().postData(getHeaders(), getPath(), signEncrypt()));
     }
 
     @Override
@@ -82,7 +82,7 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                     public void onError(Throwable e) {
                         iView.hideLoading();
                         iView.showError();
-                        Log.d("lhf",e.getMessage());
+                        Log.d("lhf", e.getMessage());
                     }
 
                     @Override
@@ -105,9 +105,15 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         iView.hideLoading();
+
                         try {
-                            T resEntity = new Gson().fromJson(responseBody.string(), getBeanType());
-                            iView.onRequestSuccess(requestCode,resEntity);
+                            String string = responseBody.string();
+                            try {
+                                T resEntity = new Gson().fromJson(string, getBeanType());
+                                iView.onRequestSuccess(requestCode, resEntity);
+                            }catch (Exception e){
+
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -145,11 +151,12 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
     public Object getJsonParams() {
         return null;
     }
+
     //TODO 加签加密
-    public Map<String,String> signEncrypt(){
+    public Map<String, String> signEncrypt() {
         Map<String, String> params = getParams();
         String sign = SignUtil.generateSign(params);
-        params.put(Constant.SIGN,sign);
+        params.put(Constant.SIGN, sign);
         TreeMap<String, String> treeMap = SignUtil.encryptParamsByBase64(params);
         return treeMap;
     }

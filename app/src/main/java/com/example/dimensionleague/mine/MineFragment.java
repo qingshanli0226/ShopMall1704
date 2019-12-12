@@ -8,15 +8,17 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.common.HomeBean;
-import com.example.common.manager.AccountManager;
+import com.example.framework.manager.AccountManager;
+import com.example.common.port.IAccountCallBack;
 import com.example.dimensionleague.R;
 import com.example.dimensionleague.home.HomePresenter;
+import com.example.dimensionleague.login.activity.LoginActivity;
 import com.example.framework.base.BaseNetConnectFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MineFragment extends BaseNetConnectFragment {
+public class MineFragment extends BaseNetConnectFragment implements IAccountCallBack {
 
     private RecyclerView rvList,rvChannel,rvRecommend;
     private MineRecycleViewAdapter listAdapter;
@@ -28,6 +30,10 @@ public class MineFragment extends BaseNetConnectFragment {
     private List<MineBean> list;
     private List<HomeBean.ResultBean.ChannelInfoBean> channelList;
     private List<HomeBean.ResultBean.SeckillInfoBean.ListBean> recommendlList;
+
+    //TODO 缓存用户信息管理类
+    private AccountManager accountManager = AccountManager.getInstance();
+
     @Override
     public void init(View view) {
         super.init(view);
@@ -40,6 +46,9 @@ public class MineFragment extends BaseNetConnectFragment {
         name=view.findViewById(R.id.mine_user_name);
         img =view.findViewById(R.id.mine_img);
         homePresenter=new HomePresenter();
+
+        //TODO 给 更多 页面进行注册监听
+        accountManager.registerUserCallBack(this);
     }
 
     @Override
@@ -67,6 +76,13 @@ public class MineFragment extends BaseNetConnectFragment {
         list.add(new MineBean(R.drawable.mine_wallet, "我的钱包"));
         homePresenter.attachView(this);
         homePresenter.doHttpGetRequest();
+        name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(LoginActivity.class,null);
+
+            }
+        });
     }
 
     private void ifUser() {
@@ -122,5 +138,34 @@ public class MineFragment extends BaseNetConnectFragment {
             homePresenter.detachView();
         }
         homePresenter=null;
+    }
+
+    //TODO 用户注册成功后回调
+    @Override
+    public void onRegisterSuccess() {
+
+    }
+
+    //TODO 用户登录成功后回调
+    @Override
+    public void onLogin() {
+        Log.d("lhf", "onLogin: 这个方法进来了");
+        name.setText(AccountManager.getInstance().user.getName());
+        if (AccountManager.getInstance().user.getAvatar()!=null){
+            Glide.with(getContext()).load(AccountManager.getInstance().user.getAvatar()).into(img);
+        }
+    }
+
+    //TODO 用户退出登录后回调
+    @Override
+    public void onLogout() {
+        name.setText("登录/注册");
+        img.setImageResource(R.mipmap.ic_launcher_round);
+    }
+
+    //TODO 用户更新头像后回调
+    @Override
+    public void onAvatarUpdate(String url) {
+
     }
 }

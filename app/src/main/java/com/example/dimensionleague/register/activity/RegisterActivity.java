@@ -1,5 +1,6 @@
 package com.example.dimensionleague.register.activity;
 
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import com.example.common.Constant;
 import com.example.common.port.IButtonEnabledListener;
 import com.example.dimensionleague.R;
+import com.example.dimensionleague.login.activity.LoginActivity;
 import com.example.dimensionleague.register.presenter.RegisterPresenter;
 import com.example.dimensionleague.userbean.RegisterBean;
 import com.example.framework.base.BaseNetConnectActivity;
@@ -130,7 +132,11 @@ public class RegisterActivity extends BaseNetConnectActivity implements View.OnC
         RegisterBean registerBean = (RegisterBean)data;
         if(registerBean.getCode().equals(Constant.CODE_OK)){
             Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
-            finishActivity();
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.putExtra("userName",user_name.getText().toString().trim());
+            intent.putExtra("password",password.getText().toString().trim());
+            boundActivity(intent);
+            finish();
         }else{
             Log.d("aaa", "onRequestSuccess: "+registerBean.toString());
         }

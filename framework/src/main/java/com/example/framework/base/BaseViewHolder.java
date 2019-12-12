@@ -27,7 +27,8 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     public View getView(int viewId){
         View view = sparseArray.get(viewId);
         if(view==null){
-            sparseArray.put(viewId, itemView.findViewById(viewId));
+            view = itemView.findViewById(viewId);
+            sparseArray.put(viewId,view);
         }
         return view;
     }

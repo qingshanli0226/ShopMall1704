@@ -218,7 +218,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                 checks.clear();
                 list.clear();
                 recyclerView.getAdapter().notifyDataSetChanged();
-                if (!((GetCartBean) data).getCode().equals(AppNetConfig.CODE_OK)){
+                if (((GetCartBean) data).getCode().equals(AppNetConfig.CODE_OK)){
                     Gson gson = new Gson();
                     GoodsBean[] goods = gson.fromJson(((GetCartBean) data).getResult(), GoodsBean[].class);
                     list.addAll(Arrays.asList(goods));
