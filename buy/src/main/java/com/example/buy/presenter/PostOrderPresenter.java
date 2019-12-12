@@ -26,8 +26,6 @@ public class PostOrderPresenter extends BasePresenter<GetPayOrderBean> {
     public JSONObject getJsonParams() {
         JSONObject object = new JSONObject();
         try {
-            object.put("subject", sendOrdersBean.getSubject());
-            object.put("totalPrice", sendOrdersBean.getTotalPrice());
             JSONArray jsonArray=new JSONArray();
             for (SendOrdersBean.BodyBean i:sendOrdersBean.getBody()){
                 JSONObject jsonObject = new JSONObject();
@@ -35,6 +33,8 @@ public class PostOrderPresenter extends BasePresenter<GetPayOrderBean> {
                 jsonObject.put("productName",i.getProductName());
                 jsonArray.add(jsonObject);
             }
+            object.put("subject", sendOrdersBean.getSubject());
+            object.put("totalPrice", sendOrdersBean.getTotalPrice());
             object.put("body", jsonArray);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -49,6 +49,6 @@ public class PostOrderPresenter extends BasePresenter<GetPayOrderBean> {
 
     @Override
     public String getPath() {
-        return AppNetConfig.UPDATEPOINT;
+        return AppNetConfig.GETORDERINFO;
     }
 }

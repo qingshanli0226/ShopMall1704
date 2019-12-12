@@ -166,7 +166,7 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
     public Object signJsonEncrypt(){
         JSONObject params = getJsonParams();
         params.put(Constant.SIGN,SignUtil.generateJsonSign(params));
-//        SignUtil.encryptJsonParamsByBase64(params);
+        SignUtil.encryptJsonParamsByBase64(params);
         return params;
     }
 

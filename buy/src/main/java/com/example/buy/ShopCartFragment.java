@@ -225,6 +225,12 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
 
     @Override
     public void initDate() {
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         sendCartPresenter.doHttpGetRequest(CART_GOODS);
     }
 

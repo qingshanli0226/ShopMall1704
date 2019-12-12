@@ -38,6 +38,8 @@ import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.port.IPresenter;
 import com.example.net.AppNetConfig;
 
+import java.util.ArrayList;
+
 /**
  * 商品详情页
  */
@@ -132,7 +134,11 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
     public void onClick(View v) {
         if (v.getId() == goPayBut.getId()) {
             //携带商品数据跳转到支付页  并结束页面
-            startActivity(PayActivity.class, null);
+            Intent intent = new Intent(this, PayActivity.class);
+            ArrayList<GoodsBean> goodList=new ArrayList<>();
+            goodList.add(goods);
+            intent.putExtra(IntentUtil.ORDERS,goodList);
+            startActivity(intent);
             finish();
         } else if (v.getId() == joinCartBut.getId()) {
             //加入购物车  弹窗
@@ -187,7 +193,6 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
                             super.onAnimationEnd(animation);
                             joinCartBut.setClickable(true);
                             animatorSet = null;
-                            setRed(2);
                         }
                     });
                     carAnimator.start();
@@ -264,7 +269,8 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         popuSure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goods.setProductNum(Integer.valueOf(goodsNewPrice.getText().toString()));
+                //强制将Float转为int
+                goods.setProductNum(((int)((float)Float.valueOf(goodsNewPrice.getText().toString()))));
                 addCartPresenter = new PostAddCartPresenter(goods);
                 addCartPresenter.attachView(GoodsActiviy.this);
                 addCartPresenter.doHttpPostJSONRequest();
