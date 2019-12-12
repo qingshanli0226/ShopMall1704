@@ -1,51 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tl="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
-    android:background="@drawable/background"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_50"
-        android:id="@+id/linear"
-        android:orientation="horizontal">
-        <ImageView
-            style="@style/StyleRoundButton"
-            android:padding="@dimen/dp_10"
-            android:src="@drawable/attention"
-            android:id="@+id/find_attention"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="发现"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/sp_30"/>
-        <ImageView
-            style="@style/StyleRoundButton"
-            android:padding="@dimen/dp_10"
-            android:src="@drawable/search_which"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/dp_50"
-            />
-        <ImageView
-            style="@style/StyleRoundButton"
-            android:padding="@dimen/dp_10"
-            android:src="@drawable/message"
-            android:layout_alignParentRight="true"
-            android:id="@+id/message"/>
-    </RelativeLayout>
+        app:elevation="0dp">
 
-    <androidx.recyclerview.widget.RecyclerView
+        <RelativeLayout
+            android:id="@+id/title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorRed"
+            app:layout_scrollFlags="scroll">
+
+            <ImageView
+                style="@style/StyleRoundButton"
+                android:padding="@dimen/dp_10"
+                android:src="@drawable/attention"
+                android:id="@+id/find_attention"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/find"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/sp_30"/>
+            <ImageView
+                style="@style/StyleRoundButton"
+                android:padding="@dimen/dp_10"
+                android:src="@drawable/search_which"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dp_50"
+                />
+            <ImageView
+                style="@style/StyleRoundButton"
+                android:padding="@dimen/dp_10"
+                android:src="@drawable/message"
+                android:layout_alignParentRight="true"
+                android:id="@+id/message"/>
+        </RelativeLayout>
+
+        <com.flyco.tablayout.SlidingTabLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            android:id="@+id/find_tab"
+            app:tl_underline_color="@color/colorWhite"
+            app:tl_underline_gravity="BOTTOM"
+            app:tl_underline_height="@dimen/dp_5"
+            app:tl_indicator_width="@dimen/dp_10"
+            app:tl_textsize="@dimen/sp_15"
+            app:tl_textSelectColor="@color/colorWhite"
+            android:background="@color/colorRed"
+        />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/find_vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/find_rv"
-        android:layout_below="@id/linear"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 
-
-</RelativeLayout>

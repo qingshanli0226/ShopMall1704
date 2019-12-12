@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.common.Constant;
+import com.example.common.code.Constant;
 import com.example.common.port.IButtonEnabledListener;
 import com.example.dimensionleague.R;
 import com.example.dimensionleague.register.presenter.RegisterPresenter;
@@ -17,7 +17,6 @@ import com.example.dimensionleague.userbean.RegisterBean;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.base.BaseTextWatcher;
 import com.example.framework.port.IPresenter;
-import com.example.net.AppNetConfig;
 
 import java.util.HashMap;
 

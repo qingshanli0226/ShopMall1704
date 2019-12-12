@@ -1,7 +1,7 @@
 package com.example.net;
 
 import com.example.common.manager.AccountManager;
-import com.example.common.Constant;
+import com.example.common.code.Constant;
 
 import java.io.IOException;
 

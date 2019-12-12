@@ -12,4 +12,5 @@
     <string name="common_type">常用分类</string>
     <string name="mine_login"><![CDATA[登录/注册>]]></string>
     <string name="mine_look">看相似</string>
+    <string name="find">发现</string>
 </resources>

@@ -8,7 +8,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.common.Constant;
+import com.example.common.code.Constant;
 
 public class ErrorHandler implements Thread.UncaughtExceptionHandler {
 

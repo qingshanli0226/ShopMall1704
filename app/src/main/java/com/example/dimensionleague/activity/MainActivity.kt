@@ -6,6 +6,7 @@ import android.graphics.Color
 
 import com.example.dimensionleague.R
 import com.example.buy.ShopCartFragment
+import com.example.dimensionleague.find.FindFragment
 import com.example.dimensionleague.home.HomeFragment
 import com.example.dimensionleague.mine.MineFragment
 import com.example.dimensionleague.type.TypeFragment
@@ -31,7 +32,7 @@ class MainActivity : BaseNetConnectActivity() {
         super.init()
         list.add(HomeFragment())
         list.add(TypeFragment())
-        list.add(HomeFragment())
+        list.add(FindFragment())
         list.add(ShopCartFragment())
         list.add(MineFragment())
     }

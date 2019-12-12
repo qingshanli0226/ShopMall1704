@@ -1,11 +1,16 @@
 package com.example.framework.base;
 
 import android.widget.RelativeLayout;
+
+import com.example.common.code.ErrorCode;
 import com.example.common.utils.LoadingPageUtils;
+import com.example.framework.manager.ErrorDisposeManager;
 import com.example.framework.manager.NetConnectManager;
 import com.example.framework.port.IActivity;
 import com.example.framework.port.INetConnectListener;
 import com.example.framework.port.IView;
+
+import java.util.logging.ErrorManager;
 
 public abstract class BaseNetConnectActivity extends BaseActivity implements IActivity, IView, INetConnectListener {
 
@@ -100,6 +105,11 @@ public abstract class BaseNetConnectActivity extends BaseActivity implements IAc
 
     @Override
     public void onDisConnected() {
+    }
+
+    @Override
+    public void onHttpRequestDataFailed(int requestCode, ErrorCode error) {
+        toast(this,error.getErrorMessage());
 
     }
 

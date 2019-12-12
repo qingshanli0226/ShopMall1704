@@ -54,6 +54,7 @@ public class OrderActivity extends BaseNetConnectActivity {
 
     @Override
     public void init() {
+        super.init();
         recyclerView=findViewById(R.id.recyclerView);
         showOrderType=findViewById(R.id.showOrderType);
 
@@ -66,6 +67,7 @@ public class OrderActivity extends BaseNetConnectActivity {
                 ((TextView)holder.getView(R.id.orderMoney)).setText(list.get(position).getTotalPrice());
             }
         });
+
 
     }
 
@@ -126,6 +128,7 @@ public class OrderActivity extends BaseNetConnectActivity {
                 break;
         }
     }
+
 
     @Override
     protected void onDestroy() {

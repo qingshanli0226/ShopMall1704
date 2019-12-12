@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
-import com.example.common.Constant;
+import com.example.common.code.Constant;
 
 /**
  * author:李浩帆

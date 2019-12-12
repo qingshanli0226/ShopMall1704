@@ -11,6 +11,8 @@ import com.example.framework.R;
 import com.example.framework.port.IClickListener;
 
 import java.util.ArrayList;
+import java.util.List;
+
 /**
  * author:李浩帆
  */
@@ -19,7 +21,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseVi
     //TODO ViewHolder的布局ID
     private int layoutId;
     //TODO 数据集合
-    public ArrayList<T> dateList;
+    public List<T> dateList;
     //TODO 点击事件
     private IClickListener clickListener;
 
@@ -28,7 +30,7 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseVi
     }
 
     //TODO 构造
-    public BaseRecyclerAdapter(int layoutId, ArrayList<T> dateList) {
+    public BaseRecyclerAdapter(int layoutId, List<T> dateList) {
         this.layoutId = layoutId;
         this.dateList = dateList;
     }

@@ -1,9 +1,11 @@
 package com.example.framework.base;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,4 +31,10 @@ public abstract class BaseFragment extends Fragment implements IFragment {
         init(view);
         initDate();
     }
+
+    //TODO 吐司
+    public void toast(Activity instance, String msg){
+        Toast.makeText(instance,msg,Toast.LENGTH_SHORT).show();
+    }
+
 }

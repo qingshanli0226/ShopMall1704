@@ -2,8 +2,10 @@ package com.example.framework.base;
 
 import android.util.Log;
 
-import com.example.common.Constant;
+import com.example.common.code.Constant;
+import com.example.common.code.ErrorCode;
 import com.example.common.utils.SignUtil;
+import com.example.framework.manager.ErrorDisposeManager;
 import com.example.framework.port.IPresenter;
 import com.example.framework.port.IView;
 import com.example.net.RetrofitCreator;
@@ -61,28 +63,41 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        iView.showLoading();
-                    }
-
-                    @Override
-                    public void onNext(ResponseBody responseBody) {
-                        iView.hideLoading();
                         try {
-                            T resEntity = new Gson().fromJson(responseBody.string(), getBeanType());
-                            //TODO 获取数据成功
-                            iView.onRequestSuccess(resEntity);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            iView.showError();
-
+                            iView.showLoading();
+                        }catch (Exception e){
+                            ErrorDisposeManager.HandlerError(e);
+                            throw new RuntimeException(e.getMessage());
                         }
                     }
 
                     @Override
+                    public void onNext(ResponseBody responseBody) {
+                        try {
+                                T resEntity = new Gson().fromJson(responseBody.string(), getBeanType());
+                                //TODO 获取数据成功
+                                iView.onRequestSuccess(resEntity);
+
+                            } catch (IOException e) {
+                            iView.showError();
+                            ErrorDisposeManager.HandlerError(e);
+                            throw new RuntimeException(e.getMessage());
+                            }
+                    }
+
+                    @Override
                     public void onError(Throwable e) {
-                        iView.hideLoading();
-                        iView.showError();
-                        Log.d("lhf",e.getMessage());
+                        try {
+                            iView.hideLoading();
+                            iView.showError();
+                            iView.onHttpRequestDataFailed(6001, ErrorCode.HTTP_ERROR);
+                            ErrorDisposeManager.HandlerError(e);
+                            Log.d("lhf",e.getMessage());
+                        }catch (Exception e1){
+                            ErrorDisposeManager.HandlerError(e1);
+                            throw new RuntimeException(e1.getMessage());
+                        }
+
                     }
 
                     @Override
@@ -99,7 +114,13 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        iView.showLoading();
+                        try {
+                            iView.showLoading();
+                        }catch (Exception e1){
+                            ErrorDisposeManager.HandlerError(e1);
+                            throw new RuntimeException(e1.getMessage());
+                        }
+
                     }
 
                     @Override
@@ -109,13 +130,23 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                             T resEntity = new Gson().fromJson(responseBody.string(), getBeanType());
                             iView.onRequestSuccess(requestCode,resEntity);
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            ErrorDisposeManager.HandlerError(e);
+                            throw new RuntimeException(e.getMessage());
+
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        iView.hideLoading();
+                        try {
+                            iView.hideLoading();
+                            iView.onHttpRequestDataFailed(6001, ErrorCode.HTTP_ERROR);
+                            ErrorDisposeManager.HandlerError(e);
+                        }catch (Exception e1){
+                            ErrorDisposeManager.HandlerError(e1);
+                            throw new RuntimeException(e1.getMessage());
+                        }
+
                     }
 
                     @Override
