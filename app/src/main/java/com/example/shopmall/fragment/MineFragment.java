@@ -21,10 +21,7 @@ import com.example.shopmall.R;
 import com.example.step.Ui.IntegralActivity;
 import com.example.shopmall.activity.LoginActivity;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
+//个人页面
 public class MineFragment extends BaseFragment {
 
     private TitleBar tbMine;
@@ -72,16 +69,13 @@ public class MineFragment extends BaseFragment {
         });
 
 
-
-
-
         ibUserIconAvator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
                 boolean isLogin = sharedPreferences.getBoolean("isLogin", false);
                 if (isLogin) {
-                    
+
                 } else {
                     Toast.makeText(getContext(), "请先登录账号", Toast.LENGTH_SHORT).show();
                 }
