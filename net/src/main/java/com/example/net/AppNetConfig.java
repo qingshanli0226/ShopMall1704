@@ -1,6 +1,8 @@
 package com.example.net;
 
 public class AppNetConfig {
+    //请求代码得到购物车产品
+    public static final int REQUEST_CODE_GET_SHORTCART_PRODUCTS= 0x002;
     //标记是否打印log
     public static final boolean PRINT_LOG = true;
     public static final String TOKEN = "token";

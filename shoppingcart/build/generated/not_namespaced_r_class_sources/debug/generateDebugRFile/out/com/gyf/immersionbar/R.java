@@ -13,8 +13,8 @@ public final class R {
         private id() {}
 
         public static int action_bar_container = 0x7f0c0003;
-        public static int immersion_fits_layout_overlap = 0x7f0c0030;
-        public static int immersion_navigation_bar_view = 0x7f0c0031;
-        public static int immersion_status_bar_view = 0x7f0c0032;
+        public static int immersion_fits_layout_overlap = 0x7f0c0036;
+        public static int immersion_navigation_bar_view = 0x7f0c0037;
+        public static int immersion_status_bar_view = 0x7f0c0038;
     }
 }

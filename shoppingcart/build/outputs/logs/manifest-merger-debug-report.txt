@@ -23,10 +23,10 @@ INJECTED from E:\shopmill\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml
 		ADDED from E:\shopmill\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:2:11-69
 application
 ADDED from E:\shopmill\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:5:5-7:19
-activity#com.example.shoppingcart.Ui.PaymentActivity
-ADDED from E:\shopmill\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:6:9-65
+activity#com.example.shoppingcart.Ui.AddressManager
+ADDED from E:\shopmill\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:6:9-64
 	android:name
-		ADDED from E:\shopmill\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:6:19-53
+		ADDED from E:\shopmill\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml:6:19-52
 uses-sdk
 INJECTED from E:\shopmill\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from E:\shopmill\ShopMall1704\shoppingcart\src\main\AndroidManifest.xml
