@@ -5,9 +5,10 @@ import com.example.net.AppNetConfig;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
+
 /**
  * 商品P层   GoodsActiviy  检查单个商品库存
- * */
+ */
 
 public class PostVerifyOnePresenter extends BasePresenter {
 
@@ -22,8 +23,8 @@ public class PostVerifyOnePresenter extends BasePresenter {
     @Override
     public HashMap<String, String> getParams() {
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("productId",productId+"");
-        hashMap.put("productNum",productNum+"");
+        hashMap.put("productId", productId + "");
+        hashMap.put("productNum", productNum + "");
         return hashMap;
     }
 

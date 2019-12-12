@@ -18,7 +18,7 @@ class BannerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun setDate(banner_info: List<HomeBean.ResultBean.BannerInfoBean>? ){
         if(banner_info==null){
-            Log.d("SSS","给我出去")
+
             return
         }
 

@@ -1,6 +1,5 @@
 package com.example.dimensionleague.activity
 
-import android.content.Intent
 import androidx.fragment.app.Fragment
 import android.graphics.Color
 
@@ -60,7 +59,6 @@ class MainActivity : BaseNetConnectActivity() {
             .fragmentManager(supportFragmentManager)
             .fragmentList(list)
             .titleItems(arrayOf("首页", "分类", "发现", "购物车", "我的"))
-            .canScroll(true)
             .build()
         //注册监听,监听购物车数量
         listenter= OnShopCartListener { num->

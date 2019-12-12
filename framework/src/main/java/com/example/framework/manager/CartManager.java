@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 public class CartManager {
     private int num=0;
-    LinkedList<OnShopCartListener> listeners=new LinkedList<>();
+    private LinkedList<OnShopCartListener> listeners=new LinkedList<>();
 
     private static CartManager cartManager=new CartManager();
 

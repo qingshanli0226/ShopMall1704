@@ -30,9 +30,6 @@ public class HomeFragment extends BaseNetConnectFragment {
 //        iBasePresenter.attachView(this);
 //        iBasePresenter.doHttpGetRequest();
 
-
-//        Log.e("SSS",CacheManager.getInstance().getHomeBeanData().toString());
-
        if(CacheManager.getInstance().getHomeBeanData()!=null){
            list=(((HomeBean) CacheManager.getInstance().getHomeBeanData()).getResult() );
        }

@@ -1,13 +1,16 @@
 package com.example.dimensionleague.home.adapter
 
+import android.content.Intent
 import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.buy.activity.GoodsActiviy
 import com.example.dimensionleague.R
 import com.example.common.HomeBean
+import com.example.common.IntentUtil
 import com.example.net.AppNetConfig
 import kotlinx.android.synthetic.main.home_seckill_item.view.*
 
@@ -34,6 +37,11 @@ class SeckillAdapter(
             home_seckill_tv_cover_price.text = "${list!!.get(position).cover_price}￥"
             home_seckill_tv_origin_price.text = "${list!!.get(position).origin_price}￥"
             home_seckill_tv_origin_price.paintFlags=Paint.STRIKE_THRU_TEXT_FLAG
+            this.setOnClickListener { v->
+                val intent = Intent(context, GoodsActiviy::class.java)
+                intent.putExtra(IntentUtil.SHOW_GOOD, list!![position])
+                context.startActivity(intent)
+            }
         }
     }
     interface OnSeckill {

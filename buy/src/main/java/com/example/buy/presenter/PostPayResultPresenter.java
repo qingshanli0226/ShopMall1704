@@ -7,6 +7,9 @@ import com.example.framework.base.BasePresenter;
 import com.example.net.AppNetConfig;
 
 import java.lang.reflect.Type;
+/**
+ *
+ * */
 
 public class PostPayResultPresenter extends BasePresenter<OkBean> {
     SendPayResultBean sendPayResultBean;
@@ -18,9 +21,9 @@ public class PostPayResultPresenter extends BasePresenter<OkBean> {
     @Override
     public JSONObject getJsonParams() {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("clientPayResult",true);
-        jsonObject.put("outTradeNo",sendPayResultBean.getOutTradeNo());
-        jsonObject.put("result",sendPayResultBean.getResult());
+        jsonObject.put("clientPayResult", true);
+        jsonObject.put("outTradeNo", sendPayResultBean.getOutTradeNo());
+        jsonObject.put("result", sendPayResultBean.getResult());
         return jsonObject;
     }
 

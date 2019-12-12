@@ -26,11 +26,11 @@ public class PostOrderPresenter extends BasePresenter<GetPayOrderBean> {
     public JSONObject getJsonParams() {
         JSONObject object = new JSONObject();
         try {
-            JSONArray jsonArray=new JSONArray();
-            for (SendOrdersBean.BodyBean i:sendOrdersBean.getBody()){
+            JSONArray jsonArray = new JSONArray();
+            for (SendOrdersBean.BodyBean i : sendOrdersBean.getBody()) {
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("productId",i.getProductId());
-                jsonObject.put("productName",i.getProductName());
+                jsonObject.put("productId", i.getProductId());
+                jsonObject.put("productName", i.getProductName());
                 jsonArray.add(jsonObject);
             }
             object.put("subject", sendOrdersBean.getSubject());

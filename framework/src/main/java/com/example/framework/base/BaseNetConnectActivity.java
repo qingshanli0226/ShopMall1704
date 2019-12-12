@@ -55,7 +55,6 @@ public abstract class BaseNetConnectActivity extends BaseActivity implements IAc
     @Override
     public void onRequestSuccess(int requestCode, Object data) {
 
-
     }
 
     //TODO 显示加载页面

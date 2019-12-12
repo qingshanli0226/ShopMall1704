@@ -8,9 +8,10 @@ import com.example.framework.base.BasePresenter;
 import com.example.net.AppNetConfig;
 
 import java.lang.reflect.Type;
+
 /**
  * 购物车P层  ShopCartFragment  更新购物车数量
- * */
+ */
 public class PostUpDatePresenter extends BasePresenter<GoodsBean> {
     GoodsBean goodsBean;
 
@@ -26,7 +27,7 @@ public class PostUpDatePresenter extends BasePresenter<GoodsBean> {
             object.put("productNum", goodsBean.getProductNum());
             object.put("productName", goodsBean.getProductName());
             object.put("url", goodsBean.getUrl());
-            object.put("productPrice",goodsBean.getProductPrice());
+            object.put("productPrice", goodsBean.getProductPrice());
         } catch (JSONException e) {
             e.printStackTrace();
         }

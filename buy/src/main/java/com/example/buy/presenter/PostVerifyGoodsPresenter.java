@@ -13,9 +13,10 @@ import java.util.ArrayList;
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+
 /**
  * 购物车P层  ShopCartFragment  发起库存请求
- * */
+ */
 public class PostVerifyGoodsPresenter extends BasePresenter<GetCheckGoodsBean> {
     //参数json串
 
