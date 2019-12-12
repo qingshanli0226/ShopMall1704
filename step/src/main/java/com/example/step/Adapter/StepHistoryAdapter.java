@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.framework.bean.ShopStepTimeRealBean;
 import com.example.step.R;
 import com.example.framework.bean.ShopStepBean;
+import com.example.framework.bean.ShopStepBean;
+import com.example.step.R;
 
 import java.util.List;
 

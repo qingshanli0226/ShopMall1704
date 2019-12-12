@@ -13,17 +13,19 @@ import android.widget.Toast;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IPostBaseView;
+import com.example.framework.bean.ResultBean;
+import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
-import com.example.shopmall.bean.LoginBean;
+import com.example.framework.bean.LoginBean;
 import com.example.shopmall.presenter.LoginPresenter;
 
 public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBean> {
 
-    TitleBar mTitleBar;
-    Button mLogin;
-    EditText mName;
-    EditText mPassWord;
-    Button mRegister;
+    private TitleBar tbLogin;
+    private Button btLogin;
+    private EditText etLoginName;
+    private EditText etLoginWord;
+    private Button btLoginRegister;
 
     @Override
     protected int setLayout() {
@@ -32,20 +34,20 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
 
     @Override
     public void initView() {
-        mTitleBar = findViewById(R.id.tb_login);
-        mLogin = findViewById(R.id.bt_login);
-        mName = findViewById(R.id.et_login_name);
-        mPassWord = findViewById(R.id.et_login_word);
-        mRegister = findViewById(R.id.bt_login_register);
+        tbLogin = findViewById(R.id.tb_login);
+        btLogin = findViewById(R.id.bt_login);
+        etLoginName = findViewById(R.id.et_login_name);
+        etLoginWord = findViewById(R.id.et_login_word);
+        btLoginRegister = findViewById(R.id.bt_login_register);
     }
 
     @Override
     public void initData() {
-        mTitleBar.setBackgroundColor(Color.RED);
-        mTitleBar.setLeftImg(R.drawable.left);
-        mTitleBar.setCenterText("登录", 18, Color.WHITE);
+        tbLogin.setBackgroundColor(Color.RED);
+        tbLogin.setLeftImg(R.drawable.left);
+        tbLogin.setCenterText("登录", 18, Color.WHITE);
 
-        mTitleBar.setTitleClickLisner(new TitleBar.TitleClickLisner() {
+        tbLogin.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
             public void LeftClick() {
                 finish();
@@ -62,18 +64,20 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
             }
         });
 
-        mLogin.setOnClickListener(new View.OnClickListener() {
+        btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = mName.getText().toString();
-                String pwd = mPassWord.getText().toString();
+                String name = etLoginName.getText().toString();
+                String pwd = etLoginWord.getText().toString();
                 LoginPresenter loginPresenter = new LoginPresenter(name, pwd);
                 loginPresenter.attachPostView(LoginActivity.this);
                 loginPresenter.getCipherTextData();
+                etLoginName.setText("");
+                etLoginWord.setText("");
             }
         });
 
-        mRegister.setOnClickListener(new View.OnClickListener() {
+        btLoginRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
@@ -85,16 +89,23 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
     @Override
     public void onPostDataSucess(LoginBean data) {
         Toast.makeText(this, data.getMessage(), Toast.LENGTH_SHORT).show();
-        LoginBean.ResultBean result = data.getResult();
+        ResultBean result = data.getResult();
         String token = result.getToken();
-        SharedPreferences token1 = getSharedPreferences("login", Context.MODE_PRIVATE);
-        SharedPreferences.Editor edit = token1.edit();
-        edit.putString("getToken", token).apply();//
-        Log.e("####", token);
+        if (data.getMessage().equals("登录成功")) {
+            UserManager.getInstance().setActiveUser(result);
+            UserManager.getInstance().addUser(result);
+            SharedPreferences token1 = getSharedPreferences("login", Context.MODE_PRIVATE);
+            SharedPreferences.Editor edit = token1.edit();
+            edit.putBoolean("isLogin", true);
+            edit.putString("getToken", token);
+            edit.apply();
+            finish();
+        }
     }
 
     @Override
     public void onPostDataFailed(String ErrorMsg) {
-
+        etLoginName.setText("");
+        etLoginWord.setText("");
     }
 }

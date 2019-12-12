@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,11 +21,13 @@ import com.example.framework.base.BaseActivity;
 import com.example.framework.bean.ShopStepBean;
 import com.example.step.R;
 import com.example.step.CustomView.RunView;
+import com.example.framework.bean.ShopStepBean;
 import com.example.step.CustomView.StepArcView;
 import com.example.framework.manager.StepManager;
 import com.litesuits.orm.LiteOrm;
 import com.litesuits.orm.db.assit.SQLiteHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -49,7 +50,7 @@ public class IntegralActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        Toast.makeText(this, "Create", Toast.LENGTH_SHORT).show();
+
         tb_integral = findViewById(R.id.tb_integral);
         intergral_Step=findViewById(R.id.Integral_step);
         integral=findViewById(R.id.Integral_integral);
@@ -101,7 +102,18 @@ public class IntegralActivity extends BaseActivity {
 
 
         //当前步数和积分
-
+//        List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
+//        intergral_Step.setText(queryAll.get(queryAll.size()-1).getCurrent_step()+"");
+//        String current_step = queryAll.get(queryAll.size() - 1).getCurrent_step();
+//        int i = Integer.parseInt(current_step);
+//        step_ArcView.setCurrentCount(10000,i);
+        //获取日期
+//        List<ShopStepBean> queryAll1 = OrmUtils.getQueryAll(ShopStepBean.class);
+//        final List<String> mlistDate=new ArrayList<>();
+//        for (int j=0;j<queryAll1.size();j++){
+//            String date = queryAll1.get(j).getDate();
+//            mlistDate.add(date);
+//        }
 
 
 

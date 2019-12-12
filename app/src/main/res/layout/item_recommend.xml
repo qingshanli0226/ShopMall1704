@@ -2,29 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#eeee"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:background="#fff"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:padding="10dp">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/home_arrow_left_hot" />
+            android:src="@drawable/home_arrow_left_new" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="这里都是买的棒棒哒"
+            android:text="新品推荐"
             android:textColor="#000" />
 
         <TextView
-            android:id="@+id/tv_more_hot"
+            android:id="@+id/tv_recommend_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -35,8 +35,8 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_hot"
+        android:id="@+id/rv_recommend"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:layout_height="380dp"
+        android:numColumns="3" />
 </LinearLayout>

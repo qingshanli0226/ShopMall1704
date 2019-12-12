@@ -29,4 +29,5 @@ public class WelcomePresenter extends BasePresenter<HomepageBean> {
     protected HashMap<String, String> getParam() {
         return new HashMap<>();
     }
+
 }

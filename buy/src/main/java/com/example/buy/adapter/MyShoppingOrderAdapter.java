@@ -61,7 +61,6 @@ public class MyShoppingOrderAdapter extends BaseAdapter<Map<String, String>, MyS
         return 0;
     }
 
-
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView iv_gov = itemView.findViewById(R.id.iv_gov);
         TextView tv_title = itemView.findViewById(R.id.tv_title);
