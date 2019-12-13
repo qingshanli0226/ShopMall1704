@@ -9,10 +9,12 @@ import android.widget.Toast;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IPostBaseView;
-import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
 import com.example.shopmall.bean.RegisterBean;
 import com.example.shopmall.presenter.RegisterPresenter;
+
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
+import cn.jiguang.analytics.android.api.RegisterEvent;
 
 public class RegisterActivity extends BaseActivity implements IPostBaseView<RegisterBean> {
 
@@ -80,7 +82,12 @@ public class RegisterActivity extends BaseActivity implements IPostBaseView<Regi
     public void onPostDataSucess(RegisterBean data) {
         Toast.makeText(this, data.getMessage(), Toast.LENGTH_SHORT).show();
         if (data.getResult().equals("注册成功")) {
+            RegisterEvent rEvent = new RegisterEvent("注册成功", true);
+            JAnalyticsInterface.onEvent(this, rEvent);
             finish();
+        } else {
+            RegisterEvent rEvent = new RegisterEvent("注册失败", false);
+            JAnalyticsInterface.onEvent(this, rEvent);
         }
     }
 

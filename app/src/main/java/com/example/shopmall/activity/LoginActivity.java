@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +17,9 @@ import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
 import com.example.framework.bean.LoginBean;
 import com.example.shopmall.presenter.LoginPresenter;
+
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
+import cn.jiguang.analytics.android.api.LoginEvent;
 
 public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBean> {
 
@@ -67,6 +69,8 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 String name = etLoginName.getText().toString();
                 String pwd = etLoginWord.getText().toString();
                 LoginPresenter loginPresenter = new LoginPresenter(name, pwd);
@@ -87,24 +91,38 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
     }
 
     @Override
-    public void onPostDataSucess(LoginBean data) {
+    public void onPostDataSucess(final LoginBean data) {
         Toast.makeText(this, data.getMessage(), Toast.LENGTH_SHORT).show();
-        ResultBean result = data.getResult();
-        String token = result.getToken();
         if (data.getMessage().equals("登录成功")) {
-            UserManager.getInstance().setActiveUser(result);
-            UserManager.getInstance().addUser(result);
-            SharedPreferences token1 = getSharedPreferences("login", Context.MODE_PRIVATE);
-            SharedPreferences.Editor edit = token1.edit();
-            edit.putBoolean("isLogin", true);
-            edit.putString("getToken", token);
-            edit.apply();
+            LoginEvent loginEvent = new LoginEvent("用户登录", true);
+            JAnalyticsInterface.onEvent(LoginActivity.this, loginEvent);
+            new Thread() {
+                @Override
+                public void run() {
+                    super.run();
+                    synchronized (LoginActivity.class) {
+                        ResultBean result = data.getResult();
+                        UserManager.getInstance().setActiveUser(result);
+                        String token = result.getToken();
+                        SharedPreferences token1 = getSharedPreferences("login", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor edit = token1.edit();
+                        edit.putBoolean("isLogin", true);
+                        edit.putString("getToken", token);
+                        edit.apply();
+                    }
+                }
+            }.start();
             finish();
+        } else {
+            LoginEvent loginEvent = new LoginEvent("用户登录", false);
+            JAnalyticsInterface.onEvent(LoginActivity.this, loginEvent);
         }
     }
 
     @Override
     public void onPostDataFailed(String ErrorMsg) {
+        LoginEvent loginEvent = new LoginEvent("用户登录", false);
+        JAnalyticsInterface.onEvent(LoginActivity.this, loginEvent);
         etLoginName.setText("");
         etLoginWord.setText("");
     }

@@ -12,6 +12,8 @@ import com.example.framework.manager.UserManager;
 import com.example.shopmall.activity.MainActivity;
 import com.example.framework.manager.StepManager;
 
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
+
 public class MyApplication extends Application {
 
     private static Context context;
@@ -24,7 +26,9 @@ public class MyApplication extends Application {
         ConnectManager.getInstance().init(this);
         //初始化异常
         CrashHandler.getInstance(this).init();
-
+        JAnalyticsInterface.setDebugMode(true);
+        JAnalyticsInterface.setDebugMode(true);
+        JAnalyticsInterface.init(context);
         StepManager.getInstance().init(this);
         //初始化缓存管理类
         CaCheManager.getInstance(this).init(this);

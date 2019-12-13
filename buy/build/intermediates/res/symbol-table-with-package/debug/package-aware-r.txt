@@ -676,6 +676,7 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable red_message
 drawable shape_rec_textview
 drawable shopping_cart
 drawable shoppingcart
@@ -765,6 +766,7 @@ id default_activity_button
 id dialog_button
 id edit_query
 id end
+id et_search
 id expand_activities_button
 id expanded_menu
 id forever
@@ -874,6 +876,7 @@ id tv_left
 id tv_orderitemnum
 id tv_price
 id tv_price_gov
+id tv_red_message
 id tv_right
 id tv_shopcart_total
 id tv_symbol

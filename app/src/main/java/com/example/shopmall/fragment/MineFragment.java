@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseFragment;
 import com.example.net.Constant;
@@ -27,15 +29,15 @@ public class MineFragment extends BaseFragment {
     private TitleBar tbMine;
     private TextView tvUserScore;
     private TextView tvUsername;
-    private ImageButton ibUserIconAvator;
+    private ImageView ibUserIconAvator;
 
     @Override
     protected void initData() {
+
         tbMine.setTitleBacKGround(Color.RED);
         tbMine.setCenterText("个人中心", 18, Color.WHITE);
         tbMine.setLeftImg(R.mipmap.new_message_icon);
         tbMine.setRightImg(R.mipmap.new_user_setting);
-
 
         tbMine.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override

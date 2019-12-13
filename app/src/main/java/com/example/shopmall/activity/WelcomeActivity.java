@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -22,12 +21,10 @@ import com.example.shopmall.R;
 import com.example.shopmall.presenter.IntegerPresenter;
 public class WelcomeActivity extends BaseActivity implements IGetBaseView<HomepageBean> {
 
-    public ImageView iv_welcome;
-    public int flag = 0;
-    private HandlerThread handlerThread = new HandlerThread("welcome");
+    private ImageView iv_welcome;
+    private int flag = 0;
+    private final HandlerThread handlerThread = new HandlerThread("welcome");
     private Handler handler;
-    private Thread welcomeThread;
-
     @Override
     protected int setLayout() {
         return R.layout.activity_welcome;
@@ -51,7 +48,7 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
 
         handlerThread.start();
 
-        welcomeThread = new Thread() {
+        Thread  welcomeThread = new Thread() {
             @Override
             public void run() {
                 super.run();

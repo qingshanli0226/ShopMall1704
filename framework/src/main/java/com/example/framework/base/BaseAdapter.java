@@ -6,14 +6,13 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 import java.util.List;
 
 //T代表bean类,V代表viewholder
 public abstract class BaseAdapter<T, V extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<V> {
     //数据集合
-    private List<T> dataList = new ArrayList<>();
+    private final List<T> dataList = new ArrayList<>();
 
     //刷新数据
     public void reFresh(List<T> newList) {
@@ -64,9 +63,4 @@ public abstract class BaseAdapter<T, V extends RecyclerView.ViewHolder> extends 
         return dataList.size();
     }
 
-    class BaseViewHolder extends RecyclerView.ViewHolder {
-        public BaseViewHolder(@NonNull View itemView) {
-            super(itemView);
-        }
-    }
 }

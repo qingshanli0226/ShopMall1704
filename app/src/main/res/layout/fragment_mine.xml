@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:mContext=".fragment.MineFragment"
     android:orientation="vertical"
-    tools:context=".fragment.MineFragment">
+    tools:context=".fragment.MineFragment"
+    tools:mContext=".fragment.MineFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -28,27 +28,27 @@
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/mine_height_170"
-                    android:background="@color/mine_back_color">
+                    android:layout_height="@dimen/mine_height_170">
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/mine_height_170"
-                        android:background="@mipmap/new_user_icon_background" />
+                        android:background="@mipmap/mine_img" />
 
-                    <ImageButton
+                    <ImageView
                         android:id="@+id/ib_user_icon_avator"
                         android:layout_width="@dimen/mine_width_50"
                         android:layout_height="@dimen/mine_height_50"
-                        android:layout_marginStart="@dimen/mine_mStart_110"
-                        android:background="@mipmap/new_user_icon" />
+                        android:layout_marginStart="@dimen/mine_mStart_15"
+                        android:layout_marginTop="@dimen/mine_mTop_20"
+                        android:src="@mipmap/user_img" />
 
                     <TextView
                         android:id="@+id/tv_username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/mine_mStart_105"
-                        android:layout_marginTop="@dimen/mine_mTop_60"
+                        android:layout_marginStart="@dimen/mine_mStart_10"
+                        android:layout_below="@id/ib_user_icon_avator"
                         android:text="@string/mine_text"
                         android:textColor="@color/color_white" />
                 </RelativeLayout>
