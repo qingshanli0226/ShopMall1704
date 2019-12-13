@@ -57,17 +57,17 @@ import java.util.Map;
  */
 public class ShoppingCartFragment extends BaseFragment implements NumberAddSubView.OnNumberChangeListener, IGetBaseView<ShoppingCartBean>, IPostBaseView {
 
-    TitleBar tb_shopping_cart;
-    ImageView iv_shopping_cart;
+    TitleBar tbShoppingCart;
+    ImageView ivShoppingCart;
     RecyclerView mRecyclerview;
     RelativeLayout shoppingcartlayout;
-    TextView tv_shopcart_total;
-    CheckBox checkbox_all;
-    CheckBox cb_all;
-    LinearLayout ll_delete;
-    LinearLayout ll_check_all;
-    Button btn_delete;
-    Button btn_check_out;
+    TextView tvShopcartTotal;
+    CheckBox checkboxAll;
+    CheckBox cbAll;
+    LinearLayout llDelete;
+    LinearLayout llCheckAll;
+    Button btnDelete;
+    Button btnCheckOut;
 
 
     int flag = 0;
@@ -85,9 +85,9 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
                 case 200:
                     int arg1 = msg.arg1;
                     if (arg1 == 0) {
-                        checkbox_all.setChecked(true);
+                        checkboxAll.setChecked(true);
                     } else if (arg1 == 1) {
-                        checkbox_all.setChecked(false);
+                        checkboxAll.setChecked(false);
                     }
                     break;
             }
@@ -105,7 +105,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             allCount = Double.parseDouble(s[2]);
             myShoppingManager.setAllCount(allCount);
 
-            tv_shopcart_total.setText("￥" + allCount + "0");
+            tvShopcartTotal.setText("￥" + allCount + "0");
 
         }
 
@@ -156,7 +156,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
 
     //删除点击事件
     private void setDelete() {
-        btn_delete.setOnClickListener(new View.OnClickListener() {
+        btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int allChecked = myShoppingManager.getAllChecked();
@@ -191,7 +191,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
 
                 judgeNumberisZero();
 
-                cb_all.setChecked(false);
+                cbAll.setChecked(false);
 
                 dialogInterface.dismiss();
             }
@@ -210,7 +210,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
 
     //TitleBar点击事件
     private void setSetting() {
-        tb_shopping_cart.setTitleClickLisner(new TitleBar.TitleClickLisner() {
+        tbShoppingCart.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
             public void LeftClick() {
 
@@ -238,16 +238,16 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         boolean isSetting = myShoppingManager.getisSetting();
         if (isSetting) {
             myShoppingManager.setisSetting(false);
-            ll_check_all.setVisibility(View.VISIBLE);
-            ll_delete.setVisibility(View.GONE);
+            llCheckAll.setVisibility(View.VISIBLE);
+            llDelete.setVisibility(View.GONE);
         } else {
             myShoppingManager.setisSetting(true);
-            ll_check_all.setVisibility(View.GONE);
-            ll_delete.setVisibility(View.VISIBLE);
+            llCheckAll.setVisibility(View.GONE);
+            llDelete.setVisibility(View.VISIBLE);
         }
         setAllUnChecked();
-        cb_all.setChecked(false);
-        checkbox_all.setChecked(false);
+        cbAll.setChecked(false);
+        checkboxAll.setChecked(false);
         myShoppingManager.setAllCount(0);
         myShoppingBasketAdapter.setAllcount(0);
         myShoppingBasketAdapter.reFresh(myShoppingManager.getData());
@@ -255,11 +255,11 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
 
     //设置全选点击事件
     private void setCheckAll() {
-        cb_all.setOnClickListener(new View.OnClickListener() {
+        cbAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 List<Map<String, String>> data = myShoppingManager.getData();
-                if (cb_all.isChecked()) {
+                if (cbAll.isChecked()) {
                     for (int i = 0; i < data.size(); i++) {
                         Map<String, String> map = data.get(i);
                         map.put("id", map.get("id"));
@@ -287,17 +287,17 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             }
         });
 
-        checkbox_all.setOnClickListener(new View.OnClickListener() {
+        checkboxAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (checkbox_all.isChecked()) {
+                if (checkboxAll.isChecked()) {
                     setAllChecked();
                 } else {
                     setAllUnChecked();
                 }
                 double allCount = myShoppingManager.getAllCount();
 
-                tv_shopcart_total.setText("￥" + allCount + "0");
+                tvShopcartTotal.setText("￥" + allCount + "0");
 
                 myShoppingBasketAdapter.reFresh(myShoppingManager.getData());
                 myShoppingBasketAdapter.setAllcount(allCount);
@@ -365,24 +365,24 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
 
     //设置TitleBar
     protected void setTitleBar() {
-        tb_shopping_cart.setCenterText("购物车", 18, Color.RED);
-        tb_shopping_cart.setRightText("编辑", 14, Color.BLACK);
+        tbShoppingCart.setCenterText("购物车", 18, Color.RED);
+        tbShoppingCart.setRightText("编辑", 14, Color.BLACK);
     }
 
     //初始化控件
     @Override
     protected void initView(View view) {
-        tb_shopping_cart = view.findViewById(R.id.tb_shopping_cart);
-        iv_shopping_cart = view.findViewById(R.id.iv_shopping_cart);
+        tbShoppingCart = view.findViewById(R.id.tbShoppingCart);
+        ivShoppingCart = view.findViewById(R.id.ivShoppingCart);
         mRecyclerview = view.findViewById(R.id.mRecyclerview);
         shoppingcartlayout = view.findViewById(R.id.shoppingcartlayout);
-        tv_shopcart_total = view.findViewById(R.id.tv_shopcart_total);
-        checkbox_all = view.findViewById(R.id.checkbox_all);
-        ll_delete = view.findViewById(R.id.ll_delete);
-        ll_check_all = view.findViewById(R.id.ll_check_all);
-        cb_all = view.findViewById(R.id.cb_all);
-        btn_delete = view.findViewById(R.id.btn_delete);
-        btn_check_out = view.findViewById(R.id.btn_check_out);
+        tvShopcartTotal = view.findViewById(R.id.tvShopcartTotal);
+        checkboxAll = view.findViewById(R.id.checkboxAll);
+        llDelete = view.findViewById(R.id.llDelete);
+        llCheckAll = view.findViewById(R.id.llCheckAll);
+        cbAll = view.findViewById(R.id.cbAll);
+        btnDelete = view.findViewById(R.id.btnDelete);
+        btnCheckOut = view.findViewById(R.id.btnCheckOut);
 
 
         myShoppingManager = ShoppingManager.getInstance();
@@ -394,7 +394,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
 
     //点击去结算
     private void setCheckOut() {
-        btn_check_out.setOnClickListener(new View.OnClickListener() {
+        btnCheckOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 List<Map<String, String>> data = myShoppingManager.getData();
@@ -451,7 +451,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
 
         if (ischecked) {
             allCount += Double.parseDouble(price);
-            tv_shopcart_total.setText("￥" + allCount + "0");
+            tvShopcartTotal.setText("￥" + allCount + "0");
             myShoppingBasketAdapter.setAllcount(allCount);
             myShoppingManager.setAllCount(allCount);
         }
@@ -481,7 +481,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         if (ischecked) {
             allCount -= Double.parseDouble(price);
 
-            tv_shopcart_total.setText("￥" + allCount + "0");
+            tvShopcartTotal.setText("￥" + allCount + "0");
 
             myShoppingBasketAdapter.setAllcount(allCount);
             myShoppingManager.setAllCount(allCount);
@@ -525,7 +525,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         int[] recyclerPosition = new int[2];
 
         view.getLocationInWindow(startPosition);
-        iv_shopping_cart.getLocationInWindow(endPosition);
+        ivShoppingCart.getLocationInWindow(endPosition);
         mRecyclerview.getLocationInWindow(recyclerPosition);
 
         PointF startF = new PointF();
@@ -533,9 +533,9 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         PointF controllF = new PointF();
 
         startF.x = startPosition[0];
-        startF.y = startPosition[1] - recyclerPosition[1] + tb_shopping_cart.getHeight();
+        startF.y = startPosition[1] - recyclerPosition[1] + tbShoppingCart.getHeight();
         endF.x = endPosition[0];
-        endF.y = endPosition[1] - recyclerPosition[1] + tb_shopping_cart.getHeight();
+        endF.y = endPosition[1] - recyclerPosition[1] + tbShoppingCart.getHeight();
         controllF.x = endF.x;
         controllF.y = startF.y;
 
@@ -583,8 +583,8 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         });
 
 
-        ObjectAnimator objectAnimatorX = new ObjectAnimator().ofFloat(iv_shopping_cart, "scaleX", 0.6f, 1.0f);
-        ObjectAnimator objectAnimatorY = new ObjectAnimator().ofFloat(iv_shopping_cart, "scaleY", 0.6f, 1.0f);
+        ObjectAnimator objectAnimatorX = new ObjectAnimator().ofFloat(ivShoppingCart, "scaleX", 0.6f, 1.0f);
+        ObjectAnimator objectAnimatorY = new ObjectAnimator().ofFloat(ivShoppingCart, "scaleY", 0.6f, 1.0f);
         objectAnimatorX.setInterpolator(new AccelerateInterpolator());
         objectAnimatorY.setInterpolator(new AccelerateInterpolator());
         AnimatorSet set = new AnimatorSet();
@@ -616,8 +616,8 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         judgeNumberisZero();
         myShoppingManager.setAllCount(0);
 
-        checkbox_all.setChecked(false);
-        tv_shopcart_total.setText("￥0.00");
+        checkboxAll.setChecked(false);
+        tvShopcartTotal.setText("￥0.00");
     }
 
     //购物车数据网址连接失败

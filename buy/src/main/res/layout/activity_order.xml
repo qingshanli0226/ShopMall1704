@@ -7,19 +7,19 @@
     tools:context=".activity.OrderActivity">
 
     <com.example.common.TitleBar
-        android:id="@+id/tb_order"
+        android:id="@+id/tbOrder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_order"
+        android:id="@+id/rvOrder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/ll_pay"
-        android:layout_below="@id/tb_order" />
+        android:layout_above="@id/llPay"
+        android:layout_below="@id/tbOrder" />
 
     <LinearLayout
-        android:id="@+id/ll_pay"
+        android:id="@+id/llPay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -36,7 +36,7 @@
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/tv_shopcart_total"
+            android:id="@+id/tvShopcartTotal"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -46,7 +46,7 @@
             android:textSize="15sp" />
 
         <Button
-            android:id="@+id/btn_pay"
+            android:id="@+id/btnPay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#ed3f3f"

@@ -40,9 +40,9 @@ import java.util.Map;
 public class OrderActivity extends BaseActivity implements IPostBaseView {
 
     TitleBar tbOrder;
-    TextView tv_shopcart_total;
-    RecyclerView rv_order;
-    Button btn_pay;
+    TextView tvShopcartTotal;
+    RecyclerView rvOrder;
+    Button btnPay;
     ShoppingManager shoppingManager;
     private List<Map<String, String>> data;
     private MyShoppingOrderAdapter myShoppingOrderAdapter;
@@ -100,17 +100,17 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
     @Override
     public void initView() {
         EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
-        tbOrder = findViewById(R.id.tb_order);
-        rv_order = findViewById(R.id.rv_order);
-        tv_shopcart_total = findViewById(R.id.tv_shopcart_total);
-        btn_pay = findViewById(R.id.btn_pay);
+        tbOrder = findViewById(R.id.tbOrder);
+        rvOrder = findViewById(R.id.rvOrder);
+        tvShopcartTotal = findViewById(R.id.tvShopcartTotal);
+        btnPay = findViewById(R.id.btnPay);
 
         initRecycler();
         initPayButton();
     }
 
     private void initPayButton() {
-        btn_pay.setOnClickListener(new View.OnClickListener() {
+        btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String token = ShoppingManager.getInstance().getToken(OrderActivity.this);
@@ -229,9 +229,9 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
     private void initRecycler() {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(RecyclerView.VERTICAL);
-        rv_order.setLayoutManager(manager);
+        rvOrder.setLayoutManager(manager);
         myShoppingOrderAdapter = new MyShoppingOrderAdapter(this);
-        rv_order.setAdapter(myShoppingOrderAdapter);
+        rvOrder.setAdapter(myShoppingOrderAdapter);
     }
 
     @Override
@@ -243,7 +243,7 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
 
     private void setAllMoney() {
         allMoney = shoppingManager.getAllMoney();
-        tv_shopcart_total.setText("￥" + allMoney + "0");
+        tvShopcartTotal.setText("￥" + allMoney + "0");
     }
 
     @Override

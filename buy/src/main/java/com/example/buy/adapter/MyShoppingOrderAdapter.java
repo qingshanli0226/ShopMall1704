@@ -42,18 +42,18 @@ public class MyShoppingOrderAdapter extends BaseAdapter<Map<String, String>, MyS
         Map<String, String> map = data.get(position);
         Glide.with(context)
                 .load(map.get("img"))
-                .into(holder.iv_gov);
-        holder.tv_title.setText(map.get("title"));
+                .into(holder.ivGov);
+        holder.tvTitle.setText(map.get("title"));
         String price = map.get("price");
         String num = map.get("num");
-        holder.tv_price.setText("￥" + price);
-        holder.tv_orderitemnum.setText(num);
+        holder.tvPrice.setText("￥" + price);
+        holder.tvOrderitemnum.setText(num);
 
         double x = Double.parseDouble(price);
         double y = Double.parseDouble(num);
         double z = x * y;
 
-        holder.tv_itemprice.setText("￥" + z + "0");
+        holder.tvItemprice.setText("￥" + z + "0");
     }
 
     @Override
@@ -63,15 +63,16 @@ public class MyShoppingOrderAdapter extends BaseAdapter<Map<String, String>, MyS
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView iv_gov = itemView.findViewById(R.id.iv_gov);
-        TextView tv_title = itemView.findViewById(R.id.tv_title);
-        TextView tv_price = itemView.findViewById(R.id.tv_price);
-        TextView tv_orderitemnum = itemView.findViewById(R.id.tv_orderitemnum);
-        TextView tv_itemprice = itemView.findViewById(R.id.tv_itemprice);
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
         }
+
+        ImageView ivGov = itemView.findViewById(R.id.ivGov);
+        TextView tvTitle = itemView.findViewById(R.id.tvTitle);
+        TextView tvPrice = itemView.findViewById(R.id.tvPrice);
+        TextView tvOrderitemnum = itemView.findViewById(R.id.tvOrderitemnum);
+        TextView tvItemprice = itemView.findViewById(R.id.tvItemprice);
+
     }
 
 }

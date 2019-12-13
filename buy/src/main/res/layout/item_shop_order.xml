@@ -11,7 +11,7 @@
         android:padding="10dp">
 
         <ImageView
-            android:id="@+id/iv_gov"
+            android:id="@+id/ivGov"
             android:layout_width="@dimen/recyclerimgsize"
             android:layout_height="@dimen/recyclerimgsize"
             android:layout_marginLeft="10dp"
@@ -25,7 +25,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_title"
+                android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -41,7 +41,7 @@
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/tv_price"
+                    android:id="@+id/tvPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -50,32 +50,32 @@
                     android:textSize="16dp" />
 
                 <TextView
-                    android:id="@+id/tv_symbol"
+                    android:id="@+id/tvSymbol"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/tv_price"
+                    android:layout_toRightOf="@id/tvPrice"
                     android:text="×"
                     android:textSize="16dp" />
 
                 <TextView
-                    android:id="@+id/tv_orderitemnum"
+                    android:id="@+id/tvOrderitemnum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/tv_symbol"
+                    android:layout_toRightOf="@id/tvSymbol"
                     android:text="1"
                     android:textSize="16dp" />
 
                 <TextView
-                    android:id="@+id/tv_itemprice"
+                    android:id="@+id/tvItemprice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dpsize_30"
-                    android:layout_toRightOf="@id/tv_orderitemnum"
+                    android:layout_toRightOf="@id/tvOrderitemnum"
                     android:text="￥0.00"
                     android:textSize="15dp" />
             </RelativeLayout>

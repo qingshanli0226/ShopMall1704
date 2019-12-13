@@ -11,14 +11,14 @@
         android:padding="10dp">
 
         <CheckBox
-            android:id="@+id/cb_gov"
+            android:id="@+id/cbGov"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:button="@drawable/checkbox_selector" />
 
         <ImageView
-            android:id="@+id/iv_gov"
+            android:id="@+id/ivGov"
             android:layout_width="@dimen/recyclerimgsize"
             android:layout_height="@dimen/recyclerimgsize"
             android:layout_marginLeft="10dp"
@@ -32,7 +32,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_desc_gov"
+                android:id="@+id/tvDescGov"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
