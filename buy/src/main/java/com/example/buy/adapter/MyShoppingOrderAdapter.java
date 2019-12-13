@@ -46,14 +46,14 @@ public class MyShoppingOrderAdapter extends BaseAdapter<Map<String, String>, MyS
         holder.tv_title.setText(map.get("title"));
         String price = map.get("price");
         String num = map.get("num");
-        holder.tv_price.setText("￥" + price + ".00");
+        holder.tv_price.setText("￥" + price);
         holder.tv_orderitemnum.setText(num);
 
-        int x = Integer.parseInt(price);
-        int y = Integer.parseInt(num);
-        int z = x * y;
+        double x = Double.parseDouble(price);
+        double y = Double.parseDouble(num);
+        double z = x * y;
 
-        holder.tv_itemprice.setText("￥" + z + ".00");
+        holder.tv_itemprice.setText("￥" + z + "0");
     }
 
     @Override

@@ -77,7 +77,7 @@
                     android:layout_marginLeft="@dimen/dpsize_30"
                     android:layout_toRightOf="@id/tv_orderitemnum"
                     android:text="￥0.00"
-                    android:textSize="20dp" />
+                    android:textSize="15dp" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

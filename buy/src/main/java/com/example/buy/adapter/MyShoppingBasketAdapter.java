@@ -17,6 +17,7 @@ import com.example.buy.R;
 import com.example.common.NumberAddSubView;
 import com.example.framework.base.BaseAdapter;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -104,8 +105,9 @@ public class MyShoppingBasketAdapter extends BaseAdapter<Map<String, String>, My
                     checkedcount++;
                 } else {
                     double count = x * Double.parseDouble(hashMap.get("price"));
-                    allcount -= count;
-
+                    BigDecimal bigDecimal = new BigDecimal(allcount + "");
+                    BigDecimal bigDecimal2 = new BigDecimal(count + "");
+                    allcount = bigDecimal.subtract(bigDecimal2).doubleValue();
                     Message message = Message.obtain();
                     message.what = 100;
                     message.arg2 = position;
