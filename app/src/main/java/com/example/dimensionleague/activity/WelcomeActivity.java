@@ -26,6 +26,7 @@ import com.example.common.HomeBean;
 import com.example.dimensionleague.userbean.AutoLoginBean;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.port.ITaskFinishListener;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -197,5 +198,6 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
             finish();
         }
     }
+
 }
 

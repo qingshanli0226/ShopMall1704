@@ -3,17 +3,18 @@ package com.example.point.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.framework.base.BaseNetConnectActivity;
+import com.example.framework.manager.AccountManager;
 import com.example.framework.port.IPresenter;
 import com.example.point.PointPresenter;
 import com.example.point.R;
-import com.example.point.UpdatePointBean;
+import com.example.point.bean.UpdatePointBean;
 import com.example.point.service.StepBean;
 import com.example.point.stepmanager.DaoManager;
 
@@ -39,7 +40,13 @@ public class IntegralActivity extends BaseNetConnectActivity {
     }
 
     @Override
+    public int getRelativeLayout() {
+        return R.id.integralLinear;
+    }
+
+    @Override
     public void init() {
+        super.init();
         iv_left = findViewById(R.id.iv_left);
         physical = findViewById(R.id.physical);
         iv_right = findViewById(R.id.iv_right);
@@ -61,25 +68,31 @@ public class IntegralActivity extends BaseNetConnectActivity {
         for (StepBean bean:beans) {
             count+=bean.getStep();
         }
-       integral_point.setText((count/100)+"分");
+        if ( AccountManager.getInstance().user.getPoint()!=null){
+            String point = (String) AccountManager.getInstance().user.getPoint();
+            int i = Integer.parseInt(point);
+            integral_point.setText( ((i+(count/100)))+"");
+        }else {
+            integral_point.setText( ((count/100))+"");
+        }
 
         iv_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
-
+             finishActivity();
             }
         });
 
-//        iPresenter=new PointPresenter(pointBean.result);
-//        iPresenter.attachView(this);
-//        iPresenter.doHttpPostRequest();
+        iPresenter=new PointPresenter(integral_point.getText().toString());
+        iPresenter.attachView(IntegralActivity.this);
+        iPresenter.doHttpPostRequest();
 
         //兑换礼品
         exchange_gift.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(IntegralActivity.this,PresentActivity.class);
+                startActivity(intent);
             }
         });
         //兑换记录
@@ -113,22 +126,24 @@ public class IntegralActivity extends BaseNetConnectActivity {
     public void onRequestSuccess(Object data) {
 //        UpdatePointBean pointBean= (UpdatePointBean) data;
 //        String result = pointBean.result;
-      //  integral_point.setText(result+"分");
-    }
-
-    @Override
-    public void initDate() {
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        iPresenter.detachView();
+//        integral_point.setText(result+"分");
     }
 
     @Override
     public void showLoading() {
         super.showLoading();
+    }
+
+    @Override
+    public void showError() {
+        super.showError();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (iPresenter!=null){
+            iPresenter.detachView();
+        }
     }
 }

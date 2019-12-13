@@ -14,6 +14,7 @@
             <ImageView
                 android:id="@+id/goodsImage"
                 android:src="@drawable/img"
+                android:contentDescription="@string/app_name"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/buy_two_hun"/>
             <ImageView

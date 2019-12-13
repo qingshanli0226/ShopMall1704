@@ -22,6 +22,7 @@ import com.example.dimensionleague.home.HomePresenter;
 import com.example.dimensionleague.login.activity.LoginActivity;
 import com.example.framework.base.BaseNetConnectFragment;
 import com.example.framework.port.OnClickItemListener;
+import com.example.point.activity.IntegralActivity;
 import com.example.point.activity.StepActivity;
 
 import java.util.ArrayList;
@@ -153,8 +154,8 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
                         getContext().startActivity(intent);
                         break;
                     case 5:
-                        //我的积分
-//                        intent.setClass(getContext(), StepActivity.class);
+                         //我的积分
+                        intent.setClass(getContext(), IntegralActivity.class);
                         getContext().startActivity(intent);
                         break;
                     case 6:
@@ -181,11 +182,13 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
 
     private void ifUser() {
         if (AccountManager.getInstance().isLogin()) {
-            //登录
-            name.setText(AccountManager.getInstance().user.getName());
-            if (AccountManager.getInstance().user.getAvatar() != null) {
-                Glide.with(getContext()).load(AccountManager.getInstance().user.getAvatar()).into(img);
-            }
+//            if(AccountManager.getInstance().user.getName() != null){
+//                //登录
+//                name.setText(AccountManager.getInstance().user.getName());
+//                if (AccountManager.getInstance().user.getAvatar() != null) {
+//                    Glide.with(getContext()).load(AccountManager.getInstance().user.getAvatar()).into(img);
+//                }
+//            }
         } else {
             //没有登录
             name.setText("登录/注册");
