@@ -27,7 +27,7 @@ public class MainActivity extends BaseActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         int intExtra = intent.getIntExtra("replacefragment", 0);
-        bottomBar.setCheckedItem(intExtra);
+        bbMain.setCheckedItem(intExtra);
 
         if (intExtra == 3) {
             refreshShoppingCartData();
@@ -45,43 +45,35 @@ public class MainActivity extends BaseActivity {
         return R.layout.activity_main;
     }
 
-//    LoadingPage loadingPage;
-
-    BottomBar bottomBar;
+    BottomBar bbMain;
 
     @Override
     public void initView() {
-//        loadingPage = findViewById(R.id.loading);
-        bottomBar = findViewById(R.id.bb_main);
+        bbMain = findViewById(R.id.bb_main);
 
         fragmentArrayList.add(new HomePageFragment());
         fragmentArrayList.add(new ClassifyFragment());
         fragmentArrayList.add(new HorizontalFragment());
         fragmentArrayList.add(new ShoppingCartFragment());
         fragmentArrayList.add(new MineFragment());
-
-
-
     }
 
     @Override
     public void initData() {
         replaceFragment(fragmentArrayList.get(0));
 
-//        loadingPage.start(LoadingPage.LOADING_FAILURE);
-
         String[] str = new String[]{"首页","分类","发现","购物车","个人中心"};
 
-        bottomBar.setBottombarName(str);
-        Drawable homepage_image = getResources().getDrawable(R.drawable.homepage_image);
-        Drawable classify_image = getResources().getDrawable(R.drawable.classify_image);
-        Drawable horizontal_image = getResources().getDrawable(R.drawable.horizontal_image);
-        Drawable shoppingcart_image = getResources().getDrawable(R.drawable.shoppingcart_image);
-        Drawable mine_image = getResources().getDrawable(R.drawable.mine_image);
-        Drawable[] integers = new Drawable[]{homepage_image,classify_image,horizontal_image,shoppingcart_image,mine_image};
-        bottomBar.setTapDrables(integers);
+        bbMain.setBottombarName(str);
+        Drawable homepageImage = getResources().getDrawable(R.drawable.homepage_image);
+        Drawable classifyImage = getResources().getDrawable(R.drawable.classify_image);
+        Drawable horizontalImage = getResources().getDrawable(R.drawable.horizontal_image);
+        Drawable shoppingcartImage = getResources().getDrawable(R.drawable.shoppingcart_image);
+        Drawable mineImage = getResources().getDrawable(R.drawable.mine_image);
+        Drawable[] integers = new Drawable[]{homepageImage,classifyImage,horizontalImage,shoppingcartImage,mineImage};
+        bbMain.setTapDrables(integers);
 
-        bottomBar.setOnTapListener(new BottomBar.OnTapListener() {
+        bbMain.setOnTapListener(new BottomBar.OnTapListener() {
             @Override
             public void tapItemClick(int i) {
                 replaceFragment(fragmentArrayList.get(i));
@@ -92,8 +84,6 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
-
-
     }
 
     public void refreshShoppingCartData() {

@@ -1,44 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ll_root"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="380dp"
+    android:layout_height="210dp"
+    android:background="#fff"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:padding="10dp">
 
-    <ImageView
-        android:id="@+id/iv_figure"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="@drawable/bluemao" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tv_cover_price_seckill"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:gravity="center_horizontal"
-        android:text="￥102.00"
-        android:textColor="#ff4c4c"
-        android:textSize="15sp" />
-
-    <RelativeLayout
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/home_arrow_left_flash" />
 
         <TextView
-            android:id="@+id/tv_origin_price_seckill"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="￥159.00"
-            android:textColor="#9a9a9a" />
+            android:layout_marginLeft="10dp"
+            android:text="今日闪购 距·结束"
+            android:textColor="#000" />
 
-        <View
-            android:layout_width="70dp"
-            android:layout_height="1dp"
-            android:layout_centerInParent="true"
-            android:background="@color/gray_dark_bg" />
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_seckill_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/time_shape"
+            android:padding="2dp"
+            android:text="00:00:00"
+            android:textColor="#fff" />
+
+        <TextView
+            android:id="@+id/tv_seckill_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/home_arrow_right"
+            android:gravity="end"
+            android:text="查看更多" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_seckill"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

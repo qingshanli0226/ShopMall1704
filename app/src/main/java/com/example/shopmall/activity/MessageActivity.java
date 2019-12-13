@@ -8,7 +8,7 @@ import com.example.shopmall.R;
 
 public class MessageActivity extends BaseActivity {
 
-    TitleBar tb_message;
+    private TitleBar tbMessage;
 
     @Override
     protected int setLayout() {
@@ -17,16 +17,16 @@ public class MessageActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        tb_message = findViewById(R.id.tb_message);
+        tbMessage = findViewById(R.id.tb_message);
     }
 
     @Override
     public void initData() {
-        tb_message.setBackgroundColor(Color.RED);
-        tb_message.setLeftImg(R.drawable.left);
-        tb_message.setCenterText("消息中心",18,Color.WHITE);
+        tbMessage.setBackgroundColor(Color.RED);
+        tbMessage.setLeftImg(R.drawable.left);
+        tbMessage.setCenterText("消息中心",18,Color.WHITE);
 
-        tb_message.setTitleClickLisner(new TitleBar.TitleClickLisner() {
+        tbMessage.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
             public void LeftClick() {
                 finish();

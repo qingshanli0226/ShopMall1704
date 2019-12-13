@@ -535,7 +535,13 @@ dimen notification_small_icon_size_as_large
 dimen notification_subtext_size
 dimen notification_top_pad
 dimen notification_top_pad_large_text
-dimen step_tvSize
+dimen stepView_height
+dimen stepView_weight
+dimen step_margin20
+dimen step_paddingLeft
+dimen step_tvSize20
+dimen step_tvSize24
+dimen titleBar_height
 dimen tooltip_corner_radius
 dimen tooltip_horizontal_padding
 dimen tooltip_margin
@@ -656,6 +662,7 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable red_message
 drawable timg
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
@@ -732,6 +739,7 @@ id decor_content_parent
 id default_activity_button
 id dialog_button
 id edit_query
+id et_search
 id expand_activities_button
 id expanded_menu
 id find_History
@@ -802,6 +810,7 @@ id src_in
 id src_over
 id step_item_count
 id step_item_day
+id step_item_time
 id submenuarrow
 id submit_area
 id tabMode
@@ -828,6 +837,7 @@ id tv_center
 id tv_common_count
 id tv_common_pricegov
 id tv_left
+id tv_red_message
 id tv_right
 id unchecked
 id uniform

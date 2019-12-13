@@ -137,7 +137,6 @@ public class MyShoppingBasketAdapter extends BaseAdapter<Map<String, String>, My
         return 0;
     }
 
-
     class ViewHolder extends RecyclerView.ViewHolder {
 
         public ViewHolder(@NonNull View itemView) {

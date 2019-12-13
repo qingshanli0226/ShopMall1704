@@ -24,4 +24,7 @@
     <dimen name="mine_pad_10">10dp</dimen>
     <dimen name="mine_mStart_45">45dp</dimen>
     <dimen name="integral_mEnd_10">10dp</dimen>
+    <dimen name="mine_mTop_20">20dp</dimen>
+    <dimen name="mine_mStart_15">15dp</dimen>
+    <dimen name="mine_mStart_10">10dp</dimen>
 </resources>

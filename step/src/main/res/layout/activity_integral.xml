@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.step.Ui.IntegralActivity"
+    tools:mContext="com.example.step.Ui.IntegralActivity"
     android:orientation="vertical">
 
     <com.example.common.TitleBar
         android:id="@+id/tb_integral"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="@dimen/titleBar_height" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,14 +28,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/stepName"
-                android:textSize="20sp"
+                android:textSize="@dimen/step_tvSize20"
                 android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/Integral_step"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/step_tvSize"
+                android:textSize="@dimen/step_tvSize24"
                 android:textColor="@color/white"/>
 
         </LinearLayout>
@@ -51,14 +51,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/integralName"
-                android:textSize="20sp"
+                android:textSize="@dimen/step_tvSize20"
                 android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/Integral_integral"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/step_tvSize"
+                android:textSize="@dimen/step_tvSize24"
                 android:textColor="@color/white"/>
 
 
@@ -78,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="@dimen/step_margin20"
             >
         </TextClock>
         <TextView
@@ -95,10 +95,10 @@
 
         <com.example.step.CustomView.StepArcView
             android:id="@+id/StepView"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_width="@dimen/stepView_weight"
+            android:layout_height="@dimen/stepView_height"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="@dimen/step_margin20"
             android:gravity="center"
             >
 

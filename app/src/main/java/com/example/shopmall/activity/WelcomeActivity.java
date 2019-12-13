@@ -1,11 +1,10 @@
 package com.example.shopmall.activity;
 
 import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.Message;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -18,41 +17,14 @@ import com.example.framework.manager.CaCheManager;
 import com.example.framework.manager.ConnectManager;
 
 import com.example.net.Constant;
-import com.example.shopmall.MyApplication;
 import com.example.shopmall.R;
 import com.example.shopmall.presenter.IntegerPresenter;
+public class WelcomeActivity extends BaseActivity implements IGetBaseView<HomepageBean> {
 
-import java.util.Timer;
-import java.util.TimerTask;
-
-public class WelcomeActivity extends BaseActivity implements IGetBaseView {
-
-    public ImageView iv_welcome;
-    public int i = 0;
-    public Timer timer;
-
-    @SuppressLint("HandlerLeak")
-    private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-
-            if (msg.what == 100){
-                i++;
-                Log.d("####", "handleMessage: " + i);
-                //判断缓存是否有内容
-                HomepageBean cacheBean = CaCheManager.getInstance(MyApplication.getContext()).getCacheBean(MyApplication.getContext());
-                Log.d("####", "handleMessage: " + cacheBean.getMsg());
-                if (i >= 3 &&  cacheBean != null){
-                    timer.cancel();
-                    startActivity(new Intent(WelcomeActivity.this,MainActivity.class));
-                    finish();
-                }
-            }
-
-        }
-    };
-
+    private ImageView iv_welcome;
+    private int flag = 0;
+    private final HandlerThread handlerThread = new HandlerThread("welcome");
+    private Handler handler;
     @Override
     protected int setLayout() {
         return R.layout.activity_welcome;
@@ -60,12 +32,13 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView {
 
     @Override
     public void initView() {
+
         iv_welcome = findViewById(R.id.iv_welcome);
     }
 
     @Override
     public void initData() {
-        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(iv_welcome,"Alpha",0,1);
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(iv_welcome, "Alpha", 0, 1);
         objectAnimator.setDuration(3000);
         objectAnimator.start();
 
@@ -73,28 +46,49 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView {
         integerPresenter.attachGetView(this);
         integerPresenter.getGetData();
 
+        handlerThread.start();
+
+        Thread  welcomeThread = new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                while (flag <= 3) {
+                    synchronized (WelcomeActivity.class) {
+                        flag++;
+                        if (flag == 3) {
+                            handler.sendEmptyMessage(1);
+                        }
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
         boolean connectStatus = ConnectManager.getInstance().getConnectStatus();
         if (connectStatus) {
-            Toast.makeText(this, "有网络连接", Toast.LENGTH_SHORT).show();
-
-            timer = new Timer(true);
-            timer.schedule(new TimerTask() {
+            welcomeThread.start();
+            handler = new Handler(handlerThread.getLooper()) {
                 @Override
-                public void run() {
-                    handler.sendEmptyMessage(100);
+                public void handleMessage(@NonNull Message msg) {
+                    super.handleMessage(msg);
+                    if (flag == 3 && msg.what == 1) {
+                        startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
+                        finish();
+                    }
                 }
-            },1000,1000);
-
+            };
         } else {
-            Toast.makeText(this, "无网络连接", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请检查网络连接情况...", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
             finish();
         }
     }
-
-    @Override
-    public void onGetDataSucess(Object data) {
-
+    public void onGetDataSucess(HomepageBean data) {
+        CaCheManager.getInstance(this).savaBean(data);
+        handler.sendEmptyMessage(1);
     }
 
     @Override

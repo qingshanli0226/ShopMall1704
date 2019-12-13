@@ -9,14 +9,29 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
+import android.text.format.Time;
+import android.util.Log;
 
 
 import com.example.common.OrmUtils;
-import com.example.common.ShopStepBean;
-import com.example.framework.StepService;
+import com.example.framework.bean.ShopStepBean;
+import com.example.framework.bean.ShopStepTimeRealBean;
+import com.example.framework.greendao.DaoMaster;
+import com.example.framework.greendao.DaoSession;
+import com.example.framework.greendao.FirstStepBean;
+import com.example.framework.greendao.FirstStepBeanDao;
+import com.example.framework.greendao.ShopStepTimeRealBeanDao;
+import com.example.framework.service.StepService;
+
+import java.text.SimpleDateFormat;
+
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class StepManager {
@@ -27,7 +42,10 @@ public class StepManager {
     StepService stepService;
     ServiceConnection serviceConnection;
     List<StepManagerListener> stepManagerListeners=new ArrayList<>();
+    List<StepIntegalListener> IntegalListeners=new ArrayList<>();
     private Intent intent;
+    ShopStepTimeRealBeanDao realBeanDao;
+    FirstStepBeanDao firstStepBeanDao;
 
     public static StepManager getInstance() {
         if (stepManager == null) {
@@ -57,10 +75,18 @@ public class StepManager {
                             stepManagerListeners.get(i).onStepChange(count);
                         }
 
+                        if(IntegalListeners.size()>0){
+                            for (int i =0;i<IntegalListeners.size();i++){
+                                IntegalListeners.get(i).onIntegral(ingal);
+                            }
+                        }
+
+
                     }
 
 
                 });
+
 
 
 
@@ -74,17 +100,134 @@ public class StepManager {
 
         context.bindService(intent,serviceConnection,Context.BIND_AUTO_CREATE);
 
+        SQLiteDatabase database = new DaoMaster.DevOpenHelper(context, "realTimes.db", null).getWritableDatabase();
+        DaoMaster daoMaster = new DaoMaster(database);
+        DaoSession daoSession = daoMaster.newSession();
+        realBeanDao = daoSession.getShopStepTimeRealBeanDao();
+
+//        SQLiteDatabase sqLiteDatabase = new DaoMaster.DevOpenHelper(context, "first.db", null).getWritableDatabase();
+//        DaoMaster daoMaster1 = new DaoMaster(sqLiteDatabase);
+//        DaoSession daoSession1 = daoMaster1.newSession();
+//        firstStepBeanDao = daoSession1.getFirstStepBeanDao();
+
+
+
+
 
     }
 
 
 
+    public int  getFirstStep(){
+        for (int i=0;i<firstStepBeanDao.queryBuilder().list().size();i++){
+            if(firstStepBeanDao.queryBuilder().list().get(i).getFirst()==1){
+                return 1;
+            }
+        }
+        return 0;
+    }
+    public void saveFirstStep(int firsts){
+        FirstStepBean firstStep = new FirstStepBean(null, firsts);
+        firstStepBeanDao.insert(firstStep);
+    }
 
-//    public static boolean isCurrentInTime(int beginHour,int beginMin,int endHour,int endbeginMin){
-//
-//        boolean result=false;
-//
-//    }
+    public void saveReal(String time,String date,int current){
+        ShopStepTimeRealBean shopStepTimeRealBean = new ShopStepTimeRealBean(null, time, date, current);
+        realBeanDao.insertOrReplace(shopStepTimeRealBean);
+    }
+    public List<ShopStepTimeRealBean> getReal(){
+        return realBeanDao.queryBuilder().distinct().list();
+    }
+
+    public boolean isThisMonth(long time){
+        return isThisTime(time,"yyyy-MM-dd");
+    }
+    public boolean isThisTime(long time,String pattern){
+
+        Calendar calendar = Calendar.getInstance();
+
+
+        Date date = new Date(time);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String param = simpleDateFormat.format(date);
+
+        String now = simpleDateFormat.format(new Date());
+
+        if(param.equals(now)){
+
+            return true;
+        }
+        return false;
+
+    }
+
+    public int getLastDayMonth(int month){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.MONTH,month-1);
+        int lastDay=0;
+        if(month==2){
+            lastDay=calendar.getLeastMaximum(Calendar.DAY_OF_MONTH);
+        }else{
+            lastDay=calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        }
+        return lastDay;
+    }
+
+    public int getFirstDayMonth(int month){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.MONTH,month-1);
+        //某月最小天数
+        int firstDay = calendar.getActualMinimum(Calendar.DAY_OF_MONTH);
+
+        return firstDay;
+    }
+
+
+    public  List<String> getWeekDay(){
+        Calendar calendar = Calendar.getInstance();
+        //本周的第一天
+        int firstDayOfWeek = calendar.getFirstDayOfWeek();
+        List<String> list=new ArrayList<>();
+        for (int i=0;i<7;i++){
+            calendar.set(Calendar.DAY_OF_WEEK,firstDayOfWeek+i);
+            String format = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
+            list.add(format);
+        }
+        return list;
+    }
+
+    //是否在 0.0 -0.0时间段
+    public boolean isCurrentTimeRange(int beginHour,int beginMin,int endHour,int endMin){
+        boolean result=false;
+        final long DayInMills=1000*60*60*24;
+        final long currentMills=System.currentTimeMillis();
+        Time now=new Time();
+        now.set(currentMills);
+
+        Time startTime=new Time();
+        startTime.set(currentMills);
+
+        startTime.hour=beginHour;
+        startTime.minute=beginMin;
+
+        Time endTime=new Time();
+        endTime.set(currentMills);
+        endTime.hour=endHour;
+        endTime.minute=endMin;
+        if(!startTime.before(endTime)){
+            startTime.set(startTime.toMillis(true)-DayInMills);
+            result=!now.before(startTime)&& !now.after(endTime);
+            Time startThisDay=new Time();
+            startThisDay.set(startTime.toMillis(true)+DayInMills);
+            if(!now.before(startThisDay)){
+                result=true;
+            }
+        }else{
+            result=!now.before(startTime)&&!now.after(endTime); //start<=now <=end
+        }
+        return result;
+    }
+    //广播
     public IntentFilter getIntentFliter(){
         IntentFilter intentFilter = new IntentFilter();
 
@@ -119,7 +262,9 @@ public class StepManager {
             shopStepBean.setIntegral(i1);
             OrmUtils.update(shopStepBean);
         }
+
     }
+    //跳转Activity
     public void setActivityIntent(Intent intent){
         this.intent=intent;
         getIntent();
@@ -139,6 +284,10 @@ public class StepManager {
         List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
         return queryAll;
     }
+
+    public interface StepIntegalListener{
+        void onIntegral(int integal);
+    }
     public interface StepManagerListener{
         void onStepChange(int count);
         void onIntegral(int intgal);
@@ -153,5 +302,16 @@ public class StepManager {
         stepManagerListeners.remove(stepManagerListener);
         context.unbindService(serviceConnection);
     }
+
+    public void registerIntalListenr(StepIntegalListener stepIntegalListener){
+        if(!IntegalListeners.contains(stepIntegalListener)){
+            this.IntegalListeners.add(stepIntegalListener);
+        }
+    }
+    public void unInstaLitener(StepIntegalListener stepIntegalListener){
+        IntegalListeners.remove(stepIntegalListener);
+
+    }
+
 
 }

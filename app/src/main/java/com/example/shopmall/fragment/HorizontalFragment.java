@@ -15,14 +15,14 @@ import com.example.shopmall.R;
  */
 public class HorizontalFragment extends BaseFragment {
 
-    TitleBar tb_horizontal;
+    TitleBar tbHorizontal;
 
     @Override
     protected void initData() {
-        tb_horizontal.setTitleBacKGround(Color.RED);
-        tb_horizontal.setCenterText("发现",18,Color.WHITE);
+        tbHorizontal.setTitleBacKGround(Color.RED);
+        tbHorizontal.setCenterText("发现",18,Color.WHITE);
 
-        tb_horizontal.setTitleClickLisner(new TitleBar.TitleClickLisner() {
+        tbHorizontal.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
             public void LeftClick() {
 
@@ -45,7 +45,7 @@ public class HorizontalFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        tb_horizontal = view.findViewById(R.id.tb_horizontal);
+        tbHorizontal = view.findViewById(R.id.tb_horizontal);
     }
 
     @Override

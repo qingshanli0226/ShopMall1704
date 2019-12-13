@@ -61,7 +61,6 @@ public class MyShoppingOrderAdapter extends BaseAdapter<Map<String, String>, MyS
         return 0;
     }
 
-
     class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
