@@ -59,6 +59,12 @@
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/cartMoney"
+            android:textColor="@color/color_red"
+            android:layout_toRightOf="@id/checkAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
         <Button
             android:id="@+id/buyBut"
             style="@style/BuyBut"

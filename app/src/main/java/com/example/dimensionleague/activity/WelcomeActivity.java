@@ -6,6 +6,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.example.buy.activity.PayActivity;
@@ -35,11 +38,9 @@ import java.util.List;
 public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFinishListener {
     private Handler handler =new MyHandler(this);
 
-    private ViewPager vp;
+    private VideoView videoView;
     private Button but;
-    private List<Integer> icon;
-    private int index = 3;
-    private int count = 0;
+    private int count = 3;
 
     private boolean isCarouselFinish = false;
     private boolean isRequestHomeBean = false;
@@ -48,19 +49,38 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
     @Override
     public void init() {
         super.init();
-        vp = findViewById(R.id.welcome_vp);
+        videoView = findViewById(R.id.videoView);
         but = findViewById(R.id.welcome_button);
-        icon = new ArrayList<>();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        final String videoPath = Uri.parse("android.resource://" + getPackageName() + "/"+R.raw.mei).toString();
+        //设置视频路径
+        videoView.setVideoPath(videoPath);
+        //开始播放
+        videoView.start();
+
+         //设置监听是否准备好
+        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.setVolume(0,0);
+                mp.start();
+                mp.setLooping(true);
+            }});
+        //设置监听是否播放完
+        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                videoView.setVideoPath(videoPath);
+                videoView.start();
+            }
+        });
     }
 
     @Override
     public void initDate() {
-        icon.add(R.mipmap.welcomeimage6);
-        icon.add(R.mipmap.welcomeimage7);
-        icon.add(R.mipmap.welcomeimage8);
-
-        but.setText(index + "秒");
+        handler.sendEmptyMessage(1);
+        but.setText(count + "秒");
         CacheManager.getInstance().getHomeDate();
         AutoLoginManager.getInstance().getLoginData();
         CacheManager.getInstance().registerGetDateListener(new CacheManager.IHomeReceivedListener() {
@@ -122,45 +142,11 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
             }
         });
 
-
-        vp.setAdapter(new PagerAdapter() {
-            @Override
-            public int getCount() {
-                return icon.size();
-            }
-
-            @Override
-            public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-                container.removeView((ImageView) object);
-            }
-
-            @NonNull
-            @Override
-            public Object instantiateItem(@NonNull ViewGroup container, int position) {
-                ImageView imageView = new ImageView(WelcomeActivity.this);
-                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                Glide.with(WelcomeActivity.this).load(icon.get(position)).into(imageView);
-                container.addView(imageView);
-                return imageView;
-            }
-
-            @Override
-            public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-                return view == object;
-            }
-        });
-        handler.sendEmptyMessageDelayed(1,1000);
     }
 
     @Override
     protected void onDestroy() {
-
         super.onDestroy();
-
-        if (handler != null) {
-            handler.removeCallbacksAndMessages(null);
-        }
-        handler = null;
         CacheManager.getInstance().unRegisterGetDateListener();
         AutoLoginManager.getInstance().unRegisterAutoLoginListener();
     }
@@ -192,11 +178,9 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
             super.handleMessage(msg);
             WelcomeActivity activity = mWeakReference.get();
             if(msg.what==1){
-                activity.count++;
-                activity.index--;
-                if (activity.count < 3) {
-                    activity.vp.setCurrentItem(activity.count);
-                    activity.but.setText("" + activity.index + "秒");
+                if (activity.count >0) {
+                    activity.but.setText(activity.count + "秒");
+                    activity.count--;
                     sendEmptyMessageDelayed(1,1000);
                 } else {
                     activity.isCarouselFinish = true;

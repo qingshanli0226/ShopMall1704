@@ -126,7 +126,6 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
                 .load(AppNetConfig.BASE_URl_IMAGE + goods.getUrl())
                 .into(goodsImage);
 
-
         webView.loadUrl("http://www.baidu.com");
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -386,21 +385,6 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         };
         CartManager.getInstance().registerListener(onShopCartListener);
         setRed(CartManager.getInstance().getCartNum());
-
-//        class NameViewModel : ViewModel() {    // 这里new了一个MutableLiveData，它是LiveData的实现类，LiveData是抽象的，很明显不能被new
-//            val currentName: LiveData<String> by lazy {
-//                MutableLdiveData<String>()
-//            }
-//        }class NameActivity : AppCompatActivity() {    private lateinit var mModel: NameViewModel    override fun onCreate(savedInstanceState: Bundle?) {        super.onCreate(savedInstanceState)
-//            mModel = ViewModelProviders.of(this).get(NameViewModel::class.java)
-//            // 这个this是LifecycleOwner
-//            mModel.currentName.observe(this, Observer { newName ->            // mNameTextView一个TextView
-//                    mNameTextView.text = newName
-//            }）        // 更新被观察者数据，LiveData会通知观察者
-//            mModel.currentName.postValue("MDove")
-//        }
-//        }
-
 
     }
 

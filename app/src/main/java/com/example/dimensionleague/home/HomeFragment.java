@@ -1,8 +1,10 @@
 package com.example.dimensionleague.home;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dimensionleague.CacheManager;
@@ -22,14 +24,12 @@ public class HomeFragment extends BaseNetConnectFragment {
     public HomeFragment(int i) {
         super();
         this.type=i;
-
     }
 
-//    无参构造
     public HomeFragment() {
         super();
-
     }
+
     @Override
     public void init(View view) {
         super.init(view);
@@ -44,25 +44,18 @@ public class HomeFragment extends BaseNetConnectFragment {
 
     @Override
     public void initDate() {
-//        iBasePresenter.attachView(this);
-//        iBasePresenter.doHttpGetRequest();
-
        if(CacheManager.getInstance().getHomeBeanData()!=null){
            list=(((HomeBean) CacheManager.getInstance().getHomeBeanData()).getResult() );
        }
-       adapter=new HomeAdapter(list,getContext());
-
-// 设置网格布局
-        rv.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+        adapter=new HomeAdapter(list,getContext());
+        rv.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         rv.setAdapter(adapter);
-
     }
 
     @Override
     public int getLayoutId() {
         return R.layout.fragment_home;
     }
-
 
     @Override
     public int getRelativeLayout() {
@@ -71,12 +64,19 @@ public class HomeFragment extends BaseNetConnectFragment {
 
     @Override
     public void onRequestSuccess(Object data) {
-        if (data!=null){
-            adapter=new HomeAdapter(((HomeBean)data).getResult(),getContext());
-// 设置网格布局
-            rv.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-            rv.setAdapter(adapter);
-        }else{
+        if (((HomeBean)data).getCode()==200){
+            list=((HomeBean)data).getResult();
+            rv.getAdapter().notifyDataSetChanged();
+
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext()) {
+                @Override
+                public RecyclerView.LayoutParams generateDefaultLayoutParams() {
+                    return new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT);
+                }
+            };
+            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            rv.setLayoutManager(layoutManager);
         }
     }
 }

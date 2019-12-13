@@ -1,6 +1,7 @@
 package com.example.buy;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -17,6 +18,7 @@ import com.example.buy.activity.PayActivity;
 import com.example.buy.databeans.GetCartBean;
 import com.example.buy.databeans.GoodsBean;
 import com.example.buy.databeans.OkBean;
+import com.example.buy.presenter.PostDelteGoodsPresenter;
 import com.example.framework.manager.CartManager;
 import com.example.buy.presenter.GetCartPresenter;
 import com.example.buy.presenter.PostUpDateCartPresenter;
@@ -35,6 +37,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
     //请求购物车  刷新单个 数据
     private final int CART_GOODS = 100;
     private final int UPDATA_GOODS = 101;
+    private final int DEL_CODE=102;
 
     private Button buyBut;
     private RecyclerView recyclerView;
@@ -42,13 +45,16 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
     private SwipeRefreshLayout swipeRefreshLayout;
     private Button editBut;
     private TextView nullGoods;
+    private TextView cartMoney;
     //数据和被选择
     private ArrayList<GoodsBean> list = new ArrayList<>();
     private ArrayList<Boolean> checks = new ArrayList<>();
+    private ArrayList<GoodsBean> waitDelList = new ArrayList<>();
 
     //购物车数据获取  购物车更新
     private IPresenter sendCartPresenter;
     private IPresenter upDatePresenter;
+    private IPresenter deleteGoodsPresenter;
 
     //删除与支付状态   全选状态
     boolean delStatus = false;
@@ -60,14 +66,12 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
         if (v.getId() == buyBut.getId()) {
             if (delStatus) {
                 //删除
-                for (int i = checks.size() - 1; i > -1; i--) {
-                    if (checks.get(i)) {
-                        list.remove(i);
+                for (int i=0;i<checks.size();i++){
+                    if (checks.get(i)){
+                        waitDelList.add(list.get(i));
                     }
                 }
-                recyclerView.getAdapter().notifyDataSetChanged();
-                buyBut.setText(getResources().getString(R.string.buyNow));
-                delStatus = false;
+                deleteGoods();
             } else {
                 //支付跳转
                 ArrayList<GoodsBean> goods = new ArrayList<>();
@@ -101,6 +105,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
         checkAll = view.findViewById(R.id.checkAll);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         nullGoods = view.findViewById(R.id.nullGoods);
+        cartMoney = view.findViewById(R.id.cartMoney);
 
         buyBut.setOnClickListener(this);
         editBut.setOnClickListener(this);
@@ -135,6 +140,8 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                             checks.set(position, isChecked);
                             judgeCheckAll();
                         }
+                        //更新价格
+                        cartMoney.setText(getAllMoney());
                     }
                 });
                 //减按钮
@@ -198,6 +205,8 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                     }
                 }
 
+                //更新价格
+                cartMoney.setText(getAllMoney());
 
             }
         });
@@ -288,6 +297,14 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                     sendCartPresenter.doHttpGetRequest(CART_GOODS);
                 }
                 break;
+            case DEL_CODE:
+                if (((OkBean) data).getCode().equals(AppNetConfig.CODE_OK)){
+                    waitDelList.remove(0);
+                    deleteGoods();
+                }else {
+                    Toast.makeText(getContext(), waitDelList.get(0).getProductName()+"删除失败", Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
     }
 
@@ -321,5 +338,28 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
         upDatePresenter = new PostUpDateCartPresenter(list.get(goodsPosition));
         upDatePresenter.attachView(ShopCartFragment.this);
         upDatePresenter.doHttpPostJSONRequest(UPDATA_GOODS);
+    }
+    //获取总价
+    private String getAllMoney(){
+        float sum=0;
+        for (int i=0;i<list.size();i++){
+            if (checks.get(i)){
+                sum+=(Float.valueOf(list.get(i).getProductPrice())*list.get(i).getProductNum());
+            }
+        }
+        return "总计:"+sum+"元";
+    }
+    //删除单个
+    private void deleteGoods(){
+        if (waitDelList.size()>0){
+            deleteGoodsPresenter=new PostDelteGoodsPresenter(waitDelList.get(0));
+            deleteGoodsPresenter.attachView(this);
+            deleteGoodsPresenter.doHttpPostJSONRequest(DEL_CODE);
+        }else {
+            buyBut.setText(getResources().getString(R.string.buyNow));
+            delStatus = false;
+            checkAll.setChecked(false);
+            sendCartPresenter.doHttpGetRequest(CART_GOODS);
+        }
     }
 }

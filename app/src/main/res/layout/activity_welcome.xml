@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.WelcomeActivity">
-    <androidx.viewpager.widget.ViewPager
+    tools:context=".activity.WelcomeActivity"
+    android:fitsSystemWindows="true">
+
+    <VideoView
+        android:id="@+id/videoView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/welcome_vp"/>
+        android:layout_height="match_parent"/>
     <Button
         android:id="@+id/welcome_button"
         style="@style/StyleRoundButton"
         android:focusable="false"
         android:gravity="center"
         android:background="@drawable/roundness"
-        android:layout_alignParentRight="true"
+        android:layout_gravity="right"
         android:layout_marginRight="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_30"
         android:textSize="@dimen/sp_12"
         android:textColor="@color/colorWhite"
         android:text="5秒"/>
 
-</RelativeLayout>
+</FrameLayout>
