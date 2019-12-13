@@ -32,10 +32,9 @@ import java.util.ArrayList;
 import com.example.net.AppNetConfig;
 
 public class ShopCartFragment extends BaseNetConnectFragment implements View.OnClickListener {
-
-    public final int CART_GOODS = 100;
-    public final int VERIFY_GOODS = 101;
-    public final int UPDATA_GOODS = 102;
+    //请求购物车  刷新单个 数据
+    private final int CART_GOODS = 100;
+    private final int UPDATA_GOODS = 101;
 
     private Button buyBut;
     private RecyclerView recyclerView;
@@ -44,12 +43,12 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
     private Button editBut;
     private TextView nullGoods;
     //数据和被选择
-    ArrayList<GoodsBean> list = new ArrayList<>();
-    ArrayList<Boolean> checks = new ArrayList<>();
+    private ArrayList<GoodsBean> list = new ArrayList<>();
+    private ArrayList<Boolean> checks = new ArrayList<>();
 
     //购物车数据获取  购物车更新
-    IPresenter sendCartPresenter;
-    IPresenter upDatePresenter;
+    private IPresenter sendCartPresenter;
+    private IPresenter upDatePresenter;
 
     //删除与支付状态   全选状态
     boolean delStatus = false;
@@ -283,12 +282,9 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                     Toast.makeText(getContext(), "获取数据失败", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case VERIFY_GOODS:
-
-                break;
             case UPDATA_GOODS:
                 if (((OkBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
-                    //更新失败
+                    //更新成功
                     sendCartPresenter.doHttpGetRequest(CART_GOODS);
                 }
                 break;

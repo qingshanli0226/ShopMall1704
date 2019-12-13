@@ -44,15 +44,17 @@ import com.example.framework.port.IPresenter;
 import com.example.net.AppNetConfig;
 import com.google.gson.Gson;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 /**
  * 跳转过来,进行库存验证,不足则提示
  * 充足则提交订单  订单完成
- *
+ * <p>
  * 支付完成,更新现金和积分  再退出
- * */
+ */
 public class PayActivity extends BaseNetConnectActivity implements View.OnClickListener {
 
     public static final int PAY = 200;
@@ -78,37 +80,7 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
     private IPresenter moneyPresenter;
 
     private GetPayOrderBean getPayOrderBean;
-
-
-    @SuppressLint("HandlerLeak")
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case PAY:
-                    PayResult payResult = new PayResult((Map<String, String>) msg.obj);
-                    String result = payResult.getResult();// 同步返回需要验证的信息
-                    PayResultMessBean payResultMessBean = new Gson().fromJson(result, PayResultMessBean.class);
-                    String resultStatus = payResult.getResultStatus();
-                    // 判断resultStatus 为9000则代表支付成功
-                    if (TextUtils.equals(resultStatus, "9000")) {
-                        // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-                        Toast.makeText(PayActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-                        postOrderPresenter = new PostPayResultPresenter(
-                                new SendPayResultBean(getPayOrderBean.getResult().getOutTradeNo(),
-                                        payResultMessBean.toString(),
-                                        true));
-                        postOrderPresenter.attachView(PayActivity.this);
-                        postOrderPresenter.doHttpPostJSONRequest(CODE_PAY_SURE);
-                    } else {
-                        // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
-                        Toast.makeText(PayActivity.this, "支付失败:" + payResult, Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-            }
-        }
-    };
+    private Handler handler = new MyHandler(this);
 
     @Override
     protected void onStart() {
@@ -118,7 +90,7 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
         //设置数据
         recyclerView.getAdapter().notifyDataSetChanged();
 
-        orderMoney.setText("原价: "+getMoney(false));
+        orderMoney.setText("原价: " + getMoney(false));
         payMoney.setText(getMoney(false));
         //库存检测
         verifyPresenter = new PostVerifyGoodsPresenter(list);
@@ -210,10 +182,10 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
     public void initDate() {
         //沙箱接入
         EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
-        if (AccountManager.getInstance().user.getPoint()==null){
+        if (AccountManager.getInstance().user.getPoint() == null) {
             subtractIntegra.setText("0");
-        }else {
-            subtractIntegra.setText(AccountManager.getInstance().user.getPoint()+"");
+        } else {
+            subtractIntegra.setText(AccountManager.getInstance().user.getPoint() + "");
         }
     }
 
@@ -232,27 +204,27 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
                 OkBean okBean = (OkBean) data;
                 if (okBean.getCode().equals(AppNetConfig.CODE_OK)) {
                     //更新现金
-                    moneyPresenter=new PostUpDateMoneyPresenter(getMoney(checkInegra.isChecked()));
+                    moneyPresenter = new PostUpDateMoneyPresenter(getMoney(checkInegra.isChecked()));
                     moneyPresenter.attachView(this);
                     moneyPresenter.doHttpPostRequest(COED_MONEY);
                 }
                 break;
             case COED_VERIFY:
-                if (((GetCheckGoodsBean)data).equals(AppNetConfig.CODE_OK)){
+                if (((GetCheckGoodsBean) data).equals(AppNetConfig.CODE_OK)) {
 
                 }
                 break;
             case COED_MONEY:
-                if (((OkBean)data).getCode().equals(AppNetConfig.CODE_OK)){
-                    pointPresenter=new PostUpDatePointPresenter("123");
+                if (((OkBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
+                    pointPresenter = new PostUpDatePointPresenter("0");
                     pointPresenter.attachView(this);
                     pointPresenter.doHttpPostRequest(COED_POINT);
                 }
                 break;
             case COED_POINT:
-                if (((OkBean)data).getCode().equals(AppNetConfig.CODE_OK)){
-                    Log.e("xxxx","用户信息:"+AccountManager.getInstance().user.toString());
-                   finishActivity();
+                if (((OkBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
+                    Log.e("xxxx", "用户信息:" + AccountManager.getInstance().user.toString());
+                    finishActivity();
                 }
                 break;
         }
@@ -261,10 +233,10 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
     private String getMoney(boolean pointStatus) {
         int sum = 0;
         for (GoodsBean i : list) {
-            sum += Float.valueOf(i.getProductPrice())*i.getProductNum();
+            sum += Float.valueOf(i.getProductPrice()) * i.getProductNum();
         }
-        if (pointStatus){
-            sum-=Integer.valueOf(subtractIntegra.getText().toString());
+        if (pointStatus) {
+            sum -= Integer.valueOf(subtractIntegra.getText().toString());
         }
         return sum + "";
     }
@@ -272,12 +244,49 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
     @Override
     protected void onDestroy() {
         super.onDestroy();
-       disPreseter(pointPresenter,postOrderPresenter,moneyPresenter,verifyPresenter,sendOrederPresenter);
+        disPreseter(pointPresenter, postOrderPresenter, moneyPresenter, verifyPresenter, sendOrederPresenter);
     }
+
     private void disPreseter(IPresenter... iPresenter) {
         for (int i = 0; i < iPresenter.length; i++) {
             if (iPresenter[i] != null) {
                 iPresenter[i].detachView();
+            }
+        }
+    }
+
+    private static class MyHandler extends Handler {
+        private WeakReference<PayActivity> mWeakReference;
+
+        public MyHandler(PayActivity activity) {
+            mWeakReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            PayActivity activity = mWeakReference.get();
+            switch (msg.what) {
+                case PAY:
+                    PayResult payResult = new PayResult((Map<String, String>) msg.obj);
+                    String result = payResult.getResult();// 同步返回需要验证的信息
+                    PayResultMessBean payResultMessBean = new Gson().fromJson(result, PayResultMessBean.class);
+                    String resultStatus = payResult.getResultStatus();
+                    // 判断resultStatus 为9000则代表支付成功
+                    if (TextUtils.equals(resultStatus, "9000")) {
+                        // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
+                        Toast.makeText(activity, "支付成功", Toast.LENGTH_SHORT).show();
+                        activity.postOrderPresenter = new PostPayResultPresenter(
+                                new SendPayResultBean(activity.getPayOrderBean.getResult().getOutTradeNo(),
+                                        payResultMessBean.toString(),
+                                        true));
+                        activity.postOrderPresenter.attachView(activity);
+                        activity.postOrderPresenter.doHttpPostJSONRequest(CODE_PAY_SURE);
+                    } else {
+                        // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
+                        Toast.makeText(activity, "支付失败:" + payResult, Toast.LENGTH_SHORT).show();
+                    }
+                    break;
             }
         }
     }

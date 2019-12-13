@@ -1,6 +1,5 @@
 package com.example.dimensionleague.home.adapter
 
-
 import android.content.Context
 import android.util.Log
 import android.view.ViewGroup
@@ -9,7 +8,6 @@ import android.view.LayoutInflater
 import com.example.dimensionleague.R
 import com.example.common.HomeBean
 import com.example.dimensionleague.home.holder.*
-
 
 class HomeAdapter(
     bean: HomeBean.ResultBean?,
@@ -57,7 +55,6 @@ class HomeAdapter(
     var currentType = BANNER
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        var Holder:RecyclerView.ViewHolder? = null
 
         return when(viewType){
             BANNER -> BannerViewHolder(mLayoutInflater!!.inflate(R.layout.home_banner, parent, false))
@@ -65,7 +62,7 @@ class HomeAdapter(
             ACT-> ActViewHolder(mLayoutInflater!!.inflate(R.layout.home_act,parent,false))
             SECKILL-> SeckillHolder(mLayoutInflater!!.inflate(R.layout.home_seckill,parent,false))
             RECOMMEND-> RecommendHolder(mLayoutInflater!!.inflate(R.layout.home_recommend,parent,false))
-            HOT -> HotViewHolder(mLayoutInflater!!.inflate(R.layout.home_hot,null))
+            HOT -> HotViewHolder(mLayoutInflater!!.inflate(R.layout.home_hot,parent,false))
             else ->ChannelHolder(mLayoutInflater!!.inflate(R.layout.home_channel,parent,false))
         }
     }
@@ -87,7 +84,6 @@ class HomeAdapter(
     }
     
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        println("lhf holder--${holder is ChannelHolder}")
         if (getItemViewType(position)==BANNER) {
             val bannerViewHolder = holder as BannerViewHolder
             bannerViewHolder.setDate(bean?.banner_info)

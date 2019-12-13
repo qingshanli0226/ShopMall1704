@@ -24,9 +24,9 @@
 
     <application>
         <activity android:name=".activity.PhysicalActivity"
-            android:launchMode="singleInstance"></activity>
+            android:launchMode="singleInstance"/>
         <activity android:name=".activity.HistoryActivity"
-            android:launchMode="singleInstance"></activity>
+            android:launchMode="singleInstance"/>
 
         <service android:name=".service.StepService">
             <intent-filter>

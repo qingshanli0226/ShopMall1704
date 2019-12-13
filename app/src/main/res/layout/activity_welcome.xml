@@ -13,6 +13,7 @@
         android:id="@+id/welcome_button"
         style="@style/StyleRoundButton"
         android:focusable="false"
+        android:gravity="center"
         android:background="@drawable/roundness"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/dp_10"

@@ -59,14 +59,13 @@ public class StepActivity extends BaseActivity   {
 
     @Override
     public void init() {
-        iv_left = (ImageView) findViewById(R.id.iv_left);
-        physical = (TextView) findViewById(R.id.physical);
+        iv_left =  findViewById(R.id.iv_left);
+        physical =  findViewById(R.id.physical);
         tv_isSupport = findViewById(R.id.tv_isSupport);
         stepView = findViewById(R.id.step);
         time = findViewById(R.id.time);
-        tv_set = (TextView) findViewById(R.id.tv_set);
-
-        tv_data = (TextView) findViewById(R.id.tv_data);
+        tv_set =  findViewById(R.id.tv_set);
+        tv_data =  findViewById(R.id.tv_data);
 
 
         physical.setText("计步页");

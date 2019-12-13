@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.buy.activity.PayActivity;
 import com.example.common.User;
 import com.example.framework.manager.AccountManager;
 import com.example.dimensionleague.AutoLoginManager;
@@ -27,28 +28,12 @@ import com.example.dimensionleague.userbean.AutoLoginBean;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.port.ITaskFinishListener;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
 public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFinishListener {
-    private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            if(msg.what==1){
-                count++;
-                index--;
-                if (count < 3) {
-                    vp.setCurrentItem(count);
-                    but.setText("" + index + "秒");
-                    sendEmptyMessageDelayed(1,1000);
-                } else {
-                    isCarouselFinish = true;
-                    onFinish();
-                }
-            }
-        }
-    };
+    private Handler handler =new MyHandler(this);
 
     private ViewPager vp;
     private Button but;
@@ -71,10 +56,11 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
 
     @Override
     public void initDate() {
-        icon.add(R.drawable.timg1);
-        icon.add(R.drawable.timg2);
-        icon.add(R.drawable.timg3);
-        but.setText("" + index + "秒");
+        icon.add(R.mipmap.welcomeimage6);
+        icon.add(R.mipmap.welcomeimage7);
+        icon.add(R.mipmap.welcomeimage8);
+
+        but.setText(index + "秒");
         CacheManager.getInstance().getHomeDate();
         AutoLoginManager.getInstance().getLoginData();
         CacheManager.getInstance().registerGetDateListener(new CacheManager.IHomeReceivedListener() {
@@ -110,7 +96,6 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
             @Override
             public void onAutoLoginReceived(AutoLoginBean.ResultBean resultBean) {
                 if (resultBean != null) {
-                    Log.d("lhf", "onAutoData: "+resultBean.token);
                     //TODO 保存用户信息
                     AccountManager.getInstance().setUser(new User(
                             resultBean.name,
@@ -134,7 +119,6 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
             public void onAutoDataError(String s) {
                 isRequestAutoLogin = false;
                 onFinish();
-                Log.d("lhf", "onAutoDataError: 请求错误:"+s);
             }
         });
 
@@ -188,13 +172,37 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
 
     @Override
     public void onFinish() {
-        Log.d("lhf", isCarouselFinish + "---" + isRequestHomeBean + "----" + isRequestAutoLogin);
         if (isCarouselFinish && isRequestHomeBean) {
             //跳转到主页面
             Bundle bundle = new Bundle();
             bundle.putBoolean("isAutoLogin",isRequestAutoLogin);
             startActivity(MainActivity.class,bundle);
             finish();
+        }
+    }
+    private static class MyHandler extends Handler {
+        private WeakReference<WelcomeActivity> mWeakReference;
+
+        public MyHandler(WelcomeActivity activity) {
+            mWeakReference = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            WelcomeActivity activity = mWeakReference.get();
+            if(msg.what==1){
+                activity.count++;
+                activity.index--;
+                if (activity.count < 3) {
+                    activity.vp.setCurrentItem(activity.count);
+                    activity.but.setText("" + activity.index + "秒");
+                    sendEmptyMessageDelayed(1,1000);
+                } else {
+                    activity.isCarouselFinish = true;
+                    activity.onFinish();
+                }
+            }
         }
     }
 }

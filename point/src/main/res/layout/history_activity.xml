@@ -19,7 +19,7 @@
                 android:entries="@array/spinner"
                 android:id="@+id/history_spinner"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></Spinner>
+                android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/tv"
                 android:layout_marginTop="@dimen/dp_10"
@@ -37,15 +37,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/tv"
-                android:hint="开始日期"></EditText>
+                android:hint="开始日期"/>
             <TextView
                 android:id="@+id/tv1"
                 android:layout_margin="10dp"
                 android:text="到"
                 android:textSize="20sp"
                 android:textColor="@android:color/black"
-                style="@style/w_wrap">
-            </TextView>
+                style="@style/w_wrap"/>
 
             <EditText
                 android:id="@+id/stop"
@@ -53,17 +52,17 @@
                 android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="结束日期"></EditText>
+                android:hint="结束日期"/>
         </LinearLayout>
         <View
             android:background="@android:color/darker_gray"
             android:layout_width="match_parent"
-            android:layout_height="1dp"></View>
+            android:layout_height="1dp"/>
         <RelativeLayout
             style="@style/w_match">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/history_re"
-                style="@style/w_match"></androidx.recyclerview.widget.RecyclerView>
+                style="@style/w_match"/>
             <TextView
                 android:layout_centerInParent="true"
                 android:visibility="gone"
@@ -71,7 +70,7 @@
                 android:textColor="@android:color/black"
                 android:id="@+id/recently"
                 android:text="@string/history"
-                style="@style/w_wrap"></TextView>
+                style="@style/w_wrap"/>
         </RelativeLayout>
     </LinearLayout>
 

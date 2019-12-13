@@ -29,7 +29,6 @@ public class SignUtil {
     }
 
     public static void encryptJsonParamsByBase64(JSONObject object) {
-        Log.d("LQS str = ", object.toString());
 
         Iterator<String> iterator = object.keySet().iterator();
         while (iterator.hasNext()) {
@@ -40,7 +39,6 @@ public class SignUtil {
             object.put(key, encryptValue);
 
         }
-        Log.d("LQS str = ", object.toString());
     }
 
 
@@ -58,11 +56,9 @@ public class SignUtil {
             String encryptStr = new String(encryptValue);
             encryptedParams.put(key, encryptStr);
         }
-        Log.d("LHF encryptedParams: ", encryptedParams.toString());
 
         for(String key:encryptedParams.keySet()) {
             String value = new String(Base64.decode(encryptedParams.get(key), Base64.DEFAULT));
-            Log.d("LHF: ", value);
         }
 
         return encryptedParams;
@@ -75,7 +71,6 @@ public class SignUtil {
         while (keys.hasNext()) {
             String key = keys.next();
             params.put(key, object.get(key).toString());
-            Log.d("LHF = ", object.get(key).toString());
         }
 
         StringBuilder str = new StringBuilder();
@@ -88,11 +83,7 @@ public class SignUtil {
 //                .replace("\"", "")
 //                .replace(":", "").replace("=", "")
 //                .replace(" ", "");
-        String signValue = stringToMD5(strNew);
-        Log.d("LHF str new = ", strNew);
-        Log.d("LHF signvalue = ", signValue);
-
-        return signValue;
+        return stringToMD5(strNew);
     }
 
     public static String generateSign(Map<String, String> params) {
@@ -108,9 +99,7 @@ public class SignUtil {
             str.append(key + "=" + value + "&");
         }
         str.append("encrypt=md5");
-        Log.d("LHF", str.toString().trim());
         String signValue = stringToMD5(str.toString().trim());
-        Log.d("LHF signvalue = ", signValue);
 
         return signValue;
     }

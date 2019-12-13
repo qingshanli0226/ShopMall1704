@@ -29,7 +29,7 @@ class ChannelAdapter(
 //            views = view
 //            holder = views.getTag() as ViewHolder
 //        }
-        Glide.with(parent!!.context).load("${AppNetConfig.BASE_URl_IMAGE}${channelInfo!!.get(position).image}").into(holder.iv_channer)
+        Glide.with(parent.context).load("${AppNetConfig.BASE_URl_IMAGE}${channelInfo!!.get(position).image}").into(holder.iv_channer)
         holder.tv_channer.text = channelInfo!!.get(position).channel_name
         return views
     }

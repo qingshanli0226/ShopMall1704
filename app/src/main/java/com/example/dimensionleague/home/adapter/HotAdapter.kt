@@ -23,21 +23,21 @@ class HotAdapter (
         this.hotInfo = hotInfo
     }
     override fun getView(posion: Int, view: View?, constan: ViewGroup?): View {
-        lateinit var view: View
+        lateinit var vie: View
         lateinit var viewholder:ViewHolder
-            view = LayoutInflater.from(constan!!.context).inflate(R.layout.home_hot_item,constan,false)
-            viewholder = ViewHolder(view)
-            view.setTag(viewholder)
-        Glide.with(constan!!.context).load(AppNetConfig.BASE_URl_IMAGE+hotInfo?.get(posion)?.figure).into(viewholder.iv_hot)
+        vie = LayoutInflater.from(constan!!.context).inflate(R.layout.home_hot_item,constan,false)
+            viewholder = ViewHolder(vie)
+        vie.setTag(viewholder)
+        Glide.with(constan.context).load(AppNetConfig.BASE_URl_IMAGE+hotInfo?.get(posion)?.figure).into(viewholder.iv_hot)
         viewholder.tv_name.text = hotInfo?.get(posion)?.name
         viewholder.tv_price.text = "${hotInfo?.get(posion)?.cover_price}￥"
         //跳转
-        view.setOnClickListener { v->
-            val intent = Intent(view.context, GoodsActiviy::class.java)
+        vie.setOnClickListener { v->
+            val intent = Intent(vie.context, GoodsActiviy::class.java)
             intent.putExtra(IntentUtil.SHOW_GOOD, hotInfo!![posion])
-            view.context.startActivity(intent)
+            vie.context.startActivity(intent)
         }
-        return view
+        return vie
     }
 
     override fun getItem(posion: Int): Any {

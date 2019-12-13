@@ -1,42 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/type_Relative"
-    android:background="@color/colorRed"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorRed">
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:background="@color/colorRed"
         android:layout_height="wrap_content"
+        android:background="@color/colorRed"
         app:elevation="0dp">
+
         <LinearLayout
-            app:layout_scrollFlags="scroll"
+            android:id="@+id/lin"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_50"
-            android:gravity="center_vertical"
-            android:id="@+id/lin"
             android:layout_marginTop="@dimen/dp_15"
-            android:orientation="horizontal">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_scrollFlags="scroll">
 
             <ImageView
                 android:layout_width="@dimen/dp_40"
                 android:layout_height="@dimen/dp_40"
                 android:gravity="center"
                 android:padding="@dimen/dp_5"
-                android:src="@drawable/scan_code"/>
+                android:src="@drawable/scan_code" />
+
             <EditText
-                android:layout_height="wrap_content"
                 style="@style/StyleEdit"
-                android:hint="@string/top_hint"/>
+                android:layout_height="wrap_content"
+                android:hint="@string/top_hint" />
+
             <ImageView
                 android:layout_width="@dimen/dp_40"
                 android:layout_height="@dimen/dp_40"
                 android:gravity="center"
                 android:padding="@dimen/dp_5"
                 android:scaleType="fitXY"
-                android:src="@drawable/message"/>
+                android:src="@drawable/message" />
 
         </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -44,22 +47,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_below="@id/lin"
-        android:orientation="horizontal">
+        android:background="@color/colorWhite"
+        android:orientation="horizontal"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
         <ListView
-            android:layout_width="@dimen/dp_0"
-            android:layout_height="match_parent"
             android:id="@+id/type_lv_left"
-            android:layout_weight="2"/>
-        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="@dimen/dp_0"
             android:layout_height="match_parent"
+            android:layout_weight="2" />
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/type_rv_right"
-            android:layout_weight="7"/>
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="7" />
     </LinearLayout>
-
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

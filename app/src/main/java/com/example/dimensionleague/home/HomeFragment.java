@@ -1,7 +1,6 @@
 package com.example.dimensionleague.home;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,13 +10,13 @@ import com.example.dimensionleague.R;
 import com.example.common.HomeBean;
 import com.example.dimensionleague.home.adapter.HomeAdapter;
 import com.example.framework.base.BaseNetConnectFragment;
-import com.example.framework.base.BasePresenter;
+import com.example.framework.port.IPresenter;
 
 public class HomeFragment extends BaseNetConnectFragment {
     private RecyclerView rv;
     private HomeAdapter adapter;
     private HomeBean.ResultBean list =new HomeBean.ResultBean();
-    private  BasePresenter iBasePresenter;
+    private IPresenter homePresnter;
 
     private int type =0;
     public HomeFragment(int i) {
@@ -35,7 +34,7 @@ public class HomeFragment extends BaseNetConnectFragment {
     public void init(View view) {
         super.init(view);
         rv=view.findViewById(R.id.home_rv);
-        iBasePresenter=new HomePresenter();
+        homePresnter=new HomePresenter();
 //        判断type值来显示隐藏搜索框
         if (type==1) {
             LinearLayout layout = view.findViewById(R.id.linear);
