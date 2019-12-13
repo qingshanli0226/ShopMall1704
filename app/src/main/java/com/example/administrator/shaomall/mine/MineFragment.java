@@ -1,5 +1,6 @@
 package com.example.administrator.shaomall.mine;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,15 +24,11 @@ import com.shaomall.framework.manager.UserInfoManager;
 public class MineFragment extends BaseMVPFragment<String> implements View.OnClickListener, UserInfoManager.UserInfoStatusListener, PointManager.CallbackIntegralListener {
     private android.widget.ImageView mIvHeader;
     private android.widget.TextView mTvUserName;
-    private android.widget.TextView mTvProductAttention;
-    private android.widget.TextView mTvShopAttention;
-    private android.widget.TextView mTvFavoriteContent;
-    private android.widget.TextView mTvBrowsingHistory;
     private android.widget.Button mBtLogout;
     private TextView mTvPoint;
     private UserInfoManager userInfoManager;
     private IBasePresenter logoutPresenter;
-    private String point;
+    private String point="0";
     private PointUpLoadPresenter pointUpLoadPresenter;
 
     @Override
@@ -48,10 +45,10 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
 
         mIvHeader = (ImageView) view.findViewById(R.id.iv_header);
         mTvUserName = (TextView) view.findViewById(R.id.tv_userName);
-        mTvProductAttention = (TextView) view.findViewById(R.id.tv_productAttention);
-        mTvShopAttention = (TextView) view.findViewById(R.id.tv_shopAttention);
-        mTvFavoriteContent = (TextView) view.findViewById(R.id.tv_favoriteContent);
-        mTvBrowsingHistory = (TextView) view.findViewById(R.id.tv_browsingHistory);
+        TextView mTvProductAttention = (TextView) view.findViewById(R.id.tv_productAttention);
+        TextView mTvShopAttention = (TextView) view.findViewById(R.id.tv_shopAttention);
+        TextView mTvFavoriteContent = (TextView) view.findViewById(R.id.tv_favoriteContent);
+        TextView mTvBrowsingHistory = (TextView) view.findViewById(R.id.tv_browsingHistory);
         mBtLogout = (Button) view.findViewById(R.id.bt_logout);
         mTvPoint = (TextView) view.findViewById(R.id.tv_point);
 
@@ -125,6 +122,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private void setUserData() {
         //判断是否处于登录状态
         if (userInfoManager.isLogin()) {
@@ -185,9 +183,11 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
      *
      * @param pointNum
      */
+    @SuppressLint("SetTextI18n")
     @Override
     public void onCallbacksIntegral(int pointNum) {
-        int pointSum = pointNum + Integer.getInteger(point);
+        int pointSum = Integer.getInteger(point);
+
         mTvPoint.setText("积分: " + pointSum);
 
 
@@ -201,6 +201,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         pointUpLoadPresenter.doPostHttpRequest(AppNetConfig.REQUEST_CODE_UPLOAD_POINT);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onRequestHttpDataSuccess(int requestCode, String message, String data) {
         super.onRequestHttpDataSuccess(requestCode, message, data);
@@ -218,6 +219,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         super.onRequestHttpDataFailed(requestCode, error);
         if (requestCode == AppNetConfig.REQUEST_CODE_LOGOUT){
             toast(error.getErrorMessage(), false);
+            userInfoManager.unLogout();
         }
     }
 

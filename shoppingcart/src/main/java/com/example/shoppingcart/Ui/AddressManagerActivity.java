@@ -1,16 +1,9 @@
 package com.example.shoppingcart.Ui;
-
-import android.annotation.SuppressLint;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-
-
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
-import com.bigkoo.pickerview.configure.PickerOptions;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.example.shoppingcart.OutsideClass.GetJsonDataUtil;
@@ -18,15 +11,9 @@ import com.example.shoppingcart.R;
 import com.example.shoppingcart.bean.JsonBean;
 import com.google.gson.Gson;
 import com.shaomall.framework.base.BaseActivity;
-
 import org.json.JSONArray;
-
 import java.util.ArrayList;
-import java.util.List;
-
-import static com.bigkoo.pickerview.configure.PickerOptions.TYPE_PICKER_OPTIONS;
-
-public class AddressManager extends BaseActivity {
+public class AddressManagerActivity extends BaseActivity {
     private ArrayList<JsonBean> options1Items = new ArrayList<>(); //省
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();//市
     private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<>();//区

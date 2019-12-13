@@ -9,11 +9,20 @@ public class UpDatePrductNumBean {
      * url : http://www.baidu.com
      */
 
+    private boolean isSelect;
     private String productId;
-    private int productNum;
+    private String productNum;
     private String productName;
     private String url;
+    private String productPrice;
 
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
+    }
 
     public String getProductId() {
         return productId;
@@ -23,11 +32,11 @@ public class UpDatePrductNumBean {
         this.productId = productId;
     }
 
-    public int getProductNum() {
+    public String getProductNum() {
         return productNum;
     }
 
-    public void setProductNum(int productNum) {
+    public void setProductNum(String productNum) {
         this.productNum = productNum;
     }
 
@@ -45,5 +54,13 @@ public class UpDatePrductNumBean {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(String productPrice) {
+        this.productPrice = productPrice;
     }
 }

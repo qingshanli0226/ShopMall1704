@@ -1,20 +1,24 @@
 package com.example.shoppingcart.presenter;
+
 import com.alibaba.fastjson.JSONObject;
 import com.example.net.AppNetConfig;
 import com.example.net.ResEntity;
 import com.google.gson.reflect.TypeToken;
 import com.shaomall.framework.base.presenter.BasePresenter;
-import java.lang.reflect.Type;
-public class UpDateShoppingcartPresenter extends BasePresenter<Object> {
 
-    public JSONObject getObject() {
-        return object;
+import java.lang.reflect.Type;
+
+public class RemoveOneProductPresenter extends BasePresenter<Object> {
+
+
+    public JSONObject json;
+
+    public JSONObject getJson() {
+        return json;
     }
 
-    private JSONObject object;
-
-    public void setJsonParam(JSONObject jsonParam) {
-        this.object = jsonParam;
+    public void setJson(JSONObject object) {
+        this.json = object;
     }
 
     @Override
@@ -24,12 +28,12 @@ public class UpDateShoppingcartPresenter extends BasePresenter<Object> {
 
     @Override
     public String getPath() {
-        return AppNetConfig.UPDATE_PRODUCT_NUM_URL;
+        return AppNetConfig.REMOVE_ONE_PRODUCT;
+
     }
 
     @Override
     protected JSONObject getJsonParam() {
-
-        return  getObject();
+        return getJson();
     }
 }

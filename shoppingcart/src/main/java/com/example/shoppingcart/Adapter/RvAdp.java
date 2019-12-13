@@ -42,6 +42,14 @@ public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler>{
         myhodler.checkBox.setChecked(arr.get(i).isSelect());
 
 
+        //TODO 购物车详情页面的按钮
+        myhodler.tvGoodsName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemDetailsCallBack.onItemDetailsCallBack(i);
+            }
+        });
+
 
         //TODO 减少的按钮
         myhodler.tvReduce.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +59,7 @@ public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler>{
                     Toast.makeText(context, "已经不能在减啦", Toast.LENGTH_SHORT).show();
                 }else {
                     itemNumCallBack.onItemNumCallBack(i, Integer.parseInt(arr.get(i).getProductNum())-1);
+                    myhodler.tvNum.setText((Integer.parseInt(arr.get(i).getProductNum())-1)+"");
                 }
 
             }
@@ -62,7 +71,7 @@ public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler>{
             public void onClick(View v) {
 
                 itemNumCallBack.onItemNumCallBack(i, Integer.parseInt(arr.get(i).getProductNum())+1);
-
+                myhodler.tvNum.setText((Integer.parseInt(arr.get(i).getProductNum())+1)+"");
             }
         });
 
@@ -137,6 +146,20 @@ public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler>{
 
     public void setItemNumCallBack(ItemNumCallBack itemNumCallBack) {
         this.itemNumCallBack = itemNumCallBack;
+    }
+
+    //TODO 购物车点击展示详情页面的接口
+    public interface ItemDetailsCallBack{
+        void onItemDetailsCallBack(int i);
+    }
+    ItemDetailsCallBack itemDetailsCallBack;
+
+    public ItemDetailsCallBack getItemDetailsCallBack() {
+        return itemDetailsCallBack;
+    }
+
+    public void setItemDetailsCallBack(ItemDetailsCallBack itemDetailsCallBack) {
+        this.itemDetailsCallBack = itemDetailsCallBack;
     }
 }
 

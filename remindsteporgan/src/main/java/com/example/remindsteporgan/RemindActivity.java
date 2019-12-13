@@ -124,8 +124,8 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
 
             long stepCount = (long) (X - y + plus);
             tv1.setText("今天走了" + stepCount + "步");
-
-            int point = (int) Math.round(stepCount * 0.001); //步数换算积分
+            int point= (int) (stepCount/10);
+            //int point = (int) Math.round(stepCount * 0.1); //步数换算积分
             //设置积分
             PointManager.getInstance().setPointNum(point);
         }
