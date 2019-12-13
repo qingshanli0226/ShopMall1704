@@ -100,7 +100,6 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
                 @Override
                 public void run() {
                     super.run();
-                    synchronized (LoginActivity.class) {
                         ResultBean result = data.getResult();
                         UserManager.getInstance().setActiveUser(result);
                         String token = result.getToken();
@@ -109,7 +108,6 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
                         edit.putBoolean("isLogin", true);
                         edit.putString("getToken", token);
                         edit.apply();
-                    }
                 }
             }.start();
             finish();

@@ -4,19 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:mContext=".activity.MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:mContext=".activity.MainActivity">
 
     <FrameLayout
         android:id="@+id/fl_main"
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_height_0dp"
-        android:layout_weight="9"/>
+        android:layout_weight="9" />
 
-    <com.example.common.BottomBar
-        android:id="@+id/bb_main"
+
+    <RelativeLayout
+        android:id="@+id/rl_main"
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_height_0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1">
+
+        <com.example.common.ShoppingCartView
+            android:id="@+id/shopping_message"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+
+        <com.example.common.BottomBar
+            android:id="@+id/bb_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
 
 </LinearLayout>

@@ -1,6 +1,9 @@
 package com.example.common;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -43,6 +46,7 @@ public class BottomBar extends LinearLayout {
     private RadioButton[] radioButtons;
 
     private void init() {
+
         View view = LayoutInflater.from(mContext).inflate(R.layout.bottombar_layout, this);
         mBottombar = view.findViewById(R.id.ll_bottombar);
         mRadioGroup = view.findViewById(R.id.rg);
@@ -80,6 +84,8 @@ public class BottomBar extends LinearLayout {
         });
 
     }
+
+
     //设置底部导航的名字,不能超过五个
     public void setBottombarName(String... msg) {
         for (int i = 0; i < msg.length; i++) {
