@@ -11,7 +11,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 /**
- * 购物车P层  ShopCartFragment  发起库存请求
+ *   发起多个库存请求
  */
 public class PostVerifyGoodsPresenter extends BasePresenter<GetCheckGoodsBean> {
     //参数json串

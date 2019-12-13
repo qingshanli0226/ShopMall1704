@@ -8,7 +8,9 @@ import com.example.framework.base.BasePresenter;
 import com.example.net.AppNetConfig;
 
 import java.lang.reflect.Type;
-
+/**
+ * 请求删除商品
+ * */
 public class PostDelteGoodsPresenter extends BasePresenter<OkBean> {
     private GoodsBean goodsBean;
 

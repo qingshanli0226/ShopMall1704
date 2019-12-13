@@ -8,7 +8,7 @@ import com.example.net.AppNetConfig;
 
 import java.lang.reflect.Type;
 /**
- *
+ * 确认请求
  * */
 
 public class PostPayResultPresenter extends BasePresenter<OkBean> {

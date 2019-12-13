@@ -2,6 +2,9 @@ package com.example.buy.databeans;
 
 import java.util.List;
 
+/**
+ * 获取到的购物车数据
+ * */
 public class GetCartBean {
     @Override
     public String toString() {

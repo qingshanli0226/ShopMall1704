@@ -7,7 +7,7 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 
 /**
- * 商品P层   GoodsActiviy  检查单个商品库存
+ * 商品  GoodsActiviy  检查单个商品库存
  */
 
 public class PostVerifyOnePresenter extends BasePresenter {

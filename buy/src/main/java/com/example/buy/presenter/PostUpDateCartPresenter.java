@@ -10,7 +10,7 @@ import com.example.net.AppNetConfig;
 import java.lang.reflect.Type;
 
 /**
- * 购物车P层  ShopCartFragment  更新购物车数量
+ * 购物车    更新单个数量
  */
 public class PostUpDateCartPresenter extends BasePresenter<GoodsBean> {
     GoodsBean goodsBean;

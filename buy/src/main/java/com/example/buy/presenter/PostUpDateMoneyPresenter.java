@@ -7,7 +7,9 @@ import com.example.net.AppNetConfig;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * 现金更新
+ * */
 public class PostUpDateMoneyPresenter extends BasePresenter<OkBean> {
 
     private String money;

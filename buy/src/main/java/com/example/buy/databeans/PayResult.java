@@ -3,6 +3,9 @@ package com.example.buy.databeans;
 import android.text.TextUtils;
 
 import java.util.Map;
+/**
+ * 获取到的支付宝信息
+ * */
 
 public class PayResult {
     private String resultStatus;

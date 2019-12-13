@@ -13,7 +13,9 @@ import com.alibaba.fastjson.JSONObject;
 import java.lang.reflect.Type;
 
 import okhttp3.RequestBody;
-
+/**
+ * 下订单
+ * */
 public class PostOrderPresenter extends BasePresenter<GetPayOrderBean> {
 
     SendOrdersBean sendOrdersBean;

@@ -6,7 +6,7 @@ import com.example.net.AppNetConfig;
 
 import java.lang.reflect.Type;
 /**
- * 订单P层  OrderActivity  待支付订单
+ * 订单  OrderActivity  待支付订单
  * */
 public class GetPayOrderPresenter extends BasePresenter<GetOrderBean> {
     @Override

@@ -19,6 +19,7 @@ import com.example.buy.databeans.GetCartBean;
 import com.example.buy.databeans.GoodsBean;
 import com.example.buy.databeans.OkBean;
 import com.example.buy.presenter.PostDelteGoodsPresenter;
+import com.example.framework.manager.AccountManager;
 import com.example.framework.manager.CartManager;
 import com.example.buy.presenter.GetCartPresenter;
 import com.example.buy.presenter.PostUpDateCartPresenter;
@@ -34,10 +35,10 @@ import java.util.ArrayList;
 import com.example.net.AppNetConfig;
 
 public class ShopCartFragment extends BaseNetConnectFragment implements View.OnClickListener {
-    //请求购物车  刷新单个 数据
+    //请求购物车  刷新单个   删除
     private final int CART_GOODS = 100;
     private final int UPDATA_GOODS = 101;
-    private final int DEL_CODE=102;
+    private final int DEL_CODE = 102;
 
     private Button buyBut;
     private RecyclerView recyclerView;
@@ -66,8 +67,8 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
         if (v.getId() == buyBut.getId()) {
             if (delStatus) {
                 //删除
-                for (int i=0;i<checks.size();i++){
-                    if (checks.get(i)){
+                for (int i = 0; i < checks.size(); i++) {
+                    if (checks.get(i)) {
                         waitDelList.add(list.get(i));
                     }
                 }
@@ -136,7 +137,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                 itemCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (checks.size()>position){
+                        if (checks.size() > position) {
                             checks.set(position, isChecked);
                             judgeCheckAll();
                         }
@@ -149,7 +150,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                     @Override
                     public void onClick(View v) {
                         if (list.get(position).getProductNum() > 1) {
-                            upDateNum(position,list.get(position).getProductNum()-1);
+                            upDateNum(position, list.get(position).getProductNum() - 1);
                         }
                     }
                 });
@@ -157,7 +158,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                 holder.getView(R.id.itemAddBut).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        upDateNum(position,list.get(position).getProductNum()+1);
+                        upDateNum(position, list.get(position).getProductNum() + 1);
                     }
                 });
             }
@@ -223,7 +224,9 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
     @Override
     public void onResume() {
         super.onResume();
-        sendCartPresenter.doHttpGetRequest(CART_GOODS);
+        if (AccountManager.getInstance().isLogin()){
+            sendCartPresenter.doHttpGetRequest(CART_GOODS);
+        }
         checkAll.setChecked(false);
     }
 
@@ -259,36 +262,25 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
         super.onRequestSuccess(requestCode, data);
         switch (requestCode) {
             case CART_GOODS:
-                if (data == null) {
-                    swipeRefreshLayout.setVisibility(View.GONE);
-                    nullGoods.setVisibility(View.VISIBLE);
-                } else {
-                    swipeRefreshLayout.setVisibility(View.VISIBLE);
-                    nullGoods.setVisibility(View.GONE);
-                }
                 checks.clear();
                 list.clear();
                 recyclerView.getAdapter().notifyDataSetChanged();
                 if (((GetCartBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
-                    if (((GetCartBean) data).getResult() == null) {
-                        swipeRefreshLayout.setVisibility(View.GONE);
+                    list.addAll(((GetCartBean) data).getResult());
+                    for (int i = 0; i < list.size(); i++) {
+                        checks.add(false);
+                    }
+                    recyclerView.getAdapter().notifyDataSetChanged();
+                    //更新商品数量
+                    CartManager.getInstance().updataCartNum(list.size());
+
+                    if (list.size() == 0) {
+                        recyclerView.setVisibility(View.GONE);
                         nullGoods.setVisibility(View.VISIBLE);
                     } else {
-                        swipeRefreshLayout.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.VISIBLE);
                         nullGoods.setVisibility(View.GONE);
-                        list.addAll(((GetCartBean) data).getResult());
-                        for (int i = 0; i < list.size(); i++) {
-                            checks.add(false);
-                        }
-                        recyclerView.getAdapter().notifyDataSetChanged();
-                        //每一次刷新购物车都重新检查库存
-//                        goodsPresenter = new PostVerifyGoodsPresenter(list);
-
-                        //更新商品数量
-                        CartManager.getInstance().updataCartNum(list.size());
                     }
-                } else {
-                    Toast.makeText(getContext(), "获取数据失败", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case UPDATA_GOODS:
@@ -298,11 +290,11 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                 }
                 break;
             case DEL_CODE:
-                if (((OkBean) data).getCode().equals(AppNetConfig.CODE_OK)){
+                if (((OkBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
                     waitDelList.remove(0);
                     deleteGoods();
-                }else {
-                    Toast.makeText(getContext(), waitDelList.get(0).getProductName()+"删除失败", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), waitDelList.get(0).getProductName() + "删除失败", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -332,30 +324,33 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
             }
         }
     }
+
     //更新单个数量
-    private void upDateNum(int goodsPosition,int goodsNum){
+    private void upDateNum(int goodsPosition, int goodsNum) {
         list.get(goodsPosition).setProductNum(goodsNum);
         upDatePresenter = new PostUpDateCartPresenter(list.get(goodsPosition));
         upDatePresenter.attachView(ShopCartFragment.this);
         upDatePresenter.doHttpPostJSONRequest(UPDATA_GOODS);
     }
+
     //获取总价
-    private String getAllMoney(){
-        float sum=0;
-        for (int i=0;i<list.size();i++){
-            if (checks.get(i)){
-                sum+=(Float.valueOf(list.get(i).getProductPrice())*list.get(i).getProductNum());
+    private String getAllMoney() {
+        float sum = 0;
+        for (int i = 0; i < list.size(); i++) {
+            if (checks.get(i)) {
+                sum += (Float.valueOf(list.get(i).getProductPrice()) * list.get(i).getProductNum());
             }
         }
-        return "总计:"+sum+"元";
+        return "总计:" + sum + "元";
     }
+
     //删除单个
-    private void deleteGoods(){
-        if (waitDelList.size()>0){
-            deleteGoodsPresenter=new PostDelteGoodsPresenter(waitDelList.get(0));
+    private void deleteGoods() {
+        if (waitDelList.size() > 0) {
+            deleteGoodsPresenter = new PostDelteGoodsPresenter(waitDelList.get(0));
             deleteGoodsPresenter.attachView(this);
             deleteGoodsPresenter.doHttpPostJSONRequest(DEL_CODE);
-        }else {
+        } else {
             buyBut.setText(getResources().getString(R.string.buyNow));
             delStatus = false;
             checkAll.setChecked(false);

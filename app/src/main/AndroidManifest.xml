@@ -2,29 +2,24 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.dimensionleague">
-    <!-- 统计需要的权限 -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- 以上是统计需要的权限 -->
 
-    <!-- 推送需要的权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
+    <!-- 敏感权限,点击按钮再申请 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
     <uses-feature android:name="android.hardware.Camera" />
-
     <uses-feature android:name="android.hardware.camera.autofocus" />
-
-    <!-- 以上是推送需要的权限 -->
-    <uses-permission android:name="android.permission.READ_CALENDAR" />
-
-    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
     <application
         android:name=".MineApplication"
@@ -34,13 +29,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:screenOrientation="portrait">
 
-        <activity android:name=".register.activity.RegisterActivity" />
-        <activity
-            android:name=".login.activity.LoginActivity"
-            android:launchMode="singleTask"></activity>
-        <activity android:name=".activity.WelcomeActivity">
+        <activity android:name=".activity.WelcomeActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -50,6 +43,14 @@
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".register.activity.RegisterActivity" />
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".login.activity.LoginActivity"
+            android:launchMode="singleTask"/>
     </application>
 </manifest>

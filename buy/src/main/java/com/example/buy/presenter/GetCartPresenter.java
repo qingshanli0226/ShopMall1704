@@ -6,7 +6,7 @@ import com.example.net.AppNetConfig;
 
 import java.lang.reflect.Type;
 /**
- * 购物车P层  ShopCartFragment  获取购物车请求
+ * 购物车  ShopCartFragment  获取购物车请求
  * */
 public class GetCartPresenter extends BasePresenter<GetCartBean> {
     @Override

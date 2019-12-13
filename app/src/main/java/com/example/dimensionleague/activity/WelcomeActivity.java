@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.media.MediaPlayer;
@@ -30,6 +31,7 @@ import com.example.common.HomeBean;
 import com.example.dimensionleague.userbean.AutoLoginBean;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.port.ITaskFinishListener;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -49,32 +51,37 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
     @Override
     public void init() {
         super.init();
+        //初始化需要的权限
+        final RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions.request(
+                Manifest.permission.INTERNET,
+                Manifest.permission.ACCESS_NETWORK_STATE,
+                Manifest.permission.ACCESS_WIFI_STATE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                       .subscribe(permission -> {
+                           if (permission) {
+                             // 成功
+                          } else {
+                             // 失败
+                          } });
+
+
+
         videoView = findViewById(R.id.videoView);
         but = findViewById(R.id.welcome_button);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        final String videoPath = Uri.parse("android.resource://" + getPackageName() + "/"+R.raw.mei).toString();
-        //设置视频路径
-        videoView.setVideoPath(videoPath);
-        //开始播放
-        videoView.start();
-
-         //设置监听是否准备好
+        videoView.setVideoPath(Uri.parse("android.resource://" + getPackageName() + "/"+R.raw.mei).toString());
+         //设置监听
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 mp.setVolume(0,0);
-                mp.start();
                 mp.setLooping(true);
+                mp.start();
             }});
-        //设置监听是否播放完
-        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                videoView.setVideoPath(videoPath);
-                videoView.start();
-            }
-        });
+
     }
 
     @Override

@@ -7,7 +7,9 @@ import com.example.net.AppNetConfig;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * 积分更新
+ * */
 public class PostUpDatePointPresenter extends BasePresenter<OkBean> {
     private String point;
 

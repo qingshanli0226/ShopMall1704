@@ -2,6 +2,7 @@ package com.example.framework.base;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -10,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.framework.R;
 import com.example.framework.manager.ActivityInstanceManager;
 import com.example.framework.port.IActivity;
+import com.gyf.immersionbar.ImmersionBar;
+import com.jaeger.library.StatusBarUtil;
 import com.umeng.message.PushAgent;
 
 /**
@@ -26,8 +29,11 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
         setContentView(getLayoutId());
         //：该方法是【友盟+】Push后台进行日活统计及多维度推送的必调用方法，请务必调用！
         PushAgent.getInstance(this).onAppStart();
-        //TODO 沉浸式状态栏
-        //  ImmersionBar.with(this).init();
+        //状态栏透明,布局上移
+//        ImmersionBar.with(this).init();
+        //只改变状态栏颜色,布局不动
+        StatusBarUtil.setColor(this, Color.RED);
+
 
         activityInstanceManager = ActivityInstanceManager.getInstance();
         activityInstanceManager.addActivity(this);

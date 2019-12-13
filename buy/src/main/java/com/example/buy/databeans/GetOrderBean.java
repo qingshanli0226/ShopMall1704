@@ -1,6 +1,6 @@
 package com.example.buy.databeans;
 /**
- * 向服务器请求订单返回的数据
+ * 获取到的下订单
  * */
 public class GetOrderBean {
 
