@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.buy.activity.ShoppingResultActivity">
+
+    <com.example.common.TitleBar
+        android:id="@+id/tb_buy_payresult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tb_buy_payresult"
+        android:background="@drawable/strokebackground"
+        android:padding="@dimen/dpsize_20">
+
+        <ImageView
+            android:id="@+id/iv_buy_success"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/success" />
+
+        <TextView
+            android:id="@+id/tv_buy_success"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_buy_success"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dpsize_06"
+            android:text="购买成功"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/dpsize_17" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_buy_success"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dpsize_06"
+            android:text="我们将尽快为您发货"
+            android:textSize="@dimen/dpsize_10" />
+    </RelativeLayout>
+</RelativeLayout>

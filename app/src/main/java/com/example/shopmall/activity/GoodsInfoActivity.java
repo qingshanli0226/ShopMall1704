@@ -3,15 +3,22 @@ package com.example.shopmall.activity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
+import com.bumptech.glide.Glide;
+import com.example.buy.BezierTypeEvaluator;
 import com.example.buy.bean.InsertBean;
 import com.example.buy.presenter.InsertPresenter;
 import com.example.common.BottomBar;
@@ -35,10 +42,12 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView {
     RecyclerView rv_goods_info;
     BottomBar bb_goods_info;
     Button bt_goods_info;
+    LinearLayout layoutBottom;
 
     ArrayList<GoodsBean> list_goods = new ArrayList<>();
 
     private InsertPresenter addOneProduct;
+    private GoodsBean goods_bean;
 
     @Override
     protected int setLayout() {
@@ -51,6 +60,7 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView {
         rv_goods_info = findViewById(R.id.rv_goods_info);
         bb_goods_info = findViewById(R.id.bb_goods_info);
         bt_goods_info = findViewById(R.id.bt_goods_info);
+        layoutBottom = findViewById(R.id.layoutBottom);
 
         rv_goods_info.setLayoutManager(new LinearLayoutManager(this));
         list_goods.clear();
@@ -107,7 +117,7 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView {
 
 
         Intent intent = getIntent();
-        final GoodsBean goods_bean = (GoodsBean) intent.getSerializableExtra("goods_bean");
+        goods_bean = (GoodsBean) intent.getSerializableExtra("goods_bean");
         list_goods.add(goods_bean);
 
         GoodsInfoAdapter goodsInfoAdapter = new GoodsInfoAdapter(this, list_goods);
@@ -117,6 +127,7 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView {
         bt_goods_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String token = ShoppingManager.getInstance().getToken(GoodsInfoActivity.this);
                 HashMap<String, String> hashMap = new HashMap<>();
                 hashMap.put("token", token);
@@ -165,4 +176,5 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView {
     public void onPostDataFailed(String ErrorMsg) {
         Log.d("####", ErrorMsg);
     }
+
 }

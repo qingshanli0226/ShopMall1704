@@ -18,9 +18,9 @@ import androidx.appcompat.widget.TintTypedArray;
  * Created by Administrator on 2016/8/31.
  */
 public class NumberAddSubView extends LinearLayout implements View.OnClickListener {
-    private ImageView btn_sub;
-    private ImageView btn_add;
-    private TextView tv_count;
+    private ImageView btnSub;
+    private ImageView btnAdd;
+    private TextView tvCount;
     String mPrice = "";
     private int value = 1;
     private int minValue = 1;
@@ -29,29 +29,21 @@ public class NumberAddSubView extends LinearLayout implements View.OnClickListen
     private int maxValue = 999999;
     private int position = 0;
 
-    public int getValue() {
-        String countStr = tv_count.getText().toString().trim();//文本内容
-        if (countStr != null) {
-            value = Integer.valueOf(countStr);
-        }
-        return value;
-    }
-
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public NumberAddSubView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         //把布局和当前类形成整体
         View.inflate(context, R.layout.number_add_sub_layout, this);
-        btn_sub = (ImageView) findViewById(R.id.btn_sub);
-        btn_add = (ImageView) findViewById(R.id.btn_add);
-        tv_count = (TextView) findViewById(R.id.tv_count);
-        tv_price = findViewById(R.id.tv_price_gov);
+        btnSub = findViewById(R.id.btn_common_sub);
+        btnAdd = findViewById(R.id.btn_common_add);
+        tvCount = findViewById(R.id.tv_common_count);
+        tv_price = findViewById(R.id.tv_common_pricegov);
 
         getValue();
 
         //设置点击事件
-        btn_add.setOnClickListener(this);
-        btn_sub.setOnClickListener(this);
+        btnAdd.setOnClickListener(this);
+        btnSub.setOnClickListener(this);
 
         if (attrs != null) {
             //取出属性
@@ -70,13 +62,21 @@ public class NumberAddSubView extends LinearLayout implements View.OnClickListen
             }
             Drawable addDrawable = tintTypedArray.getDrawable(R.styleable.NumberAddSubView_numberAddBackground);
             if (addDrawable != null) {
-                btn_add.setImageDrawable(addDrawable);
+                btnAdd.setImageDrawable(addDrawable);
             }
             Drawable subDrawable = tintTypedArray.getDrawable(R.styleable.NumberAddSubView_numberSubBackground);
             if (subDrawable != null) {
-                btn_sub.setImageDrawable(subDrawable);
+                btnSub.setImageDrawable(subDrawable);
             }
         }
+    }
+
+    public int getValue() {
+        String countStr = tvCount.getText().toString().trim();//文本内容
+        if (countStr != null) {
+            value = Integer.valueOf(countStr);
+        }
+        return value;
     }
 
     public void setPostion(int positon) {
@@ -85,7 +85,7 @@ public class NumberAddSubView extends LinearLayout implements View.OnClickListen
 
     public void setValue(int value) {
         this.value = value;
-        tv_count.setText(String.valueOf(value));
+        tvCount.setText(String.valueOf(value));
     }
 
     public int getMinValue() {
@@ -118,7 +118,7 @@ public class NumberAddSubView extends LinearLayout implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btn_add) {
+        if (v.getId() == R.id.btn_common_add) {
             //加
             if (value < maxValue) {
                 addNumber();

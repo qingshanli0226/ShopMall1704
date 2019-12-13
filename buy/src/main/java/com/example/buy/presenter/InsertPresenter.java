@@ -12,7 +12,7 @@ import java.util.HashMap;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
-public class InsertPresenter extends BasePresenter<InsertBean> {
+public class InsertPresenter extends BasePresenter {
 
     private String Config;
     private Type type;

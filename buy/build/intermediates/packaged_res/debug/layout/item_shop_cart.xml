@@ -8,47 +8,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:padding="@dimen/dpsize_10">
 
         <CheckBox
-            android:id="@+id/cb_gov"
+            android:id="@+id/cb_buy_gov"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:button="@drawable/checkbox_selector" />
 
         <ImageView
-            android:id="@+id/iv_gov"
+            android:id="@+id/iv_buy_gov"
             android:layout_width="@dimen/recyclerimgsize"
             android:layout_height="@dimen/recyclerimgsize"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/dpsize_10"
             android:background="@mipmap/ic_launcher"
             android:scaleType="fitXY" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="@dimen/dpsize_5"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_desc_gov"
+                android:id="@+id/tv_buy_descgov"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:lines="2"
                 android:text="123"
-                android:textColor="#404040"
-                android:textSize="20dp" />
+                android:textColor="@color/color4040"
+                android:textSize="@dimen/dpsize_20" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/dpsize_10"
                 android:orientation="horizontal">
 
                 <com.example.common.NumberAddSubView
-                    android:id="@+id/numberAddSubView"
+                    android:id="@+id/number_buy_addsubview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
@@ -61,7 +61,7 @@
     <View
 
         android:layout_width="match_parent"
-        android:layout_height="0.6dp"
-        android:background="#22000000" />
+        android:layout_height="@dimen/dpsize_06"
+        android:background="@color/color_classiffy2" />
 
 </LinearLayout>

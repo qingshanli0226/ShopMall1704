@@ -7,50 +7,50 @@
     tools:context=".activity.OrderActivity">
 
     <com.example.common.TitleBar
-        android:id="@+id/tb_order"
+        android:id="@+id/tb_buy_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_order"
+        android:id="@+id/rv_buy_order"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/ll_pay"
-        android:layout_below="@id/tb_order" />
+        android:layout_above="@id/ll_buy_pay"
+        android:layout_below="@id/tb_buy_order" />
 
     <LinearLayout
-        android:id="@+id/ll_pay"
+        android:id="@+id/ll_buy_pay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#fff"
+        android:background="@color/color_white"
         android:orientation="horizontal"
         android:visibility="visible">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:padding="@dimen/dpsize_10"
             android:text="合计:"
-            android:textColor="#303235"
+            android:textColor="@color/colorBlacklittlelight"
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/tv_shopcart_total"
-            android:layout_width="0dp"
+            android:id="@+id/tv_buy_shopcartTotal"
+            android:layout_width="@dimen/dpsize_0"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="10dp"
+            android:padding="@dimen/dpsize_10"
             android:text="￥0.00"
-            android:textColor="#ed3f3f"
-            android:textSize="15sp" />
+            android:textColor="@color/color_lightred"
+            android:textSize="@dimen/dpsize_15" />
 
         <Button
-            android:id="@+id/btn_pay"
+            android:id="@+id/btn_buy_pay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#ed3f3f"
+            android:background="@color/color_lightred"
             android:text="确认付款"
-            android:textColor="#fff" />
+            android:textColor="@color/color_white" />
     </LinearLayout>
 </RelativeLayout>

@@ -7,7 +7,7 @@
     >
 
     <TextView
-        android:id="@+id/tv_price_gov"
+        android:id="@+id/tv_common_pricegov"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_gravity="right"
@@ -18,7 +18,7 @@
         android:textSize="16sp" />
 
     <ImageView
-        android:id="@+id/btn_sub"
+        android:id="@+id/btn_common_sub"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@mipmap/goods_sub_btn"
@@ -27,7 +27,7 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/tv_count"
+        android:id="@+id/tv_common_count"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:gravity="center"
@@ -35,7 +35,7 @@
         android:textSize="20sp" />
 
     <ImageView
-        android:id="@+id/btn_add"
+        android:id="@+id/btn_common_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@mipmap/goods_add_btn"
