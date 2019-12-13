@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ClassifyFragment extends BaseFragment implements IGetBaseView<ClassifyBean>, ILoadView {
+public class ClassifyFragment extends BaseFragment implements IGetBaseView<ClassifyBean> {
 
     private TitleBar tbClassify;
     private LoadingPage lpClassifyLoading;
@@ -103,7 +103,6 @@ public class ClassifyFragment extends BaseFragment implements IGetBaseView<Class
     private void getDataPresenter(String url) {
         integerPresenter = new IntegerPresenter(url,ClassifyBean.class);
         integerPresenter.attachGetView(this);
-        integerPresenter.attachLoadView(this);
         integerPresenter.getGetData();
     }
 
@@ -127,7 +126,7 @@ public class ClassifyFragment extends BaseFragment implements IGetBaseView<Class
         titles.add("装扮");
         titles.add("居家宅品");
         titles.add("办公文具");
-        titles.add("数码周边\"");
+        titles.add("数码周边");
         titles.add("游戏专区");
 
     }
@@ -160,25 +159,5 @@ public class ClassifyFragment extends BaseFragment implements IGetBaseView<Class
     public void onDestroy() {
         super.onDestroy();
         integerPresenter.detachView();
-    }
-
-    //开始loadingPage
-    @Override
-    public void onLoadingPage() {
-        lpClassifyLoading.start(LoadingPage.LOADING_SUCCEED);
-        lpClassifyLoading.setVisibility(View.VISIBLE);
-        rvClassifyRight.setVisibility(View.GONE);
-    }
-
-    //结束loadingPage
-    @Override
-    public void onStopLoadingPage() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                lpClassifyLoading.isSucceed();
-                rvClassifyRight.setVisibility(View.VISIBLE);
-            }
-        },1000);
     }
 }

@@ -40,7 +40,6 @@ public class MyApplication extends Application {
         CrashHandler.getInstance(this).init();
         //初始化缓存管理类
 
-
     }
 
     public static Context getContext() {

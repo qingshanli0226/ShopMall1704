@@ -30,12 +30,12 @@ import java.util.HashMap;
 
 public class GoodsInfoActivity extends BaseActivity implements IPostBaseView {
 
-    TitleBar tb_goods_info;
-    RecyclerView rv_goods_info;
-    BottomBar bb_goods_info;
-    Button bt_goods_info;
+    TitleBar tbGoodsInfo;
+    RecyclerView rvGoodsInfo;
+    BottomBar bbGoodsInfo;
+    Button btGoodsInfo;
 
-    ArrayList<GoodsBean> list_goods = new ArrayList<>();
+    ArrayList<GoodsBean> listGoods = new ArrayList<>();
 
     private InsertPresenter addOneProduct;
 
@@ -46,25 +46,25 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView {
 
     @Override
     public void initView() {
-        tb_goods_info = findViewById(R.id.tb_goods_info);
-        rv_goods_info = findViewById(R.id.rv_goods_info);
-        bb_goods_info = findViewById(R.id.bb_goods_info);
-        bt_goods_info = findViewById(R.id.bt_goods_info);
+        tbGoodsInfo = findViewById(R.id.tb_goods_info);
+        rvGoodsInfo = findViewById(R.id.rv_goods_info);
+        bbGoodsInfo = findViewById(R.id.bb_goods_info);
+        btGoodsInfo = findViewById(R.id.bt_goods_info);
 
-        rv_goods_info.setLayoutManager(new LinearLayoutManager(this));
-        list_goods.clear();
+        rvGoodsInfo.setLayoutManager(new LinearLayoutManager(this));
+        listGoods.clear();
     }
 
     @Override
     public void initData() {
-        tb_goods_info.setTitleBacKGround(Color.RED);
-        tb_goods_info.setCenterText("商品详情",18,Color.WHITE);
-        tb_goods_info.setLeftImg(R.drawable.left);
+        tbGoodsInfo.setTitleBacKGround(Color.RED);
+        tbGoodsInfo.setCenterText("商品详情",18,Color.WHITE);
+        tbGoodsInfo.setLeftImg(R.drawable.left);
 
-        tb_goods_info.setTitleClickLisner(new TitleBar.TitleClickLisner() {
+        tbGoodsInfo.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
             public void LeftClick() {
-
+                finish();
             }
 
             @Override
@@ -83,11 +83,11 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView {
         final Drawable collect = getResources().getDrawable(R.drawable.collect);
         final Drawable shoppingcart = getResources().getDrawable(R.drawable.shoppingcart);
         Drawable[] drawables = new Drawable[]{mine,collect,shoppingcart};
-        bb_goods_info.setBottombarName(strs);
-        bb_goods_info.setTapDrables(drawables);
+        bbGoodsInfo.setBottombarName(strs);
+        bbGoodsInfo.setTapDrables(drawables);
 
         //底部导航
-        bb_goods_info.setOnTapListener(new BottomBar.OnTapListener() {
+        bbGoodsInfo.setOnTapListener(new BottomBar.OnTapListener() {
             @Override
             public void tapItemClick(int i) {
                 switch (i){
@@ -107,14 +107,14 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView {
 
         Intent intent = getIntent();
         final GoodsBean goods_bean = (GoodsBean) intent.getSerializableExtra("goods_bean");
-        list_goods.add(goods_bean);
+        listGoods.add(goods_bean);
 
         GoodsInfoAdapter goodsInfoAdapter = new GoodsInfoAdapter();
-        goodsInfoAdapter.reFresh(list_goods);
-        rv_goods_info.setAdapter(goodsInfoAdapter);
+        goodsInfoAdapter.reFresh(listGoods);
+        rvGoodsInfo.setAdapter(goodsInfoAdapter);
 
         //加入购物车
-        bt_goods_info.setOnClickListener(new View.OnClickListener() {
+        btGoodsInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String token = ShoppingManager.getInstance().getToken(GoodsInfoActivity.this);

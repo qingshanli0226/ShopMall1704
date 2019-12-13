@@ -1,6 +1,8 @@
 package com.example.common;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -127,5 +129,10 @@ public class BottomBar extends LinearLayout {
 
     public void setCheckedItem(int position) {
         radioButtons[position].setChecked(true);
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
     }
 }

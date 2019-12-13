@@ -1,14 +1,23 @@
 package com.example.shopmall.activity;
 
 import android.graphics.Color;
+import android.widget.LinearLayout;
 
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.common.LoadingPage;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.shopmall.R;
 
+/**
+ * 消息界面
+ */
 public class MessageActivity extends BaseActivity {
 
+    private LinearLayout llMessage;
     private TitleBar tbMessage;
+    private RecyclerView rvMessage;
 
     @Override
     protected int setLayout() {
@@ -17,7 +26,9 @@ public class MessageActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        llMessage = findViewById(R.id.ll_message);
         tbMessage = findViewById(R.id.tb_message);
+        rvMessage = findViewById(R.id.rv_message);
     }
 
     @Override

@@ -48,11 +48,28 @@
                 android:textSize="@dimen/register_text_20"
                 android:layout_marginStart="@dimen/register_mStart_50"/>
 
-            <EditText
-                android:id="@+id/et_word"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/register_mEnd_30"/>
+                android:layout_marginEnd="@dimen/login_mEnd_30">
+
+                <EditText
+                    android:id="@+id/et_word"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:maxLength="10"
+                    android:maxLines="1" />
+
+                <ImageView
+                    android:id="@+id/iv_word"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/view_off"/>
+
+            </RelativeLayout>
 
         </LinearLayout>
 
