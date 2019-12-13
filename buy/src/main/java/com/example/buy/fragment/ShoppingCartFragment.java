@@ -1,6 +1,5 @@
 package com.example.buy.fragment;
 
-
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -46,6 +45,7 @@ import com.example.framework.manager.ShoppingManager;
 import com.example.common.NumberAddSubView;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseFragment;
+import com.example.net.Constant;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,7 +56,6 @@ import java.util.Map;
  * 购物车页面
  */
 public class ShoppingCartFragment extends BaseFragment implements NumberAddSubView.OnNumberChangeListener, IGetBaseView<ShoppingCartBean>, IPostBaseView {
-
     TitleBar tbShoppingCart;
     ImageView ivShoppingCart;
     RecyclerView mRecyclerview;
@@ -69,8 +68,9 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     Button btnDelete;
     Button btnCheckOut;
 
-
     int flag = 0;
+
+    int flag2 = 0;
 
     private MyShoppingBasketAdapter myShoppingBasketAdapter;
     @SuppressLint("HandlerLeak")
@@ -108,7 +108,6 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             tvShopcartTotal.setText("￥" + allCount + "0");
 
         }
-
 
         List<Map<String, String>> data = myShoppingManager.getData();
         Map<String, String> map = data.get(msg.arg2);
@@ -180,23 +179,43 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
                 List<Map<String, String>> data = myShoppingManager.getData();
 
                 for (int j = 0; j < data.size(); j++) {
-                    Map<String, String> map = data.get(j);
+                    final Map<String, String> map = data.get(j);
                     if (map.get("ischecked").equals("true")) {
-                        data.remove(j);
-                        j--;
+                        flag2 = 0;
+
+                        String token = ShoppingManager.getInstance().getToken(getContext());
+                        HashMap<String, String> hashMap = new HashMap<>();
+                        hashMap.put("token", token);
+
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("productId", map.get("id"));
+                        jsonObject.put("productNum", map.get("num"));
+                        jsonObject.put("productName", map.get("title"));
+                        jsonObject.put("url", map.get("img"));
+                        jsonObject.put("productPrice", map.get("price"));
+                        jsonObject.put("sign", SignUtil.generateJsonSign(jsonObject));
+
+                        SignUtil.encryptJsonParamsByBase64(jsonObject);
+
+                        addOneProduct = new InsertPresenter("removeOneProduct", InsertBean.class, hashMap, jsonObject);
+                        addOneProduct.getPostJsonData();
+                        addOneProduct.attachPostView(new IPostBaseView() {
+                            @Override
+                            public void onPostDataSucess(Object data) {
+                                Log.e("####", "删除" + map.get("title") + "成功");
+                                initData2();
+                            }
+
+                            @Override
+                            public void onPostDataFailed(String ErrorMsg) {
+
+                            }
+                        });
                     }
                 }
-                myShoppingBasketAdapter.reFresh(data);
-                myShoppingManager.setData(data);
-
-                judgeNumberisZero();
-
-                cbAll.setChecked(false);
-
                 dialogInterface.dismiss();
             }
         });
-
         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -215,7 +234,6 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             public void LeftClick() {
 
             }
-
             @Override
             public void RightClick() {
                 int allNumber = myShoppingManager.getAllNumber();
@@ -225,7 +243,6 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
                     settingChanged();
                 }
             }
-
             @Override
             public void CenterClick() {
 
@@ -344,7 +361,6 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
                 allCount += Double.parseDouble(map.get("price")) * Integer.parseInt(map.get("num"));
                 myShoppingManager.setAllCount(allCount);
             }
-
             myShoppingBasketAdapter.setCheckedcount(data.size());
         }
         myShoppingManager.setData(data);
@@ -352,7 +368,6 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
 
     //刷新购物车数据
     private void initData2() {
-
         String token = ShoppingManager.getInstance().getToken(getContext());
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("token", token);
@@ -360,7 +375,6 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         ShoppingCartPresenter presenter = new ShoppingCartPresenter("getShortcartProducts", ShoppingCartBean.class, hashMap);
         presenter.attachGetView(this);
         presenter.getGetData();
-
     }
 
     //设置TitleBar
@@ -372,18 +386,17 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     //初始化控件
     @Override
     protected void initView(View view) {
-        tbShoppingCart = view.findViewById(R.id.tbShoppingCart);
-        ivShoppingCart = view.findViewById(R.id.ivShoppingCart);
-        mRecyclerview = view.findViewById(R.id.mRecyclerview);
-        shoppingcartlayout = view.findViewById(R.id.shoppingcartlayout);
-        tvShopcartTotal = view.findViewById(R.id.tvShopcartTotal);
-        checkboxAll = view.findViewById(R.id.checkboxAll);
-        llDelete = view.findViewById(R.id.llDelete);
-        llCheckAll = view.findViewById(R.id.llCheckAll);
-        cbAll = view.findViewById(R.id.cbAll);
-        btnDelete = view.findViewById(R.id.btnDelete);
-        btnCheckOut = view.findViewById(R.id.btnCheckOut);
-
+        tbShoppingCart = view.findViewById(R.id.tb_buy_shoppingcart);
+        ivShoppingCart = view.findViewById(R.id.iv_buy_shoppingcart);
+        mRecyclerview = view.findViewById(R.id.rv_buy_shoppingcart);
+        shoppingcartlayout = view.findViewById(R.id.rl_buy_shoppingcartlayout);
+        tvShopcartTotal = view.findViewById(R.id.tv_buy_shopcartTotal);
+        checkboxAll = view.findViewById(R.id.cb_buy_checkboxAll);
+        llDelete = view.findViewById(R.id.ll_buy_delete);
+        llCheckAll = view.findViewById(R.id.ll_buy_checkall);
+        cbAll = view.findViewById(R.id.cb_buy_all);
+        btnDelete = view.findViewById(R.id.btn_buy_delete);
+        btnCheckOut = view.findViewById(R.id.btn_buy_checkout);
 
         myShoppingManager = ShoppingManager.getInstance();
 
@@ -407,7 +420,6 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
                     }
                 }
                 myShoppingManager.setBuyThings(data2);
-
                 startActivity(new Intent(getContext(), OrderActivity.class));
             }
         });
@@ -460,7 +472,6 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     //物品减少方法
     @Override
     public void subNumner(View view, int value, String price, boolean ischecked, int postion) {
-
         List<Map<String, String>> data = myShoppingManager.getData();
 
         Map<String, String> map = data.get(postion);
@@ -565,23 +576,19 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             public void onAnimationStart(Animator animator) {
 
             }
-
             @Override
             public void onAnimationEnd(Animator animator) {
                 shoppingcartlayout.removeView(imageView);
             }
-
             @Override
             public void onAnimationCancel(Animator animator) {
 
             }
-
             @Override
             public void onAnimationRepeat(Animator animator) {
 
             }
         });
-
 
         ObjectAnimator objectAnimatorX = new ObjectAnimator().ofFloat(ivShoppingCart, "scaleX", 0.6f, 1.0f);
         ObjectAnimator objectAnimatorY = new ObjectAnimator().ofFloat(ivShoppingCart, "scaleY", 0.6f, 1.0f);
@@ -598,7 +605,6 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     public void onGetDataSucess(ShoppingCartBean data) {
         List<Map<String, String>> data2 = new ArrayList<>();
         List<ShoppingCartBean.ResultBean> result = data.getResult();
-        Log.e("####size", result.size() + "");
         for (int i = 0; i < result.size(); i++) {
             ShoppingCartBean.ResultBean resultBean = result.get(i);
 
@@ -615,6 +621,8 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         myShoppingManager.setData(data2);
         judgeNumberisZero();
         myShoppingManager.setAllCount(0);
+        myShoppingBasketAdapter.setCheckedcount(0);
+        myShoppingBasketAdapter.setAllcount(0);
 
         checkboxAll.setChecked(false);
         tvShopcartTotal.setText("￥0.00");

@@ -23,7 +23,6 @@ import com.alipay.sdk.app.PayTask;
 import com.example.buy.R;
 import com.example.buy.bean.PayBean;
 import com.example.buy.bean.PayResultBean;
-import com.example.buy.fragment.ShoppingCartFragment;
 import com.example.buy.presenter.PayPresenter;
 import com.example.common.SignUtil;
 import com.example.framework.base.IPostBaseView;
@@ -48,9 +47,6 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
     private MyShoppingOrderAdapter myShoppingOrderAdapter;
     private PayPresenter payPresenter;
 
-
-    private double allMoney;
-    private PayPresenter payPresenter2;
     @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
         @Override
@@ -62,16 +58,13 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
                     String outTradeNo = payMessage.getOutTradeNo();
                     Map<String, String> result = payMessage.getResult();
 
-
                     String resultStatus = result.get("resultStatus");
                     String resultContent = result.get("result");
                     boolean payResultIsOk = false;
                     if (resultStatus.equals("9000")) {
                         payResultIsOk = true;
                     }
-
                     confirmServerPayResult(outTradeNo, resultContent, payResultIsOk);
-
 
                     break;
                 default:
@@ -79,6 +72,9 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
             }
         }
     };
+
+    private double allMoney;
+    private PayPresenter payPresenter2;
 
     @Override
     protected int setLayout() {
@@ -100,10 +96,10 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
     @Override
     public void initView() {
         EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
-        tbOrder = findViewById(R.id.tbOrder);
-        rvOrder = findViewById(R.id.rvOrder);
-        tvShopcartTotal = findViewById(R.id.tvShopcartTotal);
-        btnPay = findViewById(R.id.btnPay);
+        tbOrder = findViewById(R.id.tb_buy_order);
+        rvOrder = findViewById(R.id.rv_buy_order);
+        tvShopcartTotal = findViewById(R.id.tv_buy_shopcartTotal);
+        btnPay = findViewById(R.id.btn_buy_pay);
 
         initRecycler();
         initPayButton();
@@ -133,7 +129,6 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
                 jsonObject1.put("body", array);
                 Log.e("####", jsonObject1.toString());
                 jsonObject1.put("sign", SignUtil.generateJsonSign(jsonObject1));
-
 
                 SignUtil.encryptJsonParamsByBase64(jsonObject1);
 
@@ -168,7 +163,6 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
 
         Thread thread = new Thread(runnable);
         thread.start();
-
     }
 
     private void confirmServerPayResult(String outTradeNo, String resultContent, final boolean payResultIsOk) {
@@ -190,6 +184,7 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
             public void onPostDataSucess(Object data) {
                 if (payResultIsOk) {
                     Log.e("####", "付款成功");
+                    startActivity(new Intent(OrderActivity.this, ShoppingResultActivity.class));
                     finish();
                 }
             }
@@ -200,7 +195,6 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
             }
         });
         payPresenter2.getPostJsonData();
-
     }
 
     private void initTitlebar() {
@@ -243,7 +237,8 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
 
     private void setAllMoney() {
         allMoney = shoppingManager.getAllMoney();
-        tvShopcartTotal.setText("￥" + allMoney + "0");
+        String text = "￥" + allMoney + "0";
+        tvShopcartTotal.setText(text);
     }
 
     @Override

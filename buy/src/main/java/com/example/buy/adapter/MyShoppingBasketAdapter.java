@@ -78,6 +78,7 @@ public class MyShoppingBasketAdapter extends BaseAdapter<Map<String, String>, My
         holder.numberAddSubView.setPostion(position);
 
         String ischecked = hashMap.get("ischecked");
+
         if (ischecked.equals("true")) {
             holder.cbGov.setChecked(true);
             holder.numberAddSubView.setChecked(true);
@@ -93,9 +94,9 @@ public class MyShoppingBasketAdapter extends BaseAdapter<Map<String, String>, My
             public void onClick(View view) {
                 if (holder.cbGov.isChecked()) {
                     double count = x * Double.parseDouble(hashMap.get("price"));
-//                    Log.e("####",allcount+"");
+                    Log.e("####", allcount + "");
                     allcount += count;
-//                    Log.e("####",count+"/"+allcount);
+                    Log.e("####", count + "/" + allcount);
                     Message message = Message.obtain();
                     message.what = 100;
                     message.arg2 = position;
@@ -116,7 +117,7 @@ public class MyShoppingBasketAdapter extends BaseAdapter<Map<String, String>, My
 
                     checkedcount--;
                 }
-                Log.e("####", checkedcount + "");
+//                Log.e("####", checkedcount + "");
                 Message message = Message.obtain();
                 message.what = 200;
 
@@ -143,9 +144,9 @@ public class MyShoppingBasketAdapter extends BaseAdapter<Map<String, String>, My
             super(itemView);
         }
 
-        ImageView ivImg = itemView.findViewById(R.id.ivGov);
-        TextView tvTitle = itemView.findViewById(R.id.tvDescGov);
-        NumberAddSubView numberAddSubView = itemView.findViewById(R.id.numberAddSubView);
-        CheckBox cbGov = itemView.findViewById(R.id.cbGov);
+        ImageView ivImg = itemView.findViewById(R.id.iv_buy_gov);
+        TextView tvTitle = itemView.findViewById(R.id.tv_buy_descgov);
+        NumberAddSubView numberAddSubView = itemView.findViewById(R.id.number_buy_addsubview);
+        CheckBox cbGov = itemView.findViewById(R.id.cb_buy_gov);
     }
 }

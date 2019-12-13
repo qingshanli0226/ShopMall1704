@@ -67,11 +67,11 @@ public class MyShoppingOrderAdapter extends BaseAdapter<Map<String, String>, MyS
             super(itemView);
         }
 
-        ImageView ivGov = itemView.findViewById(R.id.ivGov);
-        TextView tvTitle = itemView.findViewById(R.id.tvTitle);
-        TextView tvPrice = itemView.findViewById(R.id.tvPrice);
-        TextView tvOrderitemnum = itemView.findViewById(R.id.tvOrderitemnum);
-        TextView tvItemprice = itemView.findViewById(R.id.tvItemprice);
+        ImageView ivGov = itemView.findViewById(R.id.iv_buy_gov);
+        TextView tvTitle = itemView.findViewById(R.id.tv_buy_title);
+        TextView tvPrice = itemView.findViewById(R.id.tv_buy_price);
+        TextView tvOrderitemnum = itemView.findViewById(R.id.tv_buy_orderitemnum);
+        TextView tvItemprice = itemView.findViewById(R.id.tv_buy_itemprice);
 
     }
 
