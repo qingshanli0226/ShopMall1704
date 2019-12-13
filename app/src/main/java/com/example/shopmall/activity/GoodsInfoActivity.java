@@ -28,6 +28,9 @@ import com.example.shopmall.bean.GoodsBean;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * 商品详情
+ */
 public class GoodsInfoActivity extends BaseActivity implements IPostBaseView {
 
     TitleBar tbGoodsInfo;

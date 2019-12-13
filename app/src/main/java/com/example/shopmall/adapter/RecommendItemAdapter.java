@@ -17,6 +17,9 @@ import com.example.shopmall.R;
 
 import java.util.List;
 
+/**
+ * Recommend适配器
+ */
 public class RecommendItemAdapter extends BaseAdapter<HomepageBean.ResultBean.RecommendInfoBean,RecommendItemAdapter.ViewHolder> {
 
     private Context mContext;

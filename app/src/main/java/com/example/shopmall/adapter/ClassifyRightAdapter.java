@@ -15,7 +15,9 @@ import com.example.shopmall.bean.GoodsBean;
 
 import java.util.List;
 
-
+/**
+ * 分类右边数据适配器
+ */
 public class ClassifyRightAdapter extends BaseAdapter<ClassifyBean.ResultBean,ClassifyRightAdapter.ViewHolder> {
 
     private Context mContext;

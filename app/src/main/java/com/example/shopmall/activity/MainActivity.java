@@ -22,6 +22,9 @@ import com.example.shopmall.fragment.MineFragment;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * 主页
+ */
 public class MainActivity extends BaseActivity {
 
     //数据

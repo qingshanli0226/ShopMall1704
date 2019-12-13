@@ -20,6 +20,9 @@ import com.example.shopmall.bean.GoodsListBean;
 
 import java.util.List;
 
+/**
+ * GoodsList适配器
+ */
 public class GoodsListAdapter extends BaseAdapter<GoodsListBean.ResultBean.PageDataBean,GoodsListAdapter.ViewHolder> {
 
     private Context mContext;

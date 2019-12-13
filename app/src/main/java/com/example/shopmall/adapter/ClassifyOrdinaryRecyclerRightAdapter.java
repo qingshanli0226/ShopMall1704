@@ -17,7 +17,7 @@ import com.example.shopmall.bean.ClassifyBean;
 import java.util.List;
 
 /**
- * 常用分类
+ * 常用分类适配器
  */
 public class ClassifyOrdinaryRecyclerRightAdapter extends BaseAdapter<ClassifyBean.ResultBean.ChildBean,ClassifyOrdinaryRecyclerRightAdapter.ViewHolder> {
 

@@ -20,6 +20,10 @@ import com.example.framework.manager.ConnectManager;
 import com.example.net.Constant;
 import com.example.shopmall.R;
 import com.example.shopmall.presenter.IntegerPresenter;
+
+/**
+ * 起始页
+ */
 public class WelcomeActivity extends BaseActivity implements IGetBaseView<HomepageBean> {
 
     public ImageView ivWelcome;

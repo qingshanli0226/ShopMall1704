@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.framework.base.BaseAdapter;
 import com.example.shopmall.R;
-import com.example.shopmall.bean.MessageBean;
+import com.example.framework.bean.MessageBean;
 
 import java.util.List;
 
@@ -59,7 +59,7 @@ public class MessageItemAdapter extends BaseAdapter<MessageBean,MessageItemAdapt
 
         }
 
-        public void setData(List<MessageBean> messageBeans, int position) {
+        public void setData(List<MessageBean> messageBeans, final int position) {
             tvNameMessage.setText(messageBeans.get(position).getNameMessage());
             tvContentMessage.setText(messageBeans.get(position).getContentMessage());
 
@@ -70,6 +70,24 @@ public class MessageItemAdapter extends BaseAdapter<MessageBean,MessageItemAdapt
                 }
             });
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    likeliest.getLikeliest(position);
+                }
+            });
+
         }
     }
+
+    private Likeliest likeliest;
+
+    public interface Likeliest{
+        public void getLikeliest(int position);
+    }
+
+    public void setLikeliest(Likeliest likeliest) {
+        this.likeliest = likeliest;
+    }
+
 }

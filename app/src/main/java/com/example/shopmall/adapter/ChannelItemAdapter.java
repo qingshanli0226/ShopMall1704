@@ -16,6 +16,9 @@ import com.example.shopmall.R;
 
 import java.util.List;
 
+/**
+ * Channel适配器
+ */
 public class ChannelItemAdapter extends BaseAdapter<HomepageBean.ResultBean.ChannelInfoBean,ChannelItemAdapter.ViewHolder> {
 
     private Context mContext;

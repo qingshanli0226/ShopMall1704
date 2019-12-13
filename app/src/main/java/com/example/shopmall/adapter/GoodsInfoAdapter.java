@@ -16,6 +16,9 @@ import com.example.shopmall.R;
 import com.example.shopmall.bean.GoodsBean;
 import java.util.List;
 
+/**
+ * Goods适配器
+ */
 public class GoodsInfoAdapter extends BaseAdapter<GoodsBean,GoodsInfoAdapter.ViewHolder> {
 
     @Override

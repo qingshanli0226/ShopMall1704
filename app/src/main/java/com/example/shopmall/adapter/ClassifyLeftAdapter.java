@@ -13,7 +13,7 @@ import com.example.shopmall.R;
 import java.util.List;
 
 /**
- * ClassifyLeft
+ * ClassifyLeft适配器
  */
 public class ClassifyLeftAdapter extends BaseAdapter<String,ClassifyLeftAdapter.ViewHolder> {
 

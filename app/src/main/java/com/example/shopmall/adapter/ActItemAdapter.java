@@ -13,6 +13,9 @@ import com.example.net.Constant;
 
 import java.util.List;
 
+/**
+ * Act适配器
+ */
 public class ActItemAdapter extends PagerAdapter {
 
     private Context mContext;

@@ -16,6 +16,9 @@ import com.example.shopmall.R;
 
 import java.util.List;
 
+/**
+ * Seckill适配器
+ */
 public class SeckillItemAdapter extends BaseAdapter<HomepageBean.ResultBean.SeckillInfoBean.ListBean,SeckillItemAdapter.ViewHolder> {
 
     private Context mContext;

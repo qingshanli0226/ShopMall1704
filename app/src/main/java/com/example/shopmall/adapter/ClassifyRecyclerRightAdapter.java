@@ -19,7 +19,7 @@ import com.example.shopmall.bean.ClassifyBean;
 import java.util.List;
 
 /**
- * 热卖推荐
+ * 热卖推荐适配器
  */
 public class ClassifyRecyclerRightAdapter extends BaseAdapter<ClassifyBean.ResultBean.HotProductListBean,ClassifyRecyclerRightAdapter.ViewHolder> {
 

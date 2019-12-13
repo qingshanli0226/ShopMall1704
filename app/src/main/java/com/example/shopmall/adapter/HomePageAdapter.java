@@ -36,6 +36,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 首页多布局适配器
+ */
 public class HomePageAdapter extends BaseAdapter<HomepageBean.ResultBean,RecyclerView.ViewHolder> {
 
     private static final String GOODS_BEAN = "goods_bean";
