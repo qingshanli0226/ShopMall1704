@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_marginTop="28dp"
+    android:orientation="vertical"
     tools:context=".goodsinfo.GoodsInfoActivity">
 
     <LinearLayout
@@ -174,25 +174,17 @@
                     <WebView
                         android:id="@+id/mWbGoodInfoMore"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent" />
 
                 </LinearLayout>
             </ScrollView>
 
-<!--            <ScrollView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent">-->
-
-<!--               -->
-
-<!--            </ScrollView>-->
-
         </LinearLayout>
-<!--                <include layout="@layout/more_layout" />-->
     </FrameLayout>
 
+<!--        android:id="@+id/ll_goods_root"-->
     <LinearLayout
-        android:id="@+id/ll_goods_root"
+        android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

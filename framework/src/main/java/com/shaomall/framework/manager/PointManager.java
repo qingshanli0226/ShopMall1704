@@ -1,12 +1,9 @@
 package com.shaomall.framework.manager;
 
-/**
- * 积分管理类
- */
 public class PointManager {
-    private static PointManager instance = null;
+    private static PointManager instance;
     private CallbackIntegralListener callbackIntegralListener = null;
-
+    private long oldPoint = 0;
 
     private PointManager() {
     }
@@ -22,30 +19,24 @@ public class PointManager {
         return instance;
     }
 
-    public void setPointNum(int pointNum){
-        this.callbackIntegralListener.onCallbacksIntegral(pointNum);
+    public void setPointNum(int pointNum) {
+        if (oldPoint != pointNum) {
+            callbackIntegralListener.onCallbacksIntegral(pointNum);
+        }
+        oldPoint = pointNum;
     }
 
 
-    /**
-     * 注册监听
-     *
-     * @param callbackIntegralListener
-     */
     public void registerCallbackIntegralListener(CallbackIntegralListener callbackIntegralListener) {
         this.callbackIntegralListener = callbackIntegralListener;
     }
 
-    /**
-     * 注销监听
-     *
-     * @param callbackIntegralListener
-     */
-    public void unRegisterCallbackIntegralListener(CallbackIntegralListener callbackIntegralListener) {
-        if (callbackIntegralListener != null) {
+    public void unRegisterCallbackIntegralListener() {
+        if (this.callbackIntegralListener != null) {
             this.callbackIntegralListener = null;
         }
     }
+
 
     public interface CallbackIntegralListener {
         void onCallbacksIntegral(int pointNum);

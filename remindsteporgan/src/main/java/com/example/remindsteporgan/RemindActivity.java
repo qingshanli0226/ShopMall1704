@@ -7,6 +7,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -22,7 +23,6 @@ import com.shaomall.framework.manager.PointManager;
 import java.util.Calendar;
 
 public class RemindActivity extends BaseActivity implements SensorEventListener {
-
     private TextView tv1;
     private TextView historySteps;
 
@@ -66,8 +66,10 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
 
         sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         // 计步统计
-        sm.registerListener(this, sm.getDefaultSensor(Sensor.TYPE_STEP_COUNTER),
-                SensorManager.SENSOR_DELAY_NORMAL);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            sm.registerListener(this, sm.getDefaultSensor(Sensor.TYPE_STEP_COUNTER),
+                    SensorManager.SENSOR_DELAY_NORMAL);
+        }
 
     }
 
@@ -84,7 +86,7 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
 
             //TODo 获取到系统里的步数
             X = event.values[0];
-            //TODO 如果是新的一天就吧X的值给y然后减去让他归零
+            //TODO 如果是新的一天就把X的值给y然后减去让他归零
             long y = sp.getLong("y", 0);
             Log.d("SSSH:", y + "");
             if (y == 0) {
@@ -124,11 +126,18 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
 
             long stepCount = (long) (X - y + plus);
             tv1.setText("今天走了" + stepCount + "步");
-
-            int point = (int) Math.round(stepCount * 0.001); //步数换算积分
-            //设置积分
-            PointManager.getInstance().setPointNum(point);
+            setStepCount2Point(stepCount);
         }
+    }
+
+    /**
+     * 步数换算积分
+     *
+     * @param stepCount
+     */
+    public void setStepCount2Point(Long stepCount) {
+        int point = (int) Math.floor(stepCount * 0.1); //步数换算积分
+        PointManager.getInstance().setPointNum(point);
     }
 
 

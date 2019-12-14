@@ -1,7 +1,9 @@
 package com.shaomall.framework.base;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
@@ -29,6 +31,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(setLayoutId());
         mActivity = this;
 
+
+
         immersionBar = ImmersionBar.with(this);
         immersionBar.init();
 
@@ -49,6 +53,21 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void initData();
 
+
+    /**
+     * 获取android手机状态栏的高度
+     * @return
+     */
+    public int getStatusBarHeight(){
+        Resources resources = mActivity.getResources();
+        //获取标志符
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        //获取尺寸像素大小
+        int height = resources.getDimensionPixelSize(resourceId);
+        return height;
+    }
+
+
     /**
      * 简化findViewById()
      *
@@ -59,7 +78,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected <T extends View> T findViewByMe(@IdRes int resId) {
         return (T) findViewById(resId);
     }
-
 
     /**
      * Intent 跳转
