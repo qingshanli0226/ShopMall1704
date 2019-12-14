@@ -46,6 +46,8 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView {
 
     ArrayList<GoodsBean> list_goods = new ArrayList<>();
 
+    int x = 1;
+
     private InsertPresenter addOneProduct;
     private GoodsBean goods_bean;
 
@@ -127,8 +129,9 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView {
         bt_goods_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 String token = ShoppingManager.getInstance().getToken(GoodsInfoActivity.this);
+                ShoppingManager.getInstance().setOnNumberChanged(x);
+                x++;
                 HashMap<String, String> hashMap = new HashMap<>();
                 hashMap.put("token", token);
 

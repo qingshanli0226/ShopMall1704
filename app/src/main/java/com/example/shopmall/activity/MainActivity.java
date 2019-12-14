@@ -2,6 +2,7 @@ package com.example.shopmall.activity;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -21,7 +22,7 @@ import com.example.shopmall.fragment.MineFragment;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements ShoppingManager.OnNumberChangedListener {
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -66,6 +67,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        ShoppingManager.getInstance().setOnNumberChangedListener(this);
         replaceFragment(fragmentArrayList.get(0));
 
 //        loadingPage.start(LoadingPage.LOADING_FAILURE);
@@ -132,4 +134,18 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void NumberChanged(int num) {
+
+        ShoppingManager.getInstance().setAfternum(num);
+
+        int beforenum = ShoppingManager.getInstance().getBeforenum();
+        int afternum = ShoppingManager.getInstance().getAfternum();
+
+        if (beforenum != afternum) {
+            ShoppingManager.getInstance().setBeforenum(afternum);
+            Log.e("####", afternum + "");
+        }
+
+    }
 }
