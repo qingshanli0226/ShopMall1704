@@ -1,10 +1,9 @@
 package com.example.administrator.shaomall.goodsinfo
 
 import android.animation.Animator
-import android.animation.ValueAnimator
-import android.graphics.Path
+import android.animation.ObjectAnimator
 import android.graphics.PathMeasure
-import android.view.animation.LinearInterpolator
+import android.graphics.PointF
 import android.webkit.WebViewClient
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -91,80 +90,69 @@ class GoodsInfoActivity : BaseMVPActivity<String>() {
                 //将商品添加进入购物车
                 iBasePresenter!!.doJsonPostHttpRequest()
                 //给添加购物车设置动画, 贝瑟尔曲线
-//                setBezierCurveAnimation() //设置贝塞尔曲线动画
+                setBezierCurveAnimation() //设置贝塞尔曲线动画
             }
         }
     }
 
+
+    private var x = 0f
+    private var y = 0f
     /**
      * 设置贝塞尔曲线动画
      */
     private fun setBezierCurveAnimation() {
+        x = 0f
+        y = 0f
+
         //      一、创造出执行动画的主题---imageview
         //代码new一个imageview，图片资源是上面的imageview的图片
         // (这个图片就是执行动画的图片，从开始位置出发，经过一个抛物线（贝塞尔曲线），移动到购物车里)
         val goods = ImageView(this)
         goods.setImageResource(R.drawable.add_cart_bg_selector)
-        val params = RelativeLayout.LayoutParams(100, 100)
-        ll.addView(goods, params)
+        val params = RelativeLayout.LayoutParams(50, 50)
+        rl.addView(goods, params)
 
-        //计算动画开始/ 结束点的坐标的准备工作
-        //得到父布局的起始点坐标（用于辅助计算动画开始/结束时的点的坐标）
-        val parentLocation = IntArray(2)
-        ll.getLocationInWindow(parentLocation)
-
-        //得到商品图片的坐标（用于计算动画开始的坐标）
+        //得到加入购物车按钮的坐标（用于计算动画开始的坐标）
         val startLoc = IntArray(2)
         mBtnGoodInfoAddcart.getLocationInWindow(startLoc)
-
         //得到购物车图片的坐标(用于计算动画结束后的坐标)
         val endLoc = IntArray(2)
         mTvFGoodInfoCart.getLocationInWindow(endLoc)
 
-        //        三、正式开始计算动画开始/结束的坐标
-        //开始掉落的商品的起始点：商品起始点-父布局起始点+该商品图片的一半
-        val startX = (startLoc[0] - parentLocation[0] + mBtnGoodInfoAddcart.getWidth() / 2).toFloat()
-        val startY = (startLoc[1] - parentLocation[1] + mBtnGoodInfoAddcart.getHeight() / 2).toFloat()
+        //点击加入购物车的原点坐标
+        val p0 = PointF()
+        //        p0.x = startLoc[0] - mBtnGoodInfoAddcart.width.toFloat()
+        //        p0.y = startLoc[1] - mBtnGoodInfoAddcart.height.toFloat()
+        p0.x = startLoc[0].toFloat() + mBtnGoodInfoAddcart.width.toFloat() / 2
+        p0.y = startLoc[1].toFloat() - mBtnGoodInfoAddcart.height.toFloat() / 2
 
-        //商品掉落后的终点坐标：购物车起始点-父布局起始点+购物车图片的1/5
-        val toX = (endLoc[0] - parentLocation[0] + mBtnGoodInfoAddcart.getWidth() / 5).toFloat()
-        val toY = (endLoc[1] - parentLocation[1]).toFloat()
+        val p1 = PointF()
+        p1.x = startLoc[0].toFloat() - 30
+        p1.y = startLoc[1].toFloat() - 350
 
-        //四、计算中间动画的插值坐标（贝塞尔曲线）（其实就是用贝塞尔曲线来完成起终点的过程）
-        //开始绘制贝塞尔曲线
-        val path = Path()
-        //移动到起始点（贝塞尔曲线的起点）
-        path.moveTo(startX, startY)
-        //使用二次萨贝尔曲线：注意第一个起始坐标越大，贝塞尔曲线的横向距离就会越大，一般按照下面的式子取即可
-        path.quadTo((startX + toX) / 2, startY, toX, toY)
-        //mPathMeasure用来计算贝塞尔曲线的曲线长度和贝塞尔曲线中间插值的坐标，
-        // 如果是true，path会形成一个闭环
-        mPathMeasure = PathMeasure(path, true)
+        val p2 = PointF()
+        p2.x = endLoc[0].toFloat() + mTvFGoodInfoCart.width.toFloat() / 2
+        p2.y = endLoc[1].toFloat() - mTvFGoodInfoCart.height.toFloat() / 2
 
+        println("按钮: ${mBtnGoodInfoAddcart.width}, ${mBtnGoodInfoAddcart.height}  || 购物车:  ${mTvFGoodInfoCart.width}, ${mTvFGoodInfoCart.height}")
 
-        //★★★属性动画实现（从0到贝塞尔曲线的长度之间进行插值计算，获取中间过程的距离值）
-        val valueAnimator = ValueAnimator.ofFloat(0f, mPathMeasure.length)
-        valueAnimator.duration = 1000
-        valueAnimator.interpolator = LinearInterpolator()
-        valueAnimator.addUpdateListener { animation ->
-            // 当插值计算进行时，获取中间的每个值，
-            // 这里这个值是中间过程中的曲线长度（下面根据这个值来得出中间点的坐标值）
-            val value = animation.animatedValue as Float
-            // ★★★★★获取当前点坐标封装到mCurrentPosition
-            // boolean getPosTan(float distance, float[] pos, float[] tan) ：
-            // 传入一个距离distance(0<=distance<=getLength())，然后会计算当前距
-            // 离的坐标点和切线，pos会自动填充上坐标，这个方法很重要。
-            mPathMeasure.getPosTan(value, mCurrentPosition, null) //mCurrentPosition此时就是中间距离点的坐标值
-            // 移动的商品图片（动画图片）的坐标设置为该中间点的坐标
-            goods.setTranslationX(mCurrentPosition[0])
-            goods.setTranslationY(mCurrentPosition[1])
+        val goInAnim = ObjectAnimator()
+        goInAnim.setFloatValues(0f, 1f)
+        goInAnim.duration = 1000
+        goInAnim.addUpdateListener {
+            val t = it.animatedValue as Float
+            val oneMinusT = 1.0f - t
+            x = oneMinusT * oneMinusT * (p0.x) + 2 * t * oneMinusT * (p1.x) + t * t * (p2.x)
+            y = oneMinusT * oneMinusT * (p0.y) + 2 * t * oneMinusT * (p1.y) + t * t * (p2.y)
+            goods.x = x
+            goods.y = y
         }
+        goInAnim.target = 1
+        goInAnim.start()
 
-        //      五、 开始执行动画
-        valueAnimator.start()
-
-        //      六、动画结束后的处理
-        valueAnimator.addListener(object : Animator.AnimatorListener {
+        //动画结束监听
+        goInAnim.addListener(object : Animator.AnimatorListener {
             override fun onAnimationRepeat(animation: Animator?) {
 
 
@@ -172,7 +160,7 @@ class GoodsInfoActivity : BaseMVPActivity<String>() {
 
             override fun onAnimationEnd(animation: Animator?) {
                 // 把移动的图片imageview从父布局里移除
-                ll.removeView(goods)
+                rl.removeView(goods)
             }
 
             override fun onAnimationCancel(animation: Animator?) {
