@@ -1,6 +1,5 @@
 package com.example.buy.fragment;
 
-
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -57,21 +56,21 @@ import java.util.Map;
  * 购物车页面
  */
 public class ShoppingCartFragment extends BaseFragment implements NumberAddSubView.OnNumberChangeListener, IGetBaseView<ShoppingCartBean>, IPostBaseView {
-
-    TitleBar tb_shopping_cart;
-    ImageView iv_shopping_cart;
+    TitleBar tbShoppingCart;
+    ImageView ivShoppingCart;
     RecyclerView mRecyclerview;
     RelativeLayout shoppingcartlayout;
-    TextView tv_shopcart_total;
-    CheckBox checkbox_all;
-    CheckBox cb_all;
-    LinearLayout ll_delete;
-    LinearLayout ll_check_all;
-    Button btn_delete;
-    Button btn_check_out;
-
+    TextView tvShopcartTotal;
+    CheckBox checkboxAll;
+    CheckBox cbAll;
+    LinearLayout llDelete;
+    LinearLayout llCheckAll;
+    Button btnDelete;
+    Button btnCheckOut;
 
     int flag = 0;
+
+    int flag2 = 0;
 
     private MyShoppingBasketAdapter myShoppingBasketAdapter;
     @SuppressLint("HandlerLeak")
@@ -86,9 +85,9 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
                 case 200:
                     int arg1 = msg.arg1;
                     if (arg1 == 0) {
-                        checkbox_all.setChecked(true);
+                        checkboxAll.setChecked(true);
                     } else if (arg1 == 1) {
-                        checkbox_all.setChecked(false);
+                        checkboxAll.setChecked(false);
                     }
                     break;
             }
@@ -97,6 +96,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     private ShoppingManager myShoppingManager;
     private InsertPresenter addOneProduct;
 
+    //设置物品是否被选择
     protected void setCheck(Message msg) {
         boolean isSetting = myShoppingManager.getisSetting();
         double allCount = myShoppingManager.getAllCount();
@@ -105,10 +105,9 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             allCount = Double.parseDouble(s[2]);
             myShoppingManager.setAllCount(allCount);
 
-            tv_shopcart_total.setText("￥" + allCount + "0");
+            tvShopcartTotal.setText("￥" + allCount + "0");
 
         }
-
 
         List<Map<String, String>> data = myShoppingManager.getData();
         Map<String, String> map = data.get(msg.arg2);
@@ -134,6 +133,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         }
     }
 
+    //判断购物车内是否有物品
     protected void judgeNumberisZero() {
         if (myShoppingManager.getAllNumber() == 0) {
             mRecyclerview.setVisibility(View.INVISIBLE);
@@ -144,6 +144,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         }
     }
 
+    //初始化数据
     @Override
     protected void initData() {
         initData2();
@@ -152,8 +153,9 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         setDelete();
     }
 
+    //删除点击事件
     private void setDelete() {
-        btn_delete.setOnClickListener(new View.OnClickListener() {
+        btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int allChecked = myShoppingManager.getAllChecked();
@@ -164,6 +166,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         });
     }
 
+    //设置弹出框
     protected void setAlertDialog(int allchecked) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -176,23 +179,43 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
                 List<Map<String, String>> data = myShoppingManager.getData();
 
                 for (int j = 0; j < data.size(); j++) {
-                    Map<String, String> map = data.get(j);
+                    final Map<String, String> map = data.get(j);
                     if (map.get("ischecked").equals("true")) {
-                        data.remove(j);
-                        j--;
+                        flag2 = 0;
+
+                        String token = ShoppingManager.getInstance().getToken(getContext());
+                        HashMap<String, String> hashMap = new HashMap<>();
+                        hashMap.put("token", token);
+
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("productId", map.get("id"));
+                        jsonObject.put("productNum", map.get("num"));
+                        jsonObject.put("productName", map.get("title"));
+                        jsonObject.put("url", map.get("img"));
+                        jsonObject.put("productPrice", map.get("price"));
+                        jsonObject.put("sign", SignUtil.generateJsonSign(jsonObject));
+
+                        SignUtil.encryptJsonParamsByBase64(jsonObject);
+
+                        addOneProduct = new InsertPresenter("removeOneProduct", InsertBean.class, hashMap, jsonObject);
+                        addOneProduct.getPostJsonData();
+                        addOneProduct.attachPostView(new IPostBaseView() {
+                            @Override
+                            public void onPostDataSucess(Object data) {
+                                Log.e("####", "删除" + map.get("title") + "成功");
+                                initData2();
+                            }
+
+                            @Override
+                            public void onPostDataFailed(String ErrorMsg) {
+
+                            }
+                        });
                     }
                 }
-                myShoppingBasketAdapter.reFresh(data);
-                myShoppingManager.setData(data);
-
-                judgeNumberisZero();
-
-                cb_all.setChecked(false);
-
                 dialogInterface.dismiss();
             }
         });
-
         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -204,13 +227,13 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         alertDialog.show();
     }
 
+    //TitleBar点击事件
     private void setSetting() {
-        tb_shopping_cart.setTitleClickLisner(new TitleBar.TitleClickLisner() {
+        tbShoppingCart.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
             public void LeftClick() {
 
             }
-
             @Override
             public void RightClick() {
                 int allNumber = myShoppingManager.getAllNumber();
@@ -220,7 +243,6 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
                     settingChanged();
                 }
             }
-
             @Override
             public void CenterClick() {
 
@@ -228,31 +250,33 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         });
     }
 
+    //编辑事件
     private void settingChanged() {
         boolean isSetting = myShoppingManager.getisSetting();
         if (isSetting) {
             myShoppingManager.setisSetting(false);
-            ll_check_all.setVisibility(View.VISIBLE);
-            ll_delete.setVisibility(View.GONE);
+            llCheckAll.setVisibility(View.VISIBLE);
+            llDelete.setVisibility(View.GONE);
         } else {
             myShoppingManager.setisSetting(true);
-            ll_check_all.setVisibility(View.GONE);
-            ll_delete.setVisibility(View.VISIBLE);
+            llCheckAll.setVisibility(View.GONE);
+            llDelete.setVisibility(View.VISIBLE);
         }
         setAllUnChecked();
-        cb_all.setChecked(false);
-        checkbox_all.setChecked(false);
+        cbAll.setChecked(false);
+        checkboxAll.setChecked(false);
         myShoppingManager.setAllCount(0);
         myShoppingBasketAdapter.setAllcount(0);
         myShoppingBasketAdapter.reFresh(myShoppingManager.getData());
     }
 
+    //设置全选点击事件
     private void setCheckAll() {
-        cb_all.setOnClickListener(new View.OnClickListener() {
+        cbAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 List<Map<String, String>> data = myShoppingManager.getData();
-                if (cb_all.isChecked()) {
+                if (cbAll.isChecked()) {
                     for (int i = 0; i < data.size(); i++) {
                         Map<String, String> map = data.get(i);
                         map.put("id", map.get("id"));
@@ -280,17 +304,17 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             }
         });
 
-        checkbox_all.setOnClickListener(new View.OnClickListener() {
+        checkboxAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (checkbox_all.isChecked()) {
+                if (checkboxAll.isChecked()) {
                     setAllChecked();
                 } else {
                     setAllUnChecked();
                 }
                 double allCount = myShoppingManager.getAllCount();
 
-                tv_shopcart_total.setText("￥" + allCount + "0");
+                tvShopcartTotal.setText("￥" + allCount + "0");
 
                 myShoppingBasketAdapter.reFresh(myShoppingManager.getData());
                 myShoppingBasketAdapter.setAllcount(allCount);
@@ -298,6 +322,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         });
     }
 
+    //取消全选（全不选）
     private void setAllUnChecked() {
         List<Map<String, String>> data = myShoppingManager.getData();
         for (int i = 0; i < data.size(); i++) {
@@ -317,6 +342,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         myShoppingManager.setData(data);
     }
 
+    //全选
     private void setAllChecked() {
         List<Map<String, String>> data = myShoppingManager.getData();
         for (int i = 0; i < data.size(); i++) {
@@ -335,25 +361,13 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
                 allCount += Double.parseDouble(map.get("price")) * Integer.parseInt(map.get("num"));
                 myShoppingManager.setAllCount(allCount);
             }
-
             myShoppingBasketAdapter.setCheckedcount(data.size());
         }
         myShoppingManager.setData(data);
     }
 
+    //刷新购物车数据
     private void initData2() {
-//        List<Map<String, String>> data = myShoppingManager.getData();
-//        for (int i = 0; i < 10; i++) {
-//
-//            Map<String, String> map = new HashMap<>();
-//            map.put("img", "http://www.qubaobei.com//ios//cf//uploadfile//132//9//8289.jpg");
-//            map.put("title", "大虾" + i);
-//            map.put("price", 10 + i + "");
-//            map.put("ischecked", "false");
-//            map.put("num", "1");
-//            data.add(map);
-//        }
-
         String token = ShoppingManager.getInstance().getToken(getContext());
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("token", token);
@@ -361,31 +375,28 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         ShoppingCartPresenter presenter = new ShoppingCartPresenter("getShortcartProducts", ShoppingCartBean.class, hashMap);
         presenter.attachGetView(this);
         presenter.getGetData();
-
-
-//        myShoppingBasketAdapter.reFresh(data);
-//        myShoppingManager.setData(data);
     }
 
+    //设置TitleBar
     protected void setTitleBar() {
-        tb_shopping_cart.setCenterText("购物车", 18, Color.RED);
-        tb_shopping_cart.setRightText("编辑", 14, Color.BLACK);
+        tbShoppingCart.setCenterText("购物车", 18, Color.RED);
+        tbShoppingCart.setRightText("编辑", 14, Color.BLACK);
     }
 
+    //初始化控件
     @Override
     protected void initView(View view) {
-        tb_shopping_cart = view.findViewById(R.id.tb_shopping_cart);
-        iv_shopping_cart = view.findViewById(R.id.iv_shopping_cart);
-        mRecyclerview = view.findViewById(R.id.mRecyclerview);
-        shoppingcartlayout = view.findViewById(R.id.shoppingcartlayout);
-        tv_shopcart_total = view.findViewById(R.id.tv_shopcart_total);
-        checkbox_all = view.findViewById(R.id.checkbox_all);
-        ll_delete = view.findViewById(R.id.ll_delete);
-        ll_check_all = view.findViewById(R.id.ll_check_all);
-        cb_all = view.findViewById(R.id.cb_all);
-        btn_delete = view.findViewById(R.id.btn_delete);
-        btn_check_out = view.findViewById(R.id.btn_check_out);
-
+        tbShoppingCart = view.findViewById(R.id.tb_buy_shoppingcart);
+        ivShoppingCart = view.findViewById(R.id.iv_buy_shoppingcart);
+        mRecyclerview = view.findViewById(R.id.rv_buy_shoppingcart);
+        shoppingcartlayout = view.findViewById(R.id.rl_buy_shoppingcartlayout);
+        tvShopcartTotal = view.findViewById(R.id.tv_buy_shopcartTotal);
+        checkboxAll = view.findViewById(R.id.cb_buy_checkboxAll);
+        llDelete = view.findViewById(R.id.ll_buy_delete);
+        llCheckAll = view.findViewById(R.id.ll_buy_checkall);
+        cbAll = view.findViewById(R.id.cb_buy_all);
+        btnDelete = view.findViewById(R.id.btn_buy_delete);
+        btnCheckOut = view.findViewById(R.id.btn_buy_checkout);
 
         myShoppingManager = ShoppingManager.getInstance();
 
@@ -394,8 +405,9 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         setCheckOut();
     }
 
+    //点击去结算
     private void setCheckOut() {
-        btn_check_out.setOnClickListener(new View.OnClickListener() {
+        btnCheckOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 List<Map<String, String>> data = myShoppingManager.getData();
@@ -408,12 +420,12 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
                     }
                 }
                 myShoppingManager.setBuyThings(data2);
-
                 startActivity(new Intent(getContext(), OrderActivity.class));
             }
         });
     }
 
+    //初始化RecyclerView
     private void setRecycler() {
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRecyclerview.setLayoutManager(manager);
@@ -422,11 +434,13 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         ((SimpleItemAnimator) mRecyclerview.getItemAnimator()).setSupportsChangeAnimations(false);
     }
 
+    //设置布局
     @Override
     protected int setLayout() {
         return R.layout.fragment_shopping_cart;
     }
 
+    //物品添加方法
     @Override
     public void addNumber(View view, int value, String price, boolean ischecked, int postion) {
         add(view);
@@ -445,19 +459,19 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         double allCount = myShoppingManager.getAllCount();
         myShoppingBasketAdapter.refresh2(data, postion, allCount);
 
-//        refreshNumber(postion);
+        refreshNumber(postion);
 
         if (ischecked) {
             allCount += Double.parseDouble(price);
-            tv_shopcart_total.setText("￥" + allCount + "0");
+            tvShopcartTotal.setText("￥" + allCount + "0");
             myShoppingBasketAdapter.setAllcount(allCount);
             myShoppingManager.setAllCount(allCount);
         }
     }
 
+    //物品减少方法
     @Override
     public void subNumner(View view, int value, String price, boolean ischecked, int postion) {
-
         List<Map<String, String>> data = myShoppingManager.getData();
 
         Map<String, String> map = data.get(postion);
@@ -474,17 +488,18 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         double allCount = myShoppingManager.getAllCount();
         myShoppingBasketAdapter.refresh2(data, postion, allCount);
 
-//        refreshNumber(postion);
+        refreshNumber(postion);
         if (ischecked) {
             allCount -= Double.parseDouble(price);
 
-            tv_shopcart_total.setText("￥" + allCount + "0");
+            tvShopcartTotal.setText("￥" + allCount + "0");
 
             myShoppingBasketAdapter.setAllcount(allCount);
             myShoppingManager.setAllCount(allCount);
         }
     }
 
+    //更新购物车物品数量
     public void refreshNumber(int position) {
         String token = ShoppingManager.getInstance().getToken(getContext());
         HashMap<String, String> hashMap = new HashMap<>();
@@ -510,6 +525,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
 
     }
 
+    //贝斯尔曲线方法
     public void add(final View view) {
 
         //贝塞尔起始数据点
@@ -520,7 +536,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         int[] recyclerPosition = new int[2];
 
         view.getLocationInWindow(startPosition);
-        iv_shopping_cart.getLocationInWindow(endPosition);
+        ivShoppingCart.getLocationInWindow(endPosition);
         mRecyclerview.getLocationInWindow(recyclerPosition);
 
         PointF startF = new PointF();
@@ -528,9 +544,9 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         PointF controllF = new PointF();
 
         startF.x = startPosition[0];
-        startF.y = startPosition[1] - recyclerPosition[1] + tb_shopping_cart.getHeight();
+        startF.y = startPosition[1] - recyclerPosition[1] + tbShoppingCart.getHeight();
         endF.x = endPosition[0];
-        endF.y = endPosition[1] - recyclerPosition[1] + tb_shopping_cart.getHeight();
+        endF.y = endPosition[1] - recyclerPosition[1] + tbShoppingCart.getHeight();
         controllF.x = endF.x;
         controllF.y = startF.y;
 
@@ -560,26 +576,22 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             public void onAnimationStart(Animator animator) {
 
             }
-
             @Override
             public void onAnimationEnd(Animator animator) {
                 shoppingcartlayout.removeView(imageView);
             }
-
             @Override
             public void onAnimationCancel(Animator animator) {
 
             }
-
             @Override
             public void onAnimationRepeat(Animator animator) {
 
             }
         });
 
-
-        ObjectAnimator objectAnimatorX = new ObjectAnimator().ofFloat(iv_shopping_cart, "scaleX", 0.6f, 1.0f);
-        ObjectAnimator objectAnimatorY = new ObjectAnimator().ofFloat(iv_shopping_cart, "scaleY", 0.6f, 1.0f);
+        ObjectAnimator objectAnimatorX = new ObjectAnimator().ofFloat(ivShoppingCart, "scaleX", 0.6f, 1.0f);
+        ObjectAnimator objectAnimatorY = new ObjectAnimator().ofFloat(ivShoppingCart, "scaleY", 0.6f, 1.0f);
         objectAnimatorX.setInterpolator(new AccelerateInterpolator());
         objectAnimatorY.setInterpolator(new AccelerateInterpolator());
         AnimatorSet set = new AnimatorSet();
@@ -588,11 +600,11 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         set.start();
     }
 
+    //购物车数据网址连接成功
     @Override
     public void onGetDataSucess(ShoppingCartBean data) {
         List<Map<String, String>> data2 = new ArrayList<>();
         List<ShoppingCartBean.ResultBean> result = data.getResult();
-        Log.e("####size", result.size() + "");
         for (int i = 0; i < result.size(); i++) {
             ShoppingCartBean.ResultBean resultBean = result.get(i);
 
@@ -608,21 +620,27 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         myShoppingBasketAdapter.reFresh(data2);
         myShoppingManager.setData(data2);
         judgeNumberisZero();
+        myShoppingManager.setAllCount(0);
+        myShoppingBasketAdapter.setCheckedcount(0);
+        myShoppingBasketAdapter.setAllcount(0);
 
-        checkbox_all.setChecked(false);
-        tv_shopcart_total.setText("￥0.00");
+        checkboxAll.setChecked(false);
+        tvShopcartTotal.setText("￥0.00");
     }
 
+    //购物车数据网址连接失败
     @Override
     public void onGetDataFailed(String ErrorMsg) {
 
     }
 
+    //更新购物车物品数量网址连接成功
     @Override
     public void onPostDataSucess(Object data) {
         initData2();
     }
 
+    //更新购物车物品数量网址连接失败
     @Override
     public void onPostDataFailed(String ErrorMsg) {
 

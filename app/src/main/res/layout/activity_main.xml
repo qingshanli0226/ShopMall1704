@@ -11,7 +11,11 @@
         android:id="@+id/fl_main"
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_height_0dp"
-        android:layout_weight="9"/>
+        android:layout_weight="9">
+
+
+    </FrameLayout>
+
 
     <com.example.common.BottomBar
         android:id="@+id/bb_main"

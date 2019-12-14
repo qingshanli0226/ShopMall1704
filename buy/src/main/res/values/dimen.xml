@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="recyclerimgsize">100dp</dimen>
+    <dimen name="dpsize_0">0dp</dimen>
+    <dimen name="dpsize_06">0.6dp</dimen>
+    <dimen name="dpsize_1">1dp</dimen>
+    <dimen name="dpsize_5">5dp</dimen>
+    <dimen name="dpsize_10">10dp</dimen>
+    <dimen name="dpsize_15">15dp</dimen>
+    <dimen name="dpsize_16">16dp</dimen>
+    <dimen name="dpsize_17">17dp</dimen>
+    <dimen name="dpsize_20">20dp</dimen>
     <dimen name="dpsize_30">30dp</dimen>
+    <dimen name="dpsize_35">35dp</dimen>
+
 </resources>

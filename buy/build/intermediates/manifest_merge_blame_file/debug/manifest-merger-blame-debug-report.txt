@@ -11,26 +11,29 @@
 9-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml
 10
 11    <uses-permission android:name="android.permission.INTERNET" />
-11-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:4:5-67
-11-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:4:22-64
+11-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:5:5-67
+11-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:5:22-64
 12    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-12-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:5:5-75
-12-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:5:22-72
+12-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:6:5-75
+12-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:6:22-72
 13    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-13-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:6:5-79
-13-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:6:22-76
+13-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:7:5-79
+13-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:7:22-76
 14    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-14-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:7:5-76
-14-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:7:22-73
+14-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:8:5-76
+14-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:8:22-73
 15    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-15-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:8:5-81
-15-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:8:22-78
+15-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:9:5-81
+15-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:9:22-78
 16
 17    <application>
-17-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:10:5-12:19
-18        <activity android:name="com.example.buy.activity.OrderActivity" />
-18-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:11:9-60
-18-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:11:19-57
-19    </application>
-20
-21</manifest>
+17-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:11:5-14:19
+18        <activity android:name="com.example.buy.activity.ShoppingResultActivity" />
+18-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:12:9-78
+18-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:12:19-66
+19        <activity android:name="com.example.buy.activity.OrderActivity" />
+19-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:13:9-60
+19-->F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:13:19-57
+20    </application>
+21
+22</manifest>

@@ -1,36 +1,48 @@
 package com.example.step.Ui;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.common.OrmUtils;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
-import com.example.common.OrmUtils;
+import com.example.framework.bean.ShopStepBean;
 import com.example.step.R;
 import com.example.step.CustomView.RunView;
-import com.example.common.ShopStepBean;
+import com.example.framework.bean.ShopStepBean;
 import com.example.step.CustomView.StepArcView;
 import com.example.framework.manager.StepManager;
+import com.litesuits.orm.LiteOrm;
+import com.litesuits.orm.db.assit.SQLiteHelper;
 
+import java.util.ArrayList;
 import java.util.List;
+
 
 public class IntegralActivity extends BaseActivity {
 
     TitleBar tb_integral;
     TextView intergral_Step,integral;
     RunView runView;
-    StepArcView stepArcView;
+    StepArcView step_ArcView;
     RecyclerView History_recyclerView;
 
-   ArrayAdapter<String> stringArrayAdapter;
    TextView tvHistory;
 
+   boolean isFirst=false;
+    SharedPreferences preferences;
     @Override
     protected int setLayout() {
         return R.layout.activity_integral;
@@ -38,11 +50,12 @@ public class IntegralActivity extends BaseActivity {
 
     @Override
     public void initView() {
+
         tb_integral = findViewById(R.id.tb_integral);
         intergral_Step=findViewById(R.id.Integral_step);
         integral=findViewById(R.id.Integral_integral);
         runView=findViewById(R.id.runView);
-        stepArcView=findViewById(R.id.StepView);
+        step_ArcView=findViewById(R.id.StepView);
         History_recyclerView=findViewById(R.id.history_RecyclerView);
         tvHistory=findViewById(R.id.find_History);
     }
@@ -50,7 +63,6 @@ public class IntegralActivity extends BaseActivity {
     @SuppressLint({"NewApi", "ResourceAsColor", "ResourceType"})
     @Override
     public void initData() {
-
 
         tb_integral.setBackgroundColor(getResources().getInteger(R.color.color2));
         tb_integral.setCenterText("我的积分",18, Color.WHITE);
@@ -76,6 +88,7 @@ public class IntegralActivity extends BaseActivity {
 
 
 
+
         tvHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,13 +96,24 @@ public class IntegralActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-        //当前步数和积分
-        List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
-        intergral_Step.setText(queryAll.get(queryAll.size()-1).getCurrent_step()+"");
-        String current_step = queryAll.get(queryAll.size() - 1).getCurrent_step();
-        int i = Integer.parseInt(current_step);
-        stepArcView.setCurrentCount(10000,i);
 
+
+
+
+
+        //当前步数和积分
+//        List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
+//        intergral_Step.setText(queryAll.get(queryAll.size()-1).getCurrent_step()+"");
+//        String current_step = queryAll.get(queryAll.size() - 1).getCurrent_step();
+//        int i = Integer.parseInt(current_step);
+//        step_ArcView.setCurrentCount(10000,i);
+        //获取日期
+//        List<ShopStepBean> queryAll1 = OrmUtils.getQueryAll(ShopStepBean.class);
+//        final List<String> mlistDate=new ArrayList<>();
+//        for (int j=0;j<queryAll1.size();j++){
+//            String date = queryAll1.get(j).getDate();
+//            mlistDate.add(date);
+//        }
 
 
 
@@ -98,8 +122,9 @@ public class IntegralActivity extends BaseActivity {
         StepManager.getInstance().registerListener(new StepManager.StepManagerListener() {
             @Override
             public void onStepChange(int count) {
+
                 intergral_Step.setText(count+"");
-                stepArcView.setCurrentCount(10000,count);
+                step_ArcView.setCurrentCount(10000,count);
 
             }
 
@@ -114,6 +139,22 @@ public class IntegralActivity extends BaseActivity {
 
 
 
+
+
+
+    }
+
+
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+                   List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
+                   intergral_Step.setText(queryAll.get(queryAll.size()-1).getCurrent_step()+"");
+                   String current_step = queryAll.get(queryAll.size() -1).getCurrent_step();
+                    int i = Integer.parseInt(current_step);
+                    step_ArcView.setCurrentCount(10000,i);
 
 
     }

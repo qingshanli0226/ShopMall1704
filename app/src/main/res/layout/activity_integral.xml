@@ -76,7 +76,6 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/integral_text_20sp"
                 android:textColor="@color/colorWhite"/>
-
         </LinearLayout>
 
     </LinearLayout>

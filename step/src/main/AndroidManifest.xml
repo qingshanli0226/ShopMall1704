@@ -10,7 +10,7 @@
 
         </activity>
 
-        <service android:name="com.example.framework.StepService">
+        <service android:name="com.example.framework.service.StepService">
 
         </service>
     </application>

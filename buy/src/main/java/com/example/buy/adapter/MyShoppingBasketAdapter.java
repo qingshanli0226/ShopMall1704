@@ -17,6 +17,7 @@ import com.example.buy.R;
 import com.example.common.NumberAddSubView;
 import com.example.framework.base.BaseAdapter;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -65,9 +66,9 @@ public class MyShoppingBasketAdapter extends BaseAdapter<Map<String, String>, My
         final Map<String, String> hashMap = data.get(position);
         Glide.with(context)
                 .load(hashMap.get("img"))
-                .into(holder.iv_img);
+                .into(holder.ivImg);
 
-        holder.tv_title.setText(hashMap.get("title"));
+        holder.tvTitle.setText(hashMap.get("title"));
         holder.numberAddSubView.setPrice(hashMap.get("price"));
 
         holder.numberAddSubView.setOnNumberChangeListener(listener);
@@ -77,24 +78,25 @@ public class MyShoppingBasketAdapter extends BaseAdapter<Map<String, String>, My
         holder.numberAddSubView.setPostion(position);
 
         String ischecked = hashMap.get("ischecked");
+
         if (ischecked.equals("true")) {
-            holder.cb_gov.setChecked(true);
+            holder.cbGov.setChecked(true);
             holder.numberAddSubView.setChecked(true);
         } else if (ischecked.equals("false")) {
-            holder.cb_gov.setChecked(false);
+            holder.cbGov.setChecked(false);
             holder.numberAddSubView.setChecked(false);
         }
 
         final int x = holder.numberAddSubView.getValue();
 
-        holder.cb_gov.setOnClickListener(new View.OnClickListener() {
+        holder.cbGov.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (holder.cb_gov.isChecked()) {
+                if (holder.cbGov.isChecked()) {
                     double count = x * Double.parseDouble(hashMap.get("price"));
-//                    Log.e("####",allcount+"");
+                    Log.e("####", allcount + "");
                     allcount += count;
-//                    Log.e("####",count+"/"+allcount);
+                    Log.e("####", count + "/" + allcount);
                     Message message = Message.obtain();
                     message.what = 100;
                     message.arg2 = position;
@@ -104,8 +106,9 @@ public class MyShoppingBasketAdapter extends BaseAdapter<Map<String, String>, My
                     checkedcount++;
                 } else {
                     double count = x * Double.parseDouble(hashMap.get("price"));
-                    allcount -= count;
-
+                    BigDecimal bigDecimal = new BigDecimal(allcount + "");
+                    BigDecimal bigDecimal2 = new BigDecimal(count + "");
+                    allcount = bigDecimal.subtract(bigDecimal2).doubleValue();
                     Message message = Message.obtain();
                     message.what = 100;
                     message.arg2 = position;
@@ -114,7 +117,7 @@ public class MyShoppingBasketAdapter extends BaseAdapter<Map<String, String>, My
 
                     checkedcount--;
                 }
-                Log.e("####", checkedcount + "");
+//                Log.e("####", checkedcount + "");
                 Message message = Message.obtain();
                 message.what = 200;
 
@@ -136,14 +139,13 @@ public class MyShoppingBasketAdapter extends BaseAdapter<Map<String, String>, My
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-
-        ImageView iv_img = itemView.findViewById(com.example.buy.R.id.iv_gov);
-        TextView tv_title = itemView.findViewById(com.example.buy.R.id.tv_desc_gov);
-        NumberAddSubView numberAddSubView = itemView.findViewById(com.example.buy.R.id.numberAddSubView);
-        CheckBox cb_gov = itemView.findViewById(com.example.buy.R.id.cb_gov);
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
         }
+
+        ImageView ivImg = itemView.findViewById(R.id.iv_buy_gov);
+        TextView tvTitle = itemView.findViewById(R.id.tv_buy_descgov);
+        NumberAddSubView numberAddSubView = itemView.findViewById(R.id.number_buy_addsubview);
+        CheckBox cbGov = itemView.findViewById(R.id.cb_buy_gov);
     }
 }

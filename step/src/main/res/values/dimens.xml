@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="step_tvSize">24sp</dimen>
+    <dimen name="step_tvSize24">24sp</dimen>
+
+    <dimen name="step_tvSize20">20sp</dimen>
+
+    <dimen name="step_paddingLeft">10dp</dimen>
+
+    <dimen name="titleBar_height">50dp</dimen>
+
+    <dimen name="stepView_height">300dp</dimen>
+    <dimen name="stepView_weight">300dp</dimen>
+
+    <dimen name="step_margin20">20dp</dimen>
 </resources>

@@ -4,6 +4,7 @@ public class Constant {
 
     //系统默认的模拟器使用ip
     public static String BASE_URL = "http://49.233.93.155:8080";
+//    public static String BASE_URL = "http://169.254.230.253:8080";
 
     //请求json数据基本URL
     public static String BASE_URL_JSON = BASE_URL + "/atguigu/json/";

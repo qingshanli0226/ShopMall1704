@@ -1,6 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="color4040">#404040</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorBlacklittlelight">#1e2023</color>
+    <color name="colorBlue">#03A9F4</color>
+    <color name="colorGray">#eee</color>
+    <color name="colorGreen">#4CAF50</color>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorRed">#F44336</color>
+    <color name="colorTintBlack">#5d5d5d</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="color_5d5d">#5d5d5d</color>
+    <color name="color_back_eee">#eee</color>
+    <color name="color_classiffy">#11000000</color>
+    <color name="color_classiffy2">#22000000</color>
+    <color name="color_lightred">#ed3f3f</color>
+    <color name="color_white">#fff</color>
+    <color name="gray_dark_bg">#ffbababa</color>
+    <color name="mine_back_color">#f00</color>
+    <color name="mine_color_gray">#eee</color>
+    <dimen name="dpsize_0">0dp</dimen>
+    <dimen name="dpsize_06">0.6dp</dimen>
+    <dimen name="dpsize_1">1dp</dimen>
+    <dimen name="dpsize_10">10dp</dimen>
+    <dimen name="dpsize_15">15dp</dimen>
+    <dimen name="dpsize_16">16dp</dimen>
+    <dimen name="dpsize_17">17dp</dimen>
+    <dimen name="dpsize_20">20dp</dimen>
     <dimen name="dpsize_30">30dp</dimen>
+    <dimen name="dpsize_35">35dp</dimen>
+    <dimen name="dpsize_5">5dp</dimen>
     <dimen name="recyclerimgsize">100dp</dimen>
     <string name="alipay_sdk_version_is">"Alipay SDK version: "</string>
     <string name="app_name">buy</string>

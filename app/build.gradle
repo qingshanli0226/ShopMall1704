@@ -1,10 +1,16 @@
 apply plugin: 'com.android.application'
-apply plugin: 'org.greenrobot.greendao'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.example.shopmall"
+
+        manifestPlaceholders = [
+                JPUSH_APPKEY : "00069070c0ece64218196376", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
+
         minSdkVersion 17
         targetSdkVersion 29
         versionCode 1
@@ -42,7 +48,16 @@ dependencies {
     implementation files('libs/lite-orm-1.9.2.jar')
     implementation project(path: ':framework')
     implementation project(path: ':buy')
-    implementation 'com.alibaba:fastjson:1.2.56'
+    implementation 'com.alibaba:fastjson:1.1.71.android'
     implementation project(path: ':step')
+
+    compile 'cn.jiguang.sdk:janalytics:2.1.0'
+    compile 'cn.jiguang.sdk:jcore:2.2.4'
+
+    implementation 'me.thewyp:avatar:1.0.4'
+
+    implementation 'com.android.support:design:25.3.1'
+
+
 
 }

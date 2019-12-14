@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/shoppingcartlayout"
+    android:id="@+id/rl_buy_shoppingcartlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:mContext="com.example.buy.fragment.ShoppingCartFragment">
 
     <RelativeLayout
-        android:id="@+id/rl_head"
+        android:id="@+id/rl_buy_head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff">
+        android:background="@color/color_white">
 
         <com.example.common.TitleBar
-            android:id="@+id/tb_shopping_cart"
+            android:id="@+id/tb_buy_shoppingcart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true" />
@@ -21,136 +21,136 @@
     </RelativeLayout>
 
     <View
-        android:id="@+id/v_divider"
+        android:id="@+id/v_buy_Divider"
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:layout_below="@id/rl_head"
-        android:background="#eeee" />
+        android:layout_height="@dimen/dpsize_5"
+        android:layout_below="@id/rl_buy_head"
+        android:background="@color/mine_color_gray" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/rl_bottom"
-        android:layout_below="@id/v_divider"
-        android:background="#eee"
+        android:layout_above="@id/rl_buy_bottom"
+        android:layout_below="@id/v_buy_Divider"
+        android:background="@color/mine_color_gray"
         android:gravity="center"
         android:text="购物车空空的,快去商城看一看吧~~~"
-        android:textSize="17dp" />
+        android:textSize="@dimen/dpsize_17" />
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mRecyclerview"
+        android:id="@+id/rv_buy_shoppingcart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/rl_bottom"
-        android:layout_below="@id/v_divider"
-        android:background="#eee" />
+        android:layout_above="@id/rl_buy_bottom"
+        android:layout_below="@id/v_buy_Divider"
+        android:background="@color/mine_color_gray" />
 
 
     <RelativeLayout
-        android:id="@+id/rl_bottom"
+        android:id="@+id/rl_buy_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
         <LinearLayout
-            android:id="@+id/ll_check_all"
+            android:id="@+id/ll_buy_checkall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#fff"
+            android:background="@color/color_white"
             android:orientation="horizontal"
             android:visibility="visible">
 
             <ImageView
-                android:id="@+id/iv_shopping_cart"
+                android:id="@+id/iv_buy_shoppingcart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/shopping_cart" />
 
             <CheckBox
-                android:id="@+id/checkbox_all"
+                android:id="@+id/cb_buy_checkboxAll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:button="@null"
                 android:drawableLeft="@drawable/checkbox_selector"
-                android:drawablePadding="10dp"
-                android:padding="10dp"
-                android:paddingLeft="0dp"
+                android:drawablePadding="@dimen/dpsize_10"
+                android:padding="@dimen/dpsize_10"
+                android:paddingLeft="@dimen/dpsize_0"
                 android:text="全选"
-                android:textColor="#303235"
-                android:textSize="15sp" />
+                android:textColor="@color/colorBlacklittlelight"
+                android:textSize="@dimen/dpsize_15" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
+                android:padding="@dimen/dpsize_10"
                 android:text="合计:"
-                android:textColor="#303235"
-                android:textSize="15sp" />
+                android:textColor="@color/colorBlacklittlelight"
+                android:textSize="@dimen/dpsize_15" />
 
             <TextView
-                android:id="@+id/tv_shopcart_total"
-                android:layout_width="0dp"
+                android:id="@+id/tv_buy_shopcartTotal"
+                android:layout_width="@dimen/dpsize_0"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="10dp"
+                android:padding="@dimen/dpsize_10"
                 android:text="￥0.00"
                 android:textColor="#ed3f3f"
-                android:textSize="15sp" />
+                android:textSize="@dimen/dpsize_15" />
 
             <Button
-                android:id="@+id/btn_check_out"
+                android:id="@+id/btn_buy_checkout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#ed3f3f"
+                android:background="@color/color_lightred"
                 android:text="去结算"
-                android:textColor="#fff" />
+                android:textColor="@color/color_white" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_delete"
+            android:id="@+id/ll_buy_delete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#fff"
+            android:background="@color/color_white"
             android:orientation="horizontal"
-            android:padding="5dp"
+            android:padding="@dimen/dpsize_5"
             android:visibility="gone">
 
             <CheckBox
-                android:id="@+id/cb_all"
+                android:id="@+id/cb_buy_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_weight="1"
                 android:button="@null"
                 android:drawableLeft="@drawable/checkbox_selector"
-                android:drawablePadding="10dp"
-                android:padding="10dp"
-                android:paddingLeft="0dp"
+                android:drawablePadding="@dimen/dpsize_10"
+                android:padding="@dimen/dpsize_10"
+                android:paddingLeft="@dimen/dpsize_0"
                 android:text="全选"
-                android:textColor="#303235"
-                android:textSize="15sp" />
+                android:textColor="@color/colorBlacklittlelight"
+                android:textSize="@dimen/dpsize_15" />
 
             <Button
-                android:id="@+id/btn_delete"
+                android:id="@+id/btn_buy_delete"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_height="@dimen/dpsize_35"
                 android:background="@mipmap/words"
                 android:text="删除"
-                android:textColor="#303235"
-                android:textSize="15sp" />
+                android:textColor="@color/colorBlacklittlelight"
+                android:textSize="@dimen/dpsize_15" />
 
             <Button
-                android:id="@+id/btn_collection"
+                android:id="@+id/btn_buy_collection"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:layout_marginLeft="15dp"
+                android:layout_height="@dimen/dpsize_35"
+                android:layout_marginLeft="@dimen/dpsize_15"
                 android:background="@mipmap/wordsred"
                 android:text="收藏"
-                android:textColor="#ed3f3f"
-                android:textSize="15sp" />
+                android:textColor="@color/colorBlacklittlelight"
+                android:textSize="@dimen/dpsize_15" />
         </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

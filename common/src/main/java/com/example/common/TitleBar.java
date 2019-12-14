@@ -41,6 +41,7 @@ public class TitleBar extends LinearLayout {
     private ImageView mIvRight;
     private RelativeLayout mTitle;
     private TitleClickLisner titleClickLisner;
+    private TextView mTvMessage;
 
     //初始化
     private void init() {
@@ -52,6 +53,7 @@ public class TitleBar extends LinearLayout {
         mIvLeft = view.findViewById(R.id.iv_left);
         mIvRight = view.findViewById(R.id.iv_right);
         mTitle = view.findViewById(R.id.rl_title);
+        mTvMessage = view.findViewById(R.id.tv_red_message);
 
         mIvRight.setOnClickListener(new OnClickListener() {
             @Override
@@ -94,6 +96,11 @@ public class TitleBar extends LinearLayout {
     //设置标题栏监听
     public void setTitleClickLisner(TitleClickLisner titleClickLisner) {
         this.titleClickLisner = titleClickLisner;
+    }
+
+    //标题栏显示红色消息
+    public void setMessageShow() {
+        mTvMessage.setVisibility(VISIBLE);
     }
 
     //设置标题栏标题内容

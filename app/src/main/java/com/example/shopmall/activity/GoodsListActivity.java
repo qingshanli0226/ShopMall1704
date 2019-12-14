@@ -88,7 +88,6 @@ public class GoodsListActivity extends BaseActivity implements IGetBaseView<Good
     public void onGetDataFailed(String ErrorMsg) {
 
     }
-
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 

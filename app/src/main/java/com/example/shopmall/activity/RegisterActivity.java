@@ -22,11 +22,12 @@ import androidx.annotation.RequiresApi;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IPostBaseView;
-import com.example.framework.bean.UserBean;
-import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
 import com.example.shopmall.bean.RegisterBean;
 import com.example.shopmall.presenter.RegisterPresenter;
+
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
+import cn.jiguang.analytics.android.api.RegisterEvent;
 
 /**
  * 注册
@@ -116,10 +117,6 @@ public class RegisterActivity extends BaseActivity implements IPostBaseView<Regi
                 initButton();
                 String name = etName.getText().toString();
                 String pwd = etWord.getText().toString();
-                UserBean userBean = new UserBean();
-                userBean.setName(name);
-                userBean.setPassword(pwd);
-                UserManager.getInstance().addUser(userBean);
                 integerPresenter = new RegisterPresenter(name, pwd);
                 integerPresenter.attachPostView(RegisterActivity.this);
                 integerPresenter.getCipherTextData();
@@ -164,10 +161,19 @@ public class RegisterActivity extends BaseActivity implements IPostBaseView<Regi
     @Override
     public void onPostDataSucess(RegisterBean data) {
         Toast.makeText(this, data.getMessage(), Toast.LENGTH_SHORT).show();
+        if (data.getResult().equals("注册成功")) {
+            RegisterEvent rEvent = new RegisterEvent("注册成功", true);
+            JAnalyticsInterface.onEvent(this, rEvent);
+            finish();
+        } else {
+            RegisterEvent rEvent = new RegisterEvent("注册失败", false);
+            JAnalyticsInterface.onEvent(this, rEvent);
+        }
     }
 
     @Override
     public void onPostDataFailed(String ErrorMsg) {
-
+        etName.setText("");
+        etWord.setText("");
     }
 }

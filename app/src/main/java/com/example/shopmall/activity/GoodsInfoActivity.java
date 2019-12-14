@@ -2,13 +2,13 @@ package com.example.shopmall.activity;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.buy.bean.InsertBean;
@@ -31,16 +31,18 @@ import java.util.HashMap;
 /**
  * 商品详情
  */
-public class GoodsInfoActivity extends BaseActivity implements IPostBaseView {
+public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<InsertBean> {
 
     TitleBar tbGoodsInfo;
     RecyclerView rvGoodsInfo;
     BottomBar bbGoodsInfo;
     Button btGoodsInfo;
+    LinearLayout layoutBottom;
 
-    ArrayList<GoodsBean> listGoods = new ArrayList<>();
+    ArrayList<GoodsBean> list_goods = new ArrayList<>();
 
     private InsertPresenter addOneProduct;
+    private GoodsBean goods_bean;
 
     @Override
     protected int setLayout() {
@@ -53,15 +55,16 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView {
         rvGoodsInfo = findViewById(R.id.rv_goods_info);
         bbGoodsInfo = findViewById(R.id.bb_goods_info);
         btGoodsInfo = findViewById(R.id.bt_goods_info);
+        layoutBottom = findViewById(R.id.ll_bottombar);
 
         rvGoodsInfo.setLayoutManager(new LinearLayoutManager(this));
-        listGoods.clear();
+        list_goods.clear();
     }
 
     @Override
     public void initData() {
         tbGoodsInfo.setTitleBacKGround(Color.RED);
-        tbGoodsInfo.setCenterText("商品详情",18,Color.WHITE);
+        tbGoodsInfo.setCenterText("商品详情", 18, Color.WHITE);
         tbGoodsInfo.setLeftImg(R.drawable.left);
 
         tbGoodsInfo.setTitleClickLisner(new TitleBar.TitleClickLisner() {
@@ -81,11 +84,11 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView {
             }
         });
 
-        String[] strs = new String[]{"联系客服","收藏","购物车"};
+        String[] strs = new String[]{"联系客服", "收藏", "购物车"};
         final Drawable mine = getResources().getDrawable(R.drawable.mine);
         final Drawable collect = getResources().getDrawable(R.drawable.collect);
         final Drawable shoppingcart = getResources().getDrawable(R.drawable.shoppingcart);
-        Drawable[] drawables = new Drawable[]{mine,collect,shoppingcart};
+        Drawable[] drawables = new Drawable[]{mine, collect, shoppingcart};
         bbGoodsInfo.setBottombarName(strs);
         bbGoodsInfo.setTapDrables(drawables);
 
@@ -93,7 +96,7 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView {
         bbGoodsInfo.setOnTapListener(new BottomBar.OnTapListener() {
             @Override
             public void tapItemClick(int i) {
-                switch (i){
+                switch (i) {
                     case 0:
                         mine();
                         break;
@@ -106,20 +109,21 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView {
                 }
             }
         });
-
-
         Intent intent = getIntent();
-        final GoodsBean goods_bean = (GoodsBean) intent.getSerializableExtra("goods_bean");
-        listGoods.add(goods_bean);
+        goods_bean = (GoodsBean) intent.getSerializableExtra("goods_bean");
+        list_goods.add(goods_bean);
 
         GoodsInfoAdapter goodsInfoAdapter = new GoodsInfoAdapter();
-        goodsInfoAdapter.reFresh(listGoods);
+        goodsInfoAdapter.reFresh(list_goods);
         rvGoodsInfo.setAdapter(goodsInfoAdapter);
+        rvGoodsInfo.setAdapter(goodsInfoAdapter);
+
 
         //加入购物车
         btGoodsInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String token = ShoppingManager.getInstance().getToken(GoodsInfoActivity.this);
                 HashMap<String, String> hashMap = new HashMap<>();
                 hashMap.put("token", token);
@@ -135,8 +139,8 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView {
                 SignUtil.encryptJsonParamsByBase64(jsonObject);
 
                 addOneProduct = new InsertPresenter("addOneProduct", InsertBean.class, hashMap, jsonObject);
-                addOneProduct.getPostJsonData();
                 addOneProduct.attachPostView(GoodsInfoActivity.this);
+                addOneProduct.getPostJsonData();
 
             }
         });
@@ -160,7 +164,7 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView {
     }
 
     @Override
-    public void onPostDataSucess(Object data) {
+    public void onPostDataSucess(InsertBean data) {
 
     }
 
@@ -168,4 +172,6 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView {
     public void onPostDataFailed(String ErrorMsg) {
         Log.d("####", ErrorMsg);
     }
+
 }
+

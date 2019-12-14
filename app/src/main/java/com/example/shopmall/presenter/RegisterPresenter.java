@@ -32,7 +32,7 @@ public class RegisterPresenter extends BasePresenter {
 
     @Override
     protected HashMap<String, String> getHeader() {
-        return null;
+        return new HashMap<>();
     }
 
     @Override

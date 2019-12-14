@@ -95,7 +95,8 @@ public class MainActivity extends BaseActivity {
             @Override
             public void tapItemClick(int i) {
                 replaceFragment(fragmentArrayList.get(i));
-
+                ShoppingManager.getInstance().setAllCount(0);
+                ShoppingManager.getInstance().setisSetting(false);
                 if (i == 3) {
                     refreshShoppingCartData();
                 }

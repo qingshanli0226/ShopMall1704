@@ -8,7 +8,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.common.ShopStepBean;
+import com.example.framework.bean.ShopStepTimeRealBean;
+import com.example.step.R;
+import com.example.framework.bean.ShopStepBean;
+import com.example.framework.bean.ShopStepBean;
 import com.example.step.R;
 
 import java.util.List;
@@ -33,28 +36,30 @@ public class StepHistoryAdapter extends RecyclerView.Adapter<StepHistoryAdapter.
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
 
-        holder.day.setText(stepList.get(position).getDate());
-        holder.count.setText(stepList.get(position).getCurrent_step()+"步");
 
-        if(position==stepList.size()-1){
+            holder.day.setText(stepList.get(position).getDate());
+            holder.count.setText(stepList.get(position).getCurrent_step()+"步");
+            holder.time.setText(stepList.get(position).getTime());
+           if(position==stepList.size()-1){
             holder.count.setText(mcount+"步");
-        }
+            }
 
     }
 
     @Override
     public int getItemCount() {
-        return stepList.size();
+            return stepList.size();
     }
 
     class MyHolder extends RecyclerView.ViewHolder{
 
-        TextView day,count;
+        TextView day,count,time;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             day=itemView.findViewById(R.id.step_item_day);
             count=itemView.findViewById(R.id.step_item_count);
+            time=itemView.findViewById(R.id.step_item_time);
         }
     }
 }

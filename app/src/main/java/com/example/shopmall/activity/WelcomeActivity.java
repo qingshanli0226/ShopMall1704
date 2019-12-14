@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -26,12 +25,10 @@ import com.example.shopmall.presenter.IntegerPresenter;
  */
 public class WelcomeActivity extends BaseActivity implements IGetBaseView<HomepageBean> {
 
-    public ImageView ivWelcome;
-    public int flag = 0;
-    private HandlerThread handlerThread = new HandlerThread("welcome");
+    private ImageView iv_welcome;
+    private int flag = 0;
+    private final HandlerThread handlerThread = new HandlerThread("welcome");
     private Handler handler;
-    private Thread welcomeThread;
-
     @Override
     protected int setLayout() {
         return R.layout.activity_welcome;
@@ -40,14 +37,12 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
     @Override
     public void initView() {
 
-        ivWelcome = findViewById(R.id.iv_welcome);
+        iv_welcome = findViewById(R.id.iv_welcome);
     }
 
     @Override
     public void initData() {
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(ivWelcome, "Alpha", 0, 1);
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(iv_welcome, "Alpha", 0, 1);
         objectAnimator.setDuration(3000);
         objectAnimator.start();
 
@@ -57,7 +52,7 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
 
         handlerThread.start();
 
-        welcomeThread = new Thread() {
+        Thread  welcomeThread = new Thread() {
             @Override
             public void run() {
                 super.run();
