@@ -14,6 +14,7 @@ import com.example.framework.manager.MessageManager;
 import com.example.shopmall.R;
 import com.example.shopmall.adapter.MessageItemAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +24,8 @@ public class MessageActivity extends BaseActivity {
 
     private TitleBar tbMessage;
     private RecyclerView rvMessage;
+
+    private int sum = 0;
 
     @Override
     protected int setLayout() {
@@ -62,19 +65,21 @@ public class MessageActivity extends BaseActivity {
 
         //数据库获取数据，添加到消息界面
         List<MessageBean> message = MessageManager.getMessageManager().getMessage();
+//        MessageBean messageBean = new MessageBean();
+//        messageBean.setIsMessage(true);
+//        messageBean.setNameMessage("接收到数据");
+//        messageBean.setContentMessage("数据内容");
+//        List<MessageBean> message = new ArrayList<>();
+//        message.add(messageBean);
         MessageItemAdapter messageItemAdapter = new MessageItemAdapter(this);
         messageItemAdapter.reFresh(message);
         rvMessage.setAdapter(messageItemAdapter);
 
-        messageItemAdapter.setLikeliest(new MessageItemAdapter.Likeliest() {
-            @Override
-            public void getLikeliest(int position) {
-                MessageBean messageBean = new MessageBean();
-                messageBean.setId((long) position);
-                messageBean.setIsMessage(false);
-                MessageManager.getMessageManager().updateMessage(messageBean);
+        for (int i = 0; i < message.size(); i++) {
+            if (!message.get(i).getIsMessage()){
+                sum++;
             }
-        });
+        }
 
     }
 }

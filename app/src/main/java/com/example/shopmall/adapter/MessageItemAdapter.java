@@ -7,7 +7,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.common.view.RedView;
 import com.example.framework.base.BaseAdapter;
+import com.example.framework.manager.MessageManager;
 import com.example.shopmall.R;
 import com.example.framework.bean.MessageBean;
 
@@ -46,6 +48,7 @@ public class MessageItemAdapter extends BaseAdapter<MessageBean,MessageItemAdapt
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        private RedView red_view_message;
         private TextView tvNameMessage;
         private TextView tvContentMessage;
         private TextView tvViewMoreMessage;
@@ -53,13 +56,14 @@ public class MessageItemAdapter extends BaseAdapter<MessageBean,MessageItemAdapt
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            red_view_message = itemView.findViewById(R.id.red_view_message);
             tvNameMessage = itemView.findViewById(R.id.tv_name_message);
             tvContentMessage = itemView.findViewById(R.id.tv_content_message);
             tvViewMoreMessage = itemView.findViewById(R.id.tv_view_more_message);
 
         }
 
-        public void setData(List<MessageBean> messageBeans, final int position) {
+        public void setData(final List<MessageBean> messageBeans, final int position) {
             tvNameMessage.setText(messageBeans.get(position).getNameMessage());
             tvContentMessage.setText(messageBeans.get(position).getContentMessage());
 
@@ -73,7 +77,11 @@ public class MessageItemAdapter extends BaseAdapter<MessageBean,MessageItemAdapt
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    likeliest.getLikeliest(position);
+                    MessageBean bean = messageBeans.get(position);
+                    MessageBean messageBean = new MessageBean();
+                    messageBean.setId(bean.getId());
+                    messageBean.setIsMessage(false);
+                    MessageManager.getMessageManager().updateMessage(messageBean);
                 }
             });
 
