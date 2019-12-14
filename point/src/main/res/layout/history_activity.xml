@@ -5,8 +5,7 @@
     <include layout="@layout/title_toolbar"></include>
     <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
         android:id="@+id/main_swipe"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+       style="@style/w_match">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"

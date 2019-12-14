@@ -2,6 +2,7 @@ package com.example.dimensionleague.activity
 
 import androidx.fragment.app.Fragment
 import android.graphics.Color
+import android.view.KeyEvent
 import android.widget.Toast
 
 import com.example.dimensionleague.R
@@ -82,6 +83,15 @@ class MainActivity : BaseNetConnectActivity() {
     override fun onDestroy() {
         super.onDestroy()
         CartManager.getInstance().unregister(listener)
+    }
+
+    //调用moveTaskToBack可以让程序退出到后台运行，false表示只对主界面生效，true表示任何界面都可以生效。
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(false)
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
     }
 }
 

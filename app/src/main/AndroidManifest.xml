@@ -35,7 +35,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".message.MessageActivity" />
+
         <activity android:name=".register.activity.RegisterActivity" />
         <activity
             android:name=".login.activity.LoginActivity"
