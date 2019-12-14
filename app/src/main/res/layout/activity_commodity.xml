@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="28dp"
@@ -8,8 +9,10 @@
     tools:context=".goodsinfo.GoodsInfoActivity">
 
     <LinearLayout
+        android:id="@+id/ll_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:padding="10dp">
 
         <ImageButton
@@ -38,11 +41,14 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_below="@id/ll_top"
         android:background="#eeee" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_above="@id/ll_goods_root"
+        android:layout_below="@id/ll_top"
         android:layout_marginTop="5dp"
         android:layout_weight="1">
 
@@ -182,11 +188,12 @@
         </LinearLayout>
     </FrameLayout>
 
-<!--        android:id="@+id/ll_goods_root"-->
+
     <LinearLayout
-        android:id="@+id/ll"
+        android:id="@+id/ll_goods_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:background="#fff">
 
@@ -237,4 +244,4 @@
             android:text="加入购物车"
             android:textColor="#fff" />
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>
