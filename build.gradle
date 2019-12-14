@@ -31,6 +31,7 @@ allprojects {
         mavenCentral()
         jcenter{url "http://jcenter.bintray.com/"}
         maven { url 'https://dl.bintray.com/umsdk/release' }
+
     }
 }
 

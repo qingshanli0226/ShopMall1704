@@ -30,7 +30,6 @@ import okhttp3.ResponseBody;
  */
 public abstract class BasePresenter<T> implements IPresenter<T> {
 
-
     private IView<T> iView;
 
     //TODO get获取单数据
@@ -87,11 +86,13 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         try {
+                            iView.hideLoading();
                             T resEntity = new Gson().fromJson(responseBody.string(), getBeanType());
                             //TODO 获取数据成功
                             iView.onRequestSuccess(resEntity);
                         } catch (IOException e) {
                             e.printStackTrace();
+                            iView.hideLoading();
                             iView.showError();
                             ErrorDisposeManager.HandlerError(e);
                         }
@@ -110,11 +111,6 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                             ErrorDisposeManager.HandlerError(e1);
                             throw new RuntimeException(e1.getMessage());
                         }
-
-                        iView.hideLoading();
-                        iView.showError();
-                        Log.d("lhf", e.getMessage());
-                        Log.e("xxxx", "错误" + e.toString());
                     }
 
                     @Override

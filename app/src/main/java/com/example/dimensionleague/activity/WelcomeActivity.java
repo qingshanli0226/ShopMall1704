@@ -12,16 +12,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.VideoView;
-
-import com.bumptech.glide.Glide;
-import com.example.buy.activity.PayActivity;
 import com.example.common.User;
 import com.example.framework.manager.AccountManager;
 import com.example.dimensionleague.AutoLoginManager;
@@ -34,8 +27,6 @@ import com.example.framework.port.ITaskFinishListener;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
 
 public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFinishListener {
     private Handler handler =new MyHandler(this);
@@ -173,6 +164,7 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
             finish();
         }
     }
+
     private static class MyHandler extends Handler {
         private WeakReference<WelcomeActivity> mWeakReference;
 

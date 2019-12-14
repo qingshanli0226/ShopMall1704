@@ -3,6 +3,7 @@ package com.example.common.utils;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import com.bumptech.glide.Glide;
@@ -16,7 +17,7 @@ public class LoadingPageUtils {
     //TODO 布局大小
     private RelativeLayout.LayoutParams params;
     //TODO 需要用的ViewGroup
-    private RelativeLayout relativeLayout;
+    private ViewGroup relativeLayout;
     //TODO 加载页面
     private View loadingView;
     //TODO 错误页面
@@ -30,8 +31,8 @@ public class LoadingPageUtils {
     //TODO
     private LayoutInflater inflater;
     private RequestManager requestManager;
-    public LoadingPageUtils(Context context, RelativeLayout relativeLayout) {
-        this.relativeLayout = relativeLayout;
+    public LoadingPageUtils(Context context, ViewGroup viewGroup) {
+        this.relativeLayout = viewGroup;
         inflater = LayoutInflater.from(context);
         requestManager = Glide.with(context);
         init();

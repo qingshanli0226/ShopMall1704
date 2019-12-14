@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/head"
+        android:background="@drawable/backg_which">
+        <ImageView
+            android:layout_height="@dimen/dp_70"
+            android:layout_margin="@dimen/dp_25"
+            android:layout_width="@dimen/dp_70"
+            android:id="@+id/setting_head_img"
+
+            android:src="@mipmap/ic_launcher_round"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_30"
+            android:text="@string/mine_login"
+            android:textSize="@dimen/sp_20"
+            android:id="@+id/setting_head_user_name"
+            android:layout_toRightOf="@+id/setting_head_img"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_12"
+            android:id="@+id/setting_head_name"
+            android:layout_below="@id/setting_head_user_name"
+            android:layout_toRightOf="@+id/setting_head_img"/>
+        <ImageView
+            android:layout_height="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_width="@dimen/dp_10"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/dp_60"
+            android:src="@drawable/home_arrow_right"
+            />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_15"
+        android:layout_below="@id/head"/>
+</RelativeLayout>

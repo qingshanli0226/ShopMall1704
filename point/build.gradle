@@ -39,12 +39,12 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation project(path: ':framework')
-    implementation project(path: ':common')
-    implementation project(path: ':net')
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
-    implementation 'org.greenrobot:greendao:3.2.2' // 添加库
-
-
+    api project(path: ':framework')
+    api project(path: ':common')
+    api project(path: ':net')
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
+    api 'org.greenrobot:greendao:3.2.2' // 添加库
+    api 'com.github.recruit-lifestyle:WaveSwipeRefreshLayout:1.6'
+    api 'tyrant:heartlayout:1.0.1'
 //
 }

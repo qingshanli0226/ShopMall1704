@@ -2,12 +2,14 @@ package com.example.point.activity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +28,8 @@ import com.example.point.stepmanager.DaoManager;
 import java.util.Calendar;
 import java.util.List;
 
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
+
 public class HistoryActivity extends BaseActivity {
 
     private ImageView iv_left;
@@ -40,6 +44,8 @@ public class HistoryActivity extends BaseActivity {
     private int year, monthOfYear, dayOfMonth;
     private List<StepBean> beans;
     private Spinner history_spinner;
+    private LinearLayout layout_titlebar;
+    private WaveSwipeRefreshLayout main_swipe;
 
     @Override
     public void init() {
@@ -49,13 +55,27 @@ public class HistoryActivity extends BaseActivity {
         history_re = findViewById(R.id.history_re);
         start = findViewById(R.id.start);
         stop = findViewById(R.id.stop);
+        layout_titlebar = findViewById(R.id.layout_titlebar);
         recently = (TextView) findViewById(R.id.recently);
+        main_swipe = (WaveSwipeRefreshLayout) findViewById(R.id.main_swipe);
+        main_swipe.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
+            @Override public void onRefresh() {
+                try {
+                    Thread.sleep(100);
+                    main_swipe.setRefreshing(false);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         // 通过Calendar对象来获取年、月、日、时、分的信息
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(calendar.YEAR);
         monthOfYear = calendar.get(calendar.MONTH);
         dayOfMonth = calendar.get(calendar.DAY_OF_MONTH);
         history_spinner = findViewById(R.id.history_spinner);
+        layout_titlebar.setBackgroundColor(Color.rgb(30, 148, 240));
     }
 
     @Override
@@ -158,33 +178,33 @@ public class HistoryActivity extends BaseActivity {
                 dateDialog.show();
             }
         });
-        stepItemAdpter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(HistoryActivity.this, RecordActivity.class);
-                String curr_date = beans.get(position).getCurr_date();
-                int step = beans.get(position).getStep();
-                //携带页面子数据
-                Bundle bundle = new Bundle();
-                bundle.putString("curr_date", curr_date);
-                bundle.putInt("step", step);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
+        if (stepItemAdpter != null) {
+            stepItemAdpter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    Intent intent = new Intent(HistoryActivity.this, RecordActivity.class);
+                    String curr_date = beans.get(position).getCurr_date();
+                    int step = beans.get(position).getStep();
+                    //携带页面子数据
+                    Bundle bundle = new Bundle();
+                    bundle.putString("curr_date", curr_date);
+                    bundle.putInt("step", step);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
+            });
+        }
 
         history_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-               if (i==0){
+                if (i == 0) {
                     start.setHint("开始日期");
                     stop.setHint("结束日期");
-                }
-                else if (i==1){
+                } else if (i == 1) {
                     start.setHint("开始小时");
                     stop.setHint("结束小时");
-                }
-                else if (i==2){
+                } else if (i == 2) {
                     start.setHint("开始分钟");
                     stop.setHint("结束分钟");
                 }
@@ -246,5 +266,6 @@ public class HistoryActivity extends BaseActivity {
 
     private void initView() {
         history_spinner = (Spinner) findViewById(R.id.history_spinner);
+
     }
 }

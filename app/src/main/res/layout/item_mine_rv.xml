@@ -11,6 +11,7 @@
         <ImageView
             android:id="@+id/mine_rcv_img"
             android:layout_width="@dimen/dp_40"
+            android:padding="@dimen/dp_10"
             android:layout_height="@dimen/dp_40"
             android:layout_gravity="center_horizontal"/>
         <TextView

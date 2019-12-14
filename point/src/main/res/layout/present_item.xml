@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="@dimen/dp_180"
+
+    android:layout_height="@dimen/dp_180">
+    <LinearLayout
+        android:layout_marginRight="@dimen/sp_30"
+        android:background="@android:color/holo_blue_light"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/present_img"
+            android:layout_marginBottom="10dp"
+            android:background="@mipmap/qq"
+            android:layout_width="@dimen/dp_80"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="40dp"
+            android:layout_height="@dimen/dp_80"></ImageView>
+        <TextView
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:id="@+id/present_tv"
+                android:text="QQ公仔一个"
+            android:textSize="20sp"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></TextView>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/present_btn"
+        android:textColor="@android:color/white"
+        android:layout_marginLeft="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="wrap_content"
+        android:layout_height="35sp"
+        android:background="@drawable/btn_sp"
+        android:text="本期限兑(0/1)"></Button>
+</LinearLayout>

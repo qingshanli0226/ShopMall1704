@@ -1,20 +1,18 @@
 package com.example.net;
 
-
-import org.json.JSONObject;
-
 import java.util.Map;
 
 import io.reactivex.Observable;
-import okhttp3.RequestBody;
+import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.HeaderMap;
-import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
 import retrofit2.http.Streaming;
@@ -40,4 +38,10 @@ public interface NetInterence {
    @Streaming
    @GET
    Observable<ResponseBody> downloadFileWithDynamicUrlSync(@Url String fileUrl);
+
+   //上传头像文件
+    @Multipart
+    @POST("path")
+     Observable<ResponseBody> upload(@Path(value = "path", encoded = true) String path,@Part MultipartBody.Part file);
+
 }

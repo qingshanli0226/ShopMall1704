@@ -1,5 +1,6 @@
 package com.example.framework.base;
 
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.example.common.code.ErrorCode;
@@ -9,6 +10,7 @@ import com.example.framework.manager.NetConnectManager;
 import com.example.framework.port.IActivity;
 import com.example.framework.port.INetConnectListener;
 import com.example.framework.port.IView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.logging.ErrorManager;
 
@@ -18,7 +20,7 @@ public abstract class BaseNetConnectActivity extends BaseActivity implements IAc
     NetConnectManager netConnectManager;
 
     private LoadingPageUtils loadingPage;
-    private RelativeLayout relativeLayout;
+    private ViewGroup relativeLayout;
 
     @Override
     public void init() {
@@ -115,7 +117,10 @@ public abstract class BaseNetConnectActivity extends BaseActivity implements IAc
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        netConnectManager.unRegisterNetConnectListener(this);
+        if (netConnectManager!=null){
+            netConnectManager.unRegisterNetConnectListener(this);
+        }
+
     }
 
 }

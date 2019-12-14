@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">次元联盟</string>
     <string name="top_messenger">未来同款12.12日重磅上市快来预约吧!!!</string>
-    <string name="top_scan">扫啊扫</string>
-    <string name="messenger">消息</string>
+
     <string name="top_hint">剑姬同人</string>
     <string name="look_more">查看更多</string>
     <string name="hot_good">这里都是买的棒棒哒</string>
@@ -10,7 +9,9 @@
     <string name="seckill_today">今日闪购 距·结束</string>
     <string name="hot_buy">热卖推荐</string>
     <string name="common_type">常用分类</string>
-    <string name="mine_login"><![CDATA[登录/注册>]]></string>
+    <string name="mine_login"><![CDATA[登录/注册]]></string>
     <string name="mine_look">看相似</string>
     <string name="find">发现</string>
+    <string name="out_login">退出登录</string>
+    <string name="new_name">请输入新的昵称</string>
 </resources>

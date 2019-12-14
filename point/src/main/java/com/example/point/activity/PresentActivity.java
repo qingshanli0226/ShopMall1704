@@ -1,0 +1,90 @@
+package com.example.point.activity;
+
+import android.graphics.Color;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.example.framework.base.BaseNetConnectActivity;
+import com.example.point.R;
+import com.example.point.adpter.PreAdpter;
+import com.example.point.bean.PresenBean;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PresentActivity extends BaseNetConnectActivity {
+    private ImageView iv_left;
+    private TextView physical;
+    private ImageView iv_right;
+    private LinearLayout layout_titlebar;
+    private RecyclerView present_re;
+    private List<PresenBean> presenBeans;
+    private PreAdpter preAdpter;
+    @Override
+    public void init() {
+        super.init();
+        iv_left=findViewById(R.id.iv_left);
+        physical=findViewById(R.id.physical);
+        iv_right=findViewById(R.id.iv_right);
+        layout_titlebar=findViewById(R.id.layout_titlebar);
+        present_re=findViewById(R.id.present_re);
+
+        layout_titlebar.setBackgroundColor(Color.rgb(247, 195, 93));
+        physical.setText("礼品兑换");
+
+        iv_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        present_re.setLayoutManager(new GridLayoutManager(this,2));
+    }
+
+    @Override
+    public void initDate() {
+        super.initDate();
+        presenBeans=new ArrayList<>();
+
+        presenBeans.add(new PresenBean(R.mipmap.qq,"QQ公仔(1000)"));
+        presenBeans.add(new PresenBean(R.mipmap.ch,"尖叫鸡(2000)"));
+        presenBeans.add(new PresenBean(R.mipmap.ticker,"母老虎(3000)"));
+        presenBeans.add(new PresenBean(R.mipmap.tuzi,"兔子萌宠(4000)"));
+
+        preAdpter=new PreAdpter(presenBeans,this);
+        present_re.setAdapter(preAdpter);
+        preAdpter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId()==R.id.present_btn){
+                    Toast.makeText(PresentActivity.this, "兑换失败，您的积分不足", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    @Override
+    public int getRelativeLayout() {
+        return super.getRelativeLayout();
+    }
+
+    @Override
+    public void onRequestSuccess(Object data) {
+        super.onRequestSuccess(data);
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.present_activity;
+    }
+
+
+}
