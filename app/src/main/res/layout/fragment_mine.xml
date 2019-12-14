@@ -3,32 +3,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".fragment.MineFragment"
     tools:mContext=".fragment.MineFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:mContext=".fragment.MineFragment"
+    tools:context=".fragment.MineFragment">
 
-    <RelativeLayout
+
+    <com.example.common.TitleBar
+        android:id="@+id/tb_mine"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content" />
 
-        <ScrollView
-            android:id="@+id/scrollview"
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        >
+
+
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="170dp"
+            android:fitsSystemWindows="true"
+            android:id="@+id/appbar"
+            android:theme="@style/Widget.Design.AppBarLayout"
 
-            <LinearLayout
+            >
+
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <com.example.common.TitleBar
-                    android:id="@+id/tb_mine"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                android:fitsSystemWindows="true"
+                android:layout_height="match_parent"
+                app:collapsedTitleGravity="right"
+                app:contentScrim="@color/mine_back_color"
+                app:expandedTitleGravity="center"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+                >
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/mine_height_170">
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/mine_height_170"
+                    android:background="@color/mine_back_color"
+                    app:layout_collapseMode="parallax"
+                    >
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -53,211 +76,22 @@
                         android:textColor="@color/color_white" />
                 </RelativeLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/mine_height_8"
-                    android:background="@color/mine_color_gray" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/mine_pad_10">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/mine_indent_text"
-                        android:textColor="@color/colorTintBlack" />
 
-                    <TextView
-                        android:id="@+id/tv_all_order"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:drawableEnd="@mipmap/home_arrow_right"
-                        android:text="@string/look_all_indent"
-                        android:textColor="#5d5d5d" />
-                </RelativeLayout>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/colorGray" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/mine_pad_10">
+        </com.google.android.material.appbar.AppBarLayout>
 
-                    <TextView
-                        android:id="@+id/tv_user_pay"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawableTop="@mipmap/new_order_status_fukuan"
-                        android:drawablePadding="@dimen/mine_pad_10"
-                        android:gravity="center"
-                        android:text="@string/obligation_text"
-                        android:textColor="@color/color_5d5d" />
 
-                    <TextView
-                        android:layout_width="@dimen/common_width_0"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawableTop="@mipmap/new_order_status_fahuo"
-                        android:drawablePadding="@dimen/mine_pad_10"
-                        android:gravity="center"
-                        android:text="@string/drop_shipping"
-                        android:textColor="@color/color_5d5d" />
+        <include layout="@layout/nested_scroll"></include>
 
-                    <TextView
-                        android:id="@+id/tv_user_receive"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawableTop="@mipmap/new_order_status_shouhuo"
-                        android:drawablePadding="@dimen/mine_pad_10"
-                        android:gravity="center"
-                        android:text="@string/wait_for_receiving"
-                        android:textColor="@color/color_5d5d" />
 
-                    <TextView
-                        android:id="@+id/tv_user_finish"
-                        android:layout_width="@dimen/common_width_0"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawableTop="@mipmap/icon_order_status_finish"
-                        android:drawablePadding="@dimen/mine_pad_10"
-                        android:gravity="center"
-                        android:text="@string/off_the_stocks"
-                        android:textColor="@color/color_5d5d" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-                    <TextView
-                        android:id="@+id/tv_user_drawback"
-                        android:layout_width="@dimen/common_width_0"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawableTop="@mipmap/new_order_status_help"
-                        android:drawablePadding="@dimen/mine_pad_10"
-                        android:gravity="center"
-                        android:text="@string/after_sale_text"
-                        android:textColor="@color/color_5d5d" />
-                </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/mine_height_8"
-                    android:background="@color/color_back_eee" />
 
-                <TextView
-                    android:id="@+id/tv_user_location"
-                    style="@style/TextStyle"
-                    android:drawableStart="@mipmap/user_channel_icon_address"
-                    android:text="@string/address_text" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="@dimen/mine_mStart_45"
-                    android:background="@color/color_back_eee" />
-
-                <TextView
-                    android:id="@+id/tv_user_collect"
-                    style="@style/TextStyle"
-                    android:drawableStart="@mipmap/user_channel_icon_collect"
-                    android:text="@string/mine_collect" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="@dimen/mine_mStart_45"
-                    android:background="@color/color_back_eee" />
-
-                <TextView
-                    android:id="@+id/tv_user_coupon"
-                    style="@style/TextStyle"
-                    android:drawableStart="@mipmap/user_channel_icon_coupon"
-                    android:text="@string/mine_coupon" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="@dimen/mine_mStart_45"
-                    android:background="@color/color_back_eee" />
-
-                <TextView
-                    android:id="@+id/tv_user_score"
-                    style="@style/TextStyle"
-                    android:drawableStart="@mipmap/user_channel_icon_score"
-                    android:text="@string/mine_integral" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="@dimen/mine_mStart_45"
-                    android:background="@color/color_back_eee" />
-
-                <TextView
-                    android:id="@+id/tv_user_prize"
-                    style="@style/TextStyle"
-                    android:drawableStart="@mipmap/user_channel_icon_prize"
-                    android:text="@string/mine_prize" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="@dimen/mine_mStart_45"
-                    android:background="@color/color_back_eee" />
-
-                <TextView
-                    android:id="@+id/tv_user_ticket"
-                    style="@style/TextStyle"
-                    android:drawableStart="@mipmap/user_icon_ticket"
-                    android:text="@string/mine_ticket" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/mine_height_8"
-                    android:background="@color/color_back_eee" />
-
-                <TextView
-                    android:id="@+id/tv_user_invitation"
-                    style="@style/TextStyle"
-                    android:drawableStart="@mipmap/user_channel_icon_invitation"
-                    android:text="@string/mine_share" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="@dimen/mine_mStart_45"
-                    android:background="@color/color_back_eee" />
-
-                <TextView
-                    android:id="@+id/tv_user_callcenter"
-                    style="@style/TextStyle"
-                    android:drawableStart="@mipmap/user_channel_icon_callcenter"
-                    android:text="@string/mine_service_center" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="@dimen/mine_mStart_45"
-                    android:background="#eee" />
-
-                <TextView
-                    android:id="@+id/tv_user_feedback"
-                    style="@style/TextStyle"
-                    android:drawableStart="@mipmap/user_channel_icon_feedback"
-                    android:text="@string/mine_feedback" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/mine_height_8"
-                    android:background="@color/color_back_eee" />
-            </LinearLayout>
-
-        </ScrollView>
-
-    </RelativeLayout>
 
 </LinearLayout>

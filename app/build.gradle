@@ -50,4 +50,11 @@ dependencies {
 
     compile 'cn.jiguang.sdk:janalytics:2.1.0'
     compile 'cn.jiguang.sdk:jcore:2.2.4'
+
+    implementation 'me.thewyp:avatar:1.0.4'
+
+    implementation 'com.android.support:design:25.3.1'
+
+
+
 }

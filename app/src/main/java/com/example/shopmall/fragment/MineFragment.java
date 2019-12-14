@@ -18,10 +18,14 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseFragment;
+import com.example.framework.base.IGetBaseView;
 import com.example.net.Constant;
 import com.example.shopmall.R;
+import com.example.shopmall.bean.HeadBean;
+import com.example.shopmall.presenter.IntegerPresenter;
 import com.example.step.Ui.IntegralActivity;
 import com.example.shopmall.activity.LoginActivity;
+import com.wyp.avatarstudio.AvatarStudio;
 
 //个人页面
 public class MineFragment extends BaseFragment {
@@ -78,8 +82,31 @@ public class MineFragment extends BaseFragment {
                 boolean isLogin = sharedPreferences.getBoolean("isLogin", false);
                 if (isLogin) {
 
+                    final String getToken = sharedPreferences.getString("getToken", null);
+                    new AvatarStudio.Builder(getActivity())
+                            .setText("相机","相册","取消")
+                            .setTextColor(Color.RED)
+                            .setAspect(1,1)
+                            .setOutput(100,100)
+                            .dimEnabled(true)
+                            .show(new AvatarStudio.CallBack() {
+                                @Override
+                                public void callback(String uri) {
+
+                                    IntegerPresenter integerPresenter = new IntegerPresenter(Constant.BASE_URL_JSON + "upload", HeadBean.class);
+//                                    integerPresenter.attachPostView(this);
+
+                                    if(uri!=null){
+
+                                    }
+
+                                }
+                            });
+
+
                 } else {
                     Toast.makeText(getContext(), "请先登录账号", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getActivity(),LoginActivity.class));
                 }
             }
         });
@@ -97,4 +124,5 @@ public class MineFragment extends BaseFragment {
     protected int setLayout() {
         return R.layout.fragment_mine;
     }
+
 }

@@ -100,8 +100,7 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
                 @Override
                 public void run() {
                     super.run();
-                    synchronized (LoginActivity.class) {
-                        ResultBean result = data.getResult();
+                       ResultBean result = data.getResult();
                         UserManager.getInstance().setActiveUser(result);
                         String token = result.getToken();
                         SharedPreferences token1 = getSharedPreferences("login", Context.MODE_PRIVATE);
@@ -109,10 +108,9 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
                         edit.putBoolean("isLogin", true);
                         edit.putString("getToken", token);
                         edit.apply();
-                    }
+
                 }
             }.start();
-            finish();
         } else {
             LoginEvent loginEvent = new LoginEvent("用户登录", false);
             JAnalyticsInterface.onEvent(LoginActivity.this, loginEvent);

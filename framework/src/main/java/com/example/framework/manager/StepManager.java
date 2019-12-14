@@ -70,6 +70,7 @@ public class StepManager {
                     @Override
                     public void getUpdateStep(int count, int ingal) {
 
+
                         for (int i=0;i<stepManagerListeners.size();i++){
                             stepManagerListeners.get(i).onIntegral(ingal);
                             stepManagerListeners.get(i).onStepChange(count);
@@ -80,6 +81,7 @@ public class StepManager {
                                 IntegalListeners.get(i).onIntegral(ingal);
                             }
                         }
+
 
 
                     }
@@ -105,10 +107,6 @@ public class StepManager {
         DaoSession daoSession = daoMaster.newSession();
         realBeanDao = daoSession.getShopStepTimeRealBeanDao();
 
-//        SQLiteDatabase sqLiteDatabase = new DaoMaster.DevOpenHelper(context, "first.db", null).getWritableDatabase();
-//        DaoMaster daoMaster1 = new DaoMaster(sqLiteDatabase);
-//        DaoSession daoSession1 = daoMaster1.newSession();
-//        firstStepBeanDao = daoSession1.getFirstStepBeanDao();
 
 
 

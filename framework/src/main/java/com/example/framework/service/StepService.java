@@ -19,6 +19,7 @@ import android.hardware.SensorManager;
 import android.os.Binder;
 import android.os.Build;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -72,13 +73,13 @@ public class StepService extends Service implements SensorEventListener {
         //初始化广播
         initBoradCast();
         //初始化传感器
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
+//        new Thread(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//            }
+//        }).start();
                 initSensorListener();
-            }
-        }).start();
 
         startTimer();
 
@@ -112,16 +113,14 @@ public class StepService extends Service implements SensorEventListener {
                         StepManager.getInstance().save(CURRENT_DATE,currentStep,previousStep);
                         break;
                     case Intent.ACTION_DATE_CHANGED:
-                        Log.e("Tag","555");
                         StepManager.getInstance().save(CURRENT_DATE,currentStep,previousStep);
                         isNewDay();
                         break;
                     case Intent.ACTION_TIME_CHANGED:
-                        Log.e("Tag","5556");
+                        StepManager.getInstance().save(CURRENT_DATE,currentStep,previousStep);
                         isNewDay();
                         break;
                     case Intent.ACTION_TIME_TICK:
-                        Log.e("Tag","5557");
                         StepManager.getInstance().saveReal(CURRENT_TIME,CURRENT_DATE,currentStep);
                         StepManager.getInstance().save(CURRENT_DATE,currentStep,previousStep);
                         isNewDay();
@@ -160,14 +159,7 @@ public class StepService extends Service implements SensorEventListener {
             currentStep = Integer.parseInt(shopStepBeans.get(0).getCurrent_step());
         }
 
-        int count=0;
-        List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
-        for (int i=0;i<queryAll.size();i++){
-            count+=queryAll.get(i).getIntegral();
-            if (updateUi != null) {
-                updateUi.getUpdateStep(currentStep,count);
-            }
-        }
+
         updateNotification();
     }
 
@@ -189,20 +181,33 @@ public class StepService extends Service implements SensorEventListener {
             notificationManager.createNotificationChannel(channel);
         }
         notificationManager.notify(100, nbuilder.build());
+
         int count=0;
-        List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
-        for (int i=0;i<queryAll.size();i++){
-            count+=queryAll.get(i).getIntegral();
+
+        if(currentStep>0){
+            int i = currentStep / 100;
+            List<ShopStepBean> all = OrmUtils.getQueryAll(ShopStepBean.class);
+            if(all.size()>1){
+                for (int s=0;s<all.size();s++){
+                    count+=all.get(s).getIntegral();
+                }
+            }else{
+                count=i;
+            }
+
+            Log.e("##Up",count+"");
             if (updateUi != null) {
                 updateUi.getUpdateStep(currentStep,count);
             }
         }
-
-
-
+//        List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
+//        Log.e("##Up-",count+"");
+//        for (int i=0;i<queryAll.size();i++){
+//            Log.e("##Up----",queryAll.get(i).getIntegral()+"");
+//            count+=queryAll.get(i).getIntegral();
+//
+//        }
     }
-
-
 
     //获取今天的日期
     private String getTodayDate() {
@@ -254,7 +259,9 @@ public class StepService extends Service implements SensorEventListener {
             manager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
         Sensor ctor = manager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
+        if(ctor!=null){
         manager.registerListener(this, ctor, SensorManager.SENSOR_DELAY_NORMAL);
+        }
     }
 
     @Override
@@ -282,15 +289,15 @@ public class StepService extends Service implements SensorEventListener {
         } else if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
             if (sensorEvent.values[0] == 1.0f) {
                 currentStep++;
+
             }
         }
-        updateNotification();
 
+        updateNotification();
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
-
     }
 
     //销毁应用
@@ -301,7 +308,6 @@ public class StepService extends Service implements SensorEventListener {
         stopForeground(true);
         unregisterReceiver(broadcastReceiver);
     }
-
     public interface UpdateUi {
         void getUpdateStep(int count,int ingal);
     }
