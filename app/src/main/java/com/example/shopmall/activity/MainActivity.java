@@ -3,6 +3,10 @@ package com.example.shopmall.activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.WindowManager;
+import android.widget.RelativeLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -11,6 +15,7 @@ import com.example.buy.bean.ShoppingCartBean;
 import com.example.buy.fragment.ShoppingCartFragment;
 import com.example.buy.presenter.ShoppingCartPresenter;
 import com.example.common.BottomBar;
+import com.example.common.ShoppingCartView;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.manager.ShoppingManager;
 import com.example.shopmall.R;
@@ -38,6 +43,9 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
     //购物车商品数量
     private int allNumber;
 
+    private ShoppingCartView mRedMessage;
+    private RelativeLayout mRlBottom;
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -53,11 +61,11 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
     protected int setLayout() {
         return R.layout.activity_main;
     }
-
     @Override
     public void initView() {
         bbMain = findViewById(R.id.bb_main);
-
+        mRedMessage = findViewById(R.id.shopping_message);
+        mRlBottom = findViewById(R.id.rl_main);
         fragmentArrayList.add(new HomePageFragment());
         fragmentArrayList.add(new ClassifyFragment());
         fragmentArrayList.add(new HorizontalFragment());
@@ -75,7 +83,7 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
         Log.d("####", "initData: " + allNumber);
         replaceFragment(fragmentArrayList.get(0));
 
-        String[] str = new String[]{"首页","分类","发现","购物车","个人中心"};
+        String[] str = new String[]{"首页", "分类", "发现", "购物车", "个人中心"};
 
         bbMain.setBottombarName(str);
         Drawable homepageImage = getResources().getDrawable(R.drawable.homepage_image);
@@ -83,7 +91,7 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
         Drawable horizontalImage = getResources().getDrawable(R.drawable.horizontal_image);
         Drawable shoppingcartImage = getResources().getDrawable(R.drawable.shoppingcart_image);
         Drawable mineImage = getResources().getDrawable(R.drawable.mine_image);
-        Drawable[] integers = new Drawable[]{homepageImage,classifyImage,horizontalImage,shoppingcartImage,mineImage};
+        Drawable[] integers = new Drawable[]{homepageImage, classifyImage, horizontalImage, shoppingcartImage, mineImage};
         bbMain.setTapDrables(integers);
 
         bbMain.setOnTapListener(new BottomBar.OnTapListener() {
@@ -97,7 +105,16 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
                 }
             }
         });
+
+        WindowManager windowManager = getWindowManager();
+        Display defaultDisplay = windowManager.getDefaultDisplay();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        defaultDisplay.getMetrics(displayMetrics);
+        int widthPixels = displayMetrics.widthPixels;
+        Log.e("####", ""+widthPixels);
+        mRedMessage.setX(widthPixels/6*4);
     }
+
 
     public void refreshShoppingCartData() {
         String token = ShoppingManager.getInstance().getToken(MainActivity.this);
@@ -114,17 +131,17 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
         //替换功能
-        if (currentFragment != null){
+        if (currentFragment != null) {
             fragmentTransaction.hide(currentFragment);
         }
 
         //判断要添加的fragment时候被添加过
-        if (fragment.isAdded()){
+        if (fragment.isAdded()) {
             //显示传过来的
             fragmentTransaction.show(fragment);
-        }else {//没有添加过
+        } else {//没有添加过
             //添加传过来的
-            fragmentTransaction.add(R.id.fl_main,fragment);
+            fragmentTransaction.add(R.id.fl_main, fragment);
         }
 
         //提交

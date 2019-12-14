@@ -18,32 +18,50 @@ public class ShoppingCartView extends View {
     private Paint paintRed;
     //购物车显示数量数字
     private Paint paintText;
+    private int mWidth;
+    private int mHeight;
+    private String num = "";
 
     public ShoppingCartView(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public ShoppingCartView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        initPaint(num + "");
+    }
 
-        initPaint();
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
     }
 
-    private void initPaint() {
+    private void initPaint(String num) {
         paintRed = new Paint();
         paintRed.setAntiAlias(true);
         paintRed.setDither(true);
-        paintRed.setStyle(Paint.Style.FILL_AND_STROKE);
-        paintRed.setColor(Color.BLACK);
+        paintRed.setStyle(Paint.Style.FILL);
+        paintRed.setColor(Color.RED);
         paintRed.setStrokeWidth(10);
+
+        paintText = new Paint();
+        paintText.setAntiAlias(true);
+        paintText.setDither(true);
+        paintText.setStyle(Paint.Style.FILL);
+        paintText.setColor(Color.WHITE);
+        paintText.setStrokeWidth(10);
+        paintText.setTextSize(20);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        canvas.drawCircle(20, 20, 20, paintRed);
+        canvas.drawText(num, 20 - paintText.measureText(num) / 2, 25, paintText);
+    }
 
-        canvas.drawCircle(40, 40, 10, paintRed);
-
+    public void setNum(int num) {
+        initPaint(num + "");
     }
 }

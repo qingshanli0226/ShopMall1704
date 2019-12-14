@@ -62,6 +62,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                     }
                 });
     }
+
     @Override
     public void getCipherTextData() {
         RetrofitCreator.getNetPostService().getFormData(getPath(), getHeader(), getSign())
@@ -138,7 +139,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
     @Override
     public void getPostJsonData() {
-        RetrofitCreator.getNetPostService().getJsonData( getPath(),getHeader(), getRequestBody())
+        RetrofitCreator.getNetPostService().getJsonData(getHeader(), getPath(), getRequestBody())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {
