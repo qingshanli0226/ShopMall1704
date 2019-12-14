@@ -171,7 +171,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
             ObjectAnimator scaleY = ObjectAnimator.ofFloat(beiImgage, "scaleY", 1, 0.1f);
             //缩放后加贝塞尔曲线
             animatorSet.play(scaleX).with(scaleY).before(getBeiAnimator());
-            animatorSet.setDuration(800);
+            animatorSet.setDuration(500);
             animatorSet.setInterpolator(new AccelerateInterpolator());
             //动画开始不能点击加入购物车  完成后才可以点击
             animatorSet.addListener(new AnimatorListenerAdapter() {

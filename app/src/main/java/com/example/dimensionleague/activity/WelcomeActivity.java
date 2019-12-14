@@ -69,6 +69,7 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
         videoView = findViewById(R.id.videoView);
         but = findViewById(R.id.welcome_button);
 
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
          //设置监听
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
@@ -82,7 +83,6 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
 
     @Override
     public void initDate() {
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         videoView.setVideoPath(Uri.parse("android.resource://" + getPackageName() + "/"+R.raw.mei).toString());
 
