@@ -1,26 +1,24 @@
 package com.example.administrator.shaomall.home;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.renderscript.Script;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.LinearLayoutManager;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.activity.MessageActivity;
 import com.example.commen.Constants;
 import com.example.commen.view.AnimationNestedScrollView;
 import com.example.administrator.shaomall.home.adapter.HomeRecycleAdapter;
 import com.example.commen.util.CommonUtil;
-import com.example.administrator.shaomall.R;
 import com.example.commen.ACache;
-import com.example.commen.ShopMailError;
+
+import com.example.commen.util.ShopMailError;
 import com.shaomall.framework.base.BaseMVPFragment;
 import com.shaomall.framework.bean.LoginBean;
 import com.shaomall.framework.bean.MessageBean;
@@ -57,12 +55,9 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> implements MessageM
         qBadgeView.bindTarget(message)
                 .setBadgeTextSize(10f, true)
                 .setBadgeGravity(Gravity.START | Gravity.TOP)
-                .setBadgeBackgroundColor(Color.BLUE)
-        ;
+                .setBadgeBackgroundColor(Color.BLUE);
         searchLayoutParams = (ViewGroup.MarginLayoutParams) ll_search.getLayoutParams();
         titleLayoutParams = (ViewGroup.MarginLayoutParams) tv_title.getLayoutParams();
-
-
     }
 
     @Override

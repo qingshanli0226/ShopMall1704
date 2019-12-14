@@ -9,6 +9,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,6 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
     }
 
     @LayoutRes
@@ -74,6 +74,17 @@ public abstract class BaseFragment extends Fragment {
      */
     protected void toClass(Class<? extends Activity> clazz) {
         toClass(clazz, null);
+    }
+
+    /**
+     * 可以传送下标
+     * @param clazz
+     * @param index
+     */
+    protected void toClass(Class<? extends Activity> clazz, int index) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("index", index);
+        toClass(clazz, bundle);
     }
 
     /**

@@ -2,6 +2,7 @@ package com.shaomall.framework.base;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
@@ -28,6 +29,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(setLayoutId());
         mActivity = this;
 
+
+
         immersionBar = ImmersionBar.with(this);
         immersionBar.init();
 
@@ -40,12 +43,28 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void flagFullScreen() {
     }
-    protected abstract void initView();
 
     @LayoutRes
     protected abstract int setLayoutId();
 
+    protected abstract void initView();
+
     protected abstract void initData();
+
+
+    /**
+     * 获取android手机状态栏的高度
+     * @return
+     */
+    public int getStatusBarHeight(){
+        Resources resources = mActivity.getResources();
+        //获取标志符
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        //获取尺寸像素大小
+        int height = resources.getDimensionPixelSize(resourceId);
+        return height;
+    }
+
 
     /**
      * 简化findViewById()
@@ -58,7 +77,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         return (T) findViewById(resId);
     }
 
-
     /**
      * Intent 跳转
      *
@@ -66,6 +84,18 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected void toClass(Class<? extends Activity> clazz) {
         toClass(clazz, null);
+    }
+
+    /**
+     * 可以传送下标
+     *
+     * @param clazz
+     * @param index
+     */
+    protected void toClass(Class<? extends Activity> clazz, int index) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("index", index);
+        toClass(clazz, bundle);
     }
 
     /**
@@ -123,7 +153,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         ActivityInstanceManager.removeActivity(this);
-        if (immersionBar != null){
+        if (immersionBar != null) {
             immersionBar.destroy(this, null);
         }
     }

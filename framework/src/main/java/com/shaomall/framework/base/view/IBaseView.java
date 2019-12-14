@@ -1,6 +1,6 @@
 package com.shaomall.framework.base.view;
 
-import com.example.commen.ShopMailError;
+import com.example.commen.util.ShopMailError;
 
 import java.util.List;
 

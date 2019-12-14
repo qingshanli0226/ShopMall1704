@@ -17,7 +17,6 @@ public class UserInfoManager {
     private LinkedList<UserInfoStatusListener> userInfoStatusListeners = new LinkedList<>();
 
     private UserInfoManager() {
-
     }
 
     public static UserInfoManager getInstance() {

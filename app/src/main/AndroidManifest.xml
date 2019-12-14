@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+
     package="com.example.administrator.shaomall">
     <!--    联网的权限:-->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -21,47 +22,60 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
 
-
-        <!--        欢迎界面-->
-        <activity android:name=".activity.WelcomeActivity">
+        android:usesCleartextTraffic="true"
+        tools:ignore="UnusedAttribute"
+        tools:targetApi="m">
+        <activity android:name=".function.FunctionActivity" />
+        <!-- 商品详情 -->
+        <activity
+            android:name=".goodsinfo.GoodsInfoActivity"
+            android:launchMode="singleTask"
+            android:supportsPictureInPicture="true"
+            tools:targetApi="n" /> <!-- 欢迎界面 -->
+        <activity
+            android:name=".activity.WelcomeActivity"
+            android:supportsPictureInPicture="true"
+            tools:ignore="UnusedAttribute"
+            tools:targetApi="n">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <!--        主界面-->
-        <activity android:name=".activity.MainActivity" />
-        <!--        登录-->
+        <!-- 主界面 -->
         <activity
-            android:name=".login.ui.LoginActivity"
-            android:launchMode="singleTask" />
-        <!--        注册-->
-        <activity android:name=".login.ui.SigninActivity" />
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTask"
+            android:supportsPictureInPicture="true"
+            tools:ignore="UnusedAttribute"
+            tools:targetApi="n" /> <!-- 登录 -->
+        <activity
+            android:name=".login.LoginActivity"
+            android:launchMode="singleTask"
+            android:supportsPictureInPicture="true"
+            tools:ignore="UnusedAttribute"
+            tools:targetApi="n" /> <!-- 注册 -->
+        <activity
+            android:name=".login.SigninActivity"
+            android:launchMode="singleTask"
+            android:supportsPictureInPicture="true"
+            tools:ignore="UnusedAttribute"
+            tools:targetApi="n" />
+        <activity android:name=".activity.MessageActivity"/>
+        <!-- 服务 -->
+        <service android:name=".cache.CacheService" /> <!-- 适配华为（huawei）刘海屏 -->
 
-        <activity android:name=".activity.MessageActivity" />
-
-
-        <!--        服务-->
-        <service android:name=".cache.CacheService"
-      />
-
-
-        <!--适配华为（huawei）刘海屏-->
         <meta-data
             android:name="android.notch_support"
-            android:value="true" />
-        <!-- 适配小米（xiaomi）刘海屏 -->
+            android:value="true" /> <!-- 适配小米（xiaomi）刘海屏 -->
         <meta-data
             android:name="notch.config"
             android:value="portrait|landscape" />
         <meta-data
             android:name="android.max_aspect"
             android:value="2.4" />
-
 
 
         <!-- 替换原生极光推送接收器 -->
@@ -76,7 +90,8 @@
             </intent-filter>
         </receiver>
         <!-- 注册继承JCommonService的服务 -->
-        <service android:name=".message.JGServire"
+        <service
+            android:name=".message.JGServire"
             android:enabled="true"
             android:exported="false"
             android:process=":pushcore">

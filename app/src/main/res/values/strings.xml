@@ -10,13 +10,11 @@
     <string name="recommend_title">邵华推荐</string>
     <string name="skill_title">邵华秒杀 距·结束</string>
     <string name="type_sort">常用分类</string>
-
     <string name="loginUserTextVIewText">用户名:</string>
     <string name="loginLoginSigninTextViewText">没有账号?点击前往注册</string>
     <string name="signinUserTextViewText">用户名:</string>
     <string name="signinPassWordText">密码:</string>
     <string name="singinSiginTextViewText">已有账号?点击前往登录</string>
     <string name="app_fragment_mine_tv_text_user_name">登录/注册 ></string>
-
-
+    <string name="app_framgent_mine_tv_text_shop_default">- -</string>
 </resources>

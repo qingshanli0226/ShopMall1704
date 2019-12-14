@@ -28,7 +28,6 @@ public class MessageActivity extends BaseActivity implements MessageManager.Mess
         notReadAdapter.notifyDataSetChanged();
     }
 
-
     private NotReadAdapter notReadAdapter;
     private IsReadAdapter isReadAdapter;
     private android.widget.ImageView mTitleScanning;
@@ -94,8 +93,6 @@ public class MessageActivity extends BaseActivity implements MessageManager.Mess
     }
 
 
-
-
     //未读消息适配器
     class NotReadAdapter extends BaseAdapter {
         @Override
@@ -134,7 +131,7 @@ public class MessageActivity extends BaseActivity implements MessageManager.Mess
                 public void onDragStateChanged(int dragState, Badge badge, View targetView) {
                     if (dragState == STATE_SUCCEED) {
                         MessageManager.getInstance(MessageActivity.this).updateData(notReadMessages.get(position).getMessageId());
-                        isReadMessages.add(0,notReadMessages.get(position));
+                        isReadMessages.add(0, notReadMessages.get(position));
                         isReadAdapter.notifyDataSetChanged();
                         notReadMessages.remove(notReadMessages.get(position));
                         notifyDataSetChanged();

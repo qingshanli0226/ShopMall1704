@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.shoppingcart">
 
+    package="com.example.shoppingcart" >
+    <application>
+        <activity android:name=".Ui.AddressManagerActivity">
+
+        </activity>
+    </application>
 </manifest>
+

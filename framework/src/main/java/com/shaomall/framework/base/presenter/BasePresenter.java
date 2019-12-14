@@ -2,18 +2,16 @@ package com.shaomall.framework.base.presenter;
 
 import android.util.Log;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.commen.util.ErrorUtil;
 import com.example.commen.LoadingPageConfig;
-import com.example.commen.ShopMailError;
+import com.example.commen.util.ShopMailError;
 import com.example.net.MVPObserver;
 import com.example.net.ResEntity;
 import com.example.net.RetrofitCreator;
 import com.example.net.sign.SignUtil;
 import com.google.gson.Gson;
 import com.shaomall.framework.base.view.IBaseView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -33,7 +31,6 @@ import okhttp3.ResponseBody;
 
 public abstract class BasePresenter<T> implements IBasePresenter<T> {
     private IBaseView<T> iBaseView;
-
 
     @Override
     public void doGetHttpRequest() {
@@ -76,7 +73,6 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
     public void doJsonPostHttpRequest(int requestCode) {
         getData(requestCode, RetrofitCreator.getNetApiService().jsonPostData(getHeaderParams(), getPath(), getEncryptJsonParam()));
     }
-
 
 
     //设置加载页状态
@@ -164,10 +160,11 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
     }
 
 
-    protected JSONObject getJsonParam(){
+    protected JSONObject getJsonParam() {
 
         return new JSONObject();
     }
+
     /**
      * json请求
      *
@@ -176,20 +173,14 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
     private RequestBody getEncryptJsonParam() {
         JSONObject jsonParam = getJsonParam();
         RequestBody requestBody = null;
-        if (jsonParam != null){
-            try {
-                jsonParam.put("sign", SignUtil.generateJsonSign(jsonParam));
-                SignUtil.encryptJsonParamsByBase64(jsonParam);
-                requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonParam.toString());
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        if (jsonParam != null) {
+            jsonParam.put("sign", SignUtil.generateJsonSign(jsonParam));
+            SignUtil.encryptJsonParamsByBase64(jsonParam);
+            requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonParam.toString());
         }
 
         return requestBody;
     }
-
 
 
     private void getData(Observable<ResponseBody> data) {
@@ -204,42 +195,38 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
-
+                        //判断iBaseView是否为null
+                        if (iBaseView == null) {
+                            return;
+                        }
                         try {
                             //数据请求成功
                             setLoadingPager(LoadingPageConfig.STATE_SUCCESS_CODE);
                             String string = responseBody.string();
+
                             //判断数据是否是列表
                             if (isList()) {
                                 ResEntity<List<T>> resEntityList = new Gson().fromJson(string, getBeanType());
-
+                                int code = resEntityList.getCode();
                                 //获取数据列表成功
-                                if (resEntityList.getCode() == 200) { //数据请求成功
-                                    if (iBaseView != null) {
-                                        iBaseView.onRequestHttpDataListSuccess(resEntityList.getMessage(), resEntityList.getResult());
-                                    }
+                                if (code == ShopMailError.SUCCESS.getErrorCode()) { //数据请求成功
+                                    iBaseView.onRequestHttpDataListSuccess(resEntityList.getMessage(), resEntityList.getResult());
                                 } else {
                                     //获取列表数据失败
-                                    if (iBaseView != null) {
-                                        iBaseView.onRequestHttpDataFailed(ShopMailError.BUSINESS_ERROR);
-                                    }
+                                    iBaseView.onRequestHttpDataFailed(dataProcessing(code));
                                 }
 
                             } else { //不是列表
                                 ResEntity<T> resEntity = new Gson().fromJson(string, getBeanType());
-                                //  T resEntity = new Gson().fromJson(string, getBeanType());
-
-                                if (resEntity.getCode() == 200) { //数据请求成功
-                                    if (iBaseView != null) {
-                                        iBaseView.onRequestHttpDataSuccess(resEntity.getMessage(), resEntity.getResult());
-                                    }
+                                int code = resEntity.getCode();
+                                if (code == ShopMailError.SUCCESS.getErrorCode()) { //数据请求成功
+                                    iBaseView.onRequestHttpDataSuccess(resEntity.getMessage(), resEntity.getResult());
                                 } else {
                                     //获取数据失败
-                                    if (iBaseView != null) {
-                                        iBaseView.onRequestHttpDataFailed(ShopMailError.BUSINESS_ERROR);
-                                    }
+                                    iBaseView.onRequestHttpDataFailed(dataProcessing(code));
                                 }
                             }
+
                         } catch (IOException e) {
                             //e.printStackTrace();
                             //数据为空
@@ -271,40 +258,35 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
-
+                        //判断iBaseView是否为null
+                        if (iBaseView == null) {
+                            return;
+                        }
                         try {
                             //数据请求成功
                             setLoadingPager(LoadingPageConfig.STATE_SUCCESS_CODE);
                             String string = responseBody.string();
+
                             //判断数据是否是列表
                             if (isList()) {
                                 ResEntity<List<T>> resEntityList = new Gson().fromJson(string, getBeanType());
-
+                                int code = resEntityList.getCode();
                                 //获取数据列表成功
-                                if (resEntityList.getCode() == 200) { //数据请求成功
-                                    if (iBaseView != null) {
-                                        iBaseView.onRequestHttpDataListSuccess(requestCode, resEntityList.getMessage(), resEntityList.getResult());
-                                    }
+                                if (code == ShopMailError.SUCCESS.getErrorCode()) { //数据请求成功
+                                    iBaseView.onRequestHttpDataListSuccess(requestCode, resEntityList.getMessage(), resEntityList.getResult());
                                 } else {
                                     //获取列表数据失败
-                                    if (iBaseView != null) {
-                                        iBaseView.onRequestHttpDataFailed(requestCode, ShopMailError.BUSINESS_ERROR);
-                                    }
+                                    iBaseView.onRequestHttpDataFailed(requestCode, dataProcessing(code));
                                 }
 
                             } else { //不是列表
                                 ResEntity<T> resEntity = new Gson().fromJson(string, getBeanType());
-                                //                                T resEntity = new Gson().fromJson(string, getBeanType());
-
-                                if (resEntity.getCode() == 200) { //数据请求成功
-                                    if (iBaseView != null) {
-                                        iBaseView.onRequestHttpDataSuccess(requestCode, resEntity.getMessage(), resEntity.getResult());
-                                    }
+                                int code = resEntity.getCode();
+                                if (code == ShopMailError.SUCCESS.getErrorCode()) { //数据请求成功
+                                    iBaseView.onRequestHttpDataSuccess(requestCode, resEntity.getMessage(), resEntity.getResult());
                                 } else {
                                     //获取数据失败
-                                    if (iBaseView != null) {
-                                        iBaseView.onRequestHttpDataFailed(requestCode, ShopMailError.BUSINESS_ERROR);
-                                    }
+                                    iBaseView.onRequestHttpDataFailed(requestCode, dataProcessing(code));
                                 }
                             }
 
@@ -327,6 +309,54 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                 });
     }
 
+    /**
+     * 数据处理
+     *
+     * @param code
+     * @return
+     */
+    private ShopMailError dataProcessing(int code) {
+        if (code == ShopMailError.SUCCESS.getErrorCode()) { //登录成功
+            return ShopMailError.SUCCESS;
+
+        } else if (code == ShopMailError.ERROR_USER_NOT_REGISTERED.getErrorCode()) { //用户没有注册，无法登录
+            return ShopMailError.ERROR_USER_NOT_REGISTERED;
+
+        } else if (code == ShopMailError.ERROR_USER_HAS_REGISTERED.getErrorCode()) { //用户已经注册, 请直接登录
+            return ShopMailError.ERROR_USER_NOT_REGISTERED;
+
+        } else if (code == ShopMailError.ERROR_NOT_LOGIN.getErrorCode()) { //请先登录
+            return ShopMailError.ERROR_NOT_LOGIN;
+
+        } else if (code == ShopMailError.ERROR_UPLOAD_FILE.getErrorCode()) { //上传文件失败
+            return ShopMailError.ERROR_UPLOAD_FILE;
+
+        } else if (code == ShopMailError.ERROR_AUTO_LOGIN.getErrorCode()) { //token失效自动登录失败
+            return ShopMailError.ERROR_AUTO_LOGIN;
+
+        } else if (code == ShopMailError.ERROR_TOKEN_EXPIRE_CODE.getErrorCode()) { //token失效
+            return ShopMailError.ERROR_TOKEN_EXPIRE_CODE;
+
+        } else if (code == ShopMailError.ERROR_CHECK_INVENTORY.getErrorCode()) { //检查产品数量出现错误
+            return ShopMailError.ERROR_CHECK_INVENTORY;
+
+        } else if (code == ShopMailError.ERROR_GET_SHORTCART_PRODUCTS.getErrorCode()) { //获取购物车产品出现错误
+            return ShopMailError.ERROR_GET_SHORTCART_PRODUCTS;
+
+        } else if (code == ShopMailError.ERROR_ADD_ONE_PRODUCT.getErrorCode()) { //将一个产品添加到购物车失败
+            return ShopMailError.ERROR_ADD_ONE_PRODUCT;
+
+        } else if (code == ShopMailError.ERROR_UPDATE_PRODUCT_NUM.getErrorCode()) { //更新产品数量出现错误
+            return ShopMailError.ERROR_UPDATE_PRODUCT_NUM;
+
+        } else if (code == ShopMailError.ERROR_VERIFY_SIGN.getErrorCode()) { //参数签名验证不过
+            return ShopMailError.ERROR_VERIFY_SIGN;
+
+        } else {
+            return ShopMailError.OTHER_ERROR;
+
+        }
+    }
 
     @Override
     public void detachView() {

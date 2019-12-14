@@ -1,9 +1,7 @@
-package com.example.administrator.shaomall.login.ui;
+package com.example.administrator.shaomall.login;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.LinearGradient;
+import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -14,9 +12,10 @@ import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.activity.MainActivity;
 import com.example.administrator.shaomall.login.diyview.DIYButton;
 import com.example.administrator.shaomall.login.presenter.LoginPresenter;
-import com.example.commen.ShopMailError;
+import com.example.commen.util.ShopMailError;
 import com.shaomall.framework.base.BaseMVPActivity;
 import com.shaomall.framework.bean.LoginBean;
+import com.shaomall.framework.manager.ActivityInstanceManager;
 import com.shaomall.framework.manager.UserInfoManager;
 
 public class LoginActivity extends BaseMVPActivity<LoginBean> {
@@ -26,18 +25,15 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
     private EditText loginPass;
     private TextView loginSignin;
     LoginPresenter presenter;
+
     @Override
     protected void initView() {
         diybutton = (DIYButton) findViewById(R.id.diybutton);
         loginUser = (EditText) findViewById(R.id.loginUser);
         loginPass = (EditText) findViewById(R.id.loginPass);
         loginSignin = (TextView) findViewById(R.id.loginSignin);
-        presenter=new LoginPresenter();
+        presenter = new LoginPresenter();
         presenter.attachView(this);
-
-
-
-
     }
 
     @Override
@@ -45,7 +41,7 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
         return R.layout.activity_login;
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+
     @Override
     protected void initData() {
         diybutton.setButtomtext("登录");
@@ -63,7 +59,7 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
         diybutton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction()==MotionEvent.ACTION_DOWN){
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     //这是按下时的颜色
                     int colorStart = getResources().getColor(R.color.mediumspringgreen);
                     //传过去true代表是按下
@@ -73,7 +69,7 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
 
                     //Toast.makeText(mActivity, "123", Toast.LENGTH_SHORT).show();
                     diybutton.invalidate();
-                }else if (event.getAction()==MotionEvent.ACTION_UP){
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     //这是抬起时的颜色
 
                     int colorStart = getResources().getColor(R.color.mediumspringgreen);
@@ -85,9 +81,9 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
                     //Toast.makeText(mActivity, "松开了", Toast.LENGTH_SHORT).show();
                     diybutton.invalidate();
                     //判断用户名和密码逻辑
-                    if (loginUser.getText().toString().equals("")||loginPass.getText().toString().equals("")){
+                    if (loginUser.getText().toString().equals("") || loginPass.getText().toString().equals("")) {
                         Toast.makeText(mActivity, "用户名和密码或密码不可为空", Toast.LENGTH_SHORT).show();
-                    }else {
+                    } else {
                         String username = loginUser.getText().toString();
                         String password = loginPass.getText().toString();
                         presenter.setUsername(username);
@@ -95,7 +91,7 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
                         presenter.doPostHttpRequest(100);
                         toClass(MainActivity.class);
                     }
-            }
+                }
                 return false;
             }
         });
@@ -108,11 +104,33 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ActivityInstanceManager.removeActivity(this);
+
+        toClass(MainActivity.class, 0); //返回首页
+    }
+
+    @Override
     public void onRequestHttpDataSuccess(int requestCode, String message, LoginBean data) {
         //登录成功
-        Toast.makeText(mActivity, ""+message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(mActivity, "" + message, Toast.LENGTH_SHORT).show();
         UserInfoManager instance = UserInfoManager.getInstance();
         instance.saveUserInfo(data);
-        finish();
+
+        setNewActivity();
+    }
+
+    /**
+     * 跳转界面
+     */
+    private void setNewActivity(){
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null){
+            int index = bundle.getInt("index");
+            toClass(MainActivity.class, index);
+        }else {
+            toClass(MainActivity.class);
+        }
     }
 }
