@@ -93,7 +93,7 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
         String token = result.getToken();
         if (data.getMessage().equals("登录成功")) {
             UserManager.getInstance().setActiveUser(result);
-            UserManager.getInstance().addUser(result);
+
             SharedPreferences token1 = getSharedPreferences("login", Context.MODE_PRIVATE);
             SharedPreferences.Editor edit = token1.edit();
             edit.putBoolean("isLogin", true);

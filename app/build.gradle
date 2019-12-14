@@ -42,4 +42,11 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.2.62'
     implementation project(path: ':step')
 
+
+    implementation 'me.thewyp:avatar:1.0.4'
+
+    implementation 'com.android.support:design:25.3.1'
+
+
+
 }

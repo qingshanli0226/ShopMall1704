@@ -98,7 +98,6 @@
             android:layout_width="@dimen/stepView_weight"
             android:layout_height="@dimen/stepView_height"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/step_margin20"
             android:gravity="center"
             >
 

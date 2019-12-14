@@ -11,32 +11,22 @@
 9-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml
 10
 11    <application>
-11-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:5:5-20:19
+11-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:5:5-16:19
 12        <activity android:name="com.example.step.Ui.HistoryActivity" />
 12-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:6:9-65
 12-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:6:19-53
 13        <activity
-13-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:7:9-15:20
+13-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:7:9-11:20
 14            android:name="com.example.step.Ui.IntegralActivity"
 14-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:7:19-54
 15            android:screenOrientation="portrait" >
 15-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:8:13-49
-16            <intent-filter>
-16-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:10:13-14:29
-17                <action android:name="android.intent.action.MAIN" />
-17-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:11:17-69
-17-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:11:25-66
-18
-19                <category android:name="android.intent.category.LAUNCHER" />
-19-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:13:17-77
-19-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:13:27-74
-20            </intent-filter>
-21        </activity>
-22
-23        <service android:name="com.example.framework.service.StepService" >
-23-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:17:9-19:19
-23-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:17:18-74
-24        </service>
-25    </application>
-26
-27</manifest>
+16        </activity>
+17
+18        <service android:name="com.example.framework.service.StepService" >
+18-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:13:9-15:19
+18-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:13:18-74
+19        </service>
+20    </application>
+21
+22</manifest>

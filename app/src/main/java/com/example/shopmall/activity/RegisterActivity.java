@@ -80,6 +80,7 @@ public class RegisterActivity extends BaseActivity implements IPostBaseView<Regi
     public void onPostDataSucess(RegisterBean data) {
         Toast.makeText(this, data.getMessage(), Toast.LENGTH_SHORT).show();
         if (data.getResult().equals("注册成功")) {
+
             finish();
         }
     }
