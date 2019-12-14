@@ -48,6 +48,7 @@ public class MainActivity extends BaseMVPActivity<Object> {
         fragments.add(new FindFragment());
         fragments.add(new ShoppingcartActivity());
         fragments.add(new MineFragment());
+
     }
 
     @Override

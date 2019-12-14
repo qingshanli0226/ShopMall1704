@@ -1,6 +1,14 @@
 package com.example.net;
 
 public class AppNetConfig {
+
+    //求情代码删除购物车数量
+    public static final int COURT_SHIP_CODE_DELETE_SHOPPINGCART_QUANTITY=0x004;
+    //请求代码更新购物车数量
+    public static final int REQUEST_CODE_TOUPDATE_CARTQUANTITY= 0x003;
+
+    //请求代码得到购物车产品
+    public static final int REQUEST_CODE_GET_SHORTCART_PRODUCTS= 0x002;
     //标记是否打印log
     public static final boolean PRINT_LOG = true;
     public static final String TOKEN = "token";
@@ -19,6 +27,7 @@ public class AppNetConfig {
 
     ////////////////////////////////////////////
     //商品接口
+
 
     // 1.请求Json数据基本URL
     public static final String BASE_URL_JSON = BASE_URL + "atguigu/json/";
@@ -124,4 +133,8 @@ public class AppNetConfig {
 
     //22. 查找待发货的订单 get
     public static final String FIND_FOR_SEND = "findForSend";
+
+    //23.从服务端购物车删除一个产品的接口
+    public static final String  REMOVE_ONE_PRODUCT= "removeOneProduct";
+
 }

@@ -1,15 +1,14 @@
 package com.example.shoppingcart.bean;
 
-public class ShoppingCartBean {
-
+public class UpDatePrductNumBean {
 
     /**
-     * productId : 3571
-     * productNum : 4
-     * productName : 【INFANTA.婴梵塔】学院风尖领外套/大衣
+     * productId : 1512
+     * productNum : 10
+     * productName : 衬衫
      * url : http://www.baidu.com
-     * productPrice : 98.00
      */
+
     private boolean isSelect;
     private String productId;
     private String productNum;
