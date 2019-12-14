@@ -213,6 +213,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
                         });
                     }
                 }
+
                 dialogInterface.dismiss();
             }
         });
@@ -375,6 +376,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         ShoppingCartPresenter presenter = new ShoppingCartPresenter("getShortcartProducts", ShoppingCartBean.class, hashMap);
         presenter.attachGetView(this);
         presenter.getGetData();
+
     }
 
     //设置TitleBar
@@ -626,6 +628,8 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
 
         checkboxAll.setChecked(false);
         tvShopcartTotal.setText("￥0.00");
+
+        myShoppingManager.setOnNumberChanged(0);
     }
 
     //购物车数据网址连接失败

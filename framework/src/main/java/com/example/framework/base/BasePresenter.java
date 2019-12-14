@@ -194,9 +194,9 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
         TreeMap<String, String> emptyTreeMap = SignUtil.getEmptyTreeMap();
         HashMap<String, String> query = getParam();
         emptyTreeMap.putAll(query);
-        String sign = SignUtil.generateSign(query);
-        query.put("sign", sign);
-        return SignUtil.encryptParamsByBase64(query);
+        String sign = SignUtil.generateSign(emptyTreeMap);
+        emptyTreeMap.put("sign", sign);
+        return SignUtil.encryptParamsByBase64(emptyTreeMap);
     }
 
     //解绑

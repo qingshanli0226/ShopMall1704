@@ -25,7 +25,7 @@ import java.util.HashMap;
 /**
  * 主页
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements ShoppingManager.OnNumberChangedListener {
 
     //数据
     private ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
@@ -50,15 +50,6 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        //获取购物车商品数量
-        allNumber = ShoppingManager.getInstance().getAllNumber();
-
-    }
-
-    @Override
     protected int setLayout() {
         return R.layout.activity_main;
     }
@@ -76,6 +67,10 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        //获取购物车商品数量
+        allNumber = ShoppingManager.getInstance().getAllNumber();
+
+        ShoppingManager.getInstance().setOnNumberChangedListener(this);
 
         Log.d("####", "initData: " + allNumber);
         replaceFragment(fragmentArrayList.get(0));
@@ -140,4 +135,18 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void NumberChanged(int num) {
+
+        ShoppingManager.getInstance().setAfternum(num);
+
+        int beforenum = ShoppingManager.getInstance().getBeforenum();
+        int afternum = ShoppingManager.getInstance().getAfternum();
+
+        if (beforenum != afternum) {
+            ShoppingManager.getInstance().setBeforenum(afternum);
+            Log.e("####", afternum + "");
+        }
+
+    }
 }

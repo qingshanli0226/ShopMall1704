@@ -32,6 +32,8 @@ import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.google.gson.GsonBuilder;
 
+import org.json.JSONException;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -244,7 +246,7 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
     @Override
     public void onPostDataSucess(Object data) {
         Log.e("####", data.toString());
-        PayBean payBean = new GsonBuilder().create().fromJson(data.toString(), PayBean.class);
+        PayBean payBean = (PayBean) data;
         PayBean.ResultBean result = payBean.getResult();
         if (result != null) {
             payV2(result);
