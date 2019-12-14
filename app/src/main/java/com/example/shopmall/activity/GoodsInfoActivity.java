@@ -117,7 +117,6 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
             public void onClick(View view) {
                 String token = ShoppingManager.getInstance().getToken(GoodsInfoActivity.this);
 
-                addOneProduct.attachPostView(GoodsInfoActivity.this);
 
                 HashMap<String, String> hashMap = new HashMap<>();
                 hashMap.put("token", token);

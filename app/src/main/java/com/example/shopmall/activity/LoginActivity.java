@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -69,8 +70,6 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 String name = etLoginName.getText().toString();
                 String pwd = etLoginWord.getText().toString();
                 LoginPresenter loginPresenter = new LoginPresenter(name, pwd);
@@ -100,14 +99,14 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
                 @Override
                 public void run() {
                     super.run();
-                        ResultBean result = data.getResult();
-                        UserManager.getInstance().setActiveUser(result);
-                        String token = result.getToken();
-                        SharedPreferences token1 = getSharedPreferences("login", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor edit = token1.edit();
-                        edit.putBoolean("isLogin", true);
-                        edit.putString("getToken", token);
-                        edit.apply();
+                    ResultBean result = data.getResult();
+                    UserManager.getInstance().setActiveUser(result);
+                    String token = result.getToken();
+                    SharedPreferences token1 = getSharedPreferences("login", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor edit = token1.edit();
+                    edit.putBoolean("isLogin", true);
+                    edit.putString("getToken", token);
+                    edit.apply();
                 }
             }.start();
             finish();

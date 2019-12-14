@@ -20,7 +20,7 @@ public class ShoppingCartView extends View {
     private Paint paintText;
     private int mWidth;
     private int mHeight;
-    private String num = 10 + "";
+    private String num = "";
 
     public ShoppingCartView(Context context) {
         this(context, null);
@@ -28,7 +28,7 @@ public class ShoppingCartView extends View {
 
     public ShoppingCartView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initPaint();
+        initPaint(num + "");
     }
 
     @Override
@@ -37,7 +37,7 @@ public class ShoppingCartView extends View {
 
     }
 
-    private void initPaint() {
+    private void initPaint(String num) {
         paintRed = new Paint();
         paintRed.setAntiAlias(true);
         paintRed.setDither(true);
@@ -58,11 +58,10 @@ public class ShoppingCartView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawCircle(20, 20, 20, paintRed);
-        canvas.drawText(num,20-paintText.measureText(num)/2,25,paintText);
-
+        canvas.drawText(num, 20 - paintText.measureText(num) / 2, 25, paintText);
     }
 
     public void setNum(int num) {
-
+        initPaint(num + "");
     }
 }

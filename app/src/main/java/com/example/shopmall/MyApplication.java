@@ -11,6 +11,8 @@ import com.example.framework.manager.CrashHandler;
 import com.example.framework.manager.UserManager;
 import com.example.shopmall.activity.MainActivity;
 import com.example.framework.manager.StepManager;
+import com.tencent.stat.StatConfig;
+import com.tencent.stat.StatService;
 
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 
@@ -39,9 +41,9 @@ public class MyApplication extends Application {
 
         UserManager.getInstance().init(this);
 
-
-
-
+        StatConfig.setDebugEnable(true);
+        // 基础统计API
+        StatService.registerActivityLifecycleCallbacks(this);
     }
 
     public static Context getContext() {
