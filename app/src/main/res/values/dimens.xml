@@ -25,4 +25,5 @@
     <dimen name="singinSiginTextViewTextSize">12sp</dimen>
     <dimen name="signinDiyMarginTop">55dp</dimen>
     <dimen name="signinDiyWidth">300dp</dimen>
+    <dimen name="title_size">20sp</dimen>
 </resources>

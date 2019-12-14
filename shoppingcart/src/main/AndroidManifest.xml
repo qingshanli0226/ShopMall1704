@@ -2,8 +2,4 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.shoppingcart">
 
-    <application>
-        <activity android:name=".Ui.Shoppingcart"></activity>
-    </application>
-
 </manifest>

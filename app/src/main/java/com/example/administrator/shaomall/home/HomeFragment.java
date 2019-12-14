@@ -1,13 +1,19 @@
 package com.example.administrator.shaomall.home;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.renderscript.Script;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.LinearLayoutManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.administrator.shaomall.activity.MessageActivity;
 import com.example.commen.Constants;
 import com.example.commen.view.AnimationNestedScrollView;
 import com.example.administrator.shaomall.home.adapter.HomeRecycleAdapter;
@@ -15,17 +21,24 @@ import com.example.commen.util.CommonUtil;
 import com.example.administrator.shaomall.R;
 import com.example.commen.ACache;
 import com.example.commen.ShopMailError;
-import com.example.net.AppNetConfig;
 import com.shaomall.framework.base.BaseMVPFragment;
 import com.shaomall.framework.bean.LoginBean;
+import com.shaomall.framework.bean.MessageBean;
+import com.shaomall.framework.manager.MessageManager;
 
-public class HomeFragment extends BaseMVPFragment<LoginBean> {
+import java.util.List;
+
+import q.rorbin.badgeview.QBadgeView;
+
+public class HomeFragment extends BaseMVPFragment<LoginBean> implements MessageManager.MessageListener {
     private AnimationNestedScrollView sv_view;
     private LinearLayout ll_search;
     private TextView tv_title;
     private float LL_SEARCH_MIN_TOP_MARGIN, LL_SEARCH_MAX_TOP_MARGIN, LL_SEARCH_MAX_WIDTH, LL_SEARCH_MIN_WIDTH, TV_TITLE_MAX_TOP_MARGIN;
     private ViewGroup.MarginLayoutParams searchLayoutParams, titleLayoutParams;
     private android.support.v7.widget.RecyclerView mHomeRecycler;
+    private TextView message;
+    private QBadgeView qBadgeView;
 
     @Override
     public int setLayoutId() {
@@ -34,13 +47,20 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> {
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
+        MessageManager.getInstance(getContext()).registerMessageListener(this);
         mHomeRecycler = view.findViewById(R.id.home_recycler);
         sv_view = view.findViewById(R.id.search_sv_view);
         ll_search = view.findViewById(R.id.search_ll_search);
         tv_title = view.findViewById(R.id.search_tv_title);
+        message = view.findViewById(R.id.search_tv_message);
+        qBadgeView = new QBadgeView(getContext());
+        qBadgeView.bindTarget(message)
+                .setBadgeTextSize(10f, true)
+                .setBadgeGravity(Gravity.START | Gravity.TOP)
+                .setBadgeBackgroundColor(Color.BLUE)
+        ;
         searchLayoutParams = (ViewGroup.MarginLayoutParams) ll_search.getLayoutParams();
         titleLayoutParams = (ViewGroup.MarginLayoutParams) tv_title.getLayoutParams();
-
 
 
     }
@@ -49,7 +69,7 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> {
     public void onRequestHttpDataSuccess(int requestCode, String message, LoginBean data) {
         super.onRequestHttpDataSuccess(requestCode, message, data);
         toast(message, false);
-        Log.i("login", "onRequestHttpDataSuccess: "+message);
+        Log.i("login", "onRequestHttpDataSuccess: " + message);
     }
 
 
@@ -66,8 +86,19 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> {
 
         if (data != null) {
             mHomeRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-            mHomeRecycler.setAdapter(new HomeRecycleAdapter(data,getContext()));
+            mHomeRecycler.setAdapter(new HomeRecycleAdapter(data, getContext()));
         }
+
+        message.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toClass(MessageActivity.class);
+            }
+        });
+        List<MessageBean> messageBeans = MessageManager.getInstance(getContext()).qurayNotReadData();
+        int size = messageBeans.size();
+        qBadgeView.setBadgeNumber(size);
+
     }
 
 
@@ -117,4 +148,15 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> {
     }
 
 
+    @Override
+    public void getMessage(MessageBean messageBean, int messageNum) {
+        qBadgeView.setBadgeNumber(messageNum);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        int i = MessageManager.getInstance(getContext()).gitNotReadNum();
+        qBadgeView.setBadgeNumber(i);
+    }
 }

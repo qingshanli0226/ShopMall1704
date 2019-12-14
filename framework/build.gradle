@@ -35,4 +35,6 @@ dependencies {
     implementation project(':net')
     api 'com.gyf.immersionbar:immersionbar:3.0.0'
     api 'com.gyf.immersionbar:immersionbar-components:3.0.0'
+
+
 }

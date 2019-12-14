@@ -9,6 +9,9 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.shaomall.framework.manager.NetConnetMannager;
 import com.shaomall.framework.manager.UserInfoManager;
 
+import cn.jpush.android.api.JPushInterface;
+
+
 public class ShaoHuaApplication extends Application {
     public static Context context;
     @Override
@@ -18,7 +21,12 @@ public class ShaoHuaApplication extends Application {
 		context = this.getApplicationContext();
         ACache aCache = ACache.get(this);
         NetConnetMannager.getInstance().init(this);
-        CacheManager.getInstance().init(this);
         UserInfoManager.getInstance().init(this, aCache);
-    }
+
+        // 初始化 JPush
+        JPushInterface.init(this);
+        //发布时关闭日志
+        JPushInterface.setDebugMode(true);
+}
+
 }

@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-
+apply plugin: 'org.greenrobot.greendao'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -21,7 +21,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
+    greendao {
+        schemaVersion 1  //数据库版本
+        daoPackage 'com.example.administrator.shaomall' //包名
+        targetGenDir 'src/main/java/database' //存放greendao库生成文件的目录
+    }
 }
 
 dependencies {
@@ -30,4 +34,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation 'org.greenrobot:greendao:3.2.2' // 添加库
 }

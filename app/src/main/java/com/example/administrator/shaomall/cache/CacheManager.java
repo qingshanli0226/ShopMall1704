@@ -48,7 +48,9 @@ public class CacheManager {
         context.bindService(intent, new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-                cacheService = ((CacheService.CacheBinder) service).getCacheService();
+                Log.d("LW-", "onServiceConnected.......");
+                CacheService.CacheBinder serviceBinder = (CacheService.CacheBinder) service;
+                cacheService = serviceBinder.getCacheService();
                 cacheService.getHomeDate();
 
                 cacheService.registerListener(new CacheService.IHomeDataListener() {
@@ -116,4 +118,7 @@ public class CacheManager {
     public interface IHomeReceivedListener {
         void onHomeDataReceived(HomeBean.ResultBean homeBean);
     }
+
+
+
 }

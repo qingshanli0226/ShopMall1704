@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.administrator.shaomall">
     <!--    联网的权限:-->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -10,7 +11,7 @@
     <!--    读取联系人的权限：-->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <!--    读取短信的权限：-->
-    <uses-permission android:name="android.permission.READ_SMS" />
+
 
     <application
         android:name=".app.ShaoHuaApplication"
@@ -18,9 +19,10 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/AppTheme"
         android:supportsRtl="true"
+        android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
 
         <!--        欢迎界面-->
         <activity android:name=".activity.WelcomeActivity">
@@ -40,9 +42,13 @@
         <!--        注册-->
         <activity android:name=".login.ui.SigninActivity" />
 
+        <activity android:name=".activity.MessageActivity" />
+
 
         <!--        服务-->
-        <service android:name=".cache.CacheService" />
+        <service android:name=".cache.CacheService"
+      />
+
 
         <!--适配华为（huawei）刘海屏-->
         <meta-data
@@ -55,5 +61,30 @@
         <meta-data
             android:name="android.max_aspect"
             android:value="2.4" />
+
+
+
+        <!-- 替换原生极光推送接收器 -->
+        <receiver
+            android:name=".message.JGReceiver"
+            android:enabled="true"
+            android:exported="false"
+            tools:node="replace">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
+                <category android:name="com.example.administrator.shaomall" /> <!--JPush上注册的包名 -->
+            </intent-filter>
+        </receiver>
+        <!-- 注册继承JCommonService的服务 -->
+        <service android:name=".message.JGServire"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":pushcore">
+            <intent-filter>
+                <action android:name="cn.jiguang.user.service.action" />
+            </intent-filter>
+        </service>
     </application>
+
+
 </manifest>

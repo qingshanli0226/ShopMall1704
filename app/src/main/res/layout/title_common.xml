@@ -1,23 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="80dp"
+    android:paddingTop="30dp"
+    android:background="@drawable/background_img1">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="5dp">
+<RelativeLayout
+    android:layout_width="30dp"
+    android:layout_height="30dp"
+    android:layout_gravity="center_vertical"
+    android:layout_marginStart="10dp"
+    android:layout_marginLeft="10dp"
+    >
+    <ImageView
+        android:id="@+id/title_scanning"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/sao_img" />
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/sao_img" />
+    <ImageView
+        android:id="@+id/title_black"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/top_bar_left_back"
+        android:visibility="gone"
+        />
+</RelativeLayout>
+
+
 
         <RelativeLayout
+            android:id="@+id/title_search"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -35,14 +53,18 @@
                 android:paddingLeft="10dp" />
 
             <ImageView
+                android:id="@+id/title_camera"
                 style="@style/LittleImage"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:src="@drawable/camera_icon" />
+
+
         </RelativeLayout>
 
         <ImageView
+            android:id="@+id/title_message"
             style="@style/LittleImage"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="10dp"

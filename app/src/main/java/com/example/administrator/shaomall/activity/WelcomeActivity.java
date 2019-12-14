@@ -28,6 +28,7 @@ public class WelcomeActivity extends BaseActivity {
 ////        iHomePresenter = new HomePresenter();
 //        iHomePresenter.attachView(this);
 //        iHomePresenter.doGetHttpRequest(AppNetConfig.HOME_DATA_CODE);
+        CacheManager.getInstance().init(this);
 
         mWelcomeBackground = findViewById(R.id.welcome_background);
         mIvWelcomeIcon = findViewById(R.id.iv_welcome_icon);
