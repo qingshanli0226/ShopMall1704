@@ -34,7 +34,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
         //只改变状态栏颜色,布局不动
         StatusBarUtil.setColor(this, Color.RED);
 
-
         activityInstanceManager = ActivityInstanceManager.getInstance();
         activityInstanceManager.addActivity(this);
         init();

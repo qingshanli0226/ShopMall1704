@@ -231,33 +231,6 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        disPreseter(sendCartPresenter, upDatePresenter);
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.fragment_shopcart;
-    }
-
-    @Override
-    public int getRelativeLayout() {
-        return R.id.shopCartRel;
-    }
-
-    @Override
-    public void hideLoading() {
-        super.hideLoading();
-        swipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
     public void onRequestSuccess(int requestCode, Object data) {
         super.onRequestSuccess(requestCode, data);
         switch (requestCode) {
@@ -317,14 +290,6 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
         checkAll.setChecked(checkStatus);
     }
 
-    private void disPreseter(IPresenter... iPresenter) {
-        for (int i = 0; i < iPresenter.length; i++) {
-            if (iPresenter[i] != null) {
-                iPresenter[i].detachView();
-            }
-        }
-    }
-
     //更新单个数量
     private void upDateNum(int goodsPosition, int goodsNum) {
         list.get(goodsPosition).setProductNum(goodsNum);
@@ -357,4 +322,40 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
             sendCartPresenter.doHttpGetRequest(CART_GOODS);
         }
     }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.fragment_shopcart;
+    }
+
+    @Override
+    public int getRelativeLayout() {
+        return R.id.shopCartRel;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        disPreseter(sendCartPresenter, upDatePresenter);
+    }
+
+    private void disPreseter(IPresenter... iPresenter) {
+        for (int i = 0; i < iPresenter.length; i++) {
+            if (iPresenter[i] != null) {
+                iPresenter[i].detachView();
+            }
+        }
+    }
+
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
 }

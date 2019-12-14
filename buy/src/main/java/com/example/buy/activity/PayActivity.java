@@ -131,16 +131,6 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
     }
 
     @Override
-    public int getLayoutId() {
-        return R.layout.activity_pay;
-    }
-
-    @Override
-    public int getRelativeLayout() {
-        return R.id.payRel;
-    }
-
-    @Override
     public void init() {
         super.init();
         payBut = findViewById(R.id.payBut);
@@ -225,7 +215,7 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
                 break;
         }
     }
-
+    //获取总价
     private String getMoney(boolean pointStatus) {
         int sum = 0;
         for (GoodsBean i : list) {
@@ -233,22 +223,11 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
         }
         if (pointStatus) {
             sum -= Integer.valueOf(subtractIntegra.getText().toString());
-        }
-        return sum + "";
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        disPreseter(pointPresenter, postOrderPresenter, moneyPresenter, verifyPresenter, sendOrederPresenter);
-    }
-
-    private void disPreseter(IPresenter... iPresenter) {
-        for (int i = 0; i < iPresenter.length; i++) {
-            if (iPresenter[i] != null) {
-                iPresenter[i].detachView();
+            if (sum<0){
+                sum=0;
             }
         }
+        return sum + "";
     }
 
     private static class MyHandler extends Handler {
@@ -283,6 +262,30 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
                         Toast.makeText(activity, "支付失败:" + payResult, Toast.LENGTH_SHORT).show();
                     }
                     break;
+            }
+        }
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_pay;
+    }
+
+    @Override
+    public int getRelativeLayout() {
+        return R.id.payRel;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disPreseter(pointPresenter, postOrderPresenter, moneyPresenter, verifyPresenter, sendOrederPresenter);
+    }
+
+    private void disPreseter(IPresenter... iPresenter) {
+        for (int i = 0; i < iPresenter.length; i++) {
+            if (iPresenter[i] != null) {
+                iPresenter[i].detachView();
             }
         }
     }

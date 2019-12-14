@@ -40,7 +40,11 @@
     <TextView
         android:id="@+id/nullGoods"
         android:visibility="gone"
+        android:gravity="center"
+        android:layout_centerInParent="true"
         android:text="购物车空空如也"
+        android:textSize="@dimen/buy_text_three"
+        android:textColor="@color/buyPink"
         android:layout_below="@+id/cartHead"
         android:layout_above="@id/buyFoot"
         android:layout_width="match_parent"
