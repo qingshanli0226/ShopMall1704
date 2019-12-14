@@ -36,6 +36,8 @@ class MainActivity : BaseNetConnectActivity() {
         val isAutoLogin = bundle.getBoolean("isAutoLogin")
         if(!isAutoLogin){
             Toast.makeText(this,"登录超时,请重新登录",Toast.LENGTH_SHORT).show()
+            AccountManager.getInstance().logout()
+            AccountManager.getInstance().notifyLogout()
         }else{
             AccountManager.getInstance().notifyLogin()
         }

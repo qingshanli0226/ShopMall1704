@@ -30,7 +30,6 @@ import okhttp3.ResponseBody;
  */
 public abstract class BasePresenter<T> implements IPresenter<T> {
 
-
     private IView<T> iView;
 
     //TODO get获取单数据
@@ -87,6 +86,7 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         try {
+                            iView.hideLoading();
                             T resEntity = new Gson().fromJson(responseBody.string(), getBeanType());
                             //TODO 获取数据成功
                             iView.onRequestSuccess(resEntity);

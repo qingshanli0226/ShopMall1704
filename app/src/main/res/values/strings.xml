@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">次元联盟</string>
     <string name="top_messenger">未来同款12.12日重磅上市快来预约吧!!!</string>
-    <string name="top_scan">扫啊扫</string>
-    <string name="messenger">消息</string>
+
     <string name="top_hint">剑姬同人</string>
     <string name="look_more">查看更多</string>
     <string name="hot_good">这里都是买的棒棒哒</string>

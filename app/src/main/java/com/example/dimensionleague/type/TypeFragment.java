@@ -1,15 +1,18 @@
 package com.example.dimensionleague.type;
 
-import android.util.Log;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.dimensionleague.R;
 import com.example.common.TypeBean;
+import com.example.common.code.Constant;
+import com.example.common.view.MyToolBar;
+import com.example.dimensionleague.R;
 import com.example.framework.base.BaseNetConnectFragment;
 import com.example.net.AppNetConfig;
 
@@ -23,6 +26,8 @@ public class TypeFragment extends BaseNetConnectFragment {
     private TypeTagAdapter tagAdapter;
     private List<String> typeURL;
     private TypeRightAdapter rightAdapter;
+    private MyToolBar my_toolbar;
+
     @Override
     public int getLayoutId() {
         return R.layout.fragment_type;
@@ -31,14 +36,47 @@ public class TypeFragment extends BaseNetConnectFragment {
     @Override
     public void init(View view) {
         super.init(view);
-        type_left=view.findViewById(R.id.type_lv_left);
-        rv_right=view.findViewById(R.id.type_rv_right);
-        typePresenter=new TypePresenter();
-        typeURL=new ArrayList<>();
+        type_left = view.findViewById(R.id.type_lv_left);
+        rv_right = view.findViewById(R.id.type_rv_right);
+        my_toolbar = view.findViewById(R.id.my_toolbar);
+        //TODO 设置ToolBar的风格
+        my_toolbar.init(Constant.SEARCH_STYLE);
+        my_toolbar.setBackground(getResources().getDrawable(R.drawable.toolbar_background));
+        typePresenter = new TypePresenter();
+        typeURL = new ArrayList<>();
     }
 
     @Override
     public void initDate() {
+        showMyToolBar();
+        //TODO 扫一扫
+        my_toolbar.getScan().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "扫啊扫", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //TODO AI相机
+        my_toolbar.getSearch_camera().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "拍照搜索商品", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //TODO 点击搜索跳转到搜索页面
+        my_toolbar.getSearch_edit().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(),"跳转搜索页面",Toast.LENGTH_SHORT).show();
+            }
+        });
+        //TODO 点击消息跳转到消息页面
+        my_toolbar.getSearch_message().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(),"跳转到消息页",Toast.LENGTH_SHORT).show();
+            }
+        });
         typeURL.add(AppNetConfig.SKIRT_URL);
         typeURL.add(AppNetConfig.JACKET_URL);
         typeURL.add(AppNetConfig.PANTS_URL);
@@ -55,7 +93,7 @@ public class TypeFragment extends BaseNetConnectFragment {
         typePresenter.attachView(this);
         typePresenter.setURL(typeURL.get(0));
         typePresenter.doHttpGetRequest(1);
-        tagAdapter=new TypeTagAdapter(getContext());
+        tagAdapter = new TypeTagAdapter(getContext());
         type_left.setAdapter(tagAdapter);
         rv_right.setLayoutManager(new LinearLayoutManager(getContext()));
 //监听事件
@@ -84,14 +122,21 @@ public class TypeFragment extends BaseNetConnectFragment {
         });
     }
 
+    private void showMyToolBar() {
+        my_toolbar.getScan().setVisibility(View.VISIBLE);
+        my_toolbar.getScan().setImageResource(R.drawable.scan_code);
+        my_toolbar.getSearch_message().setVisibility(View.VISIBLE);
+        my_toolbar.getSearch_text().setVisibility(View.GONE);
+    }
+
     @Override
     public void onRequestSuccess(int requestCode, Object data) {
-        switch (requestCode){
+        switch (requestCode) {
             case 1:
                 List<TypeBean.ResultBean> result = ((TypeBean) data).getResult();
-                rightAdapter=new TypeRightAdapter(getContext(),result);
+                rightAdapter = new TypeRightAdapter(getContext(), result);
                 rv_right.setAdapter(rightAdapter);
-            break;
+                break;
         }
 
     }
@@ -108,10 +153,10 @@ public class TypeFragment extends BaseNetConnectFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (typePresenter!=null){
+        if (typePresenter != null) {
             typePresenter.detachView();
         }
-        typePresenter=null;
+        typePresenter = null;
     }
 
     @Override

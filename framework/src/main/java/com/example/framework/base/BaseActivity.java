@@ -7,9 +7,11 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.common.view.MyToolBar;
 import com.example.framework.R;
 import com.example.framework.manager.ActivityInstanceManager;
 import com.example.framework.port.IActivity;
+import com.gyf.immersionbar.ImmersionBar;
 import com.umeng.message.PushAgent;
 
 /**
@@ -27,8 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
         //：该方法是【友盟+】Push后台进行日活统计及多维度推送的必调用方法，请务必调用！
         PushAgent.getInstance(this).onAppStart();
         //TODO 沉浸式状态栏
-        //  ImmersionBar.with(this).init();
-
+        ImmersionBar.with(this).init();
         activityInstanceManager = ActivityInstanceManager.getInstance();
         activityInstanceManager.addActivity(this);
         init();
@@ -37,38 +38,39 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
     }
 
     //TODO 启动新的activity
-    public void startActivity(Class Activity,Bundle bundle){
-        Intent intent = new Intent(this,Activity);
+    public void startActivity(Class Activity, Bundle bundle) {
+        Intent intent = new Intent(this, Activity);
         //TODO 携带数据
-        if(bundle != null && bundle.size() != 0){
-            intent.putExtra("data",bundle);
+        if (bundle != null && bundle.size() != 0) {
+            intent.putExtra("data", bundle);
         }
         startActivity(intent);
         //TODO 添加入场动画以及退场动画
-        overridePendingTransition(R.anim.slide_to_left_in,R.anim.slide_to_left_out);
+        overridePendingTransition(R.anim.slide_to_left_in, R.anim.slide_to_left_out);
     }
 
-    public void boundActivity(Intent intent){
+    public void boundActivity(Intent intent) {
         startActivity(intent);
         //TODO 添加入场动画以及退场动画
-        overridePendingTransition(R.anim.slide_to_right_in,R.anim.slide_to_right_out);
+        overridePendingTransition(R.anim.slide_to_right_in, R.anim.slide_to_right_out);
     }
 
     //TODO finish的入场退场动画
-    public void finishActivity(){
+    public void finishActivity() {
         finish();
-        overridePendingTransition(R.anim.slide_to_right_in,R.anim.slide_to_right_out);
+        overridePendingTransition(R.anim.slide_to_right_in, R.anim.slide_to_right_out);
     }
 
     //TODO 销毁所有的activity
-    public void removeAll(){
+    public void removeAll() {
         activityInstanceManager.finishAllActivity();
     }
 
     //TODO 吐司
-    public void toast(Activity instance,String msg){
-        activityInstanceManager.toast(instance,msg);
+    public void toast(Activity instance, String msg) {
+        activityInstanceManager.toast(instance, msg);
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

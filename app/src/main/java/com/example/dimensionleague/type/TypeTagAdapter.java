@@ -60,7 +60,8 @@ class TypeTagAdapter extends BaseAdapter {
         }else {
             //其他项背景
             convertView.setBackgroundResource(R.drawable.background_gray);
-            viewHolder.tv_title.setTextColor(Color.BLACK);
+            viewHolder.tv_title.setTextColor(Color.GRAY);
+            viewHolder.tv_title.setTextSize(12);
         }
 
         return convertView;
