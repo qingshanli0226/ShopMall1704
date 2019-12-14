@@ -2,11 +2,15 @@ package com.example.dimensionleague.login.activity;
 
 import android.content.Intent;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -99,6 +103,17 @@ public class LoginActivity extends BaseNetConnectActivity implements IButtonEnab
                 }
             }
         });
+        password_check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }else{
+//                    隐藏密码
+                    password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+            }
+        });
     }
 
     @Override
@@ -129,6 +144,9 @@ public class LoginActivity extends BaseNetConnectActivity implements IButtonEnab
             accountManager.saveToken(result.getToken());
             //TODO 通知别的页面用户已登录
             accountManager.notifyLogin();
+            if (accountManager.getUser().getAvatar()!=null){
+                accountManager.notifyUserAvatarUpdate((String) accountManager.getUser().getAvatar());
+            }
             finishActivity();
         }
     }

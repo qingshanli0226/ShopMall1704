@@ -1,4 +1,4 @@
-package com.example.point;
+package com.example.point.bean;
 
 public class UpdatePointBean {
 

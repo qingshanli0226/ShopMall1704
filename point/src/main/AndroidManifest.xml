@@ -24,9 +24,11 @@
 
     <application>
         <activity android:name=".activity.PhysicalActivity"
-            android:launchMode="singleInstance"></activity>
+            android:launchMode="singleTop"
+            />
         <activity android:name=".activity.HistoryActivity"
-            android:launchMode="singleInstance"></activity>
+            android:launchMode="singleTop"
+            />
 
         <service android:name=".service.StepService">
             <intent-filter>
@@ -41,15 +43,18 @@
             </intent-filter>
         </service>
         <activity android:name=".activity.StepActivity"
-            android:launchMode="singleInstance">
-
-        </activity>
+            android:launchMode="singleTop"
+            />
         <activity android:name=".activity.RecordActivity"
-            android:launchMode="singleInstance">
-        </activity>
+            android:launchMode="singleTop"
+            />
         <activity android:name=".activity.IntegralActivity"
-            android:launchMode="singleInstance">
-        </activity>
+            android:launchMode="singleTop"
+            />
+        <activity android:name=".activity.PresentActivity"
+            android:launchMode="singleTop"/>
+        <activity android:name=".message.MessageActivity"
+            android:launchMode="singleTop"/>
     </application>
 
 

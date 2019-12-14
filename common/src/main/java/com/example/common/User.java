@@ -78,6 +78,7 @@ public class User {
     }
 
     public Object getPoint() {
+
         return point;
     }
 

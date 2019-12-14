@@ -5,17 +5,18 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 
-public class TextView extends android.widget.TextView {
-    public TextView(Context context) {
+public class CustomeTextView extends AppCompatTextView {
+    public CustomeTextView(Context context) {
         super(context,null);
     }
 
-    public TextView(Context context, @Nullable AttributeSet attrs) {
+    public CustomeTextView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs,0);
     }
 
-    public TextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public CustomeTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

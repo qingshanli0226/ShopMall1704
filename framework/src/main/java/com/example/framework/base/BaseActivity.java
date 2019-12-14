@@ -3,6 +3,7 @@ package com.example.framework.base;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import com.example.framework.R;
 import com.example.framework.manager.ActivityInstanceManager;
 import com.example.framework.port.IActivity;
 import com.gyf.immersionbar.ImmersionBar;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
 
 /**
@@ -76,6 +78,19 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
         super.onDestroy();
         activityInstanceManager.removeActivity(this);
 
+    }
+    //确保在APP的所有Activity的onResume函数中调用MobclickAgent.onResume函数，在所有Activity的onPause函数中调用MobclickAgent.onPause函数。这两个调用将不会阻塞应用程序的主线程，也不会影响应用程序的性能。
+    //如果您的Activity之间有继承关系请不要同时在父和子Activity中重复添加onPause和onResume方法，否则会造成重复统计，导致启动次数异常增高。仅在BaseActivity中onResume和onPause函数中添加MobclickAgent.onResume和MobclickAgent.onPause函数。
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
 }
