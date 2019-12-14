@@ -4,17 +4,21 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.buy.activity.OrderActivity;
 import com.example.common.HomeBean;
 
 import com.example.common.IntentUtil;
 import com.example.common.code.ErrorCode;
+import com.example.dimensionleague.setting.SettingActivity;
+import com.example.dimensionleague.setting.UserMassageActivity;
 import com.example.framework.manager.AccountManager;
 import com.example.common.port.IAccountCallBack;
 import com.example.dimensionleague.R;
@@ -33,13 +37,12 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
     private RecyclerView rvList, rvChannel, rvRecommend;
     private ImageView img;
     private TextView name;
-
+    private RelativeLayout relative;
     private MineRecycleViewAdapter listAdapter;
     private MineRecycleAdapter channelAdapter;
     private MineRecommendAdapter recommendAdapter;
 
     private HomePresenter homePresenter;
-
     private List<MineBean> list;
     private List<HomeBean.ResultBean.ChannelInfoBean> channelList;
     private List<HomeBean.ResultBean.SeckillInfoBean.ListBean> recommendlList;
@@ -55,7 +58,7 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
         rvRecommend = view.findViewById(R.id.mine_rv_recommend);
         name = view.findViewById(R.id.mine_user_name);
         img = view.findViewById(R.id.mine_img);
-
+        relative = view.findViewById(R.id.mine_Relative);
         list = new ArrayList<>();
         channelList = new ArrayList<>();
         recommendlList = new ArrayList<>();
@@ -63,24 +66,14 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
 
         //TODO 给 更多 页面进行注册监听
         accountManager.registerUserCallBack(this);
-
-        name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                getContext().startActivity(intent);
-            }
-        });
     }
 
     @Override
     public void showLoading() {
-
     }
 
     @Override
     public void hideLoading() {
-
     }
 
     @Override
@@ -106,21 +99,18 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
 
     private void mineListeners() {
 //        所有监听事件
-        name.setOnClickListener(new View.OnClickListener() {
+        relative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                getContext().startActivity(intent);
+                if (("登录/注册".equals(name.getText().toString()))){
+//                登录注册跳转
+                    startActivity(new Intent(getContext(), LoginActivity.class));
+                }else{
+//                跳转到个人信息
+                    startActivity(new Intent(getContext(), SettingActivity.class));
+                }
             }
         });
-        name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(LoginActivity.class, null);
-
-            }
-        });
-
         listAdapter.setClickListener(new OnClickItemListener() {
             @Override
             public void onClickListener(int position) {
@@ -191,7 +181,7 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
 //            }
         } else {
             //没有登录
-            name.setText("登录/注册");
+            name.setText(R.string.mine_login);
             img.setImageResource(R.mipmap.ic_launcher_round);
         }
     }
@@ -226,48 +216,9 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
                 rvChannel.setAdapter(channelAdapter);
                 rvRecommend.setAdapter(recommendAdapter);
             } else {
-                switch (code) {
-                    case 1001:
-                        toast(getActivity(), ErrorCode.ERROR_USER_NOT_REGISTERED.getErrorMessage());
-                        break;
-                    case 1002:
-                        toast(getActivity(), ErrorCode.ERROR_USER_HAS_REGISTERED.getErrorMessage());
-                        break;
-                    case 1003:
-                        toast(getActivity(), ErrorCode.ERROR_NOT_LOGIN_REGISTERED.getErrorMessage());
-                        break;
-                    case 1004:
-                        toast(getActivity(), ErrorCode.ERROR_UPLOAD_FILE_REGISTERED.getErrorMessage());
-                        break;
-                    case 1005:
-                        toast(getActivity(), ErrorCode.ERROR_AUTO_LOGIN_REGISTERED.getErrorMessage());
-                        break;
-                    case 1006:
-                        toast(getActivity(), ErrorCode.ERROR_TOKEN_EXPIRE_REGISTERED.getErrorMessage());
-                        break;
-                    case 1007:
-                        toast(getActivity(), ErrorCode.ERROR_GET_ORDER_REGISTERED.getErrorMessage());
-                        break;
-                    case 1008:
-                        toast(getActivity(), ErrorCode.ERROR_CHECK_INVENTORY_REGISTERED.getErrorMessage());
-                        break;
-                    case 1009:
-                        toast(getActivity(), ErrorCode.ERROR_GET_SHORTCART_PRODUCTS_REGISTERED.getErrorMessage());
-                        break;
-                    case 1010:
-                        toast(getActivity(), ErrorCode.ERROR_ADD_ONE_PRODUCT_REGISTERED.getErrorMessage());
-                        break;
-                    case 1011:
-                        toast(getActivity(), ErrorCode.ERROR_UPDATE_PRODUCT_NUM_REGISTERED.getErrorMessage());
-                        break;
-                    case 1012:
-                        toast(getActivity(), ErrorCode.ERROR_VERIFY_SIGN_REGISTERED.getErrorMessage());
-                        break;
+                toast(getActivity(), msg);
                 }
             }
-        } else {
-            Log.i("SSSS", "onRequestSuccess: 没有");
-        }
     }
 
     @Override
@@ -277,6 +228,10 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
             homePresenter.detachView();
         }
         homePresenter = null;
+        if (accountManager!=null){
+            accountManager.unRegisterUserCallBack(this);
+        }
+        accountManager=null;
     }
 
     //TODO 用户注册成功后回调
@@ -288,23 +243,18 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
     //TODO 用户登录成功后回调
     @Override
     public void onLogin() {
-        Log.d("lhf", "onLogin: 这个方法进来了");
         name.setText(AccountManager.getInstance().user.getName());
-        if (AccountManager.getInstance().user.getAvatar() != null) {
-            Glide.with(getContext()).load(AccountManager.getInstance().user.getAvatar()).into(img);
-        }
     }
 
-    //TODO 用户退出登录后回调
     @Override
     public void onLogout() {
-        name.setText("登录/注册");
+        name.setText(R.string.mine_login);
         img.setImageResource(R.mipmap.ic_launcher_round);
     }
 
     //TODO 用户更新头像后回调
     @Override
     public void onAvatarUpdate(String url) {
-
+        Glide.with(getContext()).load(url).apply(new RequestOptions().centerCrop()).into(img);
     }
 }

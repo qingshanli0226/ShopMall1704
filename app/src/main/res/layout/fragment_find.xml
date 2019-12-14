@@ -20,7 +20,6 @@
 
             <ImageView
                 style="@style/StyleRoundButton"
-                android:padding="@dimen/dp_10"
                 android:src="@drawable/attention"
                 android:id="@+id/find_attention"/>
             <TextView
@@ -38,7 +37,6 @@
                 />
             <ImageView
                 style="@style/StyleRoundButton"
-                android:padding="@dimen/dp_10"
                 android:src="@drawable/message"
                 android:layout_alignParentRight="true"
                 android:id="@+id/message"/>

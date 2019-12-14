@@ -9,15 +9,16 @@
        android:layout_height="match_parent"
        android:orientation="vertical">
        <RelativeLayout
+           android:id="@+id/mine_Relative"
            android:layout_width="match_parent"
            android:background="@color/colorRed"
            android:layout_height="@dimen/dp_150">
            <ImageView
                android:src="@mipmap/ic_launcher_round"
-               android:layout_width="@dimen/dp_50"
+               android:layout_width="@dimen/dp_70"
                android:layout_marginLeft="@dimen/dp_35"
                android:layout_marginTop="@dimen/dp_40"
-               android:layout_height="@dimen/dp_50"
+               android:layout_height="@dimen/dp_70"
                android:id="@+id/mine_img"/>
            <TextView
                android:id="@+id/mine_user_name"

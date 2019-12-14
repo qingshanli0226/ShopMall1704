@@ -18,6 +18,7 @@ import com.example.dimensionleague.register.presenter.RegisterPresenter;
 import com.example.dimensionleague.userbean.RegisterBean;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.base.BaseTextWatcher;
+import com.example.framework.manager.ErrorDisposeManager;
 import com.example.framework.port.IPresenter;
 
 import java.util.HashMap;
@@ -128,6 +129,7 @@ public class RegisterActivity extends BaseNetConnectActivity implements View.OnC
 
     @Override
     public void onRequestSuccess(Object data) {
+        hideLoading();
         RegisterBean registerBean = (RegisterBean)data;
         if(registerBean.getCode().equals(Constant.CODE_OK)){
             Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
@@ -137,7 +139,8 @@ public class RegisterActivity extends BaseNetConnectActivity implements View.OnC
             boundActivity(intent);
             finish();
         }else{
-            Log.d("aaa", "onRequestSuccess: "+registerBean.toString());
+            //错误处理
+            toast(this,registerBean.getMessage());
         }
     }
 
