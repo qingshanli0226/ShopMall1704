@@ -17,7 +17,13 @@ color red
 color start_color
 color white
 color yellow
-dimen step_tvSize
+dimen stepView_height
+dimen stepView_weight
+dimen step_margin20
+dimen step_paddingLeft
+dimen step_tvSize20
+dimen step_tvSize24
+dimen titleBar_height
 drawable left
 drawable timg
 id Integral_integral
@@ -29,6 +35,7 @@ id history_Spinner
 id runView
 id step_item_count
 id step_item_day
+id step_item_time
 id tb_history
 id tb_integral
 layout activity_history

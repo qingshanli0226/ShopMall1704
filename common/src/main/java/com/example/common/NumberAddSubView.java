@@ -12,11 +12,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.TintTypedArray;
 
-
-
-/**
- * Created by Administrator on 2016/8/31.
- */
 public class NumberAddSubView extends LinearLayout implements View.OnClickListener {
     private ImageView btnSub;
     private ImageView btnAdd;

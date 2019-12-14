@@ -2,9 +2,10 @@
 <resources>
 
     <string-array name="date">
-        <item>12小时之内</item>
-        <item>三天之内</item>
+        <item>三小时之内</item>
+        <item>今天</item>
         <item>一周之内</item>
         <item>一月之内</item>
+        <item>所有</item>
     </string-array>
 </resources>

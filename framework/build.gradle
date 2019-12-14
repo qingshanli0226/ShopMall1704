@@ -40,5 +40,5 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.2.2'
     // 需要加密数据库的话添加这个
     implementation 'net.zetetic:android-database-sqlcipher:3.5.6'
-
+    implementation files('libs/lite-orm-1.9.2.jar')
 }

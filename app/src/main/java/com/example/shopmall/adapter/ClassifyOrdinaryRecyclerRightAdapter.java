@@ -1,10 +1,7 @@
 package com.example.shopmall.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,54 +9,62 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.framework.base.BaseAdapter;
 import com.example.net.Constant;
 import com.example.shopmall.R;
 import com.example.shopmall.bean.ClassifyBean;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
- * 常用分类
+ * 常用分类适配器
  */
-public class ClassifyOrdinaryRecyclerRightAdapter extends RecyclerView.Adapter<ClassifyOrdinaryRecyclerRightAdapter.ViewHolder> {
+public class ClassifyOrdinaryRecyclerRightAdapter extends BaseAdapter<ClassifyBean.ResultBean.ChildBean,ClassifyOrdinaryRecyclerRightAdapter.ViewHolder> {
 
     private Context mContext;
-    private ArrayList<ClassifyBean.ResultBean.ChildBean> childBeans;
 
-    public ClassifyOrdinaryRecyclerRightAdapter(Context mContext, ArrayList<ClassifyBean.ResultBean.ChildBean> childBeans) {
+    public ClassifyOrdinaryRecyclerRightAdapter(Context mContext) {
         this.mContext = mContext;
-        this.childBeans = childBeans;
     }
 
-    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_ordinary_right, parent, false);
+    protected ClassifyOrdinaryRecyclerRightAdapter.ViewHolder getViewHolder(View view, int viewType) {
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Glide.with(mContext).load(Constant.BASE_URL_IMAGE + childBeans.get(position).getPic()).into(holder.iv_ordinary_right);
-        holder.tv_ordinary_right.setText(childBeans.get(position).getName());
+    protected int getLayout(int viewType) {
+        return R.layout.item_ordinary_right;
     }
 
     @Override
-    public int getItemCount() {
-        return childBeans.size();
+    protected void onBindHolder(ClassifyOrdinaryRecyclerRightAdapter.ViewHolder holder, List<ClassifyBean.ResultBean.ChildBean> child_bean, int position) {
+
+        holder.setData(child_bean,position);
+
+    }
+
+    @Override
+    protected int getViewType(int position) {
+        return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView iv_ordinary_right;
-        public TextView tv_ordinary_right;
+        private ImageView ivOrdinaryRight;
+        private TextView tvOrdinaryRight;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            iv_ordinary_right = itemView.findViewById(R.id.iv_ordinary_right);
-            tv_ordinary_right = itemView.findViewById(R.id.tv_ordinary_right);
+            ivOrdinaryRight = itemView.findViewById(R.id.iv_ordinary_right);
+            tvOrdinaryRight = itemView.findViewById(R.id.tv_ordinary_right);
 
+        }
+
+        public void setData(List<ClassifyBean.ResultBean.ChildBean> child_bean, int position) {
+            Glide.with(mContext).load(Constant.BASE_URL_IMAGE + child_bean.get(position).getPic()).into(ivOrdinaryRight);
+            tvOrdinaryRight.setText(child_bean.get(position).getName());
         }
     }
 }

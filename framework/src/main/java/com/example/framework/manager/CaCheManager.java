@@ -14,6 +14,9 @@ import com.example.framework.service.ShopService;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * 缓存
+ */
 public class CaCheManager {
 
     public static CaCheManager caCheManager;

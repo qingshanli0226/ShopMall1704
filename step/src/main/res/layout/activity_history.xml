@@ -6,7 +6,7 @@
     <com.example.common.TitleBar
         android:id="@+id/tb_history"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="@dimen/titleBar_height" />
 
     <Spinner
         android:id="@+id/history_Spinner"

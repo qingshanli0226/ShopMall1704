@@ -30,5 +30,12 @@
 
     </TextView>
 
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="8.00.00"
+        android:id="@+id/step_item_time"
+        android:layout_marginRight="10sp" android:layout_alignParentRight="true" android:layout_below="@+id/step_item_count">
+    </TextView>
+
 
 </RelativeLayout>
