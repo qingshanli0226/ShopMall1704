@@ -28,7 +28,7 @@ class RecommendAdapter(
             views = LayoutInflater.from(parent!!.context).inflate(R.layout.home_recommend_item,parent,false)
             holder = ViewHolder(views)
             views.setTag(holder)
-        Glide.with(parent!!.context).load("${AppNetConfig.BASE_URl_IMAGE}${recommendInfo!!.get(position).figure}").into(holder.iv_recommend)
+        Glide.with(parent.context).load("${AppNetConfig.BASE_URl_IMAGE}${recommendInfo!!.get(position).figure}").into(holder.iv_recommend)
         holder.tv_name.text = recommendInfo?.get(position)?.name
         holder.tv_price.text = "${recommendInfo?.get(position)?.cover_price}￥"
         //跳转

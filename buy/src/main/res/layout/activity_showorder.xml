@@ -7,6 +7,7 @@
         android:id="@+id/showOrderType"
         android:gravity="center"
         android:textSize="@dimen/buy_text_two"
+        android:textColor="@color/buyPink"
         android:text="订单"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

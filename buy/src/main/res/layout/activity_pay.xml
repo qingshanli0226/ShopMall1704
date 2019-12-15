@@ -20,39 +20,43 @@
             style="@style/BuyBut"
             android:layout_alignParentRight="true"/>
         <TextView
-            android:id="@+id/integralNow"
-            android:text="拥有的积分数"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/moneyNow"
-            android:layout_toRightOf="@id/integralNow"
-            android:text="拥有的现金"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
             android:id="@+id/orderMoney"
-            android:layout_toRightOf="@id/moneyNow"
             android:text="原来商品所需的现金"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/orderDe"
+            android:layout_centerVertical="true"
+            android:text="减免积分:"
+            android:layout_marginRight="@dimen/buy_Littlefive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
             android:id="@+id/subtractIntegra"
-            android:text="减去的积分数"
-            android:layout_below="@+id/integralNow"
+            android:layout_toRightOf="@id/orderDe"
+            android:layout_centerVertical="true"
+            android:text="需要减去的积分数"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <CheckBox
             android:id="@+id/checkInegra"
             android:button="@null"
             android:drawableLeft="@drawable/checkbut"
-            android:layout_below="@id/subtractIntegra"
+            android:layout_alignParentBottom="true"
             android:text="@string/buySelectInteger"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
+            android:layout_alignBottom="@id/payMoney"
+            android:layout_toLeftOf="@id/payMoney"
+            android:text="总计:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
             android:id="@+id/payMoney"
-            android:layout_below="@+id/checkInegra"
+            android:textColor="@color/buyRed"
+            android:textSize="@dimen/buy_two"
+            android:layout_alignParentRight="true"
             android:text="最终支付的现金"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

@@ -1,5 +1,7 @@
 package com.example.buy.databeans;
-
+/**
+ * 客户端确认支付
+ * */
 public class PayResultMessBean {
     @Override
     public String toString() {

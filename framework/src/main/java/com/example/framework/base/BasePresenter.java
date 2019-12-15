@@ -133,25 +133,19 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                             ErrorDisposeManager.HandlerError(e1);
                             throw new RuntimeException(e1.getMessage());
                         }
-
                     }
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         iView.hideLoading();
-
                         try {
                             String string = responseBody.string();
-                            try {
-                                T resEntity = new Gson().fromJson(string, getBeanType());
-                                iView.onRequestSuccess(requestCode, resEntity);
-                            } catch (Exception e) {
-
-                            }
+//                            Log.e("xxxx","请求到的各种数据:"+string);
+                            T resEntity = new Gson().fromJson(string, getBeanType());
+                            iView.onRequestSuccess(requestCode, resEntity);
                         } catch (IOException e) {
                             ErrorDisposeManager.HandlerError(e);
                             throw new RuntimeException(e.getMessage());
-
                         }
                     }
 
@@ -166,7 +160,6 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                             throw new RuntimeException(e1.getMessage());
                         }
                     }
-
                     @Override
                     public void onComplete() {
 

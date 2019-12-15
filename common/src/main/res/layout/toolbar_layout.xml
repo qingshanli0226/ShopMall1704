@@ -149,9 +149,7 @@
     <LinearLayout
         android:id="@+id/buy_message_layout"
         style="@style/ToolBarChildViewGroup"
-        android:gravity="center"
-        android:visibility="visible"
-        android:background="#000000">
+        android:gravity="center">
         <ImageView
             android:id="@+id/message_back"
             android:layout_weight="1"

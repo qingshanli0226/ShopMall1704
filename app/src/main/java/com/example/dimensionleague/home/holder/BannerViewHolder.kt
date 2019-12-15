@@ -18,24 +18,24 @@ import com.youth.banner.loader.ImageLoader
 
 class BannerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun setDate(banner_info: List<HomeBean.ResultBean.BannerInfoBean>? ){
-        if(banner_info==null){
-            Log.d("SSS","给我出去")
+    fun setDate(banner_info: List<HomeBean.ResultBean.BannerInfoBean>?) {
+        if (banner_info == null) {
             return
         }
 
-        var imageList:ArrayList<String> = ArrayList()
-        for (i in banner_info){
+        var imageList: ArrayList<String> = ArrayList()
+        for (i in banner_info) {
             imageList.add("${AppNetConfig.BASE_URl_IMAGE}${i.image}")
         }
         val banner = itemView.findViewById<Banner>(R.id.home_banner)
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
-        banner.setImages(imageList)
-        banner.setImageLoader(GlideImageLoader())
-        banner.setDelayTime(2000)
-        banner.start()
+            .setImages(imageList)
+            .setImageLoader(GlideImageLoader())
+            .setDelayTime(2000)
+            .start()
 
     }
+
     class GlideImageLoader : ImageLoader() {
         override fun displayImage(context: Context?, path: Any?, imageView: ImageView?) {
             Glide.with(context!!).load(path).apply(

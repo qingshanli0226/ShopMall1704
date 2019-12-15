@@ -8,6 +8,7 @@ import com.example.framework.manager.ErrorHandler;
 import com.example.framework.manager.NetConnectManager;
 import com.example.point.StepIsSupport;
 import com.example.point.stepmanager.StepPointManager;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
@@ -47,20 +48,30 @@ public class MineApplication extends Application {
         // 选用AUTO页面采集模式
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
 
-
-//获取消息推送代理示例        PushAgent mPushAgent = PushAgent.getInstance(this);
-//////注册推送服务，每次调用register方法都会回调该接口
-////        mPushAgent.register(new IUmengRegisterCallback() {
-////            @Override
-////            public void onSuccess(String deviceToken) {
-////                //注册成功会返回deviceToken deviceToken是推送消息的唯一标志
-////                Log.i("wzy","注册成功：deviceToken：-------->  " + deviceToken);
-////            }
-////            @Override
-////            public void onFailure(String s, String s1) {
-////                Log.e("wzy","注册失败：-------->  " + "s:" + s + ",s1:" + s1);
-////            }
-////        });
-
+        /***
+         *          //权限请求
+         *          如果是fragment  通过构造传输,不要不要调用 getActivity!!!!!
+         * //        RxPermissions rxPermission = new RxPermissions(Activity.this);
+         * //        rxPermissions
+         * //                .request(Manifest.permission.CAMERA)
+         * //                .subscribe(permission -> {
+         * //                   if (permission.granted) {
+         *                      //权限的具体处理
+         *                      } else if (permission.shouldShowRequestPermissionRationale) {
+         *
+         *                      } else {
+         *
+         *                      }
+         *               });
+         *
+         *
+         *         //必须在onCreate调用
+         *        RxView.clicks(findViewById(R.id.enableCamera))
+         *                .compose(rxPermissions.ensure(Manifest.permission.CAMERA))
+         *                .subscribe(granted -> {
+         *                    // 当点击之后
+         *                 });
+         *
+         * */
     }
 }

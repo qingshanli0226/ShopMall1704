@@ -1,7 +1,7 @@
 package com.example.buy.databeans;
 /**
- * 获取下订单得到的数据
- * */
+ * 获取到的订单支付
+ * * */
 public class GetPayOrderBean {
     @Override
     public String toString() {

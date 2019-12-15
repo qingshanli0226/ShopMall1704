@@ -1,6 +1,7 @@
 package com.example.buy.activity;
 
 import android.content.Intent;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,20 +21,21 @@ import com.example.framework.port.IPresenter;
 import com.example.net.AppNetConfig;
 
 import java.util.ArrayList;
+
 /**
  * 订单详情页
- * */
+ */
 public class OrderActivity extends BaseNetConnectActivity {
 
-    public final static String ALL="全部订单";
-    public final static String WAIT_PAY="待支付订单";
-    public final static String WAIT_SEND="待发货订单";
+    public final static String ALL = "全部订单";
+    public final static String WAIT_PAY = "待支付订单";
+    public final static String WAIT_SEND = "待发货订单";
 
     //网络请求码 全部  待支付 待发货 第二次
-    public final static int CODE_ALL=200;
-    public final static int CODE_PAY=201;
-    public final static int CODE_WAIT=202;
-    public final static int CODE_All_TWO=203;
+    public final static int CODE_ALL = 200;
+    public final static int CODE_PAY = 201;
+    public final static int CODE_WAIT = 202;
+    public final static int CODE_All_TWO = 203;
 
     private RecyclerView recyclerView;
     private TextView showOrderType;
@@ -63,9 +65,9 @@ public class OrderActivity extends BaseNetConnectActivity {
         recyclerView.setAdapter(new BaseRecyclerAdapter<GetOrderBean>(R.layout.item_order, list) {
             @Override
             public void onBind(BaseViewHolder holder, int position) {
-                ((TextView)holder.getView(R.id.orderTitle)).setText(list.get(position).getSubject());
-                ((TextView)holder.getView(R.id.orderNum)).setText(list.get(position).getBody());
-                ((TextView)holder.getView(R.id.orderMoney)).setText(list.get(position).getTotalPrice());
+                ((TextView) holder.getView(R.id.orderTitle)).setText(list.get(position).getSubject());
+                ((TextView) holder.getView(R.id.orderNum)).setText(list.get(position).getBody());
+                ((TextView) holder.getView(R.id.orderMoney)).setText(list.get(position).getTotalPrice());
             }
         });
 
@@ -74,24 +76,23 @@ public class OrderActivity extends BaseNetConnectActivity {
 
     @Override
     public void initDate() {
-        payOrder=new GetPayOrderPresenter();
-        watiOrder=new GetWaitOrderPresenter();
+        payOrder = new GetPayOrderPresenter();
+        watiOrder = new GetWaitOrderPresenter();
         //http://49.233.93.155:8080  updateMoney  money=1333
         //获取传递过来的数据,然后进行订单类型的显示
 
         payOrder.attachView(this);
         watiOrder.attachView(this);
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         //获取到要展示的订单的类型
-        Intent intent=getIntent();
+        Intent intent = getIntent();
         String type = intent.getStringExtra(IntentUtil.ORDER_SHOW);
         showOrderType.setText(type);
-        switch (type){
+        switch (type) {
             case ALL:
                 //先请求待支付,然后请求待发货
                 payOrder.doHttpGetRequest(CODE_ALL);
@@ -108,10 +109,11 @@ public class OrderActivity extends BaseNetConnectActivity {
     @Override
     public void onRequestSuccess(int requestCode, Object data) {
         super.onRequestSuccess(requestCode, data);
-        switch (requestCode){
+        Log.e("xxx","订单数据:"+((GetOrderBean) data).toString());
+        switch (requestCode) {
             case CODE_ALL:
                 list.add((GetOrderBean) data);
-                watiOrder.doHttpPostRequest(CODE_All_TWO);
+                watiOrder.doHttpGetRequest(CODE_All_TWO);
                 break;
             case CODE_PAY:
                 list.clear();
@@ -134,11 +136,12 @@ public class OrderActivity extends BaseNetConnectActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        disPreseter(payOrder,watiOrder);
+        disPreseter(payOrder, watiOrder);
     }
-    private void disPreseter(IPresenter... iPresenter){
-        for (int i=0;i<iPresenter.length;i++){
-            if (iPresenter[i]!=null){
+
+    private void disPreseter(IPresenter... iPresenter) {
+        for (int i = 0; i < iPresenter.length; i++) {
+            if (iPresenter[i] != null) {
                 iPresenter[i].detachView();
             }
         }

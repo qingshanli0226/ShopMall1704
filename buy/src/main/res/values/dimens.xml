@@ -10,6 +10,7 @@
     <dimen name="buy_text_of">15sp</dimen>
     <dimen name="buy_text_one">10sp</dimen>
     <dimen name="buy_one">10dp</dimen>
+    <dimen name="buy_Littlefive">5dp</dimen>
     <dimen name="buy_two">20dp</dimen>
     <dimen name="buy_tf">25dp</dimen>
     <dimen name="buy_three">30dp</dimen>

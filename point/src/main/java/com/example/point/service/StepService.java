@@ -23,6 +23,7 @@ import android.text.format.DateFormat;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 
 import com.example.point.stepmanager.DaoManager;
 import com.example.point.R;
@@ -37,7 +38,7 @@ public class StepService extends Service implements SensorEventListener {
     //通知管理
      private  NotificationManager service;
     //创建我们的通知
-    private Notification.Builder builder;
+    private NotificationCompat.Builder builder;
     //上一次的步数
     private int previousStepCount = 0;
     // 当前的日期
@@ -110,9 +111,8 @@ public class StepService extends Service implements SensorEventListener {
     @Override
     public void onCreate() {
         super.onCreate();
-        builder=new Notification.Builder(this);
         service = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        builder=new Notification.Builder(this);
+        builder=new NotificationCompat.Builder(this,"ciYuan");
         initNotification();//已经调好
         initTodayData();//已经调好
         initBroadcastReceiver();
@@ -171,7 +171,7 @@ public class StepService extends Service implements SensorEventListener {
                 } else if (Intent.ACTION_SHUTDOWN.equals(intent.getAction())) {
                     Log.i("receive", " receive 关机广播");
                     save();
-                } else if (Intent.ACTION_DATE_CHANGED.equals(action)) {//日期变化步数重置为0
+                } else if (Intent.ACTION_DATE_CHANGED.equals(action)) {//日期变化步数重置为  0
                     Log.i("receive", " 日期改变");
                     isNewDay();
                 }else if (Intent.ACTION_TIME_TICK.equals(action)) {//日期变化步数重置为0
@@ -268,7 +268,8 @@ public class StepService extends Service implements SensorEventListener {
                 .setOngoing(true)//ture，设置他为一个正在进行的通知。他们通常是用来表示一个后台任务,用户积极参与(如播放音乐)或以某种方式正在等待,因此占用设备(如一个文件下载,同步操作,主动网络连接)
                 .setSmallIcon(R.mipmap.dimension_league_icon);
         if (Build.VERSION.SDK_INT>=26){
-            @SuppressLint("WrongConstant") NotificationChannel channel = new NotificationChannel("1","没事",NotificationManager.IMPORTANCE_DEFAULT);
+            @SuppressLint("WrongConstant")
+            NotificationChannel channel = new NotificationChannel("1","没事",NotificationManager.IMPORTANCE_DEFAULT);
             service.createNotificationChannel(channel);
             builder.setChannelId("1");
         }
@@ -290,7 +291,8 @@ public class StepService extends Service implements SensorEventListener {
                 .setOngoing(true)//ture，设置他为一个正在进行的通知。他们通常是用来表示一个后台任务,用户积极参与(如播放音乐)或以某种方式正在等待,因此占用设备(如一个文件下载,同步操作,主动网络连接)
                 .setSmallIcon(R.mipmap.dimension_league_icon);
         if (Build.VERSION.SDK_INT>=26){
-            @SuppressLint("WrongConstant") NotificationChannel channel = new NotificationChannel("1","没事",NotificationManager.IMPORTANCE_DEFAULT);
+            @SuppressLint("WrongConstant")
+            NotificationChannel channel = new NotificationChannel("1","没事",NotificationManager.IMPORTANCE_DEFAULT);
             service.createNotificationChannel(channel);
             builder.setChannelId("1");
         }

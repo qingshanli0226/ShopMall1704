@@ -1,5 +1,7 @@
 package com.example.buy.databeans;
-
+/**
+ * 获取到的多个库存
+ * */
     public class GetCheckGoodsBean {
     @Override
     public String toString() {

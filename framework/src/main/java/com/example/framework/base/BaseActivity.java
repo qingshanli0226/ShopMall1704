@@ -15,7 +15,9 @@ import com.example.framework.manager.ActivityInstanceManager;
 import com.example.framework.port.IActivity;
 import com.gyf.immersionbar.ImmersionBar;
 import com.jaeger.library.StatusBarUtil;
+import com.jaeger.library.StatusBarUtil;
 import com.umeng.analytics.MobclickAgent;
+
 import com.umeng.message.PushAgent;
 
 /**
@@ -32,8 +34,13 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
         setContentView(getLayoutId());
         //：该方法是【友盟+】Push后台进行日活统计及多维度推送的必调用方法，请务必调用！
         PushAgent.getInstance(this).onAppStart();
+
+        //只改变状态栏颜色,布局不动
+//        StatusBarUtil.setColor(this, Color.RED);
+
         //TODO 沉浸式状态栏
         ImmersionBar.with(this).init();
+
         activityInstanceManager = ActivityInstanceManager.getInstance();
         activityInstanceManager.addActivity(this);
         init();

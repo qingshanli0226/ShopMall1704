@@ -1,30 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/buy_one"
+    android:background="@drawable/goodscolor">
     <ImageView
         android:id="@+id/itemPayImg"
-        android:layout_width="100dp"
-        android:layout_height="100dp"/>
+        android:layout_width="@dimen/buy_one_hund"
+        android:layout_height="@dimen/buy_one_hund"/>
     <TextView
         android:id="@+id/itemPayTitle"
         android:text="标题"
+        android:textColor="@color/buyPink"
+        android:maxLines="1"
+        android:textSize="@dimen/buy_text_of"
         android:layout_toRightOf="@id/itemPayImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
-        android:id="@+id/itemPayPrice"
-        android:layout_marginRight="80dp"
+        android:id="@+id/itemRe"
+        android:layout_margin="@dimen/buy_Littlefive"
+        android:text="@string/buyOnePrice"
+        android:layout_toRightOf="@id/itemPayImg"
         android:layout_below="@id/itemPayTitle"
-        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/itemPayPrice"
+        android:layout_toRightOf="@id/itemRe"
+        android:layout_alignBottom="@id/itemRe"
         android:text="价格"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
+        android:id="@+id/itemNe"
+        android:layout_toRightOf="@id/itemPayImg"
+        android:layout_below="@id/itemRe"
+        android:layout_marginTop="@dimen/buy_two"
+        android:layout_marginLeft="@dimen/buy_Littlefive"
+        android:text="@string/buyOneNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
         android:id="@+id/itemPayNum"
-        android:layout_marginTop="50dp"
+        android:layout_alignTop="@id/itemNe"
         android:text="数量"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@id/itemPayPrice" />
+    <TextView
+        android:id="@+id/itemSe"
+        android:text="@string/buyOneSum"
+        android:textColor="@color/buyRed"
+        android:textSize="@dimen/buy_text_of"
+        android:layout_toLeftOf="@id/itemOneSum"
+        android:layout_marginRight="@dimen/buy_Littlefive"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/itemOneSum"
+        android:text="总价"
+        android:textColor="@color/buyRed"
+        android:textSize="@dimen/buy_text_of"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </RelativeLayout>

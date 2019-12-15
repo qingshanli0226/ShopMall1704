@@ -22,8 +22,12 @@
     <TextView
         android:id="@+id/nullGoods"
         android:visibility="gone"
+        android:gravity="center"
+        android:layout_centerInParent="true"
         android:text="购物车空空如也"
         android:layout_below="@+id/my_toolbar"
+        android:textSize="@dimen/buy_text_three"
+        android:textColor="@color/buyPink"
         android:layout_above="@id/buyFoot"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
@@ -39,6 +43,12 @@
             android:drawableLeft="@drawable/checkbut"
             android:text="@string/buyCheckAll"
             android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/cartMoney"
+            android:textColor="@color/color_red"
+            android:layout_toRightOf="@id/checkAll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <Button

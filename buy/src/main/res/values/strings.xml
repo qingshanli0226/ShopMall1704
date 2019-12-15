@@ -9,4 +9,8 @@
     <string name="buySelectInteger">是否选择积分减免</string>
     <string name="buyNum">数量:</string>
     <string name="buySure">确定</string>
+    <string name="buyMoney">¥</string>
+    <string name="buyOnePrice">单价:</string>
+    <string name="buyOneNum">数量:</string>
+    <string name="buyOneSum">总价:</string>
 </resources>

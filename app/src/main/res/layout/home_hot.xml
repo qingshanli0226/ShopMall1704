@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:padding="@dimen/dp_10"
     android:layout_height="wrap_content">
     <LinearLayout
@@ -31,13 +32,10 @@
             android:text="@string/look_more" />
     </LinearLayout>
 
-    <GridView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/home_hot"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1020"
-        android:layout_marginTop="@dimen/dp_10"
-        android:horizontalSpacing="@dimen/dp_10"
-        android:numColumns="2"
-        android:verticalSpacing="@dimen/dp_10" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_10"/>
 
 </LinearLayout>

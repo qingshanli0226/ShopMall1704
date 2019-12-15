@@ -6,7 +6,7 @@ import com.example.point.service.StepBean
 import com.example.point.StepBeanDao
 
 class DaoManager {
-    private lateinit var stepBeanDao: StepBeanDao
+    private var stepBeanDao: StepBeanDao
 
     constructor(ctx: Context) {
         //创建一个db 数据库

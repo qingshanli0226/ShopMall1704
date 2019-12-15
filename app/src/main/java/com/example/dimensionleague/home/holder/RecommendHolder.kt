@@ -1,6 +1,5 @@
 package com.example.dimensionleague.home.holder
 
-
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.common.HomeBean
