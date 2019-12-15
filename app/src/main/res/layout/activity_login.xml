@@ -8,6 +8,7 @@
     tools:context=".login.activity.LoginActivity"
     android:background="@color/colorWhite">
     <RelativeLayout
+        android:layout_marginTop="@dimen/dp_10"
         android:id="@+id/rlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

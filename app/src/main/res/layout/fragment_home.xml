@@ -52,7 +52,7 @@
             <com.example.common.view.MyToolBar
                 android:id="@+id/my_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_100"
+                android:layout_height="@dimen/dp_60"
                 app:layout_anchor="@+id/mApp_layout"
                 app:layout_anchorGravity="center"
                 app:layout_collapseMode="pin" />

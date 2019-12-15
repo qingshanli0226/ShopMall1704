@@ -1,12 +1,9 @@
 package com.example.dimensionleague.home;
 
-import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -82,7 +79,7 @@ public class HomeFragment extends BaseNetConnectFragment {
             }
         });
 
-        toolbar_layout.setContentScrim(getResources().getDrawable(R.drawable.home_toolbar));
+        toolbar_layout.setContentScrim(getResources().getDrawable(R.drawable.toolbar_style));
         //TODO 跳转相机
         my_toolbar.getHome_camera().setOnClickListener(new View.OnClickListener() {
             @Override
