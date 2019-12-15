@@ -259,7 +259,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
             case UPDATA_GOODS:
                 if (((OkBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
                     //更新成功
-                    sendCartPresenter.doHttpGetRequest(CART_GOODS);
+//                    sendCartPresenter.doHttpGetRequest(CART_GOODS);
                 }
                 break;
             case DEL_CODE:
