@@ -20,6 +20,7 @@ import java.util.List;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
+
 public class MessageActivity extends BaseActivity implements MessageManager.MessageListener {
     @Override
     public void getMessage(MessageBean messageBean, int messageNum) {

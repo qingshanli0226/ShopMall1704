@@ -1,6 +1,5 @@
 package com.example.administrator.shaomall.app;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 import android.support.multidex.MultiDex;
@@ -8,7 +7,7 @@ import android.support.multidex.MultiDexApplication;
 
 import com.example.commen.ACache;
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.shaomall.framework.manager.NetConnetMannager;
+import com.shaomall.framework.manager.NetConnectManager;
 import com.shaomall.framework.manager.UserInfoManager;
 
 import cn.jpush.android.api.JPushInterface;
@@ -29,7 +28,7 @@ public class ShaoHuaApplication extends MultiDexApplication {
         mainThreadId = android.os.Process.myTid();//获取当前线程的Id
 
         ACache aCache = ACache.get(this);
-        NetConnetMannager.getInstance().init(this);
+        NetConnectManager.getInstance().init(this);
         UserInfoManager.getInstance().init(this, aCache);
 
         // 初始化 JPush

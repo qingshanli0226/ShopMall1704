@@ -17,8 +17,8 @@ import com.example.shoppingcart.Adapter.RvAdp;
 import com.example.shoppingcart.R;
 import com.example.shoppingcart.bean.ShoppingCartBean;
 import com.example.shoppingcart.presenter.RemoveOneProductPresenter;
-import com.example.shoppingcart.presenter.ShoppingcartPresenter;
-import com.example.shoppingcart.presenter.UpDateShoppingcartPresenter;
+import com.example.shoppingcart.presenter.ShoppingCartPresenter;
+import com.example.shoppingcart.presenter.UpDateShoppingCartPresenter;
 import com.shaomall.framework.base.BaseMVPFragment;
 import com.shaomall.framework.manager.UserInfoManager;
 
@@ -26,18 +26,18 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShoppingcartActivity extends BaseMVPFragment<Object> {
-    private RecyclerView listview;
+public class ShoppingCartFragment extends BaseMVPFragment<Object> {
+    private RecyclerView recyclerView;
     ArrayList<ShoppingCartBean> arr = new ArrayList<>();
     //TreeSet<ShoppingCartBean> arr= new TreeSet<ShoppingCartBean>();
     private CheckBox allChekbox;
     private TextView tvTotalPrice;
     private TextView tvDelete;
     private TextView tvGoToPay;
-    ShoppingcartPresenter presenter;
+    ShoppingCartPresenter presenter;
     RvAdp rvAdp;
     float sum = 0.0f;
-    private UpDateShoppingcartPresenter upDateShoppingcartPresenter;
+    private UpDateShoppingCartPresenter upDateShoppingcartPresenter;
 
     @Override
     public int setLayoutId() {
@@ -48,20 +48,23 @@ public class ShoppingcartActivity extends BaseMVPFragment<Object> {
     protected void initView(View view, Bundle savedInstanceState) {
         LinearLayout topBar = (LinearLayout) view.findViewById(R.id.top_bar);
         TextView title = (TextView) view.findViewById(R.id.title);
-        listview = (RecyclerView) view.findViewById(R.id.listview);
+        recyclerView = (RecyclerView) view.findViewById(R.id.rv_choppingCart);
 
         allChekbox = (CheckBox) view.findViewById(R.id.all_chekbox);
         tvTotalPrice = (TextView) view.findViewById(R.id.tv_total_price);
         tvDelete = (TextView) view.findViewById(R.id.tv_delete);
         tvGoToPay = (TextView) view.findViewById(R.id.tv_go_to_pay);
-        presenter = new ShoppingcartPresenter();
+        presenter = new ShoppingCartPresenter();
         presenter.attachView(this);
         rvAdp = new RvAdp(arr, getContext());
     }
 
     @Override
     protected void initData() {
-
+        //网络请求
+        presenter.doGetHttpRequest(AppNetConfig.REQUEST_CODE_GET_SHORTCART_PRODUCTS);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(rvAdp);
 
         //TODO 删除按钮
         tvDelete.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +78,7 @@ public class ShoppingcartActivity extends BaseMVPFragment<Object> {
                         //TODO 如果选中了就删除掉
                         if (removeOneProductPresenter == null) {
                             removeOneProductPresenter = new RemoveOneProductPresenter();
-                            removeOneProductPresenter.attachView(ShoppingcartActivity.this);
+                            removeOneProductPresenter.attachView(ShoppingCartFragment.this);
                         }
                         JSONObject jsonObject = new JSONObject();
                         jsonObject.put("productId", arr.get(i).getProductId());
@@ -133,11 +136,8 @@ public class ShoppingcartActivity extends BaseMVPFragment<Object> {
             }
         });
 
-        //网络请求
-        presenter.doGetHttpRequest(AppNetConfig.REQUEST_CODE_GET_SHORTCART_PRODUCTS);
-        rvAdp = new RvAdp(arr, getContext());
-        listview.setLayoutManager(new LinearLayoutManager(getContext()));
-        listview.setAdapter(rvAdp);
+
+
 
         //TODO 上传
         rvAdp.setItemNumCallBack(new RvAdp.ItemNumCallBack() {
@@ -199,7 +199,7 @@ public class ShoppingcartActivity extends BaseMVPFragment<Object> {
     //TODO 更新商品数量接口
     private void uploadGoodsData(int i, int num) {
         if (upDateShoppingcartPresenter == null) {
-            upDateShoppingcartPresenter = new UpDateShoppingcartPresenter();
+            upDateShoppingcartPresenter = new UpDateShoppingCartPresenter();
             upDateShoppingcartPresenter.attachView(this);
         }
 

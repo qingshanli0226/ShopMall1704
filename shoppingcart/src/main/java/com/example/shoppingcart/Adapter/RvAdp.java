@@ -29,7 +29,7 @@ public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler>{
     @NonNull
     @Override
     public Myhodler onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(context).inflate(R.layout.cart, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_cart, null);
         return new Myhodler(view);
     }
 

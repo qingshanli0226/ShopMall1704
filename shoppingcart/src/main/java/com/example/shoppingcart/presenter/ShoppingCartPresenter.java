@@ -9,7 +9,7 @@ import com.shaomall.framework.base.presenter.BasePresenter;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class ShoppingcartPresenter extends BasePresenter<Object> {
+public class ShoppingCartPresenter extends BasePresenter<Object> {
 
 
     @Override

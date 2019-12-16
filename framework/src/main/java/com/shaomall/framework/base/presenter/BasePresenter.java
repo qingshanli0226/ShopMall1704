@@ -76,9 +76,9 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
 
     //设置加载页状态
-    private void setLoadingPager(int type) {
+    private void setLoadingPager(int requestCode, int type) {
         if (iBaseView != null) {
-            iBaseView.loadingPage(type);
+            iBaseView.loadingPage(requestCode, type);
         }
     }
 
@@ -190,7 +190,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                     @Override
                     public void onSubscribe(Disposable d) {
                         //提示用户正在加载, 显示加载页
-                        setLoadingPager(LoadingPageConfig.STATE_LOADING_CODE);
+                        setLoadingPager(-1, LoadingPageConfig.STATE_LOADING_CODE);
                     }
 
                     @Override
@@ -201,7 +201,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                         }
                         try {
                             //数据请求成功
-                            setLoadingPager(LoadingPageConfig.STATE_SUCCESS_CODE);
+                            setLoadingPager(-1, LoadingPageConfig.STATE_SUCCESS_CODE);
                             String string = responseBody.string();
 
                             //判断数据是否是列表
@@ -230,14 +230,14 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                         } catch (IOException e) {
                             //e.printStackTrace();
                             //数据为空
-                            setLoadingPager(LoadingPageConfig.STATE_EMPTY_CODE);
+                            setLoadingPager(-1, LoadingPageConfig.STATE_EMPTY_CODE);
                             throw new RuntimeException("获取数据为空"); //扔出异常, 让onError函数统一管理
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        setLoadingPager(LoadingPageConfig.STATE_ERROR_CODE);
+                        setLoadingPager(-1, LoadingPageConfig.STATE_ERROR_CODE);
                         //获取数据失败
                         if (iBaseView != null) {
                             iBaseView.onRequestHttpDataFailed(ErrorUtil.handlerError(e));
@@ -253,7 +253,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                     @Override
                     public void onSubscribe(Disposable d) {
                         //提示用户正在加载, 显示加载页
-                        setLoadingPager(LoadingPageConfig.STATE_LOADING_CODE);
+                        setLoadingPager(requestCode, LoadingPageConfig.STATE_LOADING_CODE);
                     }
 
                     @Override
@@ -264,7 +264,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                         }
                         try {
                             //数据请求成功
-                            setLoadingPager(LoadingPageConfig.STATE_SUCCESS_CODE);
+                            setLoadingPager(requestCode, LoadingPageConfig.STATE_SUCCESS_CODE);
                             String string = responseBody.string();
 
                             //判断数据是否是列表
@@ -293,14 +293,14 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                         } catch (IOException e) {
                             //e.printStackTrace();
                             //数据为空
-                            setLoadingPager(LoadingPageConfig.STATE_EMPTY_CODE);
+                            setLoadingPager(requestCode, LoadingPageConfig.STATE_EMPTY_CODE);
                             throw new RuntimeException("获取数据为空"); //扔出异常, 让onError函数统一管理
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        setLoadingPager(LoadingPageConfig.STATE_ERROR_CODE);
+                        setLoadingPager(requestCode, LoadingPageConfig.STATE_ERROR_CODE);
                         //获取数据失败
                         if (iBaseView != null) {
                             iBaseView.onRequestHttpDataFailed(requestCode, ErrorUtil.handlerError(e));

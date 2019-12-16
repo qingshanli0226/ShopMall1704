@@ -21,9 +21,11 @@ public class PointManager {
 
     public void setPointNum(int pointNum) {
         if (oldPoint != pointNum) {
-            callbackIntegralListener.onCallbacksIntegral(pointNum);
+            if (callbackIntegralListener != null) {
+                callbackIntegralListener.onCallbacksIntegral(pointNum);
+                oldPoint = pointNum;
+            }
         }
-        oldPoint = pointNum;
     }
 
 

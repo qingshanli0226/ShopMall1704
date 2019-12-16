@@ -39,16 +39,12 @@ public abstract class BaseLoginFragment<T> extends BaseMVPFragment<T> implements
     }
 
     @Override
-    public void loadingPage(int code) {
-
+    public void loadingPage(int requestCode, int code) {
     }
-
 
     //    @Override
     //    public void onUserStatus(boolean isLogin, LoginBean userInfo) {
     //ei
-
-
     //    }
 
 
