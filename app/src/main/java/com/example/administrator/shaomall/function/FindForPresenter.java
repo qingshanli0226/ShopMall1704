@@ -1,7 +1,6 @@
 package com.example.administrator.shaomall.function;
 
-import com.alibaba.fastjson.JSONObject;
-import com.example.administrator.shaomall.function.bean.FindForBean;
+import com.shaomall.framework.bean.FindForBean;
 import com.example.net.ResEntity;
 import com.google.gson.reflect.TypeToken;
 import com.shaomall.framework.base.presenter.BasePresenter;

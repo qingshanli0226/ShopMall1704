@@ -17,7 +17,7 @@ import com.bumptech.glide.Glide;
 import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.goodsinfo.GoodsInfoActivity;
 import com.example.administrator.shaomall.goodsinfo.bean.GoodsInfoBean;
-import com.example.administrator.shaomall.type.TypeBean;
+import com.shaomall.framework.bean.TypeBean;
 import com.example.commen.util.DensityUtil;
 import com.example.net.AppNetConfig;
 

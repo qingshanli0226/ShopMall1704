@@ -1,4 +1,4 @@
-package com.example.administrator.shaomall.function.bean;
+package com.shaomall.framework.bean;
 
 public class FindForBean {
 

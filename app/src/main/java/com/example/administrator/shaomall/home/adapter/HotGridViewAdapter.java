@@ -1,6 +1,6 @@
 package com.example.administrator.shaomall.home.adapter;
 
-import com.example.administrator.shaomall.home.HomeBean;
+import com.shaomall.framework.bean.HomeBean;
 import com.example.administrator.shaomall.home.holder.HotViewHolder;
 import com.shaomall.framework.base.BaseHolder;
 import com.shaomall.framework.base.BaseListAdapter;

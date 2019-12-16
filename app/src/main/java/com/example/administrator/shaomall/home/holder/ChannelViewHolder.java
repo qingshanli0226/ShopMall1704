@@ -1,6 +1,5 @@
 package com.example.administrator.shaomall.home.holder;
 
-import android.os.HandlerThread;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -8,7 +7,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.app.ShaoHuaApplication;
-import com.example.administrator.shaomall.home.HomeBean;
+import com.shaomall.framework.bean.HomeBean;
 import com.example.net.AppNetConfig;
 import com.shaomall.framework.base.BaseHolder;
 

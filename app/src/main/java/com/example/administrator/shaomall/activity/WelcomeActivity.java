@@ -1,11 +1,12 @@
 package com.example.administrator.shaomall.activity;
 
+import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 
 import com.example.administrator.shaomall.cache.CacheManager;
 import com.example.administrator.shaomall.R;
-import com.example.administrator.shaomall.home.HomeBean;
+import com.shaomall.framework.bean.HomeBean;
 import com.shaomall.framework.base.BaseActivity;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -80,5 +81,12 @@ public class WelcomeActivity extends BaseActivity {
         }, 0, 1000);
     }
 
-
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK){
+//         return false;
+//        }
+//        else
+//        return super.onKeyDown(keyCode, event);
+//    }
 }

@@ -1,4 +1,4 @@
-package com.example.administrator.shaomall.home;
+package com.shaomall.framework.bean;
 
 import java.io.Serializable;
 import java.util.List;

@@ -4,7 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.administrator.shaomall.R;
-import com.example.administrator.shaomall.function.bean.FindForBean;
+import com.shaomall.framework.bean.FindForBean;
 import com.shaomall.framework.base.IBaseRecyclerAdapter;
 
 import java.util.List;

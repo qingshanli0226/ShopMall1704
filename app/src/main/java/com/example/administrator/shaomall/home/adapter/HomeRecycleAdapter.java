@@ -19,7 +19,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.shaomall.R;
-import com.example.administrator.shaomall.home.HomeBean;
+import com.shaomall.framework.bean.HomeBean;
 import com.example.net.AppNetConfig;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;

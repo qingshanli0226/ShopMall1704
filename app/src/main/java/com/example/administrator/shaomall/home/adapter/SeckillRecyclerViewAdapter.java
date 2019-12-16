@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.shaomall.R;
-import com.example.administrator.shaomall.home.HomeBean;
+import com.shaomall.framework.bean.HomeBean;
 import com.example.net.AppNetConfig;
 
 import java.util.List;

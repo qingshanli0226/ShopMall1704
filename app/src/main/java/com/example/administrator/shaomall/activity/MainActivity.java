@@ -90,7 +90,6 @@ public class MainActivity extends BaseMVPActivity<Object> {
 
             @Override
             public void onTabReselect(int position) {
-
                 showTabSelect(position);
             }
         });

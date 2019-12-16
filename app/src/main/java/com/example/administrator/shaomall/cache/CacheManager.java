@@ -7,12 +7,10 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.example.administrator.shaomall.home.HomeBean;
+import com.shaomall.framework.bean.HomeBean;
 import com.example.commen.ACache;
 import com.example.commen.Constants;
 import com.shaomall.framework.manager.NetConnetMannager;
-
-import com.example.net.AppNetConfig;
 
 
 import java.util.LinkedList;

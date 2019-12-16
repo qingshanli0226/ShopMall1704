@@ -1,4 +1,4 @@
-package com.example.administrator.shaomall.login.base;
+package com.shaomall.framework.bean;
 
 public class SigninPhoto {
 

@@ -68,7 +68,7 @@ public class MessageActivity extends BaseActivity implements MessageManager.Mess
         mTitleBlack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+              animOutActivity();
             }
         });
         mTitleMessage.setVisibility(View.INVISIBLE);

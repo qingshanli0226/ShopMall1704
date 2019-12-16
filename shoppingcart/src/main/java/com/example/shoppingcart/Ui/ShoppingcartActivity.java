@@ -70,19 +70,19 @@ public class ShoppingcartActivity extends BaseMVPFragment<Object> {
 
             @Override
             public void onClick(View v) {
-                for (int i=0;i<arr.size();i++){
-                    if (arr.get(i).isSelect()){
+                for (int i = 0; i < arr.size(); i++) {
+                    if (arr.get(i).isSelect()) {
                         //TODO 如果选中了就删除掉
-                        if (removeOneProductPresenter==null){
+                        if (removeOneProductPresenter == null) {
                             removeOneProductPresenter = new RemoveOneProductPresenter();
                             removeOneProductPresenter.attachView(ShoppingcartActivity.this);
                         }
                         JSONObject jsonObject = new JSONObject();
-                        jsonObject.put("productId",arr.get(i).getProductId());
-                        jsonObject.put("productNum",arr.get(i).getProductNum());
-                        jsonObject.put("productName",arr.get(i).getProductName());
-                        jsonObject.put("url",arr.get(i).getUrl());
-                        jsonObject.put("productPrice",arr.get(i).getProductPrice());
+                        jsonObject.put("productId", arr.get(i).getProductId());
+                        jsonObject.put("productNum", arr.get(i).getProductNum());
+                        jsonObject.put("productName", arr.get(i).getProductName());
+                        jsonObject.put("url", arr.get(i).getUrl());
+                        jsonObject.put("productPrice", arr.get(i).getProductPrice());
                         removeOneProductPresenter.setJson(jsonObject);
                         removeOneProductPresenter.doJsonPostHttpRequest(AppNetConfig.COURT_SHIP_CODE_DELETE_SHOPPINGCART_QUANTITY);
                     }
@@ -198,18 +198,18 @@ public class ShoppingcartActivity extends BaseMVPFragment<Object> {
 
     //TODO 更新商品数量接口
     private void uploadGoodsData(int i, int num) {
-        if (upDateShoppingcartPresenter==null){
+        if (upDateShoppingcartPresenter == null) {
             upDateShoppingcartPresenter = new UpDateShoppingcartPresenter();
             upDateShoppingcartPresenter.attachView(this);
         }
 
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("productId",arr.get(i).getProductId());
-        jsonObject.put("productNum",num);
-        jsonObject.put("productName",arr.get(i).getProductName());
-        jsonObject.put("url",arr.get(i).getUrl());
-        jsonObject.put("productPrice",arr.get(i).getProductPrice());
+        jsonObject.put("productId", arr.get(i).getProductId());
+        jsonObject.put("productNum", num);
+        jsonObject.put("productName", arr.get(i).getProductName());
+        jsonObject.put("url", arr.get(i).getUrl());
+        jsonObject.put("productPrice", arr.get(i).getProductPrice());
         upDateShoppingcartPresenter.setJsonParam(jsonObject);
         upDateShoppingcartPresenter.doJsonPostHttpRequest(AppNetConfig.REQUEST_CODE_TOUPDATE_CARTQUANTITY);
 
@@ -225,6 +225,16 @@ public class ShoppingcartActivity extends BaseMVPFragment<Object> {
         }
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (UserInfoManager.getInstance().isLogin() && !hidden) {
+            //网络请求
+            presenter.doGetHttpRequest(AppNetConfig.REQUEST_CODE_GET_SHORTCART_PRODUCTS);
+        }
+    }
+
+
     public void onRequestHttpDataFailed(int requestCode, ShopMailError error) {
         Toast.makeText(mContext, "" + error.getErrorMessage(), Toast.LENGTH_SHORT).show();
     }
@@ -236,10 +246,10 @@ public class ShoppingcartActivity extends BaseMVPFragment<Object> {
 
     @Override
     public void onRequestHttpDataSuccess(int requestCode, String message, Object data) {
-        if (requestCode==AppNetConfig.REQUEST_CODE_TOUPDATE_CARTQUANTITY){
+        if (requestCode == AppNetConfig.REQUEST_CODE_TOUPDATE_CARTQUANTITY) {
             // TODO　修改购物车数量
             presenter.doGetHttpRequest(AppNetConfig.REQUEST_CODE_GET_SHORTCART_PRODUCTS);
-        }else if (requestCode==AppNetConfig.COURT_SHIP_CODE_DELETE_SHOPPINGCART_QUANTITY){
+        } else if (requestCode == AppNetConfig.COURT_SHIP_CODE_DELETE_SHOPPINGCART_QUANTITY) {
             //TODO 删除购物车
             presenter.doGetHttpRequest(AppNetConfig.REQUEST_CODE_GET_SHORTCART_PRODUCTS);
         }
@@ -254,22 +264,22 @@ public class ShoppingcartActivity extends BaseMVPFragment<Object> {
             ArrayList<ShoppingCartBean> newlist = new ArrayList<>();
             arr.clear();
 
-            for (ShoppingCartBean cd: arr){
-                if (!newlist.contains(cd)){
+            for (ShoppingCartBean cd : arr) {
+                if (!newlist.contains(cd)) {
                     newlist.add(cd);
 
                 }
             }
-            if (arr.size()==0){
+            if (arr.size() == 0) {
                 //TODO 如果购物车里面没有数据了吧全选按钮设置为false并把总价格归零
-                if (arr.size()==0){
+                if (arr.size() == 0) {
                     allChekbox.setChecked(false);
-                    sum=0f;
-                    tvTotalPrice.setText(sum+"");
+                    sum = 0f;
+                    tvTotalPrice.setText(sum + "");
                 }
             }
-            for (int i=0;i<=newlist.size()-1;i++){
-                Log.d("CHY:选择 ",newlist.get(i).isSelect()+"");
+            for (int i = 0; i <= newlist.size() - 1; i++) {
+                Log.d("CHY:选择 ", newlist.get(i).isSelect() + "");
 
             }
             arr.addAll(list);

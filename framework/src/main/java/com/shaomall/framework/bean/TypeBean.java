@@ -1,4 +1,4 @@
-package com.example.administrator.shaomall.type;
+package com.shaomall.framework.bean;
 
 import java.util.List;
 

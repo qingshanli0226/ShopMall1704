@@ -8,12 +8,11 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 
-import com.example.administrator.shaomall.home.HomeBean;
+import com.shaomall.framework.bean.HomeBean;
 
 import com.example.net.AppNetConfig;
 import com.example.net.RetrofitCreator;
 import com.google.gson.Gson;
-import com.shaomall.framework.base.presenter.IBasePresenter;
 
 import java.io.IOException;
 import java.util.HashMap;

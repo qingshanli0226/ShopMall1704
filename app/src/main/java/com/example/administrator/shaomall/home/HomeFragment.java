@@ -21,6 +21,7 @@ import com.example.commen.ACache;
 
 import com.example.commen.util.ShopMailError;
 import com.shaomall.framework.base.BaseMVPFragment;
+import com.shaomall.framework.bean.HomeBean;
 import com.shaomall.framework.bean.LoginBean;
 import com.shaomall.framework.bean.MessageBean;
 import com.shaomall.framework.manager.MessageManager;
@@ -90,7 +91,7 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> implements MessageM
         message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toClass(MessageActivity.class);
+             animStartActivity(MessageActivity.class);
             }
         });
         List<MessageBean> messageBeans = MessageManager.getInstance(getContext()).qurayNotReadData();
@@ -100,7 +101,7 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> implements MessageM
         searchTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toClass(SearchActivity.class);
+           animStartActivity(SearchActivity.class);
             }
         });
     }

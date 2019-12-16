@@ -11,6 +11,7 @@ import com.example.administrator.shaomall.type.adapter.TypeRightAdapter;
 import com.example.commen.Constants;
 import com.example.net.AppNetConfig;
 import com.shaomall.framework.base.BaseMVPFragment;
+import com.shaomall.framework.bean.TypeBean;
 
 import java.util.List;
 

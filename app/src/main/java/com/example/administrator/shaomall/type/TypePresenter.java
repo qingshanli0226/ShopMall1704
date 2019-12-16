@@ -3,6 +3,7 @@ package com.example.administrator.shaomall.type;
 import com.example.net.ResEntity;
 import com.google.gson.reflect.TypeToken;
 import com.shaomall.framework.base.presenter.BasePresenter;
+import com.shaomall.framework.bean.TypeBean;
 
 import java.lang.reflect.Type;
 import java.util.List;

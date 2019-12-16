@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.example.administrator.shaomall.R
 import com.example.administrator.shaomall.function.adapter.FindForAdapter
-import com.example.administrator.shaomall.function.bean.FindForBean
+import com.shaomall.framework.bean.FindForBean
 import com.example.net.AppNetConfig
 import com.shaomall.framework.base.BaseMVPActivity
 import com.shaomall.framework.manager.ActivityInstanceManager
