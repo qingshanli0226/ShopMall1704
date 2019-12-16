@@ -1,10 +1,23 @@
 package com.example.dimensionleague.home;
 
+import android.Manifest;
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 
 
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.common.HomeBean;
@@ -18,6 +31,8 @@ import com.example.framework.port.IPresenter;
 import com.example.framework.port.AppBarStateChangeListener;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.uuzuche.lib_zxing.activity.CaptureActivity;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 
 public class HomeFragment extends BaseNetConnectFragment {
@@ -73,6 +88,8 @@ public class HomeFragment extends BaseNetConnectFragment {
                     my_toolbar.GoneAll();
                 } else if (state == State.COLLAPSED) {//TODO 折叠状态
                     my_toolbar.init(Constant.HOME_STYLE);
+//                    扫一扫及消息的点击事件
+                    toolbarMessenger();
                 } else {  //TODO 中间状态
 
                 }
@@ -96,6 +113,50 @@ public class HomeFragment extends BaseNetConnectFragment {
         });
     }
 
+    //    点击事件
+    private void toolbarMessenger() {
+        my_toolbar.getHome_search_back().setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View v) {
+                int permission = getContext().checkSelfPermission(Manifest.permission.CAMERA);
+                if (permission != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.CAMERA}, Constant.REQUSET_CODE);
+                    return;
+                } else {
+                    Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                    startActivityForResult(intent, Constant.REQUSET_ZXING_CODE);
+                }
+
+            }
+        });
+    }
+
+
+//    处理权限
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case Constant.REQUSET_CODE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission Granted 用户允许权限 继续执行（我这里执行的是二维码扫描，检查的是照相机权限）
+                    Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                    startActivityForResult(intent, Constant.REQUSET_ZXING_CODE);
+
+                } else {
+                    // Permission Denied 拒绝
+                    toast(getActivity(), "获取权限失败，无法扫描");
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+
+        }
+    }
+
+
     @Override
     public int getLayoutId() {
         return R.layout.fragment_home;
@@ -112,6 +173,27 @@ public class HomeFragment extends BaseNetConnectFragment {
         if (((HomeBean) data).getCode() == 200) {
             list = ((HomeBean) data).getResult();
             rv.getAdapter().notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i("xxxxx", "onActivityResult: ");
+        if (requestCode == Constant.REQUSET_ZXING_CODE) {
+            if (data != null) {
+                try {
+                    Bundle bundle = data.getExtras();
+                    if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                        String result = bundle.getString(CodeUtils.RESULT_STRING);
+                        toast(getActivity(), result);
+                    } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+                        toast(getActivity(), "解析二维码失败");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }

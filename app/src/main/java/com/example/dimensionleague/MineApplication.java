@@ -13,6 +13,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 /**
  * author:李浩帆
@@ -47,7 +48,7 @@ public class MineApplication extends Application {
         UMConfigure.setLogEnabled(true);
         // 选用AUTO页面采集模式
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
-
+        ZXingLibrary.initDisplayOpinion(this);
         /***
          *          //权限请求
          *          如果是fragment  通过构造传输,不要不要调用 getActivity!!!!!

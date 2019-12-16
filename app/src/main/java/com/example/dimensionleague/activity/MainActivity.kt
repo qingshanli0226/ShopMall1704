@@ -1,12 +1,19 @@
 package com.example.dimensionleague.activity
 
+import android.content.ContentResolver
+import android.content.Intent
+import android.graphics.Bitmap
 import androidx.fragment.app.Fragment
 import android.graphics.Color
+import android.net.Uri
+import android.provider.MediaStore
 import android.view.KeyEvent
 import android.widget.Toast
+import anet.channel.strategy.l
 
 import com.example.dimensionleague.R
 import com.example.buy.ShopCartFragment
+import com.example.common.code.Constant
 
 import com.example.dimensionleague.find.FindFragment
 import com.example.framework.manager.AccountManager
@@ -17,6 +24,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import com.example.framework.base.BaseNetConnectActivity
 import com.example.framework.listener.OnShopCartListener
 import com.example.framework.manager.CartManager
+import com.uuzuche.lib_zxing.activity.CodeUtils
 
 class MainActivity : BaseNetConnectActivity() {
     lateinit var listener:OnShopCartListener

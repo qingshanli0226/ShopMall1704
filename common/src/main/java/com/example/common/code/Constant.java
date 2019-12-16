@@ -15,7 +15,9 @@ public class Constant {
     public static final String KEY_PASSWORD = "password";
     //TODO 请求成功码
     public static final String CODE_OK = "200";
-
+    //TODO 权限返回码
+    public static final int REQUSET_CODE = 101;
+    public static final int REQUSET_ZXING_CODE = 110;
     //TODO ToolBar类型
     public static final int HOME_STYLE = 0;
     public static final int SEARCH_STYLE = 1;
