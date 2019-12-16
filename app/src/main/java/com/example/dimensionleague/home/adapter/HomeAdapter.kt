@@ -28,13 +28,13 @@ class HomeAdapter(
      */
     val ACT = 2
     /**
-     * 秒杀
-     */
-    val SECKILL = 3
-    /**
      * 推荐
      */
-    val RECOMMEND = 4
+    val SECKILL = 4
+    /**
+     * 秒杀
+     */
+    val RECOMMEND = 3
     /**
      * 热卖
      */

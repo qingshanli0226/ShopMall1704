@@ -1,6 +1,5 @@
 package com.example.dimensionleague.type;
 
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -41,7 +40,7 @@ public class TypeFragment extends BaseNetConnectFragment {
         my_toolbar = view.findViewById(R.id.my_toolbar);
         //TODO 设置ToolBar的风格
         my_toolbar.init(Constant.SEARCH_STYLE);
-        my_toolbar.setBackground(getResources().getDrawable(R.drawable.toolbar_background));
+        my_toolbar.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
         typePresenter = new TypePresenter();
         typeURL = new ArrayList<>();
     }

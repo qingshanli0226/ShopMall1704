@@ -9,51 +9,27 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/toolbar_style"
         app:elevation="0dp">
 
-        <RelativeLayout
-            android:id="@+id/title_layout"
+        <com.example.common.view.MyToolBar
+            android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorRed"
-            app:layout_scrollFlags="scroll">
-
-            <ImageView
-                style="@style/StyleRoundButton"
-                android:src="@drawable/attention"
-                android:id="@+id/find_attention"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@string/find"
-                android:textColor="@color/colorWhite"
-                android:textSize="@dimen/sp_30"/>
-            <ImageView
-                style="@style/StyleRoundButton"
-                android:src="@drawable/find_search"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/dp_50"
-                />
-            <ImageView
-                style="@style/StyleRoundButton"
-                android:src="@drawable/message"
-                android:layout_alignParentRight="true"
-                android:id="@+id/message"/>
-        </RelativeLayout>
+            android:layout_height="@dimen/dp_60"
+            app:layout_scrollFlags="scroll" />
 
         <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/find_tab"
+            android:layout_marginTop="@dimen/dp_10"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_50"
-            android:id="@+id/find_tab"
+            android:background="@drawable/toolbar_style"
+            app:tl_indicator_width="@dimen/dp_10"
+            app:tl_textSelectColor="@color/colorWhite"
+            app:tl_textsize="@dimen/sp_15"
             app:tl_underline_color="@color/colorWhite"
             app:tl_underline_gravity="BOTTOM"
-            app:tl_underline_height="@dimen/dp_5"
-            app:tl_indicator_width="@dimen/dp_10"
-            app:tl_textsize="@dimen/sp_15"
-            app:tl_textSelectColor="@color/colorWhite"
-            android:background="@color/colorRed"
-        />
+            app:tl_underline_height="@dimen/dp_5" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

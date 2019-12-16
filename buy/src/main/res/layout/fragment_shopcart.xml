@@ -3,31 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/shopCartRel">
-    <RelativeLayout
-        android:id="@+id/cartHead"
-        android:background="#E0FA3D2F"
+    <com.example.common.view.MyToolBar
+        android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/buy_five">
-        <TextView
-            android:textSize="@dimen/buy_text_two"
-            android:textColor="@color/buyWhite"
-            android:layout_centerInParent="true"
-            android:text="@string/buyCart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <Button
-            android:id="@+id/editBut"
-            android:textSize="@dimen/buy_text_of"
-            android:textColor="@color/buyWhite"
-            android:text="@string/buyEditor"
-            android:background="@null"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </RelativeLayout>
+        android:layout_height="wrap_content"/>
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
-        android:layout_below="@+id/cartHead"
+        android:layout_below="@+id/my_toolbar"
         android:layout_above="@id/buyFoot"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -43,9 +25,9 @@
         android:gravity="center"
         android:layout_centerInParent="true"
         android:text="购物车空空如也"
+        android:layout_below="@+id/my_toolbar"
         android:textSize="@dimen/buy_text_three"
         android:textColor="@color/buyPink"
-        android:layout_below="@+id/cartHead"
         android:layout_above="@id/buyFoot"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

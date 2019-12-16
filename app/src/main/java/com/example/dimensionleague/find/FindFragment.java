@@ -5,13 +5,12 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.adapter.FragmentViewHolder;
 
+import com.example.common.code.Constant;
+import com.example.common.view.MyToolBar;
 import com.example.dimensionleague.R;
 import com.example.dimensionleague.home.HomeFragment;
 import com.example.framework.base.BaseNetConnectFragment;
@@ -23,8 +22,10 @@ import java.util.List;
 public class FindFragment extends BaseNetConnectFragment {
     private SlidingTabLayout tab;
     private ViewPager vp;
-    private List<Fragment>list;
+    private List<Fragment> list;
     private String[] titles;
+    private MyToolBar my_toolbar;
+
     @Override
     public int getLayoutId() {
         return R.layout.fragment_find;
@@ -33,25 +34,27 @@ public class FindFragment extends BaseNetConnectFragment {
     @Override
     public void init(View view) {
         super.init(view);
-        list=new ArrayList<>();
-        tab=view.findViewById(R.id.find_tab);
-        vp =view.findViewById(R.id.find_vp);
-
-
+        list = new ArrayList<>();
+        tab = view.findViewById(R.id.find_tab);
+        vp = view.findViewById(R.id.find_vp);
+        my_toolbar = view.findViewById(R.id.my_toolbar);
+        my_toolbar.init(Constant.FIND_STYLE);
+        my_toolbar.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
     }
 
     @Override
     public void initDate() {
 
-        list.add(new HomeFragment(1));
-        list.add(new HomeFragment(1));
-        list.add(new HomeFragment(1));
-        list.add(new HomeFragment(1));
-        list.add(new HomeFragment(1));
-        list.add(new HomeFragment(1));
-        titles=new String[]{"关注","喜欢","推荐","5G","直播","视频"};
+        list.add(new FindSendFragment());
+        list.add(new FindSendFragment());
+        list.add(new FindSendFragment());
+        list.add(new FindSendFragment());
+        list.add(new FindSendFragment());
+        list.add(new FindSendFragment());
+
+        titles = new String[]{"关注", "喜欢", "推荐", "5G", "直播", "视频"};
         vp.setAdapter(new MyVPAdapter(getChildFragmentManager()));
-        tab.setViewPager(vp,titles);
+        tab.setViewPager(vp, titles);
 
     }
 

@@ -14,9 +14,8 @@ import com.example.framework.R;
 import com.example.framework.manager.ActivityInstanceManager;
 import com.example.framework.port.IActivity;
 import com.gyf.immersionbar.ImmersionBar;
-
 import com.jaeger.library.StatusBarUtil;
-
+import com.jaeger.library.StatusBarUtil;
 import com.umeng.analytics.MobclickAgent;
 
 import com.umeng.message.PushAgent;
@@ -45,8 +44,12 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
         activityInstanceManager = ActivityInstanceManager.getInstance();
         activityInstanceManager.addActivity(this);
         init();
-
+        setImmersion();
         initDate();
+    }
+
+    protected void setImmersion(){
+
     }
 
     //TODO 启动新的activity

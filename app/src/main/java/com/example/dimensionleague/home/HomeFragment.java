@@ -3,10 +3,10 @@ package com.example.dimensionleague.home;
 import android.util.Log;
 import android.view.View;
 
+
 import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.common.HomeBean;
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
@@ -14,9 +14,7 @@ import com.example.dimensionleague.CacheManager;
 import com.example.dimensionleague.R;
 import com.example.dimensionleague.home.adapter.HomeAdapter;
 import com.example.framework.base.BaseNetConnectFragment;
-
 import com.example.framework.port.IPresenter;
-
 import com.example.framework.port.AppBarStateChangeListener;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -81,7 +79,7 @@ public class HomeFragment extends BaseNetConnectFragment {
             }
         });
 
-        toolbar_layout.setContentScrim(getResources().getDrawable(R.drawable.home_toolbar));
+        toolbar_layout.setContentScrim(getResources().getDrawable(R.drawable.toolbar_style));
         //TODO 跳转相机
         my_toolbar.getHome_camera().setOnClickListener(new View.OnClickListener() {
             @Override
