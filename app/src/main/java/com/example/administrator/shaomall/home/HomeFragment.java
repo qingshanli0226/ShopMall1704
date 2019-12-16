@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.activity.MessageActivity;
+import com.example.administrator.shaomall.activity.SearchActivity;
 import com.example.commen.Constants;
 import com.example.commen.view.AnimationNestedScrollView;
 import com.example.administrator.shaomall.home.adapter.HomeRecycleAdapter;
@@ -37,6 +38,7 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> implements MessageM
     private android.support.v7.widget.RecyclerView mHomeRecycler;
     private TextView message;
     private QBadgeView qBadgeView;
+    private TextView searchTv;
 
     @Override
     public int setLayoutId() {
@@ -51,6 +53,7 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> implements MessageM
         ll_search = view.findViewById(R.id.search_ll_search);
         tv_title = view.findViewById(R.id.search_tv_title);
         message = view.findViewById(R.id.search_tv_message);
+        searchTv = view.findViewById(R.id.search_tv_search);
         qBadgeView = new QBadgeView(getContext());
         qBadgeView.bindTarget(message)
                 .setBadgeTextSize(10f, true)
@@ -94,6 +97,12 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> implements MessageM
         int size = messageBeans.size();
         qBadgeView.setBadgeNumber(size);
 
+        searchTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toClass(SearchActivity.class);
+            }
+        });
     }
 
 

@@ -64,6 +64,7 @@
             tools:ignore="UnusedAttribute"
             tools:targetApi="n" />
         <activity android:name=".activity.MessageActivity"/>
+        <activity android:name=".activity.SearchActivity"/>
         <!-- 服务 -->
         <service android:name=".cache.CacheService" /> <!-- 适配华为（huawei）刘海屏 -->
 

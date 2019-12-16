@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/background_img1"
+        android:orientation="horizontal"
+        android:paddingTop="30dp">
+
+        <ImageView
+            android:id="@+id/search_iv_back"
+            style="@style/DefaultImage"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:src="@drawable/back_icon_white" />
+
+        <com.example.commen.view.SearchEditText
+            android:id="@+id/search_view"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_weight="1"
+            android:background="@drawable/words"
+            android:drawableLeft="@drawable/search_ion_white"
+            android:drawablePadding="6dp"
+            android:hint="请输入您要搜索的内容..."
+            android:singleLine="true"
+            android:textColor="#ffffff"
+            android:textColorHint="@color/colorWhite"
+            android:textCursorDrawable="@null"
+            android:layout_gravity="center_vertical"
+            android:textSize="16dp" />
+
+
+        <ImageView
+            android:id="@+id/search_button"
+            style="@style/DefaultImage"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/dp_10"
+            android:src="@drawable/right_icon_white" />
+
+    </LinearLayout>
+
+    <com.example.commen.view.KeyWordFramLayout
+        android:id="@+id/keywordsflow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/search_layout" />
+
+    <ImageView
+        android:id="@+id/back_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="14dp"
+        android:src="@drawable/filter_list_selected" />
+</RelativeLayout>

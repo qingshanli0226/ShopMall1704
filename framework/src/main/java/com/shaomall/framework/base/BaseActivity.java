@@ -3,15 +3,19 @@ package com.shaomall.framework.base;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Slide;
 import android.view.View;
 import android.widget.Toast;
 
 import com.gyf.immersionbar.ImmersionBar;
+import com.shaomall.framework.R;
 import com.shaomall.framework.manager.ActivityInstanceManager;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -22,6 +26,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected Activity mActivity;
     private ImmersionBar immersionBar;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +82,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         return (T) findViewById(resId);
     }
 
+
+    protected void animStartActivity(Class<? extends Activity> clazz){
+        startActivity(new Intent(this,clazz));
+        overridePendingTransition(R.anim.anim_in,R.anim.anim_out);
+    }
+
+    protected void animOutActivity(){
+        finish();
+        overridePendingTransition(R.anim.anim_in,R.anim.anim_out);
+    }
     /**
      * Intent 跳转
      *
@@ -85,7 +100,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void toClass(Class<? extends Activity> clazz) {
         toClass(clazz, null);
     }
-
     /**
      * 可以传送下标
      *
@@ -157,4 +171,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             immersionBar.destroy(this, null);
         }
     }
+
+
 }

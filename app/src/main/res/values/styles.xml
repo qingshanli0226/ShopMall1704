@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        
     </style>
 
     <style name="SplitLineGoods">
@@ -17,5 +18,10 @@
     <style name="LittleImage">
         <item name="android:layout_width">16dp</item>
         <item name="android:layout_height">16dp</item>
+    </style>
+
+    <style name="DefaultImage">
+        <item name="android:layout_width">25dp</item>
+        <item name="android:layout_height">25dp</item>
     </style>
 </resources>
