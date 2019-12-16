@@ -2,7 +2,7 @@ package com.example.administrator.shaomall.goodsinfo
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
-import android.graphics.PathMeasure
+import android.annotation.SuppressLint
 import android.graphics.PointF
 import android.webkit.WebViewClient
 import android.widget.ImageView
@@ -10,6 +10,7 @@ import android.widget.RelativeLayout
 import com.alibaba.fastjson.JSONObject
 import com.bumptech.glide.Glide
 import com.example.administrator.shaomall.R
+import com.example.administrator.shaomall.R.layout.activity_commodity
 import com.example.administrator.shaomall.activity.MainActivity
 import com.example.administrator.shaomall.goodsinfo.bean.GoodsInfoBean
 import com.example.administrator.shaomall.login.LoginActivity
@@ -21,17 +22,18 @@ import com.shaomall.framework.manager.ActivityInstanceManager
 import com.shaomall.framework.manager.UserInfoManager
 import kotlinx.android.synthetic.main.activity_commodity.*
 
-
 class GoodsInfoActivity : BaseMVPActivity<String>() {
     private var iBasePresenter: IBasePresenter<String>? = null
-    private lateinit var mPathMeasure: PathMeasure
-    /**
-     * 贝塞尔曲线中间过程的点的坐标
-     */
-    private val mCurrentPosition = FloatArray(2)
+    private lateinit var productPic: String
+    private var productUrl: String? = null
+    private lateinit var productId: String
+    private lateinit var productName: String
+    private lateinit var productPrice: String
+    private var productDescribe: String? = null
 
-    override fun setLayoutId(): Int = R.layout.activity_commodity
+    override fun setLayoutId(): Int = activity_commodity
 
+    @SuppressLint("SetTextI18n", "SetJavaScriptEnabled")
     override fun initView() {
         //点击关闭
         mIbGoodInfoBack.setOnClickListener {
@@ -40,31 +42,39 @@ class GoodsInfoActivity : BaseMVPActivity<String>() {
 
         //获取intent
         val intent = intent
-        val goodsInfo = intent.getParcelableExtra<GoodsInfoBean>(GOODS_INFO)
+        val goodsInfo = intent.getParcelableExtra<GoodsInfoBean>("goodsInfo")
+        //判断是否有物品传送过来
+        if (goodsInfo != null) {
+            productPic = AppNetConfig.BASE_URl_IMAGE + goodsInfo.pic   //商品图片
+            productUrl = goodsInfo.url     //商品详情
+            productId = goodsInfo.productId //商品id
+            productName = goodsInfo.productName //商品名称
+            productPrice = goodsInfo.productPrice //商品价格
+            productDescribe = goodsInfo.productDescribe //商品描述
+        } else {
+            return
+        }
 
         //展示图片
-        Glide.with(this).load(AppNetConfig.BASE_URl_IMAGE + goodsInfo.pic).into(mIvGoodInfoImage)
+        Glide.with(this).load(productPic).into(mIvGoodInfoImage)
         //商品名称
-        mTvGoodInfoName.text = goodsInfo.goodsName
+        mTvGoodInfoName.text = productName
         //商品详情
-        val goodsDescribe = goodsInfo.goodsDescribe
-        if (goodsDescribe != null) {
-            mTvGoodInfoDesc.text = goodsDescribe
+        if (productDescribe != null) {
+            mTvGoodInfoDesc.text = productDescribe
         }
         //商品价格
-        mTvGoodInfoPrice.text = "￥ " + goodsInfo.goodsPrice
+        mTvGoodInfoPrice.text = "￥ $productPrice"
 
         //展示商品详情
-        mWbGoodInfoMore.loadUrl(AppNetConfig.BASE_URl_IMAGE + goodsInfo.pic)
+        mWbGoodInfoMore.loadUrl(productPic)
         mWbGoodInfoMore.webViewClient = WebViewClient()
         val settings = mWbGoodInfoMore.settings
         settings.javaScriptEnabled = true //允许使用js
 
-
         //点击进入购物车
         mTvFGoodInfoCart.setOnClickListener {
-            toClass(MainActivity::class.java,3)
-
+            toClass(MainActivity::class.java, 3)
         }
 
 
@@ -80,11 +90,11 @@ class GoodsInfoActivity : BaseMVPActivity<String>() {
                 }
                 //设置请求参数
                 val objects = JSONObject()
-                objects.put("productId", goodsInfo.productId)
-                objects.put("productNum", 1)
-                objects.put("productName", goodsInfo.goodsName)
-                objects.put("productPrice", goodsInfo.goodsPrice)
-                objects.put("url", AppNetConfig.BASE_URl_IMAGE + goodsInfo.pic)
+                objects["productId"] = productId
+                objects["productNum"] = 1
+                objects["productName"] = productName
+                objects["productPrice"] = productPrice
+                objects["url"] = productPic
                 (iBasePresenter as AddCartPresenter).setJsonObject(objects)
 
                 //将商品添加进入购物车
@@ -177,7 +187,10 @@ class GoodsInfoActivity : BaseMVPActivity<String>() {
      * 网络请求成功回调
      */
     override fun onRequestHttpDataSuccess(message: String?, data: String?) {
-        toast("$data", false)
+        //加入购物车成功 购物车小红点+1
+        //        toast("$data", false)
+
+
     }
 
     /**
@@ -189,11 +202,6 @@ class GoodsInfoActivity : BaseMVPActivity<String>() {
                 UserInfoManager.getInstance().unLogout()
             }
         }
-        toast("${error!!.errorMessage}", false)
-        println("1233: ${UserInfoManager.getInstance().token}")
-    }
-
-    companion object {
-        val GOODS_INFO = "goodsInfo"
+        toast(error!!.errorMessage, false)
     }
 }

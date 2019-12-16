@@ -191,7 +191,7 @@ public class TypeRightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         //                        String figure = listBean.getFigure();
                         //                        String product_id = listBean.getProduct_id();
 
-                        GoodsInfoBean goodsInfoBean = new GoodsInfoBean(listBean.getProduct_id(), listBean.getName(), listBean.getCover_price(), null, listBean.getFigure());
+                        GoodsInfoBean goodsInfoBean = new GoodsInfoBean(listBean.getProduct_id(), listBean.getName(), null, listBean.getCover_price(), listBean.getBrief(), listBean.getFigure());
                         Intent intent = new Intent(mContext, GoodsInfoActivity.class);
                         intent.putExtra("goodsInfo", goodsInfoBean);
                         mContext.startActivity(intent);

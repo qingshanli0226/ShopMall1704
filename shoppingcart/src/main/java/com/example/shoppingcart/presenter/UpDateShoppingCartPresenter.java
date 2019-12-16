@@ -5,7 +5,7 @@ import com.example.net.ResEntity;
 import com.google.gson.reflect.TypeToken;
 import com.shaomall.framework.base.presenter.BasePresenter;
 import java.lang.reflect.Type;
-public class UpDateShoppingcartPresenter extends BasePresenter<Object> {
+public class UpDateShoppingCartPresenter extends BasePresenter<Object> {
 
     public JSONObject getObject() {
         return object;

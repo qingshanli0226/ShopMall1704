@@ -65,10 +65,9 @@ public abstract class BaseMVPActivity<T> extends BaseActivity implements IBaseVi
     }
 
     @Override
-    public void loadingPage(int codee) {
+    public void loadingPage(int requestCode, int code) {
 
     }
-
 
     @Override
     protected void onDestroy() {

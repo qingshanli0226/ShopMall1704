@@ -10,9 +10,7 @@ import android.util.Log;
 import com.example.administrator.shaomall.home.HomeBean;
 import com.example.commen.ACache;
 import com.example.commen.Constants;
-import com.shaomall.framework.manager.NetConnetMannager;
-
-import com.example.net.AppNetConfig;
+import com.shaomall.framework.manager.NetConnectManager;
 
 
 import java.util.LinkedList;
@@ -66,12 +64,12 @@ public class CacheManager {
                         }
                     }
                 });
-                if (!NetConnetMannager.getInstance().isConnectStatus()) {
+                if (!NetConnectManager.getInstance().isConnectStatus()) {
                     return;
                 } else {
                     cacheService.getHomeDate();
                 }
-                NetConnetMannager.getInstance().registerNetConnectListener(new NetConnetMannager.INetConnectListener() {
+                NetConnectManager.getInstance().registerNetConnectListener(new NetConnectManager.INetConnectListener() {
                     @Override
                     public void onConnected() {
                         cacheService.getHomeDate();

@@ -66,7 +66,7 @@ public abstract class BaseMVPFragment<T> extends BaseFragment implements IBaseVi
     }
 
     @Override
-    public void loadingPage(int code) {
+    public void loadingPage(int requestCode, int code) {
 
     }
 

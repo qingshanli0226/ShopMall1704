@@ -1,6 +1,7 @@
 package com.example.administrator.shaomall.home.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -11,14 +12,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.shaomall.R;
+import com.example.administrator.shaomall.goodsinfo.GoodsInfoActivity;
+import com.example.administrator.shaomall.goodsinfo.bean.GoodsInfoBean;
 import com.example.administrator.shaomall.home.HomeBean;
 import com.example.net.AppNetConfig;
 import com.youth.banner.Banner;
@@ -246,15 +251,20 @@ public class HomeRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             }
             //设置RecyclerView
             recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-            recyclerView.setAdapter(new SeckillRecyclerViewAdapter(context, data.getSeckill_info()));
+            SeckillRecyclerViewAdapter viewAdapter = new SeckillRecyclerViewAdapter(context, data.getSeckill_info());
+            recyclerView.setAdapter(viewAdapter);
 
             handler.sendEmptyMessageDelayed(0, 1000);
+
 
         }
 
 
     }
 
+    /**
+     * 推荐
+     */
     class RecommendViewHolder extends RecyclerView.ViewHolder {
         private TextView textView;
         private GridView gridView;
@@ -268,13 +278,20 @@ public class HomeRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         public void setData() {
             RecommendGridViewAdapter gridViewAdapter = new RecommendGridViewAdapter(data.getRecommend_info());
             gridView.setAdapter(gridViewAdapter);
-
-
-
-
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    HomeBean.ResultBean.RecommendInfoBean infoBean = data.getRecommend_info().get(position);
+                    GoodsInfoBean goodsInfoBean = new GoodsInfoBean(infoBean.getProduct_id(), infoBean.getName(), null, infoBean.getCover_price(), null, infoBean.getFigure());
+                    jumpDetailsInterface(goodsInfoBean); //跳转详情界面
+                }
+            });
         }
     }
 
+    /**
+     * 热卖
+     */
     class HotViewHolder extends RecyclerView.ViewHolder {
         private TextView textView;
         private GridView gridView;
@@ -287,6 +304,25 @@ public class HomeRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         public void setData() {
             gridView.setAdapter(new HotGridViewAdapter(data.getHot_info()));
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    HomeBean.ResultBean.HotInfoBean infoBean = data.getHot_info().get(position);
+                    GoodsInfoBean goodsInfoBean = new GoodsInfoBean(infoBean.getProduct_id(), infoBean.getName(), null, infoBean.getCover_price(), null, infoBean.getFigure());
+                    jumpDetailsInterface(goodsInfoBean); //跳转详情界面
+                }
+            });
         }
+    }
+
+    /**
+     * 跳转详情界面
+     *
+     * @param goodsInfoBean
+     */
+    private void jumpDetailsInterface(GoodsInfoBean goodsInfoBean) {
+        Intent intent = new Intent(context, GoodsInfoActivity.class);
+        intent.putExtra("goodsInfo", goodsInfoBean);
+        context.startActivity(intent);
     }
 }

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Ui.ShoppingcartActivity"
+    tools:context=".Ui.ShoppingCartFragment"
     android:orientation="vertical">
     <LinearLayout
         android:id="@+id/top_bar"
@@ -24,7 +24,7 @@
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/listview"
+        android:id="@+id/rv_choppingCart"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
