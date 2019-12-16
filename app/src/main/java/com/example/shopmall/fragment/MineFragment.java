@@ -6,21 +6,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 
-import androidx.fragment.app.Fragment;
-
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseFragment;
-import com.example.framework.base.IGetBaseView;
 import com.example.net.Constant;
 import com.example.shopmall.R;
+import com.example.shopmall.activity.AddressBarActivity;
 import com.example.shopmall.bean.HeadBean;
 import com.example.shopmall.presenter.IntegerPresenter;
 import com.example.step.Ui.IntegralActivity;
@@ -34,12 +30,12 @@ public class MineFragment extends BaseFragment {
     private TextView tvUserScore;
     private TextView tvUsername;
     private ImageView ibUserIconAvator;
+    private LinearLayout llUserLocation;
 
     @Override
     protected void initData() {
-
-        tbMine.setTitleBacKGround(Color.RED);
-        tbMine.setCenterText("个人中心", 18, Color.WHITE);
+        tbMine.setTitleBacKGround(Color.WHITE);
+        tbMine.setCenterText("个人中心", 18, Color.BLACK);
         tbMine.setLeftImg(R.mipmap.new_message_icon);
         tbMine.setRightImg(R.mipmap.new_user_setting);
 
@@ -110,6 +106,14 @@ public class MineFragment extends BaseFragment {
                 }
             }
         });
+
+        llUserLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), AddressBarActivity.class));
+            }
+        });
+
     }
 
     @Override
@@ -118,6 +122,7 @@ public class MineFragment extends BaseFragment {
         tvUserScore = view.findViewById(R.id.tv_user_score);
         tvUsername = view.findViewById(R.id.tv_username);
         ibUserIconAvator = view.findViewById(R.id.ib_user_icon_avator);
+        llUserLocation = view.findViewById(R.id.ll_user_location);
     }
 
     @Override

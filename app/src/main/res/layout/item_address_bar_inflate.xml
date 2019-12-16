@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="9">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/itegral_height_50">
+
+            <LinearLayout
+                android:layout_width="@dimen/main_height_0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_consignee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="张三"
+                    android:textSize="18sp"
+                    android:textColor="#000000"
+                    android:layout_marginLeft="@dimen/dpsize_5"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/main_height_0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_cell_phone_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="123123123"
+                    android:textSize="18sp"
+                    android:textColor="#000000"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_location_address_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="北京海淀区"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:layout_marginLeft="@dimen/dpsize_5"
+                android:padding="2dp"/>
+
+            <TextView
+                android:id="@+id/tv_detailed_address_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="北京海淀区"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:layout_marginLeft="@dimen/dpsize_5"
+                android:padding="2dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/iv_modification_address_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/modification"/>
+
+    </LinearLayout>
+
+</LinearLayout>

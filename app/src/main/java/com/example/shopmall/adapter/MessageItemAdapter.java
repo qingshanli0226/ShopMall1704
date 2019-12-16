@@ -67,6 +67,13 @@ public class MessageItemAdapter extends BaseAdapter<MessageBean,MessageItemAdapt
             tvNameMessage.setText(messageBeans.get(position).getNameMessage());
             tvContentMessage.setText(messageBeans.get(position).getContentMessage());
 
+            //判断是否读取
+            if (messageBeans.get(position).getIsMessage()){
+                red_view_message.setVisibility(View.GONE);
+            }else {
+                red_view_message.setVisibility(View.VISIBLE);
+            }
+
             tvViewMoreMessage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -77,11 +84,13 @@ public class MessageItemAdapter extends BaseAdapter<MessageBean,MessageItemAdapt
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    MessageBean bean = messageBeans.get(position);
-                    MessageBean messageBean = new MessageBean();
-                    messageBean.setId(bean.getId());
-                    messageBean.setIsMessage(false);
-                    MessageManager.getMessageManager().updateMessage(messageBean);
+//                    MessageBean bean = messageBeans.get(position);
+//                    MessageBean messageBean = new MessageBean();
+//                    messageBean.setId(bean.getId());
+//                    messageBean.setIsMessage(false);
+//                    MessageManager.getAddressBarManager().updateMessage(messageBean);
+//                    notifyDataSetChanged();
+                    likeliest.getLikeliest(position);
                 }
             });
 

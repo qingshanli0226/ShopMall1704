@@ -11,7 +11,10 @@ import androidx.annotation.Nullable;
 
 public class RedView extends View {
 
+    //红色圆点
     private Paint paintRed;
+    //白色边
+    private Paint paintWhite;
 
     public RedView(Context context) {
         super(context);
@@ -31,13 +34,24 @@ public class RedView extends View {
         paintRed.setStyle(Paint.Style.FILL_AND_STROKE);
         paintRed.setColor(Color.RED);
         paintRed.setStrokeWidth(10);
+
+        paintWhite = new Paint();
+        paintWhite.setAntiAlias(true);
+        paintWhite.setDither(true);
+        paintWhite.setStyle(Paint.Style.FILL_AND_STROKE);
+        paintWhite.setColor(Color.WHITE);
+        paintWhite.setStrokeWidth(10);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawCircle(15,15,10,paintRed);
+        //外白边圆
+        canvas.drawCircle(55,30,18,paintWhite);
+
+        //内红色圆
+        canvas.drawCircle(55,30,15,paintRed);
 
     }
 }

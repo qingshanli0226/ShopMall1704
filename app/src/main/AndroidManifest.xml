@@ -13,8 +13,6 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
-
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
@@ -27,37 +25,45 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
 
-
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_confignetwork_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
-        android:networkSecurityConfig="@xml/network_security_confignetwork_security_config"
         tools:targetApi="n">
-
-        <activity android:name=".activity.GoodsInfoActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.GoodsListActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.MessageActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.RegisterActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.LoginActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask"/>
-        <activity android:name="com.example.step.Ui.HistoryActivity"
+        <activity android:name=".activity.SetActivity"></activity>
+        <activity android:name=".activity.LocationActivity" />
+        <activity android:name=".activity.AddressBarActivity" />
+        <activity
+            android:name=".activity.GoodsInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.GoodsListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.example.step.Ui.HistoryActivity"
             tools:ignore="InnerclassSeparator" />
         <activity
             android:name="com.example.step.Ui.IntegralActivity"
             android:screenOrientation="portrait"
             tools:ignore="InnerclassSeparator" />
-        <activity android:name=".activity.WelcomeActivity"
+        <activity
+            android:name=".activity.WelcomeActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -70,14 +76,18 @@
             android:name="com.example.framework.service.ShopService"
             android:enabled="true"
             android:exported="true" />
+
         <activity
             android:name=".activity.MainActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask">
-        </activity>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
-        <meta-data android:name="JPUSH_APPKEY" android:value="00069070c0ece64218196376"/>
-        <meta-data android:name="JPUSH_CHANNEL" android:value="${JPUSH_CHANNEL}"/>
-
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="00069070c0ece64218196376" />
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="${JPUSH_CHANNEL}" />
     </application>
+
 </manifest>

@@ -1,6 +1,8 @@
 package com.example.shopmall.fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Handler;
 import android.view.View;
@@ -19,6 +21,7 @@ import com.example.framework.base.BaseFragment;
 import com.example.framework.manager.ConnectManager;
 import com.example.net.Constant;
 import com.example.shopmall.R;
+import com.example.shopmall.activity.LoginActivity;
 import com.example.shopmall.activity.MessageActivity;
 import com.example.shopmall.adapter.HomePageAdapter;
 import com.example.framework.bean.HomepageBean;
@@ -36,8 +39,11 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
 
     @Override
     protected void initData() {
+        SharedPreferences token1 = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
+        final boolean isLogin = token1.getBoolean("isLogin", false);
         tbHomepage.setTitleBacKGround(Color.RED);
         tbHomepage.setCenterText("首页", 18, Color.WHITE);
+        tbHomepage.setMessageShow();
         tbHomepage.setRightImg(R.mipmap.new_message_icon);
 
         tbHomepage.setTitleClickLisner(new TitleBar.TitleClickLisner() {
@@ -48,7 +54,13 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
 
             @Override
             public void RightClick() {
-                startActivity(new Intent(getContext(), MessageActivity.class));
+                //跳转到消息
+                if (isLogin){ //判断登录，登录后跳转到消息
+                    startActivity(new Intent(getContext(), MessageActivity.class));
+                }else {//没有登录跳转到登录页登录
+                    startActivity(new Intent(getContext(), LoginActivity.class));
+                }
+//                startActivity(new Intent(getContext(), MessageActivity.class));
             }
 
             @Override

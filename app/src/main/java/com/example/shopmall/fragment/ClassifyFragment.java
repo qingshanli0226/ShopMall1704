@@ -51,8 +51,8 @@ public class ClassifyFragment extends BaseFragment implements IGetBaseView<Class
 
     @Override
     protected void initData() {
-        tbClassify.setTitleBacKGround(Color.RED);
-        tbClassify.setCenterText("分类",18,Color.WHITE);
+        tbClassify.setTitleBacKGround(Color.WHITE);
+        tbClassify.setCenterText("分类",18,Color.BLACK);
 
         tbClassify.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override

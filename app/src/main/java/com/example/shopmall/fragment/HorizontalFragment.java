@@ -19,8 +19,8 @@ public class HorizontalFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        tbHorizontal.setTitleBacKGround(Color.RED);
-        tbHorizontal.setCenterText("发现",18,Color.WHITE);
+        tbHorizontal.setTitleBacKGround(Color.WHITE);
+        tbHorizontal.setCenterText("发现",18,Color.BLACK);
 
         tbHorizontal.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
