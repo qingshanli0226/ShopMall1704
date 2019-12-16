@@ -14,7 +14,6 @@ import com.example.administrator.shaomall.home.HomeFragment;
 import com.example.administrator.shaomall.login.LoginActivity;
 import com.example.commen.util.ShopMailError;
 import com.example.shoppingcart.Ui.ShoppingCartFragment;
-import com.example.shoppingcart.Ui.ShoppingCartFragmentCeshi;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;

@@ -10,7 +10,6 @@ import android.widget.RelativeLayout
 import com.alibaba.fastjson.JSONObject
 import com.bumptech.glide.Glide
 import com.example.administrator.shaomall.R
-import com.example.administrator.shaomall.R.layout.activity_commodity
 import com.example.administrator.shaomall.activity.MainActivity
 import com.example.administrator.shaomall.goodsinfo.bean.GoodsInfoBean
 import com.example.administrator.shaomall.login.LoginActivity
@@ -31,7 +30,7 @@ class GoodsInfoActivity : BaseMVPActivity<String>() {
     private lateinit var productPrice: String
     private var productDescribe: String? = null
 
-    override fun setLayoutId(): Int = activity_commodity
+    override fun setLayoutId(): Int = R.layout.activity_commodity
 
     @SuppressLint("SetTextI18n", "SetJavaScriptEnabled")
     override fun initView() {
