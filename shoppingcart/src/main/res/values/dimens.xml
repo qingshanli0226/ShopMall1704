@@ -40,11 +40,10 @@
     <dimen name="cartLinearLayoutMarginRight">15dp</dimen>
     <dimen name="cartReduceTextVIewWidth">25dp</dimen>
     <dimen name="cartReduceTextVIewheight">25dp</dimen>
-    <dimen name="cartReduceTextVIewSize">12sp</dimen>
+    <dimen name="cartReduceTextVIewSize">16sp</dimen>
     <dimen name="cartNumTextVIewWidth">25dp</dimen>
     <dimen name="cartNumTextVIewHeight">25dp</dimen>
     <dimen name="cartNumTextVIewTextSize">14sp</dimen>
     <dimen name="cartAddTextVIewWidth">25dp</dimen>
     <dimen name="cartAddTextVIewHeight">25dp</dimen>
-    <dimen name="cartAddTextVIewTextSize">12sp</dimen>
 </resources>

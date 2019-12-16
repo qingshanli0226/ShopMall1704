@@ -223,7 +223,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
      */
     @Override
     public void onCallbacksIntegral(int pointNum) {
-        int pointSum = Integer.getInteger(point)+pointNum;
+        int pointSum = Integer.parseInt(point)+pointNum;
         mTvPoint.setText("积分: " + pointSum);
 
         //上传当前积分数量
