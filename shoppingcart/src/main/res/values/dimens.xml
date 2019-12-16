@@ -43,7 +43,7 @@
     <dimen name="cartReduceTextVIewSize">12sp</dimen>
     <dimen name="cartNumTextVIewWidth">25dp</dimen>
     <dimen name="cartNumTextVIewHeight">25dp</dimen>
-    <dimen name="cartNumTextVIewTextSize">12sp</dimen>
+    <dimen name="cartNumTextVIewTextSize">14sp</dimen>
     <dimen name="cartAddTextVIewWidth">25dp</dimen>
     <dimen name="cartAddTextVIewHeight">25dp</dimen>
     <dimen name="cartAddTextVIewTextSize">12sp</dimen>
