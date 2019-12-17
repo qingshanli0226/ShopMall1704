@@ -8,24 +8,16 @@
     tools:context=".activity.MainActivity">
 
     <FrameLayout
+        android:id="@+id/main_fragmentHome"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:id="@+id/main_fragmentHome"
-        />
+        android:layout_weight="1" />
 
     <com.flyco.tablayout.CommonTabLayout
-        android:background="@drawable/home_bottom_parent_bg"
+        android:id="@+id/main_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/main_tab"
-        app:tl_textUnselectColor="@color/colorGrayTitle"
+        android:background="@drawable/home_bottom_parent_bg"
         app:tl_textSelectColor="@android:color/holo_red_light"
-        />
-
-
-
-
-
-
+        app:tl_textUnselectColor="@color/colorGrayTitle" />
 </LinearLayout>

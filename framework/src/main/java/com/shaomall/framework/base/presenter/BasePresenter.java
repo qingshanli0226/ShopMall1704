@@ -213,7 +213,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                                     iBaseView.onRequestHttpDataListSuccess(resEntityList.getMessage(), resEntityList.getResult());
                                 } else {
                                     //获取列表数据失败
-                                    iBaseView.onRequestHttpDataFailed(dataProcessing(code));
+                                    iBaseView.onRequestHttpDataFailed(ErrorUtil.dataProcessing(code));
                                 }
 
                             } else { //不是列表
@@ -223,7 +223,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                                     iBaseView.onRequestHttpDataSuccess(resEntity.getMessage(), resEntity.getResult());
                                 } else {
                                     //获取数据失败
-                                    iBaseView.onRequestHttpDataFailed(dataProcessing(code));
+                                    iBaseView.onRequestHttpDataFailed(ErrorUtil.dataProcessing(code));
                                 }
                             }
 
@@ -276,7 +276,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                                     iBaseView.onRequestHttpDataListSuccess(requestCode, resEntityList.getMessage(), resEntityList.getResult());
                                 } else {
                                     //获取列表数据失败
-                                    iBaseView.onRequestHttpDataFailed(requestCode, dataProcessing(code));
+                                    iBaseView.onRequestHttpDataFailed(requestCode, ErrorUtil.dataProcessing(code));
                                 }
 
                             } else { //不是列表
@@ -286,7 +286,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                                     iBaseView.onRequestHttpDataSuccess(requestCode, resEntity.getMessage(), resEntity.getResult());
                                 } else {
                                     //获取数据失败
-                                    iBaseView.onRequestHttpDataFailed(requestCode, dataProcessing(code));
+                                    iBaseView.onRequestHttpDataFailed(requestCode, ErrorUtil.dataProcessing(code));
                                 }
                             }
 
@@ -307,55 +307,6 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                         }
                     }
                 });
-    }
-
-    /**
-     * 数据处理
-     *
-     * @param code
-     * @return
-     */
-    private ShopMailError dataProcessing(int code) {
-        if (code == ShopMailError.SUCCESS.getErrorCode()) { //登录成功
-            return ShopMailError.SUCCESS;
-
-        } else if (code == ShopMailError.ERROR_USER_NOT_REGISTERED.getErrorCode()) { //用户没有注册，无法登录
-            return ShopMailError.ERROR_USER_NOT_REGISTERED;
-
-        } else if (code == ShopMailError.ERROR_USER_HAS_REGISTERED.getErrorCode()) { //用户已经注册, 请直接登录
-            return ShopMailError.ERROR_USER_NOT_REGISTERED;
-
-        } else if (code == ShopMailError.ERROR_NOT_LOGIN.getErrorCode()) { //请先登录
-            return ShopMailError.ERROR_NOT_LOGIN;
-
-        } else if (code == ShopMailError.ERROR_UPLOAD_FILE.getErrorCode()) { //上传文件失败
-            return ShopMailError.ERROR_UPLOAD_FILE;
-
-        } else if (code == ShopMailError.ERROR_AUTO_LOGIN.getErrorCode()) { //token失效自动登录失败
-            return ShopMailError.ERROR_AUTO_LOGIN;
-
-        } else if (code == ShopMailError.ERROR_TOKEN_EXPIRE_CODE.getErrorCode()) { //token失效
-            return ShopMailError.ERROR_TOKEN_EXPIRE_CODE;
-
-        } else if (code == ShopMailError.ERROR_CHECK_INVENTORY.getErrorCode()) { //检查产品数量出现错误
-            return ShopMailError.ERROR_CHECK_INVENTORY;
-
-        } else if (code == ShopMailError.ERROR_GET_SHORTCART_PRODUCTS.getErrorCode()) { //获取购物车产品出现错误
-            return ShopMailError.ERROR_GET_SHORTCART_PRODUCTS;
-
-        } else if (code == ShopMailError.ERROR_ADD_ONE_PRODUCT.getErrorCode()) { //将一个产品添加到购物车失败
-            return ShopMailError.ERROR_ADD_ONE_PRODUCT;
-
-        } else if (code == ShopMailError.ERROR_UPDATE_PRODUCT_NUM.getErrorCode()) { //更新产品数量出现错误
-            return ShopMailError.ERROR_UPDATE_PRODUCT_NUM;
-
-        } else if (code == ShopMailError.ERROR_VERIFY_SIGN.getErrorCode()) { //参数签名验证不过
-            return ShopMailError.ERROR_VERIFY_SIGN;
-
-        } else {
-            return ShopMailError.OTHER_ERROR;
-
-        }
     }
 
     @Override

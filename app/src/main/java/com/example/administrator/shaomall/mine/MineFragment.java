@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.shaomall.R;
+import com.example.administrator.shaomall.activity.MessageActivity;
 import com.example.administrator.shaomall.function.FunctionActivity;
 import com.example.administrator.shaomall.login.LoginActivity;
 import com.example.commen.util.ShopMailError;
@@ -29,11 +30,13 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
     private TextView mTvPoint;
     private UserInfoManager userInfoManager;
     private IBasePresenter logoutPresenter;
-    private String point="0";
+    private String point = "0";
     private PointUpLoadPresenter pointUpLoadPresenter;
     private TextView mTvNoPayment;
     private TextView mTvSendGoods;
     private android.widget.LinearLayout mLlLayoutShow;
+    private TextView mTvUserSetting;
+    private ImageView mIvMessage;
 
     @Override
     public int setLayoutId() {
@@ -48,6 +51,9 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         //积分更新
         PointManager.getInstance().registerCallbackIntegralListener(this);
 
+
+        mTvUserSetting = (TextView) view.findViewById(R.id.tv_userSetting); //设置
+        mIvMessage = (ImageView) view.findViewById(R.id.iv_message); //消息
         mIvHeader = (ImageView) view.findViewById(R.id.iv_header);
         mTvUserName = (TextView) view.findViewById(R.id.tv_userName);
         TextView mTvProductAttention = (TextView) view.findViewById(R.id.tv_productAttention);
@@ -61,6 +67,8 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         mLlLayoutShow = (LinearLayout) view.findViewById(R.id.ll_layout_show);
 
 
+        mTvUserSetting.setOnClickListener(this);        //设置
+        mIvMessage.setOnClickListener(this);            //消息
         mIvHeader.setOnClickListener(this);             //用户头像
         mTvUserName.setOnClickListener(this);           //用户名称
         mTvProductAttention.setOnClickListener(this);   //商品关注
@@ -92,6 +100,12 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         }
 
         switch (v.getId()) {
+            case R.id.tv_userSetting: //设置界面
+
+                break;
+            case R.id.iv_message:   //消息界面
+                toClass(MessageActivity.class);
+                break;
             case R.id.iv_header: //点击头像
                 toast("点击了头像", false);
                 break;
@@ -223,7 +237,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
      */
     @Override
     public void onCallbacksIntegral(int pointNum) {
-        int pointSum = Integer.parseInt(point)+pointNum;
+        int pointSum = Integer.parseInt(point) + pointNum;
         mTvPoint.setText("积分: " + pointSum);
 
         //上传当前积分数量

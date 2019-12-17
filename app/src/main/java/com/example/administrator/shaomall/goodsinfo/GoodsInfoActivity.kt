@@ -3,7 +3,9 @@ package com.example.administrator.shaomall.goodsinfo
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.graphics.PointF
+import android.view.Gravity
 import android.webkit.WebViewClient
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -17,18 +19,25 @@ import com.example.commen.util.ShopMailError
 import com.example.net.AppNetConfig
 import com.shaomall.framework.base.BaseMVPActivity
 import com.shaomall.framework.base.presenter.IBasePresenter
+import com.shaomall.framework.bean.ShoppingCartBean
 import com.shaomall.framework.manager.ActivityInstanceManager
+import com.shaomall.framework.manager.ShoppingManager
 import com.shaomall.framework.manager.UserInfoManager
 import kotlinx.android.synthetic.main.activity_commodity.*
+import q.rorbin.badgeview.QBadgeView
 
-class GoodsInfoActivity : BaseMVPActivity<String>() {
+class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNumChangeListener {
+
+
     private var iBasePresenter: IBasePresenter<String>? = null
     private lateinit var productPic: String
     private var productUrl: String? = null
     private lateinit var productId: String
     private lateinit var productName: String
+    private var productNum = 1 //加入购物车的商品数量
     private lateinit var productPrice: String
     private var productDescribe: String? = null
+    private lateinit var qBadgeView: QBadgeView //小红点显示
 
     override fun setLayoutId(): Int = R.layout.activity_commodity
 
@@ -87,14 +96,17 @@ class GoodsInfoActivity : BaseMVPActivity<String>() {
                     iBasePresenter = AddCartPresenter()
                     iBasePresenter!!.attachView(this)
                 }
+
+
                 //设置请求参数
                 val objects = JSONObject()
                 objects["productId"] = productId
-                objects["productNum"] = 1
+                objects["productNum"] = productNum
                 objects["productName"] = productName
                 objects["productPrice"] = productPrice
                 objects["url"] = productPic
                 (iBasePresenter as AddCartPresenter).setJsonObject(objects)
+
 
                 //将商品添加进入购物车
                 iBasePresenter!!.doJsonPostHttpRequest()
@@ -102,6 +114,25 @@ class GoodsInfoActivity : BaseMVPActivity<String>() {
                 setBezierCurveAnimation() //设置贝塞尔曲线动画
             }
         }
+
+
+        //设置小红点
+        qBadgeView = QBadgeView(this)
+        qBadgeView.bindTarget(mTvFGoodInfoCart) //给购物车加红点
+                .setBadgeTextSize(10f, true)
+                .setBadgeGravity(Gravity.END or Gravity.TOP or Gravity.CENTER)
+                .setBadgeBackgroundColor(Color.RED)
+                .badgeNumber = ShoppingManager.getInstance().shoppingNum
+
+        //购物车商品数量更新监听
+        ShoppingManager.getInstance().registerShoppingNumChangeListener(this)
+    }
+
+    /**
+     * 商品数量更新监听
+     */
+    override fun onShoppingNumChange(num: Int) {
+        qBadgeView.badgeNumber = num
     }
 
 
@@ -186,10 +217,14 @@ class GoodsInfoActivity : BaseMVPActivity<String>() {
      * 网络请求成功回调
      */
     override fun onRequestHttpDataSuccess(message: String?, data: String?) {
-        //加入购物车成功 购物车小红点+1
-        //        toast("$data", false)
-
-
+        var shoppingCartBean = ShoppingCartBean()
+        shoppingCartBean.productId = productId
+        shoppingCartBean.productNum = productNum.toString()
+        shoppingCartBean.productName = productName
+        shoppingCartBean.productPrice = productPrice
+        shoppingCartBean.url = productPic
+        //添加到商品管理类
+        ShoppingManager.getInstance().addShoppingCart(shoppingCartBean)
     }
 
     /**
@@ -202,5 +237,10 @@ class GoodsInfoActivity : BaseMVPActivity<String>() {
             }
         }
         toast(error!!.errorMessage, false)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ShoppingManager.getInstance().unRegisterShoppingNumChangeListener(this)
     }
 }

@@ -1,4 +1,4 @@
-package com.example.shoppingcart.bean;
+package com.shaomall.framework.bean;
 
 public class ShoppingCartBean {
 
@@ -10,7 +10,7 @@ public class ShoppingCartBean {
      * url : http://www.baidu.com
      * productPrice : 98.00
      */
-    private boolean isSelect;
+    private boolean isSelect = false;
     private String productId;
     private String productNum;
     private String productName;

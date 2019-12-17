@@ -15,7 +15,6 @@ public class UserInfoManager {
     private ACache aCache;
     private SharedPreferences sharedPreferences;
     private LinkedList<UserInfoStatusListener> userInfoStatusListeners = new LinkedList<>();
-    private ShoppingNumChangeListener shoppingNumChangeListener; //购物车商品数量改变监听
 
     private UserInfoManager() {
     }
@@ -142,33 +141,4 @@ public class UserInfoManager {
     public interface UserInfoStatusListener {
         void onUserStatus(boolean isLogin, LoginBean userInfo);//用户登录状态
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    //保存购物车数量
-    public void saveShoppingNum(int num){
-        SharedPreferences.Editor edit = sharedPreferences.edit();
-        edit.putInt("shoppingNum", num);
-        edit.apply();
-    }
-    //获取购物车商品数量
-    public int getShoppingNum(){
-        return sharedPreferences.getInt("shoppingNum", -1);
-    }
-
-
-
-
-
-
-
-    public void setShoppingNumChangeListener(ShoppingNumChangeListener shoppingNumChangeListener){
-        this.shoppingNumChangeListener = shoppingNumChangeListener;
-    }
-    //商品数量发生改变
-    public interface ShoppingNumChangeListener{
-        void onShoppingNumChange(int num);
-    }
-
 }

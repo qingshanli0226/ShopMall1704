@@ -11,17 +11,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.shoppingcart.bean.ShoppingCartBean;
+import com.shaomall.framework.bean.ShoppingCartBean;
 import com.example.shoppingcart.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler>{
-    ArrayList<ShoppingCartBean> arr;
+public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler> {
+    List<ShoppingCartBean> arr;
     Context context;
 
-    public RvAdp(ArrayList<ShoppingCartBean> arr, Context context) {
+    public RvAdp(List<ShoppingCartBean> arr, Context context) {
         this.arr = arr;
         this.context = context;
     }
@@ -50,18 +50,16 @@ public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler>{
             }
         });
 
-
         //TODO 减少的按钮
         myhodler.tvReduce.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Integer.parseInt(arr.get(i).getProductNum())==1){
+                if (Integer.parseInt(arr.get(i).getProductNum()) == 1) {
                     Toast.makeText(context, "已经不能在减啦", Toast.LENGTH_SHORT).show();
-                }else {
-                    itemNumCallBack.onItemNumCallBack(i, Integer.parseInt(arr.get(i).getProductNum())-1);
-                    myhodler.tvNum.setText((Integer.parseInt(arr.get(i).getProductNum())-1)+"");
+                } else {
+                    itemNumCallBack.onItemNumCallBack(i, Integer.parseInt(arr.get(i).getProductNum()) - 1);
+                    myhodler.tvNum.setText((Integer.parseInt(arr.get(i).getProductNum()) - 1) + "");
                 }
-
             }
         });
 
@@ -69,9 +67,8 @@ public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler>{
         myhodler.tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                itemNumCallBack.onItemNumCallBack(i, Integer.parseInt(arr.get(i).getProductNum())+1);
-                myhodler.tvNum.setText((Integer.parseInt(arr.get(i).getProductNum())+1)+"");
+                itemNumCallBack.onItemNumCallBack(i, Integer.parseInt(arr.get(i).getProductNum()) + 1);
+                myhodler.tvNum.setText((Integer.parseInt(arr.get(i).getProductNum()) + 1) + "");
             }
         });
 
@@ -83,7 +80,7 @@ public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler>{
                 //TODO 设置多选框是否选中
                 arr.get(i).setSelect(myhodler.checkBox.isChecked());
                 //TODO 返回点击的第几个
-                itemCallBack.onItemCallBack(i);
+                itemCallBack.onClick(i);
             }
         });
     }
@@ -119,47 +116,43 @@ public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler>{
         }
     }
 
-    //TODO checkbox要使用到的的接口回调
-    public interface ItemCallBack {
-        void onItemCallBack(int i);
-    }
 
-    ItemCallBack itemCallBack;
+    //checkbox要使用到的的接口回调
+    private ItemOnCheckBoxClickListener itemCallBack;
 
-    public ItemCallBack getItemCallBack() {
-        return itemCallBack;
-    }
+    //OnClickListener
 
-    public void setItemCallBack(ItemCallBack itemCallBack) {
+    public void setItemCheckBoxOnClickListener(ItemOnCheckBoxClickListener itemCallBack) {
         this.itemCallBack = itemCallBack;
     }
 
-    //TODO 购物车数量要使用到的接口
-    public interface ItemNumCallBack{
-        void onItemNumCallBack(int i,int num);
+    //TODO checkbox要使用到的的接口回调
+    public interface ItemOnCheckBoxClickListener {
+        void onClick(int i);
     }
-    ItemNumCallBack itemNumCallBack;
 
-    public ItemNumCallBack getItemNumCallBack() {
-        return itemNumCallBack;
-    }
+    private ItemNumCallBack itemNumCallBack;
 
     public void setItemNumCallBack(ItemNumCallBack itemNumCallBack) {
         this.itemNumCallBack = itemNumCallBack;
     }
 
-    //TODO 购物车点击展示详情页面的接口
-    public interface ItemDetailsCallBack{
-        void onItemDetailsCallBack(int i);
+    //TODO 购物车数量要使用到的接口
+    public interface ItemNumCallBack {
+        void onItemNumCallBack(int i, int num);
     }
-    ItemDetailsCallBack itemDetailsCallBack;
 
-    public ItemDetailsCallBack getItemDetailsCallBack() {
-        return itemDetailsCallBack;
-    }
+
+    //购物车点击展示详情页面的接口
+    private ItemDetailsCallBack itemDetailsCallBack;
 
     public void setItemDetailsCallBack(ItemDetailsCallBack itemDetailsCallBack) {
         this.itemDetailsCallBack = itemDetailsCallBack;
+    }
+
+    //TODO 购物车点击展示详情页面的接口
+    public interface ItemDetailsCallBack {
+        void onItemDetailsCallBack(int i);
     }
 }
 

@@ -1,7 +1,9 @@
 package com.shaomall.framework.base;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 
 import com.example.commen.util.ShopMailError;
 import com.shaomall.framework.base.view.IBaseView;
@@ -11,6 +13,7 @@ import java.util.List;
 public abstract class BaseMVPActivity<T> extends BaseActivity implements IBaseView<T> {
 //    private IBasePresenter<T> iBasePresenter;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

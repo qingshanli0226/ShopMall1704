@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-
     package="com.example.administrator.shaomall">
-    <!--    联网的权限:-->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!--    写SD卡权限:-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--    读SD卡权限:-->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!--    读取联系人的权限：-->
+    <!-- 联网的权限: -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 写SD卡权限: -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 读SD卡权限: -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 读取联系人的权限： -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <!--    读取短信的权限：-->
-
 
     <application
         android:name=".app.ShaoHuaApplication"
@@ -22,12 +16,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute"
         tools:targetApi="m">
-        <activity android:name=".function.FunctionActivity" />
-        <!-- 商品详情 -->
+        <activity android:name=".activity.SettingActivity"></activity>
+        <activity android:name=".function.FunctionActivity" /> <!-- 商品详情 -->
         <activity
             android:name=".goodsinfo.GoodsInfoActivity"
             android:launchMode="singleTask"
@@ -43,8 +36,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <!-- 主界面 -->
+        </activity> <!-- 主界面 -->
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
@@ -63,11 +55,9 @@
             android:supportsPictureInPicture="true"
             tools:ignore="UnusedAttribute"
             tools:targetApi="n" />
-        <activity android:name=".activity.MessageActivity"/>
-        <activity android:name=".activity.SearchActivity"/>
-        <!-- 服务 -->
+        <activity android:name=".activity.MessageActivity" />
+        <activity android:name=".activity.SearchActivity" /> <!-- 服务 -->
         <service android:name=".cache.CacheService" /> <!-- 适配华为（huawei）刘海屏 -->
-
         <meta-data
             android:name="android.notch_support"
             android:value="true" /> <!-- 适配小米（xiaomi）刘海屏 -->
@@ -76,10 +66,7 @@
             android:value="portrait|landscape" />
         <meta-data
             android:name="android.max_aspect"
-            android:value="2.4" />
-
-
-        <!-- 替换原生极光推送接收器 -->
+            android:value="2.4" /> <!-- 替换原生极光推送接收器 -->
         <receiver
             android:name=".message.JGReceiver"
             android:enabled="true"
@@ -87,10 +74,10 @@
             tools:node="replace">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
-                <category android:name="com.example.administrator.shaomall" /> <!--JPush上注册的包名 -->
+
+                <category android:name="com.example.administrator.shaomall" /> <!-- JPush上注册的包名 -->
             </intent-filter>
-        </receiver>
-        <!-- 注册继承JCommonService的服务 -->
+        </receiver> <!-- 注册继承JCommonService的服务 -->
         <service
             android:name=".message.JGServire"
             android:enabled="true"
@@ -101,6 +88,5 @@
             </intent-filter>
         </service>
     </application>
-
 
 </manifest>

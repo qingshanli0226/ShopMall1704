@@ -1,6 +1,9 @@
 package com.example.commen;
 
 public class Constants {
+    //开启内存泄漏检测
+    public static final boolean DEBUG = true;
+
     //acache 首页数据 Key
     public static final String KEY_HOME_DATA = "Home_Data";
 

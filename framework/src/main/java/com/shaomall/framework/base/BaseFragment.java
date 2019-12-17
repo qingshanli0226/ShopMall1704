@@ -144,4 +144,12 @@ public abstract class BaseFragment extends Fragment {
         startActivity(new Intent(getContext(),clazz));
         getActivity().overridePendingTransition(R.anim.anim_in,R.anim.anim_out);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        //内存泄漏检测
+        BaseApplication.getRefWatcher().watch(this);
+    }
 }

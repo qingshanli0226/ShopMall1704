@@ -38,7 +38,6 @@ public class MessageActivity extends BaseActivity implements MessageManager.Mess
     private android.widget.ImageView mTitleMessage;
     private android.widget.ListView mNotReadMessageLv;
     private android.widget.ListView mIsReadMessageLv;
-
     private List<MessageBean> notReadMessages = new ArrayList<>();
     private List<MessageBean> isReadMessages = new ArrayList<>();
 
@@ -49,7 +48,6 @@ public class MessageActivity extends BaseActivity implements MessageManager.Mess
 
     @Override
     protected void initView() {
-
         MessageManager.getInstance(this).registerMessageListener(this);
         mTitleScanning = findViewById(R.id.title_scanning);
         mTitleBlack = findViewById(R.id.title_black);
@@ -69,7 +67,7 @@ public class MessageActivity extends BaseActivity implements MessageManager.Mess
         mTitleBlack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              animOutActivity();
+                animOutActivity();
             }
         });
         mTitleMessage.setVisibility(View.INVISIBLE);

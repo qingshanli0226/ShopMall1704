@@ -25,6 +25,7 @@ import com.shaomall.framework.bean.HomeBean;
 import com.shaomall.framework.bean.LoginBean;
 import com.shaomall.framework.bean.MessageBean;
 import com.shaomall.framework.manager.MessageManager;
+import com.shaomall.framework.manager.ShoppingManager;
 
 import java.util.List;
 
@@ -62,6 +63,9 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> implements MessageM
                 .setBadgeBackgroundColor(Color.BLUE);
         searchLayoutParams = (ViewGroup.MarginLayoutParams) ll_search.getLayoutParams();
         titleLayoutParams = (ViewGroup.MarginLayoutParams) tv_title.getLayoutParams();
+
+        //加载购物车数据
+//        ShoppingManager.getInstance().notifyUpdatedShoppingData();
     }
 
     @Override
