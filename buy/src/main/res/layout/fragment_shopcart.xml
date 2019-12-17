@@ -10,15 +10,24 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_below="@+id/my_toolbar"
-        android:layout_above="@id/buyFoot"
+        android:layout_above="@id/foot"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
+            android:paddingLeft="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_5"
             android:background="@color/colorWhite"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <View
+        android:id="@+id/foot"
+        android:background="@color/buyBigGray"
+        android:layout_width="match_parent"
+        android:layout_above="@id/buyFoot"
+        android:layout_height="@dimen/px_one"/>
     <TextView
         android:id="@+id/nullGoods"
         android:visibility="gone"
@@ -32,6 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
     <RelativeLayout
+        android:padding="@dimen/dp_10"
         android:background="@color/colorWhite"
         android:id="@+id/buyFoot"
         android:layout_alignParentBottom="true"
@@ -41,13 +51,14 @@
             android:id="@+id/checkAll"
             android:button="@null"
             android:drawableLeft="@drawable/checkbut"
-            android:text="@string/buyCheckAll"
+            android:text="  全选"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/cartMoney"
             android:textColor="@color/color_red"
+            android:layout_centerVertical="true"
             android:layout_toRightOf="@id/checkAll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

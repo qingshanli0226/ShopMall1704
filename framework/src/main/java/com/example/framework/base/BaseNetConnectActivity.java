@@ -123,4 +123,8 @@ public abstract class BaseNetConnectActivity extends BaseActivity implements IAc
 
     }
 
+    @Override
+    public void getSearchDataSuccess(String str) {
+
+    }
 }

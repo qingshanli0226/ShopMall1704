@@ -1,6 +1,7 @@
 package com.example.buy;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -20,7 +21,6 @@ import com.example.common.view.MyToolBar;
 import com.example.buy.presenter.PostDelteGoodsPresenter;
 import com.example.framework.manager.AccountManager;
 
-import com.example.framework.manager.CartManager;
 import com.example.buy.presenter.GetCartPresenter;
 import com.example.buy.presenter.PostUpDateCartPresenter;
 import com.example.common.IntentUtil;
@@ -65,30 +65,36 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
     boolean delStatus = false;
     boolean checkStatus = false;
 
+    private String goodsId;
+
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == buyBut.getId()) {
-            if (delStatus) {
-                //删除
-                for (int i = 0; i < checks.size(); i++) {
-                    if (checks.get(i)) {
-                        waitDelList.add(list.get(i));
+        if (AccountManager.getInstance().isLogin()){
+            if (v.getId() == buyBut.getId()) {
+                if (delStatus) {
+                    //删除
+                    for (int i = 0; i < checks.size(); i++) {
+                        if (checks.get(i)) {
+                            waitDelList.add(list.get(i));
+                        }
                     }
-                }
-                deleteGoods();
-            } else {
-                //支付跳转
-                ArrayList<GoodsBean> goods = new ArrayList<>();
-                for (int i = 0; i < checks.size(); i++) {
-                    if (checks.get(i)) {
-                        goods.add(list.get(i));
+                    deleteGoods();
+                } else {
+                    //支付跳转
+                    ArrayList<GoodsBean> goods = new ArrayList<>();
+                    for (int i = 0; i < checks.size(); i++) {
+                        if (checks.get(i)) {
+                            goods.add(list.get(i));
+                        }
                     }
+                    Intent intent = new Intent(getContext(), PayActivity.class);
+                    intent.putExtra(IntentUtil.ORDERS, goods);
+                    startActivity(intent);
                 }
-                Intent intent = new Intent(getContext(), PayActivity.class);
-                intent.putExtra(IntentUtil.ORDERS, goods);
-                startActivity(intent);
             }
+        }else {
+            Toast.makeText(getContext(),getResources().getString(R.string.buyLoginFirst),Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -101,13 +107,41 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         nullGoods = view.findViewById(R.id.nullGoods);
         cartMoney = view.findViewById(R.id.cartMoney);
-
         myToolBar = view.findViewById(R.id.my_toolbar);
+
         myToolBar.init(Constant.BUY_MESSAGE_STYLE);
         myToolBar.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
-        showBar();
+
 
         buyBut.setOnClickListener(this);
+
+        myToolBar.getBuy_compile().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (AccountManager.getInstance().isLogin()){
+                    //编辑
+                    if (delStatus){
+                        myToolBar.getBuy_compile().setText("编辑");
+                        buyBut.setText( getResources().getString(R.string.buyNow));
+                        delStatus=false;
+                    }else {
+                        myToolBar.getBuy_compile().setText("完成");
+                        buyBut.setText( getResources().getString(R.string.buyDelete));
+                        delStatus=true;
+                    }
+                }else {
+                    Toast.makeText(getContext(),getResources().getString(R.string.buyLoginFirst),Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        myToolBar.getBuy_menu().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //弹出消息和分享
+
+            }
+        });
 
         //设置recyclerView
         BaseRecyclerAdapter<GoodsBean> adapter = new BaseRecyclerAdapter<GoodsBean>(R.layout.item_goods, list) {
@@ -128,9 +162,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                                 getContext().startActivity(intent);
                             }
                         });
-                for (boolean i : checks) {
-                    itemCheck.setChecked(i);
-                }
+
                 //被选中
                 itemCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -138,11 +170,12 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                         if (checks.size() > position) {
                             checks.set(position, isChecked);
                             judgeCheckAll();
+                            //更新价格
+                            setAllMoney();
                         }
-                        //更新价格
-                        cartMoney.setText(getAllMoney());
                     }
                 });
+
                 //减按钮
                 holder.getView(R.id.itemDelBut).setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -159,22 +192,27 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                         upDateNum(position, list.get(position).getProductNum() + 1);
                     }
                 });
+                //必须要放到设置监听后面
+                for (int i=0;i<checks.size();i++) {
+                    if (i==position){
+                        itemCheck.setChecked(checks.get(i));
+                    }
+                }
             }
         };
-        adapter.setClickListener(new OnClickItemListener() {
-            @Override
-            public void onClickListener(int position) {
-
-            }
-        });
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
         //下拉刷新
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //下拉刷新购物车数据
-                sendCartPresenter.doHttpGetRequest(CART_GOODS);
+                if (AccountManager.getInstance().isLogin()){
+                    //下拉刷新购物车数据
+                    sendCartPresenter.doHttpGetRequest(CART_GOODS);
+                }else {
+                    Toast.makeText(getContext(),getResources().getString(R.string.buyLoginFirst),Toast.LENGTH_SHORT).show();
+                    swipeRefreshLayout.setRefreshing(false);
+                }
             }
         });
         //全选监听
@@ -205,8 +243,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                 }
 
                 //更新价格
-                cartMoney.setText(getAllMoney());
-
+                setAllMoney();
             }
         });
 
@@ -216,21 +253,8 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
 
     @Override
     public void initDate() {
-        myToolBar.getBuy_compile().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //编辑
-                if (delStatus){
-                    myToolBar.getBuy_compile().setText("编辑");
-                    buyBut.setText( getResources().getString(R.string.buyNow));
-                    delStatus=false;
-                }else {
-                    myToolBar.getBuy_compile().setText("完成");
-                    buyBut.setText( getResources().getString(R.string.buyDelete));
-                    delStatus=true;
-                }
-            }
-        });
+        setAllMoney();
+        showBar();
     }
 
     @Override
@@ -238,8 +262,10 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
         super.onResume();
         if (AccountManager.getInstance().isLogin()){
             sendCartPresenter.doHttpGetRequest(CART_GOODS);
+        }else {
+            buyBut.setClickable(false);
         }
-        checkAll.setChecked(false);
+//        checkAll.setChecked(false);
     }
 
     @Override
@@ -247,10 +273,10 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
         super.onRequestSuccess(requestCode, data);
         switch (requestCode) {
             case CART_GOODS:
-                checks.clear();
-                list.clear();
-                recyclerView.getAdapter().notifyDataSetChanged();
                 if (((GetCartBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
+                    checks.clear();
+                    list.clear();
+                    recyclerView.getAdapter().notifyDataSetChanged();
                     list.addAll(((GetCartBean) data).getResult());
                     for (int i = 0; i < list.size(); i++) {
                         checks.add(false);
@@ -266,12 +292,30 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                         recyclerView.setVisibility(View.VISIBLE);
                         nullGoods.setVisibility(View.GONE);
                     }
+                    setBuyButStyle();
+                    if (goodsId!=null){
+                        for (int i=0;i<list.size();i++){
+                            if (list.get(i).getProductId().equals(goodsId)){
+                                checks.set(i,true);
+                            }
+                        }
+                        goodsId=null;
+                    }
                 }
                 break;
             case UPDATA_GOODS:
-                if (((OkBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
-                    //更新成功
-//                    sendCartPresenter.doHttpGetRequest(CART_GOODS);
+                try {
+                    if (((OkBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
+                        //更新成功
+                        sendCartPresenter.doHttpGetRequest(UPDATA_GOODS);
+                    }
+                }catch (Exception e){
+                    if (((GetCartBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
+                        list.clear();
+                        list.addAll(((GetCartBean) data).getResult());
+                        recyclerView.getAdapter().notifyDataSetChanged();
+                        setAllMoney();
+                    }
                 }
                 break;
             case DEL_CODE:
@@ -299,7 +343,9 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
                 break;
             }
         }
-        checkAll.setChecked(checkStatus);
+        if (checkAll.isChecked()!=checkStatus){
+            checkAll.setChecked(checkStatus);
+        }
     }
 
     //更新单个数量
@@ -311,14 +357,15 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
     }
 
     //获取总价
-    private String getAllMoney() {
+    private void setAllMoney() {
+        setBuyButStyle();
         float sum = 0;
         for (int i = 0; i < list.size(); i++) {
             if (checks.get(i)) {
                 sum += (Float.valueOf(list.get(i).getProductPrice()) * list.get(i).getProductNum());
             }
         }
-        return "总计:" + sum + "元";
+        cartMoney.setText("总计:" + sum + "元");
     }
 
     //删除单个
@@ -329,6 +376,7 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
             deleteGoodsPresenter.doHttpPostJSONRequest(DEL_CODE);
         } else {
             buyBut.setText(getResources().getString(R.string.buyNow));
+            myToolBar.getBuy_compile().setText("编辑");
             delStatus = false;
             checkAll.setChecked(false);
             sendCartPresenter.doHttpGetRequest(CART_GOODS);
@@ -364,7 +412,6 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
         myToolBar.getBuy_menu().setVisibility(View.VISIBLE);
         myToolBar.getBuy_message_icon().setVisibility(View.VISIBLE);
         myToolBar.getBuy_message_title().setVisibility(View.VISIBLE);
-
         myToolBar.getMessage_menu().setVisibility(View.GONE);
         myToolBar.getMessage_back().setVisibility(View.GONE);
         myToolBar.getMessage_calendar().setVisibility(View.GONE);
@@ -379,5 +426,19 @@ public class ShopCartFragment extends BaseNetConnectFragment implements View.OnC
     @Override
     public void showLoading() {
 
+    }
+    //立即购买的点击
+    private void setBuyButStyle(){
+        for (boolean i:checks){
+            if (i){
+                buyBut.setEnabled(true);
+                return;
+            }
+        }
+        buyBut.setEnabled(false);
+    }
+
+    public void setGoodsId(String goodsId){
+        this.goodsId=goodsId;
     }
 }

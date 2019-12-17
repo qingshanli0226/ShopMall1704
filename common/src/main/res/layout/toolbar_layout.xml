@@ -19,7 +19,7 @@
             android:drawablePadding="@dimen/dp_10"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/dp_10"
-            android:layout_toLeftOf="@+id/home_search_back"/>
+            android:layout_toLeftOf="@id/home_search_back"/>
         <ImageView
             android:id="@+id/home_camera"
             android:layout_width="wrap_content"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dp_10"
-            android:layout_toLeftOf="@+id/home_message"
+            android:layout_toLeftOf="@id/home_message"
             android:drawableTop="@drawable/home_scan"
             android:gravity="center"
             android:text="@string/top_scan"
@@ -70,8 +70,11 @@
             android:layout_weight="10"
             android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content">
-            <TextView
+            <EditText
                 android:id="@+id/search_edit"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"
+                android:maxLines="1"
                 android:background="@drawable/white_text_background"
                 android:layout_width="match_parent"
                 android:drawableLeft="@drawable/search"
@@ -91,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/camera"
                 android:layout_centerVertical="true"
-                android:layout_alignRight="@+id/search_edit"
+                android:layout_alignRight="@id/search_edit"
                 android:layout_marginRight="@dimen/dp_20"/>
         </RelativeLayout>
         <ImageView

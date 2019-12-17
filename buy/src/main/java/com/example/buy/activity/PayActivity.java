@@ -78,35 +78,6 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
     private GetPayOrderBean getPayOrderBean;
     private Handler handler = new MyHandler(this);
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Intent intent = getIntent();
-        list.addAll(intent.getParcelableArrayListExtra(IntentUtil.ORDERS));
-        //设置数据
-        recyclerView.getAdapter().notifyDataSetChanged();
-
-        orderMoney.setText("原价: " + getMoney(false));
-        payMoney.setText(getMoney(false));
-        //库存检测
-        verifyPresenter = new PostVerifyGoodsPresenter(list);
-        verifyPresenter.attachView(this);
-        verifyPresenter.doHttpPostJSONRequest(COED_VERIFY);
-        //下订单
-        List<SendOrdersBean.BodyBean> bodyBeans = new ArrayList<>();
-        for (GoodsBean i : list) {
-            bodyBeans.add(new SendOrdersBean.BodyBean(i.getProductName(), i.getProductId()));
-        }
-        //直接发起订单
-        SendOrdersBean sendOrdersBean = new SendOrdersBean(
-                "购买",
-                getMoney(checkInegra.isChecked()),
-                bodyBeans
-        );
-        sendOrederPresenter = new PostOrderPresenter(sendOrdersBean);
-        sendOrederPresenter.attachView(this);
-        sendOrederPresenter.doHttpPostJSONRequest(CODE_ORDER);
-    }
 
     @Override
     public void onClick(View v) {
@@ -162,6 +133,35 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
                 payMoney.setText(getMoney(isChecked));
             }
         });
+
+
+        Intent intent = getIntent();
+        list.addAll(intent.getParcelableArrayListExtra(IntentUtil.ORDERS));
+        //设置数据
+        recyclerView.getAdapter().notifyDataSetChanged();
+
+        orderMoney.setText("原价: " + getMoney(false));
+        payMoney.setText(getMoney(false));
+        //库存检测
+        verifyPresenter = new PostVerifyGoodsPresenter(list);
+        verifyPresenter.attachView(this);
+        verifyPresenter.doHttpPostJSONRequest(COED_VERIFY);
+        //下订单
+        List<SendOrdersBean.BodyBean> bodyBeans = new ArrayList<>();
+        for (GoodsBean i : list) {
+            bodyBeans.add(new SendOrdersBean.BodyBean(i.getProductName(), i.getProductId()));
+        }
+        //直接发起订单
+        SendOrdersBean sendOrdersBean = new SendOrdersBean(
+                "购买",
+                getMoney(checkInegra.isChecked()),
+                bodyBeans
+        );
+        sendOrederPresenter = new PostOrderPresenter(sendOrdersBean);
+        sendOrederPresenter.attachView(this);
+        sendOrederPresenter.doHttpPostJSONRequest(CODE_ORDER);
+
+
     }
 
     @Override

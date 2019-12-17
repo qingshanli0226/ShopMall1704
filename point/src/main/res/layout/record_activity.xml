@@ -7,7 +7,7 @@
         android:background="@mipmap/suqina"
        android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.example.point.view.CustomTextView
+        <TextView
             android:id="@+id/record_tv"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="180dp"

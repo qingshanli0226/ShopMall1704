@@ -55,7 +55,6 @@
            android:textSize="@dimen/sp_20"
            android:text="猜你喜欢"/>
 
-
        <androidx.recyclerview.widget.RecyclerView
            android:id="@+id/mine_rv_recommend"
            android:layout_width="match_parent"

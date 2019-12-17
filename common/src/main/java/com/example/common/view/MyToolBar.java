@@ -25,7 +25,7 @@ public class MyToolBar extends Toolbar {
     //TODO 搜索风格
     private LinearLayout search_layout;
     private ImageView scan;
-    private TextView search_edit;
+    private EditText search_edit;
     private ImageView search_camera;
     private ImageView search_message;
     private TextView search_text;

@@ -3,9 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/buy_one"
+    android:padding="@dimen/dp_5"
     android:background="@drawable/goodscolor">
     <ImageView
         android:id="@+id/itemPayImg"
+        android:padding="@dimen/dp_3"
         android:layout_width="@dimen/buy_one_hund"
         android:layout_height="@dimen/buy_one_hund"/>
     <TextView
