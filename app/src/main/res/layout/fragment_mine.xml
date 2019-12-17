@@ -39,18 +39,16 @@
                 android:fitsSystemWindows="true"
                 android:layout_height="match_parent"
                 app:collapsedTitleGravity="right"
-                app:contentScrim="@color/mine_back_color"
                 app:expandedTitleGravity="center"
                 app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
                 >
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/mine_height_170">
-                    android:layout_width="match_parent"
                     android:layout_height="@dimen/mine_height_170"
-                    android:background="@color/mine_back_color"
                     app:layout_collapseMode="parallax"
+                    >
+
                     >
 
                     <ImageView
@@ -73,7 +71,9 @@
                         android:layout_marginStart="@dimen/mine_mStart_10"
                         android:layout_below="@id/ib_user_icon_avator"
                         android:text="@string/mine_text"
+                        android:background="@null"
                         android:textColor="@color/color_white" />
+
                 </RelativeLayout>
 
 

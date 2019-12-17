@@ -3,7 +3,10 @@
     >
 
     <application >
-        <activity android:name=".Ui.HistoryActivity"></activity>
+        <activity android:name=".Ui.HistoryActivity"
+            android:screenOrientation="portrait"
+
+            ></activity>
         <activity android:name=".Ui.IntegralActivity"
             android:screenOrientation="portrait"
             >
