@@ -14,8 +14,10 @@ import java.util.TreeMap;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
@@ -25,6 +27,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
     private IGetBaseView<T> iGetBaseView;
     private IPostBaseView<T> iPostBaseView;
     private ILoadView iLoadView;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Override
     public void getGetData() {
@@ -36,6 +39,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                     public void onSubscribe(Disposable d) {
                         if (iLoadView != null)
                             iLoadView.onLoadingPage();
+                        compositeDisposable.add(d);
                     }
 
                     @Override
@@ -71,6 +75,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(Disposable d) {
+                        compositeDisposable.add(d);
                         if (iLoadView != null)
                             iLoadView.onLoadingPage();
                     }
@@ -109,6 +114,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(Disposable d) {
+                        compositeDisposable.add(d);
                         if (iLoadView != null)
                             iLoadView.onLoadingPage();
                     }
@@ -116,8 +122,10 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         try {
+                            Log.e("####", "" + responseBody.string());
+                            T data = new Gson().fromJson(responseBody.string(), getBeanType());
                             if (iPostBaseView != null)
-                                iPostBaseView.onPostDataSucess((T) responseBody.string());
+                                iPostBaseView.onPostDataSucess(data);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -145,6 +153,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(Disposable d) {
+                        compositeDisposable.add(d);
                         if (iLoadView != null)
                             iLoadView.onLoadingPage();
                     }
@@ -173,6 +182,52 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                             iLoadView.onStopLoadingPage();
                     }
                 });
+    }
+
+    @Override
+    public void getPostFile() {
+        RetrofitCreator.getNetPostService().getFileData(getPath(), getHeader(), getFile())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<ResponseBody>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        compositeDisposable.add(d);
+                        if (iLoadView != null)
+                            iLoadView.onLoadingPage();
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody body) {
+                        T data = null;
+                        try {
+                            Log.e("####", body.string());
+                            data = new Gson().fromJson(body.string(), getBeanType());
+                            if (iPostBaseView != null)
+                                iPostBaseView.onPostDataSucess(data);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("####", e.getMessage());
+                        if (iPostBaseView != null)
+                            iPostBaseView.onPostDataFailed(ErrorUtil.handleError(e));
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        if (iLoadView != null)
+                            iLoadView.onStopLoadingPage();
+                    }
+                });
+
+    }
+
+    public MultipartBody.Part getFile() {
+        return null;
     }
 
     protected RequestBody getRequestBody() {
@@ -206,6 +261,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
         this.iGetBaseView = null;
         this.iPostBaseView = null;
         this.iLoadView = null;
+        compositeDisposable.dispose();
     }
 
     @Override
@@ -217,6 +273,8 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
     public void attachPostView(IPostBaseView<T> iPostBaseView) {
         this.iPostBaseView = iPostBaseView;
     }
+
+
 
     @Override
     public void attachLoadView(ILoadView iLoadView) {

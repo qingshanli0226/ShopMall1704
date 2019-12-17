@@ -4,13 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.HeaderMap;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 //post网络请求
@@ -23,6 +26,8 @@ public interface NetPostService {
     @POST("{path}")
     Observable<ResponseBody> getJsonData(@HeaderMap HashMap<String, String> headMap, @Path("path") String path, @Body RequestBody body);
 
-
+    @Multipart
+    @POST("{path}")
+    Observable<ResponseBody> getFileData(@Path("path") String path, @HeaderMap HashMap<String, String> hashMap, @Part MultipartBody.Part file);
 
 }

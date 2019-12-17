@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:text="热卖推荐"
-        android:textColor="#788188" />
+        style="@style/ShopMallText"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_classify_right_inflate"
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="常用分类"
-        android:textColor="#788188" />
+        style="@style/ShopMallText" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_ordinary_right_inflate"

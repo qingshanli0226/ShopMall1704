@@ -7,7 +7,6 @@
     <dimen name="integral_text_20sp">20sp</dimen>
     <dimen name="integral_text_24sp">24sp</dimen>
     <dimen name="login_mStart_30">30dp</dimen>
-    <dimen name="login_mEnd_30">30dp</dimen>
     <dimen name="login_mStart_50">50dp</dimen>
     <dimen name="login_text_20">20sp</dimen>
     <dimen name="register_text_20">20sp</dimen>
@@ -27,4 +26,5 @@
     <dimen name="mine_mTop_20">20dp</dimen>
     <dimen name="mine_mStart_15">15dp</dimen>
     <dimen name="mine_mStart_10">10dp</dimen>
+    <dimen name="login_mEnd_30">30dp</dimen>
 </resources>

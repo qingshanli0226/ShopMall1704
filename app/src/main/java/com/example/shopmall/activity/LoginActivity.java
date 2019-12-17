@@ -14,8 +14,10 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +30,7 @@ import com.example.framework.bean.ResultBean;
 import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
 import com.example.framework.bean.LoginBean;
+import com.example.shopmall.presenter.AutomaticPresenter;
 import com.example.shopmall.presenter.LoginPresenter;
 
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
@@ -44,17 +47,17 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
     private EditText etLoginWord;
     private Button btLoginRegister;
     private ImageView ivLoginWord;
-
+    private Switch mSwitch;
     private boolean isView = false;
 
     @SuppressLint("HandlerLeak")
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
 
-            if (msg.what == 100){
-                new CountDownTimer(1000*3,1000){
+            if (msg.what == 100) {
+                new CountDownTimer(1000 * 3, 1000) {
 
                     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                     @Override
@@ -96,6 +99,7 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
         etLoginWord = findViewById(R.id.et_login_word);
         btLoginRegister = findViewById(R.id.bt_login_register);
         ivLoginWord = findViewById(R.id.iv_login_word);
+        mSwitch = findViewById(R.id.st_automatic);
     }
 
     @Override
@@ -103,6 +107,23 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
         tbLogin.setBackgroundColor(Color.RED);
         tbLogin.setLeftImg(R.drawable.left);
         tbLogin.setCenterText("登录", 18, Color.WHITE);
+
+        mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    SharedPreferences login = getSharedPreferences("login", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor edit = login.edit();
+                    edit.putBoolean("isAutomatic", true);
+                    edit.apply();
+                } else {
+                    SharedPreferences login = getSharedPreferences("login", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor edit = login.edit();
+                    edit.putBoolean("isAutomatic", false);
+                    edit.apply();
+                }
+            }
+        });
 
         tbLogin.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
@@ -143,15 +164,16 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
             }
         });
 
+
         ivLoginWord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isView){
+                if (!isView) {
                     isView = true;
                     ivLoginWord.setBackground(getResources().getDrawable(R.drawable.view));
                     etLoginWord.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     initSelection();
-                }else {
+                } else {
                     isView = false;
                     ivLoginWord.setBackground(getResources().getDrawable(R.drawable.view_off));
                     etLoginWord.setTransformationMethod(PasswordTransformationMethod.getInstance());
@@ -162,9 +184,9 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
     }
 
     private void initSelection() {
-        if (etLoginWord.getText().length() == 0){
+        if (etLoginWord.getText().length() == 0) {
             etLoginWord.setSelection(0);
-        }else {
+        } else {
             etLoginWord.setSelection(etLoginWord.getText().length());
         }
     }
@@ -188,14 +210,14 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
                 @Override
                 public void run() {
                     super.run();
-                       ResultBean result = data.getResult();
-                        UserManager.getInstance().setActiveUser(result);
-                        String token = result.getToken();
-                        SharedPreferences token1 = getSharedPreferences("login", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor edit = token1.edit();
-                        edit.putBoolean("isLogin", true);
-                        edit.putString("getToken", token);
-                        edit.apply();
+                    ResultBean result = data.getResult();
+                    UserManager.getInstance().setActiveUser(LoginActivity.this, result);
+                    String token = result.getToken();
+                    UserManager.getInstance().savaToken(token);
+                    SharedPreferences token1 = getSharedPreferences("login", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor edit = token1.edit();
+                    edit.putBoolean("isLogin", true);
+                    edit.apply();
 
                 }
             }.start();
