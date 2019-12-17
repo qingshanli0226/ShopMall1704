@@ -1,7 +1,6 @@
 package com.example.dimensionleague.mine;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -16,9 +15,7 @@ import com.example.buy.activity.OrderActivity;
 import com.example.common.HomeBean;
 
 import com.example.common.IntentUtil;
-import com.example.common.code.ErrorCode;
 import com.example.dimensionleague.setting.SettingActivity;
-import com.example.dimensionleague.setting.UserMassageActivity;
 import com.example.framework.manager.AccountManager;
 import com.example.common.port.IAccountCallBack;
 import com.example.dimensionleague.R;

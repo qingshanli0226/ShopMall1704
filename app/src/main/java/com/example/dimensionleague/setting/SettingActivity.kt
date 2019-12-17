@@ -15,9 +15,7 @@ import com.example.framework.base.BaseActivity
 import com.example.framework.manager.AccountManager
 import kotlinx.android.synthetic.main.activity_setting.*
 import android.content.DialogInterface
-import android.text.InputType
 import androidx.appcompat.app.AlertDialog
-import com.alibaba.sdk.android.utils.AMSDevReporter
 import com.example.dimensionleague.R
 
 
@@ -108,10 +106,10 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
         headView.setOnClickListener {
             if (("登录/注册".equals(heanTitle.text.toString()))){
 //                登录注册跳转
-                boundActivity(Intent(this,LoginActivity::class.java))
+                startActivity(LoginActivity::class.java,null)
             }else{
 //                跳转到个人信息
-                boundActivity(Intent(this,UserMassageActivity::class.java))
+                startActivity(UserMassagesActivity::class.java,null)
             }
         }
 

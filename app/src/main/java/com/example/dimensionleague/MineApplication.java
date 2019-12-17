@@ -31,7 +31,7 @@ public class MineApplication extends Application {
         //TODO 异常捕获
 //        ErrorHandler.getInstance().initErrorHandler(applicationContext);
         //支持计步的话就查找历史记录-否则就什么也不做
-        if (new StepIsSupport().isSupportStepCountSensor(this)) {
+        if (!NetConnectManager.getInstance().isNetConnectStatus()&&new StepIsSupport().isSupportStepCountSensor(this)) {
             StepPointManager.getInstance(this).init();
         }
         //友盟推送
@@ -74,5 +74,7 @@ public class MineApplication extends Application {
          *                 });
          *
          * */
+
+
     }
 }

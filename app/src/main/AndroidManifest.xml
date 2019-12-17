@@ -29,15 +29,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".search.SearchActivity"></activity>
-        <activity android:name=".setting.UserMassageActivity" />
-        <activity android:name=".setting.SettingActivity" />
-        <activity android:name=".activity.WelcomeActivity">
+        <activity android:name=".setting.UserMassagesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".setting.SettingActivity" />
+        <activity android:name=".activity.WelcomeActivity">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".activity.MainActivity"
