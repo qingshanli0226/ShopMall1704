@@ -14,16 +14,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.text.format.Time;
-import android.util.Log;
 
 
 import com.example.common.OrmUtils;
 import com.example.framework.bean.HourBean;
+import com.example.framework.bean.MessageBean;
 import com.example.framework.bean.ShopStepBean;
-import com.example.framework.bean.ShopStepTimeRealBean;
-import com.example.framework.greendao.DaoMaster;
-import com.example.framework.greendao.DaoSession;
-import com.example.framework.hourSql;
+import com.example.framework.sql.HourSql;
 import com.example.framework.service.StepService;
 
 import java.text.SimpleDateFormat;
@@ -105,12 +102,41 @@ public class StepManager {
 
 
 
-        hourSql hourSql = new hourSql(context);
+        HourSql hourSql = new HourSql(context);
         hourDb = hourSql.getWritableDatabase();
 
 
     }
 
+
+
+    public List<MessageBean> getMessDate(){
+        Cursor cursor = hourDb.rawQuery("select time,date,currentStep,integral from mess", null);
+        List<MessageBean> messageBeans=new ArrayList<>();
+        while (cursor.moveToNext()){
+            String time = cursor.getString(cursor.getColumnIndex("time"));
+            String date = cursor.getString(cursor.getColumnIndex("date"));
+            int currentStep = cursor.getInt(cursor.getColumnIndex("currentStep"));
+            int integral = cursor.getInt(cursor.getColumnIndex("integral"));
+            MessageBean messageBean = new MessageBean(time, date, currentStep, integral);
+            messageBeans.add(messageBean);
+        }
+        return messageBeans;
+
+    }
+    //存储消息信息
+    public void saveMessSql(String time,String date,int current,int gal){
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("time",time);
+        contentValues.put("date",date);
+        contentValues.put("currentStep",current);
+        contentValues.put("integral",gal);
+
+        hourDb.insert("mess",null,contentValues);
+    }
+
+    //存储每分钟记录
     public void insertHour(String time,String date,int current){
         ContentValues contentValues = new ContentValues();
         contentValues.put("time",time);
@@ -133,7 +159,6 @@ public class StepManager {
 
     }
 
-
     //获取现在地1日期
     public String getTodayDate(){
         Date date = new Date(System.currentTimeMillis());
@@ -146,9 +171,6 @@ public class StepManager {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
         return simpleDateFormat.format(date);
     };
-
-
-
 
 
     public boolean isThisMonth(long time){

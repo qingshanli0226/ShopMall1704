@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.bean.HourBean;
+import com.example.framework.bean.MessageBean;
 import com.example.framework.bean.ShopStepTimeRealBean;
 import com.example.step.Adapter.StepHistoryAdapter;
 import com.example.step.Adapter.StepHistoryHourAdapter;
@@ -274,14 +275,14 @@ public class HistoryActivity extends BaseActivity {
 
         //获取今天数据
     private void TodayStep() {
+
+        List<MessageBean> messDate = StepManager.getInstance().getMessDate();
+        Log.e("MEss",messDate.toString());
         List<ShopStepBean> stepHistory = StepManager.getInstance().getStepHistory();
         List<ShopStepBean> todayList=new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
         int month = calendar.get(Calendar.MONTH) + 1;
         int day = calendar.get(Calendar.DATE);
-
-
-        //
         for (int i=0;i<stepHistory.size();i++){
             String date = stepHistory.get(i).getDate();
             String[] split = date.split("-");
