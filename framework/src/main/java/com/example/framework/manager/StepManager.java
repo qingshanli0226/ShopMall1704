@@ -10,12 +10,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.text.format.Time;
-import android.util.Log;
 
 
 import com.example.common.OrmUtils;
@@ -24,9 +22,6 @@ import com.example.framework.bean.ShopStepBean;
 import com.example.framework.bean.ShopStepTimeRealBean;
 import com.example.framework.greendao.DaoMaster;
 import com.example.framework.greendao.DaoSession;
-import com.example.framework.greendao.FirstStepBean;
-import com.example.framework.greendao.FirstStepBeanDao;
-import com.example.framework.greendao.ShopStepTimeRealBeanDao;
 import com.example.framework.hourSql;
 import com.example.framework.service.StepService;
 
@@ -48,8 +43,7 @@ public class StepManager {
     List<StepManagerListener> stepManagerListeners=new ArrayList<>();
     List<StepIntegalListener> IntegalListeners=new ArrayList<>();
     private Intent intent;
-    ShopStepTimeRealBeanDao realBeanDao;
-    FirstStepBeanDao firstStepBeanDao;
+
 
     DaoSession daoSession;
     SQLiteDatabase hourDb;
@@ -109,10 +103,7 @@ public class StepManager {
 
         context.bindService(intent,serviceConnection,Context.BIND_AUTO_CREATE);
 
-        SQLiteDatabase database = new DaoMaster.DevOpenHelper(context, "realTimes.db", null).getWritableDatabase();
-        DaoMaster daoMaster = new DaoMaster(database);
-        daoSession = daoMaster.newSession();
-        realBeanDao = daoSession.getShopStepTimeRealBeanDao();
+
 
 
         hourSql hourSql = new hourSql(context);
@@ -161,15 +152,6 @@ public class StepManager {
 
 
 
-    public void saveReal(String time,String date,int current){
-        ShopStepTimeRealBean shopStepTimeRealBean = new ShopStepTimeRealBean(null, time, date, current);
-        realBeanDao.insertOrReplace(shopStepTimeRealBean);
-    }
-    public List<ShopStepTimeRealBean> getReal(){
-
-
-        return realBeanDao.queryBuilder().distinct().list();
-    }
 
     public boolean isThisMonth(long time){
         return isThisTime(time,"yyyy-MM-dd");
