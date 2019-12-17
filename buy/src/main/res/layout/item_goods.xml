@@ -50,26 +50,30 @@
         android:text="数量"
         android:gravity="center"
         android:layout_width="@dimen/buy_three"
-        android:layout_height="@dimen/buy_two"
+        android:layout_height="@dimen/dp_25"
         android:layout_toLeftOf="@id/itemAddBut"/>
     <TextView
         android:id="@+id/itemDelBut"
         android:layout_margin="10dp"
+        android:background="@color/buyWhite"
         android:gravity="center"
+        android:textSize="@dimen/sp_20"
         android:layout_toLeftOf="@id/itemNum"
         android:layout_below="@id/itemPrice"
         android:text="-"
         android:textStyle="bold"
-        android:layout_width="20dp"
-        android:layout_height="20dp"/>
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"/>
     <TextView
         android:id="@+id/itemAddBut"
         android:gravity="center"
+        android:background="@color/buyWhite"
+        android:textSize="@dimen/sp_20"
         android:layout_alignParentRight="true"
         android:textStyle="bold"
         android:layout_margin="10dp"
         android:layout_below="@id/itemPrice"
         android:text="+"
-        android:layout_width="20dp"
-        android:layout_height="20dp"/>
+        android:layout_width="@dimen/dp_25"
+        android:layout_height="@dimen/dp_25"/>
 </RelativeLayout>

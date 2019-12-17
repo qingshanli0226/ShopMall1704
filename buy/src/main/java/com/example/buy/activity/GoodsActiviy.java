@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.buy.R;
+import com.example.buy.databeans.CheckGoodsData;
 import com.example.buy.databeans.GetCartBean;
 import com.example.buy.databeans.GoodsBean;
 import com.example.buy.databeans.OkBean;
@@ -157,6 +158,13 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
                 Toast.makeText(this, "已加入收藏", Toast.LENGTH_SHORT).show();
             } else if (v.getId() == cartBut.getId()) {
                 //点击购物车
+                //设置选中
+                for (CheckGoodsData i:CartManager.getInstance().getChecks()){
+                    if (i.getId().equals(goods.getProductId())){
+                        i.setSelect(true);
+                        break;
+                    }
+                }
                 Intent intent = new Intent(this, ShoppCartActivity.class);
                 intent.putExtra(IntentUtil.GOODS,goods.getProductId());
                 startActivity(intent);
@@ -197,8 +205,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
                     beiImgage.setScaleY(0);
                     beiImgage.setTranslationX(0);
                     beiImgage.setTranslationY(0);
-                    //更新红点
-                    CartManager.getInstance().updataCartNum(cartNum);
+
                     //购物车图标摇一摇动画
                     ObjectAnimator carAnimator = ObjectAnimator.ofFloat(cartBut, "rotation", 0, 30, -30, 0);
                     carAnimator.setDuration(500);
@@ -208,6 +215,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
                             super.onAnimationEnd(animation);
                             joinCartBut.setClickable(true);
                             animatorSet = null;
+                            setRed();
                         }
                     });
                     carAnimator.start();
@@ -246,7 +254,8 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
                 break;
             case CART_GOODS:
                 if (((GetCartBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
-                    cartNum=((GetCartBean) data).getResult().size();
+                    ArrayList<GoodsBean> goodsBeans = new ArrayList<>(((GetCartBean) data).getResult());
+                    CartManager.getInstance().setList(goodsBeans);
                     setAnimator();
                 }
                 break;
@@ -392,11 +401,10 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
             @Override
             public void shopCartNumChange(int num) {
                 cartNum=num;
-                setRed(num);
             }
         };
         CartManager.getInstance().registerListener(onShopCartListener);
-        setRed(CartManager.getInstance().getCartNum());
+        setRed();
 
     }
 
@@ -409,8 +417,8 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         super.onDestroy();
     }
 
-    private void setRed(int num) {
-        redNum.setText(num + "");
+    private void setRed() {
+        redNum.setText(CartManager.getInstance().getCartNum() + "");
         if (Integer.valueOf(redNum.getText().toString()) == 0) {
             redNum.setVisibility(View.GONE);
         } else {
