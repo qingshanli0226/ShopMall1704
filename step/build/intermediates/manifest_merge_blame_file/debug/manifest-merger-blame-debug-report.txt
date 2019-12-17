@@ -6,32 +6,11 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="17"
-8-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml
+8-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml
 9        android:targetSdkVersion="29" />
-9-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml
+9-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml
 10
 11    <application>
-<<<<<<< HEAD
-11-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:5:5-16:19
-12        <activity android:name="com.example.step.Ui.HistoryActivity" />
-12-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:6:9-65
-12-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:6:19-53
-13        <activity
-13-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:7:9-11:20
-14            android:name="com.example.step.Ui.IntegralActivity"
-14-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:7:19-54
-15            android:screenOrientation="portrait" >
-15-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:8:13-49
-16        </activity>
-17
-18        <service android:name="com.example.framework.service.StepService" >
-18-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:13:9-15:19
-18-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:13:18-74
-19        </service>
-20    </application>
-21
-22</manifest>
-=======
 11-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:5:5-19:19
 12        <activity
 12-->D:\GitHub\ShopMall1704\step\src\main\AndroidManifest.xml:6:9-9:25
@@ -54,4 +33,3 @@
 22    </application>
 23
 24</manifest>
->>>>>>> bing
