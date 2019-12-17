@@ -274,6 +274,7 @@ public class HistoryActivity extends BaseActivity {
         int day = calendar.get(Calendar.DATE);
 
 
+        //
         for (int i=0;i<stepHistory.size();i++){
             String date = stepHistory.get(i).getDate();
             String[] split = date.split("-");
