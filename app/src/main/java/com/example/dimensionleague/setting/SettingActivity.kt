@@ -14,17 +14,12 @@ import com.example.dimensionleague.login.activity.LoginActivity
 import com.example.framework.base.BaseActivity
 import com.example.framework.manager.AccountManager
 import kotlinx.android.synthetic.main.activity_setting.*
-import android.content.DialogInterface
 import android.graphics.Color
-import android.text.InputType
-import androidx.appcompat.app.AlertDialog
-import com.alibaba.sdk.android.utils.AMSDevReporter
 import com.example.common.code.Constant
 import com.example.common.view.LogoutDialog
 import com.example.dimensionleague.R
 import com.example.dimensionleague.activity.MainActivity
-import androidx.appcompat.app.AlertDialog.Builder as Builder1
-
+import com.example.net.AppNetConfig
 
 class SettingActivity : BaseActivity(),IAccountCallBack {
 
@@ -88,7 +83,7 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
         heanName.setText("用户名 : "+AccountManager.getInstance().user.name)
         foodView.visibility=View.VISIBLE
         if (AccountManager.getInstance().user.avatar!=null){
-            Glide.with(this).load(AccountManager.getInstance().user.avatar).apply(RequestOptions().centerCrop()).into(heanImg)
+            Glide.with(this).load(""+ AppNetConfig.BASE_URL+AccountManager.getInstance().user.avatar).apply(RequestOptions().circleCrop()).into(heanImg)
         }
 
     }else{
@@ -134,7 +129,7 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
                 startActivity(LoginActivity::class.java,null)
             }else{
 //                跳转到个人信息
-                startActivity(UserMassageActivity::class.java,null)
+                startActivity(UserMassagesActivity::class.java,null)
             }
         }
 
@@ -147,7 +142,7 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
     override fun onLogout() {}
     //    更新头像
     override fun onAvatarUpdate(url: String?) {
-        Glide.with(this).load(url).apply(RequestOptions().centerCrop()).into(heanImg)
+        Glide.with(this).load(""+AppNetConfig.BASE_URL+url).apply(RequestOptions().circleCrop()).into(heanImg)
     }
 
     override fun onDestroy() {

@@ -17,13 +17,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.buy.activity.OrderActivity;
 import com.example.common.HomeBean;
-
 import com.example.common.IntentUtil;
 import com.example.common.code.Constant;
-import com.example.common.code.ErrorCode;
 import com.example.common.view.MyToolBar;
 import com.example.dimensionleague.setting.SettingActivity;
-import com.example.dimensionleague.setting.UserMassageActivity;
 import com.example.framework.manager.AccountManager;
 import com.example.common.port.IAccountCallBack;
 import com.example.dimensionleague.R;
@@ -31,6 +28,7 @@ import com.example.dimensionleague.home.HomePresenter;
 import com.example.dimensionleague.login.activity.LoginActivity;
 import com.example.framework.base.BaseNetConnectFragment;
 import com.example.framework.port.OnClickItemListener;
+import com.example.net.AppNetConfig;
 import com.example.point.activity.IntegralActivity;
 import com.example.point.activity.StepActivity;
 
@@ -204,7 +202,7 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
                 //登录
                 name.setText(AccountManager.getInstance().user.getName());
                 if (AccountManager.getInstance().user.getAvatar() != null) {
-                    Glide.with(getContext()).load(AccountManager.getInstance().user.getAvatar()).into(img);
+                    Glide.with(getContext()).load(""+AppNetConfig.BASE_URL+AccountManager.getInstance().user.getAvatar()).apply(new RequestOptions().circleCrop()).into(img);
                 }
             }
         } else {
@@ -283,6 +281,6 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
     //TODO 用户更新头像后回调
     @Override
     public void onAvatarUpdate(String url) {
-        Glide.with(getContext()).load(url).apply(new RequestOptions().centerCrop()).into(img);
+        Glide.with(getContext()).load(""+ AppNetConfig.BASE_URL+url).apply(new RequestOptions().circleCrop()).into(img);
     }
 }
