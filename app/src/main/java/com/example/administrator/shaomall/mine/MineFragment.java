@@ -68,7 +68,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         //展示用户信息
         setUserData();
 
-        
+
 
         //积分更新
         PointManager.getInstance().registerCallbackIntegralListener(this);
