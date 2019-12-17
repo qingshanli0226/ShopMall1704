@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_setting.*
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
 import com.example.dimensionleague.R
+import com.example.net.AppNetConfig
 
 
 class SettingActivity : BaseActivity(),IAccountCallBack {
@@ -71,7 +72,7 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
         heanName.setText("用户名 : "+AccountManager.getInstance().user.name)
         foodView.visibility=View.VISIBLE
         if (AccountManager.getInstance().user.avatar!=null){
-            Glide.with(this).load(AccountManager.getInstance().user.avatar).apply(RequestOptions().centerCrop()).into(heanImg)
+            Glide.with(this).load(""+ AppNetConfig.BASE_URL+AccountManager.getInstance().user.avatar).apply(RequestOptions().circleCrop()).into(heanImg)
         }
 
     }else{
@@ -122,7 +123,7 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
     override fun onLogout() {}
     //    更新头像
     override fun onAvatarUpdate(url: String?) {
-        Glide.with(this).load(url).apply(RequestOptions().centerCrop()).into(heanImg)
+        Glide.with(this).load(""+AppNetConfig.BASE_URL+url).apply(RequestOptions().circleCrop()).into(heanImg)
     }
 
     override fun onDestroy() {

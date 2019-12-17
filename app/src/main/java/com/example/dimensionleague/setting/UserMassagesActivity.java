@@ -26,11 +26,13 @@ import com.example.dimensionleague.userbean.UploadBean;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.manager.AccountManager;
 import com.example.framework.manager.ErrorDisposeManager;
+import com.example.net.AppNetConfig;
 import com.example.net.RetrofitCreator;
 import com.google.gson.Gson;
 import com.wyp.avatarstudio.AvatarStudio;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -69,7 +71,7 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
 
     @Override
     public void onAvatarUpdate(String url) {
-        Glide.with(UserMassagesActivity.this).load(url).apply(new RequestOptions().centerCrop()).into(heanUserImg);
+        Glide.with(this).load(AccountManager.getInstance().user.getAvatar()).apply(new RequestOptions().circleCrop()).into(heanUserImg);
     }
 
     @Override
@@ -102,7 +104,7 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
             list.get(0).setMassage(""+AccountManager.getInstance().user.getName());
             list.get(1).setMassage(""+AccountManager.getInstance().user.getName());
             if (AccountManager.getInstance().user.getAvatar()!=null){
-                Glide.with(this).load(AccountManager.getInstance().user.getAvatar()).apply(new RequestOptions().centerCrop()).into(heanUserImg);
+                Glide.with(this).load(""+AppNetConfig.BASE_URL+AccountManager.getInstance().user.getAvatar()).apply(new RequestOptions().circleCrop()).into(heanUserImg);
             }
         }
         rv.setLayoutManager(new LinearLayoutManager(this));
@@ -226,11 +228,17 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
-                        Log.i("xxxx", "ResponseBody:上传 ");
-                        UploadBean uploadBean = new Gson().fromJson(requestBody.toString(), UploadBean.class);
-                        if ("200".equals(uploadBean.getCode())){
-                            AccountManager.getInstance().getUser().setAvatar(uploadBean.getResult());
-                            AccountManager.getInstance().notifyUserAvatarUpdate(uploadBean.getResult());
+                        String s = null;
+                        try {
+                            s = responseBody.string();
+                            Log.i("xxxx", "ResponseBody:上传 "+s);
+                            UploadBean uploadBean = new Gson().fromJson(s, UploadBean.class);
+                            if ("200".equals(uploadBean.getCode())){
+                                AccountManager.getInstance().getUser().setAvatar(uploadBean.getResult());
+                                AccountManager.getInstance().notifyUserAvatarUpdate(AccountManager.getInstance().getUser().getAvatar().toString());
+                            }
+                        } catch (IOException e) {
+                            ErrorDisposeManager.HandlerError(e);
                         }
 
                     }

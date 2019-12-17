@@ -23,6 +23,7 @@ import com.example.dimensionleague.home.HomePresenter;
 import com.example.dimensionleague.login.activity.LoginActivity;
 import com.example.framework.base.BaseNetConnectFragment;
 import com.example.framework.port.OnClickItemListener;
+import com.example.net.AppNetConfig;
 import com.example.point.activity.IntegralActivity;
 import com.example.point.activity.StepActivity;
 
@@ -169,13 +170,13 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
 
     private void ifUser() {
         if (AccountManager.getInstance().isLogin()) {
-//            if(AccountManager.getInstance().user.getName() != null){
-//                //登录
-//                name.setText(AccountManager.getInstance().user.getName());
-//                if (AccountManager.getInstance().user.getAvatar() != null) {
-//                    Glide.with(getContext()).load(AccountManager.getInstance().user.getAvatar()).into(img);
-//                }
-//            }
+            if(AccountManager.getInstance().user.getName() != null){
+                //登录
+                name.setText(AccountManager.getInstance().user.getName());
+                if (AccountManager.getInstance().user.getAvatar() != null) {
+                    Glide.with(getContext()).load(""+AppNetConfig.BASE_URL+AccountManager.getInstance().user.getAvatar()).apply(new RequestOptions().circleCrop()).into(img);
+                }
+            }
         } else {
             //没有登录
             name.setText(R.string.mine_login);
@@ -252,6 +253,6 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
     //TODO 用户更新头像后回调
     @Override
     public void onAvatarUpdate(String url) {
-        Glide.with(getContext()).load(url).apply(new RequestOptions().centerCrop()).into(img);
+        Glide.with(getContext()).load(""+ AppNetConfig.BASE_URL+url).apply(new RequestOptions().circleCrop()).into(img);
     }
 }
