@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:mContext=".activity.RegisterActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:mContext=".activity.RegisterActivity">
 
     <com.example.common.TitleBar
         android:id="@+id/tb_register"
@@ -15,25 +15,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
+                style="@style/LoginRegisterText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/register_name"
-                android:textSize="@dimen/register_text_20"
-                android:layout_marginStart="@dimen/register_mStart_30"/>
+                android:layout_marginStart="@dimen/register_mStart_30"
+                android:text="@string/register_name" />
 
             <EditText
                 android:id="@+id/et_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/register_mEnd_30"/>
+                android:layout_marginEnd="@dimen/register_mEnd_30" />
 
         </LinearLayout>
 
@@ -42,11 +42,11 @@
             android:layout_height="wrap_content">
 
             <TextView
+                style="@style/LoginRegisterText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/register_pwd"
-                android:textSize="@dimen/register_text_20"
-                android:layout_marginStart="@dimen/register_mStart_50"/>
+                android:layout_marginStart="@dimen/register_mStart_50"
+                android:text="@string/register_pwd" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/view_off"/>
+                    android:background="@drawable/view_off" />
 
             </RelativeLayout>
 
@@ -81,9 +81,10 @@
                 android:id="@+id/bt_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorGreen"
                 android:text="@string/register_text"
-                android:textColor="@color/colorWhite"
-                android:backgroundTint="@color/colorGreen" />
+                style="@style/LoginRegisterText"
+                android:textColor="@color/colorWhite" />
 
         </LinearLayout>
 

@@ -19,4 +19,5 @@ public interface IBasePresenter<T> {
 
     void getPostFormData();
 
+    void getPostFile();
 }

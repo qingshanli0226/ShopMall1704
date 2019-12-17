@@ -1,6 +1,7 @@
 package com.example.shopmall.activity;
 
 import android.animation.ObjectAnimator;
+import android.app.Application;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -16,9 +17,14 @@ import com.example.framework.bean.HomepageBean;
 import com.example.framework.manager.CaCheManager;
 import com.example.framework.manager.ConnectManager;
 
+import com.example.framework.manager.StepManager;
 import com.example.net.Constant;
+import com.example.shopmall.MyApplication;
 import com.example.shopmall.R;
 import com.example.shopmall.presenter.IntegerPresenter;
+
+import cn.jiguang.analytics.android.api.JAnalyticsInterface;
+import cn.jpush.android.api.JPushInterface;
 
 /**
  * 起始页
@@ -29,6 +35,7 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
     private int flag = 0;
     private final HandlerThread handlerThread = new HandlerThread("welcome");
     private Handler handler;
+
     @Override
     protected int setLayout() {
         return R.layout.activity_welcome;
@@ -36,12 +43,16 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
 
     @Override
     public void initView() {
-
         iv_welcome = findViewById(R.id.iv_welcome);
+        StepManager.getInstance().init(getApplicationContext());
+        //初始化缓存管理类
+        CaCheManager.getInstance(MyApplication.getContext()).init();
+
     }
 
     @Override
     public void initData() {
+
         ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(iv_welcome, "Alpha", 0, 1);
         objectAnimator.setDuration(3000);
         objectAnimator.start();
@@ -52,7 +63,7 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
 
         handlerThread.start();
 
-        Thread  welcomeThread = new Thread() {
+        Thread welcomeThread = new Thread() {
             @Override
             public void run() {
                 super.run();
@@ -90,6 +101,7 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
             finish();
         }
     }
+
     public void onGetDataSucess(HomepageBean data) {
         CaCheManager.getInstance(this).savaBean(data);
         handler.sendEmptyMessage(1);
@@ -98,5 +110,10 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
     @Override
     public void onGetDataFailed(String ErrorMsg) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

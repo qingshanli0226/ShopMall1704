@@ -13,6 +13,6 @@
         android:gravity="center"
         android:padding="13dp"
         android:text="小裙子"
-        android:textSize="17sp"/>
+        style="@style/ShopMallText"/>
 
 </RelativeLayout>

@@ -27,4 +27,5 @@
     <string name="mine_share">邀请分享</string>
     <string name="mine_service_center">客服中心</string>
     <string name="mine_feedback">服务反馈</string>
+    <string name="login_automatic">自动登录</string>
 </resources>

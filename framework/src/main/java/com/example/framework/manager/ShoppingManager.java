@@ -16,6 +16,9 @@ public class ShoppingManager {
     private List<Map<String, String>> data = new ArrayList<>();
     private List<Map<String, String>> data2 = new ArrayList<>();
 
+    int beforenum = 0;
+    int afternum = 0;
+
     public ShoppingManager() {
     }
 
@@ -29,6 +32,20 @@ public class ShoppingManager {
         }
 
         return shoppingManager;
+    }
+
+    private OnNumberChangedListener onNumberChangedListener;
+
+    public int getBeforenum() {
+        return beforenum;
+    }
+
+    public void setBeforenum(int beforenum) {
+        this.beforenum = beforenum;
+    }
+
+    public int getAfternum() {
+        return afternum;
     }
 
     public List<Map<String, String>> getBuyThings() {
@@ -53,6 +70,26 @@ public class ShoppingManager {
         }
         return nums;
     }
+
+    public void setAfternum(int afternum) {
+        this.afternum = afternum;
+    }
+
+    public void setOnNumberChanged(int x) {
+        if (onNumberChangedListener != null) {
+            onNumberChangedListener.NumberChanged(getAllNumber() + x);
+        }
+    }
+
+    public void setOnNumberChangedListener(OnNumberChangedListener onNumberChangedListener) {
+        this.onNumberChangedListener = onNumberChangedListener;
+    }
+
+    public interface OnNumberChangedListener {
+        void NumberChanged(int num);
+    }
+
+
 
     public boolean getisSetting() {
         return isSetting;

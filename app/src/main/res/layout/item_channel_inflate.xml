@@ -19,6 +19,5 @@
         android:layout_marginTop="5dp"
         android:gravity="center_horizontal"
         android:text="硅谷视频"
-        android:textColor="#000"
-        android:textSize="12sp" />
+        style="@style/ShopMallText" />
 </LinearLayout>

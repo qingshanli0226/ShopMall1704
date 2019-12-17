@@ -1,16 +1,25 @@
 package com.example.shopmall.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.WindowManager;
+import android.widget.RelativeLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.buy.bean.ShoppingCartBean;
 import com.example.buy.fragment.ShoppingCartFragment;
 import com.example.buy.presenter.ShoppingCartPresenter;
 import com.example.common.BottomBar;
+import com.example.common.ShoppingCartView;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.manager.ShoppingManager;
 import com.example.shopmall.R;
@@ -18,6 +27,7 @@ import com.example.shopmall.fragment.ClassifyFragment;
 import com.example.shopmall.fragment.HomePageFragment;
 import com.example.shopmall.fragment.HorizontalFragment;
 import com.example.shopmall.fragment.MineFragment;
+import com.example.shopmall.jpush.ExampleUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +35,7 @@ import java.util.HashMap;
 /**
  * 主页
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements ShoppingManager.OnNumberChangedListener {
 
     //数据
     private ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
@@ -37,6 +47,9 @@ public class MainActivity extends BaseActivity {
 
     //购物车商品数量
     private int allNumber;
+
+    private ShoppingCartView mRedMessage;
+    private RelativeLayout mRlBottom;
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -50,23 +63,14 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        //获取购物车商品数量
-        allNumber = ShoppingManager.getInstance().getAllNumber();
-
-    }
-
-    @Override
     protected int setLayout() {
         return R.layout.activity_main;
     }
-
     @Override
     public void initView() {
         bbMain = findViewById(R.id.bb_main);
-
+        mRedMessage = findViewById(R.id.shopping_message);
+        mRlBottom = findViewById(R.id.rl_main);
         fragmentArrayList.add(new HomePageFragment());
         fragmentArrayList.add(new ClassifyFragment());
         fragmentArrayList.add(new HorizontalFragment());
@@ -76,11 +80,15 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        //获取购物车商品数量
+        allNumber = ShoppingManager.getInstance().getAllNumber();
+        mRedMessage.setNum(allNumber);
+        ShoppingManager.getInstance().setOnNumberChangedListener(this);
 
         Log.d("####", "initData: " + allNumber);
         replaceFragment(fragmentArrayList.get(0));
 
-        String[] str = new String[]{"首页","分类","发现","购物车","个人中心"};
+        String[] str = new String[]{"首页", "分类", "发现", "购物车", "个人中心"};
 
         bbMain.setBottombarName(str);
         Drawable homepageImage = getResources().getDrawable(R.drawable.homepage_image);
@@ -88,7 +96,7 @@ public class MainActivity extends BaseActivity {
         Drawable horizontalImage = getResources().getDrawable(R.drawable.horizontal_image);
         Drawable shoppingcartImage = getResources().getDrawable(R.drawable.shoppingcart_image);
         Drawable mineImage = getResources().getDrawable(R.drawable.mine_image);
-        Drawable[] integers = new Drawable[]{homepageImage,classifyImage,horizontalImage,shoppingcartImage,mineImage};
+        Drawable[] integers = new Drawable[]{homepageImage, classifyImage, horizontalImage, shoppingcartImage, mineImage};
         bbMain.setTapDrables(integers);
 
         bbMain.setOnTapListener(new BottomBar.OnTapListener() {
@@ -102,7 +110,15 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
+
+        WindowManager windowManager = getWindowManager();
+        Display defaultDisplay = windowManager.getDefaultDisplay();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        defaultDisplay.getMetrics(displayMetrics);
+        int widthPixels = displayMetrics.widthPixels;
+        mRedMessage.setX(widthPixels/6*4);
     }
+
 
     public void refreshShoppingCartData() {
         String token = ShoppingManager.getInstance().getToken(MainActivity.this);
@@ -114,22 +130,57 @@ public class MainActivity extends BaseActivity {
         presenter.getGetData();
     }
 
+    private MessageReceiver mMessageReceiver;
+    public static final String MESSAGE_RECEIVED_ACTION = "com.example.shopmall.MESSAGE_RECEIVED_ACTION";
+    public static final String KEY_TITLE = "title";
+    public static final String KEY_MESSAGE = "message";
+    public static final String KEY_EXTRAS = "extras";
+
+    public void registerMessageReceiver() {
+        mMessageReceiver = new MessageReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
+        filter.addAction(MESSAGE_RECEIVED_ACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, filter);
+    }
+
+    public class MessageReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                if (MESSAGE_RECEIVED_ACTION.equals(intent.getAction())) {
+                    String messge = intent.getStringExtra(KEY_MESSAGE);
+                    String extras = intent.getStringExtra(KEY_EXTRAS);
+                    StringBuilder showMsg = new StringBuilder();
+                    showMsg.append(KEY_MESSAGE + " : " + messge + "\n");
+                    if (!ExampleUtil.isEmpty(extras)) {
+                        showMsg.append(KEY_EXTRAS + " : " + extras + "\n");
+                    }
+//                    setCostomMsg(showMsg.toString());
+                }
+            } catch (Exception e){
+            }
+        }
+    }
+
+
     private void replaceFragment(Fragment fragment) {
         //获取管理者,开启事务
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
         //替换功能
-        if (currentFragment != null){
+        if (currentFragment != null) {
             fragmentTransaction.hide(currentFragment);
         }
 
         //判断要添加的fragment时候被添加过
-        if (fragment.isAdded()){
+        if (fragment.isAdded()) {
             //显示传过来的
             fragmentTransaction.show(fragment);
-        }else {//没有添加过
+        } else {//没有添加过
             //添加传过来的
-            fragmentTransaction.add(R.id.fl_main,fragment);
+            fragmentTransaction.add(R.id.fl_main, fragment);
         }
 
         //提交
@@ -140,4 +191,18 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void NumberChanged(int num) {
+
+        ShoppingManager.getInstance().setAfternum(num);
+
+        int beforenum = ShoppingManager.getInstance().getBeforenum();
+        int afternum = ShoppingManager.getInstance().getAfternum();
+
+        if (beforenum != afternum) {
+            ShoppingManager.getInstance().setBeforenum(afternum);
+            mRedMessage.setNum(afternum);
+        }
+
+    }
 }

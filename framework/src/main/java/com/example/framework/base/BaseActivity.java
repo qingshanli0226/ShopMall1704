@@ -16,6 +16,8 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.framework.manager.AppActivityManager;
 
+import retrofit2.http.HEAD;
+
 /**
  * base类
  * */
@@ -38,11 +40,9 @@ public abstract class BaseActivity extends AppCompatActivity {
             Window window = getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             window.setStatusBarColor(Color.TRANSPARENT);
-//            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//                ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, REQUEST_PERMISSION_CODE);
-//            }
+            window.setStatusBarColor(Color.RED);
         }
         //初始化
         initView();

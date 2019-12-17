@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="bottom_size_16">16sp</dimen>
+    <dimen name="bottom_height_60">60dp</dimen>
+    <dimen name="bottom_height_30">30dp</dimen>
+</resources>
