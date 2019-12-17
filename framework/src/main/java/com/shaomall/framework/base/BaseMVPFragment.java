@@ -3,6 +3,8 @@ package com.shaomall.framework.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.example.commen.LoadingPageConfig;
+import com.example.commen.util.PageUtil;
 import com.example.commen.util.ShopMailError;
 import com.shaomall.framework.base.view.IBaseView;
 
@@ -24,6 +26,7 @@ public abstract class BaseMVPFragment<T> extends BaseFragment implements IBaseVi
 //            iBasePresenter.attachView(this);
 //        }
 //        initData(iBasePresenter);
+
     }
 
     @Override
@@ -66,7 +69,7 @@ public abstract class BaseMVPFragment<T> extends BaseFragment implements IBaseVi
     }
 
     @Override
-    public void loadingPage(int code) {
+    public void loadingPage(int requestCode, int code) {
 
     }
 

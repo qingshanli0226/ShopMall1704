@@ -39,6 +39,7 @@ class GoodsInfoActivity : BaseMVPActivity<String>() {
         if (goodsDescribe != null) {
             mTvGoodInfoDesc.text = goodsDescribe
         }
+
         //商品价格
         mTvGoodInfoPrice.text = "￥ " + goodsInfo.goodsPrice
 
@@ -84,6 +85,7 @@ class GoodsInfoActivity : BaseMVPActivity<String>() {
             }
         }
     }
+
 
     /**
      * 网络请求成功回调

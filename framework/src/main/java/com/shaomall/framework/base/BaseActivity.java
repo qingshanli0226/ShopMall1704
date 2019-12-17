@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.commen.util.PageUtil;
 import com.gyf.immersionbar.ImmersionBar;
 import com.shaomall.framework.manager.ActivityInstanceManager;
 import com.shaomall.framework.manager.UserInfoManager;

@@ -46,7 +46,7 @@ public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler>{
         myhodler.tvGoodsName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemDetailsCallBack.onItemDetailsCallBack(i);
+                //itemDetailsCallBack.onItemDetailsCallBack(i);
             }
         });
 

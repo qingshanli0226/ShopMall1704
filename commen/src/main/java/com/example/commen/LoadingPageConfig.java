@@ -6,3 +6,4 @@ public class LoadingPageConfig {
     public static final int STATE_EMPTY_CODE   = 3; //加载成功, 但数据为空
     public static final int STATE_SUCCESS_CODE = 4; //加载成功
 }
+
