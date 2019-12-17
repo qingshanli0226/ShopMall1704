@@ -57,8 +57,9 @@ public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler> {
                 if (Integer.parseInt(arr.get(i).getProductNum()) == 1) {
                     Toast.makeText(context, "已经不能在减啦", Toast.LENGTH_SHORT).show();
                 } else {
-                    itemNumCallBack.onItemNumCallBack(i, Integer.parseInt(arr.get(i).getProductNum()) - 1);
-                    myhodler.tvNum.setText((Integer.parseInt(arr.get(i).getProductNum()) - 1) + "");
+                    int num = Integer.parseInt(arr.get(i).getProductNum()) - 1;
+                    itemNumCallBack.onItemNumCallBack(i, num);
+                    myhodler.tvNum.setText(num + "");
                 }
             }
         });
@@ -67,8 +68,9 @@ public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler> {
         myhodler.tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemNumCallBack.onItemNumCallBack(i, Integer.parseInt(arr.get(i).getProductNum()) + 1);
-                myhodler.tvNum.setText((Integer.parseInt(arr.get(i).getProductNum()) + 1) + "");
+                int num = Integer.parseInt(arr.get(i).getProductNum()) + 1;
+                itemNumCallBack.onItemNumCallBack(i, num);
+                myhodler.tvNum.setText(num + "");
             }
         });
 
@@ -80,7 +82,7 @@ public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler> {
                 //TODO 设置多选框是否选中
                 arr.get(i).setSelect(myhodler.checkBox.isChecked());
                 //TODO 返回点击的第几个
-                itemCallBack.onClick(i);
+                itemOnCheckBoxClickListener.onClick(i);
             }
         });
     }
@@ -118,12 +120,12 @@ public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler> {
 
 
     //checkbox要使用到的的接口回调
-    private ItemOnCheckBoxClickListener itemCallBack;
+    private ItemOnCheckBoxClickListener itemOnCheckBoxClickListener;
 
     //OnClickListener
 
     public void setItemCheckBoxOnClickListener(ItemOnCheckBoxClickListener itemCallBack) {
-        this.itemCallBack = itemCallBack;
+        this.itemOnCheckBoxClickListener = itemCallBack;
     }
 
     //TODO checkbox要使用到的的接口回调

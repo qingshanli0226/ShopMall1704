@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -173,7 +172,6 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
                 allCheckbox.setChecked(true);
             }
 
-
             sum += getShoppingPrice2Num(listData.get(index));
 
         } else {
@@ -221,7 +219,6 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
 
     //TODO 更新商品数量接口
     private void uploadGoodsData(int i, int num) {
-        calculateTheTotalPrice(i);
         if (upDateShoppingcartPresenter == null) {
             upDateShoppingcartPresenter = new UpDateShoppingCartPresenter();
             upDateShoppingcartPresenter.attachView(this);
@@ -263,12 +260,37 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
     @Override
     public void onRequestHttpDataSuccess(int requestCode, String message, Object data) {
         if (requestCode == AppNetConfig.REQUEST_CODE_TOUPDATE_CARTQUANTITY) {
-            // TODO　修改购物车数量
-            ShoppingManager.getInstance().upDataGoodsNum(upDateGoodsNum);
+            //更新总价金额
+            totalPriceSingleData(upDateGoodsNum.get("index"), upDateGoodsNum.get("num"));
         } else if (requestCode == AppNetConfig.COURT_SHIP_CODE_DELETE_SHOPPINGCART_QUANTITY) {
             //TODO 删除购物车
             ShoppingManager.getInstance().removeShoppingCartData();
         }
+    }
+
+    /**
+     * 更新总价金额
+     *
+     * @param i
+     * @param newNum
+     */
+    private void totalPriceSingleData(int i, int newNum) {
+        ShoppingCartBean data = listData.get(i);
+        if (data.isSelect()) {
+            float price = Float.parseFloat(data.getProductPrice());
+            int oldNum = Integer.parseInt(data.getProductNum());
+            //根据newNum是否大于oldNum判断是点击了加还是减
+            if (newNum > oldNum) { //加
+                sum += price;
+            } else if (newNum < oldNum) { //减
+                sum -= price;
+            }
+
+            setTvTotalPriceValue(sum); //更新合计值
+        }
+
+        // TODO　修改购物车数量
+        ShoppingManager.getInstance().upDataGoodsNum(upDateGoodsNum);
     }
 
 
