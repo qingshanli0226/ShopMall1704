@@ -45,10 +45,10 @@
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/mine_height_170">
-                    android:layout_width="match_parent"
                     android:layout_height="@dimen/mine_height_170"
                     app:layout_collapseMode="parallax"
+                    >
+
                     >
 
                     <ImageView
@@ -71,7 +71,9 @@
                         android:layout_marginStart="@dimen/mine_mStart_10"
                         android:layout_below="@id/ib_user_icon_avator"
                         android:text="@string/mine_text"
+                        android:background="@null"
                         android:textColor="@color/color_white" />
+
                 </RelativeLayout>
 
 
