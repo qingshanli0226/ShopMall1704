@@ -17,8 +17,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
         android:hint="中华园"
-        android:textColor="@color/colorBlack"
-        android:textSize="18sp"/>
+        style="@style/ShopMallText"/>
 
     <TextView
         android:layout_width="match_parent"

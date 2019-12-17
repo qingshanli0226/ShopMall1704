@@ -3,7 +3,6 @@ package com.example.shopmall.activity;
 import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -22,6 +21,7 @@ import androidx.annotation.RequiresApi;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IPostBaseView;
+import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
 import com.example.shopmall.bean.RegisterBean;
 import com.example.shopmall.presenter.RegisterPresenter;
@@ -44,13 +44,13 @@ public class RegisterActivity extends BaseActivity implements IPostBaseView<Regi
     private boolean isView = false;
 
     @SuppressLint("HandlerLeak")
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
 
-            if (msg.what == 100){
-                new CountDownTimer(1000*3,1000){
+            if (msg.what == 100) {
+                new CountDownTimer(1000 * 3, 1000) {
 
                     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                     @Override
@@ -94,6 +94,8 @@ public class RegisterActivity extends BaseActivity implements IPostBaseView<Regi
         tbRegister.setLeftImg(R.drawable.left);
         tbRegister.setCenterText("注册", 18, Color.WHITE);
 
+
+
         tbRegister.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
             public void LeftClick() {
@@ -128,12 +130,12 @@ public class RegisterActivity extends BaseActivity implements IPostBaseView<Regi
         ivWord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isView){
+                if (!isView) {
                     isView = true;
                     ivWord.setBackground(getResources().getDrawable(R.drawable.view));
                     etWord.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     initSelection();
-                }else {
+                } else {
                     isView = false;
                     ivWord.setBackground(getResources().getDrawable(R.drawable.view_off));
                     etWord.setTransformationMethod(PasswordTransformationMethod.getInstance());
@@ -144,9 +146,9 @@ public class RegisterActivity extends BaseActivity implements IPostBaseView<Regi
     }
 
     private void initSelection() {
-        if (etWord.getText().length() == 0){
+        if (etWord.getText().length() == 0) {
             etWord.setSelection(0);
-        }else {
+        } else {
             etWord.setSelection(etWord.getText().length());
         }
     }

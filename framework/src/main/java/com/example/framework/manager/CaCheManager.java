@@ -1,5 +1,6 @@
 package com.example.framework.manager;
 
+import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -38,7 +39,8 @@ public class CaCheManager {
     private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            shopService = ((ShopService.MyBinder) service).getService();
+            ShopService.MyBinder service1 = (ShopService.MyBinder) service;
+            shopService = service1.getService();
             //注册服务中的接口,此接口是网络请求成功后,把请求下来的bean类传过来
             shopService.registerDownLoadDataInterface(new ShopService.DownLoadDataInterface() {
                 @Override
@@ -109,9 +111,13 @@ public class CaCheManager {
     }
 
     //管理类初始化
-    public void init(Context context) {
+    public void init() {
         Intent intent = new Intent(context, ShopService.class);
-        context.startService(intent);
         context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+        context.startService(intent);
+    }
+
+    public void unBindService(Context context) {
+        context.unbindService(serviceConnection);
     }
 }

@@ -23,7 +23,7 @@
         android:lines="2"
         android:padding="10dp"
         android:text="【智趣屋】DIY小屋盒子剧场 手工拼装房子 模型玩具创意礼品 送工具"
-        android:textColor="#000" />
+        style="@style/ShopMallText" />
 
     <TextView
         android:id="@+id/tv_hot_cover_price"
