@@ -189,6 +189,8 @@ public class StepService extends Service implements SensorEventListener {
 
             Log.e("##Up",count+"");
             if (updateUi != null) {
+
+
                 updateUi.getUpdateStep(currentStep,count);
             }
         }

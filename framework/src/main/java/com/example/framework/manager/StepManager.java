@@ -14,6 +14,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.text.format.Time;
+import android.util.Log;
 
 
 import com.example.common.OrmUtils;
@@ -42,10 +43,11 @@ public class StepManager {
     ServiceConnection serviceConnection;
     List<StepManagerListener> stepManagerListeners=new ArrayList<>();
     List<StepIntegalListener> IntegalListeners=new ArrayList<>();
+
     private Intent intent;
 
+    private int cut;
 
-    DaoSession daoSession;
     SQLiteDatabase hourDb;
 
     public static StepManager getInstance() {
@@ -68,13 +70,15 @@ public class StepManager {
                 stepService=((StepService.StepBinder)iBinder).getService();
 
                 stepService.registerListener(new StepService.UpdateUi() {
+
+
                     @Override
                     public void getUpdateStep(int count, int ingal) {
-
-
+                    cut=count;
                         for (int i=0;i<stepManagerListeners.size();i++){
                             stepManagerListeners.get(i).onIntegral(ingal);
                             stepManagerListeners.get(i).onStepChange(count);
+
                         }
 
                         if(IntegalListeners.size()>0){
@@ -83,15 +87,10 @@ public class StepManager {
                             }
                         }
 
-
-
                     }
 
 
                 });
-
-
-
 
             }
 
@@ -120,7 +119,6 @@ public class StepManager {
         hourDb.insert("history",null,contentValues);
     }
     public List<HourBean> findHour(){
-
         Cursor cursor = hourDb.rawQuery("select distinct time,date,currentStep from history", null);
         List<HourBean> mlist=new ArrayList<>();
         while (cursor.moveToNext())

@@ -29,7 +29,7 @@ public class MyApplication extends Application {
         JAnalyticsInterface.setDebugMode(true);
         JAnalyticsInterface.setDebugMode(true);
         JAnalyticsInterface.init(context);
-        StepManager.getInstance().init(this);
+        StepManager.getInstance().init(getApplicationContext());
         //初始化缓存管理类
         CaCheManager.getInstance(this).init(this);
         //点击通知跳转MainActivity

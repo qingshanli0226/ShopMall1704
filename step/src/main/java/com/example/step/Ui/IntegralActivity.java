@@ -106,6 +106,7 @@ public class IntegralActivity extends BaseActivity {
             //      当前步数和积分
             List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
             intergral_Step.setText(queryAll.get(queryAll.size()-1).getCurrent_step()+"");
+            integral.setText(queryAll.get(queryAll.size()-1).getIntegral()+"");
             String current_step = queryAll.get(queryAll.size() - 1).getCurrent_step();
             int i = Integer.parseInt(current_step);
             step_ArcView.setCurrentCount(10000,i);
