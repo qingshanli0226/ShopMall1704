@@ -116,6 +116,20 @@ public class StepManager {
 
 
 
+    //获取现在地1日期
+    public String getTodayDate(){
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return dateFormat.format(date);
+    }
+    //获取现在的时间
+    public String getToadyTime(){
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+        return simpleDateFormat.format(date);
+    };
+
+
     public int  getFirstStep(){
         for (int i=0;i<firstStepBeanDao.queryBuilder().list().size();i++){
             if(firstStepBeanDao.queryBuilder().list().get(i).getFirst()==1){
@@ -140,6 +154,7 @@ public class StepManager {
     public boolean isThisMonth(long time){
         return isThisTime(time,"yyyy-MM-dd");
     }
+
     public boolean isThisTime(long time,String pattern){
 
         Calendar calendar = Calendar.getInstance();
@@ -159,6 +174,7 @@ public class StepManager {
 
     }
 
+    //获取没有的最后一天
     public int getLastDayMonth(int month){
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.MONTH,month-1);
@@ -171,6 +187,7 @@ public class StepManager {
         return lastDay;
     }
 
+    //获取每月的第一天
     public int getFirstDayMonth(int month){
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.MONTH,month-1);
@@ -181,6 +198,7 @@ public class StepManager {
     }
 
 
+    //获取每周的日期
     public  List<String> getWeekDay(){
         Calendar calendar = Calendar.getInstance();
         //本周的第一天

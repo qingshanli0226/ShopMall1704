@@ -73,16 +73,8 @@ public class StepService extends Service implements SensorEventListener {
         //初始化广播
         initBoradCast();
         //初始化传感器
-//        new Thread(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//            }
-//        }).start();
-                initSensorListener();
-
+        initSensorListener();
         startTimer();
-
 
     }
 
@@ -148,8 +140,8 @@ public class StepService extends Service implements SensorEventListener {
 
 
     private void initToday() {
-        CURRENT_DATE = getTodayDate();
-        CURRENT_TIME=getToadyTime();
+        CURRENT_DATE = StepManager.getInstance().getTodayDate();
+        CURRENT_TIME=StepManager.getInstance().getToadyTime();
         OrmUtils.createDb(this, "DbStep");
         List<ShopStepBean> shopStepBeans = OrmUtils.getQueryByWhere(ShopStepBean.class, "day", new String[]{CURRENT_DATE});
         Log.e("##day", shopStepBeans.toString());
@@ -200,26 +192,10 @@ public class StepService extends Service implements SensorEventListener {
                 updateUi.getUpdateStep(currentStep,count);
             }
         }
-//        List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
-//        Log.e("##Up-",count+"");
-//        for (int i=0;i<queryAll.size();i++){
-//            Log.e("##Up----",queryAll.get(i).getIntegral()+"");
-//            count+=queryAll.get(i).getIntegral();
-//
-//        }
+
     }
 
-    //获取今天的日期
-    private String getTodayDate() {
-        Date date = new Date(System.currentTimeMillis());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        return dateFormat.format(date);
-    }
-    private String getToadyTime(){
-        Date date = new Date(System.currentTimeMillis());
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
-        return simpleDateFormat.format(date);
-    }
+
 
     //实时通知
     @SuppressLint("NewApi")
@@ -272,8 +248,8 @@ public class StepService extends Service implements SensorEventListener {
     //实时获取步数
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        CURRENT_DATE = getTodayDate();
-        CURRENT_TIME=getToadyTime();
+        CURRENT_DATE = StepManager.getInstance().getTodayDate();
+        CURRENT_TIME=StepManager.getInstance().getToadyTime();
         if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
             int sensorStep = (int) sensorEvent.values[0];
             if (!isFirst) {

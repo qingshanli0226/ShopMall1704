@@ -8,6 +8,7 @@ import android.graphics.Color;
 
 import androidx.fragment.app.Fragment;
 
+import android.net.Uri;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -93,12 +94,11 @@ public class MineFragment extends BaseFragment {
                                 @Override
                                 public void callback(String uri) {
 
+                                    ibUserIconAvator.setImageURI(Uri.parse(uri));
                                     IntegerPresenter integerPresenter = new IntegerPresenter(Constant.BASE_URL_JSON + "upload", HeadBean.class);
 //                                    integerPresenter.attachPostView(this);
-
-                                    if(uri!=null){
-
-                                    }
+//                                    if(uri!=null){
+//                                    }
 
                                 }
                             });
