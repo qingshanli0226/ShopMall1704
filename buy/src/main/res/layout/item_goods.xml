@@ -3,16 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/buy_one"
+    android:padding="@dimen/dp_5"
     android:background="@drawable/goodscolor">
     <CheckBox
         android:id="@+id/itemCheck"
         android:button="@null"
-        android:drawableLeft="@drawable/checkbut"
+        android:layout_marginRight="@dimen/dp_10"
+        android:background="@drawable/checkbut"
         android:layout_centerVertical="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"/>
     <ImageView
         android:id="@+id/itemImg"
+        android:padding="@dimen/dp_3"
         android:layout_toRightOf="@id/itemCheck"
         android:layout_width="@dimen/buy_one_hund"
         android:layout_height="@dimen/buy_one_hund"/>
@@ -20,7 +23,7 @@
         android:id="@+id/itemTitle"
         android:text="标题"
         android:textColor="@color/buyPink"
-        android:textSize="@dimen/buy_text_two"
+        android:textSize="@dimen/buy_text_of"
         android:maxLines="1"
         android:layout_toRightOf="@id/itemImg"
         android:layout_width="wrap_content"
@@ -45,23 +48,24 @@
         android:id="@+id/itemNum"
         android:layout_alignTop="@id/itemAddBut"
         android:text="数量"
-        android:layout_toLeftOf="@id/itemAddBut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Button
+        android:gravity="center"
+        android:layout_width="@dimen/buy_three"
+        android:layout_height="@dimen/buy_two"
+        android:layout_toLeftOf="@id/itemAddBut"/>
+    <TextView
         android:id="@+id/itemDelBut"
-        android:background="@null"
         android:layout_margin="10dp"
+        android:gravity="center"
         android:layout_toLeftOf="@id/itemNum"
         android:layout_below="@id/itemPrice"
         android:text="-"
         android:textStyle="bold"
         android:layout_width="20dp"
         android:layout_height="20dp"/>
-    <Button
+    <TextView
         android:id="@+id/itemAddBut"
+        android:gravity="center"
         android:layout_alignParentRight="true"
-        android:background="@null"
         android:textStyle="bold"
         android:layout_margin="10dp"
         android:layout_below="@id/itemPrice"

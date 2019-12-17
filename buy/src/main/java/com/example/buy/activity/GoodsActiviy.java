@@ -31,7 +31,8 @@ import com.example.buy.databeans.GoodsBean;
 import com.example.buy.databeans.OkBean;
 import com.example.buy.presenter.GetCartPresenter;
 import com.example.framework.listener.OnShopCartListener;
-import com.example.framework.manager.CartManager;
+import com.example.framework.manager.AccountManager;
+import com.example.buy.CartManager;
 import com.example.buy.presenter.PostAddCartPresenter;
 import com.example.common.HomeBean;
 import com.example.common.IntentUtil;
@@ -138,24 +139,30 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == goPayBut.getId()) {
-            //携带商品数据跳转到支付页  并结束页面
-            Intent intent = new Intent(this, PayActivity.class);
-            ArrayList<GoodsBean> goodList = new ArrayList<>();
-            goodList.add(goods);
-            intent.putExtra(IntentUtil.ORDERS, goodList);
-            startActivity(intent);
-            finish();
-        } else if (v.getId() == joinCartBut.getId()) {
-            //加入购物车  弹窗
-            setBackAlph(0.7f);
-            popupWindow.showAtLocation(findViewById(R.id.goodsRel), Gravity.BOTTOM, 0, 0);
-        } else if (v.getId() == collectBut.getId()) {
-            //本地sp存储收藏的商品的信息
-            Toast.makeText(this, "已加入收藏", Toast.LENGTH_SHORT).show();
-        } else if (v.getId() == cartBut.getId()) {
-            //点击购物车
-            startActivity(ShoppCartActivity.class, null);
+        if (AccountManager.getInstance().isLogin()){
+            if (v.getId() == goPayBut.getId()) {
+                //携带商品数据跳转到支付页  并结束页面
+                Intent intent = new Intent(this, PayActivity.class);
+                ArrayList<GoodsBean> goodList = new ArrayList<>();
+                goodList.add(goods);
+                intent.putExtra(IntentUtil.ORDERS, goodList);
+                startActivity(intent);
+                finish();
+            } else if (v.getId() == joinCartBut.getId()) {
+                //加入购物车  弹窗
+                setBackAlph(0.7f);
+                popupWindow.showAtLocation(findViewById(R.id.goodsRel), Gravity.BOTTOM, 0, 0);
+            } else if (v.getId() == collectBut.getId()) {
+                //本地sp存储收藏的商品的信息
+                Toast.makeText(this, "已加入收藏", Toast.LENGTH_SHORT).show();
+            } else if (v.getId() == cartBut.getId()) {
+                //点击购物车
+                Intent intent = new Intent(this, ShoppCartActivity.class);
+                intent.putExtra(IntentUtil.GOODS,goods.getProductId());
+                startActivity(intent);
+            }
+        }else {
+            Toast.makeText(this,getResources().getString(R.string.buyLoginFirst),Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -256,8 +263,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         //动画样式
         popupWindow.setAnimationStyle(R.style.popAnimation);
         //背景色
-        ColorDrawable cd = new ColorDrawable(Color.alpha(0));
-        popupWindow.setBackgroundDrawable(cd);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(0));
 
         View view = LayoutInflater.from(this).inflate(R.layout.popuwindow_goods, null);
 
@@ -288,11 +294,15 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         popuSure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //强制将Float转为int
-                goods.setProductNum(((int) ((float) Float.valueOf(popuNum.getText().toString()))));
-                addCartPresenter = new PostAddCartPresenter(goods);
-                addCartPresenter.attachView(GoodsActiviy.this);
-                addCartPresenter.doHttpPostJSONRequest(ADD_GOODS);
+                if (AccountManager.getInstance().isLogin()){
+                    //强制将Float转为int
+                    goods.setProductNum(((int) ((float) Float.valueOf(popuNum.getText().toString()))));
+                    addCartPresenter = new PostAddCartPresenter(goods);
+                    addCartPresenter.attachView(GoodsActiviy.this);
+                    addCartPresenter.doHttpPostJSONRequest(ADD_GOODS);
+                }else {
+                    Toast.makeText(GoodsActiviy.this,getResources().getString(R.string.buyLoginFirst),Toast.LENGTH_SHORT).show();
+                }
             }
         });
         //消失监听
@@ -332,6 +342,8 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
 
         endLoaction[0] = -(beiImgage.getWidth() / 2) + (cartBut.getWidth() * 2);
         endLoaction[1] = (height - (beiImgage.getHeight() / 2));
+//        endLoaction[0]=width;
+//        endLoaction[1]=height;
 
         Path path = new Path();
         //控制初始点

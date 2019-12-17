@@ -4,7 +4,13 @@
     android:layout_height="match_parent"
     android:background="@color/buyWhite"
     android:id="@+id/goodsRel">
+    <com.example.common.view.MyToolBar
+        android:id="@+id/myToolBar"
+        android:background="@drawable/toolbar_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <ScrollView
+        android:layout_below="@id/myToolBar"
         android:layout_above="@id/foot"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -25,7 +31,7 @@
             <TextView
                 android:id="@+id/goodsTitle"
                 android:textColor="@color/buyPink"
-                android:textSize="@dimen/buy_text_three"
+                android:textSize="@dimen/sp_25"
                 android:layout_below="@id/goodsImage"
                 android:text="标题"
                 android:layout_width="match_parent"
@@ -62,6 +68,9 @@
     </ScrollView>
     <RelativeLayout
         android:id="@+id/foot"
+        android:paddingBottom="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

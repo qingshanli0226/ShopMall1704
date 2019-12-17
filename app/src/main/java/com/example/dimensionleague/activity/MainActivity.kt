@@ -17,7 +17,7 @@ import com.example.dimensionleague.type.TypeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import com.example.framework.base.BaseNetConnectActivity
 import com.example.framework.listener.OnShopCartListener
-import com.example.framework.manager.CartManager
+import com.example.buy.CartManager
 
 class MainActivity : BaseNetConnectActivity() {
     lateinit var listener:OnShopCartListener

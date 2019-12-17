@@ -29,4 +29,6 @@ public interface IView<T> {
     int getRelativeLayout();
     //TODO 返回错误信息
     void onHttpRequestDataFailed(int requestCode, ErrorCode error);
+    //搜索
+    void getSearchDataSuccess(String str);
 }

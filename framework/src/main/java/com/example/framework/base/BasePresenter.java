@@ -79,8 +79,9 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                             if (iView != null)
                                 iView.showLoading();
                         } catch (Exception e) {
-                            ErrorDisposeManager.HandlerError(e);
-                            throw new RuntimeException(e.getMessage());
+                            e.printStackTrace();
+//                            ErrorDisposeManager.HandlerError(e);
+//                            throw new RuntimeException(e.getMessage());
                         }
                     }
 
@@ -89,9 +90,14 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                         try {
                             if (iView != null) {
                                 iView.hideLoading();
-                                T resEntity = new Gson().fromJson(responseBody.string(), getBeanType());
-                                //TODO 获取数据成功
-                                iView.onRequestSuccess(resEntity);
+                                String string = responseBody.string();
+                                if (getBeanType()==null){
+                                    iView.getSearchDataSuccess(string);
+                                }else {
+                                    T resEntity = new Gson().fromJson(string, getBeanType());
+                                    //TODO 获取数据成功
+                                    iView.onRequestSuccess(resEntity);
+                                }
                             }
                         } catch (IOException e) {
                             e.printStackTrace();

@@ -10,6 +10,7 @@
         <activity android:name="com.example.buy.activity.PayActivity"
             android:launchMode="singleTask"/>
         <activity android:name="com.example.buy.activity.OrderActivity"/>
-        <activity android:name=".activity.ShoppCartActivity" />
+        <activity android:name=".activity.ShoppCartActivity"/>
+        <activity android:name=".activity.SearchActivity"/>
     </application>
 </manifest>

@@ -1,5 +1,6 @@
 package com.example.dimensionleague.home;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 
@@ -7,6 +8,8 @@ import android.view.View;
 import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.buy.activity.SearchActivity;
 import com.example.common.HomeBean;
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
@@ -91,7 +94,8 @@ public class HomeFragment extends BaseNetConnectFragment {
         my_toolbar.getHome_search().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "跳转到搜索页面", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(), SearchActivity.class);
+                startActivity(intent);
             }
         });
     }

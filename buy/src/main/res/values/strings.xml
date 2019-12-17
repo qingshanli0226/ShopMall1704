@@ -1,5 +1,4 @@
 <resources>
-    <string name="buyCheckAll">全选</string>
     <string name="buyDelete">删除</string>
     <string name="buyNow">立即购买</string>
     <string name="buyCart">购物车</string>
@@ -13,4 +12,5 @@
     <string name="buyOnePrice">单价:</string>
     <string name="buyOneNum">数量:</string>
     <string name="buyOneSum">总价:</string>
+    <string name="buyLoginFirst">请您先登录,蟹蟹配合</string>
 </resources>
