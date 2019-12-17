@@ -5,7 +5,8 @@
     android:id="@+id/type_Relative"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@mipmap/style_background">
     <com.example.common.view.MyToolBar
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
@@ -14,7 +15,7 @@
         android:layout_below="@id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite"
+        android:background="#99FFFFFF"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:orientation="horizontal">
         <ListView
@@ -28,9 +29,4 @@
             android:id="@+id/type_rv_right"
             android:layout_weight="7"/>
     </LinearLayout>
-    <ImageView
-        android:layout_below="@id/my_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@mipmap/style_background"/>
 </RelativeLayout>

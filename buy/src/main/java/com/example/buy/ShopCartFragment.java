@@ -1,5 +1,6 @@
 package com.example.buy;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.example.buy.databeans.GetCartBean;
 import com.example.buy.databeans.GoodsBean;
 import com.example.buy.databeans.OkBean;
 import com.example.common.code.Constant;
+import com.example.common.view.LogoutDialog;
 import com.example.common.view.MyToolBar;
 import com.example.buy.presenter.PostDelteGoodsPresenter;
 import com.example.framework.manager.AccountManager;
@@ -34,6 +36,8 @@ import com.example.framework.port.IPresenter;
 import java.util.ArrayList;
 
 import com.example.net.AppNetConfig;
+
+import javax.security.auth.login.LoginException;
 
 public class ShopCartFragment extends BaseNetConnectFragment{
     //请求购物车  刷新单个   删除
@@ -53,8 +57,6 @@ public class ShopCartFragment extends BaseNetConnectFragment{
     private TextView cartMoney;
 
     //数据和被选择
-    private ArrayList<GoodsBean> list = new ArrayList<>();
-    private ArrayList<CheckGoodsData> checks = new ArrayList<>();
     private ArrayList<GoodsBean> waitDelList = new ArrayList<>();
 
     //购物车数据获取  购物车更新
@@ -87,18 +89,18 @@ public class ShopCartFragment extends BaseNetConnectFragment{
                     if (v.getId() == buyBut.getId()) {
                         if (delStatus) {
                             //删除
-                            for (int i = 0; i < checks.size(); i++) {
-                                if (checks.get(i).isSelect()) {
-                                    waitDelList.add(list.get(i));
+                            for (int i = 0; i < CartManager.getInstance().getChecks().size(); i++) {
+                                if (CartManager.getInstance().getChecks().get(i).isSelect()) {
+                                    waitDelList.add(CartManager.getInstance().getList().get(i));
                                 }
                             }
                             deleteGoods();
                         } else {
                             //支付跳转
                             ArrayList<GoodsBean> goods = new ArrayList<>();
-                            for (int i = 0; i < checks.size(); i++) {
-                                if (checks.get(i).isSelect()) {
-                                    goods.add(list.get(i));
+                            for (int i = 0; i < CartManager.getInstance().getChecks().size(); i++) {
+                                if (CartManager.getInstance().getChecks().get(i).isSelect()) {
+                                    goods.add(CartManager.getInstance().getList().get(i));
                                 }
                             }
                             Intent intent = new Intent(getContext(), PayActivity.class);
@@ -141,27 +143,54 @@ public class ShopCartFragment extends BaseNetConnectFragment{
         });
 
         //设置recyclerView
-        BaseRecyclerAdapter<GoodsBean> adapter = new BaseRecyclerAdapter<GoodsBean>(R.layout.item_goods, list) {
+        BaseRecyclerAdapter<GoodsBean> adapter = new BaseRecyclerAdapter<GoodsBean>(R.layout.item_goods, CartManager.getInstance().getList()) {
             @Override
             public void onBind(BaseViewHolder holder, final int position) {
-                holder.getTextView(R.id.itemTitle, list.get(position).getProductName());
-                holder.getTextView(R.id.itemPrice, list.get(position).getProductPrice());
+                holder.getTextView(R.id.itemTitle, CartManager.getInstance().getList().get(position).getProductName());
+                holder.getTextView(R.id.itemPrice, CartManager.getInstance().getList().get(position).getProductPrice());
                 CheckBox itemCheck = (CheckBox) holder.getView(R.id.itemCheck);
-                holder.getTextView(R.id.itemNum, list.get(position).getProductNum() + "")
+                //数量
+                holder.getTextView(R.id.itemNum, CartManager.getInstance().getList().get(position).getProductNum() + "")
                         .setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                //修改数量对话框
+                                LogoutDialog logoutDialog =new LogoutDialog(getContext());
+                                logoutDialog.init(R.layout.dialog_num);
+                                logoutDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                                logoutDialog.setCanceledOnTouchOutside(false);
+                                //焦点
+                                logoutDialog.findViewById(R.id.buyDialogNum).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
 
+                                    }
+                                });
+                                //确定
+                                logoutDialog.findViewById(R.id.buyDialogCancel).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                    }
+                                });
+                                //取消
+                                logoutDialog.findViewById(R.id.buyDialogCancel).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                    }
+                                });
+                                logoutDialog.show();
                             }
                         });
                 //点击图片跳转
                 holder.getImageView(R.id.itemImg,
-                        AppNetConfig.BASE_URl_IMAGE + list.get(position).getUrl())
+                        AppNetConfig.BASE_URl_IMAGE + CartManager.getInstance().getList().get(position).getUrl())
                         .setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Intent intent = new Intent(getContext(), GoodsActiviy.class);
-                                intent.putExtra(IntentUtil.SHOW_GOOD, list.get(position));
+                                intent.putExtra(IntentUtil.SHOW_GOOD, CartManager.getInstance().getList().get(position));
                                 getContext().startActivity(intent);
                             }
                         });
@@ -170,12 +199,11 @@ public class ShopCartFragment extends BaseNetConnectFragment{
                 itemCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (checks.size() > position) {
-                            checks.set(position,new CheckGoodsData(isChecked,list.get(position).getProductId()));
-                            CartManager.getInstance().setChecks(checks);
-                            //判断是否需要全选  更新价格
+                        if (CartManager.getInstance().getChecks().size() > position) {
+                            CartManager.getInstance().getChecks().set(position,new CheckGoodsData(isChecked,CartManager.getInstance().getList().get(position).getProductId()));
+                            CartManager.getInstance().setChecks(CartManager.getInstance().getChecks());
+                            //判断是否需要全选
                             judgeCheckAll();
-                            setAllMoney();
                         }
                     }
                 });
@@ -184,8 +212,8 @@ public class ShopCartFragment extends BaseNetConnectFragment{
                 holder.getView(R.id.itemDelBut).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (list.get(position).getProductNum() > 1) {
-                            upDateNum(position, list.get(position).getProductNum() - 1);
+                        if (CartManager.getInstance().getList().get(position).getProductNum() > 1) {
+                            upDateNum(position, CartManager.getInstance().getList().get(position).getProductNum() - 1);
                         }
                     }
                 });
@@ -193,13 +221,13 @@ public class ShopCartFragment extends BaseNetConnectFragment{
                 holder.getView(R.id.itemAddBut).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        upDateNum(position, list.get(position).getProductNum() + 1);
+                        upDateNum(position, CartManager.getInstance().getList().get(position).getProductNum() + 1);
                     }
                 });
                 //必须要放到设置监听后面
-                for (int i=0;i<checks.size();i++) {
+                for (int i=0;i<CartManager.getInstance().getChecks().size();i++) {
                     if (i==position){
-                        itemCheck.setChecked(checks.get(i).isSelect());
+                        itemCheck.setChecked(CartManager.getInstance().getChecks().get(i).isSelect());
                     }
                 }
             }
@@ -224,10 +252,6 @@ public class ShopCartFragment extends BaseNetConnectFragment{
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 /**
-                 * 状态统一   状态相同  状态不同
-                 * 状态相同:反选   状态不同:则根据全局状态,设置全部
-                 *
-                 *
                  * 状态true 选true   不动作
                  * 状态false 选true   全部选中
                  * 状态true 选false    全部取消
@@ -235,20 +259,20 @@ public class ShopCartFragment extends BaseNetConnectFragment{
                  * * */
                 if (isChecked) {
                     if (!checkStatus) {
-                        for (CheckGoodsData i:checks) {
+                        for (CheckGoodsData i:CartManager.getInstance().getChecks()) {
                             i.setSelect(true);
                         }
                         recyclerView.getAdapter().notifyDataSetChanged();
                     }
                 } else {
                     if (checkStatus) {
-                        for (CheckGoodsData i:checks) {
+                        for (CheckGoodsData i:CartManager.getInstance().getChecks()) {
                             i.setSelect(false);
                         }
                         recyclerView.getAdapter().notifyDataSetChanged();
                     }
                 }
-                CartManager.getInstance().setChecks(checks);
+                CartManager.getInstance().setChecks(CartManager.getInstance().getChecks());
                 //更新价格
                 setAllMoney();
             }
@@ -291,30 +315,28 @@ public class ShopCartFragment extends BaseNetConnectFragment{
                      * 物品改变 -->物品全变  物品单个变
                      */
                     if (CartManager.getInstance().getList().isEmpty()){
-                        list.addAll(((GetCartBean) data).getResult());
-                        for (int i = 0; i < list.size(); i++) {
-                            checks.add(new CheckGoodsData(false,list.get(i).getProductId()));
+                        CartManager.getInstance().getList().addAll(((GetCartBean) data).getResult());
+                        for (int i = 0; i < CartManager.getInstance().getList().size(); i++) {
+                            CartManager.getInstance().getChecks().add(new CheckGoodsData(false,CartManager.getInstance().getList().get(i).getProductId()));
                         }
                     }else {
-                        checks=CartManager.getInstance().getChecks();
-                        list.clear();
-                        list.addAll(((GetCartBean) data).getResult());
+                        CartManager.getInstance().getList().clear();
+                        CartManager.getInstance().getList().addAll(((GetCartBean) data).getResult());
                         ArrayList<CheckGoodsData> littleCheks=new ArrayList<>();
-                        for (int i=0;i<list.size();i++){
-                            for (CheckGoodsData good:checks){
-                                if (list.get(i).getProductId().equals(good.getId())&&good.isSelect()){
+                        for (int i=0;i<CartManager.getInstance().getList().size();i++){
+                            for (CheckGoodsData good:CartManager.getInstance().getChecks()){
+                                if (CartManager.getInstance().getList().get(i).getProductId().equals(good.getId())&&good.isSelect()){
                                     littleCheks.add(good);
                                     break;
                                 }
                             }
                         }
                         CartManager.getInstance().getChecks().clear();
-                        checks.clear();
-                        for (int i = 0; i < list.size(); i++) {
-                            checks.add(new CheckGoodsData(false,list.get(i).getProductId()));
+                        for (int i = 0; i < CartManager.getInstance().getList().size(); i++) {
+                            CartManager.getInstance().getChecks().add(new CheckGoodsData(false,CartManager.getInstance().getList().get(i).getProductId()));
                             for (CheckGoodsData good:littleCheks){
-                                if (list.get(i).getProductId().equals(good.getId())){
-                                    checks.get(i).setSelect(true);
+                                if (CartManager.getInstance().getList().get(i).getProductId().equals(good.getId())){
+                                    CartManager.getInstance().getChecks().get(i).setSelect(true);
                                     break;
                                 }
                             }
@@ -322,10 +344,8 @@ public class ShopCartFragment extends BaseNetConnectFragment{
                     }
                     recyclerView.getAdapter().notifyDataSetChanged();
 
-                    CartManager.getInstance().setList(list);
-                    CartManager.getInstance().setChecks(checks);
-                    nullGoods.setVisibility(list.isEmpty()?View.VISIBLE:View.GONE);
-                    recyclerView.setVisibility(list.isEmpty()?View.GONE:View.VISIBLE);
+                    nullGoods.setVisibility(CartManager.getInstance().getList().isEmpty()?View.VISIBLE:View.GONE);
+                    recyclerView.setVisibility(CartManager.getInstance().getList().isEmpty()?View.GONE:View.VISIBLE);
                     setAllMoney();
                 }
                 break;
@@ -353,7 +373,7 @@ public class ShopCartFragment extends BaseNetConnectFragment{
           *  有一个为false  全选状态为false  取消全选
          **/
         checkStatus = true;
-        for (CheckGoodsData i : checks) {
+        for (CheckGoodsData i : CartManager.getInstance().getChecks()) {
             if (!i.isSelect()) {
                 checkStatus = false;
                 break;
@@ -362,13 +382,14 @@ public class ShopCartFragment extends BaseNetConnectFragment{
         if (checkAll.isChecked()!=checkStatus){
             checkAll.setChecked(checkStatus);
         }
+        setAllMoney();
     }
 
     //更新单个数量
     private void upDateNum(int goodsPosition, int goodsNum) {
-        list.get(goodsPosition).setProductNum(goodsNum);
+        CartManager.getInstance().getList().get(goodsPosition).setProductNum(goodsNum);
         recyclerView.getAdapter().notifyDataSetChanged();
-        upDatePresenter = new PostUpDateCartPresenter(list.get(goodsPosition));
+        upDatePresenter = new PostUpDateCartPresenter(CartManager.getInstance().getList().get(goodsPosition));
         upDatePresenter.attachView(ShopCartFragment.this);
         upDatePresenter.doHttpPostJSONRequest(UPDATA_GOODS);
     }
@@ -377,9 +398,9 @@ public class ShopCartFragment extends BaseNetConnectFragment{
     private void setAllMoney() {
         setBuyButStyle();
         float sum = 0;
-        for (int i = 0; i < list.size(); i++) {
-            if (checks.get(i).isSelect()) {
-                sum += (Float.valueOf(list.get(i).getProductPrice()) * list.get(i).getProductNum());
+        for (int i = 0; i < CartManager.getInstance().getList().size(); i++) {
+            if (CartManager.getInstance().getChecks().get(i).isSelect()) {
+                sum += (Float.valueOf(CartManager.getInstance().getList().get(i).getProductPrice()) * CartManager.getInstance().getList().get(i).getProductNum());
             }
         }
         cartMoney.setText("总计:" + sum + "元");
@@ -446,7 +467,7 @@ public class ShopCartFragment extends BaseNetConnectFragment{
     }
     //立即购买的点击
     private void setBuyButStyle(){
-        for (CheckGoodsData i:checks){
+        for (CheckGoodsData i:CartManager.getInstance().getChecks()){
             if (i.isSelect()){
                 buyBut.setEnabled(true);
                 return;
