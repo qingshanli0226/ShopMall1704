@@ -1,6 +1,9 @@
 package com.example.shopmall.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.util.DisplayMetrics;
@@ -10,6 +13,7 @@ import android.widget.RelativeLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.buy.bean.ShoppingCartBean;
 import com.example.buy.fragment.ShoppingCartFragment;
@@ -23,6 +27,7 @@ import com.example.shopmall.fragment.ClassifyFragment;
 import com.example.shopmall.fragment.HomePageFragment;
 import com.example.shopmall.fragment.HorizontalFragment;
 import com.example.shopmall.fragment.MineFragment;
+import com.example.shopmall.jpush.ExampleUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,7 +82,7 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
     public void initData() {
         //获取购物车商品数量
         allNumber = ShoppingManager.getInstance().getAllNumber();
-
+        mRedMessage.setNum(allNumber);
         ShoppingManager.getInstance().setOnNumberChangedListener(this);
 
         Log.d("####", "initData: " + allNumber);
@@ -111,7 +116,6 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
         DisplayMetrics displayMetrics = new DisplayMetrics();
         defaultDisplay.getMetrics(displayMetrics);
         int widthPixels = displayMetrics.widthPixels;
-        Log.e("####", ""+widthPixels);
         mRedMessage.setX(widthPixels/6*4);
     }
 
@@ -125,6 +129,41 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
         presenter.attachGetView((ShoppingCartFragment) fragmentArrayList.get(3));
         presenter.getGetData();
     }
+
+    private MessageReceiver mMessageReceiver;
+    public static final String MESSAGE_RECEIVED_ACTION = "com.example.shopmall.MESSAGE_RECEIVED_ACTION";
+    public static final String KEY_TITLE = "title";
+    public static final String KEY_MESSAGE = "message";
+    public static final String KEY_EXTRAS = "extras";
+
+    public void registerMessageReceiver() {
+        mMessageReceiver = new MessageReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
+        filter.addAction(MESSAGE_RECEIVED_ACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, filter);
+    }
+
+    public class MessageReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                if (MESSAGE_RECEIVED_ACTION.equals(intent.getAction())) {
+                    String messge = intent.getStringExtra(KEY_MESSAGE);
+                    String extras = intent.getStringExtra(KEY_EXTRAS);
+                    StringBuilder showMsg = new StringBuilder();
+                    showMsg.append(KEY_MESSAGE + " : " + messge + "\n");
+                    if (!ExampleUtil.isEmpty(extras)) {
+                        showMsg.append(KEY_EXTRAS + " : " + extras + "\n");
+                    }
+//                    setCostomMsg(showMsg.toString());
+                }
+            } catch (Exception e){
+            }
+        }
+    }
+
 
     private void replaceFragment(Fragment fragment) {
         //获取管理者,开启事务
@@ -162,7 +201,7 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
 
         if (beforenum != afternum) {
             ShoppingManager.getInstance().setBeforenum(afternum);
-            Log.e("####", afternum + "");
+            mRedMessage.setNum(afternum);
         }
 
     }

@@ -6,7 +6,14 @@ android {
     defaultConfig {
         applicationId "com.example.shopmall"
 
+        ndk {
+            //选择要添加的对应 cpu 类型的 .so 库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
         manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
                 JPUSH_APPKEY : "00069070c0ece64218196376", //JPush上注册的包名对应的appkey.
                 JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
                 MTA_APPKEY:"AHKV88TM45MP",
@@ -56,6 +63,7 @@ dependencies {
 
     compile 'cn.jiguang.sdk:janalytics:2.1.0'
     compile 'cn.jiguang.sdk:jcore:2.2.4'
+    compile 'cn.jiguang.sdk:jpush:3.5.0'
 
     implementation 'me.thewyp:avatar:1.0.4'
 

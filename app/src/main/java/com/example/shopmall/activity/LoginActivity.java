@@ -199,6 +199,7 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
 
                 }
             }.start();
+            finish();
         } else {
             LoginEvent loginEvent = new LoginEvent("用户登录", false);
             JAnalyticsInterface.onEvent(LoginActivity.this, loginEvent);

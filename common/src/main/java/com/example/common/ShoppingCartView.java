@@ -28,7 +28,7 @@ public class ShoppingCartView extends View {
 
     public ShoppingCartView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initPaint(num + "");
+        initPaint();
     }
 
     @Override
@@ -37,7 +37,7 @@ public class ShoppingCartView extends View {
 
     }
 
-    private void initPaint(String num) {
+    private void initPaint() {
         paintRed = new Paint();
         paintRed.setAntiAlias(true);
         paintRed.setDither(true);
@@ -51,17 +51,18 @@ public class ShoppingCartView extends View {
         paintText.setStyle(Paint.Style.FILL);
         paintText.setColor(Color.WHITE);
         paintText.setStrokeWidth(10);
-        paintText.setTextSize(20);
+        paintText.setTextSize(30);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawCircle(20, 20, 20, paintRed);
-        canvas.drawText(num, 20 - paintText.measureText(num) / 2, 25, paintText);
+        canvas.drawText(num, 20 - paintText.measureText(num) / 2, 30, paintText);
     }
 
     public void setNum(int num) {
-        initPaint(num + "");
+        this.num=num+"";
+        invalidate();
     }
 }
