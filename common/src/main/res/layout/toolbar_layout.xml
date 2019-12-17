@@ -57,6 +57,7 @@
     <LinearLayout
         android:id="@+id/search_layout"
         style="@style/ToolBarChildViewGroup"
+        android:visibility="visible"
         android:gravity="center">
         <ImageView
             android:id="@+id/scan"

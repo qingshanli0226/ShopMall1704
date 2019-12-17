@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.VideoView;
@@ -38,6 +39,7 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
     private boolean isCarouselFinish = false;
     private boolean isRequestHomeBean = false;
     private boolean isRequestAutoLogin = false;
+    private boolean isNotNet = false;
 
     @Override
     public void init() {
@@ -93,6 +95,8 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
             @Override
             public void onHomeDataError(String s) {
                 isRequestHomeBean = false;
+                isNotNet = true;
+                onFinish();
                 try {
                     AlertDialog alertDialog = new AlertDialog.Builder(WelcomeActivity.this)
                             .setTitle("警告")
@@ -100,7 +104,7 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
                             .setPositiveButton("点击重试", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    CacheManager.getInstance().getHomeDate();
+//                                    CacheManager.getInstance().getHomeDate();
                                 }
                             }).create();
                     alertDialog.show();
@@ -156,7 +160,14 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
 
     @Override
     public void onFinish() {
+        Log.d("lhfff","isCarouselFinish--"+isCarouselFinish+"---isRequestHomeBean---"+isRequestHomeBean+"---isAutoFinish---"+isRequestAutoLogin);
         if (isCarouselFinish && isRequestHomeBean) {
+            //跳转到主页面
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("isAutoLogin",isRequestAutoLogin);
+            startActivity(MainActivity.class,bundle);
+            finish();
+        }else if(isCarouselFinish && isNotNet){
             //跳转到主页面
             Bundle bundle = new Bundle();
             bundle.putBoolean("isAutoLogin",isRequestAutoLogin);

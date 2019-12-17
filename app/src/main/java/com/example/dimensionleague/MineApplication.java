@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.common.utils.SPUtil;
 import com.example.framework.manager.ErrorHandler;
 import com.example.framework.manager.NetConnectManager;
+import com.example.framework.port.INetConnectListener;
 import com.example.point.StepIsSupport;
 import com.example.point.stepmanager.StepPointManager;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -30,7 +31,7 @@ public class MineApplication extends Application {
         //TODO 异常捕获
 //        ErrorHandler.getInstance().initErrorHandler(applicationContext);
         //支持计步的话就查找历史记录-否则就什么也不做
-        if (new StepIsSupport().isSupportStepCountSensor(this)) {
+        if (NetConnectManager.getInstance().isNetConnectStatus() && new StepIsSupport().isSupportStepCountSensor(this)) {
             StepPointManager.getInstance(this).init();
         }
         //友盟推送

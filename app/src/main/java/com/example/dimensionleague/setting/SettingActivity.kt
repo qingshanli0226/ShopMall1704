@@ -15,10 +15,15 @@ import com.example.framework.base.BaseActivity
 import com.example.framework.manager.AccountManager
 import kotlinx.android.synthetic.main.activity_setting.*
 import android.content.DialogInterface
+import android.graphics.Color
 import android.text.InputType
 import androidx.appcompat.app.AlertDialog
 import com.alibaba.sdk.android.utils.AMSDevReporter
+import com.example.common.code.Constant
+import com.example.common.view.LogoutDialog
 import com.example.dimensionleague.R
+import com.example.dimensionleague.activity.MainActivity
+import androidx.appcompat.app.AlertDialog.Builder as Builder1
 
 
 class SettingActivity : BaseActivity(),IAccountCallBack {
@@ -37,6 +42,11 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
     }
 
     override fun init() {
+        setting_toolbar.init(Constant.OTHER_STYLE)
+        setting_toolbar.background = resources.getDrawable(R.drawable.toolbar_style)
+        setting_toolbar.other_back.setImageResource(R.drawable.back3)
+        setting_toolbar.other_title.setTextColor(Color.WHITE)
+        setting_toolbar.other_title.text = "账户设置"
         headView = LayoutInflater.from(this).inflate(R.layout.setting_item_head, null)
         foodView = LayoutInflater.from(this).inflate(R.layout.setting_item_food, null)
         foodButton=foodView.findViewById<Button>(R.id.setting_food_out)
@@ -49,6 +59,11 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
     }
 
     override fun initDate() {
+        setting_toolbar.other_back.setOnClickListener {
+            var intent = Intent(this,MainActivity::class.java)
+            boundActivity(intent)
+            finish()
+        }
         initRecycleView()
 
 
@@ -94,24 +109,32 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
             toast(this,list.get(position).title+"功能暂未开发完全,如有疑问请联系小柚")
         }
         foodButton.setOnClickListener {
-            println("SSSSS退出登录")
-            AlertDialog.Builder(this)
-                .setMessage("是否确认退出账号登陆?")
-                .setPositiveButton("确定",object :DialogInterface.OnClickListener{
-                    override fun onClick(dialog: DialogInterface?, which: Int) {
-                        AccountManager.getInstance().logout()
-                        AccountManager.getInstance().notifyLogout()
-                        finish()
-                    }
-                }).show()
+            val logoutDialog = LogoutDialog(this@SettingActivity)
+            //TODO 背景透明
+            logoutDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+            logoutDialog.setCanceledOnTouchOutside(false)
+            logoutDialog.show()
+
+            val cancel_btn = logoutDialog.findViewById<Button>(R.id.cancel)
+            cancel_btn.setOnClickListener {
+                logoutDialog.dismiss()
+            }
+            val notarize_btn = logoutDialog.findViewById<Button>(R.id.notarize)
+            notarize_btn.setOnClickListener {
+                AccountManager.getInstance().logout()
+                AccountManager.getInstance().notifyLogout()
+                logoutDialog.dismiss()
+                toast(this,"退出成功!")
+                finishActivity()
+            }
         }
         headView.setOnClickListener {
             if (("登录/注册".equals(heanTitle.text.toString()))){
 //                登录注册跳转
-                boundActivity(Intent(this,LoginActivity::class.java))
+                startActivity(LoginActivity::class.java,null)
             }else{
 //                跳转到个人信息
-                boundActivity(Intent(this,UserMassageActivity::class.java))
+                startActivity(UserMassageActivity::class.java,null)
             }
         }
 

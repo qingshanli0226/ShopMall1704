@@ -2,6 +2,7 @@ package com.example.dimensionleague.setting
 
 import android.app.DatePickerDialog
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Color
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -11,7 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.example.common.code.ErrorCode
+import com.example.common.code.Constant
 import com.example.common.port.IAccountCallBack
 import com.example.dimensionleague.R
 import com.example.dimensionleague.userbean.UploadBean
@@ -22,21 +23,14 @@ import com.example.net.AppNetConfig
 import com.example.net.RetrofitCreator
 import com.wyp.avatarstudio.AvatarStudio
 import io.reactivex.Observer
-import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.android.synthetic.main.activity_user_massage.*
-import retrofit2.Retrofit
 import java.io.File
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.user_item_set_name.*
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.MediaType
 import okhttp3.ResponseBody
-import java.lang.Error
 import java.util.*
-import kotlin.math.log
 
 
 //个人用户页面
@@ -67,13 +61,19 @@ class UserMassageActivity :  BaseActivity(),IAccountCallBack {
 
     override fun init() {
         headView = LayoutInflater.from(this).inflate(R.layout.user_item_head, null)
-        heanUserImg=headView.findViewById<ImageView>(R.id.user_massage_item_img)
-        heanUserName=headView.findViewById<TextView>(R.id.user_massage_item_title)
         AccountManager.getInstance().registerUserCallBack(this)
-
+        user_toolbar.init(Constant.OTHER_STYLE)
+        user_toolbar.other_back.setImageResource(R.drawable.back2)
+        user_toolbar.other_title.setText("个人信息")
+        user_toolbar.other_title.setTextColor(Color.BLACK)
     }
 
     override fun initDate() {
+        user_toolbar.other_back.setOnClickListener {
+            var intent = Intent(this,SettingActivity::class.java)
+            boundActivity(intent)
+            finish()
+        }
         list.add(SettingBean("用户名",""))
         list.add(SettingBean("昵称",""))
         list.add(SettingBean("性别","保密"))
@@ -96,7 +96,7 @@ class UserMassageActivity :  BaseActivity(),IAccountCallBack {
                 .needCrop(true)
                 .dimEnabled(true)
                 .setAspect(1,1)
-                .setOutput(50,50)
+                .setOutput(100,100)
                 .setText("拍照","我的相册","取消")
                 .setTextColor(Color.BLUE)
                 .show { uri: String? ->

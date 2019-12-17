@@ -239,7 +239,7 @@ public class MyToolBar extends Toolbar {
                 break;
             case Constant.OTHER_STYLE:
                 GoneAll();
-                other_layout.setVisibility(GONE);
+                other_layout.setVisibility(VISIBLE);
                 break;
         }
     }

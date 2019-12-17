@@ -1,12 +1,15 @@
 package com.example.dimensionleague.mine;
 
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,7 +19,9 @@ import com.example.buy.activity.OrderActivity;
 import com.example.common.HomeBean;
 
 import com.example.common.IntentUtil;
+import com.example.common.code.Constant;
 import com.example.common.code.ErrorCode;
+import com.example.common.view.MyToolBar;
 import com.example.dimensionleague.setting.SettingActivity;
 import com.example.dimensionleague.setting.UserMassageActivity;
 import com.example.framework.manager.AccountManager;
@@ -41,6 +46,8 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
     private MineRecycleViewAdapter listAdapter;
     private MineRecycleAdapter channelAdapter;
     private MineRecommendAdapter recommendAdapter;
+    private NestedScrollView nestedScrollView;
+    private MyToolBar myToolBar;
 
     private HomePresenter homePresenter;
     private List<MineBean> list;
@@ -53,6 +60,8 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
     @Override
     public void init(View view) {
         super.init(view);
+        myToolBar = view.findViewById(R.id.mine_toolbar);
+        nestedScrollView = view.findViewById(R.id.scroll_mine);
         rvList = view.findViewById(R.id.mine_rv_h);
         rvChannel = view.findViewById(R.id.mine_rv_v);
         rvRecommend = view.findViewById(R.id.mine_rv_recommend);
@@ -63,6 +72,13 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
         channelList = new ArrayList<>();
         recommendlList = new ArrayList<>();
         homePresenter = new HomePresenter();
+        rvList.setNestedScrollingEnabled(false);
+        rvChannel.setNestedScrollingEnabled(false);
+        rvRecommend.setNestedScrollingEnabled(false);
+
+        myToolBar.init(Constant.MINE_STYLE);
+        myToolBar.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
+
 
         //TODO 给 更多 页面进行注册监听
         accountManager.registerUserCallBack(this);
@@ -76,6 +92,7 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
     public void hideLoading() {
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void initDate() {
         ifUser();
@@ -95,6 +112,17 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
         channelAdapter = new MineRecycleAdapter(R.layout.item_mine_rv_h, channelList);
         recommendAdapter = new MineRecommendAdapter(R.layout.item_mine_rv_recommend, recommendlList);
         mineListeners();
+        nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                Log.d("llf", "scrollX: "+scrollX+"--scrollY:  "+scrollY+"--oldScrollX:  "+oldScrollX+"--oldScrollY: "+oldScrollY);
+                if(scrollY<530){
+                    myToolBar.setAlpha(scrollY/530.0f);
+                }else{
+                    myToolBar.setAlpha(1.0f);
+                }
+            }
+        });
     }
 
     private void mineListeners() {
@@ -102,12 +130,12 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
         relative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (("登录/注册".equals(name.getText().toString()))){
+                if (("登录/注册".equals(name.getText().toString()))) {
 //                登录注册跳转
-                    startActivity(new Intent(getContext(), LoginActivity.class));
-                }else{
+                    startActivity(LoginActivity.class,null);
+                } else {
 //                跳转到个人信息
-                    startActivity(new Intent(getContext(), SettingActivity.class));
+                    startActivity(SettingActivity.class,null);
                 }
             }
         });
@@ -144,7 +172,7 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
                         getContext().startActivity(intent);
                         break;
                     case 5:
-                         //我的积分
+                        //我的积分
                         intent.setClass(getContext(), IntegralActivity.class);
                         getContext().startActivity(intent);
                         break;
@@ -172,13 +200,13 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
 
     private void ifUser() {
         if (AccountManager.getInstance().isLogin()) {
-//            if(AccountManager.getInstance().user.getName() != null){
-//                //登录
-//                name.setText(AccountManager.getInstance().user.getName());
-//                if (AccountManager.getInstance().user.getAvatar() != null) {
-//                    Glide.with(getContext()).load(AccountManager.getInstance().user.getAvatar()).into(img);
-//                }
-//            }
+            if (AccountManager.getInstance().user.getName() != null) {
+                //登录
+                name.setText(AccountManager.getInstance().user.getName());
+                if (AccountManager.getInstance().user.getAvatar() != null) {
+                    Glide.with(getContext()).load(AccountManager.getInstance().user.getAvatar()).into(img);
+                }
+            }
         } else {
             //没有登录
             name.setText(R.string.mine_login);
@@ -217,8 +245,8 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
                 rvRecommend.setAdapter(recommendAdapter);
             } else {
                 toast(getActivity(), msg);
-                }
             }
+        }
     }
 
     @Override
@@ -228,10 +256,10 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
             homePresenter.detachView();
         }
         homePresenter = null;
-        if (accountManager!=null){
+        if (accountManager != null) {
             accountManager.unRegisterUserCallBack(this);
         }
-        accountManager=null;
+        accountManager = null;
     }
 
     //TODO 用户注册成功后回调

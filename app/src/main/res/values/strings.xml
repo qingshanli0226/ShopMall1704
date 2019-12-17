@@ -14,4 +14,7 @@
     <string name="find">发现</string>
     <string name="out_login">退出登录</string>
     <string name="new_name">请输入新的昵称</string>
+    <string name="logout">确定退出登录?</string>
+    <string name="yes">确定</string>
+    <string name="no">取消</string>
 </resources>

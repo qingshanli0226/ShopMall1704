@@ -6,4 +6,7 @@
     <string name="btn_text_register">注 册</string>
     <string name="top_scan">扫啊扫</string>
     <string name="messenger">消息</string>
+    <string name="logout">确定退出登录?</string>
+    <string name="no">取消</string>
+    <string name="yes">确定</string>
 </resources>

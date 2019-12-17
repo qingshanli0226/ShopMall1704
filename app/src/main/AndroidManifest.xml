@@ -35,7 +35,8 @@
         android:theme="@style/AppTheme"
         android:screenOrientation="portrait">
         <activity android:name=".setting.UserMassageActivity"/>
-        <activity android:name=".setting.SettingActivity" />
+        <activity android:name=".setting.SettingActivity"
+            android:launchMode="singleTask"/>
         <activity android:name=".activity.WelcomeActivity">
 
             <intent-filter>

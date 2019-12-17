@@ -142,11 +142,19 @@ public class TypeFragment extends BaseNetConnectFragment {
 
     @Override
     public int getRelativeLayout() {
-        return 0;
+        return R.id.type_Relative;
     }
 
     @Override
-    public void hideLoading() {
+    public void onConnected() {
+        hideEmpty();
+    }
+
+    @Override
+    public void onDisConnected() {
+        hideError();
+        hideLoading();
+        showEmpty();
     }
 
     @Override
@@ -156,9 +164,5 @@ public class TypeFragment extends BaseNetConnectFragment {
             typePresenter.detachView();
         }
         typePresenter = null;
-    }
-
-    @Override
-    public void showLoading() {
     }
 }

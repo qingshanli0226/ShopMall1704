@@ -14,9 +14,12 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.common.code.Constant;
 import com.example.common.User;
+import com.example.common.code.ErrorCode;
+import com.example.common.view.MyToast;
 import com.example.framework.manager.AccountManager;
 import com.example.common.port.IButtonEnabledListener;
 import com.example.dimensionleague.R;
@@ -148,8 +151,11 @@ public class LoginActivity extends BaseNetConnectActivity implements IButtonEnab
                 accountManager.notifyUserAvatarUpdate((String) accountManager.getUser().getAvatar());
             }
             finishActivity();
+        }else if(loginBean.getCode().equals(""+ErrorCode.ERROR_USER_NOT_REGISTERED.getErrorCode())){
+            MyToast.showToast(this,loginBean.getMessage(),R.drawable.empty_image, Toast.LENGTH_SHORT);
         }
     }
+
 
     @Override
     public void onConnected() {

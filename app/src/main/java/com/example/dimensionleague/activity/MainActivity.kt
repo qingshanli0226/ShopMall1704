@@ -7,6 +7,7 @@ import android.widget.Toast
 
 import com.example.dimensionleague.R
 import com.example.buy.ShopCartFragment
+import com.example.common.view.MyToast
 
 import com.example.dimensionleague.find.FindFragment
 import com.example.framework.manager.AccountManager
@@ -42,6 +43,10 @@ class MainActivity : BaseNetConnectActivity() {
             AccountManager.getInstance().notifyLogout()
         }else{
             AccountManager.getInstance().notifyLogin()
+        }
+
+        if(isNetType=="移动流量"){
+            MyToast.showToast(this,"正在使用移动流量,请注意使用!",null,Toast.LENGTH_LONG)
         }
         list.add(HomeFragment())
         list.add(TypeFragment())
