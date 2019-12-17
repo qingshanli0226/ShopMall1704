@@ -5,11 +5,13 @@ package com.example.framework.manager;
  */
 
 import android.content.ComponentName;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.text.format.Time;
@@ -17,6 +19,7 @@ import android.util.Log;
 
 
 import com.example.common.OrmUtils;
+import com.example.framework.bean.HourBean;
 import com.example.framework.bean.ShopStepBean;
 import com.example.framework.bean.ShopStepTimeRealBean;
 import com.example.framework.greendao.DaoMaster;
@@ -24,6 +27,7 @@ import com.example.framework.greendao.DaoSession;
 import com.example.framework.greendao.FirstStepBean;
 import com.example.framework.greendao.FirstStepBeanDao;
 import com.example.framework.greendao.ShopStepTimeRealBeanDao;
+import com.example.framework.hourSql;
 import com.example.framework.service.StepService;
 
 import java.text.SimpleDateFormat;
@@ -47,6 +51,9 @@ public class StepManager {
     ShopStepTimeRealBeanDao realBeanDao;
     FirstStepBeanDao firstStepBeanDao;
 
+    DaoSession daoSession;
+    SQLiteDatabase hourDb;
+
     public static StepManager getInstance() {
         if (stepManager == null) {
             stepManager = new StepManager();
@@ -56,8 +63,8 @@ public class StepManager {
 
 
     //绑定服务
-    public void init(Context context){
-        this.context=context;
+    public void init(Context ctx){
+        this.context=ctx;
 
         Intent intent = new Intent(context, StepService.class);
          serviceConnection = new ServiceConnection() {
@@ -104,16 +111,38 @@ public class StepManager {
 
         SQLiteDatabase database = new DaoMaster.DevOpenHelper(context, "realTimes.db", null).getWritableDatabase();
         DaoMaster daoMaster = new DaoMaster(database);
-        DaoSession daoSession = daoMaster.newSession();
+        daoSession = daoMaster.newSession();
         realBeanDao = daoSession.getShopStepTimeRealBeanDao();
 
 
-
-
+        hourSql hourSql = new hourSql(context);
+        hourDb = hourSql.getWritableDatabase();
 
 
     }
 
+    public void insertHour(String time,String date,int current){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("time",time);
+        contentValues.put("date",date);
+        contentValues.put("currentStep",current);
+        hourDb.insert("history",null,contentValues);
+    }
+    public List<HourBean> findHour(){
+
+        Cursor cursor = hourDb.rawQuery("select distinct time,date,currentStep from history", null);
+        List<HourBean> mlist=new ArrayList<>();
+        while (cursor.moveToNext())
+        {
+            String time = cursor.getString(cursor.getColumnIndex("time"));
+            String date = cursor.getString(cursor.getColumnIndex("date"));
+            int currentStep = cursor.getInt(cursor.getColumnIndex("currentStep"));
+            HourBean hourBean = new HourBean(time, date, currentStep);
+            mlist.add(hourBean);
+        }
+        return mlist;
+
+    }
 
 
     //获取现在地1日期
@@ -130,24 +159,15 @@ public class StepManager {
     };
 
 
-    public int  getFirstStep(){
-        for (int i=0;i<firstStepBeanDao.queryBuilder().list().size();i++){
-            if(firstStepBeanDao.queryBuilder().list().get(i).getFirst()==1){
-                return 1;
-            }
-        }
-        return 0;
-    }
-    public void saveFirstStep(int firsts){
-        FirstStepBean firstStep = new FirstStepBean(null, firsts);
-        firstStepBeanDao.insert(firstStep);
-    }
+
 
     public void saveReal(String time,String date,int current){
         ShopStepTimeRealBean shopStepTimeRealBean = new ShopStepTimeRealBean(null, time, date, current);
         realBeanDao.insertOrReplace(shopStepTimeRealBean);
     }
     public List<ShopStepTimeRealBean> getReal(){
+
+
         return realBeanDao.queryBuilder().distinct().list();
     }
 

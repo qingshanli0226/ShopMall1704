@@ -113,6 +113,7 @@ public class StepService extends Service implements SensorEventListener {
                         isNewDay();
                         break;
                     case Intent.ACTION_TIME_TICK:
+                        StepManager.getInstance().insertHour(CURRENT_TIME,CURRENT_DATE,currentStep);
                         StepManager.getInstance().saveReal(CURRENT_TIME,CURRENT_DATE,currentStep);
                         StepManager.getInstance().save(CURRENT_DATE,currentStep,previousStep);
                         isNewDay();

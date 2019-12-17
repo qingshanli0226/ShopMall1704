@@ -8,12 +8,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.framework.base.BaseAdapter;
+import com.example.framework.bean.HourBean;
 import com.example.framework.bean.ShopStepTimeRealBean;
 import com.example.step.R;
 
 import java.util.List;
 
-public class StepHistoryHourAdapter extends BaseAdapter<ShopStepTimeRealBean, StepHistoryHourAdapter.HourMyHolder>{
+public class StepHistoryHourAdapter extends BaseAdapter<HourBean, StepHistoryHourAdapter.HourMyHolder>{
 
 
     @Override
@@ -26,8 +27,9 @@ public class StepHistoryHourAdapter extends BaseAdapter<ShopStepTimeRealBean, St
         return R.layout.step_adapter_item;
     }
 
+
     @Override
-    protected void onBindHolder(HourMyHolder holder, List<ShopStepTimeRealBean> shopStepTimeRealBeans, int type) {
+    protected void onBindHolder(HourMyHolder holder, List<HourBean> shopStepTimeRealBeans, int type) {
         holder.day.setText(shopStepTimeRealBeans.get(type).getDate());
         holder.time.setText(shopStepTimeRealBeans.get(type).getTime());
         holder.count.setText(shopStepTimeRealBeans.get(type).getCurrentStep()+"步");

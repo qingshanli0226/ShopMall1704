@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
+import com.example.framework.bean.HourBean;
 import com.example.framework.bean.ShopStepTimeRealBean;
 import com.example.step.Adapter.StepHistoryAdapter;
 import com.example.step.Adapter.StepHistoryHourAdapter;
@@ -100,6 +101,7 @@ public class HistoryActivity extends BaseActivity {
                 switch (currentDate){
                     case "三小时之内":
                         ThreeHourStep();
+
                         break;
                     case "今天":
                         TodayStep();
@@ -236,8 +238,8 @@ public class HistoryActivity extends BaseActivity {
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-        List<ShopStepTimeRealBean> real = StepManager.getInstance().getReal();
-        List<ShopStepTimeRealBean>threeList=new ArrayList<>();
+        List<HourBean> real = StepManager.getInstance().findHour();
+        List<HourBean>threeList=new ArrayList<>();
         for (int i=0;i<real.size();i++) {
             String realTime = real.get(i).getTime();
             String[] split = realTime.split(":");
@@ -250,8 +252,8 @@ public class HistoryActivity extends BaseActivity {
             if (beforeHour >= thrreHour && beforeHour <= hour) {
                 boolean currentTimeRange = StepManager.getInstance().isCurrentTimeRange(beforeHour, beforeMinute, hour, minute);
                 if (currentTimeRange == true) {
-                    ShopStepTimeRealBean shopStepRealBean = new ShopStepTimeRealBean(real.get(i).getId(), real.get(i).getTime(), real.get(i).getDate(), real.get(i).getCurrentStep());
-                    threeList.add(shopStepRealBean);
+                    HourBean hourBean = new HourBean(real.get(i).getTime(), real.get(i).getDate(), real.get(i).getCurrentStep());
+                    threeList.add(hourBean);
                     StepHistoryHourAdapter stepHistoryHourAdapter = new StepHistoryHourAdapter();
                     stepHistoryHourAdapter.reFresh(threeList);
                     //滑动到最后一个
@@ -289,14 +291,12 @@ public class HistoryActivity extends BaseActivity {
                     allList.clear();
                     weekList.clear();
                     monthList.clear();
-                    stepHistory.clear();
                     stepHistoryAdapter.notifyDataSetChanged();
                 }
             }else{
                 allList.clear();
                 weekList.clear();
                 monthList.clear();
-                stepHistory.clear();
                 stepHistoryAdapter.notifyDataSetChanged();
             }
         }
