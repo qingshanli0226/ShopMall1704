@@ -1,8 +1,8 @@
 package com.example.dimensionleague.home;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
-
 
 import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,6 +16,7 @@ import com.example.dimensionleague.home.adapter.HomeAdapter;
 import com.example.framework.base.BaseNetConnectFragment;
 import com.example.framework.port.IPresenter;
 import com.example.framework.port.AppBarStateChangeListener;
+import com.example.point.message.MessageActivity;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
@@ -92,6 +93,13 @@ public class HomeFragment extends BaseNetConnectFragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "跳转到搜索页面", Toast.LENGTH_SHORT).show();
+            }
+        });
+        my_toolbar.getHome_message().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), MessageActivity.class);
+                startActivity(intent);
             }
         });
     }

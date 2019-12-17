@@ -4,9 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/integralLinear">
-
-    <include layout="@layout/title_toolbar"></include>
-
+    <com.example.common.view.MyToolBar
+        android:id="@+id/integral_tool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.example.common.view.MyToolBar>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="203dp"

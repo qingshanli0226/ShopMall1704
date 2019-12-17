@@ -1,5 +1,6 @@
 package com.example.dimensionleague.type;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -14,6 +15,7 @@ import com.example.common.view.MyToolBar;
 import com.example.dimensionleague.R;
 import com.example.framework.base.BaseNetConnectFragment;
 import com.example.net.AppNetConfig;
+import com.example.point.message.MessageActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +75,8 @@ public class TypeFragment extends BaseNetConnectFragment {
         my_toolbar.getSearch_message().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"跳转到消息页",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), MessageActivity.class);
+                startActivity(intent);
             }
         });
         typeURL.add(AppNetConfig.SKIRT_URL);

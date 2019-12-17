@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" style="@style/w_match">
-    <include
-         layout="@layout/title_toolbar"></include>
+    <com.example.common.view.MyToolBar
+        android:id="@+id/step_tool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.example.common.view.MyToolBar>
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="183dp"
-        android:background="@mipmap/sport"></ImageView>
+        android:scaleType="fitXY"
+        android:background="@mipmap/ai"></ImageView>
     <RelativeLayout
        style="@style/w_match">
         <TextView

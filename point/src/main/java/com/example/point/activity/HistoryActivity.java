@@ -3,13 +3,13 @@ package com.example.point.activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.example.common.code.Constant;
+import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseActivity;
 import com.example.point.R;
 import com.example.point.StepIsSupport;
@@ -32,9 +34,6 @@ import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 
 public class HistoryActivity extends BaseActivity {
 
-    private ImageView iv_left;
-    private TextView physical;
-    private ImageView iv_right;
     private RecyclerView history_re;
     private TextView recently;
     private StepItemAdpter stepItemAdpter;//展示数据的适配器
@@ -44,22 +43,23 @@ public class HistoryActivity extends BaseActivity {
     private int year, monthOfYear, dayOfMonth;
     private List<StepBean> beans;
     private Spinner history_spinner;
-    private LinearLayout layout_titlebar;
     private WaveSwipeRefreshLayout main_swipe;
-
+    private MyToolBar history_tool;
+    private Button show;
     @Override
     public void init() {
-        iv_left = findViewById(R.id.iv_left);
-        physical = findViewById(R.id.physical);
-        iv_right = findViewById(R.id.iv_right);
+        history_tool = (MyToolBar) findViewById(R.id.history_tool);
+        history_tool.init(Constant.OTHER_STYLE);
+        history_tool.setBackgroundColor(Color.rgb(34,150,243));
         history_re = findViewById(R.id.history_re);
         start = findViewById(R.id.start);
         stop = findViewById(R.id.stop);
-        layout_titlebar = findViewById(R.id.layout_titlebar);
+        show=findViewById(R.id.show);
         recently = (TextView) findViewById(R.id.recently);
         main_swipe = (WaveSwipeRefreshLayout) findViewById(R.id.main_swipe);
         main_swipe.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
-            @Override public void onRefresh() {
+            @Override
+            public void onRefresh() {
                 try {
                     Thread.sleep(100);
                     main_swipe.setRefreshing(false);
@@ -75,60 +75,32 @@ public class HistoryActivity extends BaseActivity {
         monthOfYear = calendar.get(calendar.MONTH);
         dayOfMonth = calendar.get(calendar.DAY_OF_MONTH);
         history_spinner = findViewById(R.id.history_spinner);
-        layout_titlebar.setBackgroundColor(Color.rgb(30, 148, 240));
+
     }
 
     @Override
     public void initDate() {
-        iv_left.setOnClickListener(new View.OnClickListener() {
+        history_tool.getOther_title().setText("历史记录");
+        Drawable drawable = getResources().getDrawable(R.drawable.history);
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+
+        history_tool.getOther_title().setCompoundDrawables(null,null,drawable,null);
+
+        //返回计步页
+        history_tool.getOther_back().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HistoryActivity.this, StepActivity.class);
-                startActivity(intent);
                 finish();
             }
         });
-        physical.setText("历史步数");
-
         history_re.setLayoutManager(new LinearLayoutManager(this));
         getSQdata();
-        //开始日期
-        start.setOnKeyListener(new View.OnKeyListener() {
+        show.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (i == KeyEvent.KEYCODE_ENTER) {
-                    //为空的话便不能移到第二个edittext
-                    if (start.getText().toString().isEmpty()) {
-                        Toast.makeText(HistoryActivity.this, "输入不能为空!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        //光标移到stop输入框
-                        stop.requestFocus();
-                    }
-
-                    return true;
-                }
-                return false;
+            public void onClick(View view) {
+                getSQdataArea(start.getText().toString(), stop.getText().toString());
             }
         });
-        //停止日期
-        stop.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (i == KeyEvent.KEYCODE_ENTER) {
-                    //为空的话便不能
-                    if (stop.getText().toString().isEmpty()) {
-                        Toast.makeText(HistoryActivity.this, "输入不能为空!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        getSQdataArea(start.getText().toString(), stop.getText().toString());
-
-                    }
-
-                    return true;
-                }
-                return false;
-            }
-        });
-
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -266,6 +238,7 @@ public class HistoryActivity extends BaseActivity {
 
     private void initView() {
         history_spinner = (Spinner) findViewById(R.id.history_spinner);
+
 
     }
 }

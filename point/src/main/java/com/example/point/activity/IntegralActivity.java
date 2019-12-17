@@ -1,15 +1,16 @@
 package com.example.point.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.common.code.Constant;
+import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.manager.AccountManager;
 import com.example.framework.port.IPresenter;
@@ -22,10 +23,6 @@ import com.example.point.stepmanager.DaoManager;
 import java.util.List;
 
 public class IntegralActivity extends BaseNetConnectActivity {
-    private ImageView iv_left;
-    private TextView physical;
-    private ImageView iv_right;
-    private LinearLayout layout_titlebar;
     private ImageView integral_img;
     private TextView integral_title;
     private TextView integral_point;
@@ -35,6 +32,7 @@ public class IntegralActivity extends BaseNetConnectActivity {
 
     private UpdatePointBean pointBean;
     private IPresenter iPresenter;
+    private MyToolBar integral_tool;
 
     @Override
     public int getLayoutId() {
@@ -49,46 +47,48 @@ public class IntegralActivity extends BaseNetConnectActivity {
     @Override
     public void init() {
         super.init();
-        iv_left = findViewById(R.id.iv_left);
-        physical = findViewById(R.id.physical);
-        iv_right = findViewById(R.id.iv_right);
-        layout_titlebar = findViewById(R.id.layout_titlebar);
+        integral_tool = (MyToolBar) findViewById(R.id.integral_tool);
+        integral_tool.init(Constant.OTHER_STYLE);
+        integral_tool.getOther_title().setText("积分页面");
+        Drawable drawable = getResources().getDrawable(R.drawable.point);
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        integral_tool.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
+        integral_tool.getOther_title().setCompoundDrawables(null,null,drawable,null);
+
+
+        //返回我的页面
+        integral_tool.getOther_back().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         integral_img = findViewById(R.id.integral_img);
         integral_point = findViewById(R.id.integral_point);
         exchange_gift = findViewById(R.id.exchange_gift);
         exchange_record = findViewById(R.id.exchange_record);
         exchange_point = findViewById(R.id.exchange_point);
-        integral_title=findViewById(R.id.integral_title);
+        integral_title = findViewById(R.id.integral_title);
         ifUser();
-        if (pointBean==null){
-            pointBean=new UpdatePointBean();
+        if (pointBean == null) {
+            pointBean = new UpdatePointBean();
         }
-        layout_titlebar.setBackgroundColor(Color.rgb(247, 195, 93));
-        physical.setText("积分统计");
         List<StepBean> beans = new DaoManager(this).loadStepBean();
         //步数累加
-        long count=0;
-        for (StepBean bean:beans) {
-            count+=bean.getStep();
+        long count = 0;
+        for (StepBean bean : beans) {
+            count += bean.getStep();
         }
         if (AccountManager.getInstance().isLogin()) {
-            if ( AccountManager.getInstance().user.getPoint()!=null){
+            if (AccountManager.getInstance().user.getPoint() != null) {
                 String point = (String) AccountManager.getInstance().user.getPoint();
                 int i = Integer.parseInt(point);
-                integral_point.setText( ((i+(count/100)))+"");
+                integral_point.setText(((i + (count / 100))) + "");
             }
         } else {
-            integral_point.setText( ((count/100))+"");
+            integral_point.setText(((count / 100)) + "");
         }
-
-        iv_left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-             finishActivity();
-            }
-        });
-
-        iPresenter=new PointPresenter(integral_point.getText().toString());
+        iPresenter = new PointPresenter(integral_point.getText().toString());
         iPresenter.attachView(IntegralActivity.this);
         iPresenter.doHttpPostRequest();
 
@@ -96,7 +96,7 @@ public class IntegralActivity extends BaseNetConnectActivity {
         exchange_gift.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(IntegralActivity.this,PresentActivity.class);
+                Intent intent = new Intent(IntegralActivity.this, PresentActivity.class);
                 startActivity(intent);
             }
         });
@@ -111,12 +111,13 @@ public class IntegralActivity extends BaseNetConnectActivity {
         exchange_point.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(IntegralActivity.this,StepActivity.class);
+                Intent intent = new Intent(IntegralActivity.this, StepActivity.class);
                 startActivity(intent);
             }
         });
 
     }
+
     @Override
     public boolean isConnectStatus() {
         return super.isConnectStatus();
@@ -147,14 +148,14 @@ public class IntegralActivity extends BaseNetConnectActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (iPresenter!=null){
+        if (iPresenter != null) {
             iPresenter.detachView();
         }
     }
 
     private void ifUser() {
         if (AccountManager.getInstance().isLogin()) {
-            if(AccountManager.getInstance().user.getName() != null){
+            if (AccountManager.getInstance().user.getName() != null) {
                 //登录
                 integral_title.setText(AccountManager.getInstance().user.getName());
                 if (AccountManager.getInstance().user.getAvatar() != null) {
@@ -166,5 +167,10 @@ public class IntegralActivity extends BaseNetConnectActivity {
             integral_title.setText("登录/注册");
             integral_img.setImageResource(R.mipmap.wu);
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 }

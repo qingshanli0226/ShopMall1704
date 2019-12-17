@@ -3,12 +3,12 @@ package com.example.point.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.os.Bundle;
+import android.graphics.drawable.Drawable;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.common.code.Constant;
+import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseActivity;
 import com.example.point.R;
 
@@ -20,14 +20,11 @@ import tyrantgit.widget.HeartLayout;
 
 public class RecordActivity extends BaseActivity {
 
-    private ImageView iv_left;
-    private TextView physical;
-    private ImageView iv_right;
-    private LinearLayout layout_titlebar;
     private TextView record_tv;
     private HeartLayout heart_layout;
     private Random mRandom = new Random();
     private Timer mTimer = new Timer();
+    private MyToolBar record_tool;
 
     @Override
     public int getLayoutId() {
@@ -36,21 +33,23 @@ public class RecordActivity extends BaseActivity {
 
     @Override
     public void init() {
-        iv_left = findViewById(R.id.iv_left);
-        physical = findViewById(R.id.physical);
-        iv_right = findViewById(R.id.iv_right);
-        layout_titlebar = findViewById(R.id.layout_titlebar);
-        record_tv = findViewById(R.id.record_tv);
-        heart_layout=findViewById(R.id.heart_layout);
-        layout_titlebar.setBackgroundColor(Color.rgb(247, 195, 93));
-        physical.setText("记录详情");
-
-        iv_left.setOnClickListener(new View.OnClickListener() {
+        record_tool = (MyToolBar) findViewById(R.id.record_tool);
+        record_tool.init(Constant.OTHER_STYLE);
+        record_tool.getOther_title().setText("计步详情");
+        Drawable drawable = getResources().getDrawable(R.drawable.recorder);
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        record_tool.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
+        //返回详情页
+        record_tool.getOther_back().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+        record_tool.getOther_title().setCompoundDrawables(null,null,drawable,null);
+        record_tv = findViewById(R.id.record_tv);
+        heart_layout = findViewById(R.id.heart_layout);
+
 
         Intent intent = getIntent();
         String curr_date = intent.getStringExtra("curr_date");
@@ -88,4 +87,6 @@ public class RecordActivity extends BaseActivity {
     private int randomColor() {
         return Color.rgb(mRandom.nextInt(255), mRandom.nextInt(255), mRandom.nextInt(255));
     }
+
+
 }
