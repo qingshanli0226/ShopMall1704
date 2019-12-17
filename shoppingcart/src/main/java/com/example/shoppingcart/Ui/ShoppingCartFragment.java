@@ -265,6 +265,8 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
         } else if (requestCode == AppNetConfig.COURT_SHIP_CODE_DELETE_SHOPPINGCART_QUANTITY) {
             //TODO 删除购物车
             ShoppingManager.getInstance().removeShoppingCartData();
+            sum = 0.00f;
+            setTvTotalPriceValue(sum); //总价归0
         }
     }
 
