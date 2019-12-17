@@ -260,7 +260,6 @@ public class StepService extends Service implements SensorEventListener {
                 int i = thisStep - previousStep;
                 currentStep += (i);
                 previousStep = thisStep;
-                Log.e("##THIS", systemStep + "--" + sensorStep + "---" + i + "--" + currentStep + "--" + previousStep+"-this"+thisStep);
             }
         } else if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
             if (sensorEvent.values[0] == 1.0f) {

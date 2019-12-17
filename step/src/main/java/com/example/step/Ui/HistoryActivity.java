@@ -278,17 +278,23 @@ public class HistoryActivity extends BaseActivity {
             String date = stepHistory.get(i).getDate();
             String[] split = date.split("-");
 
-            if(Integer.parseInt(split[0])==month){
+            if(Integer.parseInt(split[1])==month){
 
-                if(Integer.parseInt(split[1])==day){
+                if(Integer.parseInt(split[2])==day){
                 todayList.add(stepHistory.get(i)) ;
                 stepHistoryAdapter = new StepHistoryAdapter(todayList, Integer.parseInt(stepHistory.get(i).getCurrent_step()));
                 History_recyclerView.setAdapter(stepHistoryAdapter);
                 }else{
+                    allList.clear();
+                    weekList.clear();
+                    monthList.clear();
                     stepHistory.clear();
                     stepHistoryAdapter.notifyDataSetChanged();
                 }
             }else{
+                allList.clear();
+                weekList.clear();
+                monthList.clear();
                 stepHistory.clear();
                 stepHistoryAdapter.notifyDataSetChanged();
             }
