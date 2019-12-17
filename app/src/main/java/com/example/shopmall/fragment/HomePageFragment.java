@@ -36,6 +36,7 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
     private RecyclerView rvHomePage;
     private LoadingPage lpLoadingPageHomePage;
     private LinearLayout llHomePage;
+    private IntegerPresenter integerPresenter;
 
     @Override
     protected void initData() {
@@ -83,7 +84,7 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
         boolean connectStatus = ConnectManager.getInstance().getConnectStatus();
         if (connectStatus) {//有网络
             //从网上获取数据
-            IntegerPresenter integerPresenter = new IntegerPresenter(Constant.HOME_URL, HomepageBean.class);
+            integerPresenter = new IntegerPresenter(Constant.HOME_URL, HomepageBean.class);
             integerPresenter.attachGetView(this);
             integerPresenter.attachLoadView(this);
             integerPresenter.getGetData();
@@ -147,5 +148,13 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
                 llHomePage.setVisibility(View.VISIBLE);
             }
         }, 1000);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        integerPresenter.detachView();
+
     }
 }

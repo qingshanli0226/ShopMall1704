@@ -1,16 +1,26 @@
 package com.example.shopmall.activity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
-import com.example.framework.bean.AddressBarBean;
+import com.example.framework.base.IPostBaseView;
+import com.example.framework.manager.ShoppingManager;
+import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
+import com.example.shopmall.bean.AddressBean;
+import com.example.shopmall.presenter.AddressPresenter;
+import com.example.shopmall.presenter.LocationPresenter;
 
-public class LocationActivity extends BaseActivity {
+public class LocationActivity extends BaseActivity implements IPostBaseView<AddressBean> {
 
     private TitleBar tbLocation;
     private EditText etConsignee;
@@ -18,6 +28,8 @@ public class LocationActivity extends BaseActivity {
     private EditText etLocation;
     private EditText etDetailed;
     private Button btLocationInflate;
+
+    private String token;
 
     @Override
     protected int setLayout() {
@@ -36,6 +48,9 @@ public class LocationActivity extends BaseActivity {
 
     @Override
     public void initData() {
+
+        Intent intent = getIntent();
+        token = intent.getStringExtra("token");
 
         tbLocation.setTitleBacKGround(Color.WHITE);
         tbLocation.setCenterText("新建收货地址",18,Color.BLACK);
@@ -64,7 +79,29 @@ public class LocationActivity extends BaseActivity {
                 String CellPhoneNumber = etCellPhoneNumber.getText().toString().trim();
                 String Location = etLocation.getText().toString().trim();
                 String Detailed = etDetailed.getText().toString().trim();
+
+                AddressPresenter addressPresenter = new AddressPresenter(CellPhoneNumber,"updatePhone",token);
+                addressPresenter.attachPostView(LocationActivity.this);
+                addressPresenter.getCipherTextData();
+
+                LocationPresenter locationPresenter = new LocationPresenter(Location + Detailed,"updateAddress",token);
+                locationPresenter.attachPostView(LocationActivity.this);
+                locationPresenter.getCipherTextData();
+
             }
         });
+    }
+
+    @Override
+    public void onPostDataSucess(AddressBean data) {
+        if (data.getCode().equals("200")){
+            Toast.makeText(this, "新建成功", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    }
+
+    @Override
+    public void onPostDataFailed(String ErrorMsg) {
+
     }
 }

@@ -14,6 +14,20 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" >
+
+        <Button
+            android:id="@+id/bt_log_out"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dpsize_30"
+            android:layout_marginRight="@dimen/dpsize_30"
+            android:background="@drawable/bt_location"
+            android:text="退出登录"
+            android:textSize="20sp"
+            android:textColor="@color/colorWhite"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
 
 </LinearLayout>

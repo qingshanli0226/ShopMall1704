@@ -130,8 +130,6 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
                 LoginPresenter loginPresenter = new LoginPresenter(name, pwd);
                 loginPresenter.attachPostView(LoginActivity.this);
                 loginPresenter.getCipherTextData();
-                etLoginName.setText("");
-                etLoginWord.setText("");
             }
         });
 
@@ -196,9 +194,10 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
                         edit.putBoolean("isLogin", true);
                         edit.putString("getToken", token);
                         edit.apply();
-
                 }
             }.start();
+            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            finish();
         } else {
             LoginEvent loginEvent = new LoginEvent("用户登录", false);
             JAnalyticsInterface.onEvent(LoginActivity.this, loginEvent);

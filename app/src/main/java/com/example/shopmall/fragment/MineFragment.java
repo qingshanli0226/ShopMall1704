@@ -17,6 +17,7 @@ import com.example.framework.base.BaseFragment;
 import com.example.net.Constant;
 import com.example.shopmall.R;
 import com.example.shopmall.activity.AddressBarActivity;
+import com.example.shopmall.activity.SetActivity;
 import com.example.shopmall.bean.HeadBean;
 import com.example.shopmall.presenter.IntegerPresenter;
 import com.example.step.Ui.IntegralActivity;
@@ -34,6 +35,7 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+
         tbMine.setTitleBacKGround(Color.WHITE);
         tbMine.setCenterText("个人中心", 18, Color.BLACK);
         tbMine.setLeftImg(R.mipmap.new_message_icon);
@@ -47,7 +49,7 @@ public class MineFragment extends BaseFragment {
 
             @Override
             public void RightClick() {
-
+                startActivity(new Intent(getContext(), SetActivity.class));
             }
 
             @Override
@@ -110,7 +112,14 @@ public class MineFragment extends BaseFragment {
         llUserLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), AddressBarActivity.class));
+                SharedPreferences token1 = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
+                boolean isLogin = token1.getBoolean("isLogin", false);
+                if (isLogin){
+                    startActivity(new Intent(getContext(), AddressBarActivity.class));
+                }else {
+                    Toast.makeText(getContext(), "请先登录", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getContext(),LoginActivity.class));
+                }
             }
         });
 

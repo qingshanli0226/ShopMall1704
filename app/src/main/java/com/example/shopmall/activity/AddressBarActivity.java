@@ -1,21 +1,65 @@
 package com.example.shopmall.activity;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
+import com.example.framework.base.IPostBaseView;
 import com.example.shopmall.R;
+import com.example.shopmall.adapter.AddressBarAdapter;
+import com.example.shopmall.bean.AutoLoginBean;
+import com.example.shopmall.presenter.AutoLoginPresenter;
 
-public class AddressBarActivity extends BaseActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class AddressBarActivity extends BaseActivity implements IPostBaseView<AutoLoginBean> {
 
     private TitleBar tbAddressBar;
     private RecyclerView rvAddressBar;
     private Button btNewReceivingAddress;
+
+    private String token;
+    private SharedPreferences sharedPreferences;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        handler.sendEmptyMessage(100);
+
+    }
+
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 100){
+                sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+                String getToken = sharedPreferences.getString("getToken", "");
+                Log.d("####", "handleMessage: " + getToken);
+
+                AutoLoginPresenter autoLoginPresenter = new AutoLoginPresenter("autoLogin",getToken);
+                autoLoginPresenter.attachPostView(AddressBarActivity.this);
+                autoLoginPresenter.getCipherTextData();
+            }
+        }
+    };
 
     @Override
     protected int setLayout() {
@@ -27,6 +71,8 @@ public class AddressBarActivity extends BaseActivity {
         tbAddressBar = findViewById(R.id.tb_address_bar);
         rvAddressBar = findViewById(R.id.rv_address_bar);
         btNewReceivingAddress = findViewById(R.id.bt_new_receiving_address);
+
+        rvAddressBar.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
@@ -55,9 +101,33 @@ public class AddressBarActivity extends BaseActivity {
         btNewReceivingAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(AddressBarActivity.this,LocationActivity.class));
+                Intent intent = new Intent(AddressBarActivity.this, LocationActivity.class);
+                intent.putExtra("token",token);
+                startActivity(intent);
             }
         });
+
+    }
+
+    @Override
+    public void onPostDataSucess(AutoLoginBean data) {
+        if (data.getCode().equals("200")){
+            token = data.getResult().getToken();
+            SharedPreferences.Editor edit = sharedPreferences.edit();
+            edit.putString("getToken",data.getResult().getToken()).apply();
+            AddressBarAdapter addressBarAdapter = new AddressBarAdapter();
+            List<AutoLoginBean.ResultBean> resultBeans = new ArrayList<>();
+            resultBeans.add(data.getResult());
+            addressBarAdapter.reFresh(resultBeans);
+            rvAddressBar.setAdapter(addressBarAdapter);
+        }else {
+            Toast.makeText(this, "请先登录", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(AddressBarActivity.this,LoginActivity.class));
+        }
+    }
+
+    @Override
+    public void onPostDataFailed(String ErrorMsg) {
 
     }
 }

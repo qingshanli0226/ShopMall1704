@@ -10,10 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.framework.base.BaseAdapter;
 import com.example.framework.bean.AddressBarBean;
 import com.example.shopmall.R;
+import com.example.shopmall.bean.AutoLoginBean;
 
 import java.util.List;
 
-public class AddressBarAdapter extends BaseAdapter<AddressBarBean,AddressBarAdapter.ViewHolder> {
+public class AddressBarAdapter extends BaseAdapter<AutoLoginBean.ResultBean,AddressBarAdapter.ViewHolder> {
     @Override
     protected AddressBarAdapter.ViewHolder getViewHolder(View view, int viewType) {
         return new ViewHolder(view);
@@ -25,8 +26,8 @@ public class AddressBarAdapter extends BaseAdapter<AddressBarBean,AddressBarAdap
     }
 
     @Override
-    protected void onBindHolder(AddressBarAdapter.ViewHolder holder, List<AddressBarBean> addressBarBeans, int position) {
-        holder.setData(addressBarBeans,position);
+    protected void onBindHolder(AddressBarAdapter.ViewHolder holder, List<AutoLoginBean.ResultBean> resultBeans, int position) {
+        holder.setData(resultBeans,position);
     }
 
     @Override
@@ -53,11 +54,11 @@ public class AddressBarAdapter extends BaseAdapter<AddressBarBean,AddressBarAdap
 
         }
 
-        public void setData(List<AddressBarBean> addressBarBeans, int position) {
-            tvConsignee.setText(addressBarBeans.get(position).getConsignee());
-            tvCellPhoneNumber.setText(addressBarBeans.get(position).getCell_phone_number());
-            tvLocationAddressBar.setText(addressBarBeans.get(position).getLocation());
-            tvDetailedAddressBar.setText(addressBarBeans.get(position).getDetailed_address());
+        public void setData(List<AutoLoginBean.ResultBean> resultBeans, int position) {
+//            tvConsignee.setText(resultBeans.get(position).getConsignee());
+            tvCellPhoneNumber.setText((String) resultBeans.get(position).getPhone());
+            tvLocationAddressBar.setText((String) resultBeans.get(position).getAddress());
+//            tvDetailedAddressBar.setText(resultBeans.get(position).getDetailed_address());
 
             ivModificationAddressBar.setOnClickListener(new View.OnClickListener() {
                 @Override
