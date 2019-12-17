@@ -2,7 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     style="@style/w_match">
-    <include layout="@layout/title_toolbar"></include>
+    <com.example.common.view.MyToolBar
+        android:id="@+id/history_tool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.example.common.view.MyToolBar>
     <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
         android:id="@+id/main_swipe"
        style="@style/w_match">
@@ -25,37 +28,49 @@
                 <TextView
                     android:id="@+id/tv"
                     android:layout_marginTop="@dimen/dp_10"
-                    android:layout_marginLeft="@dimen/dp_10"
                     android:text="从"
                     android:textSize="20sp"
                     android:textColor="@android:color/black"
                     style="@style/w_wrap">
                 </TextView>
 
-                <EditText
+                <TextView
                     android:id="@+id/start"
                     style="@style/history_edit"
                     android:layout_marginLeft="5dp"
+                    android:textSize="@dimen/sp_18"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/tv"
-                    android:hint="开始日期"></EditText>
+                    android:text="开始日期"></TextView>
                 <TextView
                     android:id="@+id/tv1"
-                    android:layout_margin="10dp"
+                    android:layout_marginTop="10dp"
+
                     android:text="到"
                     android:textSize="20sp"
                     android:textColor="@android:color/black"
                     style="@style/w_wrap">
                 </TextView>
 
-                <EditText
+                <TextView
                     android:id="@+id/stop"
+                    android:textSize="@dimen/sp_18"
                     style="@style/history_edit"
                     android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="结束日期"></EditText>
+                    android:text="结束日期"></TextView>
+
+                <Button
+                    android:id="@+id/show"
+                    android:layout_width="52dp"
+                    android:layout_height="27dp"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:background="@drawable/edit_background"
+
+                    android:text="查询"
+                    android:textSize="@dimen/sp_10"></Button>
             </LinearLayout>
             <View
                 android:background="@android:color/darker_gray"

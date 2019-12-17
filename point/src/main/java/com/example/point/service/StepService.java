@@ -62,19 +62,21 @@ public class StepService extends Service implements SensorEventListener {
             int sensorStep = (int) sensorEvent.values[0];
             String s=DateFormat.format("MM-dd", System.currentTimeMillis())+"";//今日日期
             List<StepBean> beans = new DaoManager(this).queryexcept(s);
-            if (beans.size()==0){
-                CURRENT_STEP=sensorStep;
+            List<StepBean> beanList = new DaoManager(this).loadStepBean();
+            if (sensorStep==0){
+                for (StepBean bean:beanList) {
+                    //获取到所有日期的总步数
+                    sensorStep+=bean.getStep();
+                }
             }else {
                 int stepprious=0;
                 for (StepBean bean:beans) {
                     //获取到所有之前日期的总步数
                     stepprious+=bean.getStep();
-                    Log.i("onSensorChanged", "onSensorChanged: "+stepprious);
-                    Log.i("onSensorChanged", "onSensorChanged: "+bean.getStep());
                 }
-                //然后总步数减去之前的步数++++
+                //数据库日期的总步数-今天之前的步数
                 CURRENT_STEP=sensorStep-stepprious;
-                Log.i("onSensorChanged", "onSensorChanged: "+CURRENT_STEP);
+                Log.i("onSensorChanged", "onSensorChanged: "+sensorStep);
             }
 
         } else if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
@@ -174,7 +176,7 @@ public class StepService extends Service implements SensorEventListener {
                 } else if (Intent.ACTION_DATE_CHANGED.equals(action)) {//日期变化步数重置为  0
                     Log.i("receive", " 日期改变");
                     isNewDay();
-                }else if (Intent.ACTION_TIME_TICK.equals(action)) {//日期变化步数重置为0
+                }else if (Intent.ACTION_TIME_TICK.equals(action)) {
                     Log.i("receive", " 时间变动");
                     isCall();
                     save();
@@ -252,7 +254,7 @@ public class StepService extends Service implements SensorEventListener {
             bean.setId(id);
             bean.setCurr_date(CURRENT_DATE);
             bean.setStep(CURRENT_STEP);
-            Log.i("save", "save: "+CURRENT_STEP);
+            Log.i("save", "save: "+0);
             new DaoManager(this).updateStepBean(bean);
         }
     }

@@ -23,6 +23,7 @@ public class MineApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
         applicationContext = this;
         //TODO 网络
         NetConnectManager.getInstance().init(applicationContext);
@@ -31,6 +32,7 @@ public class MineApplication extends Application {
         //TODO 异常捕获
 //        ErrorHandler.getInstance().initErrorHandler(applicationContext);
         //支持计步的话就查找历史记录-否则就什么也不做
+
         if (NetConnectManager.getInstance().isNetConnectStatus() && new StepIsSupport().isSupportStepCountSensor(this)) {
             StepPointManager.getInstance(this).init();
         }

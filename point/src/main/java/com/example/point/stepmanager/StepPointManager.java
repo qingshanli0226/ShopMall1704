@@ -63,13 +63,6 @@ public class StepPointManager {
     public void addGetStepListener(GetStepListener getStepListener){
         this.getStepListener=getStepListener;
     }
-// //   public void  initStep(int step){
-//        this.step=step;
-//    }
-//
-// //   public int getStep(){
-//        return step;
-//    }
     public interface GetStepListener{
         void onsetStep(int step);
     }

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 
-
 import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +18,7 @@ import com.example.dimensionleague.home.adapter.HomeAdapter;
 import com.example.framework.base.BaseNetConnectFragment;
 import com.example.framework.port.IPresenter;
 import com.example.framework.port.AppBarStateChangeListener;
+import com.example.point.message.MessageActivity;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
@@ -95,6 +95,13 @@ public class HomeFragment extends BaseNetConnectFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), SearchActivity.class);
+                startActivity(intent);
+            }
+        });
+        my_toolbar.getHome_message().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), MessageActivity.class);
                 startActivity(intent);
             }
         });

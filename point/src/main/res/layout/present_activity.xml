@@ -2,8 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <include
-        layout="@layout/title_toolbar"></include>
+    <com.example.common.view.MyToolBar
+        android:id="@+id/present_tool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.example.common.view.MyToolBar>
     <RelativeLayout
         android:background="@android:color/holo_orange_light"
         android:layout_width="match_parent"
