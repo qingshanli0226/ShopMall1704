@@ -162,6 +162,7 @@ public class HistoryActivity extends BaseActivity {
 
     //所有记录
     private void AllStep() {
+        allList.clear();
         List<ShopStepBean> stepHistory = StepManager.getInstance().getStepHistory();
         monthList.clear();
         weekList.clear();
@@ -176,6 +177,7 @@ public class HistoryActivity extends BaseActivity {
 
     //一月之内
     private void MonthStep() {
+        monthList.clear();
         List<ShopStepBean> shopStepTimeRealBeans = StepManager.getInstance().getStepHistory();
         Calendar instance = Calendar.getInstance();
         int NowMonth = instance.get(Calendar.MONTH )+1;
@@ -214,6 +216,7 @@ public class HistoryActivity extends BaseActivity {
 
     //只显示一周
     private void WeekStep() {
+        weekList.clear();
         List<ShopStepBean> real = StepManager.getInstance().getStepHistory();
         for (int w=0;w<real.size();w++){
             String date = real.get(w).getDate();
