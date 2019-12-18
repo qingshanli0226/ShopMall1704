@@ -441,6 +441,7 @@ color color_classiffy
 color color_classiffy2
 color color_lightred
 color color_white
+color colorcheckedRed
 color dim_foreground_disabled_material_dark
 color dim_foreground_disabled_material_light
 color dim_foreground_material_dark
@@ -887,6 +888,7 @@ id ll_bottombar
 id ll_buy_checkall
 id ll_buy_delete
 id ll_buy_pay
+id lp_buy_loading
 id message
 id multiply
 id none
@@ -918,6 +920,7 @@ id rl_buy_head
 id rl_buy_shoppingcartlayout
 id rl_title
 id rv_buy_order
+id rv_buy_sendgoods
 id rv_buy_shoppingcart
 id screen
 id scrollIndicatorDown
@@ -956,6 +959,7 @@ id tag_unhandled_key_event_manager
 id tag_unhandled_key_listeners
 id tb_buy_order
 id tb_buy_payresult
+id tb_buy_sendgoods
 id tb_buy_shoppingcart
 id text
 id text2
@@ -969,6 +973,8 @@ id top
 id topPanel
 id tv_buy_descgov
 id tv_buy_itemprice
+id tv_buy_leftnum
+id tv_buy_num
 id tv_buy_orderitemnum
 id tv_buy_price
 id tv_buy_shopcartTotal
@@ -1028,6 +1034,7 @@ layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_order
+layout activity_send_goods
 layout activity_shopping_result
 layout bottombar_layout
 layout custom_dialog
@@ -1035,6 +1042,7 @@ layout failure_layout
 layout fragment_shopping_cart
 layout item_shop_cart
 layout item_shop_order
+layout item_shop_send
 layout notification_action
 layout notification_action_tombstone
 layout notification_template_custom_big

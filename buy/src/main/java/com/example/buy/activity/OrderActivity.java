@@ -25,6 +25,7 @@ import com.example.buy.bean.PayBean;
 import com.example.buy.bean.PayResultBean;
 import com.example.buy.presenter.PayPresenter;
 import com.example.common.SignUtil;
+import com.example.common.view.MyOKButton;
 import com.example.framework.base.IPostBaseView;
 import com.example.framework.manager.ShoppingManager;
 import com.example.buy.adapter.MyShoppingOrderAdapter;
@@ -43,7 +44,7 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
     TitleBar tbOrder;
     TextView tvShopcartTotal;
     RecyclerView rvOrder;
-    Button btnPay;
+    MyOKButton btnPay;
     ShoppingManager shoppingManager;
     private List<Map<String, String>> data;
     private MyShoppingOrderAdapter myShoppingOrderAdapter;

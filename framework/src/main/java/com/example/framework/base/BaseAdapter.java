@@ -47,7 +47,7 @@ public abstract class BaseAdapter<T, V extends RecyclerView.ViewHolder> extends 
     }
 
     //绑定布局
-    protected abstract void onBindHolder(V holder, List<T> data, int type);
+    protected abstract void onBindHolder(V holder, List<T> data, int position);
 
     //返回不同的布局类型
     @Override

@@ -39,17 +39,6 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
     private int allNumber;
 
     @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        int intExtra = intent.getIntExtra("replacefragment", 0);
-        bbMain.setCheckedItem(intExtra);
-
-        if (intExtra == 3) {
-            refreshShoppingCartData();
-        }
-    }
-
-    @Override
     protected int setLayout() {
         return R.layout.activity_main;
     }
@@ -66,9 +55,18 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        int mainitem = ShoppingManager.getInstance().getMainitem();
+        bbMain.setCheckedItem(mainitem);
+        if (mainitem == 3) {
+            refreshShoppingCartData();
+        }
+    }
+
+    @Override
     public void initData() {
         ShoppingManager.getInstance().setOnNumberChangedListener(this);
-        replaceFragment(fragmentArrayList.get(0));
         //获取购物车商品数量
         allNumber = ShoppingManager.getInstance().getAllNumber();
 

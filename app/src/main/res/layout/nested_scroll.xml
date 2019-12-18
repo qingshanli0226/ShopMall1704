@@ -73,6 +73,7 @@
                         android:textColor="@color/color_5d5d" />
 
                     <TextView
+                        android:id="@+id/tv_app_sendgoods"
                         android:layout_width="@dimen/common_width_0"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
