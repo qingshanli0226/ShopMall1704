@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/socket_message"
+        android:textSize="@dimen/sp_20"
+        android:textColor="@android:color/black"
+        android:padding="@dimen/dp_20"
+        android:layout_toLeftOf="@+id/socket_img"
+        android:layout_marginTop="@dimen/dp_30"
+        android:background="@drawable/message"
+        android:layout_width="@dimen/dp_220"
+        android:layout_height="wrap_content"></TextView>
+    <ImageView
+        android:id="@+id/socket_img"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/ic_launcher_round"
+        android:layout_margin="@dimen/dp_30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></ImageView>
+</RelativeLayout>
