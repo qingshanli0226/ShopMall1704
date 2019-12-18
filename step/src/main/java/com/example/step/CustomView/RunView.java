@@ -64,7 +64,7 @@ public class RunView extends SurfaceView {
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
 
-        int newWidth=450;
+        int newWidth=480;
         int newHeight=180;
 
 
@@ -132,7 +132,7 @@ public class RunView extends SurfaceView {
                         postionLeft= toleft-picPostion* mPeople.getWidth()/10;
 
                         if(postionLeft<=mWidth){
-                            toleft+=30;
+                            toleft+=40;
                             Thread.sleep(30);
 
                         }else {

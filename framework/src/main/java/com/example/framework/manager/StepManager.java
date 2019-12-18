@@ -18,11 +18,9 @@ import android.text.format.Time;
 
 import com.example.common.OrmUtils;
 import com.example.framework.bean.HourBean;
+import com.example.framework.bean.MessageStepBean;
 import com.example.framework.bean.ShopStepBean;
-import com.example.framework.bean.ShopStepTimeRealBean;
-import com.example.framework.greendao.DaoMaster;
-import com.example.framework.greendao.DaoSession;
-import com.example.framework.hourSql;
+import com.example.framework.sql.HourSql;
 import com.example.framework.service.StepService;
 
 import java.text.SimpleDateFormat;
@@ -42,10 +40,11 @@ public class StepManager {
     ServiceConnection serviceConnection;
     List<StepManagerListener> stepManagerListeners=new ArrayList<>();
     List<StepIntegalListener> IntegalListeners=new ArrayList<>();
+
     private Intent intent;
 
+    private int cut;
 
-    DaoSession daoSession;
     SQLiteDatabase hourDb;
 
     public static StepManager getInstance() {
@@ -68,13 +67,15 @@ public class StepManager {
                 stepService=((StepService.StepBinder)iBinder).getService();
 
                 stepService.registerListener(new StepService.UpdateUi() {
+
+
                     @Override
                     public void getUpdateStep(int count, int ingal) {
-
-
+                    cut=count;
                         for (int i=0;i<stepManagerListeners.size();i++){
                             stepManagerListeners.get(i).onIntegral(ingal);
                             stepManagerListeners.get(i).onStepChange(count);
+
                         }
 
                         if(IntegalListeners.size()>0){
@@ -83,15 +84,10 @@ public class StepManager {
                             }
                         }
 
-
-
                     }
 
 
                 });
-
-
-
 
             }
 
@@ -106,12 +102,41 @@ public class StepManager {
 
 
 
-        hourSql hourSql = new hourSql(context);
+        HourSql hourSql = new HourSql(context);
         hourDb = hourSql.getWritableDatabase();
 
 
     }
 
+
+
+    public List<MessageStepBean> getMessDate(){
+        Cursor cursor = hourDb.rawQuery("select time,date,currentStep,integral from mess", null);
+        List<MessageStepBean> messageBeans=new ArrayList<>();
+        while (cursor.moveToNext()){
+            String time = cursor.getString(cursor.getColumnIndex("time"));
+            String date = cursor.getString(cursor.getColumnIndex("date"));
+            int currentStep = cursor.getInt(cursor.getColumnIndex("currentStep"));
+            int integral = cursor.getInt(cursor.getColumnIndex("integral"));
+            MessageStepBean messageBean = new MessageStepBean(time, date, currentStep, integral);
+            messageBeans.add(messageBean);
+        }
+        return messageBeans;
+
+    }
+    //存储消息信息
+    public void saveMessSql(String time,String date,int current,int gal){
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("time",time);
+        contentValues.put("date",date);
+        contentValues.put("currentStep",current);
+        contentValues.put("integral",gal);
+
+        hourDb.insert("mess",null,contentValues);
+    }
+
+    //存储每分钟记录
     public void insertHour(String time,String date,int current){
         ContentValues contentValues = new ContentValues();
         contentValues.put("time",time);
@@ -120,7 +145,6 @@ public class StepManager {
         hourDb.insert("history",null,contentValues);
     }
     public List<HourBean> findHour(){
-
         Cursor cursor = hourDb.rawQuery("select distinct time,date,currentStep from history", null);
         List<HourBean> mlist=new ArrayList<>();
         while (cursor.moveToNext())
@@ -135,7 +159,6 @@ public class StepManager {
 
     }
 
-
     //获取现在地1日期
     public String getTodayDate(){
         Date date = new Date(System.currentTimeMillis());
@@ -148,9 +171,6 @@ public class StepManager {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
         return simpleDateFormat.format(date);
     };
-
-
-
 
 
     public boolean isThisMonth(long time){

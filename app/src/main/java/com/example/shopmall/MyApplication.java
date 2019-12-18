@@ -35,6 +35,8 @@ public class MyApplication extends Application {
         JAnalyticsInterface.init(this);
         JPushInterface.init(this);
 
+        JAnalyticsInterface.setDebugMode(true);
+        JAnalyticsInterface.init(context);
         //点击通知跳转MainActivity
         Intent intent = new Intent(this, MainActivity.class);
 
