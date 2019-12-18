@@ -18,7 +18,7 @@ import android.text.format.Time;
 
 import com.example.common.OrmUtils;
 import com.example.framework.bean.HourBean;
-import com.example.framework.bean.MessageBean;
+import com.example.framework.bean.MessageStepBean;
 import com.example.framework.bean.ShopStepBean;
 import com.example.framework.sql.HourSql;
 import com.example.framework.service.StepService;
@@ -110,15 +110,15 @@ public class StepManager {
 
 
 
-    public List<MessageBean> getMessDate(){
+    public List<MessageStepBean> getMessDate(){
         Cursor cursor = hourDb.rawQuery("select time,date,currentStep,integral from mess", null);
-        List<MessageBean> messageBeans=new ArrayList<>();
+        List<MessageStepBean> messageBeans=new ArrayList<>();
         while (cursor.moveToNext()){
             String time = cursor.getString(cursor.getColumnIndex("time"));
             String date = cursor.getString(cursor.getColumnIndex("date"));
             int currentStep = cursor.getInt(cursor.getColumnIndex("currentStep"));
             int integral = cursor.getInt(cursor.getColumnIndex("integral"));
-            MessageBean messageBean = new MessageBean(time, date, currentStep, integral);
+            MessageStepBean messageBean = new MessageStepBean(time, date, currentStep, integral);
             messageBeans.add(messageBean);
         }
         return messageBeans;

@@ -1,13 +1,14 @@
 package com.example.framework.bean;
 
-public class MessageBean {
+public class MessageStepBean {
+
 
     String time;
     String date;
     int currentStep;
     int integral;
 
-    public MessageBean(String time, String date, int currentStep, int integral) {
+    public MessageStepBean(String time, String date, int currentStep, int integral) {
         this.time = time;
         this.date = date;
         this.currentStep = currentStep;
@@ -48,11 +49,12 @@ public class MessageBean {
 
     @Override
     public String toString() {
-        return "MessageBean{" +
+        return "MessageStepBean{" +
                 "time='" + time + '\'' +
                 ", date='" + date + '\'' +
                 ", currentStep=" + currentStep +
                 ", integral=" + integral +
                 '}';
     }
+
 }
