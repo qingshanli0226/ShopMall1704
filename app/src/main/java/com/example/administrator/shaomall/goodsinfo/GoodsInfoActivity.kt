@@ -71,6 +71,7 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
         if (productDescribe != null) {
             mTvGoodInfoDesc.text = productDescribe
         }
+
         //商品价格
         mTvGoodInfoPrice.text = "￥ $productPrice"
 

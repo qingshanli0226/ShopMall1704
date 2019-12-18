@@ -1,5 +1,7 @@
 package com.example.remindsteporgan;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,10 +10,15 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.commen.util.PageUtil;
 import com.example.remindsteporgan.Base.Bean;
+import com.example.remindsteporgan.DIYView.MyPassometView;
 import com.example.remindsteporgan.Util.ScreenBroadcastListener;
 import com.example.remindsteporgan.Util.ScreenManager;
 import com.example.view.demogreendao.BeanDao;
@@ -22,9 +29,13 @@ import com.shaomall.framework.manager.PointManager;
 
 import java.util.Calendar;
 
+@RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
 public class RemindActivity extends BaseActivity implements SensorEventListener {
     private TextView tv1;
+    private MyPassometView viewPassometView;
+    private RelativeLayout review;
     private TextView historySteps;
+    PageUtil pageUtil;
 
     //TODO 获取当前系统的时间
     Calendar calendar = Calendar.getInstance();
@@ -38,8 +49,6 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
     float plus = 0;
 
 
-    //TODO 传感器
-    private SensorManager sm;
     //TODO 定义的数据库
     DaoSession dao;
     //TODO SP存储
@@ -51,10 +60,14 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
         return R.layout.remindactivity_main;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void initView() {
+        viewPassometView = (MyPassometView) findViewById(R.id.view_passomet_view);
+        review = (RelativeLayout) findViewById(R.id.review);
         tv1 = (TextView) this.findViewById(R.id.tv1);
         historySteps = (TextView) findViewById(R.id.historySteps);
+        TextView historySteps = (TextView) findViewById(R.id.historySteps);
         sp = getSharedPreferences("ssh", 0);
         //TODO 实例化数据库
         DaoMaster.DevOpenHelper openHelper = new DaoMaster.DevOpenHelper(this, "ssh");
@@ -63,23 +76,40 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
         dao = daoMaster.newSession();
         beanDao = dao.getBeanDao();
 
+        //TODO 加载动画
+        pageUtil=new PageUtil(this);
 
-        sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+        //TODO 传感器
+        SensorManager sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         // 计步统计
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             sm.registerListener(this, sm.getDefaultSensor(Sensor.TYPE_STEP_COUNTER),
                     SensorManager.SENSOR_DELAY_NORMAL);
         }
 
+        assert sm != null;
+        sm.registerListener(this, sm.getDefaultSensor(Sensor.TYPE_STEP_COUNTER),
+                SensorManager.SENSOR_DELAY_NORMAL);
+
     }
 
 
     @Override
     protected void initData() {
-
+        pageUtil.setReview(review);
+        historySteps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pageUtil.showLoad();
+            }
+        });
     }
 
 
+    @TargetApi(Build.VERSION_CODES.GINGERBREAD)
+    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
+    @SuppressLint("SetTextI18n")
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
@@ -128,6 +158,7 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
             tv1.setText("今天走了" + stepCount + "步");
 
             setStepCount2Point(stepCount);
+
         }
     }
 
@@ -147,6 +178,7 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onDestroy() {
         super.onDestroy();

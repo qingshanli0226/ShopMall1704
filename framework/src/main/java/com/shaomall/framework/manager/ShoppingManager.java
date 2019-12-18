@@ -185,8 +185,8 @@ public class ShoppingManager {
      *
      * @return
      */
-    public List<ShoppingCartBean> getShoppingCartSelectionData() {
-        List<ShoppingCartBean> shoppingCartBeans = new ArrayList<>();
+    public ArrayList<ShoppingCartBean> getShoppingCartSelectionData() {
+        ArrayList<ShoppingCartBean> shoppingCartBeans = new ArrayList<>();
         for (ShoppingCartBean bean : result) {
             if (bean.isSelect()) {
                 shoppingCartBeans.add(bean);

@@ -17,6 +17,7 @@ import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.type.TypeFragment;
 import com.example.administrator.shaomall.home.HomeFragment;
 import com.example.administrator.shaomall.login.LoginActivity;
+
 import com.example.commen.util.ShopMailError;
 import com.example.shoppingcart.Ui.ShoppingCartFragment;
 import com.flyco.tablayout.CommonTabLayout;

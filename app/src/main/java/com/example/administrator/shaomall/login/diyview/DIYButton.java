@@ -1,5 +1,6 @@
 package com.example.administrator.shaomall.login.diyview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -41,6 +42,7 @@ public class DIYButton  extends android.support.v7.widget.AppCompatButton {
         super(context, attrs, defStyleAttr);
     }
 
+    @SuppressLint("DrawAllocation")
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);

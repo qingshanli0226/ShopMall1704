@@ -1,8 +1,10 @@
 package com.shaomall.framework.bean;
 
-public class ShoppingCartBean {
-
-
+import android.annotation.SuppressLint;
+import android.os.Parcel;
+import android.os.Parcelable;
+@SuppressLint("ParcelCreator")
+public class ShoppingCartBean implements Parcelable {
     /**
      * productId : 3571
      * productNum : 4
@@ -63,5 +65,37 @@ public class ShoppingCartBean {
 
     public void setProductPrice(String productPrice) {
         this.productPrice = productPrice;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Parcelable.Creator<ShoppingCartBean> CREATOR = new Creator<ShoppingCartBean>() {
+        @Override
+        public ShoppingCartBean createFromParcel(Parcel parcel) {
+            ShoppingCartBean shoppingCartBean = new ShoppingCartBean();
+            shoppingCartBean.productId = parcel.readString();
+            shoppingCartBean.productName = parcel.readString();
+            shoppingCartBean.productNum = parcel.readString();
+            shoppingCartBean.url = parcel.readString();
+            shoppingCartBean.productPrice = parcel.readString();
+            return shoppingCartBean;
+        }
+
+        @Override
+        public ShoppingCartBean[] newArray(int i) {
+            return new ShoppingCartBean[i];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(productId);
+        parcel.writeString(productNum);
+        parcel.writeString(productName);
+        parcel.writeString(url);
+        parcel.writeString(productPrice);
     }
 }

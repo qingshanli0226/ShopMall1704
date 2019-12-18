@@ -1,7 +1,12 @@
 package com.example.shoppingcart.Ui;
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
@@ -17,11 +22,22 @@ public class AddressManagerActivity extends BaseActivity {
     private ArrayList<JsonBean> options1Items = new ArrayList<>(); //省
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<>();//市
     private ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<>();//区
+    private TextView subtotalprice;
+    private TextView todalprice;
+    private Button commitorder;
+    private TextView howmanyindex;
+
 
     private TextView tvAddress;
     @Override
     protected void initView() {
         tvAddress = (TextView) findViewById(R.id.tv_address);
+        subtotalprice = (TextView) findViewById(R.id.subtotalprice);
+        todalprice = (TextView) findViewById(R.id.todalprice);
+        commitorder = (Button) findViewById(R.id.commitorder);
+        howmanyindex = (TextView) findViewById(R.id.howmanyindex);
+
+
         initJsonData();
         tvAddress.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,8 +144,16 @@ public class AddressManagerActivity extends BaseActivity {
         return R.layout.activity_payment;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void initData() {
-
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        ArrayList<Parcelable> data = extras.getParcelableArrayList("data");
+        int payment = extras.getInt("payment");
+        float sum = extras.getFloat("sum");
+        subtotalprice.setText("$"+sum);
+        todalprice.setText("$"+sum);
+        howmanyindex.setText("共"+payment+"件商品");
     }
 }
