@@ -29,7 +29,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
     private TextView mTvPoint;
     private UserInfoManager userInfoManager;
     private IBasePresenter logoutPresenter;
-    private String point="0";
+    private String point = "0";
     private PointUpLoadPresenter pointUpLoadPresenter;
     private TextView mTvNoPayment;
     private TextView mTvSendGoods;
@@ -79,6 +79,9 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         super.initData();
         //展示用户信息
         setUserData();
+
+        //积分更新
+        PointManager.getInstance().registerCallbackIntegralListener(this);
     }
 
 
@@ -223,7 +226,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
      */
     @Override
     public void onCallbacksIntegral(int pointNum) {
-        int pointSum = Integer.parseInt(point)+pointNum;
+        int pointSum = Integer.parseInt(point) + pointNum;
         mTvPoint.setText("积分: " + pointSum);
 
         //上传当前积分数量

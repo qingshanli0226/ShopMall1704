@@ -1,5 +1,6 @@
 package com.example.administrator.shaomall.login;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -42,6 +43,7 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void initData() {
         diybutton.setButtomtext("登录");
@@ -62,8 +64,9 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     //这是按下时的颜色
                     int colorStart = getResources().getColor(R.color.mediumspringgreen);
-                    //传过去true代表是按下
-                    diybutton.setType(true);
+                    //传过去false代表是按下
+                    diybutton.setType(false);
+
                     int color = Color.parseColor("#00ced1");
                     int colorEnd = getResources().getColor(R.color.skyblue);
 
@@ -73,8 +76,8 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
                     //这是抬起时的颜色
 
                     int colorStart = getResources().getColor(R.color.mediumspringgreen);
-                    //false抬起
-                    diybutton.setType(false);
+                    //true抬起
+                    diybutton.setType(true);
                     int color = Color.parseColor("#00ced1");
                     int colorEnd = getResources().getColor(R.color.skyblue);
 

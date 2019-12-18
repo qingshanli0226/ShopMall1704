@@ -76,14 +76,36 @@ public class SigninActivity extends BaseMVPActivity<String> {
                     @Override
                     public void callback(String uri) {
                         signinPhoto.setVisibility(View.VISIBLE);
-
                         signinPhoto.setImageURI(Uri.fromFile(new File(uri)));
                         signinhead.setVisibility(View.GONE);
-
                     }
                 });
             }
         });
+
+        //点击圆形图片
+        signinPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AvatarStudio.Builder builder = new AvatarStudio.Builder(SigninActivity.this);
+                builder.setTextColor(R.color.darkturquoise);
+                builder.setText("拍照", "本地选择", "取消");
+                builder.needCrop(true);
+                builder.dimEnabled(true);
+                builder.setOutput(100, 100);
+                builder.setAspect(1, 1);
+                builder.show(new AvatarStudio.CallBack() {
+                    @Override
+                    public void callback(String uri) {
+                        signinPhoto.setVisibility(View.VISIBLE);
+                        signinPhoto.setImageURI(Uri.fromFile(new File(uri)));
+                        signinhead.setVisibility(View.GONE);
+                    }
+                });
+            }
+        });
+
+
         //判断登录按钮按下和抬起
         diybutton.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -91,8 +113,8 @@ public class SigninActivity extends BaseMVPActivity<String> {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     //这是按下时的颜色
                     int colorStart = getResources().getColor(R.color.mediumspringgreen);
-                    //传过去true代表是按下
-                    diybutton.setType(true);
+                    //传过去false代表是按下
+                    diybutton.setType(false);
                     int color = Color.parseColor("#00ced1");
                     int colorEnd = getResources().getColor(R.color.skyblue);
 
@@ -101,8 +123,8 @@ public class SigninActivity extends BaseMVPActivity<String> {
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     //这是抬起时的颜色
                     int colorStart = getResources().getColor(R.color.mediumspringgreen);
-                    //false抬起
-                    diybutton.setType(false);
+                    //true抬起
+                    diybutton.setType(true);
                     int color = Color.parseColor("#00ced1");
                     int colorEnd = getResources().getColor(R.color.skyblue);
 

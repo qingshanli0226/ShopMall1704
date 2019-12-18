@@ -9,7 +9,8 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/loginLinearLayoutHeight" />
+        android:layout_height="@dimen/loginLinearLayoutHeight"
+        android:layout_marginBottom="20dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -72,8 +73,6 @@
             android:singleLine="true"
             android:textColor="@color/darkturquoise"
             android:textCursorDrawable="@drawable/cursor_color" />
-
-
     </LinearLayout>
 
     <LinearLayout
@@ -97,7 +96,6 @@
     </LinearLayout>
 
     <com.example.administrator.shaomall.login.diyview.DIYButton
-
         android:id="@+id/diybutton"
         android:layout_width="@dimen/loginDiyWidth"
         android:layout_height="0dp"
@@ -108,7 +106,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2">
+        android:layout_weight="2" />
 
-    </View>
 </LinearLayout>

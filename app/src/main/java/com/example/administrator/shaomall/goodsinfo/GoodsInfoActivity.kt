@@ -62,6 +62,7 @@ class GoodsInfoActivity : BaseMVPActivity<String>() {
         if (productDescribe != null) {
             mTvGoodInfoDesc.text = productDescribe
         }
+
         //商品价格
         mTvGoodInfoPrice.text = "￥ $productPrice"
 
