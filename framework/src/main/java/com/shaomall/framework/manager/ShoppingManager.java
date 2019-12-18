@@ -133,10 +133,11 @@ public class ShoppingManager {
 
     /**
      * 更新商品购买的数量
+     *
      * @param map
      */
-    public void upDataGoodsNum(HashMap<String, Integer> map){
-        result.get(map.get("index")).setProductNum(map.get("num")+"");
+    public void upDataGoodsNum(HashMap<String, Integer> map) {
+        result.get(map.get("index")).setProductNum(map.get("num") + "");
         notifyUpdatedShoppingData();
     }
 
@@ -177,6 +178,21 @@ public class ShoppingManager {
         for (ShoppingNumChangeListener listener : shoppingNumChangeListeners) {
             listener.onShoppingNumChange(getShoppingNum()); //当前商品数量
         }
+    }
+
+    /**
+     * 获取被选中的数据, 付款时使用
+     *
+     * @return
+     */
+    public List<ShoppingCartBean> getShoppingCartSelectionData() {
+        List<ShoppingCartBean> shoppingCartBeans = new ArrayList<>();
+        for (ShoppingCartBean bean : result) {
+            if (bean.isSelect()) {
+                shoppingCartBeans.add(bean);
+            }
+        }
+        return shoppingCartBeans;
     }
 
 
