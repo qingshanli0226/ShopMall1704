@@ -240,6 +240,7 @@ public class HistoryActivity extends BaseActivity {
     }
     //三小时之内
     private void ThreeHourStep() {
+        threeList.clear();
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
