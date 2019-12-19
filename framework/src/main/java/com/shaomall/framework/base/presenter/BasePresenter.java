@@ -47,7 +47,6 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
         getData(requestCode, RetrofitCreator.getNetApiService().getData(getHeaderParams(), getPath(), getParams()));
     }
 
-
     /**
      * post请求
      */
