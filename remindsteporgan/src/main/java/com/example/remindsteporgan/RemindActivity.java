@@ -3,6 +3,7 @@ package com.example.remindsteporgan;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.hardware.Sensor;
@@ -10,6 +11,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +30,7 @@ import com.shaomall.framework.base.BaseActivity;
 import com.shaomall.framework.manager.PointManager;
 
 import java.util.Calendar;
+import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
 public class RemindActivity extends BaseActivity implements SensorEventListener {
@@ -43,6 +46,7 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
     int day = calendar.get(Calendar.DAY_OF_MONTH);
 
     float X;
+
     BeanDao beanDao;
 
     //TODO 加的步数
@@ -53,6 +57,8 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
     DaoSession dao;
     //TODO SP存储
     SharedPreferences sp;
+    //TODO 这个是"我的"页面里面传过来的用户名方便数据库存储
+    private String username;
 
 
     @Override
@@ -69,6 +75,11 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
         historySteps = (TextView) findViewById(R.id.historySteps);
         TextView historySteps = (TextView) findViewById(R.id.historySteps);
         sp = getSharedPreferences("ssh", 0);
+
+        Intent intent=getIntent();
+        Bundle extras = intent.getExtras();
+        username = extras.getString("username");
+
         //TODO 实例化数据库
         DaoMaster.DevOpenHelper openHelper = new DaoMaster.DevOpenHelper(this, "ssh");
         SQLiteDatabase writableDatabase = openHelper.getWritableDatabase();
@@ -101,7 +112,7 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
         historySteps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pageUtil.showLoad();
+                toClass(HistoryActivity.class);
             }
         });
     }
@@ -140,9 +151,9 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
                     if (daychange == day) {
                         //TODO 还是同一天
                         //TODO step代表和上一次运行相差了多少步
-                        //long step = sp.getLong("step", 0);
+                        long step = sp.getLong("step", 0);
                         //TODO 这个是算出程序没有运行期间走了多少步
-                        //plus=X-step;
+                        plus=X-step;
                     } else {
                         //TODO 不是同一天了
                         daychange = day;
@@ -154,9 +165,12 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
                 }
             }
 
+            //TODO 这里判断是哪一个用户然后分别显示不同的步数
+
+
             long stepCount = (long) (X - y + plus);
             tv1.setText("今天走了" + stepCount + "步");
-
+            viewPassometView.setText((int) stepCount);
             setStepCount2Point(stepCount);
 
         }
@@ -194,10 +208,10 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
         SharedPreferences sp = getSharedPreferences("ssh", 0);
         SharedPreferences.Editor edit = sp.edit();
         //TODO 退出前提交一个退出前的步数方便下次打开做计算期间相差多少步
+
         edit.putLong("step", (long) X);
         edit.putString("type", "0");
         edit.apply();
-
     }
 
     private void Keep_alice() {

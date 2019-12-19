@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">remindsteporgan</string>
+    <string name="remindActivityTextLongAgo">查看历史步数</string>
 </resources>

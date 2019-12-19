@@ -2,14 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.remindsteporgan">
 
-
     <application>
-        <activity android:name=".RemindActivity">
+        <activity android:name=".RemindActivity"></activity>
 
-        </activity>
-        <service android:name=".Util.LiveService"
-            android:process=":live_service"/>
+        <service
+            android:name=".Util.LiveService"
+            android:process=":live_service" />
+
+        <activity android:name=".HistoryActivity"></activity>
     </application>
-
 
 </manifest>

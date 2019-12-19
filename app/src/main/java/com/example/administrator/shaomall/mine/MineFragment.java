@@ -1,7 +1,9 @@
 package com.example.administrator.shaomall.mine;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.activity.MessageActivity;
+import com.example.administrator.shaomall.activity.SettingActivity;
 import com.example.administrator.shaomall.function.FunctionActivity;
 import com.example.administrator.shaomall.login.LoginActivity;
 import com.example.commen.util.ShopMailError;
@@ -106,6 +109,10 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         switch (v.getId()) {
             case R.id.tv_userSetting: //设置界面
 
+                Bundle bundle=new Bundle();
+                bundle.putString("name",mTvUserName.getText().toString());
+                bundle.putString("head",mIvHeader.toString());
+                toClass(SettingActivity.class,bundle);
                 break;
             case R.id.iv_message:   //消息界面
                 toClass(MessageActivity.class);
@@ -163,7 +170,11 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
      */
     private void setPoint() {
         //        mTvPoint.setText();
-        toClass(RemindActivity.class);
+        //把用户名先传到计步器的页面可以使用数据库存储用户名
+        Bundle bundle=new Bundle();
+        bundle.putString("username",mTvUserName.getText().toString());
+        toClass(RemindActivity.class,bundle);
+
     }
 
     /**
@@ -196,7 +207,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
             String name = loginBean.getName();      //得到名字
             String phone = (String) loginBean.getPhone();    //取得电话
             point = (String) loginBean.getPoint();  //获得积分
-
+            //Log.d("WQS: ",point);
             //设置头像
             if (avatar == null) {
                 avatar = "http://img5.imgtn.bdimg.com/it/u=1441588315,1666293982&fm=26&gp=0.jpg";
