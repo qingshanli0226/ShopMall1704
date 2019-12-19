@@ -19,15 +19,12 @@ import com.example.shoppingcart.Adapter.RvAdp;
 import com.example.shoppingcart.R;
 import com.shaomall.framework.bean.LoginBean;
 import com.shaomall.framework.bean.ShoppingCartBean;
-import com.example.shoppingcart.presenter.RemoveOneProductPresenter;
 import com.example.shoppingcart.presenter.UpDateShoppingCartPresenter;
 import com.shaomall.framework.base.BaseMVPFragment;
 
 import com.shaomall.framework.manager.ShoppingManager;
 import com.shaomall.framework.manager.UserInfoManager;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,12 +36,11 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
     private TextView tvDelete;
     private TextView tvGoToPay;
     private RvAdp rvAdp;
-    float sum = 0.00f; //总价
+    private float sum = 0.00f;
 
     //商品数据
     private List<ShoppingCartBean> listData = ShoppingManager.getInstance().getShoppingCartData();
     private UpDateShoppingCartPresenter upDateShoppingCartPresenter; //更新商品数量
-    private RemoveOneProductPresenter removeOneProductPresenter; //删除选中数据
     private HashMap<String, Integer> upDateGoodsNum; //存储更改的商品的下标和数量
 
     @Override
@@ -70,6 +66,10 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
         rvAdp = new RvAdp(listData, getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(rvAdp);
+        //是否是全选
+        if (listData.size() != 0 && listData.size() == ShoppingManager.getInstance().getShoppingCartSelectionData().size()) {
+            allCheckbox.setChecked(true);
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -81,8 +81,8 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
             public void onClick(View v) {
                 //TODO 删除的判断
                 boolean judgmentOfDeletion = false;
-                for (int x = 0; x <= listData.size() - 1; x++) {
-                    if (listData.get(x).isSelect()) {
+                for (int i = 0; i < listData.size(); i++) {
+                    if (listData.get(i).isSelect()) {
                         judgmentOfDeletion = true;
                         break;
                     }
@@ -99,23 +99,8 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
                     builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            for (int i = 0; i < listData.size(); i++) {
-                                if (listData.get(i).isSelect()) {
-                                    //TODO 如果选中了就删除掉
-                                    if (removeOneProductPresenter == null) {
-                                        removeOneProductPresenter = new RemoveOneProductPresenter();
-                                        removeOneProductPresenter.attachView(ShoppingCartFragment.this);
-                                    }
-                                    JSONObject jsonObject = new JSONObject();
-                                    jsonObject.put("productId", listData.get(i).getProductId());
-                                    jsonObject.put("productNum", listData.get(i).getProductNum());
-                                    jsonObject.put("productName", listData.get(i).getProductName());
-                                    jsonObject.put("url", listData.get(i).getUrl());
-                                    jsonObject.put("productPrice", listData.get(i).getProductPrice());
-                                    removeOneProductPresenter.setJson(jsonObject);
-                                    removeOneProductPresenter.doJsonPostHttpRequest(AppNetConfig.COURT_SHIP_CODE_DELETE_SHOPPINGCART_QUANTITY);
-                                }
-                            }
+                            //进行删除
+                            ShoppingManager.getInstance().removeShoppingCartData();
                         }
                     });
                     builder.show();
@@ -130,7 +115,7 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
         rvAdp.setItemDetailsCallBack(new RvAdp.ItemDetailsCallBack() {
             @Override
             public void onItemDetailsCallBack(int i) {
-//                DisplayGoods();
+                //                displayGoods();
             }
         });
 
@@ -138,20 +123,12 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
         allCheckbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i = 0; i < listData.size(); i++) {
-                    if (allCheckbox.isChecked()) {
-                        if (!listData.get(i).isSelect()) {
-                            listData.get(i).setSelect(true);
-                            sum += getShoppingPrice2Num(listData.get(i)); //计算总价
-                        }
-                    } else {
-                        listData.get(i).setSelect(false);
-                        sum = 0.00f;
-                    }
+                for (ShoppingCartBean listDatum : listData) {
+                    listDatum.setSelect(allCheckbox.isChecked());
                 }
-                rvAdp.notifyDataSetChanged(); //刷新适配器
                 //TODO 更新合计值
-                setTvTotalPriceValue(sum);
+                setTvTotalPriceValue();//更新合计值
+                rvAdp.notifyDataSetChanged(); //刷新适配器
             }
         });
 
@@ -163,9 +140,10 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
                 ArrayList<ShoppingCartBean> data = ShoppingManager.getInstance().getShoppingCartSelectionData();
                 //TODO 付款的判断
                 if (data.size() != 0) {
-                    int size = ShoppingManager.getInstance().getShoppingCartSelectionData().size();
+                    //选中的商品数量
+                    int payment = ShoppingManager.getInstance().getShoppingCartSelectionData().size();
                     Bundle bundle = new Bundle();
-                    bundle.putInt("payment", size);
+                    bundle.putInt("payment", payment);
                     bundle.putParcelableArrayList("data", data);
                     bundle.putFloat("sum", sum);
                     toClass(AddressManagerActivity.class, bundle);
@@ -214,44 +192,12 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
             if (whether == 0) {
                 allCheckbox.setChecked(true);
             }
-            sum += getShoppingPrice2Num(listData.get(index));
         } else {
             //TODO 让全选取消一个就成为false
             allCheckbox.setChecked(false);
-            sum -= getShoppingPrice2Num(listData.get(index));
         }
 
-        setTvTotalPriceValue(sum); //更新合计值
-    }
-
-
-    /**
-     * 设置合计的值
-     */
-    private void setTvTotalPriceValue(float totalPrice) {
-        //四舍五入保留两位小数
-        BigDecimal bigDecimal = new BigDecimal(totalPrice);
-        totalPrice = bigDecimal.setScale(2, RoundingMode.HALF_UP).floatValue();//四舍五入
-
-        //        //TODO 格式化只保留两位小数点
-        //        DecimalFormat df = new DecimalFormat("0.00");
-        //        totalPrice = Float.parseFloat(df.format(totalPrice));
-        tvTotalPrice.setText("￥" + totalPrice);
-        //TODO 设置付款选中了多少个商品
-        tvGoToPay.setText("付款(" + ShoppingManager.getInstance().getShoppingCartSelectionData().size() + ")");
-    }
-
-
-    /**
-     * 计算单个商品的总价格
-     *
-     * @param data
-     * @return
-     */
-    private float getShoppingPrice2Num(ShoppingCartBean data) {
-        float price = Float.parseFloat(data.getProductPrice());
-        float num = Float.parseFloat(data.getProductNum());
-        return price * num;
+        setTvTotalPriceValue(); //更新合计值
     }
 
 
@@ -296,39 +242,10 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
     @Override
     public void onRequestHttpDataSuccess(int requestCode, String message, Object data) {
         if (requestCode == AppNetConfig.REQUEST_CODE_TOUPDATE_CARTQUANTITY) {
-            //更新总价金额
-            totalPriceSingleData(upDateGoodsNum.get("index"), upDateGoodsNum.get("num"));
-        } else if (requestCode == AppNetConfig.COURT_SHIP_CODE_DELETE_SHOPPINGCART_QUANTITY) {
-            //TODO 删除购物车
-            ShoppingManager.getInstance().removeShoppingCartData();
-            sum = 0.00f;
-            setTvTotalPriceValue(sum); //总价归0
+            // TODO　修改购物车数量
+            ShoppingManager.getInstance().upDataGoodsNum(upDateGoodsNum);
+            setTvTotalPriceValue();//更新合计值
         }
-    }
-
-    /**
-     * 更新总价金额
-     *
-     * @param i
-     * @param newNum
-     */
-    private void totalPriceSingleData(int i, int newNum) {
-        ShoppingCartBean data = listData.get(i);
-        if (data.isSelect()) {
-            float price = Float.parseFloat(data.getProductPrice());
-            int oldNum = Integer.parseInt(data.getProductNum());
-            //根据newNum是否大于oldNum判断是点击了加还是减
-            if (newNum > oldNum) { //加
-                sum += price;
-            } else if (newNum < oldNum) { //减
-                sum -= price;
-            }
-
-            setTvTotalPriceValue(sum); //更新合计值
-        }
-
-        // TODO　修改购物车数量
-        ShoppingManager.getInstance().upDataGoodsNum(upDateGoodsNum);
     }
 
 
@@ -340,16 +257,31 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
         //TODO 如果购物车里面没有数据了吧全选按钮设置为false并把总价格归零
         if (data.size() == 0) {
             allCheckbox.setChecked(false);
-            sum = 0.00f;
-            setTvTotalPriceValue(sum);
+        } else if (data.size() == ShoppingManager.getInstance().getShoppingCartSelectionData().size()) {
+            //是否是全选
+            allCheckbox.setChecked(true);
         }
+        setTvTotalPriceValue();//更新合计值
         rvAdp.notifyDataSetChanged();
     }
+
+    /**
+     * 设置总价
+     */
+    private void setTvTotalPriceValue() {
+        sum = ShoppingManager.getInstance().getTheTotalPrice();
+        //商品总价
+        tvTotalPrice.setText("￥" + sum);
+        //TODO 设置付款选中了多少个商品
+        tvGoToPay.setText("付款(" + ShoppingManager.getInstance().getShoppingCartSelectionData().size() + ")");
+    }
+
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         ShoppingManager.getInstance().unRegisterNotifyUpdatedShoppingDataListener(this);
+        ShoppingManager.getInstance().disposeCompositeDisposable();//释放网络
     }
 
     //TODO 如果退出登录了让他选择的数量归零

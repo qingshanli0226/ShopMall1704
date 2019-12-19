@@ -37,7 +37,6 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.Map;
 
-import okhttp3.Address;
 
 public class AddressManagerActivity extends BaseMVPActivity<Object> {
     private ArrayList<JsonBean> options1Items = new ArrayList<>(); //省
@@ -177,9 +176,9 @@ public class AddressManagerActivity extends BaseMVPActivity<Object> {
     public void onRequestHttpDataSuccess(int requestCode, String message, Object data) {
         if (requestCode == AppNetConfig.REQUEST_CODE_GET_ORDER_INFO) {
             infoBean = (OrderInfoBean) data;
-        }else if (requestCode == AppNetConfig.REQUEST_CODE_CONFIRM_SERVER_PAY_RESULT){
+        } else if (requestCode == AppNetConfig.REQUEST_CODE_CONFIRM_SERVER_PAY_RESULT) {
             boolean isPayResult = ((String) data).equals("true");//支付成功
-            if (isPayResult){
+            if (isPayResult) {
                 ShoppingManager.getInstance().removeShoppingCartData();
             }
         }
@@ -189,7 +188,7 @@ public class AddressManagerActivity extends BaseMVPActivity<Object> {
     public void onRequestHttpDataFailed(int requestCode, ShopMailError error) {
         if (requestCode == AppNetConfig.REQUEST_CODE_GET_ORDER_INFO) { //订单信息获取失败
             toast(error.getErrorMessage(), false);
-        }else if (requestCode == AppNetConfig.REQUEST_CODE_CONFIRM_SERVER_PAY_RESULT){ //服务器后台失败
+        } else if (requestCode == AppNetConfig.REQUEST_CODE_CONFIRM_SERVER_PAY_RESULT) { //服务器后台失败
             toast(error.getErrorMessage(), false);
         }
     }

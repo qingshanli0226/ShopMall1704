@@ -1,6 +1,5 @@
 package com.example.administrator.shaomall.activity;
 
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;

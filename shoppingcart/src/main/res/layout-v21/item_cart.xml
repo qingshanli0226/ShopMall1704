@@ -97,12 +97,11 @@
                         android:id="@+id/tv_reduce"
                         android:layout_width="@dimen/cartReduceTextVIewWidth"
                         android:layout_height="@dimen/cartReduceTextVIewheight"
-                        android:background="?android:selectableItemBackgroundBorderless"
                         android:gravity="center"
                         android:text="-"
+                        android:background="?android:selectableItemBackgroundBorderless"
                         android:textColor="@color/grey_color1"
-                        android:textSize="@dimen/cartReduceTextVIewSize"
-                        tools:targetApi="lollipop" />
+                        android:textSize="@dimen/cartReduceTextVIewSize" />
 
                     <TextView
                         android:id="@+id/tv_num"
@@ -118,12 +117,10 @@
                         android:id="@+id/tv_add"
                         android:layout_width="@dimen/cartAddTextVIewWidth"
                         android:layout_height="@dimen/cartAddTextVIewHeight"
-                        android:background="?android:selectableItemBackgroundBorderless"
                         android:gravity="center"
                         android:text="+"
                         android:textColor="@color/grey_color1"
-                        android:textSize="@dimen/cartReduceTextVIewSize"
-                        tools:targetApi="lollipop" />
+                        android:textSize="@dimen/cartReduceTextVIewSize" />
                 </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>

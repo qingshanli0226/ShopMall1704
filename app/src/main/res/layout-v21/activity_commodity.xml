@@ -177,14 +177,13 @@
                         android:background="#ed3f3f" />
 
 
-                    <WebView
+                    <FrameLayout
                         android:id="@+id/mWbGoodInfoMore"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
                 </LinearLayout>
             </ScrollView>
-
         </LinearLayout>
     </FrameLayout>
 

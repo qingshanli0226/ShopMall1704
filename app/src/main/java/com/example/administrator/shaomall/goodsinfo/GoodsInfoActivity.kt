@@ -7,7 +7,9 @@ import android.graphics.Color
 import android.graphics.PointF
 import android.view.Gravity
 import android.view.View
+import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.alibaba.fastjson.JSONObject
@@ -38,6 +40,8 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
     private lateinit var productPrice: String
     private var productDescribe: String? = null
     private lateinit var qBadgeView: QBadgeView //小红点显示
+    lateinit var frameLayout: FrameLayout
+    private lateinit var mWebView: WebView
 
     override fun setLayoutId(): Int = R.layout.activity_commodity
 
@@ -76,10 +80,7 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
         mTvGoodInfoPrice.text = "￥ $productPrice"
 
         //展示商品详情
-        mWbGoodInfoMore.loadUrl(productPic)
-        mWbGoodInfoMore.webViewClient = WebViewClient()
-        val settings = mWbGoodInfoMore.settings
-        settings.javaScriptEnabled = true //允许使用js
+        productDetails()
 
         //点击进入购物车监听
         mTvFGoodInfoCart.setOnClickListener(this)
@@ -104,6 +105,21 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
 
         //购物车商品数量更新监听
         ShoppingManager.getInstance().registerShoppingNumChangeListener(this)
+    }
+
+    /**
+     * 商品详情展示
+     */
+    private fun productDetails() {
+        //创建webView控件
+        mWebView = WebView(applicationContext)
+        frameLayout = this.findViewByMe(R.id.mWbGoodInfoMore)
+        frameLayout.addView(mWebView)
+
+        mWebView.loadUrl(productPic)
+        mWebView.webViewClient = WebViewClient()
+        val settings = mWebView.settings
+        settings.javaScriptEnabled = true //允许使用js
     }
 
 
@@ -249,6 +265,7 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
         shoppingCartBean.productName = productName
         shoppingCartBean.productPrice = productPrice
         shoppingCartBean.url = productPic
+        shoppingCartBean.isSelect = true //默认选中
         //添加到商品管理类
         ShoppingManager.getInstance().addShoppingCart(shoppingCartBean)
     }
@@ -267,6 +284,9 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
 
     override fun onDestroy() {
         super.onDestroy()
+        frameLayout.removeView(mWebView)
+        mWebView.removeAllViews()
+        mWebView.destroy()
         ShoppingManager.getInstance().unRegisterShoppingNumChangeListener(this)
     }
 }

@@ -176,8 +176,7 @@
                         android:layout_height="1dp"
                         android:background="#ed3f3f" />
 
-
-                    <WebView
+                    <FrameLayout
                         android:id="@+id/mWbGoodInfoMore"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -202,27 +201,28 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="?android:selectableItemBackgroundBorderless"
             android:drawableTop="@drawable/icon_callserver_unpressed"
             android:drawablePadding="5dp"
             android:gravity="center"
             android:padding="2dp"
             android:text="@string/goodInfo_customer"
             android:textColor="#393b3e"
-             android:background="?android:selectableItemBackgroundBorderless"/>
+            tools:targetApi="lollipop" />
 
         <TextView
             android:id="@+id/mTvGoodInfoCollection"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="?android:selectableItemBackgroundBorderless"
             android:drawableTop="@drawable/good_uncollected"
             android:drawablePadding="5dp"
             android:gravity="center"
             android:padding="2dp"
             android:text="@string/goodInfo_collect"
             android:textColor="#393b3e"
-            android:background="?android:selectableItemBackgroundBorderless"
-          />
+            tools:targetApi="lollipop" />
 
 
         <TextView
@@ -230,14 +230,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="?android:selectableItemBackgroundBorderless"
             android:drawableTop="@drawable/icon_good_detail_cart"
             android:drawablePadding="5dp"
             android:gravity="center"
             android:padding="2dp"
             android:text="@string/goodInfo_car"
-            android:background="?android:selectableItemBackgroundBorderless"
             android:textColor="#393b3e"
-            />
+            tools:targetApi="lollipop" />
 
         <Button
             android:id="@+id/mBtnGoodInfoAddcart"
