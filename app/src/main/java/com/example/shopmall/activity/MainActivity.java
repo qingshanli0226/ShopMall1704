@@ -50,6 +50,7 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
 
     private ShoppingCartView mRedMessage;
     private RelativeLayout mRlBottom;
+    private ShoppingCartPresenter shoppingCartPresenter;
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -125,9 +126,9 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("token", token);
 
-        ShoppingCartPresenter presenter = new ShoppingCartPresenter("getShortcartProducts", ShoppingCartBean.class, hashMap);
-        presenter.attachGetView((ShoppingCartFragment) fragmentArrayList.get(3));
-        presenter.getGetData();
+        shoppingCartPresenter = new ShoppingCartPresenter("getShortcartProducts", ShoppingCartBean.class, hashMap);
+        shoppingCartPresenter.attachGetView((ShoppingCartFragment) fragmentArrayList.get(3));
+        shoppingCartPresenter.getGetData();
     }
 
     private MessageReceiver mMessageReceiver;
@@ -202,6 +203,16 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
         if (beforenum != afternum) {
             ShoppingManager.getInstance().setBeforenum(afternum);
             mRedMessage.setNum(afternum);
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (shoppingCartPresenter != null){
+            shoppingCartPresenter.detachView();
         }
 
     }

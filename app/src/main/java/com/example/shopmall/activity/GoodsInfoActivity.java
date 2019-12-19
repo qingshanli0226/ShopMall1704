@@ -65,8 +65,8 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
 
     @Override
     public void initData() {
-        tbGoodsInfo.setTitleBacKGround(Color.RED);
-        tbGoodsInfo.setCenterText("商品详情", 18, Color.WHITE);
+        tbGoodsInfo.setTitleBacKGround(Color.WHITE);
+        tbGoodsInfo.setCenterText("商品详情", 18, Color.BLACK);
         tbGoodsInfo.setLeftImg(R.drawable.left);
 
         tbGoodsInfo.setTitleClickLisner(new TitleBar.TitleClickLisner() {
@@ -176,5 +176,14 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
         Log.d("####", ErrorMsg);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (addOneProduct != null){
+            addOneProduct.detachView();
+        }
+
+    }
 }
 

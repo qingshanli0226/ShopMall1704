@@ -2,7 +2,6 @@ package com.example.shopmall.presenter;
 
 import com.example.framework.base.BasePresenter;
 import com.example.framework.bean.LoginBean;
-import com.example.framework.manager.UserManager;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;

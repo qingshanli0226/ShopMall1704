@@ -1,14 +1,18 @@
 package com.example.shopmall.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,9 +20,12 @@ import com.example.common.LoadingPage;
 import com.example.common.TitleBar;
 import com.example.framework.base.IGetBaseView;
 import com.example.framework.base.ILoadView;
+import com.example.framework.bean.MessageBean;
 import com.example.framework.manager.CaCheManager;
 import com.example.framework.base.BaseFragment;
 import com.example.framework.manager.ConnectManager;
+import com.example.framework.manager.MessageManager;
+import com.example.framework.manager.UserManager;
 import com.example.net.Constant;
 import com.example.shopmall.R;
 import com.example.shopmall.activity.LoginActivity;
@@ -38,13 +45,49 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
     private LinearLayout llHomePage;
     private IntegerPresenter integerPresenter;
 
+    private int sum = 0;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (UserManager.getInstance().getLoginStatus(getContext())) {
+            handler.sendEmptyMessage(100);
+        }else {
+            tbHomepage.setMessageShow(0);
+        }
+
+    }
+
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+
+            if (msg.what == 100){
+                List<MessageBean> messages = MessageManager.getMessageManager().getMessage();
+                if (messages.size() > 0) {
+                    for (int i = 0; i < messages.size(); i++) {
+                        Log.d("####", "handleMessage: " + messages.get(i).getIsMessage());
+                        if (!messages.get(i).getIsMessage()) {
+                            sum++;
+                            tbHomepage.setMessageShow(sum);
+                        } else {
+                            sum = 0;
+                            tbHomepage.setMessageShow(sum);
+                        }
+                    }
+                }
+            }
+
+        }
+    };
+
     @Override
     protected void initData() {
-        SharedPreferences token1 = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
-        final boolean isLogin = token1.getBoolean("isLogin", false);
         tbHomepage.setTitleBacKGround(Color.RED);
         tbHomepage.setCenterText("首页", 18, Color.WHITE);
-        tbHomepage.setMessageShow();
         tbHomepage.setRightImg(R.mipmap.new_message_icon);
 
         tbHomepage.setTitleClickLisner(new TitleBar.TitleClickLisner() {
@@ -56,12 +99,11 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
             @Override
             public void RightClick() {
                 //跳转到消息
-                if (isLogin){ //判断登录，登录后跳转到消息
+                if (UserManager.getInstance().getLoginStatus(getContext())){ //判断登录，登录后跳转到消息
                     startActivity(new Intent(getContext(), MessageActivity.class));
                 }else {//没有登录跳转到登录页登录
                     startActivity(new Intent(getContext(), LoginActivity.class));
                 }
-//                startActivity(new Intent(getContext(), MessageActivity.class));
             }
 
             @Override
@@ -155,6 +197,8 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
         super.onDestroy();
 
         integerPresenter.detachView();
+
+        handler.removeCallbacksAndMessages(this);
 
     }
 }

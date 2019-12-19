@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.common.view.RedView;
 import com.example.framework.base.BaseAdapter;
-import com.example.framework.manager.MessageManager;
 import com.example.shopmall.R;
 import com.example.framework.bean.MessageBean;
 

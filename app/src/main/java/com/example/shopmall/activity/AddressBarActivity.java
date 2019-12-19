@@ -1,13 +1,11 @@
 package com.example.shopmall.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -19,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IPostBaseView;
+import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
 import com.example.shopmall.adapter.AddressBarAdapter;
 import com.example.shopmall.bean.AutoLoginBean;
@@ -50,9 +49,7 @@ public class AddressBarActivity extends BaseActivity implements IPostBaseView<Au
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             if (msg.what == 100){
-                sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
-                String getToken = sharedPreferences.getString("getToken", "");
-                Log.d("####", "handleMessage: " + getToken);
+                String getToken = UserManager.getInstance().getToken();
 
                 AutoLoginPresenter autoLoginPresenter = new AutoLoginPresenter("autoLogin",getToken);
                 autoLoginPresenter.attachPostView(AddressBarActivity.this);
@@ -113,8 +110,7 @@ public class AddressBarActivity extends BaseActivity implements IPostBaseView<Au
     public void onPostDataSucess(AutoLoginBean data) {
         if (data.getCode().equals("200")){
             token = data.getResult().getToken();
-            SharedPreferences.Editor edit = sharedPreferences.edit();
-            edit.putString("getToken",data.getResult().getToken()).apply();
+            UserManager.getInstance().savaToken(token);
             AddressBarAdapter addressBarAdapter = new AddressBarAdapter();
             List<AutoLoginBean.ResultBean> resultBeans = new ArrayList<>();
             resultBeans.add(data.getResult());
@@ -128,6 +124,14 @@ public class AddressBarActivity extends BaseActivity implements IPostBaseView<Au
 
     @Override
     public void onPostDataFailed(String ErrorMsg) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        handler.removeCallbacksAndMessages(this);
 
     }
 }

@@ -2,4 +2,5 @@
 <resources>
     <dimen name="recyclerimgsize">100dp</dimen>
     <dimen name="dpsize_30">30dp</dimen>
+    <dimen name="spsize_20">20sp</dimen>
 </resources>

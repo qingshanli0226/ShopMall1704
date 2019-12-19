@@ -2,13 +2,14 @@ package com.example.shopmall.activity;
 
 import android.graphics.Color;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.bean.MessageBean;
+import com.example.framework.manager.MessageManager;
 import com.example.shopmall.R;
 import com.example.shopmall.adapter.MessageItemAdapter;
 import com.yanzhenjie.recyclerview.OnItemMenuClickListener;
@@ -18,7 +19,6 @@ import com.yanzhenjie.recyclerview.SwipeMenuCreator;
 import com.yanzhenjie.recyclerview.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,8 +28,7 @@ public class MessageActivity extends BaseActivity {
 
     private TitleBar tbMessage;
     private SwipeRecyclerView srvMessage;
-
-    private int sum = 0;
+    private MessageItemAdapter messageItemAdapter;
 
     @Override
     protected int setLayout() {
@@ -46,9 +45,9 @@ public class MessageActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        tbMessage.setBackgroundColor(Color.RED);
+        tbMessage.setBackgroundColor(Color.WHITE);
         tbMessage.setLeftImg(R.drawable.left);
-        tbMessage.setCenterText("消息中心",18,Color.WHITE);
+        tbMessage.setCenterText("消息中心",18,Color.BLACK);
 
         tbMessage.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
@@ -67,6 +66,7 @@ public class MessageActivity extends BaseActivity {
             }
         });
 
+        //侧滑删除item
         SwipeMenuCreator swipeMenuCreator = new SwipeMenuCreator() {
             @Override
             public void onCreateMenu(SwipeMenu leftMenu, SwipeMenu rightMenu, int position) {
@@ -88,43 +88,36 @@ public class MessageActivity extends BaseActivity {
             }
         };
 
+        //侧滑点击事件
         srvMessage.setOnItemMenuClickListener(onItemMenuClickListener);
 
 
         //数据库获取数据，添加到消息界面
-//        List<MessageBean> messages = MessageManager.getAddressBarManager().getMessage();
-        final MessageBean messageBean = new MessageBean();
-        messageBean.setIsMessage(false);
-        messageBean.setNameMessage("接收到数据");
-        messageBean.setContentMessage("数据内容");
-        final List<MessageBean> message = new ArrayList<>();
-        message.add(messageBean);
-        final MessageItemAdapter messageItemAdapter = new MessageItemAdapter(this);
-        messageItemAdapter.reFresh(message);
-        srvMessage.setAdapter(messageItemAdapter);
+        final List<MessageBean> messages = MessageManager.getMessageManager().getMessage();
+        if (messages.size() > 0){
+            messageItemAdapter = new MessageItemAdapter(this);
+            messageItemAdapter.reFresh(messages);
+            srvMessage.setAdapter(messageItemAdapter);
 
-        messageItemAdapter.setLikeliest(new MessageItemAdapter.Likeliest() {
-            @Override
-            public void getLikeliest(int position) {
-                if (!message.get(position).getIsMessage()){
-                    messageBean.setIsMessage(true);
-                    message.remove(position);
-                    message.add(position,messageBean);
-                    messageItemAdapter.reFresh(message);
-                    srvMessage.setAdapter(messageItemAdapter);
-                    messageItemAdapter.notifyDataSetChanged();
+            messageItemAdapter.setLikeliest(new MessageItemAdapter.Likeliest() {
+                @Override
+                public void getLikeliest(int position) {
+                    if (!messages.get(position).getIsMessage()){
+                        Long id = messages.get(position).getId();
+                        messages.get(position).setIsMessage(true);
+                        MessageBean messageBean = new MessageBean();
+                        messageBean.setId(id);
+                        messageBean.setIsMessage(true);
+                        MessageManager.getMessageManager().updateMessage(messageBean);
+                        messageItemAdapter.reFresh(messages);
+                        srvMessage.setAdapter(messageItemAdapter);
+                        messageItemAdapter.notifyDataSetChanged();
+                    }
                 }
-            }
-        });
+            });
 
-        for (int i = 0; i < message.size(); i++) {
-            if (!message.get(i).getIsMessage()){
-                sum++;
-                if (sum == 0){
-
-                }
-            }
+        }else {
+            Toast.makeText(this, "现在没有消息", Toast.LENGTH_SHORT).show();
         }
-
     }
 }

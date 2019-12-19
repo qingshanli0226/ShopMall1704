@@ -12,11 +12,15 @@ import android.widget.Toast;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IPostBaseView;
+import com.example.framework.bean.ResultBean;
+import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
 import com.example.shopmall.bean.AddressBean;
-import com.example.shopmall.presenter.AutoLoginPresenter;
 import com.example.shopmall.presenter.LogOutPresenter;
 
+/**
+ * 设置
+ */
 public class SetActivity extends BaseActivity implements IPostBaseView<AddressBean> {
 
     private TitleBar tbSet;
@@ -60,13 +64,16 @@ public class SetActivity extends BaseActivity implements IPostBaseView<AddressBe
         btLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
-                String getToken = sharedPreferences.getString("getToken", "");
-                Log.d("####", "handleMessage: " + getToken);
 
-                logOutPresenter = new LogOutPresenter("logout",getToken);
-                logOutPresenter.attachPostView(SetActivity.this);
-                logOutPresenter.getCipherTextData();
+                String getToken = UserManager.getInstance().getToken();
+                Log.d("####", "handleMessage: " + getToken);
+                if (UserManager.getInstance().getLoginStatus(SetActivity.this)){
+                    logOutPresenter = new LogOutPresenter("logout",getToken);
+                    logOutPresenter.attachPostView(SetActivity.this);
+                    logOutPresenter.getCipherTextData();
+                }else {
+                    initLogin();
+                }
             }
         });
 
@@ -81,7 +88,9 @@ public class SetActivity extends BaseActivity implements IPostBaseView<AddressBe
     @Override
     public void onPostDataSucess(AddressBean data) {
         if (data.getCode().equals("200")){
-            Log.d("####", "onPostDataSucess: " + data.getResult());
+            ResultBean resultBean = new ResultBean();
+            UserManager.getInstance().setActiveUser(SetActivity.this,resultBean);
+            sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
             sharedPreferences.edit().putBoolean("isLogin",false).apply();
             startActivity(new Intent(this,MainActivity.class));
             finish();

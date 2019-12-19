@@ -21,7 +21,6 @@ import androidx.annotation.RequiresApi;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IPostBaseView;
-import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
 import com.example.shopmall.bean.RegisterBean;
 import com.example.shopmall.presenter.RegisterPresenter;
@@ -90,9 +89,9 @@ public class RegisterActivity extends BaseActivity implements IPostBaseView<Regi
     @Override
     public void initData() {
 
-        tbRegister.setBackgroundColor(Color.RED);
+        tbRegister.setBackgroundColor(Color.WHITE);
         tbRegister.setLeftImg(R.drawable.left);
-        tbRegister.setCenterText("注册", 18, Color.WHITE);
+        tbRegister.setCenterText("注册", 18, Color.BLACK);
 
 
 
@@ -177,5 +176,15 @@ public class RegisterActivity extends BaseActivity implements IPostBaseView<Regi
     public void onPostDataFailed(String ErrorMsg) {
         etName.setText("");
         etWord.setText("");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        integerPresenter.detachView();
+
+        handler.removeCallbacksAndMessages(this);
+
     }
 }

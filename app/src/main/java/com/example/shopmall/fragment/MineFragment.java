@@ -35,10 +35,12 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
     private TitleBar tbMine;
     private TextView tvUserScore;
     private TextView tvUsername;
-    private ImageView ibUserIconAvator;
+    private ImageView ivUserIconAvator;
     private AutomaticPresenter automaticPresenter;
     private UpImgPresenter upImgPresenter;
     private LinearLayout llUserLocation;
+
+    private int sum = 0;
 
     @Override
     protected void initData() {
@@ -85,17 +87,15 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mTvName.setText("用户昵称:" + resultBean.getName());
+                        if (resultBean.getName() != null){
+                            mTvName.setText("用户昵称:" + resultBean.getName());
+                        }else {
+                            mTvName.setText("");
+                        }
                     }
                 });
             }
         });
-
-        boolean liginStatus = UserManager.getInstance().getLoginStatus(getActivity());
-        if (liginStatus) {
-//            ResultBean user = UserManager.getInstance().getUser(getActivity());
-//            mTvName.setText("用户昵称:" + user.getName());
-        }
 
         SharedPreferences login = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
         String getToken = login.getString("getToken", "");
@@ -106,7 +106,7 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
             automaticPresenter.getPostFormData();
         }
 
-        ibUserIconAvator.setOnClickListener(new View.OnClickListener() {
+        ivUserIconAvator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
@@ -122,7 +122,7 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
                                 @Override
                                 public void callback(String uri) {
                                     Log.e("####", uri);
-                                    ibUserIconAvator.setImageURI(Uri.parse(uri));
+                                    ivUserIconAvator.setImageURI(Uri.parse(uri));
                                     if (uri != null) {
                                         String token = UserManager.getInstance().getToken();
                                         upImgPresenter = new UpImgPresenter(uri, token);
@@ -130,8 +130,6 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
                                     }
                                 }
                             });
-
-
                 } else {
                     Toast.makeText(getContext(), "请先登录账号", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -161,7 +159,11 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        automaticPresenter.detachView();
+
+        if (automaticPresenter != null){
+            automaticPresenter.detachView();
+        }
+
     }
 
     @Override
@@ -169,7 +171,7 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
         tbMine = view.findViewById(R.id.tb_mine);
         tvUserScore = view.findViewById(R.id.tv_user_score);
         tvUsername = view.findViewById(R.id.tv_username);
-        ibUserIconAvator = view.findViewById(R.id.ib_user_icon_avator);
+        ivUserIconAvator = view.findViewById(R.id.iv_user_icon_avator);
         llUserLocation = view.findViewById(R.id.ll_user_location);
         mTvName = view.findViewById(R.id.tv_user_name);
     }
