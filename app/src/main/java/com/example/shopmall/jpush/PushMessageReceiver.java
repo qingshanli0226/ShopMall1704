@@ -7,6 +7,8 @@ import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.example.framework.bean.MessageBean;
+import com.example.framework.manager.MessageManager;
 import com.example.shopmall.activity.MainActivity;
 
 import org.json.JSONException;
@@ -71,8 +73,14 @@ public class PushMessageReceiver extends JPushMessageReceiver {
     @Override
     public void onNotifyMessageArrived(Context context, NotificationMessage message) {
         Log.e(TAG, "[onNotifyMessageArrived] " + message);
-        Log.e("####", message.notificationContent);//接受消息的内容
-        Log.e("####", message.notificationTitle);//接受消息的标题
+//        Log.e("####", message.notificationContent);//接受消息的内容
+//        Log.e("####", message.notificationTitle);//接受消息的标题
+
+        MessageBean messageBean = new MessageBean();
+        messageBean.setIsMessage(false);
+        messageBean.setNameMessage(message.notificationTitle);
+        messageBean.setContentMessage(message.notificationContent);
+        MessageManager.getMessageManager().addMessage(messageBean);
 
     }
 

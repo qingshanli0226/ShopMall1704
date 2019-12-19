@@ -30,7 +30,6 @@ import com.example.framework.bean.ResultBean;
 import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
 import com.example.framework.bean.LoginBean;
-import com.example.shopmall.presenter.AutomaticPresenter;
 import com.example.shopmall.presenter.LoginPresenter;
 
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
@@ -49,6 +48,8 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
     private ImageView ivLoginWord;
     private Switch mSwitch;
     private boolean isView = false;
+
+    private LoginPresenter loginPresenter;
 
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
@@ -104,9 +105,27 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
 
     @Override
     public void initData() {
-        tbLogin.setBackgroundColor(Color.RED);
+        tbLogin.setBackgroundColor(Color.WHITE);
         tbLogin.setLeftImg(R.drawable.left);
-        tbLogin.setCenterText("登录", 18, Color.WHITE);
+        tbLogin.setCenterText("登录", 18, Color.BLACK);
+
+        tbLogin.setTitleClickLisner(new TitleBar.TitleClickLisner() {
+            @Override
+            public void LeftClick() {
+                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                finish();
+            }
+
+            @Override
+            public void RightClick() {
+
+            }
+
+            @Override
+            public void CenterClick() {
+
+            }
+        });
 
         mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -125,30 +144,13 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
             }
         });
 
-        tbLogin.setTitleClickLisner(new TitleBar.TitleClickLisner() {
-            @Override
-            public void LeftClick() {
-                finish();
-            }
-
-            @Override
-            public void RightClick() {
-
-            }
-
-            @Override
-            public void CenterClick() {
-
-            }
-        });
-
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 initButton();
                 String name = etLoginName.getText().toString();
                 String pwd = etLoginWord.getText().toString();
-                LoginPresenter loginPresenter = new LoginPresenter(name, pwd);
+                loginPresenter = new LoginPresenter(name, pwd);
                 loginPresenter.attachPostView(LoginActivity.this);
                 loginPresenter.getCipherTextData();
             }
@@ -232,5 +234,17 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
         JAnalyticsInterface.onEvent(LoginActivity.this, loginEvent);
         etLoginName.setText("");
         etLoginWord.setText("");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (loginPresenter != null){
+            loginPresenter.detachView();
+        }
+
+        handler.removeCallbacksAndMessages(this);
+
     }
 }

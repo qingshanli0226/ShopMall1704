@@ -1,6 +1,5 @@
 package com.example.shopmall.fragment;
 
-
 import androidx.fragment.app.Fragment;
 
 import android.graphics.Color;

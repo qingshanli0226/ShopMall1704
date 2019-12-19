@@ -1,7 +1,6 @@
 package com.example.shopmall.presenter;
 
 import com.example.framework.base.BasePresenter;
-import com.example.shopmall.bean.AddressBean;
 import com.example.shopmall.bean.AutoLoginBean;
 import com.google.gson.reflect.TypeToken;
 

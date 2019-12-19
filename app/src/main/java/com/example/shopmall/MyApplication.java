@@ -5,13 +5,13 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.framework.manager.CaCheManager;
 import com.example.framework.manager.ConnectManager;
 import com.example.framework.manager.CrashHandler;
 import com.example.framework.manager.MessageManager;
 import com.example.framework.manager.UserManager;
 import com.example.shopmall.activity.MainActivity;
 import com.example.framework.manager.StepManager;
+import com.squareup.leakcanary.LeakCanary;
 import com.tencent.stat.StatConfig;
 import com.tencent.stat.StatService;
 
@@ -53,6 +53,7 @@ public class MyApplication extends Application {
         StatConfig.setDebugEnable(true);
         // 基础统计API
         StatService.registerActivityLifecycleCallbacks(this);
+        LeakCanary.install(this);
     }
 
     public static Context getContext() {

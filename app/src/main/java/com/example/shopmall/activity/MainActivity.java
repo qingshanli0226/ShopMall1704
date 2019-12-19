@@ -50,17 +50,7 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
 
     private ShoppingCartView mRedMessage;
     private RelativeLayout mRlBottom;
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        int intExtra = intent.getIntExtra("replacefragment", 0);
-        bbMain.setCheckedItem(intExtra);
-
-        if (intExtra == 3) {
-            refreshShoppingCartData();
-        }
-    }
+    private ShoppingCartPresenter shoppingCartPresenter;
 
     @Override
     protected int setLayout() {
@@ -79,13 +69,23 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        int mainitem = ShoppingManager.getInstance().getMainitem();
+        bbMain.setCheckedItem(mainitem);
+        if (mainitem == 3) {
+            refreshShoppingCartData();
+        }
+    }
+
+    @Override
     public void initData() {
+        ShoppingManager.getInstance().setOnNumberChangedListener(this);
         //获取购物车商品数量
         allNumber = ShoppingManager.getInstance().getAllNumber();
         mRedMessage.setNum(allNumber);
         ShoppingManager.getInstance().setOnNumberChangedListener(this);
 
-        Log.d("####", "initData: " + allNumber);
         replaceFragment(fragmentArrayList.get(0));
 
         String[] str = new String[]{"首页", "分类", "发现", "购物车", "个人中心"};
@@ -125,9 +125,9 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("token", token);
 
-        ShoppingCartPresenter presenter = new ShoppingCartPresenter("getShortcartProducts", ShoppingCartBean.class, hashMap);
-        presenter.attachGetView((ShoppingCartFragment) fragmentArrayList.get(3));
-        presenter.getGetData();
+        shoppingCartPresenter = new ShoppingCartPresenter("getShortcartProducts", ShoppingCartBean.class, hashMap);
+        shoppingCartPresenter.attachGetView((ShoppingCartFragment) fragmentArrayList.get(3));
+        shoppingCartPresenter.getGetData();
     }
 
     private MessageReceiver mMessageReceiver;
@@ -202,6 +202,16 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
         if (beforenum != afternum) {
             ShoppingManager.getInstance().setBeforenum(afternum);
             mRedMessage.setNum(afternum);
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (shoppingCartPresenter != null){
+            shoppingCartPresenter.detachView();
         }
 
     }

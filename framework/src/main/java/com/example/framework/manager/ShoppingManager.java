@@ -11,13 +11,24 @@ import java.util.Map;
 public class ShoppingManager {
 
     private static ShoppingManager shoppingManager;
+    //购物车内选中的物品总价
     private double allCount = 0;
+    //全选按钮是否被选中
     private boolean isSetting = false;
+    //购物车内物品（本地）
     private List<Map<String, String>> data = new ArrayList<>();
+    //购物车内选中的购买物品
     private List<Map<String, String>> data2 = new ArrayList<>();
 
-    int beforenum = 0;
-    int afternum = 0;
+    //购物车内改变前和改变后的数目
+    private int beforenum = 0;
+    private int afternum = 0;
+
+    //控制返回时的主页面item
+    private int mainitem = 0;
+
+    //数目变化监听
+    private OnNumberChangedListener onNumberChangedListener;
 
     public ShoppingManager() {
     }
@@ -30,11 +41,16 @@ public class ShoppingManager {
                 }
             }
         }
-
         return shoppingManager;
     }
 
-    private OnNumberChangedListener onNumberChangedListener;
+    public int getMainitem() {
+        return mainitem;
+    }
+
+    public void setMainitem(int mainitem) {
+        this.mainitem = mainitem;
+    }
 
     public int getBeforenum() {
         return beforenum;
@@ -89,8 +105,6 @@ public class ShoppingManager {
         void NumberChanged(int num);
     }
 
-
-
     public boolean getisSetting() {
         return isSetting;
     }
@@ -127,31 +141,11 @@ public class ShoppingManager {
         this.isSetting = isSetting;
     }
 
-    public void initializeDatas() {
-
-        for (int i = 0; i < data2.size(); i++) {
-            Map<String, String> map = data2.get(i);
-            for (int j = 0; j < data.size(); j++) {
-                Map<String, String> map1 = data.get(j);
-                if (map.get("title").equals(map1.get("title"))) {
-                    data.remove(j);
-                    j--;
-                }
-            }
-        }
-
-        data2.clear();
-        allCount = 0;
-        isSetting = false;
-    }
-
     public String getToken(Context context) {
         SharedPreferences getToken = context.getSharedPreferences("login", Context.MODE_PRIVATE);
         String getToken1 = getToken.getString("getToken", null);
         return getToken1;
     }
 
-    public void joinintoShoppingCart(Map<String, String> map) {
-        data.add(map);
-    }
+
 }

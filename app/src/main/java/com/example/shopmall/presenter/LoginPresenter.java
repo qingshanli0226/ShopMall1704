@@ -1,7 +1,5 @@
 package com.example.shopmall.presenter;
 
-import android.util.Log;
-
 import com.example.framework.base.BasePresenter;
 import com.example.framework.bean.LoginBean;
 import com.google.gson.reflect.TypeToken;

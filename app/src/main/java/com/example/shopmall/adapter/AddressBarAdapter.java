@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.framework.base.BaseAdapter;
-import com.example.framework.bean.AddressBarBean;
 import com.example.shopmall.R;
 import com.example.shopmall.bean.AutoLoginBean;
 
@@ -55,7 +54,7 @@ public class AddressBarAdapter extends BaseAdapter<AutoLoginBean.ResultBean,Addr
         }
 
         public void setData(List<AutoLoginBean.ResultBean> resultBeans, int position) {
-//            tvConsignee.setText(resultBeans.get(position).getConsignee());
+            tvConsignee.setText(resultBeans.get(position).getName());
             tvCellPhoneNumber.setText((String) resultBeans.get(position).getPhone());
             tvLocationAddressBar.setText((String) resultBeans.get(position).getAddress());
 //            tvDetailedAddressBar.setText(resultBeans.get(position).getDetailed_address());

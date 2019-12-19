@@ -2,10 +2,6 @@ package com.example.shopmall.jpush;
 
 import android.util.Log;
 
-/**
- * Created by efan on 2017/4/13.
- */
-
 public class Logger {
 
     //设为false关闭日志

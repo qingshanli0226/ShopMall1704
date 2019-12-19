@@ -25,6 +25,7 @@ public class GoodsListActivity extends BaseActivity implements IGetBaseView<Good
 
     private String[] urls = new String[]{Constant.CLOSE_STORE, Constant.GAME_STORE, Constant.COMIC_STORE, Constant.COSPLAY_STORE,
             Constant.GUFENG_STORE, Constant.STICK_STORE, Constant.WENJU_STORE, Constant.FOOD_STORE, Constant.SHOUSHI_STORE,};
+    private IntegerPresenter integerPresenter;
 
     @Override
     protected int setLayout() {
@@ -47,9 +48,9 @@ public class GoodsListActivity extends BaseActivity implements IGetBaseView<Good
         int position = intent.getIntExtra("position", 0);
         getDataPresenter(urls[position]);
 
-        tbGoodsList.setTitleBacKGround(Color.RED);
+        tbGoodsList.setTitleBacKGround(Color.WHITE);
         tbGoodsList.setLeftImg(R.drawable.left);
-        tbGoodsList.setCenterText("商品内容",18,Color.WHITE);
+        tbGoodsList.setCenterText("商品内容",18,Color.BLACK);
 
         tbGoodsList.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
@@ -71,7 +72,7 @@ public class GoodsListActivity extends BaseActivity implements IGetBaseView<Good
 
     //网络获取商品内容数据
     private void getDataPresenter(String url) {
-        IntegerPresenter integerPresenter = new IntegerPresenter(url, GoodsListBean.class);
+        integerPresenter = new IntegerPresenter(url, GoodsListBean.class);
         integerPresenter.attachGetView(this);
         integerPresenter.getGetData();
     }
@@ -90,6 +91,14 @@ public class GoodsListActivity extends BaseActivity implements IGetBaseView<Good
     }
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        integerPresenter.detachView();
 
     }
 }

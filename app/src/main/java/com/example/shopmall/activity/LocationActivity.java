@@ -1,10 +1,7 @@
 package com.example.shopmall.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,8 +10,6 @@ import android.widget.Toast;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IPostBaseView;
-import com.example.framework.manager.ShoppingManager;
-import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
 import com.example.shopmall.bean.AddressBean;
 import com.example.shopmall.presenter.AddressPresenter;
@@ -30,6 +25,8 @@ public class LocationActivity extends BaseActivity implements IPostBaseView<Addr
     private Button btLocationInflate;
 
     private String token;
+    private AddressPresenter addressPresenter;
+    private LocationPresenter locationPresenter;
 
     @Override
     protected int setLayout() {
@@ -80,11 +77,11 @@ public class LocationActivity extends BaseActivity implements IPostBaseView<Addr
                 String Location = etLocation.getText().toString().trim();
                 String Detailed = etDetailed.getText().toString().trim();
 
-                AddressPresenter addressPresenter = new AddressPresenter(CellPhoneNumber,"updatePhone",token);
+                addressPresenter = new AddressPresenter(CellPhoneNumber,"updatePhone",token);
                 addressPresenter.attachPostView(LocationActivity.this);
                 addressPresenter.getCipherTextData();
 
-                LocationPresenter locationPresenter = new LocationPresenter(Location + Detailed,"updateAddress",token);
+                locationPresenter = new LocationPresenter(Location + Detailed,"updateAddress",token);
                 locationPresenter.attachPostView(LocationActivity.this);
                 locationPresenter.getCipherTextData();
 
@@ -102,6 +99,15 @@ public class LocationActivity extends BaseActivity implements IPostBaseView<Addr
 
     @Override
     public void onPostDataFailed(String ErrorMsg) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        addressPresenter.detachView();
+        locationPresenter.detachView();
 
     }
 }

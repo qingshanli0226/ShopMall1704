@@ -99,8 +99,12 @@ public class TitleBar extends LinearLayout {
     }
 
     //标题栏显示红色消息
-    public void setMessageShow() {
-        mTvMessage.setVisibility(VISIBLE);
+    public void setMessageShow(int j) {
+        if (j > 0){
+            mTvMessage.setVisibility(View.VISIBLE);
+        }else {
+            mTvMessage.setVisibility(View.GONE);
+        }
     }
 
     //设置标题栏标题内容

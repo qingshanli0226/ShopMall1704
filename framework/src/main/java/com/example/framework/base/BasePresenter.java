@@ -199,10 +199,8 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
                     @Override
                     public void onNext(ResponseBody body) {
-                        T data = null;
                         try {
-                            Log.e("####", body.string());
-                            data = new Gson().fromJson(body.string(), getBeanType());
+                            T data = new Gson().fromJson(body.string(), getBeanType());
                             if (iPostBaseView != null)
                                 iPostBaseView.onPostDataSucess(data);
                         } catch (IOException e) {
@@ -273,7 +271,6 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
     public void attachPostView(IPostBaseView<T> iPostBaseView) {
         this.iPostBaseView = iPostBaseView;
     }
-
 
 
     @Override
