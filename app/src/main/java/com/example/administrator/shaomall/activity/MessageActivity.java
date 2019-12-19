@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.administrator.shaomall.R;
+import com.example.administrator.shaomall.app.ShaoHuaApplication;
 import com.example.administrator.shaomall.message.IsReadAdapter;
 import com.shaomall.framework.base.BaseActivity;
 import com.shaomall.framework.bean.MessageBean;
@@ -48,7 +49,7 @@ public class MessageActivity extends BaseActivity implements MessageManager.Mess
 
     @Override
     protected void initView() {
-        MessageManager.getInstance(this).registerMessageListener(this);
+        MessageManager.getInstance(ShaoHuaApplication.context).registerMessageListener(this);
         mTitleScanning = findViewById(R.id.title_scanning);
         mTitleBlack = findViewById(R.id.title_black);
         mTitleSearch = findViewById(R.id.title_search);
@@ -144,5 +145,11 @@ public class MessageActivity extends BaseActivity implements MessageManager.Mess
             TextView textView;
             Badge badge;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MessageManager.getInstance(ShaoHuaApplication.context).unRegisterMessageListener(this);
     }
 }

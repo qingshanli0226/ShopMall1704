@@ -59,7 +59,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/camera_icon"
+                android:src="@drawable/camera_icon" 
                 android:background="?android:selectableItemBackgroundBorderless"/>
 
 
@@ -70,7 +70,7 @@
             style="@style/LittleImage"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="10dp"
-            android:src="@drawable/message_icon"
+            android:src="@drawable/message_icon" 
             android:background="?android:selectableItemBackgroundBorderless"/>
     </LinearLayout>
 

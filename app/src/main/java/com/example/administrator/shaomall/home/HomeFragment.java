@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.activity.MessageActivity;
 import com.example.administrator.shaomall.activity.SearchActivity;
+import com.example.administrator.shaomall.app.ShaoHuaApplication;
 import com.example.commen.Constants;
 import com.example.commen.view.AnimationNestedScrollView;
 import com.example.administrator.shaomall.home.adapter.HomeRecycleAdapter;
@@ -49,7 +50,7 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> implements MessageM
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
-        MessageManager.getInstance(getContext()).registerMessageListener(this);
+        MessageManager.getInstance(ShaoHuaApplication.context).registerMessageListener(this);
         mHomeRecycler = view.findViewById(R.id.home_recycler);
         sv_view = view.findViewById(R.id.search_sv_view);
         ll_search = view.findViewById(R.id.search_ll_search);
@@ -167,5 +168,11 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> implements MessageM
         super.onResume();
         int i = MessageManager.getInstance(getContext()).gitNotReadNum();
         qBadgeView.setBadgeNumber(i);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        MessageManager.getInstance(ShaoHuaApplication.context).unRegisterMessageListener(this);
     }
 }

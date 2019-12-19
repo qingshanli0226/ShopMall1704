@@ -89,10 +89,11 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
             if (instance.isLogin()) {
                 //已经登录了
                 switchFragment(fragments.get(position));
-
+                mMainTab.setCurrentTab(position);
             } else {
                 //还没有登录
                 toClass(LoginActivity.class, position);
+                switchFragment(fragments.get(position));
             }
         } else {
             switchFragment(fragments.get(position));
@@ -164,7 +165,7 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
             int index = bundle.getInt("index");
-            switchFragment(fragments.get(index));
+            showTabSelect(index);
         }
     }
 

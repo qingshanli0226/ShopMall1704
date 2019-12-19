@@ -7,7 +7,16 @@
     android:background="@drawable/start_background"
     android:id="@+id/welcome_background"
     tools:context=".activity.WelcomeActivity">
-
+    <TextView
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="5"
+        android:id="@+id/welcome_time_tv"
+        android:background="@drawable/time_background"
+        android:gravity="center"
+        android:clickable="false"
+        />
     <ImageView
         android:id="@+id/iv_welcome_icon"
         android:layout_width="wrap_content"
