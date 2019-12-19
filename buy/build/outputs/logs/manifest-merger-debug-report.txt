@@ -1,23 +1,23 @@
 -- Merging decision tree log ---
 manifest
-ADDED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-16:12
-INJECTED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-16:12
-INJECTED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-16:12
-INJECTED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-16:12
-INJECTED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-16:12
-INJECTED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-16:12
-INJECTED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-16:12
+ADDED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-17:12
+INJECTED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-17:12
+INJECTED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-17:12
+INJECTED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-17:12
+INJECTED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-17:12
+INJECTED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-17:12
+INJECTED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-17:12
 	package
 		ADDED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:3:5-30
 		INJECTED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml
 		INJECTED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml
-		ADDED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-16:12
+		ADDED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-17:12
 		INJECTED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml
-		ADDED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-16:12
+		ADDED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-17:12
 		INJECTED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:2:11-69
@@ -42,15 +42,19 @@ ADDED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:9:5
 	android:name
 		ADDED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:9:22-78
 application
-ADDED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:11:5-14:19
+ADDED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:11:5-15:19
+activity#com.example.buy.activity.SendGoodsActivity
+ADDED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:12:9-73
+	android:name
+		ADDED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:12:19-61
 activity#com.example.buy.activity.ShoppingResultActivity
-ADDED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:12:9-78
+ADDED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:13:9-69
 	android:name
-		ADDED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:12:19-66
+		ADDED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:13:19-66
 activity#com.example.buy.activity.OrderActivity
-ADDED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:13:9-60
+ADDED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:14:9-60
 	android:name
-		ADDED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:13:19-57
+		ADDED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml:14:19-57
 uses-sdk
 INJECTED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from F:\Android-7\GitHup\ShopMall1704\buy\src\main\AndroidManifest.xml

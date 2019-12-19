@@ -6,6 +6,7 @@ import android.graphics.Color;
 import com.example.buy.R;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
+import com.example.framework.manager.ShoppingManager;
 
 public class ShoppingResultActivity extends BaseActivity {
     TitleBar tbPayResult;
@@ -35,6 +36,7 @@ public class ShoppingResultActivity extends BaseActivity {
 
             @Override
             public void RightClick() {
+                ShoppingManager.getInstance().setMainitem(0);
                 finish();
             }
 

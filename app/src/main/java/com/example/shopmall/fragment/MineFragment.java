@@ -13,9 +13,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseFragment;
+import com.example.buy.activity.SendGoodsActivity;
+import com.example.framework.manager.ShoppingManager;
 import com.example.shopmall.R;
 import com.example.shopmall.activity.AddressBarActivity;
 import com.example.shopmall.activity.SetActivity;
@@ -36,6 +37,7 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
     private TextView tvUserScore;
     private TextView tvUsername;
     private ImageView ivUserIconAvator;
+    private TextView tvSendgoods;
     private AutomaticPresenter automaticPresenter;
     private UpImgPresenter upImgPresenter;
     private LinearLayout llUserLocation;
@@ -152,6 +154,14 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
             }
         });
 
+        //代发货
+        tvSendgoods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), SendGoodsActivity.class));
+            }
+        });
+
     }
 
     private TextView mTvName;
@@ -159,11 +169,9 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         if (automaticPresenter != null){
             automaticPresenter.detachView();
         }
-
     }
 
     @Override
@@ -174,6 +182,7 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
         ivUserIconAvator = view.findViewById(R.id.iv_user_icon_avator);
         llUserLocation = view.findViewById(R.id.ll_user_location);
         mTvName = view.findViewById(R.id.tv_user_name);
+        tvSendgoods = view.findViewById(R.id.tv_app_sendgoods);
     }
 
     @Override
@@ -187,6 +196,7 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
             ResultBean result = ((LoginBean) data).getResult();
             UserManager.getInstance().savaToken(result.getToken());
             Toast.makeText(getActivity(), "自动登录成功", Toast.LENGTH_SHORT).show();
+            ShoppingManager.getInstance().setMainitem(0);
         }
         Log.e("####", ""+data.toString());
 
