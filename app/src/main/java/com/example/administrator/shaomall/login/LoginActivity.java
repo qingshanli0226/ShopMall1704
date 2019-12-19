@@ -92,7 +92,8 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
                         presenter.setUsername(username);
                         presenter.setPassname(password);
                         presenter.doPostHttpRequest(100);
-                        toClass(MainActivity.class);
+                        ActivityInstanceManager.removeActivity(LoginActivity.this);
+
                     }
                 }
                 return false;

@@ -20,7 +20,7 @@
             <TextView
                 android:id="@+id/historySteps"
                 android:textSize="25sp"
-                android:text="查看历史步数"
+                android:text="@string/remindActivityTextLongAgo"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.administrator.shaomall">
+
     <!-- 联网的权限: -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 写SD卡权限: -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 读SD卡权限: -->
@@ -19,7 +20,6 @@
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute"
         tools:targetApi="m">
-        <activity android:name=".activity.SettingActivity"></activity>
         <activity android:name=".function.FunctionActivity" /> <!-- 商品详情 -->
         <activity
             android:name=".goodsinfo.GoodsInfoActivity"
@@ -87,6 +87,9 @@
                 <action android:name="cn.jiguang.user.service.action" />
             </intent-filter>
         </service>
+
+        <activity android:name=".activity.SettingActivity" />
+        <activity android:name=".activity.NameChangeActivity"></activity>
     </application>
 
 </manifest>
