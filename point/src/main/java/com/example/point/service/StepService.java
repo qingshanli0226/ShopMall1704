@@ -71,19 +71,20 @@ public class StepService extends Service implements SensorEventListener {
             }else {
                 int stepprious=0;
                 for (StepBean bean:beans) {
-                    //获取到所有之前日期的总步数
+                    //获取到所有今天之前日期的总步数
                     stepprious+=bean.getStep();
                 }
-                //数据库日期的总步数-今天之前的步数
-                CURRENT_STEP=sensorStep-stepprious;
-                Log.i("onSensorChanged", "onSensorChanged: "+sensorStep);
+                if (sensorStep>stepprious){
+                    //数据库日期的总步数-今天之前的步数
+                    CURRENT_STEP=sensorStep-stepprious;
+                }else {
+                    CURRENT_STEP=sensorStep;
+                }
             }
-
         } else if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
             if (sensorEvent.values[0] == 1.0) {
                 CURRENT_STEP++;
             }
-
         }
         updateNotification();
     }
@@ -98,7 +99,6 @@ public class StepService extends Service implements SensorEventListener {
     }
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
-
     }
     //获取当前service对象
     public class StepBinder extends Binder{
@@ -226,8 +226,6 @@ public class StepService extends Service implements SensorEventListener {
     //初始化当天的步数
     private void initTodayData() {
         CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis())+"";//今日日期
-        Log.i("initTodayData", "initTodayData: "+CURRENT_DATE);
-
         List<StepBean> beans = new DaoManager(this).queryStepBean(CURRENT_DATE);
         if (beans.size() == 0 ){
             CURRENT_STEP=0;
@@ -239,14 +237,12 @@ public class StepService extends Service implements SensorEventListener {
     //将今日步数存入数据库
     private void save(){
         List<StepBean> beans = new DaoManager(this).queryStepBean(CURRENT_DATE);
-        Log.i("wzy", "save: "+beans.size());
         if (beans.size() == 0){
             CURRENT_STEP=0;
             //数据库没有的情况下  进行第一次插入
             StepBean bean = new StepBean();
             bean.setCurr_date(CURRENT_DATE);
             bean.setStep(CURRENT_STEP);
-            Log.i("save", "save: "+CURRENT_STEP);
             new DaoManager(this).addStepBean(bean);
         }else {
             Long id = beans.get(0).getId();
@@ -254,7 +250,6 @@ public class StepService extends Service implements SensorEventListener {
             bean.setId(id);
             bean.setCurr_date(CURRENT_DATE);
             bean.setStep(CURRENT_STEP);
-            Log.i("save", "save: "+0);
             new DaoManager(this).updateStepBean(bean);
         }
     }
@@ -298,14 +293,12 @@ public class StepService extends Service implements SensorEventListener {
             service.createNotificationChannel(channel);
             builder.setChannelId("1");
         }
-
         if (Build.VERSION.SDK_INT>=16){
             service.notify(100,builder.build());
             save();//通知更新的时候就去保存下数据
         }
         if (mCallback!=null){
             mCallback.updateUi(CURRENT_STEP);
-            Log.i("updateNotification", "updateNotification: "+CURRENT_STEP);
         }
     }
     /**
@@ -331,12 +324,10 @@ public class StepService extends Service implements SensorEventListener {
     public void registerCallback(UpdateUiCallBack paramICallback) {
         this.mCallback = paramICallback;
     }
-
     //步数更新回调
     public interface UpdateUiCallBack{
         void updateUi(int stepCount);
     }
-
      //服务销毁的注销广播and计步管理监听
     @Override
     public void onDestroy() {
