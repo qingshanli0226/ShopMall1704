@@ -1,27 +1,8 @@
 package com.example.dimensionleague.mine;
 
-import android.content.Context;
-import android.content.Intent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
-import com.example.buy.activity.OrderActivity;
-import com.example.common.HomeBean;
-import com.example.common.IntentUtil;
 import com.example.dimensionleague.R;
 import com.example.framework.base.BaseRecyclerAdapter;
-import com.example.net.AppNetConfig;
-import com.example.point.activity.StepActivity;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class MineRecycleViewAdapter extends BaseRecyclerAdapter<MineBean>  {

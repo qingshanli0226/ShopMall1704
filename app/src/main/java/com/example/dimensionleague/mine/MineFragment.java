@@ -2,17 +2,14 @@ package com.example.dimensionleague.mine;
 
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import androidx.annotation.RequiresApi;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.buy.activity.OrderActivity;
@@ -27,7 +24,6 @@ import com.example.dimensionleague.R;
 import com.example.dimensionleague.home.HomePresenter;
 import com.example.dimensionleague.login.activity.LoginActivity;
 import com.example.framework.base.BaseNetConnectFragment;
-import com.example.framework.port.OnClickItemListener;
 import com.example.net.AppNetConfig;
 import com.example.point.activity.IntegralActivity;
 import com.example.point.activity.StepActivity;
@@ -83,114 +79,102 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
     }
 
     @Override
-    public void showLoading() {
-    }
+    public void showLoading() {}
 
     @Override
-    public void hideLoading() {
-    }
+    public void hideLoading() {}
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void initDate() {
         ifUser();
-        list.add(new MineBean(R.drawable.mine_pay, "待付款"));
-        list.add(new MineBean(R.drawable.mine_receiver, "待发货"));
-        list.add(new MineBean(R.drawable.mine_evaluate, "待评价"));
-        list.add(new MineBean(R.drawable.mine_refund, "退换/售后"));
-        list.add(new MineBean(R.drawable.mine_indent, "我的订单"));
-        list.add(new MineBean(R.drawable.mine_bean, "我的积分"));
-        list.add(new MineBean(R.drawable.mine_white, "白条"));
-        list.add(new MineBean(R.drawable.mine_discounts, "优惠券"));
-        list.add(new MineBean(R.drawable.mine_run, "运动"));
-        list.add(new MineBean(R.drawable.mine_wallet, "我的钱包"));
+        list.add(new MineBean(R.drawable.mine_pay, getString(R.string.mine_pay)));
+        list.add(new MineBean(R.drawable.mine_receiver, getString(R.string.mine_receiver)));
+        list.add(new MineBean(R.drawable.mine_evaluate, getString(R.string.mine_evaluate)));
+        list.add(new MineBean(R.drawable.mine_refund, getString(R.string.mine_refund)));
+        list.add(new MineBean(R.drawable.mine_indent, getString(R.string.mine_indent)));
+        list.add(new MineBean(R.drawable.mine_bean, getString(R.string.mine_bean)));
+        list.add(new MineBean(R.drawable.mine_white, getString(R.string.mine_white)));
+        list.add(new MineBean(R.drawable.mine_discounts, getString(R.string.mine_discounts)));
+        list.add(new MineBean(R.drawable.mine_run, getString(R.string.mine_run)));
+        list.add(new MineBean(R.drawable.mine_wallet, getString(R.string.mine_wallet)));
         homePresenter.attachView(this);
         homePresenter.doHttpGetRequest();
         listAdapter = new MineRecycleViewAdapter(R.layout.item_mine_rv, list);
         channelAdapter = new MineRecycleAdapter(R.layout.item_mine_rv_h, channelList);
         recommendAdapter = new MineRecommendAdapter(R.layout.item_mine_rv_recommend, recommendlList);
         mineListeners();
-        nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                Log.d("llf", "scrollX: "+scrollX+"--scrollY:  "+scrollY+"--oldScrollX:  "+oldScrollX+"--oldScrollY: "+oldScrollY);
-                if(scrollY<530){
-                    myToolBar.setAlpha(scrollY/530.0f);
-                }else{
-                    myToolBar.setAlpha(1.0f);
-                }
+        nestedScrollView.setOnScrollChangeListener((View.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+           if(scrollY<530){
+                myToolBar.setAlpha(scrollY/530.0f);
+            }else{
+                myToolBar.setAlpha(1.0f);
             }
         });
     }
 
     private void mineListeners() {
 //        所有监听事件
-        relative.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (("登录/注册".equals(name.getText().toString()))) {
+        relative.setOnClickListener(v -> {
+            if ((getString(R.string.mine_login).equals(name.getText().toString()))) {
 //                登录注册跳转
-                    startActivity(LoginActivity.class,null);
-                } else {
+                startActivity(LoginActivity.class,null);
+            } else {
 //                跳转到个人信息
-                    startActivity(SettingActivity.class,null);
-                }
+                startActivity(SettingActivity.class,null);
             }
         });
-        listAdapter.setClickListener(new OnClickItemListener() {
-            @Override
-            public void onClickListener(int position) {
-                Intent intent = new Intent();
-                switch (position) {
+        listAdapter.setClickListener(position -> {
+            Intent intent = new Intent();
+            switch (position) {
 
-                    case 0:
-                        //待付款
-                        intent.setClass(getContext(), OrderActivity.class);
-                        intent.putExtra(IntentUtil.ORDER_SHOW, OrderActivity.WAIT_PAY);
-                        getContext().startActivity(intent);
-                        break;
-                    case 1:
-                        //待发货
-                        intent.setClass(getContext(), OrderActivity.class);
-                        intent.putExtra(IntentUtil.ORDER_SHOW, OrderActivity.WAIT_SEND);
-                        getContext().startActivity(intent);
-                        break;
-                    case 2:
-                        //待评价
-                        toast(getActivity(), list.get(position).getTitle());
-                        break;
-                    case 3:
-                        //退换/售后
-                        toast(getActivity(), list.get(position).getTitle());
-                        break;
-                    case 4:
-                        //我的订单
-                        intent.setClass(getContext(), OrderActivity.class);
-                        intent.putExtra(IntentUtil.ORDER_SHOW, OrderActivity.ALL);
-                        getContext().startActivity(intent);
-                        break;
-                    case 5:
-                        //我的积分
-                        intent.setClass(getContext(), IntegralActivity.class);
-                        getContext().startActivity(intent);
-                        break;
-                    case 6:
-                        //白条
-                        toast(getActivity(), list.get(position).getTitle());
-                        break;
-                    case 7:
-                        //优惠券
-                        toast(getActivity(), list.get(position).getTitle());
-                        break;
-                    case 8:
-                        //运动
-                        intent.setClass(getContext(), StepActivity.class);
-                        getContext().startActivity(intent);
-                        break;
-                    case 9:
-                        //我的钱包
-                        break;
-                }
+                case 0:
+                    //待付款
+                    intent.setClass(getContext(), OrderActivity.class);
+                    intent.putExtra(IntentUtil.ORDER_SHOW, OrderActivity.WAIT_PAY);
+                    getContext().startActivity(intent);
+                    break;
+                case 1:
+                    //待发货
+                    intent.setClass(getContext(), OrderActivity.class);
+                    intent.putExtra(IntentUtil.ORDER_SHOW, OrderActivity.WAIT_SEND);
+                    getContext().startActivity(intent);
+                    break;
+                case 2:
+                    //待评价
+                    toast(getActivity(), list.get(position).getTitle());
+                    break;
+                case 3:
+                    //退换/售后
+                    toast(getActivity(), list.get(position).getTitle());
+                    break;
+                case 4:
+                    //我的订单
+                    intent.setClass(getContext(), OrderActivity.class);
+                    intent.putExtra(IntentUtil.ORDER_SHOW, OrderActivity.ALL);
+                    getContext().startActivity(intent);
+                    break;
+                case 5:
+                    //我的积分
+                    intent.setClass(getContext(), IntegralActivity.class);
+                    getContext().startActivity(intent);
+                    break;
+                case 6:
+                    //白条
+                    toast(getActivity(), list.get(position).getTitle());
+                    break;
+                case 7:
+                    //优惠券
+                    toast(getActivity(), list.get(position).getTitle());
+                    break;
+                case 8:
+                    //运动
+                    intent.setClass(getContext(), StepActivity.class);
+                    getContext().startActivity(intent);
+                    break;
+                case 9:
+                    //我的钱包
+                    break;
             }
         });
 
@@ -198,7 +182,7 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
 
     private void ifUser() {
         if (AccountManager.getInstance().isLogin()) {
-            if (AccountManager.getInstance().user.getName() != null) {
+            if (AccountManager.getInstance().user.getName()!= null) {
                 //登录
                 name.setText(AccountManager.getInstance().user.getName());
                 if (AccountManager.getInstance().user.getAvatar() != null) {
@@ -229,7 +213,7 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
         if (data != null) {
             int code = ((HomeBean) data).getCode();
             String msg = ((HomeBean) data).getMsg();
-            if (code == 200) {
+            if (code == Integer.parseInt(Constant.CODE_OK)){
                 channelList.addAll(((HomeBean) data).getResult().getChannel_info());
                 recommendlList.addAll(((HomeBean) data).getResult().getRecommend_info());
                 rvList.setLayoutManager(new GridLayoutManager(getContext(), 5));

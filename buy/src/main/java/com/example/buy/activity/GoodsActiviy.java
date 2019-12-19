@@ -154,7 +154,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
                 popupWindow.showAtLocation(findViewById(R.id.goodsRel), Gravity.BOTTOM, 0, 0);
             } else if (v.getId() == collectBut.getId()) {
                 //本地sp存储收藏的商品的信息
-                Toast.makeText(this, "已加入收藏", Toast.LENGTH_SHORT).show();
+                toast(this,String.valueOf(R.string.buy_add));
             } else if (v.getId() == cartBut.getId()) {
                 //点击购物车
                 Intent intent = new Intent(this, ShoppCartActivity.class);

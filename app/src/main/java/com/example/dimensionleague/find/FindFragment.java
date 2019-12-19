@@ -12,10 +12,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.dimensionleague.R;
-import com.example.dimensionleague.home.HomeFragment;
 import com.example.framework.base.BaseNetConnectFragment;
 import com.flyco.tablayout.SlidingTabLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +50,7 @@ public class FindFragment extends BaseNetConnectFragment {
         list.add(new FindSendFragment());
         list.add(new FindSendFragment());
 
-        titles = new String[]{"关注", "喜欢", "推荐", "5G", "直播", "视频"};
+        titles = new String[]{getString(R.string.find_attention), getString(R.string.find_like), getString(R.string.find_recommend), getString(R.string.find_5G),getString(R.string.find_streaming),getString(R.string.find_video)};
         vp.setAdapter(new MyVPAdapter(getChildFragmentManager()));
         tab.setViewPager(vp, titles);
 

@@ -2,7 +2,6 @@ package com.example.dimensionleague.home.holder
 
 
 import android.content.Context
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView

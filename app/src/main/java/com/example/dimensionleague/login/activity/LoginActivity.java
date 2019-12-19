@@ -2,15 +2,12 @@ package com.example.dimensionleague.login.activity;
 
 import android.content.Intent;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -46,9 +43,7 @@ public class LoginActivity extends BaseNetConnectActivity implements IButtonEnab
     private TextView user_register;
     //TODO 登录的Presenter
     private IPresenter loginPresenter;
-
     private AccountManager accountManager = AccountManager.getInstance();
-
     private boolean isContentUser = false;
     private boolean isContentPassword = false;
 
@@ -106,28 +101,28 @@ public class LoginActivity extends BaseNetConnectActivity implements IButtonEnab
                 }
             }
         });
-        password_check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                }else{
+        password_check.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked){
+                password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            }else{
 //                    隐藏密码
-                    password.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                }
+                password.setTransformationMethod(PasswordTransformationMethod.getInstance());
             }
+        });
+        forget_password.setOnClickListener(v -> {
+            toast(this,getString(R.string.contact));
         });
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        String userName = intent.getStringExtra("userName");
-        String password = intent.getStringExtra("password");
+        String userName = intent.getStringExtra(Constant.KEY_USERNAME);
+        String password = intent.getStringExtra(Constant.KEY_PASSWORD);
         this.user_name.setText(userName);
         this.password.setText(password);
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put(Constant.KEY_USERNAME,userName);
+        hashMap.put(Constant.KEY_NAME,userName);
         hashMap.put(Constant.KEY_PASSWORD,password);
         loginPresenter = new LoginPresenter(hashMap);
         loginPresenter.attachView(this);
@@ -137,7 +132,6 @@ public class LoginActivity extends BaseNetConnectActivity implements IButtonEnab
     @Override
     public void onRequestSuccess(Object data) {
         LoginBean loginBean = (LoginBean)data;
-        Log.d("lhf", "onRequestSuccess: "+loginBean.toString());
         LoginBean.ResultBean result = loginBean.getResult();
         if(loginBean.getCode().equals(Constant.CODE_OK)){
             LoginBean.ResultBean bean = loginBean.getResult();
@@ -188,7 +182,7 @@ public class LoginActivity extends BaseNetConnectActivity implements IButtonEnab
                 String userName = user_name.getText().toString();
                 String pwd = password.getText().toString();
                 HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put(Constant.KEY_USERNAME,userName);
+                hashMap.put(Constant.KEY_NAME,userName);
                 hashMap.put(Constant.KEY_PASSWORD,pwd);
                 loginPresenter = new LoginPresenter(hashMap);
                 loginPresenter.attachView(LoginActivity.this);

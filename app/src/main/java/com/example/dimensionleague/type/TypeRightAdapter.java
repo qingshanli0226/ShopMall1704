@@ -71,7 +71,6 @@ public class TypeRightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             this.mContext = mContext;
             rv_type_right = itemView.findViewById(R.id.rv_hot_right);
             rv_type_right.setLayoutManager(new GridLayoutManager(mContext,3));
-
             rv_ordinary_right = itemView.findViewById(R.id.rv_ordinary_right);
             rv_ordinary_right.setLayoutManager(new GridLayoutManager(mContext,3));
 
@@ -82,20 +81,11 @@ public class TypeRightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             TypeRecycleViewAdapter classifyRecyclerRightAdapter = new TypeRecycleViewAdapter(R.layout.type_right_rv,resultBeans.get(position).getHot_product_list());
             rv_type_right.setAdapter(classifyRecyclerRightAdapter);
 
-            classifyRecyclerRightAdapter.setLinkedlist(new TypeRecycleViewAdapter.Linkedlist() {
-                @Override
-                public void getLinkedlist(int i) {
-                    String cover_price = resultBeans.get(position).getHot_product_list().get(i).getCover_price();
-                    String name = resultBeans.get(position).getHot_product_list().get(i).getName();
-                    String figure = resultBeans.get(position).getHot_product_list().get(i).getFigure();
-                    String product_id = resultBeans.get(position).getHot_product_list().get(i).getProduct_id();
-
-
-
-                }
+            classifyRecyclerRightAdapter.setLinkedlist(i -> {
+                Intent intent =  new Intent(mContext, GoodsActiviy.class);
+                intent.putExtra(IntentUtil.SHOW_GOOD, resultBeans.get(position));
+                mContext.startActivity(intent);
             });
-
-
             TypeChildRecycleAdapter childRecycleAdapter = new TypeChildRecycleAdapter(mContext, (ArrayList<TypeBean.ResultBean.ChildBean>) resultBeans.get(position).getChild());
             rv_ordinary_right.setAdapter(childRecycleAdapter);
         }

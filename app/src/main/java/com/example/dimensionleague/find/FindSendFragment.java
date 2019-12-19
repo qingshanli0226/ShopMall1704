@@ -2,25 +2,20 @@ package com.example.dimensionleague.find;
 
 import android.content.Intent;
 import android.view.View;
-import android.widget.LinearLayout;
-
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.buy.activity.GoodsActiviy;
 import com.example.common.HomeBean;
 import com.example.common.IntentUtil;
+import com.example.common.code.Constant;
 import com.example.dimensionleague.R;
 import com.example.dimensionleague.home.HomePresenter;
 import com.example.dimensionleague.mine.MineRecommendAdapter;
 import com.example.framework.base.BaseNetConnectFragment;
-import com.example.framework.port.OnClickItemListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class FindSendFragment extends BaseNetConnectFragment {
-    private LinearLayout linear;
     private List<HomeBean.ResultBean.SeckillInfoBean.ListBean> list;
     private RecyclerView rv;
     private HomePresenter homePresenter;
@@ -43,13 +38,10 @@ public class FindSendFragment extends BaseNetConnectFragment {
         homePresenter.attachView(this);
         homePresenter.doHttpGetRequest();
         recommendAdapter = new MineRecommendAdapter(R.layout.item_mine_rv_recommend, list);
-        recommendAdapter.setClickListener(new OnClickItemListener() {
-            @Override
-            public void onClickListener(int position) {
-                Intent intent =new Intent(getContext(), GoodsActiviy.class);
-                intent.putExtra(IntentUtil.SHOW_GOOD,list.get(position));
-                startActivity(intent);
-            }
+        recommendAdapter.setClickListener(position -> {
+            Intent intent =new Intent(getContext(), GoodsActiviy.class);
+            intent.putExtra(IntentUtil.SHOW_GOOD,list.get(position));
+            startActivity(intent);
         });
     }
 
@@ -69,7 +61,7 @@ public class FindSendFragment extends BaseNetConnectFragment {
         if (data != null) {
             int code = ((HomeBean) data).getCode();
             String msg = ((HomeBean) data).getMsg();
-            if (code == 200) {
+            if (String.valueOf(code).equals(Constant.CODE_OK)) {
                 list.addAll(((HomeBean) data).getResult().getRecommend_info());
                 rv.setLayoutManager(new GridLayoutManager(getContext(), 2));
                 recommendAdapter.notifyDataSetChanged();

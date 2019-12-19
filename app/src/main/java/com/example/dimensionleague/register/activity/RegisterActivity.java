@@ -3,7 +3,6 @@ package com.example.dimensionleague.register.activity;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +17,6 @@ import com.example.dimensionleague.register.presenter.RegisterPresenter;
 import com.example.dimensionleague.userbean.RegisterBean;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.base.BaseTextWatcher;
-import com.example.framework.manager.ErrorDisposeManager;
 import com.example.framework.port.IPresenter;
 
 import java.util.HashMap;
@@ -111,11 +109,11 @@ public class RegisterActivity extends BaseNetConnectActivity implements View.OnC
                 String pwd = password.getText().toString().trim();
                 String qrPassword = qr_password.getText().toString().trim();
                 if(!pwd.equals(qrPassword)){
-                    Toast.makeText(this, "两次密码不相同，无法注册", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.region_no, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put(Constant.KEY_USERNAME,name);
+                hashMap.put(Constant.KEY_NAME,name);
                 hashMap.put(Constant.KEY_PASSWORD,pwd);
                 iPresenter = new RegisterPresenter(hashMap);
                 iPresenter.attachView(this);
@@ -132,10 +130,10 @@ public class RegisterActivity extends BaseNetConnectActivity implements View.OnC
         hideLoading();
         RegisterBean registerBean = (RegisterBean)data;
         if(registerBean.getCode().equals(Constant.CODE_OK)){
-            Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.region_yes, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, LoginActivity.class);
-            intent.putExtra("userName",user_name.getText().toString().trim());
-            intent.putExtra("password",password.getText().toString().trim());
+            intent.putExtra(Constant.KEY_USERNAME,user_name.getText().toString().trim());
+            intent.putExtra(Constant.KEY_PASSWORD,password.getText().toString().trim());
             boundActivity(intent);
             finish();
         }else{

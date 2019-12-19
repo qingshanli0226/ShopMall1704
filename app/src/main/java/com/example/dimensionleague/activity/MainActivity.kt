@@ -1,15 +1,9 @@
 package com.example.dimensionleague.activity
 
-import android.content.ContentResolver
-import android.content.Intent
-import android.graphics.Bitmap
 import androidx.fragment.app.Fragment
-import android.graphics.Color
-import android.net.Uri
-import android.provider.MediaStore
 import android.view.KeyEvent
 import android.widget.Toast
-import anet.channel.strategy.l
+import anet.channel.util.Utils.context
 
 import com.example.dimensionleague.R
 import com.example.buy.ShopCartFragment
@@ -25,7 +19,7 @@ import com.example.framework.listener.OnShopCartListener
 import com.example.buy.CartManager
 
 class MainActivity : BaseNetConnectActivity() {
-    lateinit var listener:OnShopCartListener
+    private lateinit var listener:OnShopCartListener
     override fun getRelativeLayout(): Int {
         return R.id.main_relative
     }
@@ -43,15 +37,15 @@ class MainActivity : BaseNetConnectActivity() {
         val isAutoLogin = bundle!!.getBoolean("isAutoLogin")
         if(!isAutoLogin){
             AccountManager.getInstance().logout()
-            Toast.makeText(this,"登录超时,请重新登录",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.timeout.toString(),Toast.LENGTH_SHORT).show()
             AccountManager.getInstance().logout()
             AccountManager.getInstance().notifyLogout()
         }else{
             AccountManager.getInstance().notifyLogin()
         }
 
-        if(isNetType=="移动流量"){
-            MyToast.showToast(this,"正在使用移动流量,请注意使用!",null,Toast.LENGTH_LONG)
+        if(isNetType==getString(R.string.ascend)){
+            MyToast.showToast(this,getString(R.string.ascend_messenger),null,Toast.LENGTH_LONG)
         }
         list.add(HomeFragment())
         list.add(TypeFragment())
@@ -61,8 +55,8 @@ class MainActivity : BaseNetConnectActivity() {
     }
     override fun initDate() {
         super.init()
-        main_easy.selectTextColor(Color.parseColor("#d3217b"))
-            .normalTextColor(Color.parseColor("#707070"))
+        main_easy.selectTextColor(R.color.colorGradualPurple)
+            .normalTextColor(R.color.colorMainNormal)
             .selectIconItems(
                 intArrayOf(
                     R.drawable.home,
@@ -83,7 +77,7 @@ class MainActivity : BaseNetConnectActivity() {
             )
             .fragmentManager(supportFragmentManager)
             .fragmentList(list)
-            .titleItems(arrayOf("首页", "分类", "发现", "购物车", "我的"))
+            .titleItems(arrayOf(getString(R.string.home), getString(R.string.type),getString(R.string.find),getString(R.string.shopping_cart),getString(R.string.mine)))
             .build()
         //注册监听,监听购物车数量
         listener= OnShopCartListener { num->
