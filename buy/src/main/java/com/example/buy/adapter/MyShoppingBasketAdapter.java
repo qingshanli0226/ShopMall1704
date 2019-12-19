@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.example.buy.R;
 import com.example.common.NumberAddSubView;
 import com.example.framework.base.BaseAdapter;
+import com.example.framework.manager.ShoppingManager;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -31,6 +32,7 @@ public class MyShoppingBasketAdapter extends BaseAdapter<Map<String, String>, My
     private Handler handler;
 
     private int checkedcount = 0;
+    private int checkedcount2 = 0;
 
     public MyShoppingBasketAdapter(Context context, NumberAddSubView.OnNumberChangeListener listener, Handler handler) {
         this.context = context;
@@ -40,6 +42,10 @@ public class MyShoppingBasketAdapter extends BaseAdapter<Map<String, String>, My
 
     public void setCheckedcount(int checkedcount) {
         this.checkedcount = checkedcount;
+    }
+
+    public void setCheckedcount2(int checkedcount2) {
+        this.checkedcount2 = checkedcount2;
     }
 
     public void refresh2(List<Map<String, String>> data, int position, double allcount) {
@@ -95,7 +101,9 @@ public class MyShoppingBasketAdapter extends BaseAdapter<Map<String, String>, My
                 if (holder.cbGov.isChecked()) {
                     double count = x * Double.parseDouble(hashMap.get("price"));
                     Log.e("####", allcount + "");
-                    allcount += count;
+                    BigDecimal bigDecimal = new BigDecimal(allcount + "");
+                    BigDecimal bigDecimal2 = new BigDecimal(count + "");
+                    allcount = bigDecimal.add(bigDecimal2).doubleValue();
                     Log.e("####", count + "/" + allcount);
                     Message message = Message.obtain();
                     message.what = 100;
@@ -103,7 +111,12 @@ public class MyShoppingBasketAdapter extends BaseAdapter<Map<String, String>, My
                     message.obj = "true " + x + " " + allcount;
                     handler.sendMessage(message);
 
-                    checkedcount++;
+
+                    if (ShoppingManager.getInstance().getisSetting()) {
+                        checkedcount2++;
+                    } else {
+                        checkedcount++;
+                    }
                 } else {
                     double count = x * Double.parseDouble(hashMap.get("price"));
                     BigDecimal bigDecimal = new BigDecimal(allcount + "");
@@ -115,18 +128,32 @@ public class MyShoppingBasketAdapter extends BaseAdapter<Map<String, String>, My
                     message.obj = "false " + x + " " + allcount;
                     handler.sendMessage(message);
 
-                    checkedcount--;
+                    if (ShoppingManager.getInstance().getisSetting()) {
+                        checkedcount2--;
+                    } else {
+                        checkedcount--;
+                    }
                 }
 //                Log.e("####", checkedcount + "");
                 Message message = Message.obtain();
                 message.what = 200;
 
-                if (checkedcount == data.size()) {
-                    message.arg1 = 0;
-                    handler.sendMessage(message);
+                if (ShoppingManager.getInstance().getisSetting()) {
+                    if (checkedcount2 == data.size()) {
+                        message.arg1 = 0;
+                        handler.sendMessage(message);
+                    } else {
+                        message.arg1 = 1;
+                        handler.sendMessage(message);
+                    }
                 } else {
-                    message.arg1 = 1;
-                    handler.sendMessage(message);
+                    if (checkedcount == data.size()) {
+                        message.arg1 = 0;
+                        handler.sendMessage(message);
+                    } else {
+                        message.arg1 = 1;
+                        handler.sendMessage(message);
+                    }
                 }
             }
         });

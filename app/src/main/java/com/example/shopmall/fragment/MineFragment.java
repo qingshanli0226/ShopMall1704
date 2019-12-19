@@ -13,9 +13,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseFragment;
+import com.example.buy.activity.SendGoodsActivity;
+import com.example.framework.manager.ShoppingManager;
 import com.example.shopmall.R;
 import com.example.shopmall.activity.AddressBarActivity;
 import com.example.shopmall.activity.SetActivity;
@@ -35,6 +36,7 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
     private TitleBar tbMine;
     private TextView tvUserScore;
     private TextView tvUsername;
+    private TextView tvSendgoods;
     private ImageView ibUserIconAvator;
     private AutomaticPresenter automaticPresenter;
     private UpImgPresenter upImgPresenter;
@@ -162,6 +164,12 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
     public void onDestroy() {
         super.onDestroy();
         automaticPresenter.detachView();
+        tvSendgoods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), SendGoodsActivity.class));
+            }
+        });
     }
 
     @Override
@@ -172,6 +180,7 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
         ibUserIconAvator = view.findViewById(R.id.ib_user_icon_avator);
         llUserLocation = view.findViewById(R.id.ll_user_location);
         mTvName = view.findViewById(R.id.tv_user_name);
+        tvSendgoods = view.findViewById(R.id.tv_app_sendgoods);
     }
 
     @Override
@@ -185,6 +194,7 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
             ResultBean result = ((LoginBean) data).getResult();
             UserManager.getInstance().savaToken(result.getToken());
             Toast.makeText(getActivity(), "自动登录成功", Toast.LENGTH_SHORT).show();
+            ShoppingManager.getInstance().setMainitem(0);
         }
         Log.e("####", ""+data.toString());
 

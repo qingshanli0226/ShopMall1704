@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.buy.bean.InsertBean;
@@ -16,6 +17,7 @@ import com.example.buy.presenter.InsertPresenter;
 import com.example.common.BottomBar;
 import com.example.common.SignUtil;
 import com.example.common.TitleBar;
+import com.example.common.view.MyOKButton;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IPostBaseView;
 import com.example.framework.manager.ShoppingManager;
@@ -36,7 +38,7 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
     TitleBar tbGoodsInfo;
     RecyclerView rvGoodsInfo;
     BottomBar bbGoodsInfo;
-    Button btGoodsInfo;
+    MyOKButton btGoodsInfo;
     LinearLayout layoutBottom;
 
     ArrayList<GoodsBean> list_goods = new ArrayList<>();
@@ -72,6 +74,7 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
         tbGoodsInfo.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
             public void LeftClick() {
+                ShoppingManager.getInstance().setMainitem(0);
                 finish();
             }
 
@@ -125,6 +128,7 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
         btGoodsInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.e("####", "点击");
                 String token = ShoppingManager.getInstance().getToken(GoodsInfoActivity.this);
                 ShoppingManager.getInstance().setOnNumberChanged(x);
                 x++;
@@ -145,15 +149,17 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
                 addOneProduct.attachPostView(GoodsInfoActivity.this);
                 addOneProduct.getPostJsonData();
 
+                Toast.makeText(GoodsInfoActivity.this, "购物车内物品数量+1", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     //购物车
     private void shoppingcart() {
+        ShoppingManager.getInstance().setMainitem(3);
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("replacefragment", 3);
         startActivity(intent);
+
     }
 
     //收藏
