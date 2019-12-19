@@ -100,5 +100,6 @@ class MainActivity : BaseNetConnectActivity() {
         }
         return super.onKeyDown(keyCode, event)
     }
+
 }
 

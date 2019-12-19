@@ -308,7 +308,10 @@ public class ShopCartFragment extends BaseNetConnectFragment{
             recyclerView.getAdapter().notifyDataSetChanged();
             sendCartPresenter.doHttpGetRequest(CART_GOODS);
         }else {
-            buyBut.setClickable(false);
+            list.clear();
+            CartManager.getInstance().setListGoods(list);
+            CartManager.getInstance().clearCheck();
+            judgeCheckAll();
         }
     }
 
