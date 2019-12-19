@@ -39,6 +39,6 @@ dependencies {
 //    "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"    //两个
     api 'com.alibaba:fastjson:1.1.71.android'
     api 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
-    implementation 'androidx.cardview:cardview:1.0.0'
+    api 'androidx.cardview:cardview:1.0.0'
 
 }

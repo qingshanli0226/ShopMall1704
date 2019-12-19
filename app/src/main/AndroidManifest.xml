@@ -31,7 +31,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".setting.SettingActivity"
             android:launchMode="singleTask"/>
-        <activity android:name=".setting.UserMassagesActivity"/>
         <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,6 +38,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".setting.UserMassagesActivity"/>
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
@@ -47,6 +47,8 @@
             android:name=".register.activity.RegisterActivity" />
         <activity
             android:name=".login.activity.LoginActivity"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"/>
+        <activity android:name=".address.AddressActivity"/>
+
     </application>
 </manifest>

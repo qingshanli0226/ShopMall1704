@@ -168,10 +168,10 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
     public void initDate() {
         //沙箱接入
         EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
-        if (AccountManager.getInstance().user.getPoint() == null) {
+        if (AccountManager.getInstance().getUser().getPoint() == null) {
             subtractIntegra.setText("0");
         } else {
-            subtractIntegra.setText(AccountManager.getInstance().user.getPoint() + "");
+            subtractIntegra.setText(AccountManager.getInstance().getUser().getPoint() + "");
         }
     }
 
@@ -209,7 +209,7 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
                 break;
             case COED_POINT:
                 if (((OkBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
-                    Log.e("xxxx", "用户信息:" + AccountManager.getInstance().user.toString());
+                    Log.e("xxxx", "用户信息:" + AccountManager.getInstance().getUser().toString());
                     finishActivity();
                 }
                 break;

@@ -77,8 +77,8 @@ public class IntegralActivity extends BaseNetConnectActivity {
             count += bean.getStep();
         }
         if (AccountManager.getInstance().isLogin()) {
-            if (AccountManager.getInstance().user.getPoint() != null) {
-                String point = (String) AccountManager.getInstance().user.getPoint();
+            if (AccountManager.getInstance().getUser().getPoint() != null) {
+                String point = (String) AccountManager.getInstance().getUser().getPoint();
                 int i = Integer.parseInt(point);
                 integral_point.setText(((i + (count / 100))) + "");
             }
@@ -152,11 +152,11 @@ public class IntegralActivity extends BaseNetConnectActivity {
 
     private void ifUser() {
         if (AccountManager.getInstance().isLogin()) {
-            if (AccountManager.getInstance().user.getName() != null) {
+            if (AccountManager.getInstance().getUser().getName() != null) {
                 //登录
-                integral_title.setText(AccountManager.getInstance().user.getName());
-                if (AccountManager.getInstance().user.getAvatar() != null) {
-                    Glide.with(this).load(AccountManager.getInstance().user.getAvatar()).into(integral_img);
+                integral_title.setText(AccountManager.getInstance().getUser().getName());
+                if (AccountManager.getInstance().getUser().getAvatar() != null) {
+                    Glide.with(this).load(AccountManager.getInstance().getUser().getAvatar()).into(integral_img);
                 }
             }
         } else {

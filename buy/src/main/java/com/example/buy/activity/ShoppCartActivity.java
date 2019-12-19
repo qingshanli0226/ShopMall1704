@@ -13,9 +13,6 @@ public class ShoppCartActivity extends BaseNetConnectActivity {
     @Override
     public void init() {
         super.init();
-        Intent intent=getIntent();
-        String goodsId = intent.getStringExtra(IntentUtil.GOODS);
-        fragment.setGoodsId(goodsId);
         getSupportFragmentManager().beginTransaction().add(R.id.shopFragment, fragment).commit();
     }
 

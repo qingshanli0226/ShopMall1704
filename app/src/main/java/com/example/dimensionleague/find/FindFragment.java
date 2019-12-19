@@ -20,7 +20,6 @@ import com.example.framework.base.BaseNetConnectFragment;
 import com.example.framework.manager.AccountManager;
 import com.example.point.message.MessageActivity;
 import com.flyco.tablayout.SlidingTabLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,7 +85,7 @@ public class FindFragment extends BaseNetConnectFragment {
         list.add(new FindSendFragment());
         list.add(new FindSendFragment());
 
-        titles = new String[]{"关注", "喜欢", "推荐", "5G", "直播", "视频"};
+        titles = new String[]{getString(R.string.find_attention), getString(R.string.find_like), getString(R.string.find_recommend), getString(R.string.find_5G),getString(R.string.find_streaming),getString(R.string.find_video)};
         vp.setAdapter(new MyVPAdapter(getChildFragmentManager()));
         tab.setViewPager(vp, titles);
 
@@ -94,7 +93,7 @@ public class FindFragment extends BaseNetConnectFragment {
 
     @Override
     public int getRelativeLayout() {
-        return 0;
+        return R.id.find_relativeLayout;
     }
 
     private class MyVPAdapter extends FragmentPagerAdapter {
@@ -119,5 +118,17 @@ public class FindFragment extends BaseNetConnectFragment {
         public int getCount() {
             return list.size();
         }
+    }
+
+    @Override
+    public void onConnected() {
+        hideEmpty();
+    }
+
+    @Override
+    public void onDisConnected() {
+        hideLoading();
+        hideError();
+        showEmpty();
     }
 }

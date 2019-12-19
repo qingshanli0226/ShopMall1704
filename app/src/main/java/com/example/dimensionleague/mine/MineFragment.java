@@ -94,152 +94,142 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
     @Override
     public void initDate() {
         ifUser();
-        list.add(new MineBean(R.drawable.mine_pay, "待付款"));
-        list.add(new MineBean(R.drawable.mine_receiver, "待发货"));
-        list.add(new MineBean(R.drawable.mine_evaluate, "待评价"));
-        list.add(new MineBean(R.drawable.mine_refund, "退换/售后"));
-        list.add(new MineBean(R.drawable.mine_indent, "我的订单"));
-        list.add(new MineBean(R.drawable.mine_bean, "我的积分"));
-        list.add(new MineBean(R.drawable.mine_white, "白条"));
-        list.add(new MineBean(R.drawable.mine_discounts, "优惠券"));
-        list.add(new MineBean(R.drawable.mine_run, "运动"));
-        list.add(new MineBean(R.drawable.mine_wallet, "我的钱包"));
+        list.add(new MineBean(R.drawable.mine_pay, getString(R.string.mine_pay)));
+        list.add(new MineBean(R.drawable.mine_receiver, getString(R.string.mine_receiver)));
+        list.add(new MineBean(R.drawable.mine_evaluate, getString(R.string.mine_evaluate)));
+        list.add(new MineBean(R.drawable.mine_refund, getString(R.string.mine_refund)));
+        list.add(new MineBean(R.drawable.mine_indent, getString(R.string.mine_indent)));
+        list.add(new MineBean(R.drawable.mine_bean, getString(R.string.mine_bean)));
+        list.add(new MineBean(R.drawable.mine_white, getString(R.string.mine_white)));
+        list.add(new MineBean(R.drawable.mine_discounts, getString(R.string.mine_discounts)));
+        list.add(new MineBean(R.drawable.mine_run, getString(R.string.mine_run)));
+        list.add(new MineBean(R.drawable.mine_wallet, getString(R.string.mine_wallet)));
         homePresenter.attachView(this);
         homePresenter.doHttpGetRequest();
         listAdapter = new MineRecycleViewAdapter(R.layout.item_mine_rv, list);
         channelAdapter = new MineRecycleAdapter(R.layout.item_mine_rv_h, channelList);
         recommendAdapter = new MineRecommendAdapter(R.layout.item_mine_rv_recommend, recommendlList);
         mineListeners();
-        nestedScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                Log.d("llf", "scrollX: "+scrollX+"--scrollY:  "+scrollY+"--oldScrollX:  "+oldScrollX+"--oldScrollY: "+oldScrollY);
-                if(scrollY<530){
-                    myToolBar.setAlpha(scrollY/530.0f);
-                }else{
-                    myToolBar.setAlpha(1.0f);
-                }
+        nestedScrollView.setOnScrollChangeListener((View.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            if (scrollY < 530) {
+                myToolBar.setAlpha(scrollY / 530.0f);
+            } else {
+                myToolBar.setAlpha(1.0f);
             }
         });
     }
 
     private void mineListeners() {
 //        所有监听事件
-        relative.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (("登录/注册".equals(name.getText().toString()))) {
+        relative.setOnClickListener(v -> {
+            if ((getString(R.string.mine_login).equals(name.getText().toString()))) {
 //                登录注册跳转
-                    startActivity(LoginActivity.class,null);
-                } else {
+                startActivity(LoginActivity.class, null);
+            } else {
 //                跳转到个人信息
-                    startActivity(SettingActivity.class,null);
-                }
+                startActivity(SettingActivity.class, null);
             }
         });
-        listAdapter.setClickListener(new OnClickItemListener() {
-            @Override
-            public void onClickListener(int position) {
-                Bundle bundle = new Bundle();
-                if(AccountManager.getInstance().isLogin()){
-                    switch (position) {
-                        case 0:
-                            //待付款
-                            bundle.putString(IntentUtil.ORDER_SHOW, Constant.WAIT_PAY);
-                            startActivity(OrderActivity.class,bundle);
-                            break;
-                        case 1:
-                            //待发货
-                            bundle.putString(IntentUtil.ORDER_SHOW, Constant.WAIT_SEND);
-                            startActivity(OrderActivity.class,bundle);
-                            break;
-                        case 2:
-                            //待评价
-                        case 3:
-                            //退换/售后
-                            toast(getActivity(), list.get(position).getTitle());
-                            break;
-                        case 4:
-                            //我的订单
-                            bundle.putString(IntentUtil.ORDER_SHOW, Constant.ALL_ORDER);
-                            startActivity(OrderActivity.class,bundle);
-                            break;
-                        case 5:
-                            //我的积分
-                            startActivity(IntegralActivity.class,null);
-                            break;
-                        case 6:
-                            //白条
-                        case 7:
-                            //优惠券
-                            toast(getActivity(), list.get(position).getTitle());
-                            break;
-                        case 8:
-                            //运动
-                            startActivity(StepActivity.class,null);
-                            break;
-                        case 9:
-                            //我的钱包
-                            break;
-                    }
-                }else {
-                    switch (position){
-                        case 0:
-                            //待付款
-                            bundle.putString(IntentUtil.LOGIN, Constant.WAIT_PAY);
-                            startActivity(LoginActivity.class,bundle);
-                            break;
-                        case 1:
-                            //待发货
-                            bundle.putString(IntentUtil.LOGIN, Constant.WAIT_SEND);
-                            startActivity(LoginActivity.class,bundle);
-                            break;
-                        case 2:
-                            //待评价
-                        case 3:
-                            //退换/售后
-                            startActivity(LoginActivity.class,null);
-                            break;
-                        case 4:
-                            //我的订单
-                            bundle.putString(IntentUtil.LOGIN, Constant.ALL_ORDER);
-                            startActivity(LoginActivity.class,bundle);
-                            break;
-                        case 5:
-                            //我的积分
-                            bundle.putString(IntentUtil.LOGIN,Constant.MINE_INTEGRAL);
-                            startActivity(LoginActivity.class,bundle);
-                            break;
-                        case 6:
-                            //白条
-                        case 7:
-                            //优惠券
-                            startActivity(LoginActivity.class,null);
-                            break;
-                        case 8:
-                            //运动
-                            bundle.putString(IntentUtil.LOGIN,Constant.EXERCISE);
-                            startActivity(LoginActivity.class,bundle);
-                            break;
-                        case 9:
-                            //我的钱包
-                            startActivity(LoginActivity.class,null);
-                            break;
-                    }
-
+        listAdapter.setClickListener(position -> {
+            Bundle bundle = new Bundle();
+            if (AccountManager.getInstance().isLogin()) {
+                switch (position) {
+                    case 0:
+                        //待付款
+                        bundle.putString(IntentUtil.ORDER_SHOW, Constant.WAIT_PAY);
+                        startActivity(OrderActivity.class, bundle);
+                        break;
+                    case 1:
+                        //待发货
+                        bundle.putString(IntentUtil.ORDER_SHOW, Constant.WAIT_SEND);
+                        startActivity(OrderActivity.class, bundle);
+                        break;
+                    case 2:
+                        //待评价
+                    case 3:
+                        //退换/售后
+                        toast(getActivity(), list.get(position).getTitle());
+                        break;
+                    case 4:
+                        //我的订单
+                        bundle.putString(IntentUtil.ORDER_SHOW, Constant.ALL_ORDER);
+                        startActivity(OrderActivity.class, bundle);
+                        break;
+                    case 5:
+                        //我的积分
+                        startActivity(IntegralActivity.class, null);
+                        break;
+                    case 6:
+                        //白条
+                    case 7:
+                        //优惠券
+                        toast(getActivity(), list.get(position).getTitle());
+                        break;
+                    case 8:
+                        //运动
+                        startActivity(StepActivity.class, null);
+                        break;
+                    case 9:
+                        //我的钱包
+                        break;
                 }
+            } else {
+                switch (position) {
+                    case 0:
+                        //待付款
+                        bundle.putString(IntentUtil.LOGIN, Constant.WAIT_PAY);
+                        startActivity(LoginActivity.class, bundle);
+                        break;
+                    case 1:
+                        //待发货
+                        bundle.putString(IntentUtil.LOGIN, Constant.WAIT_SEND);
+                        startActivity(LoginActivity.class, bundle);
+                        break;
+                    case 2:
+                        //待评价
+                    case 3:
+                        //退换/售后
+                        startActivity(LoginActivity.class, null);
+                        break;
+                    case 4:
+                        //我的订单
+                        bundle.putString(IntentUtil.LOGIN, Constant.ALL_ORDER);
+                        startActivity(LoginActivity.class, bundle);
+                        break;
+                    case 5:
+                        //我的积分
+                        bundle.putString(IntentUtil.LOGIN, Constant.MINE_INTEGRAL);
+                        startActivity(LoginActivity.class, bundle);
+                        break;
+                    case 6:
+                        //白条
+                    case 7:
+                        //优惠券
+                        startActivity(LoginActivity.class, null);
+                        break;
+                    case 8:
+                        //运动
+                        bundle.putString(IntentUtil.LOGIN, Constant.EXERCISE);
+                        startActivity(LoginActivity.class, bundle);
+                        break;
+                    case 9:
+                        //我的钱包
+                        startActivity(LoginActivity.class, null);
+                        break;
+                }
+
             }
         });
-
     }
+
 
     private void ifUser() {
         if (AccountManager.getInstance().isLogin()) {
-            if (AccountManager.getInstance().user.getName() != null) {
+            if (AccountManager.getInstance().getUser().getName() != null) {
                 //登录
-                name.setText(AccountManager.getInstance().user.getName());
-                if (AccountManager.getInstance().user.getAvatar() != null) {
-                    Glide.with(getContext()).load(""+AppNetConfig.BASE_URL+AccountManager.getInstance().user.getAvatar()).apply(new RequestOptions().circleCrop()).into(img);
+                name.setText(AccountManager.getInstance().getUser().getName());
+                if (AccountManager.getInstance().getUser().getAvatar() != null) {
+                    Glide.with(getContext()).load("" + AppNetConfig.BASE_URL + AccountManager.getInstance().getUser().getAvatar()).apply(new RequestOptions().circleCrop()).into(img);
                 }
             }
         } else {
@@ -266,7 +256,7 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
         if (data != null) {
             int code = ((HomeBean) data).getCode();
             String msg = ((HomeBean) data).getMsg();
-            if (code == 200) {
+            if (code == Integer.parseInt(Constant.CODE_OK)) {
                 channelList.addAll(((HomeBean) data).getResult().getChannel_info());
                 recommendlList.addAll(((HomeBean) data).getResult().getRecommend_info());
                 rvList.setLayoutManager(new GridLayoutManager(getContext(), 5));
@@ -306,7 +296,7 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
     //TODO 用户登录成功后回调
     @Override
     public void onLogin() {
-        name.setText(AccountManager.getInstance().user.getName());
+        name.setText(AccountManager.getInstance().getUser().getName());
     }
 
     @Override
@@ -318,6 +308,17 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
     //TODO 用户更新头像后回调
     @Override
     public void onAvatarUpdate(String url) {
-        Glide.with(getContext()).load(""+ AppNetConfig.BASE_URL+url).apply(new RequestOptions().circleCrop()).into(img);
+        Glide.with(getContext()).load("" + AppNetConfig.BASE_URL + url).apply(new RequestOptions().circleCrop()).into(img);
+    }
+
+    @Override
+    public void onConnected() {
+        homePresenter.doHttpGetRequest();
+        myToolBar.isConnection(true);
+    }
+
+    @Override
+    public void onDisConnected() {
+        myToolBar.isConnection(false);
     }
 }

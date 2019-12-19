@@ -1,13 +1,9 @@
 package com.example.dimensionleague.activity;
 
-import androidx.annotation.NonNull;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.media.MediaPlayer;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,7 +22,6 @@ import com.example.dimensionleague.userbean.AutoLoginBean;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.port.ITaskFinishListener;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-
 import java.lang.ref.WeakReference;
 
 public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFinishListener {
@@ -41,6 +36,7 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
     private boolean isRequestAutoLogin = false;
     private boolean isNotNet = false;
 
+    @SuppressLint("CheckResult")
     @Override
     public void init() {
         super.init();
@@ -64,23 +60,22 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
          //设置监听
-        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                mp.setVolume(0,0);
-                mp.setLooping(true);
-                mp.start();
-            }});
+        videoView.setOnPreparedListener(mp -> {
+            mp.setVolume(0,0);
+            mp.setLooping(true);
+            mp.start();
+        });
 
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void initDate() {
 
         videoView.setVideoPath(Uri.parse("android.resource://" + getPackageName() + "/"+R.raw.peng).toString());
 
         handler.sendEmptyMessage(1);
-        but.setText(count + "秒");
+        but.setText(count +getString(R.string.second));
         CacheManager.getInstance().getHomeDate();
         AutoLoginManager.getInstance().getLoginData();
         CacheManager.getInstance().registerGetDateListener(new CacheManager.IHomeReceivedListener() {
@@ -97,20 +92,7 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
                 isRequestHomeBean = false;
                 isNotNet = true;
                 onFinish();
-                try {
-                    AlertDialog alertDialog = new AlertDialog.Builder(WelcomeActivity.this)
-                            .setTitle("警告")
-                            .setMessage("网络信号不好哟~宝宝卡得要哭了~")
-                            .setPositiveButton("点击重试", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-//                                    CacheManager.getInstance().getHomeDate();
-                                }
-                            }).create();
-                    alertDialog.show();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+
             }
         });
 
@@ -119,19 +101,21 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
             public void onAutoLoginReceived(AutoLoginBean.ResultBean resultBean) {
                 if (resultBean != null) {
                     //TODO 保存用户信息
-                    AccountManager.getInstance().setUser(new User(
-                            resultBean.name,
-                            resultBean.password,
-                            resultBean.email,
-                            resultBean.phone,
-                            resultBean.point,
-                            resultBean.address,
-                            resultBean.money,
-                            resultBean.avatar
-                    ));
+                    User user = new User(
+                            resultBean.getName(),
+                            resultBean.getPassword(),
+                            resultBean.getEmail(),
+                            resultBean.getPhone(),
+                            resultBean.getPoint(),
+                            resultBean.getAddress(),
+                            resultBean.getMoney(),
+                            resultBean.getAvatar());
+                    AccountManager.getInstance().setUser(user);
+                    Log.d("lhf--welcome--user",AccountManager.getInstance().getUser().toString());
+                    Log.d("lhf--welcome", ""+resultBean.toString());
                     //TODO 更新登录状态
                     AccountManager.getInstance().notifyLogin();
-                    AccountManager.getInstance().saveToken(resultBean.token);
+                    AccountManager.getInstance().saveToken(resultBean.getToken());
                     isRequestAutoLogin = true;
                     onFinish();
                 }
@@ -160,17 +144,16 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
 
     @Override
     public void onFinish() {
-        Log.d("lhfff","isCarouselFinish--"+isCarouselFinish+"---isRequestHomeBean---"+isRequestHomeBean+"---isAutoFinish---"+isRequestAutoLogin);
         if (isCarouselFinish && isRequestHomeBean) {
             //跳转到主页面
             Bundle bundle = new Bundle();
-            bundle.putBoolean("isAutoLogin",isRequestAutoLogin);
+            bundle.putBoolean(getString(R.string.test_auto_login),isRequestAutoLogin);
             startActivity(MainActivity.class,bundle);
             finish();
         }else if(isCarouselFinish && isNotNet){
             //跳转到主页面
             Bundle bundle = new Bundle();
-            bundle.putBoolean("isAutoLogin",isRequestAutoLogin);
+            bundle.putBoolean(getString(R.string.test_auto_login),isRequestAutoLogin);
             startActivity(MainActivity.class,bundle);
             finish();
         }
@@ -178,9 +161,11 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
 
     private static class MyHandler extends Handler {
         private WeakReference<WelcomeActivity> mWeakReference;
+        private Context mContext;
 
         public MyHandler(WelcomeActivity activity) {
             mWeakReference = new WeakReference<>(activity);
+            mContext=activity;
         }
 
         @Override
@@ -189,7 +174,7 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
             WelcomeActivity activity = mWeakReference.get();
             if(msg.what==1){
                 if (activity.count >0) {
-                    activity.but.setText(activity.count + "秒");
+                    activity.but.setText(activity.count + mContext.getString(R.string.second));
                     activity.count--;
                     sendEmptyMessageDelayed(1,1000);
                 } else {

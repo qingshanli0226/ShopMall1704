@@ -13,4 +13,6 @@
     <string name="buyOneNum">数量:</string>
     <string name="buyOneSum">总价:</string>
     <string name="buyLoginFirst">请您先登录,蟹蟹配合</string>
+    <string name="buy_add">已加入收藏</string>
+    <string name="shop_details">商品详情</string>
 </resources>

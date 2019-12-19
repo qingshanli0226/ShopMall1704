@@ -21,14 +21,9 @@ class ChannelAdapter(
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
         lateinit var views:View
         lateinit var holder:ViewHolder
-//        if(view==null){
              views = LayoutInflater.from(parent!!.context).inflate(R.layout.home_channel_item,parent,false)
             holder = ViewHolder(views)
             views.setTag(holder)
-//        }else{
-//            views = view
-//            holder = views.getTag() as ViewHolder
-//        }
         Glide.with(parent.context).load("${AppNetConfig.BASE_URl_IMAGE}${channelInfo!!.get(position).image}").into(holder.iv_channer)
         holder.tv_channer.text = channelInfo!!.get(position).channel_name
         return views

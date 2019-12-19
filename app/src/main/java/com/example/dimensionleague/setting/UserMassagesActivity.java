@@ -1,9 +1,13 @@
 package com.example.dimensionleague.setting;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,6 +37,7 @@ import com.example.framework.manager.ErrorDisposeManager;
 import com.example.net.AppNetConfig;
 import com.example.net.RetrofitCreator;
 import com.google.gson.Gson;
+import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.wyp.avatarstudio.AvatarStudio;
 
 import java.io.File;
@@ -51,7 +57,7 @@ import okhttp3.ResponseBody;
 
 public class UserMassagesActivity extends BaseActivity implements IAccountCallBack {
     private List<SettingBean> list;
-    private String[] sexArry = new String[]{"保密", "女", "男"};// 性别选择
+    private String[] sexArry;
     private RecyclerView rv;
     private ImageView heanUserImg;
     private TextView heanUserName;
@@ -77,7 +83,7 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
 
     @Override
     public void onAvatarUpdate(String url) {
-        Glide.with(this).load(AppNetConfig.BASE_URL + AccountManager.getInstance().user.getAvatar()).apply(new RequestOptions().circleCrop()).into(heanUserImg);
+        Glide.with(this).load(AppNetConfig.BASE_URL + AccountManager.getInstance().getUser().getAvatar()).apply(new RequestOptions().circleCrop()).into(heanUserImg);
     }
 
     @Override
@@ -94,19 +100,27 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
         user_toolbar.getOther_title().setText("个人设置");
         user_toolbar.getOther_title().setTextColor(Color.BLACK);
         headView = LayoutInflater.from(this).inflate(R.layout.user_item_head, null);
+
         heanUserImg = headView.findViewById(R.id.user_massage_item_img);
         heanUserName = headView.findViewById(R.id.user_massage_item_title);
+
         AccountManager.getInstance().registerUserCallBack(this);
         rv = findViewById(R.id.user_massage_rv);
     }
 
     @Override
     public void initDate() {
-        list = new ArrayList<>();
-        list.add(new SettingBean("用户名", ""));
-        list.add(new SettingBean("昵称", ""));
-        list.add(new SettingBean("性别", "保密"));
-        list.add(new SettingBean("出生年月", ""));
+        list=new ArrayList<>();
+        sexArry = new String[]{
+                getString(R.string.privary),
+                getString(R.string.woman),
+                getString(R.string.man)
+        };
+        list.add(new SettingBean(getString(R.string.setting_user),""));
+        list.add(new SettingBean(getString(R.string.name),""));
+        list.add(new SettingBean(getString(R.string.sex),getString(R.string.privary)));
+        list.add(new SettingBean(getString(R.string.birth),""));
+
         mYear = nowdate.get(Calendar.YEAR);
         mMonth = nowdate.get(Calendar.MONTH);
         mDay = nowdate.get(Calendar.DAY_OF_MONTH);
@@ -116,14 +130,17 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
                 finishActivity();
             }
         });
-//      判断是否登录
+     //         判断是否登录
         if (AccountManager.getInstance().isLogin()) {
-            list.get(0).setMassage("" + AccountManager.getInstance().user.getName());
-            list.get(1).setMassage("" + AccountManager.getInstance().user.getName());
-            if (AccountManager.getInstance().user.getAvatar() != null) {
-                Glide.with(this).load("" + AppNetConfig.BASE_URL + AccountManager.getInstance().user.getAvatar()).apply(new RequestOptions().circleCrop()).into(heanUserImg);
+            if (AccountManager.getInstance().getUser().getName() != null) {
+                list.get(0).setMassage("" + AccountManager.getInstance().getUser().getName());
+                list.get(1).setMassage("" + AccountManager.getInstance().getUser().getName());
+                if (AccountManager.getInstance().getUser().getAvatar() != null) {
+                    Glide.with(this).load("" + AppNetConfig.BASE_URL + AccountManager.getInstance().getUser().getAvatar()).apply(new RequestOptions().circleCrop()).into(heanUserImg);
+                }
             }
         }
+        heanUserName.setText(getResources().getString(R.string.hean_user_name));
         rv.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MySettingAdapter(R.layout.setting_item, list);
         adapter.addHeaderView(headView);
@@ -131,94 +148,82 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
         AccountManager.getInstance().registerUserCallBack(this);
 //        点击事件
         initListener();
-
-
     }
 
     private void initListener() {
-        headView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new AvatarStudio.Builder(UserMassagesActivity.this)
-                        .needCrop(false)
-                        .dimEnabled(true)
-                        .setAspect(1, 1)
-                        .setOutput(50, 50)
-                        .setText("拍照", "我的相册", "取消")
-                        .setTextColor(Color.BLUE)
-                        .show(new AvatarStudio.CallBack() {
-                            @Override
-                            public void callback(String uri) {
+        headView.setOnClickListener(v -> {
+            int permission = 0;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                permission = this.checkSelfPermission(Manifest.permission.CAMERA);
+                if (permission != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.CAMERA}, Constant.REQUSET_CODE);
+                    return;
+                } else {
+                    new AvatarStudio.Builder(UserMassagesActivity.this)
+                            .needCrop(true)
+                            .dimEnabled(true)
+                            .setAspect(1, 1)
+                            .setOutput(50, 50)
+                            .setText(getString(R.string.camera), getString(R.string.albums), getString(R.string.cancel))
+                            .setTextColor(Color.BLUE)
+                            .show(uri -> {
                                 File file = new File(uri);
                                 upload(file);
-                            }
-                        });
-
-            }
-        });
-
-
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
-                switch (position) {
-                    case 0:
-                        Toast toast = Toast.makeText(view.getContext(), "这个是不可以修改的哦`", Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.CENTER, 0, 0);
-                        toast.show();
-                        break;
-                    case 1:
-                        View inflate = LayoutInflater.from(UserMassagesActivity.this).inflate(R.layout.user_item_set_name, null);
-                        AlertDialog.Builder builder = new AlertDialog.Builder(UserMassagesActivity.this)
-                                .setView(inflate)
-                                .setCancelable(false)
-                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        EditText et = inflate.findViewById(R.id.user_changename_edit);
-                                        list.get(position).setMassage("" + et.getText().toString());
-                                        adapter.notifyDataSetChanged();
-                                    }
-                                })
-                                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.cancel();
-                                    }
-                                });
-                        builder.show();
-                        break;
-                    case 2:
-                        showSexDialog(position);
-                        break;
-                    case 3:
-                        new DatePickerDialog(UserMassagesActivity.this, DatePickerDialog.THEME_HOLO_LIGHT, new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                String s = new StringBuffer().append(mYear).append("年").append(mMonth)
-                                        .append("月")
-                                        .append(mDay).append("日").toString();
-                                list.get(position).setMassage("" + s);
-                                adapter.notifyDataSetChanged();
-                            }
-                        }, mYear, mMonth, mDay).show();
-                        break;
+                            });
                 }
+            }
+
+
+        });
+        adapter.setOnItemClickListener((adapter, view, position) -> {
+
+            switch (position) {
+                case 0:
+                    Toast toast = Toast.makeText(view.getContext(), R.string.no, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                    break;
+                case 1:
+                    View inflate = LayoutInflater.from(UserMassagesActivity.this).inflate(R.layout.user_item_set_name, null);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(UserMassagesActivity.this)
+                            .setView(inflate)
+                            .setCancelable(false)
+                            .setPositiveButton(R.string.yes, (dialog, which) -> {
+                                EditText et = inflate.findViewById(R.id.user_changename_edit);
+                                list.get(position).setMassage("" + et.getText().toString());
+                                adapter.notifyDataSetChanged();
+                            })
+                            .setNegativeButton(R.string.no, (dialog, which) -> dialog.cancel());
+                    builder.show();
+                    break;
+                case 2:
+                    showSexDialog(position);
+                    break;
+                case 3:
+                    new DatePickerDialog(UserMassagesActivity.this, DatePickerDialog.THEME_HOLO_LIGHT, (view1, year, month, dayOfMonth) -> {
+                        String s = new StringBuffer().append(mYear).append(getString(R.string.year)).append(mMonth)
+                                .append(getString(R.string.moth))
+                                .append(mDay).append(getString(R.string.day)).toString();
+                        list.get(position).setMassage("" + s);
+                        adapter.notifyDataSetChanged();
+                    }, mYear, mMonth, mDay).show();
+                    break;
+
             }
         });
     }
 
-    private void showSexDialog(int position) {
+
+
+
+
+        private void showSexDialog(int position) {
 //        性别选择
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setSingleChoiceItems(sexArry, 0, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                list.get(position).setMassage(sexArry[which]);
-                adapter.notifyDataSetChanged();
-                dialog.dismiss();
-            }
+        builder.setSingleChoiceItems(sexArry, 0, (dialog, which) -> {
+            list.get(position).setMassage(sexArry[which]);
+            adapter.notifyDataSetChanged();
+            dialog.dismiss();
         });
         builder.show();
 
@@ -228,7 +233,7 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
     //上传头像
     private void upload(File file) {
         if (!file.exists()) {
-            toast(this, "上传文件不存在!");
+            toast(this,getString(R.string.up_file_no));
             return;
         }
         //创建上传文件的请求体.
@@ -248,9 +253,8 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
                         String s = null;
                         try {
                             s = responseBody.string();
-                            Log.i("xxxx", "ResponseBody:上传 " + s);
                             UploadBean uploadBean = new Gson().fromJson(s, UploadBean.class);
-                            if ("200".equals(uploadBean.getCode())) {
+                            if (Constant.CODE_OK.equals(uploadBean.getCode())){
                                 AccountManager.getInstance().getUser().setAvatar(uploadBean.getResult());
                                 AccountManager.getInstance().notifyUserAvatarUpdate(AccountManager.getInstance().getUser().getAvatar().toString());
                             }
@@ -262,7 +266,6 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.i("xxxx", "onError:cw上传 ");
                         ErrorDisposeManager.HandlerError(e);
                     }
 
@@ -279,9 +282,34 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
         AccountManager.getInstance().unRegisterUserCallBack(this);
     }
 
+    //    处理权限
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) and run LayoutCreator again
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case Constant.REQUSET_CODE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    new AvatarStudio.Builder(UserMassagesActivity.this)
+                            .needCrop(true)
+                            .dimEnabled(true)
+                            .setAspect(1, 1)
+                            .setOutput(50, 50)
+                            .setText(getString(R.string.camera), getString(R.string.albums), getString(R.string.cancel))
+                            .setTextColor(Color.BLUE)
+                            .show(uri -> {
+                                File file = new File(uri);
+                                upload(file);
+                            });
+
+                } else {
+                    // Permission Denied 拒绝
+                    toast(this, getString(R.string.request_no));
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
+
+
 }

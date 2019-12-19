@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -59,44 +59,43 @@ public class TypeFragment extends BaseNetConnectFragment {
     public void initDate() {
         showMyToolBar();
         //TODO 扫一扫
-        my_toolbar.getScan().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int permission = 0;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                    permission = getContext().checkSelfPermission(Manifest.permission.CAMERA);
+        my_toolbar.getScan().setOnClickListener(v -> {
+            int permission = 0;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                permission = getContext().checkSelfPermission(Manifest.permission.CAMERA);
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.CAMERA}, Constant.REQUSET_CODE);
+                return;
+            } else {
+                Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                startActivityForResult(intent, Constant.REQUSET_ZXING_CODE);
+            }
+            }
+        });
+        //TODO AI相机
+        my_toolbar.getSearch_camera().setOnClickListener(v -> {
+            int permission = 0;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                permission = getContext().checkSelfPermission(Manifest.permission.CAMERA);
                 if (permission != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, Constant.REQUSET_CODE);
                     return;
                 } else {
-                    Intent intent = new Intent(getActivity(), CaptureActivity.class);
-                    startActivityForResult(intent, Constant.REQUSET_ZXING_CODE);
+                    Intent intent = new Intent();
+                    intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, Constant.REQUSET_CAMERA_CODE);
                 }
-                }
-            }
-        });
-        //TODO AI相机
-        my_toolbar.getSearch_camera().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "拍照搜索商品", Toast.LENGTH_SHORT).show();
             }
         });
         //TODO 点击搜索跳转到搜索页面
-        my_toolbar.getSearch_edit().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(SearchActivity.class,null);
-            }
+        my_toolbar.getSearch_edit().setOnClickListener(v -> {
+            startActivity(SearchActivity.class,null);
         });
         //TODO 点击消息跳转到消息页面
-        my_toolbar.getSearch_message().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("intent","消息");
-                startActivity(MessageActivity.class,bundle);
-            }
+        my_toolbar.getSearch_message().setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("intent","消息");
+            startActivity(MessageActivity.class,bundle);
         });
         typeURL.add(AppNetConfig.SKIRT_URL);
         typeURL.add(AppNetConfig.JACKET_URL);
@@ -118,16 +117,13 @@ public class TypeFragment extends BaseNetConnectFragment {
         type_left.setAdapter(tagAdapter);
         rv_right.setLayoutManager(new LinearLayoutManager(getContext()));
 //监听事件
-        type_left.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                tagAdapter.changeSelected(position);
-                typePresenter.setURL(typeURL.get(position));
-                typePresenter.doHttpGetRequest(1);
-                tagAdapter.notifyDataSetChanged();
+        type_left.setOnItemClickListener((parent, view, position, id) -> {
+            tagAdapter.changeSelected(position);
+            typePresenter.setURL(typeURL.get(position));
+            typePresenter.doHttpGetRequest(1);
+            tagAdapter.notifyDataSetChanged();
 
 
-            }
         });
         type_left.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -199,11 +195,17 @@ public class TypeFragment extends BaseNetConnectFragment {
                         String result = bundle.getString(CodeUtils.RESULT_STRING);
                         toast(getActivity(), result);
                     } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
-                        toast(getActivity(), "解析二维码失败");
+                        toast(getActivity(), getString(R.string.failure));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+        }else if (requestCode==Constant.REQUSET_CAMERA_CODE){
+            if (data!=null){
+                toast(getActivity(),getString(R.string.camera_ok));
+            }else{
+                toast(getActivity(),getString(R.string.camera_no));
             }
         }
     }
@@ -221,7 +223,7 @@ public class TypeFragment extends BaseNetConnectFragment {
 
                 } else {
                     // Permission Denied 拒绝
-                    toast(getActivity(), "获取权限失败，无法扫描");
+                    toast(getActivity(), getString(R.string.request_no));
                 }
                 break;
             default:
