@@ -1,16 +1,20 @@
 package com.example.buy.presenter;
 
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
+import com.example.buy.databeans.OkBean;
 import com.example.framework.base.BasePresenter;
 import com.example.net.AppNetConfig;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 商品  GoodsActiviy  检查单个商品库存
  */
 
-public class PostVerifyOnePresenter extends BasePresenter {
+public class PostVerifyOnePresenter extends BasePresenter<OkBean> {
 
     String productId;
     int productNum;
@@ -21,25 +25,21 @@ public class PostVerifyOnePresenter extends BasePresenter {
     }
 
     @Override
-    public HashMap<String, String> getParams() {
+    public Map<String, String> getParams() {
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("productId", productId + "");
-        hashMap.put("productNum", productNum + "");
+        hashMap.put("productId",productId);
+        hashMap.put("productNum",productNum+"");
         return hashMap;
+
     }
 
     @Override
     public Type getBeanType() {
-        return String.class;
+        return OkBean.class;
     }
 
     @Override
     public String getPath() {
         return AppNetConfig.CHECKONPRODUCTINVENTORY;
-    }
-
-    @Override
-    public void detachView() {
-        super.detachView();
     }
 }

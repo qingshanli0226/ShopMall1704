@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/buy_two_hun"/>
             <ImageView
-                android:id="@+id/beiImgage"
+                android:id="@+id/beiImage"
                 android:src="@drawable/img"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/buy_two_hun"/>

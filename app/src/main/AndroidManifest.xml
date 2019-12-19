@@ -58,6 +58,7 @@
             android:screenOrientation="portrait"
             android:name=".login.activity.LoginActivity"
             android:launchMode="singleTask"/>
+        <activity android:name=".address.AddressActivity"/>
     </application>
 
 </manifest>
