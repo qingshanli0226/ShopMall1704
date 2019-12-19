@@ -1,7 +1,7 @@
 package com.example.dimensionleague.util;
-
 import android.text.TextUtils;
-import android.util.Log;
+
+import com.example.framework.manager.ErrorDisposeManager;
 
 import java.security.MessageDigest;
 
@@ -27,7 +27,7 @@ public class Md5Util {
             }
             return outStrBuf.toString();
         } catch (Exception e) {
-            Log.e("sign_utils签名错误", "");
+            ErrorDisposeManager.HandlerError(e);
         }
         return null;
     }

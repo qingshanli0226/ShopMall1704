@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Path;
 import android.graphics.drawable.ColorDrawable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,12 +31,13 @@ import com.example.buy.databeans.GetCartBean;
 import com.example.buy.databeans.GoodsBean;
 import com.example.buy.databeans.OkBean;
 import com.example.buy.presenter.GetCartPresenter;
+import com.example.common.view.MyToolBar;
 import com.example.framework.listener.OnShopCartListener;
 import com.example.framework.manager.AccountManager;
 import com.example.buy.CartManager;
 import com.example.buy.presenter.PostAddCartPresenter;
 import com.example.common.HomeBean;
-import com.example.common.IntentUtil;
+import com.example.common.utils.IntentUtil;
 import com.example.common.TypeBean;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.port.IPresenter;
@@ -84,39 +86,40 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
     //暂存购物车数量
     private int cartNum;
 
+    private MyToolBar myToolBar;
+
     @Override
     protected void onStart() {
         super.onStart();
 //      展示收到的两种商品数据
         Intent intent = getIntent();
+        Log.e("xxx", "数据:" + intent.getParcelableExtra(IntentUtil.GOTO_GOOD).toString());
         try {
-            goodsBeanOne = intent.getParcelableExtra(IntentUtil.SHOW_GOOD);
+            goodsBeanOne = intent.getParcelableExtra(IntentUtil.GOTO_GOOD);
             if (goodsBeanOne != null) {
                 goods = new GoodsBean(
                         goodsBeanOne.getProduct_id(),
                         1,
                         goodsBeanOne.getName(),
                         goodsBeanOne.getFigure(),
-                        goodsBeanOne.getCover_price()
-                );
-
+                        goodsBeanOne.getCover_price());
             }
         } catch (Exception e) {
             try {
-                goodsBeanTwo = intent.getParcelableExtra(IntentUtil.SHOW_GOOD);
+                goodsBeanTwo = intent.getParcelableExtra(IntentUtil.GOTO_GOOD);
                 if (goodsBeanTwo != null) {
                     goods = new GoodsBean(
                             goodsBeanTwo.getProduct_id(),
                             1,
                             goodsBeanTwo.getName(),
                             goodsBeanTwo.getFigure(),
-                            goodsBeanTwo.getCover_price()
-                    );
+                            goodsBeanTwo.getCover_price());
                 }
             } catch (Exception e2) {
-                goods = intent.getParcelableExtra(IntentUtil.SHOW_GOOD);
+                goods = intent.getParcelableExtra(IntentUtil.GOTO_GOOD);
             }
         }
+
         goodsTitle.setText(goods.getProductName());
         goodsOldPrice.setText("");
         goodsNewPrice.setText(goods.getProductPrice());
@@ -139,7 +142,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        if (AccountManager.getInstance().isLogin()){
+        if (AccountManager.getInstance().isLogin()) {
             if (v.getId() == goPayBut.getId()) {
                 //携带商品数据跳转到支付页  并结束页面
                 Intent intent = new Intent(this, PayActivity.class);
@@ -154,22 +157,22 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
                 popupWindow.showAtLocation(findViewById(R.id.goodsRel), Gravity.BOTTOM, 0, 0);
             } else if (v.getId() == collectBut.getId()) {
                 //本地sp存储收藏的商品的信息
-                Toast.makeText(this, "已加入收藏", Toast.LENGTH_SHORT).show();
+                toast(this, String.valueOf(R.string.buy_add));
             } else if (v.getId() == cartBut.getId()) {
                 //点击购物车
                 //设置选中
-                for (CheckGoodsData i:CartManager.getInstance().getChecks()){
-                    if (i.getId().equals(goods.getProductId())){
-                        i.setSelect(true);
+                for (int i = 0; i < CartManager.getInstance().getChecks().size(); i++) {
+                    if (CartManager.getInstance().getChecks().get(i).getId().equals(goods.getProductId())) {
+                        CartManager.getInstance().setCheckSelect(i, true);
                         break;
                     }
                 }
                 Intent intent = new Intent(this, ShoppCartActivity.class);
-                intent.putExtra(IntentUtil.GOODS,goods.getProductId());
+                intent.putExtra(IntentUtil.GOODS, goods.getProductId());
                 startActivity(intent);
             }
-        }else {
-            Toast.makeText(this,getResources().getString(R.string.buyLoginFirst),Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, getResources().getString(R.string.buyLoginFirst), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -238,14 +241,16 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
 
     //请求数据成功
     @Override
-    public void onRequestSuccess(int requestCode,Object data) {
-        super.onRequestSuccess(requestCode,data);
-        switch (requestCode){
+    public void onRequestSuccess(int requestCode, Object data) {
+        super.onRequestSuccess(requestCode, data);
+        switch (requestCode) {
             case ADD_GOODS:
                 if (((OkBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
                     //提示用户加入购物车完成   增加小红点
                     //只能通过再次网络请求
 //            setRed(( Integer.valueOf(redNum.getText().toString()) + 1));
+
+                    CartManager.getInstance().addCheck(true, goods.getProductId());
                     sendCartPresenter = new GetCartPresenter();
                     sendCartPresenter.attachView(GoodsActiviy.this);
                     sendCartPresenter.doHttpGetRequest(CART_GOODS);
@@ -302,14 +307,14 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         popuSure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (AccountManager.getInstance().isLogin()){
+                if (AccountManager.getInstance().isLogin()) {
                     //强制将Float转为int
                     goods.setProductNum(((int) ((float) Float.valueOf(popuNum.getText().toString()))));
                     addCartPresenter = new PostAddCartPresenter(goods);
                     addCartPresenter.attachView(GoodsActiviy.this);
                     addCartPresenter.doHttpPostJSONRequest(ADD_GOODS);
-                }else {
-                    Toast.makeText(GoodsActiviy.this,getResources().getString(R.string.buyLoginFirst),Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(GoodsActiviy.this, getResources().getString(R.string.buyLoginFirst), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -399,7 +404,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         onShopCartListener = new OnShopCartListener() {
             @Override
             public void shopCartNumChange(int num) {
-                cartNum=num;
+                cartNum = num;
             }
         };
         CartManager.getInstance().registerListener(onShopCartListener);
@@ -413,7 +418,17 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
             addCartPresenter.detachView();
         }
         CartManager.getInstance().unregister(onShopCartListener);
+        beiImage = null;
+        goodsImage = null;
+        cartBut = null;
+        collectBut = null;
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     private void setRed() {

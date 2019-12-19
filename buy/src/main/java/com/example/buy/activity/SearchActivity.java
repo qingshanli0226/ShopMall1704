@@ -112,7 +112,7 @@ public class SearchActivity extends BaseNetConnectActivity {
             public void onBind(BaseViewHolder holder, int position) {
                 holder.getTextView(R.id.itemSearchTitle,hotList.get(position).getName());
                 holder.getTextView(R.id.itemSearchBrief,hotList.get(position).getBrief());
-                holder.getTextView(R.id.itemSearchPrice,hotList.get(position).getCover_price());
+                holder.getTextView(R.id.itemSearchPrice,"¥\t"+hotList.get(position).getCover_price());
                 holder.getImageView(R.id.itemSearchImg,AppNetConfig.BASE_URl_IMAGE+hotList.get(position).getFigure());
             }});
         //result数据
@@ -144,13 +144,20 @@ public class SearchActivity extends BaseNetConnectActivity {
             childRecyclerView.setVisibility(View.VISIBLE);
             resultRecyclerView.setVisibility(View.GONE);
         }catch (Exception e){
-            GetSearchBeanTwo dateTwo = new Gson().fromJson(str, GetSearchBeanTwo.class);
-            resultList.addAll(dateTwo.getResult());
-            resultRecyclerView.getAdapter().notifyDataSetChanged();
+            try {
+                GetSearchBeanTwo dateTwo = new Gson().fromJson(str, GetSearchBeanTwo.class);
+                resultList.addAll(dateTwo.getResult());
+                resultRecyclerView.getAdapter().notifyDataSetChanged();
 
-            resultRecyclerView.setVisibility(View.VISIBLE);
-            hotRecyclerView.setVisibility(View.GONE);
-            childRecyclerView.setVisibility(View.GONE);
+                resultRecyclerView.setVisibility(View.VISIBLE);
+                hotRecyclerView.setVisibility(View.GONE);
+                childRecyclerView.setVisibility(View.GONE);
+            }catch (Exception e1){
+                toast(this,"这个数据太长了,而且拿不到bean");
+                resultRecyclerView.setVisibility(View.GONE);
+                hotRecyclerView.setVisibility(View.GONE);
+                childRecyclerView.setVisibility(View.GONE);
+            }
         }
     }
 

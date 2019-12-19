@@ -1,14 +1,14 @@
 package com.example.dimensionleague.activity
 
 import androidx.fragment.app.Fragment
-import android.graphics.Color
 import android.view.KeyEvent
 import android.widget.Toast
+import anet.channel.util.Utils.context
 
 import com.example.dimensionleague.R
+import android.graphics.Color
 import com.example.buy.ShopCartFragment
 import com.example.common.view.MyToast
-
 import com.example.dimensionleague.find.FindFragment
 import com.example.framework.manager.AccountManager
 import com.example.dimensionleague.home.HomeFragment
@@ -18,9 +18,14 @@ import kotlinx.android.synthetic.main.activity_main.*
 import com.example.framework.base.BaseNetConnectActivity
 import com.example.framework.listener.OnShopCartListener
 import com.example.buy.CartManager
+import com.example.dimensionleague.login.activity.LoginActivity
+import kotlin.system.exitProcess
 
 class MainActivity : BaseNetConnectActivity() {
-    lateinit var listener:OnShopCartListener
+
+    private lateinit var listener: OnShopCartListener
+
+    var exitTime = 0L
     override fun getRelativeLayout(): Int {
         return R.id.main_relative
     }
@@ -36,17 +41,17 @@ class MainActivity : BaseNetConnectActivity() {
         super.init()
         val bundle = intent!!.getBundleExtra("data")
         val isAutoLogin = bundle!!.getBoolean("isAutoLogin")
-        if(!isAutoLogin){
+        if (!isAutoLogin) {
             AccountManager.getInstance().logout()
-            Toast.makeText(this,"登录超时,请重新登录",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, resources.getString(R.string.timeout), Toast.LENGTH_SHORT).show()
             AccountManager.getInstance().logout()
             AccountManager.getInstance().notifyLogout()
-        }else{
+        } else {
             AccountManager.getInstance().notifyLogin()
         }
 
-        if(isNetType=="移动流量"){
-            MyToast.showToast(this,"正在使用移动流量,请注意使用!",null,Toast.LENGTH_LONG)
+        if (isNetType == getString(R.string.ascend)) {
+            MyToast.showToast(this, getString(R.string.ascend_messenger), null, Toast.LENGTH_LONG)
         }
         list.add(HomeFragment())
         list.add(TypeFragment())
@@ -54,12 +59,15 @@ class MainActivity : BaseNetConnectActivity() {
         list.add(ShopCartFragment())
         list.add(MineFragment())
     }
+
     override fun initDate() {
         super.init()
-        main_easy.selectTextColor(Color.parseColor("#d3217b"))
-            .normalTextColor(Color.parseColor("#707070"))
+
+        main_easy.selectTextColor(R.color.colorGradualPurple)
+            .normalTextColor(R.color.colorMainNormal)
             .selectIconItems(
                 intArrayOf(
+
                     R.drawable.home,
                     R.drawable.vertical_list,
                     R.drawable.find,
@@ -78,11 +86,30 @@ class MainActivity : BaseNetConnectActivity() {
             )
             .fragmentManager(supportFragmentManager)
             .fragmentList(list)
-            .titleItems(arrayOf("首页", "分类", "发现", "购物车", "我的"))
+            .titleItems(
+                arrayOf(
+                    getString(R.string.home),
+                    getString(R.string.type),
+                    getString(R.string.find),
+                    getString(R.string.shopping_cart),
+                    getString(R.string.mine)
+                )).onTabClickListener { v, position ->
+                if (position == 3) {
+                    if (!AccountManager.getInstance().isLogin){
+                        toast(this,"请先登录")
+                        startActivity(LoginActivity::class.java,null)
+                        return@onTabClickListener true
+                    }else{
+                        return@onTabClickListener false
+                    }
+                }
+                return@onTabClickListener false
+
+            }
             .build()
         //注册监听,监听购物车数量
-        listener= OnShopCartListener { num->
-            main_easy.setMsgPointCount(3,num)
+        listener = OnShopCartListener { num ->
+            main_easy.setMsgPointCount(3, num)
         }
         CartManager.getInstance().registerListener(listener)
     }
@@ -95,11 +122,30 @@ class MainActivity : BaseNetConnectActivity() {
     //调用moveTaskToBack可以让程序退出到后台运行，false表示只对主界面生效，true表示任何界面都可以生效。
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            moveTaskToBack(false)
+            exit()
             return true
         }
         return super.onKeyDown(keyCode, event)
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        moveTaskToBack(false)
+
+    }
+
+
+    fun exit() {
+        if (System.currentTimeMillis() - exitTime > 2000) {
+            Toast.makeText(
+                applicationContext, "再按一次退出程序",
+                Toast.LENGTH_SHORT
+            ).show()
+            exitTime = System.currentTimeMillis()
+        } else {
+            finish()
+            exitProcess(0)
+        }
+    }
 }
 

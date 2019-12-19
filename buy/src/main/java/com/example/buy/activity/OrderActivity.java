@@ -1,7 +1,10 @@
 package com.example.buy.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,14 +14,14 @@ import com.example.buy.R;
 import com.example.buy.databeans.GetOrderBean;
 import com.example.buy.presenter.GetPayOrderPresenter;
 import com.example.buy.presenter.GetWaitOrderPresenter;
-import com.example.common.IntentUtil;
+import com.example.common.utils.IntentUtil;
+import com.example.common.code.Constant;
+import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.base.BaseRecyclerAdapter;
 import com.example.framework.base.BaseViewHolder;
-import com.example.framework.listener.OnOrderListener;
 import com.example.framework.manager.OrderManager;
 import com.example.framework.port.IPresenter;
-import com.example.net.AppNetConfig;
 
 import java.util.ArrayList;
 
@@ -26,10 +29,6 @@ import java.util.ArrayList;
  * 订单详情页
  */
 public class OrderActivity extends BaseNetConnectActivity {
-
-    public final static String ALL = "全部订单";
-    public final static String WAIT_PAY = "待支付订单";
-    public final static String WAIT_SEND = "待发货订单";
 
     //网络请求码 全部  待支付 待发货 第二次
     public final static int CODE_ALL = 200;
@@ -39,6 +38,7 @@ public class OrderActivity extends BaseNetConnectActivity {
 
     private RecyclerView recyclerView;
     private TextView showOrderType;
+    private MyToolBar myToolBar;
 
     ArrayList<GetOrderBean> list = new ArrayList<>();
 
@@ -59,8 +59,12 @@ public class OrderActivity extends BaseNetConnectActivity {
     public void init() {
         super.init();
         recyclerView=findViewById(R.id.recyclerView);
-        showOrderType=findViewById(R.id.showOrderType);
 
+        myToolBar = findViewById(R.id.myToolBar);
+        myToolBar.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
+        myToolBar.init(Constant.OTHER_STYLE);
+        myToolBar.getOther_back().setImageResource(R.drawable.back3);
+        myToolBar.getOther_title().setTextColor(Color.WHITE);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new BaseRecyclerAdapter<GetOrderBean>(R.layout.item_order, list) {
             @Override
@@ -83,6 +87,12 @@ public class OrderActivity extends BaseNetConnectActivity {
 
         payOrder.attachView(this);
         watiOrder.attachView(this);
+        myToolBar.getOther_back().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishActivity();
+            }
+        });
     }
 
     @Override
@@ -90,17 +100,18 @@ public class OrderActivity extends BaseNetConnectActivity {
         super.onStart();
         //获取到要展示的订单的类型
         Intent intent = getIntent();
-        String type = intent.getStringExtra(IntentUtil.ORDER_SHOW);
-        showOrderType.setText(type);
+        Bundle data = intent.getBundleExtra("data");
+        String type = data.getString(IntentUtil.ORDER_SHOW);
+        myToolBar.getOther_title().setText(type);
         switch (type) {
-            case ALL:
+            case Constant.ALL_ORDER:
                 //先请求待支付,然后请求待发货
                 payOrder.doHttpGetRequest(CODE_ALL);
                 break;
-            case WAIT_PAY:
+            case Constant.WAIT_PAY:
                 payOrder.doHttpGetRequest(CODE_PAY);
                 break;
-            case WAIT_SEND:
+            case Constant.WAIT_SEND:
                 watiOrder.doHttpGetRequest(CODE_WAIT);
                 break;
         }

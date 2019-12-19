@@ -46,5 +46,5 @@ dependencies {
     api 'org.greenrobot:greendao:3.2.2' // 添加库
     api 'com.github.recruit-lifestyle:WaveSwipeRefreshLayout:1.6'
     api 'tyrant:heartlayout:1.0.1'
-//
+
 }

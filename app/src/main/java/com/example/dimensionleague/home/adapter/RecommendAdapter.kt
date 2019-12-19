@@ -1,15 +1,13 @@
 package com.example.dimensionleague.home.adapter
 
 import android.content.Intent
-import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.bumptech.glide.Glide
 import com.example.buy.activity.GoodsActiviy
-import com.example.common.IntentUtil
+import com.example.common.utils.IntentUtil
 import com.example.dimensionleague.R
 import com.example.common.HomeBean
 import com.example.net.AppNetConfig
@@ -34,7 +32,7 @@ class RecommendAdapter(
         //跳转
         views.setOnClickListener { v->
             val intent = Intent(views.context, GoodsActiviy::class.java)
-            intent.putExtra(IntentUtil.SHOW_GOOD, recommendInfo!![position])
+            intent.putExtra(IntentUtil.GOTO_GOOD, recommendInfo!![position])
             views.context.startActivity(intent)
         }
         return views

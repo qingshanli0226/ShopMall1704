@@ -4,7 +4,7 @@ import android.content.Intent;
 
 import com.example.buy.R;
 import com.example.buy.ShopCartFragment;
-import com.example.common.IntentUtil;
+import com.example.common.utils.IntentUtil;
 import com.example.framework.base.BaseNetConnectActivity;
 
 public class ShoppCartActivity extends BaseNetConnectActivity {
@@ -19,5 +19,12 @@ public class ShoppCartActivity extends BaseNetConnectActivity {
     @Override
     public int getLayoutId() {
         return R.layout.activity_shoppcart;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        fragment=null;
+        finish();
     }
 }

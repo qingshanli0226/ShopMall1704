@@ -1,7 +1,5 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -24,6 +22,9 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    dataBinding {
+        enabled true
     }
 }
 
@@ -53,6 +54,7 @@ dependencies {
     implementation 'com.umeng.umsdk:utdid:1.1.5.3'
     implementation 'me.thewyp:avatar:1.0.4'
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
+    implementation 'cn.yipianfengye.android:zxing-library:2.2'
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'

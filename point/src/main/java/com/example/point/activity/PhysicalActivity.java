@@ -52,10 +52,8 @@ public class PhysicalActivity extends BaseActivity {
     public void initDate() {
         physical_tool.init(Constant.OTHER_STYLE);
         physical_tool.getOther_title().setText("锻炼计划");
-        Drawable drawable = getResources().getDrawable(R.drawable.prical);
-        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+
         physical_tool.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
-        physical_tool.getOther_title().setCompoundDrawables(null, null, drawable, null);
         //返回计步页
         physical_tool.getOther_back().setOnClickListener(new View.OnClickListener() {
             @Override

@@ -31,7 +31,7 @@ import com.example.buy.presenter.PostPayResultPresenter;
 import com.example.buy.presenter.PostUpDateMoneyPresenter;
 import com.example.buy.presenter.PostUpDatePointPresenter;
 import com.example.buy.presenter.PostVerifyGoodsPresenter;
-import com.example.common.IntentUtil;
+import com.example.common.utils.IntentUtil;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.base.BaseRecyclerAdapter;
 import com.example.framework.base.BaseViewHolder;
@@ -66,6 +66,7 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
     private TextView payMoney;
     private TextView subtractIntegra;
     private CheckBox checkInegra;
+    private TextView userPoint;
 
     private ArrayList<GoodsBean> list = new ArrayList<>();
     //订单 支付确认  库存  积分 现金
@@ -82,22 +83,19 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.payBut) {
-            final String orderInfo = (getPayOrderBean.getResult().getOrderInfo());   // 订单信息
-
-            // 必须异步调用
-            new Thread(new Runnable() {
-
-                @Override
-                public void run() {
-                    PayTask alipay = new PayTask(PayActivity.this);
-                    Map<String, String> result = alipay.payV2(orderInfo, true);
-
-                    Message msg = new Message();
-                    msg.what = PAY;
-                    msg.obj = result;
-                    handler.sendMessage(msg);
-                }
-            }).start();
+            //下订单
+            List<SendOrdersBean.BodyBean> bodyBeans = new ArrayList<>();
+            for (GoodsBean i : list) {
+                bodyBeans.add(new SendOrdersBean.BodyBean(i.getProductName(), i.getProductId()));
+            }
+            //直接发起订单
+            SendOrdersBean sendOrdersBean = new SendOrdersBean(
+                    "购买",
+                    getMoney(checkInegra.isChecked()),
+                    bodyBeans);
+            sendOrederPresenter = new PostOrderPresenter(sendOrdersBean);
+            sendOrederPresenter.attachView(this);
+            sendOrederPresenter.doHttpPostJSONRequest(CODE_ORDER);
         }
     }
 
@@ -110,11 +108,13 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
         recyclerView = findViewById(R.id.recyclerView);
         checkInegra = findViewById(R.id.checkInegra);
         subtractIntegra = findViewById(R.id.subtractIntegra);
-        //http://49.233.93.155:8080  updateMoney  money=1333
+        userPoint = findViewById(R.id.userPoint);
+
         payBut.setOnClickListener(this);
 
         //设置RecyclerView
-        BaseRecyclerAdapter<GoodsBean> adapter = new BaseRecyclerAdapter<GoodsBean>(R.layout.item_pay, list) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(new BaseRecyclerAdapter<GoodsBean>(R.layout.item_pay, list) {
             @Override
             public void onBind(BaseViewHolder holder, final int position) {
                 holder.getImageView(R.id.itemPayImg, AppNetConfig.BASE_URl_IMAGE + list.get(position).getUrl());
@@ -123,9 +123,7 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
                 holder.getTextView(R.id.itemPayPrice, list.get(position).getProductPrice());
                 holder.getTextView(R.id.itemOneSum, Float.valueOf(list.get(position).getProductPrice()) * list.get(position).getProductNum() + "");
             }
-        };
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(adapter);
+        });
         //减免状态
         checkInegra.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -134,45 +132,26 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
             }
         });
 
-
-        Intent intent = getIntent();
-        list.addAll(intent.getParcelableArrayListExtra(IntentUtil.ORDERS));
-        //设置数据
-        recyclerView.getAdapter().notifyDataSetChanged();
-
-        orderMoney.setText("原价: " + getMoney(false));
-        payMoney.setText(getMoney(false));
-        //库存检测
-        verifyPresenter = new PostVerifyGoodsPresenter(list);
-        verifyPresenter.attachView(this);
-        verifyPresenter.doHttpPostJSONRequest(COED_VERIFY);
-        //下订单
-        List<SendOrdersBean.BodyBean> bodyBeans = new ArrayList<>();
-        for (GoodsBean i : list) {
-            bodyBeans.add(new SendOrdersBean.BodyBean(i.getProductName(), i.getProductId()));
-        }
-        //直接发起订单
-        SendOrdersBean sendOrdersBean = new SendOrdersBean(
-                "购买",
-                getMoney(checkInegra.isChecked()),
-                bodyBeans
-        );
-        sendOrederPresenter = new PostOrderPresenter(sendOrdersBean);
-        sendOrederPresenter.attachView(this);
-        sendOrederPresenter.doHttpPostJSONRequest(CODE_ORDER);
-
-
     }
 
     @Override
     public void initDate() {
         //沙箱接入
         EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
-        if (AccountManager.getInstance().user.getPoint() == null) {
-            subtractIntegra.setText("0");
-        } else {
-            subtractIntegra.setText(AccountManager.getInstance().user.getPoint() + "");
-        }
+
+        Intent intent = getIntent();
+        list.addAll(intent.getParcelableArrayListExtra(IntentUtil.ORDERS));
+        //设置数据
+        recyclerView.getAdapter().notifyDataSetChanged();
+        orderMoney.setText("原价: " + getMoney(false));
+        payMoney.setText(getMoney(false));
+        //库存检测
+        verifyPresenter = new PostVerifyGoodsPresenter(list);
+        verifyPresenter.attachView(this);
+        verifyPresenter.doHttpPostJSONRequest(COED_VERIFY);
+
+        setPoint();
+
     }
 
     @Override
@@ -183,14 +162,33 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
                 getPayOrderBean = (GetPayOrderBean) data;
                 if (getPayOrderBean.getCode().equals(AppNetConfig.CODE_OK)) {
                     //下订单成功
+                    final String orderInfo = (getPayOrderBean.getResult().getOrderInfo());   // 订单信息
 
+                    // 必须异步调用
+                    new Thread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            PayTask alipay = new PayTask(PayActivity.this);
+                            Map<String, String> result = alipay.payV2(orderInfo, true);
+
+                            Message msg = new Message();
+                            msg.what = PAY;
+                            msg.obj = result;
+                            handler.sendMessage(msg);
+                        }
+                    }).start();
                 }
                 break;
             case CODE_PAY_SURE:
                 OkBean okBean = (OkBean) data;
                 if (okBean.getCode().equals(AppNetConfig.CODE_OK)) {
-                    //更新现金
-                    moneyPresenter = new PostUpDateMoneyPresenter(getMoney(checkInegra.isChecked()));
+                    //发送现金
+                    if (AccountManager.getInstance().user.getMoney() == null) {
+                        moneyPresenter = new PostUpDateMoneyPresenter("0");
+                    } else {
+                        moneyPresenter = new PostUpDateMoneyPresenter(getMoney(checkInegra.isChecked()));
+                    }
                     moneyPresenter.attachView(this);
                     moneyPresenter.doHttpPostRequest(COED_MONEY);
                 }
@@ -202,19 +200,26 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
                 break;
             case COED_MONEY:
                 if (((OkBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
-                    pointPresenter = new PostUpDatePointPresenter("0");
-                    pointPresenter.attachView(this);
-                    pointPresenter.doHttpPostRequest(COED_POINT);
+                    //发送积分
+                    if (checkInegra.isChecked()) {
+                        int sum = Integer.valueOf(userPoint.getText().toString())-Integer.valueOf(getMoney(false));
+                        if (sum < 0) {
+                            sum = 0;
+                        }
+                        pointPresenter = new PostUpDatePointPresenter(sum + "");
+                        pointPresenter.attachView(this);
+                        pointPresenter.doHttpPostRequest(COED_POINT);
+                    }
                 }
                 break;
             case COED_POINT:
                 if (((OkBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
-                    Log.e("xxxx", "用户信息:" + AccountManager.getInstance().user.toString());
                     finishActivity();
                 }
                 break;
         }
     }
+
     //获取总价
     private String getMoney(boolean pointStatus) {
         int sum = 0;
@@ -223,8 +228,8 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
         }
         if (pointStatus) {
             sum -= Integer.valueOf(subtractIntegra.getText().toString());
-            if (sum<0){
-                sum=0;
+            if (sum < 0) {
+                sum = 0;
             }
         }
         return sum + "";
@@ -286,6 +291,19 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
         for (int i = 0; i < iPresenter.length; i++) {
             if (iPresenter[i] != null) {
                 iPresenter[i].detachView();
+            }
+        }
+    }
+
+    private void setPoint() {
+        if (AccountManager.getInstance().user.getPoint() == null) {
+            subtractIntegra.setText("0");
+            userPoint.setText("0");
+        } else {
+            userPoint.setText(AccountManager.getInstance().user.getPoint() + "");
+            subtractIntegra.setText(AccountManager.getInstance().user.getPoint() + "");
+            if (Integer.valueOf((String) AccountManager.getInstance().user.getPoint()) > Integer.valueOf(getMoney(false))) {
+                subtractIntegra.setText(getMoney(false));
             }
         }
     }

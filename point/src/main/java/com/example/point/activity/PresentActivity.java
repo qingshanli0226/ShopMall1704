@@ -33,8 +33,6 @@ public class PresentActivity extends BaseNetConnectActivity {
         present_tool = (MyToolBar) findViewById(R.id.present_tool);
         present_tool.init(Constant.OTHER_STYLE);
         present_tool.getOther_title().setText("礼品兑换");
-        Drawable drawable = getResources().getDrawable(R.drawable.prent);
-        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         present_tool.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
         //返回积分页
         present_tool.getOther_back().setOnClickListener(new View.OnClickListener() {
@@ -43,7 +41,6 @@ public class PresentActivity extends BaseNetConnectActivity {
                 finish();
             }
         });
-        present_tool.getOther_title().setCompoundDrawables(null,null,drawable,null);
         present_tool.getOther_back().setImageResource(R.drawable.back3);
         present_re.setLayoutManager(new GridLayoutManager(this, 2));
     }

@@ -2,8 +2,11 @@ package com.example.dimensionleague.setting;
 
 public class SettingBean {
     private String Title;
-    private String massage;
+    private String massage="";
 
+    public SettingBean(String title) {
+        Title = title;
+    }
 
     public String getTitle() {
         return Title;

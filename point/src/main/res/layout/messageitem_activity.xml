@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.example.common.view.MyToolBar
+        android:id="@+id/messageitem_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></com.example.common.view.MyToolBar>
+    <LinearLayout
+        android:windowSoftInputMode="adjustPan"
+        android:id="@+id/messageitem_line"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"> <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/messageitem_re"
+        android:layout_width="match_parent"
+        android:layout_height="595dp"></androidx.recyclerview.widget.RecyclerView>
+        <View
+            android:background="@android:color/darker_gray"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"></View>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/messageitem_record"
+                android:src="@mipmap/ic_launcher_round"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"></ImageView>
+
+            <EditText
+                android:id="@+id/messageitem_edit"
+                android:layout_width="274dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_toRightOf="@+id/messageitem_record"
+                android:background="@drawable/edit_background"></EditText>
+            <ImageView
+                android:id="@+id/messageitem_other"
+                android:src="@mipmap/ic_launcher_round"
+                android:layout_width="wrap_content"
+                android:layout_toRightOf="@+id/messageitem_edit"
+                android:layout_height="match_parent"></ImageView>
+        </RelativeLayout></LinearLayout>
+</LinearLayout>

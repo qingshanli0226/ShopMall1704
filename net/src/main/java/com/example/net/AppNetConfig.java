@@ -88,7 +88,7 @@ public class AppNetConfig {
     //上传头像 POST 请求头加token   参数:MultipartFile  file
     /**
      *  @Multipart
-     *     @POST("upload")
+     *  @POST("upload")
      *     Observable<ResEntity < String>> upload(@Part MultipartBody.Part file);
      * */
     public static final String UPLOAD="upload";
