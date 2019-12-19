@@ -45,8 +45,8 @@
             tools:targetApi="n" /> <!-- 登录 -->
         <activity
             android:name=".login.LoginActivity"
-            android:launchMode="singleTask"
             android:supportsPictureInPicture="true"
+            android:launchMode="singleTask"
             tools:ignore="UnusedAttribute"
             tools:targetApi="n" /> <!-- 注册 -->
         <activity

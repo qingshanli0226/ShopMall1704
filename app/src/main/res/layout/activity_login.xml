@@ -26,7 +26,7 @@
             android:layout_weight="1"
             android:gravity="right|center_vertical"
             android:paddingRight="8dp"
-            android:text="@string/loginUserTextVIewText"
+            android:text="@string/login_user_name"
             android:textColor="@color/darkturquoise"
             android:textSize="@dimen/loginUserTextViewSize" />
 
@@ -58,7 +58,7 @@
             android:layout_weight="1"
             android:gravity="right|center_vertical"
             android:paddingRight="8dp"
-            android:text="密码:"
+            android:text="@string/login_user_pwd"
             android:textColor="@color/darkturquoise"
             android:textSize="@dimen/loginPassWordTextviewTextSize" />
 
@@ -89,9 +89,11 @@
             android:layout_marginRight="@dimen/loginLoginSigninTextViewMarginRight"
             android:layout_weight="1"
             android:gravity="right|center"
-            android:text="@string/loginLoginSigninTextViewText"
+            android:text="@string/login_user_goRegister"
             android:textColor="@color/darkturquoise"
-            android:textSize="@dimen/loginLoginSigninTextViewTextSize" />
+            android:textSize="@dimen/loginLoginSigninTextViewTextSize"
+            android:background="?android:selectableItemBackgroundBorderless"
+       />
 
     </LinearLayout>
 

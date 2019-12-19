@@ -18,7 +18,7 @@
             style="@style/DefaultImage"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/dp_10"
-            android:src="@drawable/back_icon_white"
+            android:src="@drawable/back_icon_white" 
             android:background="?android:selectableItemBackgroundBorderless"/>
 
         <com.example.commen.view.SearchEditText

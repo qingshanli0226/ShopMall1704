@@ -53,7 +53,7 @@ public class ShoppingManager {
         getData();
     }
 
-    private void getData() {
+    public void getData() {
         //进行网络请求
         RetrofitCreator.getNetApiService().getData(new HashMap<String, String>(), AppNetConfig.GET_SHORTCART_PRODUCTS_URL, new HashMap<String, String>())
                 .subscribeOn(Schedulers.io())
@@ -76,6 +76,8 @@ public class ShoppingManager {
                                 List<ShoppingCartBean> data = listResEntity.getResult();
                                 result.clear();
                                 result.addAll(data);
+                                notifyUpdatedShoppingData();
+                                sendShoppingNumChangeListener();
                             } else {
                                 Toast.makeText(mContext, ErrorUtil.dataProcessing(code).getErrorMessage(), Toast.LENGTH_SHORT).show();
                             }
@@ -125,6 +127,18 @@ public class ShoppingManager {
             if (result.get(i).isSelect()) {
                 result.remove(i);
             }
+        }
+        //商品数量改变
+        sendShoppingNumChangeListener();
+        notifyUpdatedShoppingData();
+    }
+
+    /**
+     * 清空商品数据
+     */
+    public void removeShoppingCartAllData() {
+        if (result != null) {
+            result.clear();
         }
         //商品数量改变
         sendShoppingNumChangeListener();

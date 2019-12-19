@@ -21,6 +21,7 @@ import com.shaomall.framework.base.BaseMVPFragment;
 import com.shaomall.framework.base.presenter.IBasePresenter;
 import com.shaomall.framework.bean.LoginBean;
 import com.shaomall.framework.manager.PointManager;
+import com.shaomall.framework.manager.ShoppingManager;
 import com.shaomall.framework.manager.UserInfoManager;
 
 public class MineFragment extends BaseMVPFragment<String> implements View.OnClickListener, UserInfoManager.UserInfoStatusListener, PointManager.CallbackIntegralListener {
@@ -260,6 +261,8 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         if (requestCode == AppNetConfig.REQUEST_CODE_LOGOUT) {
             UserInfoManager.getInstance().unLogout();
             toast(message + ": " + data, false);
+            //清空商品数据
+            ShoppingManager.getInstance().removeShoppingCartAllData();
         }
         if (requestCode == AppNetConfig.REQUEST_CODE_UPLOAD_POINT) {
             mTvPoint.setText("积分: " + data);

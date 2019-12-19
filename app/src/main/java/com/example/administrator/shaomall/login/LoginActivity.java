@@ -17,6 +17,7 @@ import com.example.commen.util.ShopMailError;
 import com.shaomall.framework.base.BaseMVPActivity;
 import com.shaomall.framework.bean.LoginBean;
 import com.shaomall.framework.manager.ActivityInstanceManager;
+import com.shaomall.framework.manager.ShoppingManager;
 import com.shaomall.framework.manager.UserInfoManager;
 
 public class LoginActivity extends BaseMVPActivity<LoginBean> {
@@ -111,7 +112,7 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
         super.onBackPressed();
         ActivityInstanceManager.removeActivity(this);
 
-        toClass(MainActivity.class, 0); //返回首页
+//        toClass(MainActivity.class, 0); //返回首页
     }
 
     @Override
@@ -120,6 +121,8 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
         Toast.makeText(mActivity, "" + message, Toast.LENGTH_SHORT).show();
         UserInfoManager instance = UserInfoManager.getInstance();
         instance.saveUserInfo(data);
+        //加载用户的购物车数据
+        ShoppingManager.getInstance().getData();
 
         setNewActivity();
     }
@@ -133,7 +136,7 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
             int index = bundle.getInt("index");
             toClass(MainActivity.class, index);
         }else {
-            toClass(MainActivity.class);
+            ActivityInstanceManager.removeActivity(this);
         }
     }
 }

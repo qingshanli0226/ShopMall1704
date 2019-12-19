@@ -1,20 +1,25 @@
 package com.example.administrator.shaomall.activity;
 
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
+import android.widget.TextView;
 
+import com.example.administrator.shaomall.app.ShaoHuaApplication;
 import com.example.administrator.shaomall.cache.CacheManager;
 import com.example.administrator.shaomall.R;
 import com.shaomall.framework.bean.HomeBean;
 import com.shaomall.framework.base.BaseActivity;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class WelcomeActivity extends BaseActivity {
+public class WelcomeActivity extends BaseActivity implements CacheManager.IHomeReceivedListener {
     private android.widget.RelativeLayout mWelcomeBackground;
     private android.widget.ImageView mIvWelcomeIcon;
     private android.widget.TextView mTvWelcomeVersion;
+    private TextView timeTv;
     private volatile boolean isData = false;
     private int count = 0;
 
@@ -25,12 +30,8 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-//        aCache = ACache.get(this);
-////        iHomePresenter = new HomePresenter();
-//        iHomePresenter.attachView(this);
-//        iHomePresenter.doGetHttpRequest(AppNetConfig.HOME_DATA_CODE);
-        CacheManager.getInstance().init(this);
-
+        CacheManager.getInstance().init(ShaoHuaApplication.context);
+        timeTv = findViewById(R.id.welcome_time_tv);
         mWelcomeBackground = findViewById(R.id.welcome_background);
         mIvWelcomeIcon = findViewById(R.id.iv_welcome_icon);
         mTvWelcomeVersion = findViewById(R.id.tv_welcome_version);
@@ -43,27 +44,23 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        CacheManager.getInstance().registerListener(new CacheManager.IHomeReceivedListener() {
+        CacheManager.getInstance().registerListener(this);
+
+        timeTv.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onHomeDataReceived(HomeBean.ResultBean homeBean) {
-                isData=true;
-//                toClass(RemindActivity.class);
+            public void onClick(View v) {
+                isData = true;
             }
         });
         TimeThread();
-
-
-//        if (CacheManager.getInstance().getHomeBean()!=null){
-//            isData=true;
-//        }
     }
-
-
 
     @Override
     public void flagFullScreen() {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
+
+    private int time = 4;
 
     private void TimeThread() {
         //使用时间戳控制跳转主页面并销毁当前页面
@@ -72,6 +69,17 @@ public class WelcomeActivity extends BaseActivity {
             @Override
             public void run() {
                 count++;
+                time--;
+                runOnUiThread(new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (time <= 0) {
+                            timeTv.setText("跳过");
+                            timeTv.setClickable(true);
+                        }else
+                        timeTv.setText("" + time);
+                    }
+                });
                 if (count >= 4 && isData) {
                     toClass(MainActivity.class);
                     finish();
@@ -81,12 +89,16 @@ public class WelcomeActivity extends BaseActivity {
         }, 0, 1000);
     }
 
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == KeyEvent.KEYCODE_BACK){
-//         return false;
-//        }
-//        else
-//        return super.onKeyDown(keyCode, event);
-//    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        CacheManager.getInstance().unregisterListener(this);
+    }
+
+    @Override
+    public void onHomeDataReceived(HomeBean.ResultBean homeBean) {
+        isData = true;
+
+    }
 }
+    

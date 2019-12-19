@@ -6,6 +6,7 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.PointF
 import android.view.Gravity
+import android.view.View
 import android.webkit.WebViewClient
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -26,8 +27,7 @@ import com.shaomall.framework.manager.UserInfoManager
 import kotlinx.android.synthetic.main.activity_commodity.*
 import q.rorbin.badgeview.QBadgeView
 
-class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNumChangeListener {
-
+class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNumChangeListener, View.OnClickListener {
 
     private var iBasePresenter: IBasePresenter<String>? = null
     private lateinit var productPic: String
@@ -81,40 +81,17 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
         val settings = mWbGoodInfoMore.settings
         settings.javaScriptEnabled = true //允许使用js
 
-        //点击进入购物车
-        mTvFGoodInfoCart.setOnClickListener {
-            toClass(MainActivity::class.java, 3)
-        }
-
+        //点击进入购物车监听
+        mTvFGoodInfoCart.setOnClickListener(this)
 
         //点击加入购物车
-        mBtnGoodInfoAddcart.setOnClickListener {
-            if (!UserInfoManager.getInstance().isLogin) {
-                toast("请登录", false)
-                toClass(LoginActivity::class.java)
-            } else {
-                if (iBasePresenter == null) {
-                    iBasePresenter = AddCartPresenter()
-                    iBasePresenter!!.attachView(this)
-                }
+        mBtnGoodInfoAddcart.setOnClickListener(this)
 
+        //点击了收藏
+        mTvGoodInfoCollection.setOnClickListener(this)
 
-                //设置请求参数
-                val objects = JSONObject()
-                objects["productId"] = productId
-                objects["productNum"] = productNum
-                objects["productName"] = productName
-                objects["productPrice"] = productPrice
-                objects["url"] = productPic
-                (iBasePresenter as AddCartPresenter).setJsonObject(objects)
-
-
-                //将商品添加进入购物车
-                iBasePresenter!!.doJsonPostHttpRequest()
-                //给添加购物车设置动画, 贝瑟尔曲线
-                setBezierCurveAnimation() //设置贝塞尔曲线动画
-            }
-        }
+        //点击了联系客服
+        mTvGoodInfoCallcenter.setOnClickListener(this)
 
 
         //设置小红点
@@ -128,6 +105,53 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
         //购物车商品数量更新监听
         ShoppingManager.getInstance().registerShoppingNumChangeListener(this)
     }
+
+
+    /**
+     * 点击事件监听处理
+     */
+    override fun onClick(v: View?) {
+        if (!UserInfoManager.getInstance().isLogin) {
+            toast("请先登录", false)
+            toClass(LoginActivity::class.java)
+            return
+        }
+
+        if (v != null) {
+            when (v.id) {
+                R.id.mTvFGoodInfoCart -> { //点击进入购物车
+                    toClass(MainActivity::class.java, 3)
+                }
+
+                R.id.mBtnGoodInfoAddcart -> { //点击加入购物车
+                    if (iBasePresenter == null) {
+                        iBasePresenter = AddCartPresenter()
+                        iBasePresenter!!.attachView(this)
+                    }
+                    //设置请求参数
+                    val objects = JSONObject()
+                    objects["productId"] = productId
+                    objects["productNum"] = productNum
+                    objects["productName"] = productName
+                    objects["productPrice"] = productPrice
+                    objects["url"] = productPic
+                    (iBasePresenter as AddCartPresenter).setJsonObject(objects)
+
+                    //给添加购物车设置动画, 贝瑟尔曲线
+                    setBezierCurveAnimation() //设置贝塞尔曲线动画
+                }
+
+                R.id.mTvGoodInfoCollection -> { //收藏
+                    toast("收藏", false)
+                }
+
+                R.id.mTvGoodInfoCallcenter -> { //联系客服
+                    toast("联系客服", false)
+                }
+            }
+        }
+    }
+
 
     /**
      * 商品数量更新监听
@@ -196,10 +220,12 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
         goInAnim.addListener(object : Animator.AnimatorListener {
             override fun onAnimationRepeat(animation: Animator?) {
 
-
             }
 
             override fun onAnimationEnd(animation: Animator?) {
+                //将商品添加进入购物车 进行网络请求
+                iBasePresenter!!.doJsonPostHttpRequest()
+
                 // 把移动的图片imageview从父布局里移除
                 rl.removeView(goods)
             }
@@ -209,7 +235,6 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
             }
 
             override fun onAnimationStart(animation: Animator?) {
-
             }
         })
     }
