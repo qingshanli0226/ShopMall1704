@@ -391,6 +391,11 @@ public class ShopCartFragment extends BaseNetConnectFragment{
           * 每选择一个判断是否全部选中
           *  有一个为false  全选状态为false  取消全选
          **/
+         if (list.isEmpty()){
+             checkAll.setEnabled(false);
+         }else {
+             checkAll.setEnabled(true);
+         }
         checkStatus = true;
         for (CheckGoodsData i : CartManager.getInstance().getChecks()) {
             if (!i.isSelect()) {
