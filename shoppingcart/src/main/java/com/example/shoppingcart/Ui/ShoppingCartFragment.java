@@ -153,7 +153,7 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
             }
         });
 
-        //TODO 上传
+        //TODO 上传数量
         rvAdp.setItemNumCallBack(new RvAdp.ItemNumCallBack() {
             @Override
             public void onItemNumCallBack(int i, int num) {
