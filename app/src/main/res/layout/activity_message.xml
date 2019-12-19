@@ -4,16 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
         <include layout="@layout/title_common"/>
-<com.example.administrator.shaomall.MyScrollView
-    android:layout_marginTop="5dp"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+
                 <TextView
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
@@ -30,27 +21,10 @@
                     android:background="@color/colorWhite"
                     android:id="@+id/message_lv"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    />
-
-                <TextView
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/message_lv_notread"
-                    android:text="已读消息"
-                    android:paddingLeft="10dp"
-                    android:textColor="@color/colorDiscount"
-                    android:gravity="center_vertical"
-                    android:background="@color/colorWhite"
                     />
-                <ListView
-                    android:background="@color/colorWhite"
-                    android:id="@+id/message_lv_isread"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    />
-        </LinearLayout>
 
-</com.example.administrator.shaomall.MyScrollView>
+
+
+
 </LinearLayout>
