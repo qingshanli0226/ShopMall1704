@@ -77,6 +77,6 @@ public class JGReceiver extends JPushMessageReceiver {
         String messageId = customMessage.messageId;
         String message = customMessage.message;
         MessageManager.getInstance(context).insertData(new MessageBean(messageId,message,"no"));
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "您有新的消息请注意查收", Toast.LENGTH_SHORT).show();
     }
 }

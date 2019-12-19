@@ -6,7 +6,8 @@
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 写SD卡权限: -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 读SD卡权限: -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 读取联系人的权限： -->
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />com.example.administrator.shaomall
+    com.example.administrator.shaoma
 
     <application
         android:name=".app.ShaoHuaApplication"
