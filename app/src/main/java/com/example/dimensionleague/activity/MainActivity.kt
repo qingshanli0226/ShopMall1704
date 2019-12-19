@@ -39,7 +39,6 @@ class MainActivity : BaseNetConnectActivity() {
         if(!isAutoLogin){
             AccountManager.getInstance().logout()
             Toast.makeText(this,"登录超时,请重新登录",Toast.LENGTH_SHORT).show()
-            AccountManager.getInstance().logout()
             AccountManager.getInstance().notifyLogout()
         }else{
             AccountManager.getInstance().notifyLogin()
@@ -60,7 +59,6 @@ class MainActivity : BaseNetConnectActivity() {
             .normalTextColor(Color.parseColor("#707070"))
             .selectIconItems(
                 intArrayOf(
-
                     R.drawable.home,
                     R.drawable.vertical_list,
                     R.drawable.find,
