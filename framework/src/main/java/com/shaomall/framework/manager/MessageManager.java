@@ -49,7 +49,18 @@ public class MessageManager {
         db.execSQL(sql);
     }
 
-
+public List<MessageBean> selectAll(){
+    Cursor usermessage = db.query("usermessage", null, null, null, null, null, null);
+    ArrayList<MessageBean> messages = new ArrayList<>();
+    while (usermessage.moveToNext())
+    {
+        String messageId = usermessage.getString(0);
+        String message = usermessage.getString(1);
+        String isRead = usermessage.getString(2);
+        messages.add(new MessageBean(messageId, message, isRead));
+    }
+    return messages;
+}
     public List<MessageBean> qurayIsReadData() {
         Cursor cursor = db.query("usermessage", null, "isRead = ?", new String[]{"yes"}, null, null, null);
         List<MessageBean> messages = new ArrayList<>();

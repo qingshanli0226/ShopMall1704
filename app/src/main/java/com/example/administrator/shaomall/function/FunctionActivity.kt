@@ -20,6 +20,8 @@ class FunctionActivity : BaseMVPActivity<FindForBean>() {
     override fun initView() {
         bundle = intent.extras
 
+
+
         //更新标题
         val stringExtra = bundle!!.getString("title")
         if (stringExtra != null) {

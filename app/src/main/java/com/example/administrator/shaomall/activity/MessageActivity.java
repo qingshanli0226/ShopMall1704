@@ -6,11 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.app.ShaoHuaApplication;
-import com.example.administrator.shaomall.message.IsReadAdapter;
 import com.shaomall.framework.base.BaseActivity;
 import com.shaomall.framework.bean.MessageBean;
 import com.shaomall.framework.manager.MessageManager;
@@ -26,21 +26,18 @@ public class MessageActivity extends BaseActivity implements MessageManager.Mess
     @Override
     public void getMessage(MessageBean messageBean, int messageNum) {
         Log.i("LWW", "getMessage: " + messageBean.getMessage());
-        notReadMessages.add(0, messageBean);
-        notReadAdapter.notifyDataSetChanged();
+        messages.add(0, messageBean);
+        messageAdapter.notifyDataSetChanged();
     }
 
-    private NotReadAdapter notReadAdapter;
-    private IsReadAdapter isReadAdapter;
+    private MessageAdapter messageAdapter;
     private android.widget.ImageView mTitleScanning;
     private android.widget.ImageView mTitleBlack;
     private android.widget.RelativeLayout mTitleSearch;
     private android.widget.ImageView mTitleCamera;
     private android.widget.ImageView mTitleMessage;
     private android.widget.ListView mNotReadMessageLv;
-    private android.widget.ListView mIsReadMessageLv;
-    private List<MessageBean> notReadMessages = new ArrayList<>();
-    private List<MessageBean> isReadMessages = new ArrayList<>();
+    private List<MessageBean> messages = new ArrayList<>();
 
     @Override
     protected int setLayoutId() {
@@ -56,7 +53,6 @@ public class MessageActivity extends BaseActivity implements MessageManager.Mess
         mNotReadMessageLv = findViewById(R.id.message_lv);
         mTitleCamera = findViewById(R.id.title_camera);
         mTitleMessage = findViewById(R.id.title_message);
-        mIsReadMessageLv = findViewById(R.id.message_lv_isread);
     }
 
 
@@ -73,36 +69,27 @@ public class MessageActivity extends BaseActivity implements MessageManager.Mess
         });
         mTitleMessage.setVisibility(View.INVISIBLE);
         mTitleSearch.setVisibility(View.INVISIBLE);
-
-        ChangeReadMessageData();
-        ChangeNotReadMessageData();
-        notReadAdapter = new NotReadAdapter();
-        isReadAdapter = new IsReadAdapter(isReadMessages);
-        mNotReadMessageLv.setAdapter(notReadAdapter);
-        mIsReadMessageLv.setAdapter(isReadAdapter);
+        changeMessageDatas();
+        messageAdapter = new MessageAdapter();
+        mNotReadMessageLv.setAdapter(messageAdapter);
     }
 
-    private void ChangeNotReadMessageData() {
-        List<MessageBean> list = MessageManager.getInstance(this).qurayNotReadData();
-        notReadMessages.addAll(list);
-    }
-
-    private void ChangeReadMessageData() {
-        List<MessageBean> list = MessageManager.getInstance(this).qurayIsReadData();
-        isReadMessages.addAll(list);
+    private void changeMessageDatas() {
+        List<MessageBean> messageBeans = MessageManager.getInstance(ShaoHuaApplication.context).selectAll();
+        messages = messageBeans;
     }
 
 
     //未读消息适配器
-    class NotReadAdapter extends BaseAdapter {
+    class MessageAdapter extends BaseAdapter {
         @Override
         public int getCount() {
-            return notReadMessages.size();
+            return messages.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return notReadMessages.get(position);
+            return messages.get(position);
         }
 
         @Override
@@ -115,34 +102,43 @@ public class MessageActivity extends BaseActivity implements MessageManager.Mess
             Holder holder;
             if (convertView == null) {
                 holder = new Holder();
-                convertView = LayoutInflater.from(MessageActivity.this).inflate(R.layout.item_message, parent, false);
-                holder.textView = convertView.findViewById(R.id.message_item_tv);
+                if (messages.get(position).getIsRead().equals("yes")) {
+                    convertView = LayoutInflater.from(MessageActivity.this).inflate(R.layout.item_message, parent, false);
+                } else if (messages.get(position).getIsRead().equals("no")) {
+                    convertView = LayoutInflater.from(MessageActivity.this).inflate(R.layout.item_message2, parent, false);
+                }
+                holder.image = convertView.findViewById(R.id.message_item_iv);
                 holder.badge = new QBadgeView(MessageActivity.this).bindTarget(convertView.findViewById(R.id.message_item_tv));
                 holder.badge.setBadgeTextSize(12, true);
                 holder.badge.setBadgeGravity(Gravity.TOP | Gravity.END);
+                holder.message = convertView.findViewById(R.id.message_item_tv);
+                holder.title = convertView.findViewById(R.id.message_item_title);
                 convertView.setTag(holder);
             } else {
                 holder = (Holder) convertView.getTag();
             }
-            holder.textView.setText(notReadMessages.get(position).getMessage());
-            holder.badge.setBadgeNumber(1);
-            holder.badge.setOnDragStateChangedListener(new Badge.OnDragStateChangedListener() {
-                @Override
-                public void onDragStateChanged(int dragState, Badge badge, View targetView) {
-                    if (dragState == STATE_SUCCEED) {
-                        MessageManager.getInstance(MessageActivity.this).updateData(notReadMessages.get(position).getMessageId());
-                        isReadMessages.add(0, notReadMessages.get(position));
-                        isReadAdapter.notifyDataSetChanged();
-                        notReadMessages.remove(notReadMessages.get(position));
-                        notifyDataSetChanged();
+            holder.message.setText(messages.get(position).getMessage());
+            if (messages.get(position).getIsRead().equals("no")) {
+                holder.badge.setBadgeText("未读");
+                holder.badge.setOnDragStateChangedListener(new Badge.OnDragStateChangedListener() {
+                    @Override
+                    public void onDragStateChanged(int dragState, Badge badge, View targetView) {
+                        if (dragState == STATE_SUCCEED) {
+                            MessageManager.getInstance(MessageActivity.this).updateData(messages.get(position).getMessageId());
+                            messages.get(position).setIsRead("yes");
+                        }
                     }
-                }
-            });
+                });
+            } else if (messages.get(position).getIsRead().equals("yes")) {
+
+            }
             return convertView;
         }
 
         class Holder {
-            TextView textView;
+            TextView message;
+            TextView title;
+            ImageView image;
             Badge badge;
         }
     }
