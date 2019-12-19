@@ -2,6 +2,7 @@ package com.example.buy;
 
 import android.content.Intent;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -147,9 +148,10 @@ public class ShopCartFragment extends BaseNetConnectFragment{
         });
 
         //设置recyclerView
-        BaseRecyclerAdapter<GoodsBean> adapter = new BaseRecyclerAdapter<GoodsBean>(R.layout.item_goods, list) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(new BaseRecyclerAdapter<GoodsBean>(R.layout.item_goods, list) {
             @Override
-            public void onBind(BaseViewHolder holder, final int position) {
+            public void onBind(BaseViewHolder holder, int position) {
                 holder.getTextView(R.id.itemTitle,list.get(position).getProductName());
                 holder.getTextView(R.id.itemPrice,list.get(position).getProductPrice());
                 CheckBox itemCheck = (CheckBox) holder.getView(R.id.itemCheck);
@@ -242,9 +244,7 @@ public class ShopCartFragment extends BaseNetConnectFragment{
                     }
                 }
             }
-        };
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(adapter);
+        });
         //下拉刷新
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -303,7 +303,8 @@ public class ShopCartFragment extends BaseNetConnectFragment{
     public void onResume() {
         super.onResume();
         if (AccountManager.getInstance().isLogin()){
-            list=CartManager.getInstance().getList();
+            list.clear();
+            list.addAll(CartManager.getInstance().getList());
             recyclerView.getAdapter().notifyDataSetChanged();
             sendCartPresenter.doHttpGetRequest(CART_GOODS);
         }else {
