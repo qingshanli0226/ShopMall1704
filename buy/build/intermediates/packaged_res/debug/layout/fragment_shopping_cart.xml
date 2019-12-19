@@ -42,18 +42,20 @@
         android:layout_height="match_parent"
         android:layout_above="@id/rl_buy_bottom"
         android:layout_below="@id/v_buy_Divider">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_buy_shoppingcart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
 
             android:background="@color/mine_color_gray" />
+
         <com.example.common.LoadingPage
             android:id="@+id/lp_buy_loading"
-            android:visibility="gone"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@color/mine_color_gray"
-            android:layout_height="match_parent"/>
+            android:visibility="gone" />
     </FrameLayout>
 
     <RelativeLayout
