@@ -283,7 +283,6 @@ public class ShopCartFragment extends BaseNetConnectFragment{
                         recyclerView.getAdapter().notifyDataSetChanged();
                     }
                 }
-                CartManager.getInstance().setChecks(CartManager.getInstance().getChecks());
                 //更新价格
                 setAllMoney();
             }
@@ -303,8 +302,9 @@ public class ShopCartFragment extends BaseNetConnectFragment{
     public void onResume() {
         super.onResume();
         if (AccountManager.getInstance().isLogin()){
+            CartManager.getInstance().notifyChecks();
             list.clear();
-            list.addAll(CartManager.getInstance().getList());
+            list.addAll(CartManager.getInstance().getListGoods());
             recyclerView.getAdapter().notifyDataSetChanged();
             sendCartPresenter.doHttpGetRequest(CART_GOODS);
         }else {
@@ -330,33 +330,18 @@ public class ShopCartFragment extends BaseNetConnectFragment{
                      */
                     if (list.isEmpty()){
                         list.addAll(((GetCartBean) data).getResult());
-                        for (int i = 0; i < list.size(); i++) {
-                            CartManager.getInstance().getChecks().add(new CheckGoodsData(false,list.get(i).getProductId()));
+                        CartManager.getInstance().setListGoods(list);
+                        if (CartManager.getInstance().getChecks().isEmpty()){
+                            for (int i = 0; i < list.size(); i++) {
+                                CartManager.getInstance().addCheck(false,list.get(i).getProductId());
+                            }
                         }
                     }else {
                         list.clear();
                         list.addAll(((GetCartBean) data).getResult());
-                        ArrayList<CheckGoodsData> littleCheks=new ArrayList<>();
-                        for (int i=0;i<list.size();i++){
-                            for (CheckGoodsData good:CartManager.getInstance().getChecks()){
-                                if (list.get(i).getProductId().equals(good.getId())&&good.isSelect()){
-                                    littleCheks.add(good);
-                                    break;
-                                }
-                            }
-                        }
-                        CartManager.getInstance().getChecks().clear();
-                        for (int i = 0; i < list.size(); i++) {
-                            CartManager.getInstance().getChecks().add(new CheckGoodsData(false,list.get(i).getProductId()));
-                            for (CheckGoodsData good:littleCheks){
-                                if (list.get(i).getProductId().equals(good.getId())){
-                                    CartManager.getInstance().getChecks().get(i).setSelect(true);
-                                    break;
-                                }
-                            }
-                        }
+                        CartManager.getInstance().setListGoods(list);
+                        CartManager.getInstance().notifyChecks();
                     }
-                    CartManager.getInstance().setList(list);
                     recyclerView.getAdapter().notifyDataSetChanged();
                     nullGoods.setVisibility(list.isEmpty()?View.VISIBLE:View.GONE);
                     recyclerView.setVisibility(list.isEmpty()?View.GONE:View.VISIBLE);

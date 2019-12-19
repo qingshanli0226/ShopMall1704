@@ -254,7 +254,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
             case CART_GOODS:
                 if (((GetCartBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
                     ArrayList<GoodsBean> goodsBeans = new ArrayList<>(((GetCartBean) data).getResult());
-                    CartManager.getInstance().setList(goodsBeans);
+                    CartManager.getInstance().setListGoods(goodsBeans);
                     setAnimator();
                 }
                 break;
