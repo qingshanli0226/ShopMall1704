@@ -3,16 +3,13 @@ package com.example.point.activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,11 +18,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseActivity;
+import com.example.framework.manager.DaoManager;
 import com.example.point.R;
 import com.example.point.StepIsSupport;
 import com.example.point.adpter.StepItemAdpter;
-import com.example.point.service.StepBean;
-import com.example.point.stepmanager.DaoManager;
+import com.example.framework.bean.StepBean;
+
 
 import java.util.Calendar;
 import java.util.List;

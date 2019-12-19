@@ -1,7 +1,6 @@
 package com.example.point.activity;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,12 +12,12 @@ import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.manager.AccountManager;
+import com.example.framework.manager.DaoManager;
 import com.example.framework.port.IPresenter;
 import com.example.point.PointPresenter;
 import com.example.point.R;
 import com.example.point.bean.UpdatePointBean;
-import com.example.point.service.StepBean;
-import com.example.point.stepmanager.DaoManager;
+import com.example.framework.bean.StepBean;
 
 import java.util.List;
 
@@ -101,7 +100,8 @@ public class IntegralActivity extends BaseNetConnectActivity {
         exchange_record.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(IntegralActivity.this, ConversionActivity.class);
+                startActivity(intent);
             }
         });
         //计步功能

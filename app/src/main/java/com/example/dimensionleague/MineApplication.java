@@ -9,6 +9,7 @@ import com.example.framework.manager.NetConnectManager;
 import com.example.framework.port.INetConnectListener;
 import com.example.point.StepIsSupport;
 import com.example.point.stepmanager.StepPointManager;
+import com.squareup.leakcanary.LeakCanary;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
@@ -32,6 +33,11 @@ public class MineApplication extends Application {
         //TODO 异常捕获
 //        ErrorHandler.getInstance().initErrorHandler(applicationContext);
         //支持计步的话就查找历史记录-否则就什么也不做
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        LeakCanary.install(this);
+
 
         if (NetConnectManager.getInstance().isNetConnectStatus() && new StepIsSupport().isSupportStepCountSensor(this)) {
             StepPointManager.getInstance(this).init();

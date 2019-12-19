@@ -1,5 +1,10 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
+apply plugin: 'kotlin-android-extensions'
+//添加插件依赖 在文件最上面
+//添加依赖库
+apply plugin: 'org.greenrobot.greendao'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -25,11 +30,17 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    greendao {
+        schemaVersion 1 //当前数据库版本
+        daoPackage 'com.example.framework' //包名 需要更改
+        targetGenDir 'src/main/java' //存放greendao库生成文件的目录
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
+    implementation 'org.greenrobot:greendao:3.2.2' // 添加库
+//
     implementation 'androidx.appcompat:appcompat:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

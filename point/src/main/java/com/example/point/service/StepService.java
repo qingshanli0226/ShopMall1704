@@ -1,7 +1,6 @@
 package com.example.point.service;
 
 import android.annotation.SuppressLint;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -25,12 +24,12 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
-import com.example.point.stepmanager.DaoManager;
+import com.example.framework.bean.StepBean;
+import com.example.framework.manager.DaoManager;
 import com.example.point.R;
 import com.example.point.activity.StepActivity;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -214,7 +213,7 @@ public class StepService extends Service implements SensorEventListener {
                     .setWhen(System.currentTimeMillis())//通知产生的时间，会在通知信息里显示
                     .setAutoCancel(false)//设置这个标志当用户单击面板就可以让通知将自动取消
                     .setOngoing(true)//一个正在进行的通知。
-                    .setSmallIcon(R.mipmap.logo);
+                    .setSmallIcon(R.mipmap.jiaoyazi);
 
             service = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             if (Build.VERSION.SDK_INT>=16){
