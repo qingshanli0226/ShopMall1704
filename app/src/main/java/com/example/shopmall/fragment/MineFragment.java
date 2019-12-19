@@ -31,7 +31,7 @@ import com.example.shopmall.activity.LoginActivity;
 import com.wyp.avatarstudio.AvatarStudio;
 
 //个人页面
-public class MineFragment extends BaseFragment implements IPostBaseView<Object> {
+public class MineFragment extends BaseFragment implements IPostBaseView {
 
     private TitleBar tbMine;
     private TextView tvUserScore;
@@ -128,6 +128,17 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
                                     if (uri != null) {
                                         String token = UserManager.getInstance().getToken();
                                         upImgPresenter = new UpImgPresenter(uri, token);
+                                        upImgPresenter.attachPostView(new IPostBaseView() {
+                                            @Override
+                                            public void onPostDataSucess(Object data) {
+                                                Log.e("####", "" + data.toString());
+                                            }
+
+                                            @Override
+                                            public void onPostDataFailed(String ErrorMsg) {
+
+                                            }
+                                        });
                                         upImgPresenter.getPostFile();
                                     }
                                 }
@@ -169,8 +180,11 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (automaticPresenter != null){
+        if (automaticPresenter != null) {
             automaticPresenter.detachView();
+        }
+        if (upImgPresenter != null) {
+            upImgPresenter.detachView();
         }
     }
 
@@ -198,12 +212,11 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
             Toast.makeText(getActivity(), "自动登录成功", Toast.LENGTH_SHORT).show();
             ShoppingManager.getInstance().setMainitem(0);
         }
-        Log.e("####", ""+data.toString());
-
     }
 
     @Override
     public void onPostDataFailed(String ErrorMsg) {
 
     }
+
 }

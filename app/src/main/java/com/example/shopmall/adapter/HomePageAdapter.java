@@ -235,7 +235,6 @@ public class HomePageAdapter extends BaseAdapter<HomepageBean.ResultBean,Recycle
             channel_item_adapter.setLikeliest(new ChannelItemAdapter.Likeliest() {
                 @Override
                 public void getLikeliest(int position) {
-                    Log.d("####", "onItemClick: " + position);
                     if (position <= 8) {
                         Intent intent = new Intent(mContext, GoodsListActivity.class);
                         intent.putExtra("position", position);

@@ -130,7 +130,6 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
                 jsonObject1.put("subject", "buy");
                 jsonObject1.put("totalPrice", shoppingManager.getAllMoney() + "");
                 jsonObject1.put("body", array);
-                Log.e("####", jsonObject1.toString());
                 jsonObject1.put("sign", SignUtil.generateJsonSign(jsonObject1));
 
                 SignUtil.encryptJsonParamsByBase64(jsonObject1);

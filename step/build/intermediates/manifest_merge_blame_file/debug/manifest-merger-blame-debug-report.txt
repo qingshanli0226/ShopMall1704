@@ -6,29 +6,29 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="17"
-8-->F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml
+8-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml
 9        android:targetSdkVersion="29" />
-9-->F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml
+9-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml
 10
 11    <application>
-11-->F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:5:5-19:19
+11-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:5:5-19:19
 12        <activity
-12-->F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:6:9-9:25
+12-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:6:9-9:25
 13            android:name="com.example.step.Ui.HistoryActivity"
-13-->F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:6:19-53
+13-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:6:19-53
 14            android:screenOrientation="portrait" />
-14-->F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:7:13-49
+14-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:7:13-49
 15        <activity
-15-->F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:10:9-14:20
+15-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:10:9-14:20
 16            android:name="com.example.step.Ui.IntegralActivity"
-16-->F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:10:19-54
+16-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:10:19-54
 17            android:screenOrientation="portrait" >
-17-->F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:11:13-49
+17-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:11:13-49
 18        </activity>
 19
 20        <service android:name="com.example.framework.service.StepService" >
-20-->F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:16:9-18:19
-20-->F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:16:18-74
+20-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:16:9-18:19
+20-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:16:18-74
 21        </service>
 22    </application>
 23

@@ -86,7 +86,6 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
         mRedMessage.setNum(allNumber);
         ShoppingManager.getInstance().setOnNumberChangedListener(this);
 
-        Log.d("####", "initData: " + allNumber);
         replaceFragment(fragmentArrayList.get(0));
 
         String[] str = new String[]{"首页", "分类", "发现", "购物车", "个人中心"};

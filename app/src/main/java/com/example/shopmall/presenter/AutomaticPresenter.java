@@ -7,7 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
-public class AutomaticPresenter extends BasePresenter {
+public class AutomaticPresenter extends BasePresenter<LoginBean> {
 
     private String token;
 

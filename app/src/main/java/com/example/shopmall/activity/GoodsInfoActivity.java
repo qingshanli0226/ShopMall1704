@@ -179,7 +179,7 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
 
     @Override
     public void onPostDataFailed(String ErrorMsg) {
-        Log.d("####", ErrorMsg);
+
     }
 
     @Override
