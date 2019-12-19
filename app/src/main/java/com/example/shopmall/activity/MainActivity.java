@@ -1,6 +1,5 @@
 package com.example.shopmall.activity;
 
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 
