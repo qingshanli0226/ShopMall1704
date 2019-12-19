@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <ImageView
+
+    <data>
+        <import type="android.view.View"/>
+
+        <variable
+            name="key"
+            type="String" />
+    </data>
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_70"
-        android:scaleType="fitXY"
-        android:src="@drawable/home_background_2"/>
-    <com.youth.banner.Banner
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_150"
-        android:layout_margin="@dimen/dp_10"
-        android:id="@+id/home_banner"/>
-</RelativeLayout>
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_70"
+            android:scaleType="fitXY"
+            android:src="@drawable/home_background_2"/>
+        <com.youth.banner.Banner
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_150"
+            android:layout_margin="@dimen/dp_10"
+            android:id="@+id/home_banner"/>
+    </RelativeLayout>
+</layout>

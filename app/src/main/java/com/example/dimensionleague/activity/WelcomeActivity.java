@@ -77,7 +77,7 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
     @Override
     public void initDate() {
 
-        videoView.setVideoPath(Uri.parse("android.resource://" + getPackageName() + "/"+R.raw.mei).toString());
+        videoView.setVideoPath(Uri.parse("android.resource://" + getPackageName() + "/"+R.raw.peng).toString());
 
         handler.sendEmptyMessage(1);
         but.setText(count + "秒");

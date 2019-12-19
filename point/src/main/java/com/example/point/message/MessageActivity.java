@@ -6,8 +6,10 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseNetConnectActivity;
@@ -25,8 +27,9 @@ public class MessageActivity extends BaseNetConnectActivity {
     private MyToolBar message_tool;
     private List<MessageBean> messageBeans;
     private MessageAdpter messageAdpter;
-    private   List<StepBean> beans;
-    private  MessageBean bean;
+    private List<StepBean> beans;
+    private MessageBean bean;
+
     @Override
     public void init() {
         super.init();
@@ -44,15 +47,13 @@ public class MessageActivity extends BaseNetConnectActivity {
         message_tool.getMessage_back().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                finishActivity();
             }
         });
         message_tool.getMessage_calendar().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setComponent(new ComponentName("com.android.calendar", "com.android.calendar.LaunchActivity"));
-                startActivity(intent);
+                Toast.makeText(MessageActivity.this,"小王正在拼命赶功能",Toast.LENGTH_SHORT).show();
             }
         });
         message_tool.getMessage_menu().setOnClickListener(new View.OnClickListener() {
@@ -70,20 +71,22 @@ public class MessageActivity extends BaseNetConnectActivity {
         message_tool.getBuy_message_title().setText("消息");
 
         //消息列表
-        messageBeans=new ArrayList<>();
-        messageAdpter=new MessageAdpter(R.layout.message_item,messageBeans,this);
-        String CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis())+"";//今日日期
+        messageBeans = new ArrayList<>();
+        messageAdpter = new MessageAdpter(R.layout.message_item, messageBeans, this);
+        String CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis()) + "";//今日日期
         beans = new DaoManager(this).queryStepBean(CURRENT_DATE);
-         bean = new MessageBean(R.mipmap.sport,"次元联盟运动","今天行走了"+beans.get(0).getStep(),beans.get(0).getCurr_date());
-        messageBeans.add(bean);
-        message_re.setAdapter(messageAdpter);
+        if (beans.size() != 0) {
+            bean = new MessageBean(R.mipmap.sport, "次元联盟运动", "今天行走了" + beans.get(0).getStep(), beans.get(0).getCurr_date());
+            messageBeans.add(bean);
+            message_re.setAdapter(messageAdpter);
+        }
         //服务按照时间的变动来更新消息步数
         StepPointManager.getInstance(this).addGetStepListener(new StepPointManager.GetStepListener() {
             @Override
             public void onsetStep(int step) {
-                bean.setMessage_message("今天行走了"+beans.get(0).getStep());
+                bean.setMessage_message("今天行走了" + beans.get(0).getStep());
                 messageAdpter.notifyDataSetChanged();
-                Log.i("receive", " 时间变动"+step);
+                Log.i("receive", " 时间变动" + step);
             }
         });
     }

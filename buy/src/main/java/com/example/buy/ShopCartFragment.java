@@ -1,7 +1,6 @@
 package com.example.buy;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -23,11 +22,10 @@ import com.example.framework.manager.AccountManager;
 
 import com.example.buy.presenter.GetCartPresenter;
 import com.example.buy.presenter.PostUpDateCartPresenter;
-import com.example.common.IntentUtil;
+import com.example.common.utils.IntentUtil;
 import com.example.framework.base.BaseNetConnectFragment;
 import com.example.framework.base.BaseRecyclerAdapter;
 import com.example.framework.base.BaseViewHolder;
-import com.example.framework.port.OnClickItemListener;
 import com.example.framework.port.IPresenter;
 
 import java.util.ArrayList;
