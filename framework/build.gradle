@@ -30,10 +30,13 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     greendao {
-        schemaVersion 1 //当前数据库版本
+        schemaVersion 2 //当前数据库版本
         daoPackage 'com.example.framework' //包名 需要更改
         targetGenDir 'src/main/java' //存放greendao库生成文件的目录
+    dataBinding {
+        enabled true
     }
 }
 
@@ -68,4 +71,5 @@ dependencies {
     api 'com.umeng.umsdk:analytics:8.0.0'
     api 'com.umeng.umsdk:common:2.0.0'
     api 'com.umeng.umsdk:utdid:1.1.5.3'
-}
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+}}

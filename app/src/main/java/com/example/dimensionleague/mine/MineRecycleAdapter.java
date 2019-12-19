@@ -1,24 +1,10 @@
 package com.example.dimensionleague.mine;
 
-import android.content.Context;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.common.HomeBean;
 import com.example.dimensionleague.R;
 import com.example.framework.base.BaseRecyclerAdapter;
 import com.example.framework.base.BaseViewHolder;
 import com.example.net.AppNetConfig;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class MineRecycleAdapter extends BaseRecyclerAdapter<HomeBean.ResultBean.ChannelInfoBean> {

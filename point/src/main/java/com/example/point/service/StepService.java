@@ -221,7 +221,6 @@ public class StepService extends Service implements SensorEventListener {
             }
         }
     }
-
     //初始化当天的步数
     private void initTodayData() {
         CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis())+"";//今日日期

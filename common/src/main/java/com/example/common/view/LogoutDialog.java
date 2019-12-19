@@ -22,16 +22,19 @@ public class LogoutDialog extends Dialog {
         this.context = context;
         //去掉标题栏
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.setContentView(R.layout.logout_dialog);
     }
 
     public LogoutDialog(@NonNull Context context, int themeResId) {
         super(context, themeResId);
         this.context = context;
-        this.setContentView(R.layout.logout_dialog);
+
     }
 
     protected LogoutDialog(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
+    }
+
+    public void init(int layout){
+        this.setContentView(layout);
     }
 }

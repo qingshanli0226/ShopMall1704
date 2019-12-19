@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.buy.activity.GoodsActiviy
 import com.example.dimensionleague.R
 import com.example.common.HomeBean
-import com.example.common.IntentUtil
+import com.example.common.utils.IntentUtil
 import com.example.net.AppNetConfig
 import kotlinx.android.synthetic.main.home_seckill_item.view.*
 

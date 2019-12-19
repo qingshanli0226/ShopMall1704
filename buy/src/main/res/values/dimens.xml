@@ -16,4 +16,5 @@
     <dimen name="buy_three">30dp</dimen>
     <dimen name="buy_thf">35dp</dimen>
     <dimen name="buy_one_hund">100dp</dimen>
+    <dimen name="buy_dialog">200dp</dimen>
 </resources>

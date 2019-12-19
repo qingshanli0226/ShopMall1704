@@ -7,19 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import com.example.dimensionleague.R;
-
-import java.util.List;
 
 class TypeTagAdapter extends BaseAdapter {
 
-    private String[] titles = new String[]{"小裙子", "上衣", "下装", "外套", "配件", "包包", "装扮", "居家宅品", "办公文具", "数码周边", "游戏专区"};
+    private String[] titles ;
     private Context mContext;
     private int mSelect = 0;
 
     public TypeTagAdapter(Context mContext) {
         this.mContext = mContext;
+        titles = new String[]{ mContext.getString(R.string.tag_skirt), mContext.getString(R.string.tag_coattail),mContext.getString(R.string.tag_costume), mContext.getString(R.string.tag_coat), mContext.getString(R.string.tag_parts), mContext.getString(R.string.tag_handbag), mContext.getString(R.string.tag_dress_up), mContext.getString(R.string.tag_tasted), mContext.getString(R.string.tag_office), mContext.getString(R.string.tag_peripheral), mContext.getString(R.string.tag_game) };
     }
 
     @Override

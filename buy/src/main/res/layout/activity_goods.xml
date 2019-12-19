@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/buy_two_hun"/>
             <ImageView
-                android:id="@+id/beiImgage"
+                android:id="@+id/beiImage"
                 android:src="@drawable/img"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/buy_two_hun"/>
@@ -87,7 +87,6 @@
             android:layout_width="@dimen/buy_four"/>
         <TextView
             android:id="@+id/redNum"
-            android:text="5"
             style="@style/RedDotView"
             android:layout_alignRight="@id/cartBut"
             android:layout_alignTop="@id/cartBut"/>

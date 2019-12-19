@@ -166,14 +166,14 @@ public class HistoryActivity extends BaseActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 0) {
-                    start.setHint("开始日期");
-                    stop.setHint("结束日期");
+                    start.setText("开始日期");
+                    stop.setText("结束日期");
                 } else if (i == 1) {
-                    start.setHint("开始小时");
-                    stop.setHint("结束小时");
+                    start.setText("开始小时");
+                    stop.setText("结束小时");
                 } else if (i == 2) {
-                    start.setHint("开始分钟");
-                    stop.setHint("结束分钟");
+                    start.setText("开始分钟");
+                    stop.setText("结束分钟");
                 }
             }
 
@@ -189,11 +189,6 @@ public class HistoryActivity extends BaseActivity {
         return R.layout.history_activity;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     public void getSQdata() {
         //支持计步的话就查找历史记录-否则就什么也不做

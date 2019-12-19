@@ -4,6 +4,7 @@ import com.example.common.code.Constant;
 import com.example.common.utils.SPUtil;
 import com.example.common.utils.SignUtil;
 import com.example.dimensionleague.userbean.AutoLoginBean;
+import com.example.framework.manager.ErrorDisposeManager;
 import com.example.net.AppNetConfig;
 import com.example.net.RetrofitCreator;
 import com.google.gson.Gson;
@@ -61,37 +62,30 @@ public class AutoLoginManager {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
+                    public void onSubscribe(Disposable d) {}
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         try {
                             String string = responseBody.string();
                             AutoLoginBean autoLoginBean = new Gson().fromJson(string, AutoLoginBean.class);
-                            loginReceivedListener.onAutoLoginReceived(autoLoginBean.result);
+                            loginReceivedListener.onAutoLoginReceived(autoLoginBean.getResult());
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            ErrorDisposeManager.HandlerError(e);
                         }
-
                     }
-
                     @Override
                     public void onError(Throwable e) {
                         loginReceivedListener.onAutoDataError(e.getMessage());
+                        ErrorDisposeManager.HandlerError(e);
                     }
-
                     @Override
-                    public void onComplete() {
-
-                    }
+                    public void onComplete() {}
                 });
     }
 
     public interface IAutoLoginReceivedListener {
         void onAutoLoginReceived(AutoLoginBean.ResultBean resultBean);
-
         void onAutoDataError(String s);
     }
 }

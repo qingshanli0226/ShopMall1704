@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <string name="logout">确定退出登录?</string>
-    <string name="yes">确定</string>
-    <string name="no">取消</string>
-</resources>

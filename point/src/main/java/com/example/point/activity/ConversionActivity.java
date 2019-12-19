@@ -10,8 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseNetConnectActivity;
+import com.example.framework.bean.PointBean;
+import com.example.framework.manager.DaoManager;
 import com.example.point.R;
 import com.example.point.adpter.ConversionAdpter;
+
+import java.util.List;
 
 public class ConversionActivity extends BaseNetConnectActivity {
     private MyToolBar conversion_toolbar;
@@ -42,16 +46,16 @@ public class ConversionActivity extends BaseNetConnectActivity {
             }
         });
         conversion_re.setLayoutManager(new LinearLayoutManager(this));
-//        List<PointBean> pointBeans = new DaoManager(this).loadPointBean();
-//        if (pointBeans.size()==0){
-//            conversion_tv.setVisibility(View.VISIBLE);
-//            conversion_re.setVisibility(View.GONE);
-//        }else {
-////            conversion_tv.setVisibility(View.GONE);
-////            conversion_re.setVisibility(View.VISIBLE);
-////            conversionAdpter=new ConversionAdpter(R.layout.conversion_item,pointBeans);
-////            conversion_re.setAdapter(conversionAdpter);
-//        }
+        List<PointBean> pointBeans = new DaoManager(this).loadPointBean();
+        if (pointBeans.size()==0){
+            conversion_tv.setVisibility(View.VISIBLE);
+            conversion_re.setVisibility(View.GONE);
+        }else {
+//            conversion_tv.setVisibility(View.GONE);
+//            conversion_re.setVisibility(View.VISIBLE);
+//            conversionAdpter=new ConversionAdpter(R.layout.conversion_item,pointBeans);
+//            conversion_re.setAdapter(conversionAdpter);
+        }
     }
 
     @Override

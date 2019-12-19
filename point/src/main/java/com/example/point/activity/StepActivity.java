@@ -120,13 +120,16 @@ public class StepActivity extends BaseActivity {
         if (new StepIsSupport().isSupportStepCountSensor(this)) {
             String CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis())+"";//今日日期
             List<StepBean> beans = new DaoManager(this).queryStepBean(CURRENT_DATE);
-            stepView.setCurrentCount(stepInt, beans.get(0).getStep());
+            if (beans.size()!=0){
+                stepView.setCurrentCount(stepInt, beans.get(0).getStep());
+            }else {
+                 stepView.setCurrentCount(stepInt,0);
+            }
             tv_isSupport.setText("计步中...");
             StepPointManager.getInstance(this).addGetStepListener(new StepPointManager.GetStepListener() {
                 @Override
                 public void onsetStep(int step) {
                     stepView.setCurrentCount(stepInt, step);
-                    Log.i("wzy", "onsetStep: " + stepInt + "   " + step);
                 }
             });
         } else {

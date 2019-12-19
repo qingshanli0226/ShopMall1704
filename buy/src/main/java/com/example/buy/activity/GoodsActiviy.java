@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.drawable.ColorDrawable;
 import android.util.DisplayMetrics;
@@ -26,16 +25,18 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.buy.R;
+import com.example.buy.databeans.CheckGoodsData;
 import com.example.buy.databeans.GetCartBean;
 import com.example.buy.databeans.GoodsBean;
 import com.example.buy.databeans.OkBean;
 import com.example.buy.presenter.GetCartPresenter;
+import com.example.common.view.MyToolBar;
 import com.example.framework.listener.OnShopCartListener;
 import com.example.framework.manager.AccountManager;
 import com.example.buy.CartManager;
 import com.example.buy.presenter.PostAddCartPresenter;
 import com.example.common.HomeBean;
-import com.example.common.IntentUtil;
+import com.example.common.utils.IntentUtil;
 import com.example.common.TypeBean;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.port.IPresenter;
@@ -57,7 +58,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
     private ImageView collectBut;
     private ImageView goodsImage;
     private ImageView cartBut;
-    private ImageView beiImgage;
+    private ImageView beiImage;
     private TextView goodsTitle;
     private WebView webView;
     private TextView goodsOldPrice;
@@ -84,6 +85,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
     //暂存购物车数量
     private int cartNum;
 
+    private MyToolBar myToolBar;
     @Override
     protected void onStart() {
         super.onStart();
@@ -122,7 +124,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         goodsNewPrice.setText(goods.getProductPrice());
         Glide.with(this)
                 .load(AppNetConfig.BASE_URl_IMAGE + goods.getUrl())
-                .into(beiImgage);
+                .into(beiImage);
         Glide.with(this)
                 .load(AppNetConfig.BASE_URl_IMAGE + goods.getUrl())
                 .into(goodsImage);
@@ -154,9 +156,16 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
                 popupWindow.showAtLocation(findViewById(R.id.goodsRel), Gravity.BOTTOM, 0, 0);
             } else if (v.getId() == collectBut.getId()) {
                 //本地sp存储收藏的商品的信息
-                Toast.makeText(this, "已加入收藏", Toast.LENGTH_SHORT).show();
+                toast(this,String.valueOf(R.string.buy_add));
             } else if (v.getId() == cartBut.getId()) {
                 //点击购物车
+                //设置选中
+                for (CheckGoodsData i:CartManager.getInstance().getChecks()){
+                    if (i.getId().equals(goods.getProductId())){
+                        i.setSelect(true);
+                        break;
+                    }
+                }
                 Intent intent = new Intent(this, ShoppCartActivity.class);
                 intent.putExtra(IntentUtil.GOODS,goods.getProductId());
                 startActivity(intent);
@@ -174,8 +183,8 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         } else {
             animatorSet = new AnimatorSet();
 
-            ObjectAnimator scaleX = ObjectAnimator.ofFloat(beiImgage, "scaleX", 1, 0.1f);
-            ObjectAnimator scaleY = ObjectAnimator.ofFloat(beiImgage, "scaleY", 1, 0.1f);
+            ObjectAnimator scaleX = ObjectAnimator.ofFloat(beiImage, "scaleX", 1, 0.1f);
+            ObjectAnimator scaleY = ObjectAnimator.ofFloat(beiImage, "scaleY", 1, 0.1f);
             //缩放后加贝塞尔曲线
             animatorSet.play(scaleX).with(scaleY).before(getBeiAnimator());
             animatorSet.setDuration(500);
@@ -192,13 +201,12 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     //隐藏,并还原imageview
-                    beiImgage.setVisibility(View.GONE);
-                    beiImgage.setScaleX(0);
-                    beiImgage.setScaleY(0);
-                    beiImgage.setTranslationX(0);
-                    beiImgage.setTranslationY(0);
-                    //更新红点
-                    CartManager.getInstance().updataCartNum(cartNum);
+                    beiImage.setVisibility(View.GONE);
+                    beiImage.setScaleX(0);
+                    beiImage.setScaleY(0);
+                    beiImage.setTranslationX(0);
+                    beiImage.setTranslationY(0);
+
                     //购物车图标摇一摇动画
                     ObjectAnimator carAnimator = ObjectAnimator.ofFloat(cartBut, "rotation", 0, 30, -30, 0);
                     carAnimator.setDuration(500);
@@ -208,6 +216,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
                             super.onAnimationEnd(animation);
                             joinCartBut.setClickable(true);
                             animatorSet = null;
+                            setRed();
                         }
                     });
                     carAnimator.start();
@@ -246,7 +255,8 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
                 break;
             case CART_GOODS:
                 if (((GetCartBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
-                    cartNum=((GetCartBean) data).getResult().size();
+                    ArrayList<GoodsBean> goodsBeans = new ArrayList<>(((GetCartBean) data).getResult());
+                    CartManager.getInstance().setListGoods(goodsBeans);
                     setAnimator();
                 }
                 break;
@@ -329,7 +339,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
     //返回贝塞尔曲线
     private ObjectAnimator getBeiAnimator() {
         //每次都重新设置起始点 控制点 结束点  并绘制路线
-        beiImgage.setVisibility(View.VISIBLE);
+        beiImage.setVisibility(View.VISIBLE);
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int height = metrics.heightPixels;
@@ -340,8 +350,8 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         controlLoaction[0] = -(width / 2);
         controlLoaction[1] = height / 2;
 
-        endLoaction[0] = -(beiImgage.getWidth() / 2) + (cartBut.getWidth() * 2);
-        endLoaction[1] = (height - (beiImgage.getHeight() / 2));
+        endLoaction[0] = -(beiImage.getWidth() / 2) + (cartBut.getWidth() * 2);
+        endLoaction[1] = (height - (beiImage.getHeight() / 2));
 //        endLoaction[0]=width;
 //        endLoaction[1]=height;
 
@@ -349,7 +359,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         //控制初始点
         path.moveTo(startLoaction[0], startLoaction[1]);
         path.quadTo(controlLoaction[0], controlLoaction[1], endLoaction[0], endLoaction[1]);
-        return ObjectAnimator.ofFloat(beiImgage, "translationX", "translationY", path);
+        return ObjectAnimator.ofFloat(beiImage, "translationX", "translationY", path);
     }
 
     @Override
@@ -370,7 +380,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         collectBut = findViewById(R.id.collectBut);
         cartBut = findViewById(R.id.cartBut);
         goodsImage = findViewById(R.id.goodsImage);
-        beiImgage = findViewById(R.id.beiImgage);
+        beiImage = findViewById(R.id.beiImage);
         goodsTitle = findViewById(R.id.goodsTitle);
         webView = findViewById(R.id.webView);
         goodsOldPrice = findViewById(R.id.goodsOldPrice);
@@ -382,7 +392,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         goPayBut.setOnClickListener(this);
         goodsImage.setOnClickListener(this);
         cartBut.setOnClickListener(this);
-        beiImgage.setOnClickListener(this);
+        beiImage.setOnClickListener(this);
     }
 
     @Override
@@ -392,11 +402,10 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
             @Override
             public void shopCartNumChange(int num) {
                 cartNum=num;
-                setRed(num);
             }
         };
         CartManager.getInstance().registerListener(onShopCartListener);
-        setRed(CartManager.getInstance().getCartNum());
+        setRed();
 
     }
 
@@ -409,8 +418,8 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         super.onDestroy();
     }
 
-    private void setRed(int num) {
-        redNum.setText(num + "");
+    private void setRed() {
+        redNum.setText(CartManager.getInstance().getCartNum() + "");
         if (Integer.valueOf(redNum.getText().toString()) == 0) {
             redNum.setVisibility(View.GONE);
         } else {

@@ -1,5 +1,6 @@
 package com.example.dimensionleague.setting
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -14,17 +15,12 @@ import com.example.dimensionleague.login.activity.LoginActivity
 import com.example.framework.base.BaseActivity
 import com.example.framework.manager.AccountManager
 import kotlinx.android.synthetic.main.activity_setting.*
-import android.content.DialogInterface
 import android.graphics.Color
-import android.text.InputType
-import androidx.appcompat.app.AlertDialog
-import com.alibaba.sdk.android.utils.AMSDevReporter
 import com.example.common.code.Constant
 import com.example.common.view.LogoutDialog
 import com.example.dimensionleague.R
 import com.example.dimensionleague.activity.MainActivity
-import androidx.appcompat.app.AlertDialog.Builder as Builder1
-
+import com.example.net.AppNetConfig
 
 class SettingActivity : BaseActivity(),IAccountCallBack {
 
@@ -46,7 +42,7 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
         setting_toolbar.background = resources.getDrawable(R.drawable.toolbar_style)
         setting_toolbar.other_back.setImageResource(R.drawable.back3)
         setting_toolbar.other_title.setTextColor(Color.WHITE)
-        setting_toolbar.other_title.text = "账户设置"
+        setting_toolbar.other_title.text = getString(R.string.user_setting)
         headView = LayoutInflater.from(this).inflate(R.layout.setting_item_head, null)
         foodView = LayoutInflater.from(this).inflate(R.layout.setting_item_food, null)
         foodButton=foodView.findViewById<Button>(R.id.setting_food_out)
@@ -70,25 +66,25 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
 
     }
 //    添加rv布局
+    @SuppressLint("SetTextI18n")
     private fun initRecycleView() {
-        list.add(SettingBean("地址管理",""))
-        list.add(SettingBean("账户与安全","免费领取百万帐户险"))
-        list.add(SettingBean("支付设置",""))
-        list.add(SettingBean("增票资质","添加增票资质"))
-        list.add(SettingBean("我的档案","添加爱宠/神颜"))
-        list.add(SettingBean("我的定制","个性化定制各种周边"))
-        list.add(SettingBean("通用","清除本地缓存"))
-        list.add(SettingBean("联盟会员","免费试用 立领一折优惠卷"))
-        list.add(SettingBean("功能体验馆","最新功能提前体验"))
-        list.add(SettingBean("功能反馈",""))
-        list.add(SettingBean("关于联盟","v1.0"))
+        list.add(SettingBean(getString(R.string.setting_address)))
+        list.add(SettingBean(getString(R.string.setting_security)))
+        list.add(SettingBean(getString(R.string.setting_payment)))
+        list.add(SettingBean(getString(R.string.setting_qualification)))
+        list.add(SettingBean(getString(R.string.setting_my_files)))
+        list.add(SettingBean(getString(R.string.setting_my_custom)))
+        list.add(SettingBean(getString(R.string.setting_common)))
+        list.add(SettingBean(getString(R.string.setting_union)))
+        list.add(SettingBean(getString(R.string.setting_hall)))
+        list.add(SettingBean(getString(R.string.setting_about), packageManager.getPackageInfo(packageName,0).versionName))
     //        判断是否登录
     if (AccountManager.getInstance().isLogin){
-        heanTitle.setText(""+AccountManager.getInstance().user.name)
-        heanName.setText("用户名 : "+AccountManager.getInstance().user.name)
+        heanTitle.setText(AccountManager.getInstance().user.name.toString())
+        heanName.setText(getString(R.string.setting_user)+AccountManager.getInstance().user.name.toString())
         foodView.visibility=View.VISIBLE
         if (AccountManager.getInstance().user.avatar!=null){
-            Glide.with(this).load(AccountManager.getInstance().user.avatar).apply(RequestOptions().centerCrop()).into(heanImg)
+            Glide.with(this).load(AppNetConfig.BASE_URL+AccountManager.getInstance().user.avatar).apply(RequestOptions().circleCrop()).into(heanImg)
         }
 
     }else{
@@ -106,10 +102,11 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
     private fun initListener() {
 //        全部监听
         adapter.setOnItemChildClickListener { adapter, view, position ->
-            toast(this,list.get(position).title+"功能暂未开发完全,如有疑问请联系小柚")
+            toast(this,list.get(position).title+R.string.contact)
         }
         foodButton.setOnClickListener {
             val logoutDialog = LogoutDialog(this@SettingActivity)
+            logoutDialog.init(R.layout.logout_dialog)
             //TODO 背景透明
             logoutDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
             logoutDialog.setCanceledOnTouchOutside(false)
@@ -124,17 +121,17 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
                 AccountManager.getInstance().logout()
                 AccountManager.getInstance().notifyLogout()
                 logoutDialog.dismiss()
-                toast(this,"退出成功!")
+                toast(this,getString(R.string.login_out))
                 finishActivity()
             }
         }
         headView.setOnClickListener {
-            if (("登录/注册".equals(heanTitle.text.toString()))){
+            if (R.string.mine_login.equals(heanTitle.text.toString())){
 //                登录注册跳转
                 startActivity(LoginActivity::class.java,null)
             }else{
 //                跳转到个人信息
-                startActivity(UserMassageActivity::class.java,null)
+                startActivity(UserMassagesActivity::class.java,null)
             }
         }
 
@@ -147,7 +144,7 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
     override fun onLogout() {}
     //    更新头像
     override fun onAvatarUpdate(url: String?) {
-        Glide.with(this).load(url).apply(RequestOptions().centerCrop()).into(heanImg)
+        Glide.with(this).load(AppNetConfig.BASE_URL+url).apply(RequestOptions().circleCrop()).into(heanImg)
     }
 
     override fun onDestroy() {
