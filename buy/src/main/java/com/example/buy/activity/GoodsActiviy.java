@@ -30,12 +30,13 @@ import com.example.buy.databeans.GetCartBean;
 import com.example.buy.databeans.GoodsBean;
 import com.example.buy.databeans.OkBean;
 import com.example.buy.presenter.GetCartPresenter;
+import com.example.common.view.MyToolBar;
 import com.example.framework.listener.OnShopCartListener;
 import com.example.framework.manager.AccountManager;
 import com.example.buy.CartManager;
 import com.example.buy.presenter.PostAddCartPresenter;
 import com.example.common.HomeBean;
-import com.example.common.IntentUtil;
+import com.example.common.utils.IntentUtil;
 import com.example.common.TypeBean;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.port.IPresenter;
@@ -84,6 +85,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
     //暂存购物车数量
     private int cartNum;
 
+    private MyToolBar myToolBar;
     @Override
     protected void onStart() {
         super.onStart();
@@ -154,7 +156,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
                 popupWindow.showAtLocation(findViewById(R.id.goodsRel), Gravity.BOTTOM, 0, 0);
             } else if (v.getId() == collectBut.getId()) {
                 //本地sp存储收藏的商品的信息
-                Toast.makeText(this, "已加入收藏", Toast.LENGTH_SHORT).show();
+                toast(this,String.valueOf(R.string.buy_add));
             } else if (v.getId() == cartBut.getId()) {
                 //点击购物车
                 //设置选中

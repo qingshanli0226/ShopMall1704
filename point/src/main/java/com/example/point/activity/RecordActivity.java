@@ -36,8 +36,6 @@ public class RecordActivity extends BaseActivity {
         record_tool = (MyToolBar) findViewById(R.id.record_tool);
         record_tool.init(Constant.OTHER_STYLE);
         record_tool.getOther_title().setText("计步详情");
-        Drawable drawable = getResources().getDrawable(R.drawable.recorder);
-        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         record_tool.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
         //返回详情页
         record_tool.getOther_back().setOnClickListener(new View.OnClickListener() {
@@ -46,7 +44,6 @@ public class RecordActivity extends BaseActivity {
                 finish();
             }
         });
-        record_tool.getOther_title().setCompoundDrawables(null,null,drawable,null);
         record_tv = findViewById(R.id.record_tv);
         heart_layout = findViewById(R.id.heart_layout);
 

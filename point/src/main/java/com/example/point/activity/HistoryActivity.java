@@ -81,10 +81,7 @@ public class HistoryActivity extends BaseActivity {
     @Override
     public void initDate() {
         history_tool.getOther_title().setText("历史记录");
-        Drawable drawable = getResources().getDrawable(R.drawable.history);
-        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
 
-        history_tool.getOther_title().setCompoundDrawables(null,null,drawable,null);
 
         //返回计步页
         history_tool.getOther_back().setOnClickListener(new View.OnClickListener() {

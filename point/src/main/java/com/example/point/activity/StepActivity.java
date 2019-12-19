@@ -69,9 +69,6 @@ public class StepActivity extends BaseActivity {
         step_tool = (MyToolBar) findViewById(R.id.step_tool);
         step_tool.init(Constant.OTHER_STYLE);
         step_tool.getOther_title().setText("计步页");
-        Drawable drawable = getResources().getDrawable(R.drawable.step);
-        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-        step_tool.getOther_title().setCompoundDrawables(null,null,drawable,null);
         step_tool.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
         SharedPreferences step = getSharedPreferences("Step", MODE_PRIVATE);
         stepInt = step.getInt("step", 3000);

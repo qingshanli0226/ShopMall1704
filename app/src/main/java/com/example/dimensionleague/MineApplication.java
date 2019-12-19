@@ -1,19 +1,14 @@
 package com.example.dimensionleague;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.example.common.utils.SPUtil;
-import com.example.framework.manager.ErrorHandler;
 import com.example.framework.manager.NetConnectManager;
-import com.example.framework.port.INetConnectListener;
 import com.example.point.StepIsSupport;
 import com.example.point.stepmanager.StepPointManager;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
-import com.umeng.message.IUmengRegisterCallback;
-import com.umeng.message.PushAgent;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 /**
  * author:李浩帆
@@ -33,7 +28,7 @@ public class MineApplication extends Application {
 //        ErrorHandler.getInstance().initErrorHandler(applicationContext);
         //支持计步的话就查找历史记录-否则就什么也不做
 
-        if (NetConnectManager.getInstance().isNetConnectStatus() && new StepIsSupport().isSupportStepCountSensor(this)) {
+        if (!NetConnectManager.getInstance().isNetConnectStatus() && new StepIsSupport().isSupportStepCountSensor(this)) {
             StepPointManager.getInstance(this).init();
         }
         //友盟推送
@@ -50,31 +45,6 @@ public class MineApplication extends Application {
         UMConfigure.setLogEnabled(true);
         // 选用AUTO页面采集模式
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
-
-        /***
-         *          //权限请求
-         *          如果是fragment  通过构造传输,不要不要调用 getActivity!!!!!
-         * //        RxPermissions rxPermission = new RxPermissions(Activity.this);
-         * //        rxPermissions
-         * //                .request(Manifest.permission.CAMERA)
-         * //                .subscribe(permission -> {
-         * //                   if (permission.granted) {
-         *                      //权限的具体处理
-         *                      } else if (permission.shouldShowRequestPermissionRationale) {
-         *
-         *                      } else {
-         *
-         *                      }
-         *               });
-         *
-         *
-         *         //必须在onCreate调用
-         *        RxView.clicks(findViewById(R.id.enableCamera))
-         *                .compose(rxPermissions.ensure(Manifest.permission.CAMERA))
-         *                .subscribe(granted -> {
-         *                    // 当点击之后
-         *                 });
-         *
-         * */
+        ZXingLibrary.initDisplayOpinion(this);
     }
 }

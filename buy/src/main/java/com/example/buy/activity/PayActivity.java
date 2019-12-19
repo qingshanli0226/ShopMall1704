@@ -31,7 +31,7 @@ import com.example.buy.presenter.PostPayResultPresenter;
 import com.example.buy.presenter.PostUpDateMoneyPresenter;
 import com.example.buy.presenter.PostUpDatePointPresenter;
 import com.example.buy.presenter.PostVerifyGoodsPresenter;
-import com.example.common.IntentUtil;
+import com.example.common.utils.IntentUtil;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.base.BaseRecyclerAdapter;
 import com.example.framework.base.BaseViewHolder;

@@ -112,7 +112,7 @@ public class SearchActivity extends BaseNetConnectActivity {
             public void onBind(BaseViewHolder holder, int position) {
                 holder.getTextView(R.id.itemSearchTitle,hotList.get(position).getName());
                 holder.getTextView(R.id.itemSearchBrief,hotList.get(position).getBrief());
-                holder.getTextView(R.id.itemSearchPrice,hotList.get(position).getCover_price());
+                holder.getTextView(R.id.itemSearchPrice,"¥\t"+hotList.get(position).getCover_price());
                 holder.getImageView(R.id.itemSearchImg,AppNetConfig.BASE_URl_IMAGE+hotList.get(position).getFigure());
             }});
         //result数据
