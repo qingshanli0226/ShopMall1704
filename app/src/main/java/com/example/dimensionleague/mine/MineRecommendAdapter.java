@@ -5,7 +5,7 @@ import androidx.annotation.Nullable;
 
 import com.example.buy.activity.GoodsActiviy;
 import com.example.common.HomeBean;
-import com.example.common.IntentUtil;
+import com.example.common.utils.IntentUtil;
 import com.example.dimensionleague.R;
 import com.example.framework.base.BaseRecyclerAdapter;
 import com.example.framework.base.BaseViewHolder;

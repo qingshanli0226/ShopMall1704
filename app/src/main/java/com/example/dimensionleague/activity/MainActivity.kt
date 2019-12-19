@@ -6,6 +6,7 @@ import android.widget.Toast
 import anet.channel.util.Utils.context
 
 import com.example.dimensionleague.R
+import android.graphics.Color
 import com.example.buy.ShopCartFragment
 import com.example.common.view.MyToast
 import com.example.dimensionleague.find.FindFragment
@@ -19,7 +20,10 @@ import com.example.framework.listener.OnShopCartListener
 import com.example.buy.CartManager
 
 class MainActivity : BaseNetConnectActivity() {
+
     private lateinit var listener:OnShopCartListener
+
+    var exitTime = 0
     override fun getRelativeLayout(): Int {
         return R.id.main_relative
     }
@@ -37,7 +41,7 @@ class MainActivity : BaseNetConnectActivity() {
         val isAutoLogin = bundle!!.getBoolean("isAutoLogin")
         if(!isAutoLogin){
             AccountManager.getInstance().logout()
-            Toast.makeText(this, R.string.timeout.toString(),Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, resources.getString(R.string.timeout),Toast.LENGTH_SHORT).show()
             AccountManager.getInstance().logout()
             AccountManager.getInstance().notifyLogout()
         }else{
@@ -59,6 +63,7 @@ class MainActivity : BaseNetConnectActivity() {
             .normalTextColor(R.color.colorMainNormal)
             .selectIconItems(
                 intArrayOf(
+
                     R.drawable.home,
                     R.drawable.vertical_list,
                     R.drawable.find,
@@ -95,9 +100,23 @@ class MainActivity : BaseNetConnectActivity() {
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             moveTaskToBack(false)
+            exit()
             return true
         }
         return super.onKeyDown(keyCode, event)
+    }
+
+    fun exit() {
+        if (System.currentTimeMillis() - exitTime > 2000) {
+            Toast.makeText(
+                applicationContext, "再按一次退出程序",
+                Toast.LENGTH_SHORT
+            ).show()
+            exitTime = System.currentTimeMillis().toInt()
+        } else {
+            finish()
+            System.exit(0)
+        }
     }
 }
 

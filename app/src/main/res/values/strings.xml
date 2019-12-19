@@ -84,4 +84,5 @@
     <string name="birth">出生年月</string>
     <string name="sex">性别</string>
     <string name="name">昵称</string>
+    <string name="hean_user_name">头像</string>
 </resources>

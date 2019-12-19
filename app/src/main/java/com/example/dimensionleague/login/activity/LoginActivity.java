@@ -1,6 +1,7 @@
 package com.example.dimensionleague.login.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
@@ -13,10 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.buy.activity.OrderActivity;
+import com.example.buy.activity.SearchActivity;
 import com.example.common.code.Constant;
 import com.example.common.User;
 import com.example.common.code.ErrorCode;
+import com.example.common.utils.IntentUtil;
 import com.example.common.view.MyToast;
+import com.example.dimensionleague.setting.SettingActivity;
 import com.example.framework.manager.AccountManager;
 import com.example.common.port.IButtonEnabledListener;
 import com.example.dimensionleague.R;
@@ -26,6 +31,8 @@ import com.example.dimensionleague.userbean.LoginBean;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.base.BaseTextWatcher;
 import com.example.framework.port.IPresenter;
+import com.example.point.activity.IntegralActivity;
+import com.example.point.activity.StepActivity;
 
 import java.util.HashMap;
 
@@ -43,6 +50,9 @@ public class LoginActivity extends BaseNetConnectActivity implements IButtonEnab
     private TextView user_register;
     //TODO 登录的Presenter
     private IPresenter loginPresenter;
+
+    private String whence = "默认";
+
     private AccountManager accountManager = AccountManager.getInstance();
     private boolean isContentUser = false;
     private boolean isContentPassword = false;
@@ -60,6 +70,10 @@ public class LoginActivity extends BaseNetConnectActivity implements IButtonEnab
     @Override
     public void init() {
         super.init();
+        Bundle data = getIntent().getBundleExtra("data");
+        if(data!=null){
+            whence = data.getString(IntentUtil.LOGIN);
+        }
         login_back = findViewById(R.id.login_back);
         user_name = findViewById(R.id.user_name);
         password = findViewById(R.id.password);
@@ -144,7 +158,43 @@ public class LoginActivity extends BaseNetConnectActivity implements IButtonEnab
             if (accountManager.getUser().getAvatar()!=null){
                 accountManager.notifyUserAvatarUpdate((String) accountManager.getUser().getAvatar());
             }
-            finishActivity();
+            Bundle bundle = new Bundle();
+            switch (whence){
+                case Constant.MESSAGE:
+                    startActivity(SearchActivity.class,null);
+                    finish();
+                    break;
+                case Constant.USER_SETTING:
+                    startActivity(SettingActivity.class,null);
+                    finish();
+                    break;
+                case Constant.ALL_ORDER:
+                    bundle.putString(IntentUtil.ORDER_SHOW,Constant.ALL_ORDER);
+                    startActivity(OrderActivity.class,bundle);
+                    finish();
+                    break;
+                case Constant.WAIT_PAY:
+                    bundle.putString(IntentUtil.ORDER_SHOW,Constant.WAIT_PAY);
+                    startActivity(OrderActivity.class,bundle);
+                    finish();
+                    break;
+                case Constant.WAIT_SEND:
+                    bundle.putString(IntentUtil.ORDER_SHOW,Constant.WAIT_SEND);
+                    startActivity(OrderActivity.class,bundle);
+                    finish();
+                    break;
+                case Constant.MINE_INTEGRAL:
+                    startActivity(IntegralActivity.class,null);
+                    finish();
+                    break;
+                case Constant.EXERCISE:
+                    startActivity(StepActivity.class, null);
+                    finish();
+                    break;
+                default:
+                    finishActivity();
+                    break;
+            }
         }else if(loginBean.getCode().equals(""+ErrorCode.ERROR_USER_NOT_REGISTERED.getErrorCode())){
             MyToast.showToast(this,loginBean.getMessage(),R.drawable.empty_image, Toast.LENGTH_SHORT);
         }

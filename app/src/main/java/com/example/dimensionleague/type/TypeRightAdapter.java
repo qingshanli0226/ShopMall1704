@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buy.activity.GoodsActiviy;
-import com.example.common.IntentUtil;
+import com.example.common.utils.IntentUtil;
 import com.example.dimensionleague.R;
 import com.example.common.TypeBean;
 

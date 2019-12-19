@@ -1,8 +1,10 @@
 package com.example.dimensionleague.mine;
 
 import androidx.annotation.Nullable;
+
 import com.example.dimensionleague.R;
 import com.example.framework.base.BaseRecyclerAdapter;
+
 import java.util.List;
 
 public class MineRecycleViewAdapter extends BaseRecyclerAdapter<MineBean>  {

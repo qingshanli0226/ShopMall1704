@@ -89,13 +89,13 @@ public class TypeFragment extends BaseNetConnectFragment {
         });
         //TODO 点击搜索跳转到搜索页面
         my_toolbar.getSearch_edit().setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), SearchActivity.class);
-            startActivity(intent);
+            startActivity(SearchActivity.class,null);
         });
         //TODO 点击消息跳转到消息页面
         my_toolbar.getSearch_message().setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), MessageActivity.class);
-            startActivity(intent);
+            Bundle bundle = new Bundle();
+            bundle.putString("intent","消息");
+            startActivity(MessageActivity.class,bundle);
         });
         typeURL.add(AppNetConfig.SKIRT_URL);
         typeURL.add(AppNetConfig.JACKET_URL);

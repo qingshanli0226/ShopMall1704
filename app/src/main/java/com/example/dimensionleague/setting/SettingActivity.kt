@@ -77,7 +77,7 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
         list.add(SettingBean(getString(R.string.setting_common)))
         list.add(SettingBean(getString(R.string.setting_union)))
         list.add(SettingBean(getString(R.string.setting_hall)))
-        list.add(SettingBean(getString(R.string.setting_about), packageManager.getPackageInfo(packageName,0).toString()))
+        list.add(SettingBean(getString(R.string.setting_about), packageManager.getPackageInfo(packageName,0).versionName))
     //        判断是否登录
     if (AccountManager.getInstance().isLogin){
         heanTitle.setText(AccountManager.getInstance().user.name.toString())
@@ -106,6 +106,7 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
         }
         foodButton.setOnClickListener {
             val logoutDialog = LogoutDialog(this@SettingActivity)
+            logoutDialog.init(R.layout.logout_dialog)
             //TODO 背景透明
             logoutDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
             logoutDialog.setCanceledOnTouchOutside(false)

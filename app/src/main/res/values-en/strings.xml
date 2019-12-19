@@ -85,4 +85,5 @@
     <string name="birth">birth</string>
     <string name="sex">sex</string>
     <string name="name">name</string>
+    <string name="hean_user_name">portrait</string>
 </resources>

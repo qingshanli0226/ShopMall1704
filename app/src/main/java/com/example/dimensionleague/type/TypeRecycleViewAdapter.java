@@ -3,7 +3,7 @@ package com.example.dimensionleague.type;
 import android.content.Intent;
 import android.graphics.Color;
 import com.example.buy.activity.GoodsActiviy;
-import com.example.common.IntentUtil;
+import com.example.common.utils.IntentUtil;
 import com.example.dimensionleague.R;
 import com.example.common.TypeBean;
 import com.example.framework.base.BaseRecyclerAdapter;

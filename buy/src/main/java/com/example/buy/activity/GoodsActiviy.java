@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.drawable.ColorDrawable;
 import android.util.DisplayMetrics;
@@ -30,12 +29,13 @@ import com.example.buy.databeans.GetCartBean;
 import com.example.buy.databeans.GoodsBean;
 import com.example.buy.databeans.OkBean;
 import com.example.buy.presenter.GetCartPresenter;
+import com.example.common.view.MyToolBar;
 import com.example.framework.listener.OnShopCartListener;
 import com.example.framework.manager.AccountManager;
 import com.example.buy.CartManager;
 import com.example.buy.presenter.PostAddCartPresenter;
 import com.example.common.HomeBean;
-import com.example.common.IntentUtil;
+import com.example.common.utils.IntentUtil;
 import com.example.common.TypeBean;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.port.IPresenter;
@@ -84,6 +84,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
     //暂存购物车数量
     private int cartNum;
 
+    private MyToolBar myToolBar;
     @Override
     protected void onStart() {
         super.onStart();

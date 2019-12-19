@@ -1,5 +1,6 @@
 package com.example.dimensionleague.find;
 
+import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -9,10 +10,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.buy.activity.SearchActivity;
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.dimensionleague.R;
+import com.example.dimensionleague.login.activity.LoginActivity;
+import com.example.dimensionleague.setting.SettingActivity;
 import com.example.framework.base.BaseNetConnectFragment;
+import com.example.framework.manager.AccountManager;
+import com.example.point.message.MessageActivity;
 import com.flyco.tablayout.SlidingTabLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +48,36 @@ public class FindFragment extends BaseNetConnectFragment {
 
     @Override
     public void initDate() {
+        //TODO 用户信息
+        my_toolbar.getFind_user().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(AccountManager.getInstance().isLogin()){
+                    startActivity(SettingActivity.class,null);
+                }else{
+                    Bundle bundle = new Bundle();
+                    bundle.putString("intent","用户设置");
+                    startActivity(LoginActivity.class,bundle);
+                }
+            }
+        });
+        //TODO 搜索页面
+        my_toolbar.getFind_search().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(SearchActivity.class,null);
+            }
+        });
 
+        //TODO 跳转到消息页面
+        my_toolbar.getFind_message().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("intent","消息");
+                startActivity(MessageActivity.class,bundle);
+            }
+        });
         list.add(new FindSendFragment());
         list.add(new FindSendFragment());
         list.add(new FindSendFragment());

@@ -50,10 +50,7 @@ public class IntegralActivity extends BaseNetConnectActivity {
         integral_tool = (MyToolBar) findViewById(R.id.integral_tool);
         integral_tool.init(Constant.OTHER_STYLE);
         integral_tool.getOther_title().setText("积分页面");
-        Drawable drawable = getResources().getDrawable(R.drawable.point);
-        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         integral_tool.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
-        integral_tool.getOther_title().setCompoundDrawables(null,null,drawable,null);
 
 
         //返回我的页面

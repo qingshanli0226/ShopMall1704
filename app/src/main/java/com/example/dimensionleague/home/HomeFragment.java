@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.buy.activity.SearchActivity;
 import com.example.common.HomeBean;
+import com.example.common.utils.IntentUtil;
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.dimensionleague.CacheManager;
@@ -25,7 +26,6 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
-import java.util.ArrayList;
 
 
 public class HomeFragment extends BaseNetConnectFragment {
@@ -102,13 +102,12 @@ public class HomeFragment extends BaseNetConnectFragment {
             }
         });
         //TODO 跳转搜索页面
-        my_toolbar.getHome_search().setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), SearchActivity.class);
-            startActivity(intent);
-        });
-        my_toolbar.getHome_message().setOnClickListener(view -> {
-            Intent intent = new Intent(getActivity(), MessageActivity.class);
-            startActivity(intent);
+
+        my_toolbar.getHome_search().setOnClickListener(v -> startActivity(SearchActivity.class,null));
+        my_toolbar.getHome_message().setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString(IntentUtil.LOGIN,"消息");
+            startActivity(MessageActivity.class,bundle);
         });
     }
 

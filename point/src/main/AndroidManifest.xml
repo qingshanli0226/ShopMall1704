@@ -60,6 +60,9 @@
         <activity
             android:name=".message.MessageActivity"
             android:launchMode="singleTop" />
+        <activity
+            android:name=".message.MessageItemActivity"
+            android:launchMode="singleTop" />
     </application>
 
 
