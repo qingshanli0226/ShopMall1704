@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buy.activity.SearchActivity;
 import com.example.common.HomeBean;
+import com.example.common.utils.IntentUtil;
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.dimensionleague.CacheManager;
@@ -106,15 +107,15 @@ public class HomeFragment extends BaseNetConnectFragment {
         my_toolbar.getHome_search().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), SearchActivity.class);
-                startActivity(intent);
+                startActivity(SearchActivity.class,null);
             }
         });
         my_toolbar.getHome_message().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MessageActivity.class);
-                startActivity(intent);
+                Bundle bundle = new Bundle();
+                bundle.putString(IntentUtil.LOGIN,"消息");
+                startActivity(MessageActivity.class,bundle);
             }
         });
     }

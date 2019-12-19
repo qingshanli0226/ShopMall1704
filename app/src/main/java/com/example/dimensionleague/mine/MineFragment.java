@@ -1,7 +1,7 @@
 package com.example.dimensionleague.mine;
 
-import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,7 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.buy.activity.OrderActivity;
 import com.example.common.HomeBean;
-import com.example.common.IntentUtil;
+import com.example.common.utils.IntentUtil;
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.dimensionleague.setting.SettingActivity;
@@ -140,56 +140,93 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
         listAdapter.setClickListener(new OnClickItemListener() {
             @Override
             public void onClickListener(int position) {
-                Intent intent = new Intent();
-                switch (position) {
+                Bundle bundle = new Bundle();
+                if(AccountManager.getInstance().isLogin()){
+                    switch (position) {
+                        case 0:
+                            //待付款
+                            bundle.putString(IntentUtil.ORDER_SHOW, Constant.WAIT_PAY);
+                            startActivity(OrderActivity.class,bundle);
+                            break;
+                        case 1:
+                            //待发货
+                            bundle.putString(IntentUtil.ORDER_SHOW, Constant.WAIT_SEND);
+                            startActivity(OrderActivity.class,bundle);
+                            break;
+                        case 2:
+                            //待评价
+                        case 3:
+                            //退换/售后
+                            toast(getActivity(), list.get(position).getTitle());
+                            break;
+                        case 4:
+                            //我的订单
+                            bundle.putString(IntentUtil.ORDER_SHOW, Constant.ALL_ORDER);
+                            startActivity(OrderActivity.class,bundle);
+                            break;
+                        case 5:
+                            //我的积分
+                            startActivity(IntegralActivity.class,null);
+                            break;
+                        case 6:
+                            //白条
+                        case 7:
+                            //优惠券
+                            toast(getActivity(), list.get(position).getTitle());
+                            break;
+                        case 8:
+                            //运动
+                            startActivity(StepActivity.class,null);
+                            break;
+                        case 9:
+                            //我的钱包
+                            break;
+                    }
+                }else {
+                    switch (position){
+                        case 0:
+                            //待付款
+                            bundle.putString(IntentUtil.LOGIN, Constant.WAIT_PAY);
+                            startActivity(LoginActivity.class,bundle);
+                            break;
+                        case 1:
+                            //待发货
+                            bundle.putString(IntentUtil.LOGIN, Constant.WAIT_SEND);
+                            startActivity(LoginActivity.class,bundle);
+                            break;
+                        case 2:
+                            //待评价
+                        case 3:
+                            //退换/售后
+                            startActivity(LoginActivity.class,null);
+                            break;
+                        case 4:
+                            //我的订单
+                            bundle.putString(IntentUtil.LOGIN, Constant.ALL_ORDER);
+                            startActivity(LoginActivity.class,bundle);
+                            break;
+                        case 5:
+                            //我的积分
+                            bundle.putString(IntentUtil.LOGIN,Constant.MINE_INTEGRAL);
+                            startActivity(LoginActivity.class,bundle);
+                            break;
+                        case 6:
+                            //白条
+                        case 7:
+                            //优惠券
+                            startActivity(LoginActivity.class,null);
+                            break;
+                        case 8:
+                            //运动
+                            bundle.putString(IntentUtil.LOGIN,Constant.EXERCISE);
+                            startActivity(LoginActivity.class,bundle);
+                            break;
+                        case 9:
+                            //我的钱包
+                            startActivity(LoginActivity.class,null);
+                            break;
+                    }
 
-                    case 0:
-                        //待付款
-                        intent.setClass(getContext(), OrderActivity.class);
-                        intent.putExtra(IntentUtil.ORDER_SHOW, OrderActivity.WAIT_PAY);
-                        getContext().startActivity(intent);
-                        break;
-                    case 1:
-                        //待发货
-                        intent.setClass(getContext(), OrderActivity.class);
-                        intent.putExtra(IntentUtil.ORDER_SHOW, OrderActivity.WAIT_SEND);
-                        getContext().startActivity(intent);
-                        break;
-                    case 2:
-                        //待评价
-                        toast(getActivity(), list.get(position).getTitle());
-                        break;
-                    case 3:
-                        //退换/售后
-                        toast(getActivity(), list.get(position).getTitle());
-                        break;
-                    case 4:
-                        //我的订单
-                        intent.setClass(getContext(), OrderActivity.class);
-                        intent.putExtra(IntentUtil.ORDER_SHOW, OrderActivity.ALL);
-                        getContext().startActivity(intent);
-                        break;
-                    case 5:
-                        //我的积分
-                        intent.setClass(getContext(), IntegralActivity.class);
-                        getContext().startActivity(intent);
-                        break;
-                    case 6:
-                        //白条
-                        toast(getActivity(), list.get(position).getTitle());
-                        break;
-                    case 7:
-                        //优惠券
-                        toast(getActivity(), list.get(position).getTitle());
-                        break;
-                    case 8:
-                        //运动
-                        intent.setClass(getContext(), StepActivity.class);
-                        getContext().startActivity(intent);
-                        break;
-                    case 9:
-                        //我的钱包
-                        break;
                 }
             }
         });

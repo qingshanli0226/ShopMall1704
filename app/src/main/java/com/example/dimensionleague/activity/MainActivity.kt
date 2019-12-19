@@ -1,17 +1,9 @@
 package com.example.dimensionleague.activity
 
-import android.content.ContentResolver
-import android.content.Intent
-import android.graphics.Bitmap
 import androidx.fragment.app.Fragment
 import android.graphics.Color
-import android.net.Uri
-import android.provider.MediaStore
 import android.view.KeyEvent
 import android.widget.Toast
-import anet.channel.strategy.l
-
-import com.example.dimensionleague.R
 import com.example.buy.ShopCartFragment
 import com.example.common.view.MyToast
 import com.example.dimensionleague.find.FindFragment
@@ -23,9 +15,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 import com.example.framework.base.BaseNetConnectActivity
 import com.example.framework.listener.OnShopCartListener
 import com.example.buy.CartManager
+import com.example.dimensionleague.R
+
 
 class MainActivity : BaseNetConnectActivity() {
     lateinit var listener:OnShopCartListener
+    var exitTime = 0
     override fun getRelativeLayout(): Int {
         return R.id.main_relative
     }
@@ -65,6 +60,7 @@ class MainActivity : BaseNetConnectActivity() {
             .normalTextColor(Color.parseColor("#707070"))
             .selectIconItems(
                 intArrayOf(
+
                     R.drawable.home,
                     R.drawable.vertical_list,
                     R.drawable.find,
@@ -101,9 +97,23 @@ class MainActivity : BaseNetConnectActivity() {
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             moveTaskToBack(false)
+            exit()
             return true
         }
         return super.onKeyDown(keyCode, event)
+    }
+
+    fun exit() {
+        if (System.currentTimeMillis() - exitTime > 2000) {
+            Toast.makeText(
+                applicationContext, "再按一次退出程序",
+                Toast.LENGTH_SHORT
+            ).show()
+            exitTime = System.currentTimeMillis().toInt()
+        } else {
+            finish()
+            System.exit(0)
+        }
     }
 }
 

@@ -105,6 +105,7 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
         }
         foodButton.setOnClickListener {
             val logoutDialog = LogoutDialog(this@SettingActivity)
+            logoutDialog.init(R.layout.logout_dialog)
             //TODO 背景透明
             logoutDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
             logoutDialog.setCanceledOnTouchOutside(false)

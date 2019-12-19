@@ -1,23 +1,17 @@
 package com.example.dimensionleague.mine;
 import android.content.Intent;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
-import com.bumptech.glide.Glide;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.buy.activity.GoodsActiviy;
 import com.example.common.HomeBean;
-import com.example.common.IntentUtil;
+import com.example.common.utils.IntentUtil;
 import com.example.dimensionleague.R;
 import com.example.framework.base.BaseRecyclerAdapter;
 import com.example.framework.base.BaseViewHolder;
 import com.example.framework.port.OnClickItemListener;
 import com.example.net.AppNetConfig;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MineRecommendAdapter extends BaseRecyclerAdapter<HomeBean.ResultBean.SeckillInfoBean.ListBean> {

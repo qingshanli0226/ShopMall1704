@@ -25,5 +25,14 @@ public class Constant {
     public static final int BUY_MESSAGE_STYLE = 3;
     public static final int MINE_STYLE = 4;
     public static final int OTHER_STYLE = 5;
+    //TODO 没登录跳转匹配页面
+    public static final String MESSAGE = "消息";
+    public static final String USER_SETTING = "用户设置";
+    public static final String ALL_ORDER = "全部订单";
+    public final static String WAIT_PAY = "待支付订单";
+    public final static String WAIT_SEND = "待发货订单";
+    public final static String MINE_INTEGRAL = "我的积分";
+    public final static String EXERCISE = "运动";
+    public final static String BUY_CAR = "购物车";
 
 }

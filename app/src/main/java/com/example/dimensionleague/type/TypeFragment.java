@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.buy.activity.SearchActivity;
 import com.example.common.TypeBean;
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
@@ -84,15 +86,16 @@ public class TypeFragment extends BaseNetConnectFragment {
         my_toolbar.getSearch_edit().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(),"跳转搜索页面",Toast.LENGTH_SHORT).show();
+                startActivity(SearchActivity.class,null);
             }
         });
         //TODO 点击消息跳转到消息页面
         my_toolbar.getSearch_message().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MessageActivity.class);
-                startActivity(intent);
+                Bundle bundle = new Bundle();
+                bundle.putString("intent","消息");
+                startActivity(MessageActivity.class,bundle);
             }
         });
         typeURL.add(AppNetConfig.SKIRT_URL);

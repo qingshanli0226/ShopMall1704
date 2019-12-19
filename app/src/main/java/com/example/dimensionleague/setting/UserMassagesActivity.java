@@ -3,6 +3,7 @@ package com.example.dimensionleague.setting;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,7 +21,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.example.common.code.Constant;
 import com.example.common.port.IAccountCallBack;
+import com.example.common.view.MyToolBar;
 import com.example.dimensionleague.R;
 import com.example.dimensionleague.userbean.UploadBean;
 import com.example.framework.base.BaseActivity;
@@ -53,17 +56,20 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
     private ImageView heanUserImg;
     private TextView heanUserName;
     private View headView;
-    private Calendar nowdate=Calendar.getInstance();
+    private Calendar nowdate = Calendar.getInstance();
     private int mYear;
     private int mMonth;
     private int mDay;
     private MySettingAdapter adapter;
+    private MyToolBar user_toolbar;
 
     @Override
-    public void onRegisterSuccess() {}
+    public void onRegisterSuccess() {
+    }
 
     @Override
-    public void onLogin() {}
+    public void onLogin() {
+    }
 
     @Override
     public void onLogout() {
@@ -71,50 +77,60 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
 
     @Override
     public void onAvatarUpdate(String url) {
-        Glide.with(this).load(AccountManager.getInstance().user.getAvatar()).apply(new RequestOptions().circleCrop()).into(heanUserImg);
+        Glide.with(this).load(AppNetConfig.BASE_URL + AccountManager.getInstance().user.getAvatar()).apply(new RequestOptions().circleCrop()).into(heanUserImg);
     }
 
     @Override
     public int getLayoutId() {
-       return R.layout.activity_user_massage;
+        return R.layout.activity_user_massage;
     }
 
     @Override
     public void init() {
-
+        user_toolbar = findViewById(R.id.user_toolbar);
+        user_toolbar.init(Constant.OTHER_STYLE);
+        user_toolbar.setBackgroundColor(Color.WHITE);
+        user_toolbar.getOther_back().setImageResource(R.drawable.back2);
+        user_toolbar.getOther_title().setText("个人设置");
+        user_toolbar.getOther_title().setTextColor(Color.BLACK);
         headView = LayoutInflater.from(this).inflate(R.layout.user_item_head, null);
-        heanUserImg=headView.findViewById(R.id.user_massage_item_img) ;
-        heanUserName=headView.findViewById(R.id.user_massage_item_title);
+        heanUserImg = headView.findViewById(R.id.user_massage_item_img);
+        heanUserName = headView.findViewById(R.id.user_massage_item_title);
         AccountManager.getInstance().registerUserCallBack(this);
-        rv=findViewById(R.id.user_massage_rv);
+        rv = findViewById(R.id.user_massage_rv);
     }
 
     @Override
     public void initDate() {
-        list=new ArrayList<>();
-        list.add(new SettingBean("用户名",""));
-        list.add(new SettingBean("昵称",""));
-        list.add(new SettingBean("性别","保密"));
-        list.add(new SettingBean("出生年月",""));
-        mYear =nowdate.get(Calendar.YEAR);
+        list = new ArrayList<>();
+        list.add(new SettingBean("用户名", ""));
+        list.add(new SettingBean("昵称", ""));
+        list.add(new SettingBean("性别", "保密"));
+        list.add(new SettingBean("出生年月", ""));
+        mYear = nowdate.get(Calendar.YEAR);
         mMonth = nowdate.get(Calendar.MONTH);
         mDay = nowdate.get(Calendar.DAY_OF_MONTH);
-//         判断是否登录
-        if (AccountManager.getInstance().isLogin()){
-            list.get(0).setMassage(""+AccountManager.getInstance().user.getName());
-            list.get(1).setMassage(""+AccountManager.getInstance().user.getName());
-            if (AccountManager.getInstance().user.getAvatar()!=null){
-                Glide.with(this).load(""+AppNetConfig.BASE_URL+AccountManager.getInstance().user.getAvatar()).apply(new RequestOptions().circleCrop()).into(heanUserImg);
+        user_toolbar.getOther_back().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishActivity();
+            }
+        });
+//      判断是否登录
+        if (AccountManager.getInstance().isLogin()) {
+            list.get(0).setMassage("" + AccountManager.getInstance().user.getName());
+            list.get(1).setMassage("" + AccountManager.getInstance().user.getName());
+            if (AccountManager.getInstance().user.getAvatar() != null) {
+                Glide.with(this).load("" + AppNetConfig.BASE_URL + AccountManager.getInstance().user.getAvatar()).apply(new RequestOptions().circleCrop()).into(heanUserImg);
             }
         }
         rv.setLayoutManager(new LinearLayoutManager(this));
-        adapter= new MySettingAdapter(R.layout.setting_item,list);
+        adapter = new MySettingAdapter(R.layout.setting_item, list);
         adapter.addHeaderView(headView);
         rv.setAdapter(adapter);
         AccountManager.getInstance().registerUserCallBack(this);
 //        点击事件
         initListener();
-
 
 
     }
@@ -126,9 +142,9 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
                 new AvatarStudio.Builder(UserMassagesActivity.this)
                         .needCrop(false)
                         .dimEnabled(true)
-                        .setAspect(1,1)
-                        .setOutput(50,50)
-                        .setText("拍照","我的相册","取消")
+                        .setAspect(1, 1)
+                        .setOutput(50, 50)
+                        .setText("拍照", "我的相册", "取消")
                         .setTextColor(Color.BLUE)
                         .show(new AvatarStudio.CallBack() {
                             @Override
@@ -146,10 +162,10 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
-                switch (position){
+                switch (position) {
                     case 0:
                         Toast toast = Toast.makeText(view.getContext(), "这个是不可以修改的哦`", Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.CENTER,0,0);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
                         break;
                     case 1:
@@ -171,7 +187,7 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
                                         dialog.cancel();
                                     }
                                 });
-                                builder.show();
+                        builder.show();
                         break;
                     case 2:
                         showSexDialog(position);
@@ -186,12 +202,12 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
                                 list.get(position).setMassage("" + s);
                                 adapter.notifyDataSetChanged();
                             }
-                        },mYear, mMonth, mDay).show();
+                        }, mYear, mMonth, mDay).show();
                         break;
                 }
             }
         });
-            }
+    }
 
     private void showSexDialog(int position) {
 //        性别选择
@@ -209,10 +225,10 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
     }
 
 
-//上传头像
+    //上传头像
     private void upload(File file) {
         if (!file.exists()) {
-            toast(this,"上传文件不存在!");
+            toast(this, "上传文件不存在!");
             return;
         }
         //创建上传文件的请求体.
@@ -224,16 +240,17 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
-                    public void onSubscribe(Disposable d) {}
+                    public void onSubscribe(Disposable d) {
+                    }
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         String s = null;
                         try {
                             s = responseBody.string();
-                            Log.i("xxxx", "ResponseBody:上传 "+s);
+                            Log.i("xxxx", "ResponseBody:上传 " + s);
                             UploadBean uploadBean = new Gson().fromJson(s, UploadBean.class);
-                            if ("200".equals(uploadBean.getCode())){
+                            if ("200".equals(uploadBean.getCode())) {
                                 AccountManager.getInstance().getUser().setAvatar(uploadBean.getResult());
                                 AccountManager.getInstance().notifyUserAvatarUpdate(AccountManager.getInstance().getUser().getAvatar().toString());
                             }
@@ -250,7 +267,8 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
                     }
 
                     @Override
-                    public void onComplete() {}
+                    public void onComplete() {
+                    }
                 });
 
     }
@@ -259,5 +277,11 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
     protected void onDestroy() {
         super.onDestroy();
         AccountManager.getInstance().unRegisterUserCallBack(this);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) and run LayoutCreator again
     }
 }

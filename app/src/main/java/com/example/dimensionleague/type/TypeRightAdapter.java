@@ -1,7 +1,6 @@
 package com.example.dimensionleague.type;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +8,6 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.buy.activity.GoodsActiviy;
-import com.example.common.IntentUtil;
 import com.example.dimensionleague.R;
 import com.example.common.TypeBean;
 
