@@ -18,6 +18,7 @@ import android.view.View;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.common.UIUtils;
 import com.example.step.R;
 
 public class StepArcView extends View {
@@ -72,7 +73,6 @@ public class StepArcView extends View {
     public StepArcView(Context context) {
         super(context);
         init();
-
     }
 
 
@@ -97,6 +97,7 @@ public class StepArcView extends View {
         setBorderWidthw(1);
         setMarginWidth(3);
     }
+
 
     public float getBorderWidth() {
         return borderWidth;

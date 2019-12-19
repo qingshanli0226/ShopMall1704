@@ -19,11 +19,11 @@ import com.example.common.OrmUtils;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.bean.ShopStepBean;
-import com.example.step.R;
 import com.example.step.CustomView.RunView;
 import com.example.framework.bean.ShopStepBean;
 import com.example.step.CustomView.StepArcView;
 import com.example.framework.manager.StepManager;
+import com.example.step.R;
 import com.litesuits.orm.LiteOrm;
 import com.litesuits.orm.db.assit.SQLiteHelper;
 
@@ -51,6 +51,7 @@ public class IntegralActivity extends BaseActivity {
     @Override
     public void initView() {
 
+        //555
         tb_integral = findViewById(R.id.tb_integral);
         intergral_Step=findViewById(R.id.Integral_step);
         integral=findViewById(R.id.Integral_integral);
@@ -85,6 +86,7 @@ public class IntegralActivity extends BaseActivity {
 
             }
         });
+
 
 
 
@@ -143,6 +145,7 @@ public class IntegralActivity extends BaseActivity {
 
 
     }
+
 
 
 
