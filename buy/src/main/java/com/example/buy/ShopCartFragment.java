@@ -393,8 +393,12 @@ public class ShopCartFragment extends BaseNetConnectFragment{
          **/
          if (list.isEmpty()){
              checkAll.setEnabled(false);
+             buyBut.setEnabled(false);
+             myToolBar.getBuy_compile().setEnabled(false);
          }else {
              checkAll.setEnabled(true);
+             myToolBar.getBuy_compile().setEnabled(true);
+             buyBut.setEnabled(true);
          }
         checkStatus = true;
         for (CheckGoodsData i : CartManager.getInstance().getChecks()) {
