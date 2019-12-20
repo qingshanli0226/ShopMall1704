@@ -91,40 +91,45 @@ public class MineFragment extends BaseFragment implements IPostBaseView<LoginBea
 
             }
         });
+        boolean loginStatus = UserManager.getInstance().getLoginStatus();
+        if (loginStatus){
+            String avatar = UserManager.getInstance().getUser().getAvatar();
+            Retrofit.Builder builder = new Retrofit.Builder();
+            builder.baseUrl("http://49.233.93.155:8080/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .build()
+                    .create(NetGetService.class)
+                    .getGetData("http://49.233.93.155:8080"+avatar,new HashMap<String, String>())
+                    .subscribe(new Observer<ResponseBody>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
 
-        String avatar = UserManager.getInstance().getUser().getAvatar();
-        Retrofit.Builder builder = new Retrofit.Builder();
-        builder.baseUrl("http://49.233.93.155:8080/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-                .create(NetGetService.class)
-                .getGetData("http://49.233.93.155:8080"+avatar,new HashMap<String, String>())
-                .subscribe(new Observer<ResponseBody>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(ResponseBody body) {
-                        try {
-                            Log.e("####", body.string());
-                        } catch (IOException e) {
-                            e.printStackTrace();
                         }
-                    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("####", ""+e.getMessage());
-                    }
+                        @Override
+                        public void onNext(ResponseBody body) {
+                            try {
+                                Log.e("####", body.string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
 
-                    @Override
-                    public void onComplete() {
+                        @Override
+                        public void onError(Throwable e) {
+                            Log.e("####", ""+e.getMessage());
+                        }
 
-                    }
-                });
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        }else {
+            Toast.makeText(getActivity(), "未登录", Toast.LENGTH_SHORT).show();
+        }
+
 
         tvUserScore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,6 +165,7 @@ public class MineFragment extends BaseFragment implements IPostBaseView<LoginBea
 
 
         boolean isAutomatic = login.getBoolean("isAutomatic", false);
+        //判断是否登录
         if (isAutomatic) {
             tvUsername.setVisibility(View.GONE);
             automaticPresenter = new AutomaticPresenter(getToken);
