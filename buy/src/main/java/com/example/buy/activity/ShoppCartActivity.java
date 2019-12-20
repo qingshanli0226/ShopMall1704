@@ -1,10 +1,7 @@
 package com.example.buy.activity;
 
-import android.content.Intent;
-
 import com.example.buy.R;
 import com.example.buy.ShopCartFragment;
-import com.example.common.utils.IntentUtil;
 import com.example.framework.base.BaseNetConnectActivity;
 
 public class ShoppCartActivity extends BaseNetConnectActivity {

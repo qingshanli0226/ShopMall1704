@@ -21,6 +21,7 @@ import java.util.TreeMap;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
@@ -31,6 +32,7 @@ import okhttp3.ResponseBody;
 public abstract class BasePresenter<T> implements IPresenter<T> {
 
     private IView<T> iView;
+    CompositeDisposable disposables = new CompositeDisposable();
 
     //TODO get获取单数据
     @Override
@@ -80,8 +82,8 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                                 iView.showLoading();
                         } catch (Exception e) {
                             e.printStackTrace();
-//                            ErrorDisposeManager.HandlerError(e);
-//                            throw new RuntimeException(e.getMessage());
+                            ErrorDisposeManager.HandlerError(e);
+                            throw new RuntimeException(e.getMessage());
                         }
                     }
 
@@ -101,9 +103,9 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
-//                            iView.hideLoading();
-//                            iView.showError();
-//                            ErrorDisposeManager.HandlerError(e);
+                            iView.hideLoading();
+                            iView.showError();
+                            ErrorDisposeManager.HandlerError(e);
                         }
                     }
 
@@ -114,12 +116,11 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                             if (iView != null) {
                                 iView.hideLoading();
                                 iView.showError();
-//                                iView.onHttpRequestDataFailed(6001, ErrorCode.HTTP_ERROR);
-//                                ErrorDisposeManager.HandlerError(e);
-//                                Log.d("lhf", e.getMessage());
+                                iView.onHttpRequestDataFailed(6001, ErrorCode.HTTP_ERROR);
+                                ErrorDisposeManager.HandlerError(e);
                             }
                         } catch (Exception e1) {
-//                            ErrorDisposeManager.HandlerError(e1);
+                            ErrorDisposeManager.HandlerError(e1);
                         }
                     }
 
@@ -148,19 +149,24 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
-                        if(iView!=null){
-                            iView.hideLoading();
-                            try {
+                        try {
+                            if (iView != null) {
+                                iView.hideLoading();
                                 String string = responseBody.string();
-//                            Log.e("xxxx","请求到的各种数据:"+string);
-                                T resEntity = new Gson().fromJson(string, getBeanType());
-                                iView.onRequestSuccess(requestCode, resEntity);
-                            } catch (IOException e) {
-//                                ErrorDisposeManager.HandlerError(e);
-//                                throw new RuntimeException(e.getMessage());
+                                if (getBeanType()==null){
+                                    iView.getSearchDataSuccess(requestCode,string);
+                                }else {
+                                    T resEntity = new Gson().fromJson(string, getBeanType());
+                                    //TODO 获取数据成功
+                                    iView.onRequestSuccess(requestCode,resEntity);
+                                }
                             }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            iView.hideLoading();
+                            iView.showError();
+                            ErrorDisposeManager.HandlerError(e);
                         }
-
 
                     }
 
@@ -170,10 +176,10 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                             try {
                                 iView.hideLoading();
                                 iView.onHttpRequestDataFailed(6001, ErrorCode.HTTP_ERROR);
-//                                ErrorDisposeManager.HandlerError(e);
+                                ErrorDisposeManager.HandlerError(e);
                             } catch (Exception e1) {
-//                                ErrorDisposeManager.HandlerError(e1);
-//                                throw new RuntimeException(e1.getMessage());
+                                ErrorDisposeManager.HandlerError(e1);
+                                throw new RuntimeException(e1.getMessage());
                             }
                         }
                     }
@@ -231,8 +237,10 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
     //TODO 销毁IView
     @Override
     public void detachView() {
+        disposables.clear();
         if (iView != null) {
             iView = null;
         }
     }
+
 }

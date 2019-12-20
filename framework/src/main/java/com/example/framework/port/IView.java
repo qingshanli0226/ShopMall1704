@@ -31,4 +31,6 @@ public interface IView<T> {
     void onHttpRequestDataFailed(int requestCode, ErrorCode error);
     //搜索
     void getSearchDataSuccess(String str);
+
+    void getSearchDataSuccess(int requestCode,String str);
 }

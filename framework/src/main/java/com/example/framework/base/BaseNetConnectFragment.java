@@ -108,4 +108,10 @@ public abstract class BaseNetConnectFragment extends BaseFragment implements IVi
     public void getSearchDataSuccess(String str) {
 
     }
+
+    @Override
+    public void getSearchDataSuccess(int requestCode, String str) {
+
+    }
 }
+

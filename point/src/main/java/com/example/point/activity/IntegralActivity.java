@@ -70,7 +70,7 @@ public class IntegralActivity extends BaseNetConnectActivity {
         if (pointBean == null) {
             pointBean = new UpdatePointBean();
         }
-        List<StepBean> beans = new DaoManager(this).loadStepBean();
+        List<StepBean> beans = DaoManager.Companion.getInstance(this).loadStepBean();
         //步数累加
         long count = 0;
         for (StepBean bean : beans) {

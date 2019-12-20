@@ -8,7 +8,7 @@ import com.example.point.StepBeanDao
 class DaoManager {
     private var stepBeanDao: StepBeanDao
 
-    constructor(ctx: Context) {
+    private constructor(ctx: Context) {
         //创建一个db 数据库
         //通过DaoMaster内部类DaoMaster.DevOpenHelper创建一个SqliteOpenHelper类实例， 通过openhelper获取数据db
         var db = DaoMaster.DevOpenHelper(ctx, "1704.db", null).writableDatabase
@@ -22,8 +22,7 @@ class DaoManager {
         private var instance: DaoManager? = null
         public fun getInstance(ctx: Context): DaoManager {
             if (instance == null) {
-                instance =
-                    DaoManager(ctx)
+                instance = DaoManager(ctx)
             }
             return instance!!
         }
