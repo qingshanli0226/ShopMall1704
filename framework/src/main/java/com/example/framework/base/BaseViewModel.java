@@ -24,6 +24,7 @@ public class BaseViewModel<T> extends ViewModel {
         return tMutableLiveData;
     }
 
+    //网络请求
     public void getData() {
         RetrofitCreator.getNetGetSerivice().getGetData(getPath(), getHead(), getParms())
                 .subscribeOn(Schedulers.io())
