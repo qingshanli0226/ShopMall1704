@@ -15,11 +15,12 @@
         android:layout_alignParentTop="true"
         android:padding="10dp">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/mIbGoodInfoBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/top_bar_left_back" />
+             style="@style/DefaultImage"
+            android:src="@drawable/top_bar_left_back"
+            android:background="?android:selectableItemBackgroundBorderless"
+            tools:ignore="NewApi" />
 
         <TextView
             android:layout_width="0dp"
@@ -30,11 +31,12 @@
             android:textColor="#564c4c"
             android:textSize="20sp" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/mIbGoodINfoMore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/icon_more" />
+           style="@style/DefaultImage"
+            android:src="@drawable/icon_more"
+            android:background="?android:selectableItemBackgroundBorderless"
+            tools:ignore="NewApi" />
 
     </LinearLayout>
     <!--分割线-->
