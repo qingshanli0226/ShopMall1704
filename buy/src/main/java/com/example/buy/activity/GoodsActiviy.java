@@ -41,6 +41,7 @@ import com.example.common.TypeBean;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.port.IPresenter;
 import com.example.net.AppNetConfig;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 
@@ -410,6 +411,18 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
     }
 
     @Override
+    protected void onPause() {
+        MobclickAgent.onPause(this);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        MobclickAgent.onResume(this);
+        super.onResume();
+    }
+
+    @Override
     protected void onDestroy() {
         if (addCartPresenter != null) {
             addCartPresenter.detachView();
@@ -426,5 +439,6 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
             redNum.setVisibility(View.VISIBLE);
         }
     }
+
 
 }

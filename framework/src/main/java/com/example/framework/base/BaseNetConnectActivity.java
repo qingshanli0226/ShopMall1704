@@ -122,7 +122,17 @@ public abstract class BaseNetConnectActivity extends BaseActivity implements IAc
         }
 
     }
+    @Override
+    protected void onPause() {
+        MobclickAgent.onPause(this);
+        super.onPause();
+    }
 
+    @Override
+    protected void onResume() {
+        MobclickAgent.onResume(this);
+        super.onResume();
+    }
     @Override
     public void getSearchDataSuccess(String str) {
 

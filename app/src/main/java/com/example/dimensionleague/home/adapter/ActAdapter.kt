@@ -11,7 +11,7 @@ class ActAdapter(
     image:List<String>,
     context:Context
 ) : PagerAdapter() {
-    var image:List<String>? = null
+    private var image:List<String>? = null
     var context:Context? = null
     init {
         this.image = image

@@ -20,23 +20,25 @@ import com.example.common.code.Constant
 import com.example.common.view.LogoutDialog
 import com.example.dimensionleague.R
 import com.example.dimensionleague.activity.MainActivity
+import com.example.dimensionleague.address.AddressActivity
 import com.example.net.AppNetConfig
-
+import com.umeng.analytics.MobclickAgent
 class SettingActivity : BaseActivity(),IAccountCallBack {
 
 
-    var list:MutableList<SettingBean> = mutableListOf()
-    lateinit var heanImg:ImageView
-    lateinit var heanName:TextView
-    lateinit var heanTitle:TextView
-    lateinit var headView: View
-    lateinit var foodView: View
-    lateinit var foodButton:Button
-    lateinit var adapter:MySettingAdapter
+    private var list:MutableList<SettingBean> = mutableListOf()
+    private lateinit var heanImg:ImageView
+    private lateinit var heanName:TextView
+    private lateinit var heanTitle:TextView
+    private lateinit var headView: View
+    private lateinit var foodView: View
+    private lateinit var foodButton:Button
+    private lateinit var adapter:MySettingAdapter
     override fun getLayoutId(): Int {
         return R.layout.activity_setting
     }
 
+    @SuppressLint("InflateParams")
     override fun init() {
         setting_toolbar.init(Constant.OTHER_STYLE)
         setting_toolbar.background = resources.getDrawable(R.drawable.toolbar_style)
@@ -45,25 +47,17 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
         setting_toolbar.other_title.text = getString(R.string.user_setting)
         headView = LayoutInflater.from(this).inflate(R.layout.setting_item_head, null)
         foodView = LayoutInflater.from(this).inflate(R.layout.setting_item_food, null)
-        foodButton=foodView.findViewById<Button>(R.id.setting_food_out)
-        heanImg=headView.findViewById<ImageView>(R.id.setting_head_img)
-        heanTitle=headView.findViewById<TextView>(R.id.setting_head_user_name)
-        heanName=headView.findViewById<TextView>(R.id.setting_head_name)
+        foodButton=foodView.findViewById(R.id.setting_food_out)
+        heanImg=headView.findViewById(R.id.setting_head_img)
+        heanTitle=headView.findViewById(R.id.setting_head_user_name)
+        heanName=headView.findViewById(R.id.setting_head_name)
         AccountManager.getInstance().registerUserCallBack(this)
 
 
     }
 
     override fun initDate() {
-        setting_toolbar.other_back.setOnClickListener {
-            var intent = Intent(this,MainActivity::class.java)
-            boundActivity(intent)
-            finish()
-        }
         initRecycleView()
-
-
-
     }
 //    添加rv布局
     @SuppressLint("SetTextI18n")
@@ -80,8 +74,8 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
         list.add(SettingBean(getString(R.string.setting_about), packageManager.getPackageInfo(packageName,0).versionName))
     //        判断是否登录
     if (AccountManager.getInstance().isLogin){
-        heanTitle.setText(AccountManager.getInstance().user.name.toString())
-        heanName.setText(getString(R.string.setting_user)+AccountManager.getInstance().user.name.toString())
+        heanTitle.text=(AccountManager.getInstance().user.name.toString())
+        heanName.text=(getString(R.string.setting_user)+AccountManager.getInstance().user.name.toString())
         foodView.visibility=View.VISIBLE
         if (AccountManager.getInstance().user.avatar!=null){
             Glide.with(this).load(AppNetConfig.BASE_URL+AccountManager.getInstance().user.avatar).apply(RequestOptions().circleCrop()).into(heanImg)
@@ -94,15 +88,21 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
         adapter= MySettingAdapter(R.layout.setting_item,list)
         adapter.addHeaderView(headView)
         adapter.addFooterView(foodView)
-        setting_rv.adapter=adapter;
-        initListener()
+        setting_rv.adapter=adapter
+    initListener()
 
     }
 
     private fun initListener() {
 //        全部监听
         adapter.setOnItemChildClickListener { adapter, view, position ->
-            toast(this,list.get(position).title+R.string.contact)
+            when(position){
+                0-> {
+                    startActivity(AddressActivity::class.java,null)
+                }
+                else ->  toast(this, list[position].title+R.string.contact)
+            }
+
         }
         foodButton.setOnClickListener {
             val logoutDialog = LogoutDialog(this@SettingActivity)
@@ -111,13 +111,12 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
             logoutDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
             logoutDialog.setCanceledOnTouchOutside(false)
             logoutDialog.show()
-
-            val cancel_btn = logoutDialog.findViewById<Button>(R.id.cancel)
-            cancel_btn.setOnClickListener {
+            val notarizeBtn = logoutDialog.findViewById<Button>(R.id.notarize)
+            val cancelBtn = logoutDialog.findViewById<Button>(R.id.cancel)
+            cancelBtn.setOnClickListener {
                 logoutDialog.dismiss()
             }
-            val notarize_btn = logoutDialog.findViewById<Button>(R.id.notarize)
-            notarize_btn.setOnClickListener {
+            notarizeBtn.setOnClickListener {
                 AccountManager.getInstance().logout()
                 AccountManager.getInstance().notifyLogout()
                 logoutDialog.dismiss()
@@ -126,13 +125,18 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
             }
         }
         headView.setOnClickListener {
-            if (R.string.mine_login.equals(heanTitle.text.toString())){
+            if (heanTitle.text == getString(R.string.mine_login)){
 //                登录注册跳转
                 startActivity(LoginActivity::class.java,null)
             }else{
 //                跳转到个人信息
                 startActivity(UserMassagesActivity::class.java,null)
             }
+        }
+        setting_toolbar.other_back.setOnClickListener {
+            val intent = Intent(this,MainActivity::class.java)
+            boundActivity(intent)
+            finish()
         }
 
     }
@@ -150,5 +154,15 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
     override fun onDestroy() {
         super.onDestroy()
         AccountManager.getInstance().unRegisterUserCallBack(this)
+    }
+
+    override fun onPause() {
+        MobclickAgent.onPause(this)
+        super.onPause()
+    }
+
+    override fun onResume() {
+        MobclickAgent.onResume(this)
+        super.onResume()
     }
 }

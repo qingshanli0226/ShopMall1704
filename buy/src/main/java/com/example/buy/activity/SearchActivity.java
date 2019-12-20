@@ -25,6 +25,7 @@ import com.example.framework.base.BaseViewHolder;
 import com.example.framework.port.IPresenter;
 import com.example.net.AppNetConfig;
 import com.google.gson.Gson;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -191,5 +192,16 @@ public class SearchActivity extends BaseNetConnectActivity {
         }else {
             Toast.makeText(SearchActivity.this,"请输入英文或拼音",Toast.LENGTH_SHORT).show();
         }
+    }
+    @Override
+    protected void onPause() {
+        MobclickAgent.onPause(this);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        MobclickAgent.onResume(this);
+        super.onResume();
     }
 }

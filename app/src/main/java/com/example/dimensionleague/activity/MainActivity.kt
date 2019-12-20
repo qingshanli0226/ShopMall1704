@@ -3,10 +3,7 @@ package com.example.dimensionleague.activity
 import androidx.fragment.app.Fragment
 import android.view.KeyEvent
 import android.widget.Toast
-import anet.channel.util.Utils.context
-
 import com.example.dimensionleague.R
-import android.graphics.Color
 import com.example.buy.ShopCartFragment
 import com.example.common.view.MyToast
 import com.example.dimensionleague.find.FindFragment
@@ -18,17 +15,29 @@ import kotlinx.android.synthetic.main.activity_main.*
 import com.example.framework.base.BaseNetConnectActivity
 import com.example.framework.listener.OnShopCartListener
 import com.example.buy.CartManager
+import com.umeng.analytics.MobclickAgent
+import kotlin.system.exitProcess
+
+
 
 class MainActivity : BaseNetConnectActivity() {
 
     private lateinit var listener: OnShopCartListener
 
-    var exitTime = 0L
+    private var exitTime = 0L
     override fun getRelativeLayout(): Int {
         return R.id.main_relative
     }
 
+    override fun onPause() {
+        MobclickAgent.onPause(this)
+        super.onPause()
+    }
 
+    override fun onResume() {
+        MobclickAgent.onResume(this)
+        super.onResume()
+    }
     override fun getLayoutId(): Int {
         return R.layout.activity_main
     }
@@ -121,7 +130,7 @@ class MainActivity : BaseNetConnectActivity() {
     }
 
 
-    fun exit() {
+    private fun exit() {
         if (System.currentTimeMillis() - exitTime > 2000) {
             Toast.makeText(
                 applicationContext, "再按一次退出程序",
@@ -130,7 +139,7 @@ class MainActivity : BaseNetConnectActivity() {
             exitTime = System.currentTimeMillis()
         } else {
             finish()
-            System.exit(0)
+            exitProcess(0)
         }
     }
 }

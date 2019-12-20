@@ -7,7 +7,7 @@ import com.example.framework.base.BaseViewHolder;
 import com.example.net.AppNetConfig;
 import java.util.List;
 
-public class MineRecycleAdapter extends BaseRecyclerAdapter<HomeBean.ResultBean.ChannelInfoBean> {
+class MineRecycleAdapter extends BaseRecyclerAdapter<HomeBean.ResultBean.ChannelInfoBean> {
     //我的页面第二个RecycleView
 
     public MineRecycleAdapter(int layoutId, List<HomeBean.ResultBean.ChannelInfoBean> dateList) {

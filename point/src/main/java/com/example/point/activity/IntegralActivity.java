@@ -19,6 +19,7 @@ import com.example.point.R;
 import com.example.point.bean.UpdatePointBean;
 import com.example.point.service.StepBean;
 import com.example.point.stepmanager.DaoManager;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -165,7 +166,17 @@ public class IntegralActivity extends BaseNetConnectActivity {
             integral_img.setImageResource(R.mipmap.wu);
         }
     }
+    @Override
+    protected void onPause() {
+        MobclickAgent.onPause(this);
+        super.onPause();
+    }
 
+    @Override
+    protected void onResume() {
+        MobclickAgent.onResume(this);
+        super.onResume();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -26,6 +26,7 @@ import com.example.point.StepIsSupport;
 import com.example.point.adpter.StepItemAdpter;
 import com.example.point.service.StepBean;
 import com.example.point.stepmanager.DaoManager;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.Calendar;
 import java.util.List;
@@ -235,7 +236,16 @@ public class HistoryActivity extends BaseActivity {
 
     private void initView() {
         history_spinner = (Spinner) findViewById(R.id.history_spinner);
+    }
+    @Override
+    protected void onPause() {
+        MobclickAgent.onPause(this);
+        super.onPause();
+    }
 
-
+    @Override
+    protected void onResume() {
+        MobclickAgent.onResume(this);
+        super.onResume();
     }
 }

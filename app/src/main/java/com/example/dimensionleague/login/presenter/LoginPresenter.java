@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public class LoginPresenter extends BasePresenter<LoginBean> {
 
-    Map<String,String> map;
+    private final Map<String,String> map;
 
     public LoginPresenter(Map<String, String> map) {
         this.map = map;

@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class RegisterPresenter extends BasePresenter<RegisterBean> {
 
-    Map<String,String> map;
+    private final Map<String,String> map;
 
     public RegisterPresenter(Map<String, String> map) {
         this.map = map;

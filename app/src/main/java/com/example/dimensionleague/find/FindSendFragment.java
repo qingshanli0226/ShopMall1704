@@ -27,7 +27,7 @@ public class FindSendFragment extends BaseNetConnectFragment {
     }
 
     @Override
-    public void init(View view) {
+    public void init(View view ) {
         super.init(view);
         rv=view.findViewById(R.id.find_rv);
         list=new ArrayList<>();

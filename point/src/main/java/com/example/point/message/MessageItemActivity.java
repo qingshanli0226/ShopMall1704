@@ -15,6 +15,7 @@ import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.point.R;
+import com.umeng.analytics.MobclickAgent;
 
 public class MessageItemActivity extends BaseNetConnectActivity {
     private MyToolBar messageitem_toolbar;
@@ -82,7 +83,11 @@ public class MessageItemActivity extends BaseNetConnectActivity {
     public int getRelativeLayout() {
         return super.getRelativeLayout();
     }
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

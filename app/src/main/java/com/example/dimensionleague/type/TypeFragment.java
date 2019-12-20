@@ -27,6 +27,7 @@ import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class TypeFragment extends BaseNetConnectFragment {
     private RecyclerView rv_right;
@@ -34,7 +35,6 @@ public class TypeFragment extends BaseNetConnectFragment {
     private TypePresenter typePresenter;
     private TypeTagAdapter tagAdapter;
     private List<String> typeURL;
-    private TypeRightAdapter rightAdapter;
     private MyToolBar my_toolbar;
 
     @Override
@@ -60,12 +60,11 @@ public class TypeFragment extends BaseNetConnectFragment {
         showMyToolBar();
         //TODO 扫一扫
         my_toolbar.getScan().setOnClickListener(v -> {
-            int permission = 0;
+            int permission;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                permission = getContext().checkSelfPermission(Manifest.permission.CAMERA);
+                permission = Objects.requireNonNull(getContext()).checkSelfPermission(Manifest.permission.CAMERA);
             if (permission != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.CAMERA}, Constant.REQUSET_CODE);
-                return;
             } else {
                 Intent intent = new Intent(getActivity(), CaptureActivity.class);
                 startActivityForResult(intent, Constant.REQUSET_ZXING_CODE);
@@ -74,12 +73,11 @@ public class TypeFragment extends BaseNetConnectFragment {
         });
         //TODO AI相机
         my_toolbar.getSearch_camera().setOnClickListener(v -> {
-            int permission = 0;
+            int permission;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                permission = getContext().checkSelfPermission(Manifest.permission.CAMERA);
+                permission = Objects.requireNonNull(getContext()).checkSelfPermission(Manifest.permission.CAMERA);
                 if (permission != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, Constant.REQUSET_CODE);
-                    return;
                 } else {
                     Intent intent = new Intent();
                     intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -88,9 +86,7 @@ public class TypeFragment extends BaseNetConnectFragment {
             }
         });
         //TODO 点击搜索跳转到搜索页面
-        my_toolbar.getSearch_edit().setOnClickListener(v -> {
-            startActivity(SearchActivity.class,null);
-        });
+        my_toolbar.getSearch_edit().setOnClickListener(v -> startActivity(SearchActivity.class,null));
         //TODO 点击消息跳转到消息页面
         my_toolbar.getSearch_message().setOnClickListener(v -> {
             Bundle bundle = new Bundle();
@@ -113,7 +109,7 @@ public class TypeFragment extends BaseNetConnectFragment {
         typePresenter.attachView(this);
         typePresenter.setURL(typeURL.get(0));
         typePresenter.doHttpGetRequest(1);
-        tagAdapter = new TypeTagAdapter(getContext());
+        tagAdapter = new TypeTagAdapter(Objects.requireNonNull(getContext()));
         type_left.setAdapter(tagAdapter);
         rv_right.setLayoutManager(new LinearLayoutManager(getContext()));
 //监听事件
@@ -148,12 +144,10 @@ public class TypeFragment extends BaseNetConnectFragment {
 
     @Override
     public void onRequestSuccess(int requestCode, Object data) {
-        switch (requestCode) {
-            case 1:
-                List<TypeBean.ResultBean> result = ((TypeBean) data).getResult();
-                rightAdapter = new TypeRightAdapter(getContext(), result);
-                rv_right.setAdapter(rightAdapter);
-                break;
+        if (requestCode == 1) {
+            List<TypeBean.ResultBean> result = ((TypeBean) data).getResult();
+            TypeRightAdapter rightAdapter = new TypeRightAdapter(getContext(), result);
+            rv_right.setAdapter(rightAdapter);
         }
 
     }
@@ -191,7 +185,7 @@ public class TypeFragment extends BaseNetConnectFragment {
             if (data != null) {
                 try {
                     Bundle bundle = data.getExtras();
-                    if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                    if (Objects.requireNonNull(bundle).getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
                         String result = bundle.getString(CodeUtils.RESULT_STRING);
                         toast(getActivity(), result);
                     } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
@@ -214,22 +208,18 @@ public class TypeFragment extends BaseNetConnectFragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case Constant.REQUSET_CODE:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Permission Granted 用户允许权限 继续执行（我这里执行的是二维码扫描，检查的是照相机权限）
-                    Intent intent = new Intent(getActivity(), CaptureActivity.class);
-                    startActivityForResult(intent, Constant.REQUSET_ZXING_CODE);
+        if (requestCode == Constant.REQUSET_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission Granted 用户允许权限 继续执行（我这里执行的是二维码扫描，检查的是照相机权限）
+                Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                startActivityForResult(intent, Constant.REQUSET_ZXING_CODE);
 
-                } else {
-                    // Permission Denied 拒绝
-                    toast(getActivity(), getString(R.string.request_no));
-                }
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-
+            } else {
+                // Permission Denied 拒绝
+                toast(getActivity(), getString(R.string.request_no));
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
     @Override

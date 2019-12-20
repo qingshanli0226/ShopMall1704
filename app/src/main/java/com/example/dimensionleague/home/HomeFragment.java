@@ -26,11 +26,11 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
+import java.util.Objects;
 
 
 public class HomeFragment extends BaseNetConnectFragment {
     private RecyclerView rv;
-    private HomeAdapter adapter;
     private HomeBean.ResultBean list=null;
 
     private int type = 0;
@@ -67,7 +67,7 @@ public class HomeFragment extends BaseNetConnectFragment {
         if (CacheManager.getInstance().getHomeBeanData() != null) {
             list = (((HomeBean) CacheManager.getInstance().getHomeBeanData()).getResult());
         }
-        adapter = new HomeAdapter(list, getContext());
+        HomeAdapter adapter = new HomeAdapter(list, Objects.requireNonNull(getContext()));
         rv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rv.setAdapter(adapter);
         appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
@@ -79,21 +79,19 @@ public class HomeFragment extends BaseNetConnectFragment {
                     my_toolbar.init(Constant.HOME_STYLE);
 //                    扫一扫及消息的点击事件
                     toolbarMessenger();
-                } else {  //TODO 中间状态
+                }  //TODO 中间状态
 
-                }
             }
         });
 
         toolbar_layout.setContentScrim(getResources().getDrawable(R.drawable.toolbar_style));
         //TODO 跳转相机
         my_toolbar.getHome_camera().setOnClickListener(v -> {
-            int permission = 0;
+            int permission;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                 permission = getContext().checkSelfPermission(Manifest.permission.CAMERA);
                 if (permission != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, Constant.REQUSET_CODE);
-                    return;
                 } else {
                     Intent intent = new Intent();
                     intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -114,13 +112,12 @@ public class HomeFragment extends BaseNetConnectFragment {
     //    点击事件
     private void toolbarMessenger() {
         my_toolbar.getHome_search_back().setOnClickListener(v -> {
-            int permission = 0;
+            int permission;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                permission = getContext().checkSelfPermission(Manifest.permission.CAMERA);
+                permission = Objects.requireNonNull(getContext()).checkSelfPermission(Manifest.permission.CAMERA);
 
             if (permission != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.CAMERA}, Constant.REQUSET_CODE);
-                return;
             } else {
                 Intent intent = new Intent(getActivity(), CaptureActivity.class);
                 startActivityForResult(intent, Constant.REQUSET_ZXING_CODE);
@@ -135,20 +132,18 @@ public class HomeFragment extends BaseNetConnectFragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case Constant.REQUSET_CODE:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Permission Granted 用户允许权限 继续执行（检查的是照相机权限）
-                    Intent intent = new Intent(getActivity(), CaptureActivity.class);
-                    startActivityForResult(intent, Constant.REQUSET_ZXING_CODE);
+        if (requestCode == Constant.REQUSET_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission Granted 用户允许权限 继续执行（检查的是照相机权限）
+                Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                startActivityForResult(intent, Constant.REQUSET_ZXING_CODE);
 
-                } else {
-                    // Permission Denied 拒绝
-                    toast(getActivity(), getString(R.string.request_no));
-                }
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            } else {
+                // Permission Denied 拒绝
+                toast(getActivity(), getString(R.string.request_no));
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
@@ -166,9 +161,9 @@ public class HomeFragment extends BaseNetConnectFragment {
     @Override
     public void onRequestSuccess(Object data) {
 
-        if (String.valueOf(((HomeBean) data).getCode()) == Constant.CODE_OK) {
+        if (String.valueOf(((HomeBean) data).getCode()).equals(Constant.CODE_OK)) {
             list = ((HomeBean) data).getResult();
-            rv.getAdapter().notifyDataSetChanged();
+            Objects.requireNonNull(rv.getAdapter()).notifyDataSetChanged();
         }
     }
 
@@ -179,7 +174,7 @@ public class HomeFragment extends BaseNetConnectFragment {
             if (data != null) {
                 try {
                     Bundle bundle = data.getExtras();
-                    if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                    if (Objects.requireNonNull(bundle).getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
                         String result = bundle.getString(CodeUtils.RESULT_STRING);
                         toast(getActivity(), result);
                     } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {

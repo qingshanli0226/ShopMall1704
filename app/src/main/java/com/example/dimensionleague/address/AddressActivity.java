@@ -1,12 +1,10 @@
 package com.example.dimensionleague.address;
 
 import android.graphics.Color;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
-import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.example.buy.databeans.OkBean;
 import com.example.common.utils.GetAssetsJson;
@@ -15,31 +13,28 @@ import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.port.IPresenter;
 import com.example.net.AppNetConfig;
 import com.google.gson.Gson;
+import com.umeng.analytics.MobclickAgent;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("unchecked")
 public class AddressActivity extends BaseNetConnectActivity {
-    private Button addressSure;
     private OptionsPickerView<AddressBean.CityBean.AreaBean> pvOptions;
 
     private IPresenter updateAddressPresenter;
 
-    List<AddressBean.CityBean.AreaBean> provinceList=new ArrayList<>();
-    List<List<AddressBean.CityBean.AreaBean>> cityList=new ArrayList<>();
-    List<List<List<AddressBean.CityBean.AreaBean>>> areaList=new ArrayList<>();
+    private final List<AddressBean.CityBean.AreaBean> provinceList=new ArrayList<>();
+    private final List<List<AddressBean.CityBean.AreaBean>> cityList=new ArrayList<>();
+    private final List<List<List<AddressBean.CityBean.AreaBean>>> areaList=new ArrayList<>();
 
-    String address;
+    private String address;
     @Override
     public void init() {
         super.init();
-        addressSure = findViewById(R.id.addressSure);
+        Button addressSure = findViewById(R.id.addressSure);
 
-        addressSure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pvOptions.show();
-            }
-        });
+        addressSure.setOnClickListener(v -> pvOptions.show());
     }
 
     @Override
@@ -49,7 +44,17 @@ public class AddressActivity extends BaseNetConnectActivity {
             Toast.makeText(this, "地址设置成功", Toast.LENGTH_SHORT).show();
         }
     }
+    @Override
+    protected void onPause() {
+        MobclickAgent.onPause(this);
+        super.onPause();
+    }
 
+    @Override
+    protected void onResume() {
+        MobclickAgent.onResume(this);
+        super.onResume();
+    }
     @Override
     public void initDate() {
         super.initDate();
@@ -57,44 +62,42 @@ public class AddressActivity extends BaseNetConnectActivity {
             AddressBean[] addressBean = new Gson().fromJson(GetAssetsJson.getJsonString(AddressActivity.this,
                     "city_code.json"),
                     AddressBean[].class);
-            for (int i=0;i<addressBean.length;i++){
-                provinceList.add(new AddressBean.CityBean.AreaBean(addressBean[i].getName(),addressBean[i].getCode()));
+            for (AddressBean bean : addressBean) {
+                provinceList.add(new AddressBean.CityBean.AreaBean(bean.getName(), bean.getCode()));
 
-                List<AddressBean.CityBean.AreaBean> provinceCityList=new ArrayList<>();
-                List<List<AddressBean.CityBean.AreaBean>> provinceAreaList=new ArrayList<>();
+                List<AddressBean.CityBean.AreaBean> provinceCityList = new ArrayList<>();
+                List<List<AddressBean.CityBean.AreaBean>> provinceAreaList = new ArrayList<>();
 
-                if (addressBean[i].getCity()==null){
-                    provinceCityList.add(new AddressBean.CityBean.AreaBean("",""));
-                    List<AddressBean.CityBean.AreaBean> nullList=new ArrayList<>();
-                    nullList.add(new AddressBean.CityBean.AreaBean("",""));
+                if (bean.getCity() == null) {
+                    provinceCityList.add(new AddressBean.CityBean.AreaBean("", ""));
+                    List<AddressBean.CityBean.AreaBean> nullList = new ArrayList<>();
+                    nullList.add(new AddressBean.CityBean.AreaBean("", ""));
                     provinceAreaList.add(nullList);
-                }else {
-                    for (int j=0; j<addressBean[i].getCity().size();j++) {
-                        provinceCityList.add(new AddressBean.CityBean.AreaBean(addressBean[i].getCity().get(j).getName()
-                                ,addressBean[i].getCity().get(j).getCode()));
-                        provinceAreaList.add(addressBean[i].getCity().get(j).getArea());
+                } else {
+                    for (int j = 0; j < bean.getCity().size(); j++) {
+                        provinceCityList.add(new AddressBean.CityBean.AreaBean(bean.getCity().get(j).getName()
+                                , bean.getCity().get(j).getCode()));
+                        provinceAreaList.add(bean.getCity().get(j).getArea());
                     }
                 }
-                    cityList.add(provinceCityList);
-                    areaList.add(provinceAreaList);
+                cityList.add(provinceCityList);
+                areaList.add(provinceAreaList);
 
             }
         }
 
-        pvOptions = new OptionsPickerBuilder(AddressActivity.this, new OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int options2, int options3, View v) {
-                //返回的分别是三个级别的选中位置
-                address = provinceList.get(options1).getName()
-                        + cityList.get(options1).get(options2)
-                        + areaList.get(options1).get(options2).get(options3).getName();
-                Toast.makeText(AddressActivity.this,"位置:"+address,Toast.LENGTH_SHORT).show();
-                //选中则网络请求
-                updateAddressPresenter = new UpdateAddressPresenter(address);
-                updateAddressPresenter.attachView(AddressActivity.this);
-                updateAddressPresenter.doHttpPostRequest();
+        pvOptions = new OptionsPickerBuilder(AddressActivity.this, (options1, options2, options3, v) -> {
+            //返回的分别是三个级别的选中位置
+            address = provinceList.get(options1).getName()
+                    + cityList.get(options1).get(options2)
+                    + areaList.get(options1).get(options2).get(options3).getName();
+            Toast.makeText(AddressActivity.this,"位置:"+address,Toast.LENGTH_SHORT).show();
+            //选中则网络请求
+            updateAddressPresenter = new UpdateAddressPresenter(address);
+            updateAddressPresenter.attachView(AddressActivity.this);
+            updateAddressPresenter.doHttpPostRequest();
 
-            }}).setSubmitText("确定")//确定按钮文字
+        }).setSubmitText("确定")//确定按钮文字
                 .setCancelText("取消")//取消按钮文字
                 .setTitleText("城市选择")//标题
                 .setSubCalSize(18)//确定和取消文字大小

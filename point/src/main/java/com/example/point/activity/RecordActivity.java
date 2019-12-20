@@ -11,6 +11,7 @@ import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseActivity;
 import com.example.point.R;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.Random;
 import java.util.Timer;
@@ -84,6 +85,16 @@ public class RecordActivity extends BaseActivity {
     private int randomColor() {
         return Color.rgb(mRandom.nextInt(255), mRandom.nextInt(255), mRandom.nextInt(255));
     }
+    @Override
+    protected void onPause() {
+        MobclickAgent.onPause(this);
+        super.onPause();
+    }
 
+    @Override
+    protected void onResume() {
+        MobclickAgent.onResume(this);
+        super.onResume();
+    }
 
 }

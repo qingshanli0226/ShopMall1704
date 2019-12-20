@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:gravity="center_vertical"
     android:background="@color/colorWhite"
@@ -23,7 +24,8 @@
         android:singleLine="true"
         android:inputType="text"
         android:padding="@dimen/dp_10"
-        android:id="@+id/setting_item_name"/>
+        android:id="@+id/setting_item_name"
+        tools:ignore="TextViewEdits" />
     <ImageView
         android:layout_height="@dimen/dp_10"
         android:layout_width="@dimen/dp_10"

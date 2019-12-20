@@ -25,6 +25,7 @@ import com.example.point.service.StepBean;
 import com.example.point.stepmanager.DaoManager;
 import com.example.point.stepmanager.StepPointManager;
 import com.example.point.view.StepView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -141,6 +142,16 @@ public class StepActivity extends BaseActivity {
 
         return R.layout.step_activity;
     }
+    @Override
+    protected void onPause() {
+        MobclickAgent.onPause(this);
+        super.onPause();
+    }
 
+    @Override
+    protected void onResume() {
+        MobclickAgent.onResume(this);
+        super.onResume();
+    }
 
 }

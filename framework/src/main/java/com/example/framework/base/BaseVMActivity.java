@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
 import com.example.framework.port.IActivity;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.LinkedList;
 
@@ -34,5 +35,16 @@ public abstract class BaseVMActivity extends AppCompatActivity implements IActiv
 
     public interface IDataBindingListener {
         void onViewDataBinding(ViewDataBinding viewDataBinding);
+    }
+    @Override
+    protected void onPause() {
+        MobclickAgent.onPause(this);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        MobclickAgent.onResume(this);
+        super.onResume();
     }
 }

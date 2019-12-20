@@ -9,45 +9,45 @@ import com.example.common.HomeBean
 import com.example.dimensionleague.home.holder.*
 
 class HomeAdapter(
-    var bean: HomeBean.ResultBean,
-    var mContext: Context
+    private var bean: HomeBean.ResultBean,
+    mContext: Context
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var mLayoutInflater: LayoutInflater = LayoutInflater.from(mContext)
+    private var mLayoutInflater: LayoutInflater = LayoutInflater.from(mContext)
 
     /**
      * 横幅广告
      */
-    val BANNER = 0
+    private val banner = 0
     /**
      * 频道
      */
-    val CHANNEL = 1
+    private val channal = 1
     /**
      * 活动
      */
-    val ACT = 2
+    private val act = 2
     /**
      * 推荐
      */
-    val SECKILL = 4
+    private val seckill = 4
     /**
      * 秒杀
      */
-    val RECOMMEND = 3
+    private val recommend = 3
     /**
      * 热卖
      */
-    val HOT = 5
+    private val hot = 5
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         return when (viewType) {
-            BANNER -> BannerViewHolder(mLayoutInflater.inflate(R.layout.home_banner, parent, false))
-            CHANNEL -> ChannelHolder(mLayoutInflater.inflate(R.layout.home_channel, parent, false))
-            ACT -> ActViewHolder(mLayoutInflater.inflate(R.layout.home_act, parent, false))
-            SECKILL -> SeckillHolder(mLayoutInflater.inflate(R.layout.home_seckill, parent, false))
-            RECOMMEND -> RecommendHolder(mLayoutInflater.inflate(R.layout.home_recommend, parent, false))
-            HOT -> HotViewHolder(mLayoutInflater.inflate(R.layout.home_hot, parent, false))
+            banner -> BannerViewHolder(mLayoutInflater.inflate(R.layout.home_banner, parent, false))
+            channal -> ChannelHolder(mLayoutInflater.inflate(R.layout.home_channel, parent, false))
+            act -> ActViewHolder(mLayoutInflater.inflate(R.layout.home_act, parent, false))
+            seckill -> SeckillHolder(mLayoutInflater.inflate(R.layout.home_seckill, parent, false))
+            recommend -> RecommendHolder(mLayoutInflater.inflate(R.layout.home_recommend, parent, false))
+            hot -> HotViewHolder(mLayoutInflater.inflate(R.layout.home_hot, parent, false))
             else -> HotViewHolder(mLayoutInflater.inflate(R.layout.home_hot, parent, false))
         }
     }
@@ -62,12 +62,12 @@ class HomeAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
-            BANNER -> (holder as BannerViewHolder).setDate(bean.banner_info)
-            CHANNEL -> (holder as ChannelHolder).setDate(bean.channel_info)
-            ACT -> (holder as ActViewHolder).setData(bean.act_info)
-            SECKILL -> (holder as SeckillHolder).setData(bean.seckill_info)
-            RECOMMEND -> (holder as RecommendHolder).setData(bean.recommend_info)
-            HOT -> (holder as HotViewHolder).setData((bean.hot_info))
+            banner -> (holder as BannerViewHolder).setDate(bean.banner_info)
+            channal -> (holder as ChannelHolder).setDate(bean.channel_info)
+            act -> (holder as ActViewHolder).setData(bean.act_info)
+            seckill -> (holder as SeckillHolder).setData(bean.seckill_info)
+            recommend -> (holder as RecommendHolder).setData(bean.recommend_info)
+            hot -> (holder as HotViewHolder).setData((bean.hot_info))
         }
 
     }

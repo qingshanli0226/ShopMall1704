@@ -19,6 +19,7 @@ import com.example.point.StepIsSupport;
 import com.example.point.service.StepBean;
 import com.example.point.stepmanager.DaoManager;
 import com.example.point.stepmanager.StepPointManager;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,11 @@ public class MessageActivity extends BaseNetConnectActivity {
         message_re = findViewById(R.id.message_re);
         message_tool = (MyToolBar) findViewById(R.id.message_tool);
     }
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
     @Override
     public void initDate() {
         super.initDate();

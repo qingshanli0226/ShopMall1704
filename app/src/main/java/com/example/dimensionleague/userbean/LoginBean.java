@@ -1,5 +1,7 @@
 package com.example.dimensionleague.userbean;
 
+import org.jetbrains.annotations.NotNull;
+
 public class LoginBean {
 
     /**
@@ -36,6 +38,7 @@ public class LoginBean {
         this.result = result;
     }
 
+    @NotNull
     @Override
     public String toString() {
         return "LoginBean{" +
@@ -150,6 +153,7 @@ public class LoginBean {
             this.token = token;
         }
 
+        @NotNull
         @Override
         public String toString() {
             return "ResultBean{" +

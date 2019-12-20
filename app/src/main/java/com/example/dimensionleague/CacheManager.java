@@ -1,9 +1,9 @@
 package com.example.dimensionleague;
 
 import android.annotation.SuppressLint;
+import android.os.Environment;
 import android.os.Parcel;
 import com.example.common.HomeBean;
-import com.example.framework.manager.ErrorDisposeManager;
 import com.example.net.AppNetConfig;
 import com.example.net.RetrofitCreator;
 import com.google.gson.Gson;
@@ -23,7 +23,7 @@ import okhttp3.ResponseBody;
 public class CacheManager {
     private static CacheManager instance;
     private IHomeReceivedListener listener;
-    private static final String indexPath = "/sdcard/indexData.txt";
+    private static final String indexPath = Environment.getExternalStorageState()+"indexData.txt";
 
     public static CacheManager getInstance() {
         if (instance==null){
@@ -47,13 +47,12 @@ public class CacheManager {
             out.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (Exception e) {
-            ErrorDisposeManager.HandlerError(e);
+        } catch (Exception ignored) {
         }
     }
 
     public Object getHomeBeanData() {
-        return readObject(indexPath);
+        return readObject();
     }
     public void registerGetDateListener(IHomeReceivedListener listener){
         synchronized (CacheManager.class){
@@ -66,9 +65,10 @@ public class CacheManager {
             this.listener=null;
         }
     }
-    private Object readObject(String indexPath) {
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private Object readObject() {
         try {
-            FileInputStream in = new FileInputStream(new File(indexPath));
+            FileInputStream in = new FileInputStream(new File(CacheManager.indexPath));
             byte[] bytes = new byte[in.available()];
             in.read(bytes);
             Parcel parcel = Parcel.obtain();
@@ -77,8 +77,7 @@ public class CacheManager {
             HomeBean homeBean = parcel.readParcelable(Thread.currentThread().getContextClassLoader());
             in.close();
             return homeBean;
-        } catch (Exception e) {
-            ErrorDisposeManager.HandlerError(e);
+        } catch (Exception ignored) {
         }
         return null;
     }
@@ -108,7 +107,6 @@ public class CacheManager {
                     public void onError(Throwable e) {
                        synchronized (CacheManager.class){
                            listener.onHomeDataError(e.getMessage());
-                           ErrorDisposeManager.HandlerError(e);
                        }
                     }
                     @Override

@@ -39,6 +39,7 @@ import com.example.framework.manager.AccountManager;
 import com.example.framework.port.IPresenter;
 import com.example.net.AppNetConfig;
 import com.google.gson.Gson;
+import com.umeng.analytics.MobclickAgent;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -288,5 +289,16 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
                 iPresenter[i].detachView();
             }
         }
+    }
+    @Override
+    protected void onPause() {
+        MobclickAgent.onPause(this);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        MobclickAgent.onResume(this);
+        super.onResume();
     }
 }

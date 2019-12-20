@@ -14,23 +14,23 @@ import kotlinx.android.synthetic.main.home_channel_item.view.*
 class ChannelAdapter(
     channelInfo: List<HomeBean.ResultBean.ChannelInfoBean>
 ) : BaseAdapter() {
-    var channelInfo:List<HomeBean.ResultBean.ChannelInfoBean>? = null
+    private var channelInfo:List<HomeBean.ResultBean.ChannelInfoBean>? = null
     init {
         this.channelInfo = channelInfo
     }
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
-        lateinit var views:View
+        val views:View =
+            LayoutInflater.from(parent!!.context).inflate(R.layout.home_channel_item,parent,false)
         lateinit var holder:ViewHolder
-             views = LayoutInflater.from(parent!!.context).inflate(R.layout.home_channel_item,parent,false)
-            holder = ViewHolder(views)
-            views.setTag(holder)
-        Glide.with(parent.context).load("${AppNetConfig.BASE_URl_IMAGE}${channelInfo!!.get(position).image}").into(holder.iv_channer)
-        holder.tv_channer.text = channelInfo!!.get(position).channel_name
+        holder = ViewHolder(views)
+        views.tag = holder
+        Glide.with(parent.context).load("${AppNetConfig.BASE_URl_IMAGE}${channelInfo!![position].image}").into(holder.ivChanner)
+        holder.tvChanner.text = channelInfo!![position].channel_name
         return views
     }
 
     override fun getItem(position: Int): Any {
-        return channelInfo!!.get(position)
+        return channelInfo!![position]
     }
 
     override fun getItemId(position: Int): Long {
@@ -42,7 +42,7 @@ class ChannelAdapter(
     }
 
     inner class ViewHolder(itemView: View){
-        var iv_channer = itemView.channel_iv
-        var tv_channer = itemView.channel_tv
+        var ivChanner = itemView.channel_iv!!
+        var tvChanner = itemView.channel_tv!!
     }
 }
