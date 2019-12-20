@@ -4,55 +4,76 @@ package com.example.shopmall.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 
-import androidx.fragment.app.Fragment;
-
 import android.net.Uri;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseFragment;
+import com.example.buy.activity.SendGoodsActivity;
 import com.example.framework.base.IGetBaseView;
+import com.example.framework.manager.ShoppingManager;
+import com.example.net.NetGetService;
+import com.example.shopmall.R;
+import com.example.shopmall.activity.AddressBarActivity;
+import com.example.shopmall.activity.SetActivity;
 import com.example.framework.base.IPostBaseView;
 import com.example.framework.bean.LoginBean;
 import com.example.framework.bean.ResultBean;
 import com.example.framework.manager.UserManager;
-import com.example.net.Constant;
-import com.example.shopmall.R;
-import com.example.shopmall.bean.HeadBean;
-import com.example.shopmall.bean.RegisterBean;
 import com.example.shopmall.presenter.AutomaticPresenter;
-import com.example.shopmall.presenter.IntegerPresenter;
+import com.example.shopmall.presenter.DownLoadImgPresenter;
 import com.example.shopmall.presenter.UpImgPresenter;
 import com.example.step.Ui.IntegralActivity;
 import com.example.shopmall.activity.LoginActivity;
 import com.wyp.avatarstudio.AvatarStudio;
 
-//个人页面
-public class MineFragment extends BaseFragment implements IPostBaseView<Object> {
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
 
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+//个人页面
+public class MineFragment extends BaseFragment implements IPostBaseView<LoginBean> {
+    private File file1;
     private TitleBar tbMine;
     private TextView tvUserScore;
     private TextView tvUsername;
-    private ImageView ibUserIconAvator;
+    private ImageView ivUserIconAvator;
+    private TextView tvSendgoods;
     private AutomaticPresenter automaticPresenter;
     private UpImgPresenter upImgPresenter;
+    private LinearLayout llUserLocation;
+    private TextView mTvName;
+    private int sum = 0;
 
     @Override
     protected void initData() {
 
-        tbMine.setTitleBacKGround(Color.RED);
-        tbMine.setCenterText("个人中心", 18, Color.WHITE);
+        tbMine.setTitleBacKGround(Color.WHITE);
+        tbMine.setCenterText("个人中心", 18, Color.BLACK);
         tbMine.setLeftImg(R.mipmap.new_message_icon);
         tbMine.setRightImg(R.mipmap.new_user_setting);
+        SharedPreferences login = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
+        String getToken = login.getString("getToken", "");
 
         tbMine.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
@@ -62,7 +83,7 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
 
             @Override
             public void RightClick() {
-
+                startActivity(new Intent(getContext(), SetActivity.class));
             }
 
             @Override
@@ -70,6 +91,40 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
 
             }
         });
+
+        String avatar = UserManager.getInstance().getUser().getAvatar();
+        Retrofit.Builder builder = new Retrofit.Builder();
+        builder.baseUrl("http://49.233.93.155:8080/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build()
+                .create(NetGetService.class)
+                .getGetData("http://49.233.93.155:8080"+avatar,new HashMap<String, String>())
+                .subscribe(new Observer<ResponseBody>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody body) {
+                        try {
+                            Log.e("####", body.string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("####", ""+e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
 
         tvUserScore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,28 +146,31 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mTvName.setText("用户昵称:" + resultBean.getName());
+                        if (resultBean.getName() != null) {
+                            mTvName.setText("用户昵称:" + resultBean.getName());
+                            tvUsername.setVisibility(View.GONE);
+                        } else {
+                            tvUsername.setVisibility(View.VISIBLE);
+                            mTvName.setText("");
+                        }
                     }
                 });
             }
         });
 
-        boolean liginStatus = UserManager.getInstance().getLoginStatus(getActivity());
-        if (liginStatus) {
-//            ResultBean user = UserManager.getInstance().getUser(getActivity());
-//            mTvName.setText("用户昵称:" + user.getName());
-        }
 
-        SharedPreferences login = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
-        String getToken = login.getString("getToken", "");
         boolean isAutomatic = login.getBoolean("isAutomatic", false);
         if (isAutomatic) {
+            tvUsername.setVisibility(View.GONE);
             automaticPresenter = new AutomaticPresenter(getToken);
             automaticPresenter.attachPostView(this);
             automaticPresenter.getPostFormData();
+        } else {
+            tvUsername.setVisibility(View.VISIBLE);
         }
 
-        ibUserIconAvator.setOnClickListener(new View.OnClickListener() {
+
+        ivUserIconAvator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
@@ -127,17 +185,55 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
                             .show(new AvatarStudio.CallBack() {
                                 @Override
                                 public void callback(String uri) {
-                                    Log.e("####", uri);
-                                    ibUserIconAvator.setImageURI(Uri.parse(uri));
+                                    ivUserIconAvator.setImageURI(Uri.parse(uri));
+
+                                    BitmapFactory.Options options = new BitmapFactory.Options();
+                                    options.inJustDecodeBounds = true;
+                                    BitmapFactory.decodeFile(uri, options);
+                                    int outWidth = options.outWidth;
+                                    int outHeight = options.outHeight;
+                                    int sampleSize = 1;
+                                    while (outHeight / sampleSize > 50 || outWidth / sampleSize > 50) {
+                                        sampleSize *= 2;
+                                    }
+
+                                    options.inJustDecodeBounds = false;
+                                    //设置缩放比例
+                                    options.inSampleSize = sampleSize;
+                                    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                                    Bitmap bitmap = BitmapFactory.decodeFile(uri, options);
+
+                                    File file = new File(Environment.getExternalStorageDirectory(), "shop");
+                                    if (!file.mkdirs()) {
+                                        file.mkdir();
+                                    }
+                                    String s = System.currentTimeMillis() + ".png";
+                                    file1 = new File(file, s);
+                                    try {
+                                        FileOutputStream fos = new FileOutputStream(file1);
+                                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                                    } catch (FileNotFoundException e) {
+                                        e.printStackTrace();
+                                    }
+
                                     if (uri != null) {
                                         String token = UserManager.getInstance().getToken();
-                                        upImgPresenter = new UpImgPresenter(uri, token);
+                                        upImgPresenter = new UpImgPresenter(file1.getAbsolutePath(), token);
+                                        upImgPresenter.attachPostView(new IPostBaseView() {
+                                            @Override
+                                            public void onPostDataSucess(Object data) {
+                                                Log.e("####", "" + data.toString());
+                                            }
+
+                                            @Override
+                                            public void onPostDataFailed(String ErrorMsg) {
+
+                                            }
+                                        });
                                         upImgPresenter.getPostFile();
                                     }
                                 }
                             });
-
-
                 } else {
                     Toast.makeText(getContext(), "请先登录账号", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -145,14 +241,41 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
             }
 
         });
+
+        llUserLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences token1 = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
+                boolean isLogin = token1.getBoolean("isLogin", false);
+                if (isLogin) {
+                    startActivity(new Intent(getContext(), AddressBarActivity.class));
+                } else {
+                    Toast.makeText(getContext(), "请先登录", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getContext(), LoginActivity.class));
+                }
+            }
+        });
+
+        //代发货
+        tvSendgoods.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), SendGoodsActivity.class));
+            }
+        });
+
     }
 
-    private TextView mTvName;
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        automaticPresenter.detachView();
+        if (automaticPresenter != null) {
+            automaticPresenter.detachView();
+        }
+        if (upImgPresenter != null) {
+            upImgPresenter.detachView();
+        }
     }
 
     @Override
@@ -160,8 +283,10 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
         tbMine = view.findViewById(R.id.tb_mine);
         tvUserScore = view.findViewById(R.id.tv_user_score);
         tvUsername = view.findViewById(R.id.tv_username);
-        ibUserIconAvator = view.findViewById(R.id.ib_user_icon_avator);
+        ivUserIconAvator = view.findViewById(R.id.iv_user_icon_avator);
+        llUserLocation = view.findViewById(R.id.ll_user_location);
         mTvName = view.findViewById(R.id.tv_user_name);
+        tvSendgoods = view.findViewById(R.id.tv_app_sendgoods);
     }
 
     @Override
@@ -170,18 +295,19 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
     }
 
     @Override
-    public void onPostDataSucess(Object data) {
-        if (data instanceof LoginBean) {
+    public void onPostDataSucess(LoginBean data) {
+        if (data != null) {
             ResultBean result = ((LoginBean) data).getResult();
             UserManager.getInstance().savaToken(result.getToken());
+            UserManager.getInstance().setActiveUser(getActivity(), result);
             Toast.makeText(getActivity(), "自动登录成功", Toast.LENGTH_SHORT).show();
+            ShoppingManager.getInstance().setMainitem(4);
+            mTvName.setText("用户昵称:" + result.getName());
         }
-        Log.e("####", ""+data.toString());
-
     }
 
     @Override
     public void onPostDataFailed(String ErrorMsg) {
-
     }
+
 }

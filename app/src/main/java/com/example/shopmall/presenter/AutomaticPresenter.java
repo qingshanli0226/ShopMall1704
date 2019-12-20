@@ -1,14 +1,15 @@
 package com.example.shopmall.presenter;
 
+import com.example.common.SignUtil;
 import com.example.framework.base.BasePresenter;
 import com.example.framework.bean.LoginBean;
-import com.example.framework.manager.UserManager;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.Map;
 
-public class AutomaticPresenter extends BasePresenter {
+public class AutomaticPresenter extends BasePresenter<LoginBean> {
 
     private String token;
 
@@ -29,15 +30,18 @@ public class AutomaticPresenter extends BasePresenter {
 
     @Override
     protected HashMap<String, String> getHeader() {
-//        HashMap<String, String> hashMap = new HashMap<>();
-//        hashMap.put("token", token);
-        return new HashMap<>();
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("token", token);
+        return hashMap;
     }
 
     @Override
-    protected HashMap<String, String> getParam() {
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("token",token);
-        return hashMap;
+    protected Map<String, String> getParam() {
+        Map<String, String> parmMap = SignUtil.getEmptyTreeMap();
+        parmMap.put("token", token);
+        String sign = SignUtil.generateSign(parmMap);//生成签名
+        parmMap.put("sign", sign);
+        Map<String, String> encryptParmMap = SignUtil.encryptParamsByBase64(parmMap);
+        return encryptParmMap;
     }
 }

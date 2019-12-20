@@ -25,9 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="170dp"
             android:fitsSystemWindows="true"
-            android:theme="@style/Widget.Design.AppBarLayout"
-
-            >
+            android:theme="@style/Widget.Design.AppBarLayout">
 
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -49,11 +47,12 @@
                         android:background="@mipmap/mine_img" />
 
                     <ImageView
-                        android:id="@+id/ib_user_icon_avator"
+                        android:id="@+id/iv_user_icon_avator"
                         android:layout_width="@dimen/mine_width_50"
                         android:layout_height="@dimen/mine_height_50"
                         android:layout_marginStart="@dimen/mine_mStart_15"
                         android:layout_marginTop="@dimen/mine_mTop_20"
+                        android:background="@null"
                         android:scaleType="fitXY"
                         android:src="@mipmap/user_img" />
 
@@ -61,7 +60,7 @@
                         android:id="@+id/tv_username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/ib_user_icon_avator"
+                        android:layout_below="@id/iv_user_icon_avator"
                         android:layout_marginStart="@dimen/mine_mStart_10"
                         android:background="@null"
                         android:text="@string/mine_text"
@@ -71,9 +70,8 @@
                         android:id="@+id/tv_user_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/iv_user_icon_avator"
                         android:layout_marginStart="10dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_toEndOf="@id/ib_user_icon_avator"
                         android:background="@null"
                         android:textColor="#B8B8B8" />
 

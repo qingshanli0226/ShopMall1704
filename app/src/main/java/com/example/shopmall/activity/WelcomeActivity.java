@@ -1,7 +1,6 @@
 package com.example.shopmall.activity;
 
 import android.animation.ObjectAnimator;
-import android.app.Application;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -23,9 +22,6 @@ import com.example.shopmall.MyApplication;
 import com.example.shopmall.R;
 import com.example.shopmall.presenter.IntegerPresenter;
 
-import cn.jiguang.analytics.android.api.JAnalyticsInterface;
-import cn.jpush.android.api.JPushInterface;
-
 /**
  * 起始页
  */
@@ -35,6 +31,7 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
     private int flag = 0;
     private final HandlerThread handlerThread = new HandlerThread("welcome");
     private Handler handler;
+    private IntegerPresenter integerPresenter;
 
     @Override
     protected int setLayout() {
@@ -57,7 +54,7 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
         objectAnimator.setDuration(3000);
         objectAnimator.start();
 
-        IntegerPresenter integerPresenter = new IntegerPresenter(Constant.HOME_URL, HomepageBean.class);
+        integerPresenter = new IntegerPresenter(Constant.HOME_URL, HomepageBean.class);
         integerPresenter.attachGetView(this);
         integerPresenter.getGetData();
 
@@ -115,5 +112,10 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        integerPresenter.detachView();
+
+        handler.removeCallbacksAndMessages(this);
+
     }
 }

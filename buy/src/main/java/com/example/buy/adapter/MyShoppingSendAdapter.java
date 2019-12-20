@@ -1,0 +1,70 @@
+package com.example.buy.adapter;
+
+import android.content.Context;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.example.buy.R;
+import com.example.framework.base.BaseAdapter;
+
+import java.util.List;
+import java.util.Map;
+
+public class MyShoppingSendAdapter extends BaseAdapter<Map<String, String>, MyShoppingSendAdapter.ViewHolder> {
+
+    private Context context;
+
+    public MyShoppingSendAdapter(Context context) {
+        this.context = context;
+    }
+
+    @Override
+    protected ViewHolder getViewHolder(View view, int viewType) {
+        return new ViewHolder(view);
+    }
+
+    @Override
+    protected int getLayout(int viewType) {
+        return R.layout.item_shop_send;
+    }
+
+    @Override
+    protected void onBindHolder(ViewHolder holder, List<Map<String, String>> data, int position) {
+        Map<String, String> map = data.get(position);
+        Glide.with(context)
+                .load(map.get("img"))
+                .into(holder.ivGov);
+
+        holder.tvTitle.setText(map.get("title"));
+        holder.tvNum.setText(map.get("num"));
+        String price = map.get("price");
+        String num = map.get("num");
+
+        double x = Double.parseDouble(price);
+        double y = Double.parseDouble(num);
+        double z = x * y;
+        holder.tvPrice.setText(z + "");
+    }
+
+    @Override
+    protected int getViewType(int position) {
+        return 0;
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView ivGov = itemView.findViewById(R.id.iv_buy_gov);
+        TextView tvTitle = itemView.findViewById(R.id.tv_buy_title);
+        TextView tvNum = itemView.findViewById(R.id.tv_buy_num);
+        TextView tvPrice = itemView.findViewById(R.id.tv_buy_price);
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+
+    }
+}

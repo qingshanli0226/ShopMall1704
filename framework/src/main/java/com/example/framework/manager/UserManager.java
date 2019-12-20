@@ -3,8 +3,6 @@ package com.example.framework.manager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-
 import com.example.common.ACache;
 import com.example.framework.bean.ResultBean;
 import com.example.framework.greendao.DaoMaster;
@@ -19,6 +17,7 @@ public class UserManager {
     private ResultBeanDao resultBeanDao;
     private ResultBean resultBean;
     private Context mContext;
+    private IUserInterface iUserInterface;
 
     public static UserManager getInstance() {
         if (userManager == null) {
@@ -44,10 +43,9 @@ public class UserManager {
         }
     }
 
-    public boolean getLoginStatus(Context context) {
-        SharedPreferences login = context.getSharedPreferences("login", Context.MODE_PRIVATE);
-        boolean login1 = login.getBoolean("isLogin", false);
-        return login1;
+    public boolean getLoginStatus() {
+        SharedPreferences login = mContext.getSharedPreferences("login", Context.MODE_PRIVATE);
+        return login.getBoolean("isLogin", false);
     }
 
     public void savaToken(String token) {
@@ -59,18 +57,18 @@ public class UserManager {
 
     public String getToken() {
         SharedPreferences token1 = mContext.getSharedPreferences("login", Context.MODE_PRIVATE);
-        String getToken = token1.getString("getToken", "");
-        return getToken;
+        return token1.getString("getToken", "");
     }
 
-    public ResultBean getUser(Context context) {
-        ACache aCache = ACache.get(context);
-        ResultBean resultBean = (ResultBean) aCache.getAsObject("CurrentUser");
-        Log.e("####", "" + resultBean.toString());
-        return resultBean;
+    public void startLogin() {
+//        ARouter.getInstance().build("shop/login").navigation();
     }
 
-    IUserInterface iUserInterface;
+    public ResultBean getUser() {
+        ACache aCache = ACache.get(mContext);
+        return (ResultBean) aCache.getAsObject("CurrentUser");
+    }
+
 
     public void setiUserInterface(IUserInterface iUserInterface) {
         this.iUserInterface = iUserInterface;

@@ -98,22 +98,22 @@ public class IntegralActivity extends BaseActivity {
         });
 
 
+        SharedPreferences is = getSharedPreferences("is", Context.MODE_PRIVATE);
+        boolean first = is.getBoolean("first", false);
+        if(first){
+            is.edit().putBoolean("first",true).commit();
+        }else{
+            //      当前步数和积分
+            List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
+            intergral_Step.setText(queryAll.get(queryAll.size()-1).getCurrent_step()+"");
+            integral.setText(queryAll.get(queryAll.size()-1).getIntegral()+"");
+            String current_step = queryAll.get(queryAll.size() - 1).getCurrent_step();
+            int i = Integer.parseInt(current_step);
+            step_ArcView.setCurrentCount(10000,i);
+        }
 
 
 
-        //当前步数和积分
-//        List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
-//        intergral_Step.setText(queryAll.get(queryAll.size()-1).getCurrent_step()+"");
-//        String current_step = queryAll.get(queryAll.size() - 1).getCurrent_step();
-//        int i = Integer.parseInt(current_step);
-//        step_ArcView.setCurrentCount(10000,i);
-        //获取日期
-//        List<ShopStepBean> queryAll1 = OrmUtils.getQueryAll(ShopStepBean.class);
-//        final List<String> mlistDate=new ArrayList<>();
-//        for (int j=0;j<queryAll1.size();j++){
-//            String date = queryAll1.get(j).getDate();
-//            mlistDate.add(date);
-//        }
 
 
 

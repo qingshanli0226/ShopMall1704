@@ -5,7 +5,6 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.example.shopmall"
-
         ndk {
             //选择要添加的对应 cpu 类型的 .so 库。
             abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
@@ -36,7 +35,6 @@ android {
 }
 
 
-
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -53,6 +51,7 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.yanzhenjie.recyclerview:x:1.3.2'
     implementation project(path: ':common')
     implementation project(path: ':net')
     implementation files('libs/lite-orm-1.9.2.jar')
@@ -61,6 +60,8 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.1.71.android'
     implementation project(path: ':step')
 
+    implementation 'cn.jiguang.sdk:janalytics:2.1.0'
+    implementation 'cn.jiguang.sdk:jcore:2.2.4'
     compile 'cn.jiguang.sdk:janalytics:2.1.0'
     compile 'cn.jiguang.sdk:jcore:2.2.4'
     compile 'cn.jiguang.sdk:jpush:3.5.0'
@@ -70,4 +71,6 @@ dependencies {
     implementation 'com.android.support:design:25.3.1'
     implementation 'com.qq.mta:mta:3.4.2'
     implementation 'com.tencent.mid:mid:3.73-release'
+    debugApi'com.squareup.leakcanary:leakcanary-android:1.6.2'
+    releaseApi'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
 }

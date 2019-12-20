@@ -21,10 +21,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-
-
-
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/mine_height_8"
@@ -73,6 +69,7 @@
                         android:textColor="@color/color_5d5d" />
 
                     <TextView
+                        android:id="@+id/tv_app_sendgoods"
                         android:layout_width="@dimen/common_width_0"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -121,111 +118,174 @@
                     android:layout_height="@dimen/mine_height_8"
                     android:background="@color/color_back_eee" />
 
-                <TextView
-                    android:id="@+id/tv_user_location"
-                    style="@style/TextStyle"
-                    android:drawableStart="@mipmap/user_channel_icon_address"
-                    android:text="@string/address_text" />
-
-                <View
+                <LinearLayout
+                    android:id="@+id/ll_user_location"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="@dimen/mine_mStart_45"
-                    android:background="@color/color_back_eee" />
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/tv_user_collect"
-                    style="@style/TextStyle"
-                    android:drawableStart="@mipmap/user_channel_icon_collect"
-                    android:text="@string/mine_collect" />
+                    <TextView
+                        android:id="@+id/tv_user_location"
+                        style="@style/TextStyle"
+                        android:drawableStart="@mipmap/user_channel_icon_address"
+                        android:text="@string/address_text" />
 
-                <View
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/mine_mStart_45"
+                        android:background="@color/color_back_eee" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_user_collect"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="@dimen/mine_mStart_45"
-                    android:background="@color/color_back_eee" />
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/tv_user_coupon"
-                    style="@style/TextStyle"
-                    android:drawableStart="@mipmap/user_channel_icon_coupon"
-                    android:text="@string/mine_coupon" />
+                    <TextView
+                        android:id="@+id/tv_user_collect"
+                        style="@style/TextStyle"
+                        android:drawableStart="@mipmap/user_channel_icon_collect"
+                        android:text="@string/mine_collect" />
 
-                <View
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/mine_mStart_45"
+                        android:background="@color/color_back_eee" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_user_coupon"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="@dimen/mine_mStart_45"
-                    android:background="@color/color_back_eee" />
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/tv_user_score"
-                    style="@style/TextStyle"
-                    android:drawableStart="@mipmap/user_channel_icon_score"
-                    android:text="@string/mine_integral" />
+                    <TextView
+                        android:id="@+id/tv_user_coupon"
+                        style="@style/TextStyle"
+                        android:drawableStart="@mipmap/user_channel_icon_coupon"
+                        android:text="@string/mine_coupon" />
 
-                <View
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/mine_mStart_45"
+                        android:background="@color/color_back_eee" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_user_score"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="@dimen/mine_mStart_45"
-                    android:background="@color/color_back_eee" />
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/tv_user_prize"
-                    style="@style/TextStyle"
-                    android:drawableStart="@mipmap/user_channel_icon_prize"
-                    android:text="@string/mine_prize" />
+                    <TextView
+                        android:id="@+id/tv_user_score"
+                        style="@style/TextStyle"
+                        android:drawableStart="@mipmap/user_channel_icon_score"
+                        android:text="@string/mine_integral" />
 
-                <View
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/mine_mStart_45"
+                        android:background="@color/color_back_eee" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="@dimen/mine_mStart_45"
-                    android:background="@color/color_back_eee" />
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/tv_user_ticket"
-                    style="@style/TextStyle"
-                    android:drawableStart="@mipmap/user_icon_ticket"
-                    android:text="@string/mine_ticket" />
+                    <TextView
+                        android:id="@+id/tv_user_prize"
+                        style="@style/TextStyle"
+                        android:drawableStart="@mipmap/user_channel_icon_prize"
+                        android:text="@string/mine_prize" />
 
-                <View
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/mine_mStart_45"
+                        android:background="@color/color_back_eee" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_user_ticket"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/mine_height_8"
-                    android:background="@color/color_back_eee" />
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/tv_user_invitation"
-                    style="@style/TextStyle"
-                    android:drawableStart="@mipmap/user_channel_icon_invitation"
-                    android:text="@string/mine_share" />
+                    <TextView
+                        android:id="@+id/tv_user_ticket"
+                        style="@style/TextStyle"
+                        android:drawableStart="@mipmap/user_icon_ticket"
+                        android:text="@string/mine_ticket" />
 
-                <View
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/mine_height_8"
+                        android:background="@color/color_back_eee" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_user_invitation"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="@dimen/mine_mStart_45"
-                    android:background="@color/color_back_eee" />
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/tv_user_callcenter"
-                    style="@style/TextStyle"
-                    android:drawableStart="@mipmap/user_channel_icon_callcenter"
-                    android:text="@string/mine_service_center" />
+                    <TextView
+                        android:id="@+id/tv_user_invitation"
+                        style="@style/TextStyle"
+                        android:drawableStart="@mipmap/user_channel_icon_invitation"
+                        android:text="@string/mine_share" />
 
-                <View
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/mine_mStart_45"
+                        android:background="@color/color_back_eee" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_user_callcenter"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="@dimen/mine_mStart_45"
-                    android:background="#eee" />
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/tv_user_feedback"
-                    style="@style/TextStyle"
-                    android:drawableStart="@mipmap/user_channel_icon_feedback"
-                    android:text="@string/mine_feedback" />
+                    <TextView
+                        android:id="@+id/tv_user_callcenter"
+                        style="@style/TextStyle"
+                        android:drawableStart="@mipmap/user_channel_icon_callcenter"
+                        android:text="@string/mine_service_center" />
 
-                <View
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/mine_mStart_45"
+                        android:background="#eee" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_user_feedback"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/mine_height_8"
-                    android:background="@color/color_back_eee" />
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_user_feedback"
+                        style="@style/TextStyle"
+                        android:drawableStart="@mipmap/user_channel_icon_feedback"
+                        android:text="@string/mine_feedback" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/mine_height_8"
+                        android:background="@color/color_back_eee" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </ScrollView>

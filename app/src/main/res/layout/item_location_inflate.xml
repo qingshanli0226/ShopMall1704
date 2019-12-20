@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收货人"
+            android:textSize="@dimen/integral_text_20sp"
+            android:padding="@dimen/dpsize_20"/>
+
+        <EditText
+            android:id="@+id/et_consignee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请填写收货人姓名"
+            android:layout_marginLeft="@dimen/dpsize_20"
+            android:background="@null"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="手机号码"
+            android:textSize="@dimen/integral_text_20sp"
+            android:padding="@dimen/dpsize_20"/>
+
+        <EditText
+            android:id="@+id/et_cell_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请填写收货人手机号"
+            android:background="@null"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="所在地区"
+            android:textSize="@dimen/integral_text_20sp"
+            android:padding="@dimen/dpsize_20"/>
+
+        <EditText
+            android:id="@+id/et_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="省市区县、乡镇等"
+            android:background="@null"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="详细地址"
+            android:textSize="@dimen/integral_text_20sp"
+            android:padding="@dimen/dpsize_20"/>
+
+        <EditText
+            android:id="@+id/et_detailed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="街道、楼牌号等"
+            android:background="@null"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/bt_location_inflate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dpsize_30"
+            android:layout_marginRight="@dimen/dpsize_30"
+            android:background="@drawable/bt_location"
+            android:text="保存"
+            android:textSize="20sp"
+            android:textColor="@color/colorWhite"/>
+
+    </LinearLayout>
+
+</LinearLayout>

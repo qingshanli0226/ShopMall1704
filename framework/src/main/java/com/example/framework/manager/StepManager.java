@@ -5,25 +5,22 @@ package com.example.framework.manager;
  */
 
 import android.content.ComponentName;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.text.format.Time;
-import android.util.Log;
 
 
 import com.example.common.OrmUtils;
+import com.example.framework.bean.HourBean;
+import com.example.framework.bean.MessageStepBean;
 import com.example.framework.bean.ShopStepBean;
-import com.example.framework.bean.ShopStepTimeRealBean;
-import com.example.framework.greendao.DaoMaster;
-import com.example.framework.greendao.DaoSession;
-import com.example.framework.greendao.FirstStepBean;
-import com.example.framework.greendao.FirstStepBeanDao;
-import com.example.framework.greendao.ShopStepTimeRealBeanDao;
+import com.example.framework.sql.HourSql;
 import com.example.framework.service.StepService;
 
 import java.text.SimpleDateFormat;
@@ -43,9 +40,12 @@ public class StepManager {
     ServiceConnection serviceConnection;
     List<StepManagerListener> stepManagerListeners=new ArrayList<>();
     List<StepIntegalListener> IntegalListeners=new ArrayList<>();
+
     private Intent intent;
-    ShopStepTimeRealBeanDao realBeanDao;
-    FirstStepBeanDao firstStepBeanDao;
+
+    private int cut;
+
+    SQLiteDatabase hourDb;
 
     public static StepManager getInstance() {
         if (stepManager == null) {
@@ -56,8 +56,8 @@ public class StepManager {
 
 
     //绑定服务
-    public void init(Context context){
-        this.context=context;
+    public void init(Context ctx){
+        this.context=ctx;
 
         Intent intent = new Intent(context, StepService.class);
          serviceConnection = new ServiceConnection() {
@@ -67,13 +67,15 @@ public class StepManager {
                 stepService=((StepService.StepBinder)iBinder).getService();
 
                 stepService.registerListener(new StepService.UpdateUi() {
+
+
                     @Override
                     public void getUpdateStep(int count, int ingal) {
-
-
+                    cut=count;
                         for (int i=0;i<stepManagerListeners.size();i++){
                             stepManagerListeners.get(i).onIntegral(ingal);
                             stepManagerListeners.get(i).onStepChange(count);
+
                         }
 
                         if(IntegalListeners.size()>0){
@@ -82,15 +84,10 @@ public class StepManager {
                             }
                         }
 
-
-
                     }
 
 
                 });
-
-
-
 
             }
 
@@ -102,44 +99,84 @@ public class StepManager {
 
         context.bindService(intent,serviceConnection,Context.BIND_AUTO_CREATE);
 
-        SQLiteDatabase database = new DaoMaster.DevOpenHelper(context, "realTimes.db", null).getWritableDatabase();
-        DaoMaster daoMaster = new DaoMaster(database);
-        DaoSession daoSession = daoMaster.newSession();
-        realBeanDao = daoSession.getShopStepTimeRealBeanDao();
 
 
 
-
+        HourSql hourSql = new HourSql(context);
+        hourDb = hourSql.getWritableDatabase();
 
 
     }
 
 
 
-    public int  getFirstStep(){
-        for (int i=0;i<firstStepBeanDao.queryBuilder().list().size();i++){
-            if(firstStepBeanDao.queryBuilder().list().get(i).getFirst()==1){
-                return 1;
-            }
+    public List<MessageStepBean> getMessDate(){
+        Cursor cursor = hourDb.rawQuery("select time,date,currentStep,integral from mess", null);
+        List<MessageStepBean> messageBeans=new ArrayList<>();
+        while (cursor.moveToNext()){
+            String time = cursor.getString(cursor.getColumnIndex("time"));
+            String date = cursor.getString(cursor.getColumnIndex("date"));
+            int currentStep = cursor.getInt(cursor.getColumnIndex("currentStep"));
+            int integral = cursor.getInt(cursor.getColumnIndex("integral"));
+            MessageStepBean messageBean = new MessageStepBean(time, date, currentStep, integral);
+            messageBeans.add(messageBean);
         }
-        return 0;
+        return messageBeans;
+
     }
-    public void saveFirstStep(int firsts){
-        FirstStepBean firstStep = new FirstStepBean(null, firsts);
-        firstStepBeanDao.insert(firstStep);
+    //存储消息信息
+    public void saveMessSql(String time,String date,int current,int gal){
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("time",time);
+        contentValues.put("date",date);
+        contentValues.put("currentStep",current);
+        contentValues.put("integral",gal);
+
+        hourDb.insert("mess",null,contentValues);
     }
 
-    public void saveReal(String time,String date,int current){
-        ShopStepTimeRealBean shopStepTimeRealBean = new ShopStepTimeRealBean(null, time, date, current);
-        realBeanDao.insertOrReplace(shopStepTimeRealBean);
+    //存储每分钟记录
+    public void insertHour(String time,String date,int current){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("time",time);
+        contentValues.put("date",date);
+        contentValues.put("currentStep",current);
+        hourDb.insert("history",null,contentValues);
     }
-    public List<ShopStepTimeRealBean> getReal(){
-        return realBeanDao.queryBuilder().distinct().list();
+    public List<HourBean> findHour(){
+        Cursor cursor = hourDb.rawQuery("select distinct time,date,currentStep from history", null);
+        List<HourBean> mlist=new ArrayList<>();
+        while (cursor.moveToNext())
+        {
+            String time = cursor.getString(cursor.getColumnIndex("time"));
+            String date = cursor.getString(cursor.getColumnIndex("date"));
+            int currentStep = cursor.getInt(cursor.getColumnIndex("currentStep"));
+            HourBean hourBean = new HourBean(time, date, currentStep);
+            mlist.add(hourBean);
+        }
+        return mlist;
+
     }
+
+    //获取现在地1日期
+    public String getTodayDate(){
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return dateFormat.format(date);
+    }
+    //获取现在的时间
+    public String getToadyTime(){
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+        return simpleDateFormat.format(date);
+    };
+
 
     public boolean isThisMonth(long time){
         return isThisTime(time,"yyyy-MM-dd");
     }
+
     public boolean isThisTime(long time,String pattern){
 
         Calendar calendar = Calendar.getInstance();
@@ -159,6 +196,7 @@ public class StepManager {
 
     }
 
+    //获取没有的最后一天
     public int getLastDayMonth(int month){
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.MONTH,month-1);
@@ -171,6 +209,7 @@ public class StepManager {
         return lastDay;
     }
 
+    //获取每月的第一天
     public int getFirstDayMonth(int month){
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.MONTH,month-1);
@@ -181,6 +220,7 @@ public class StepManager {
     }
 
 
+    //获取每周的日期
     public  List<String> getWeekDay(){
         Calendar calendar = Calendar.getInstance();
         //本周的第一天

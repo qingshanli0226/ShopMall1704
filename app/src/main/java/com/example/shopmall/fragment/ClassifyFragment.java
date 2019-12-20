@@ -1,14 +1,14 @@
 package com.example.shopmall.fragment;
 
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
+
 import com.example.common.LoadingPage;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseFragment;
@@ -27,10 +27,11 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ClassifyFragment extends BaseFragment implements IGetBaseView<ClassifyBean> {
+public class ClassifyFragment extends BaseFragment implements IGetBaseView<ClassifyBean>,ILoadView {
 
     private TitleBar tbClassify;
     private LoadingPage lpClassifyLoading;
+    private LinearLayout llClassify;
 
     private RecyclerView rvClassifyLeft;
     private RecyclerView rvClassifyRight;
@@ -51,8 +52,8 @@ public class ClassifyFragment extends BaseFragment implements IGetBaseView<Class
 
     @Override
     protected void initData() {
-        tbClassify.setTitleBacKGround(Color.RED);
-        tbClassify.setCenterText("分类",18,Color.WHITE);
+        tbClassify.setTitleBacKGround(Color.WHITE);
+        tbClassify.setCenterText("分类",18,Color.BLACK);
 
         tbClassify.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
@@ -103,6 +104,7 @@ public class ClassifyFragment extends BaseFragment implements IGetBaseView<Class
     private void getDataPresenter(String url) {
         integerPresenter = new IntegerPresenter(url,ClassifyBean.class);
         integerPresenter.attachGetView(this);
+        integerPresenter.attachLoadView(this);
         integerPresenter.getGetData();
     }
 
@@ -110,6 +112,7 @@ public class ClassifyFragment extends BaseFragment implements IGetBaseView<Class
     protected void initView(View view) {
         tbClassify = view.findViewById(R.id.tb_classify);
         lpClassifyLoading = view.findViewById(R.id.lp_classify_loading);
+        llClassify = view.findViewById(R.id.ll_classify);
 
         rvClassifyLeft = view.findViewById(R.id.rv_classify_left);
         rvClassifyRight = view.findViewById(R.id.rv_classify_right);
@@ -138,7 +141,6 @@ public class ClassifyFragment extends BaseFragment implements IGetBaseView<Class
 
     @Override
     public void onGetDataSucess(ClassifyBean data) {
-
         classifyRightAdapter = new ClassifyRightAdapter(getContext());
         classifyRightAdapter.reFresh(data.getResult());
         rvClassifyRight.setAdapter(classifyRightAdapter);
@@ -148,16 +150,31 @@ public class ClassifyFragment extends BaseFragment implements IGetBaseView<Class
     //网络获取数据失败显示loadingPage
     @Override
     public void onGetDataFailed(String ErrorMsg) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                lpClassifyLoading.start(LoadingPage.LOADING_FAILURE);
-            }
-        },1000);
+        lpClassifyLoading.start(LoadingPage.LOADING_FAILURE);
     }
     @Override
     public void onDestroy() {
         super.onDestroy();
         integerPresenter.detachView();
+    }
+
+    //开始网络请求加载loading
+    @Override
+    public void onLoadingPage() {
+        lpClassifyLoading.start(LoadingPage.LOADING_SUCCEED);
+        lpClassifyLoading.setVisibility(View.VISIBLE);
+        llClassify.setVisibility(View.GONE);
+    }
+
+    //结束网络请求加载loading
+    @Override
+    public void onStopLoadingPage() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                lpClassifyLoading.isSucceed();
+                llClassify.setVisibility(View.VISIBLE);
+            }
+        },1000);
     }
 }

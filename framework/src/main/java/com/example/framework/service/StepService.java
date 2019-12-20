@@ -73,16 +73,8 @@ public class StepService extends Service implements SensorEventListener {
         //初始化广播
         initBoradCast();
         //初始化传感器
-//        new Thread(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//            }
-//        }).start();
-                initSensorListener();
-
+        initSensorListener();
         startTimer();
-
 
     }
 
@@ -121,7 +113,7 @@ public class StepService extends Service implements SensorEventListener {
                         isNewDay();
                         break;
                     case Intent.ACTION_TIME_TICK:
-                        StepManager.getInstance().saveReal(CURRENT_TIME,CURRENT_DATE,currentStep);
+                        StepManager.getInstance().insertHour(CURRENT_TIME,CURRENT_DATE,currentStep);
                         StepManager.getInstance().save(CURRENT_DATE,currentStep,previousStep);
                         isNewDay();
                         break;
@@ -142,14 +134,22 @@ public class StepService extends Service implements SensorEventListener {
     private void isNewDay() {
         if ("00:00:00".equals(new SimpleDateFormat("HH:mm:ss").format(new Date()))) {
             initToday();
+            //发送消息
+            List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
+            String time = queryAll.get(queryAll.size() - 1).getTime();
+            String date = queryAll.get(queryAll.size() - 1).getDate();
+            String current_step = queryAll.get(queryAll.size() - 1).getCurrent_step();
+            int cur = Integer.parseInt(current_step);
+            int integral = queryAll.get(queryAll.size() - 1).getIntegral();
+            StepManager.getInstance().saveMessSql(time,date,cur,integral);
         }
     }
 
 
 
     private void initToday() {
-        CURRENT_DATE = getTodayDate();
-        CURRENT_TIME=getToadyTime();
+        CURRENT_DATE = StepManager.getInstance().getTodayDate();
+        CURRENT_TIME=StepManager.getInstance().getToadyTime();
         OrmUtils.createDb(this, "DbStep");
         List<ShopStepBean> shopStepBeans = OrmUtils.getQueryByWhere(ShopStepBean.class, "day", new String[]{CURRENT_DATE});
         Log.e("##day", shopStepBeans.toString());
@@ -200,26 +200,10 @@ public class StepService extends Service implements SensorEventListener {
                 updateUi.getUpdateStep(currentStep,count);
             }
         }
-//        List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
-//        Log.e("##Up-",count+"");
-//        for (int i=0;i<queryAll.size();i++){
-//            Log.e("##Up----",queryAll.get(i).getIntegral()+"");
-//            count+=queryAll.get(i).getIntegral();
-//
-//        }
+
     }
 
-    //获取今天的日期
-    private String getTodayDate() {
-        Date date = new Date(System.currentTimeMillis());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        return dateFormat.format(date);
-    }
-    private String getToadyTime(){
-        Date date = new Date(System.currentTimeMillis());
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
-        return simpleDateFormat.format(date);
-    }
+
 
     //实时通知
     @SuppressLint("NewApi")
@@ -272,8 +256,8 @@ public class StepService extends Service implements SensorEventListener {
     //实时获取步数
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        CURRENT_DATE = getTodayDate();
-        CURRENT_TIME=getToadyTime();
+        CURRENT_DATE = StepManager.getInstance().getTodayDate();
+        CURRENT_TIME=StepManager.getInstance().getToadyTime();
         if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
             int sensorStep = (int) sensorEvent.values[0];
             if (!isFirst) {
@@ -284,7 +268,6 @@ public class StepService extends Service implements SensorEventListener {
                 int i = thisStep - previousStep;
                 currentStep += (i);
                 previousStep = thisStep;
-                Log.e("##THIS", systemStep + "--" + sensorStep + "---" + i + "--" + currentStep + "--" + previousStep+"-this"+thisStep);
             }
         } else if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
             if (sensorEvent.values[0] == 1.0f) {

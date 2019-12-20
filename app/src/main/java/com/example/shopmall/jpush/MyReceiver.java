@@ -6,10 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
-import com.example.shopmall.activity.MainActivity;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -108,20 +104,20 @@ public class MyReceiver extends BroadcastReceiver {
 //		if (MainActivity.isForeground) {
 			String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
 			String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
-			Intent msgIntent = new Intent(MainActivity.MESSAGE_RECEIVED_ACTION);
-			msgIntent.putExtra(MainActivity.KEY_MESSAGE, message);
-			if (!ExampleUtil.isEmpty(extras)) {
-				try {
-					JSONObject extraJson = new JSONObject(extras);
-					if (extraJson.length() > 0) {
-						msgIntent.putExtra(MainActivity.KEY_EXTRAS, extras);
-					}
-				} catch (JSONException e) {
-
-				}
-
-			}
-			LocalBroadcastManager.getInstance(context).sendBroadcast(msgIntent);
+//			Intent msgIntent = new Intent(MainActivity.MESSAGE_RECEIVED_ACTION);
+//			msgIntent.putExtra(MainActivity.KEY_MESSAGE, message);
+//			if (!ExampleUtil.isEmpty(extras)) {
+//				try {
+//					JSONObject extraJson = new JSONObject(extras);
+//					if (extraJson.length() > 0) {
+//						msgIntent.putExtra(MainActivity.KEY_EXTRAS, extras);
+//					}
+//				} catch (JSONException e) {
+//
+//				}
+//
+//			}
+//			LocalBroadcastManager.getInstance(context).sendBroadcast(msgIntent);
 //		}
 	}
 }

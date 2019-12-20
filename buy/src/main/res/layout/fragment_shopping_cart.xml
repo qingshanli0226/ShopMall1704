@@ -37,15 +37,26 @@
         android:text="购物车空空的,快去商城看一看吧~~~"
         android:textSize="@dimen/dpsize_17" />
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_buy_shoppingcart"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/rl_buy_bottom"
-        android:layout_below="@id/v_buy_Divider"
-        android:background="@color/mine_color_gray" />
+        android:layout_below="@id/v_buy_Divider">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_buy_shoppingcart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:background="@color/mine_color_gray" />
+
+        <com.example.common.LoadingPage
+            android:id="@+id/lp_buy_loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/mine_color_gray"
+            android:visibility="gone" />
+    </FrameLayout>
 
     <RelativeLayout
         android:id="@+id/rl_buy_bottom"
@@ -100,11 +111,10 @@
                 android:textColor="#ed3f3f"
                 android:textSize="@dimen/dpsize_15" />
 
-            <Button
+            <com.example.common.view.MyOKButton
                 android:id="@+id/btn_buy_checkout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/color_lightred"
                 android:text="去结算"
                 android:textColor="@color/color_white" />
         </LinearLayout>

@@ -9,7 +9,9 @@
         android:targetSdkVersion="29" />
 
     <application>
-        <activity android:name="com.example.step.Ui.HistoryActivity" />
+        <activity
+            android:name="com.example.step.Ui.HistoryActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.example.step.Ui.IntegralActivity"
             android:screenOrientation="portrait" >

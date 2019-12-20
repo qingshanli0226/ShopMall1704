@@ -8,11 +8,13 @@ import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.identityscope.IdentityScopeType;
 import org.greenrobot.greendao.internal.DaoConfig;
 
+import com.example.framework.bean.AddressBarBean;
 import com.example.framework.bean.MessageBean;
 import com.example.framework.bean.ResultBean;
 import com.example.framework.bean.ShopStepTimeRealBean;
 import com.example.framework.greendao.FirstStepBean;
 
+import com.example.framework.greendao.AddressBarBeanDao;
 import com.example.framework.greendao.MessageBeanDao;
 import com.example.framework.greendao.ResultBeanDao;
 import com.example.framework.greendao.ShopStepTimeRealBeanDao;
@@ -27,11 +29,13 @@ import com.example.framework.greendao.FirstStepBeanDao;
  */
 public class DaoSession extends AbstractDaoSession {
 
+    private final DaoConfig addressBarBeanDaoConfig;
     private final DaoConfig messageBeanDaoConfig;
     private final DaoConfig resultBeanDaoConfig;
     private final DaoConfig shopStepTimeRealBeanDaoConfig;
     private final DaoConfig firstStepBeanDaoConfig;
 
+    private final AddressBarBeanDao addressBarBeanDao;
     private final MessageBeanDao messageBeanDao;
     private final ResultBeanDao resultBeanDao;
     private final ShopStepTimeRealBeanDao shopStepTimeRealBeanDao;
@@ -40,6 +44,9 @@ public class DaoSession extends AbstractDaoSession {
     public DaoSession(Database db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
             daoConfigMap) {
         super(db);
+
+        addressBarBeanDaoConfig = daoConfigMap.get(AddressBarBeanDao.class).clone();
+        addressBarBeanDaoConfig.initIdentityScope(type);
 
         messageBeanDaoConfig = daoConfigMap.get(MessageBeanDao.class).clone();
         messageBeanDaoConfig.initIdentityScope(type);
@@ -53,11 +60,13 @@ public class DaoSession extends AbstractDaoSession {
         firstStepBeanDaoConfig = daoConfigMap.get(FirstStepBeanDao.class).clone();
         firstStepBeanDaoConfig.initIdentityScope(type);
 
+        addressBarBeanDao = new AddressBarBeanDao(addressBarBeanDaoConfig, this);
         messageBeanDao = new MessageBeanDao(messageBeanDaoConfig, this);
         resultBeanDao = new ResultBeanDao(resultBeanDaoConfig, this);
         shopStepTimeRealBeanDao = new ShopStepTimeRealBeanDao(shopStepTimeRealBeanDaoConfig, this);
         firstStepBeanDao = new FirstStepBeanDao(firstStepBeanDaoConfig, this);
 
+        registerDao(AddressBarBean.class, addressBarBeanDao);
         registerDao(MessageBean.class, messageBeanDao);
         registerDao(ResultBean.class, resultBeanDao);
         registerDao(ShopStepTimeRealBean.class, shopStepTimeRealBeanDao);
@@ -65,10 +74,15 @@ public class DaoSession extends AbstractDaoSession {
     }
     
     public void clear() {
+        addressBarBeanDaoConfig.clearIdentityScope();
         messageBeanDaoConfig.clearIdentityScope();
         resultBeanDaoConfig.clearIdentityScope();
         shopStepTimeRealBeanDaoConfig.clearIdentityScope();
         firstStepBeanDaoConfig.clearIdentityScope();
+    }
+
+    public AddressBarBeanDao getAddressBarBeanDao() {
+        return addressBarBeanDao;
     }
 
     public MessageBeanDao getMessageBeanDao() {

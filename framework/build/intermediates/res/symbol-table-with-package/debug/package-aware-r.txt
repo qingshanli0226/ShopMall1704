@@ -118,6 +118,7 @@ attr contentInsetRight
 attr contentInsetStart
 attr contentInsetStartWithNavigation
 attr controlBackground
+attr coordinatorLayoutStyle
 attr customNavigationLayout
 attr defaultQueryHint
 attr dialogCornerRadius
@@ -177,9 +178,16 @@ attr indeterminateProgressStyle
 attr initialActivityCount
 attr isLightTheme
 attr itemPadding
+attr keylines
 attr lastBaselineToBottomHeight
 attr layout
 attr layoutManager
+attr layout_anchor
+attr layout_anchorGravity
+attr layout_behavior
+attr layout_dodgeInsetEdges
+attr layout_insetEdge
+attr layout_keyline
 attr lineHeight
 attr listChoiceBackgroundIndicator
 attr listChoiceIndicatorMultipleAnimated
@@ -251,6 +259,7 @@ attr splitTrack
 attr srcCompat
 attr stackFromEnd
 attr state_above_anchor
+attr statusBarBackground
 attr subMenuArrow
 attr submitBackground
 attr subtitle
@@ -357,6 +366,25 @@ color bright_foreground_material_dark
 color bright_foreground_material_light
 color button_material_dark
 color button_material_light
+color color4040
+color colorAccent
+color colorBlack
+color colorBlacklittlelight
+color colorBlue
+color colorGray
+color colorGreen
+color colorPrimary
+color colorPrimaryDark
+color colorRed
+color colorTintBlack
+color colorWhite
+color color_5d5d
+color color_back_eee
+color color_classiffy
+color color_classiffy2
+color color_lightred
+color color_white
+color colorcheckedRed
 color dim_foreground_disabled_material_dark
 color dim_foreground_disabled_material_light
 color dim_foreground_material_dark
@@ -365,6 +393,7 @@ color error_color_material_dark
 color error_color_material_light
 color foreground_material_dark
 color foreground_material_light
+color gray_dark_bg
 color highlighted_text_material_dark
 color highlighted_text_material_light
 color material_blue_grey_800
@@ -379,6 +408,8 @@ color material_grey_600
 color material_grey_800
 color material_grey_850
 color material_grey_900
+color mine_back_color
+color mine_color_gray
 color notification_action_color_filter
 color notification_icon_bg_color
 color primary_dark_material_dark
@@ -699,6 +730,7 @@ id add
 id alertTitle
 id async
 id blocking
+id bottom
 id btn_common_add
 id btn_common_sub
 id buttonPanel
@@ -713,6 +745,7 @@ id decor_content_parent
 id default_activity_button
 id dialog_button
 id edit_query
+id end
 id et_search
 id expand_activities_button
 id expanded_menu
@@ -730,6 +763,7 @@ id iv_failure
 id iv_left
 id iv_right
 id iv_succeed
+id left
 id line1
 id line3
 id listMode
@@ -754,6 +788,7 @@ id rb_one
 id rb_three
 id rb_two
 id rg
+id right
 id right_icon
 id right_side
 id rl_title
@@ -778,6 +813,7 @@ id split_action_bar
 id src_atop
 id src_in
 id src_over
+id start
 id submenuarrow
 id submit_area
 id tabMode
@@ -797,6 +833,7 @@ id time
 id title
 id titleDividerNoCustom
 id title_template
+id top
 id topPanel
 id tv_center
 id tv_common_count
@@ -1282,6 +1319,7 @@ style Widget_AppCompat_Toolbar
 style Widget_AppCompat_Toolbar_Button_Navigation
 style Widget_Compat_NotificationActionContainer
 style Widget_Compat_NotificationActionText
+style Widget_Support_CoordinatorLayout
 styleable ActionBar background backgroundSplit backgroundStacked contentInsetEnd contentInsetEndWithActions contentInsetLeft contentInsetRight contentInsetStart contentInsetStartWithNavigation customNavigationLayout displayOptions divider elevation height hideOnContentScroll homeAsUpIndicator homeLayout icon indeterminateProgressStyle itemPadding logo navigationMode popupTheme progressBarPadding progressBarStyle subtitle subtitleTextStyle title titleTextStyle
 styleable ActionBarLayout android_layout_gravity
 styleable ActionMenuItemView android_minWidth
@@ -1300,6 +1338,8 @@ styleable AppCompatTheme actionBarDivider actionBarItemBackground actionBarPopup
 styleable ButtonBarLayout allowStacking
 styleable ColorStateListItem alpha android_alpha android_color
 styleable CompoundButton android_button buttonCompat buttonTint buttonTintMode
+styleable CoordinatorLayout keylines statusBarBackground
+styleable CoordinatorLayout_Layout android_layout_gravity layout_anchor layout_anchorGravity layout_behavior layout_dodgeInsetEdges layout_insetEdge layout_keyline
 styleable DrawerArrowToggle arrowHeadLength arrowShaftLength barLength color drawableSize gapBetweenBars spinBars thickness
 styleable FontFamily fontProviderAuthority fontProviderCerts fontProviderFetchStrategy fontProviderFetchTimeout fontProviderPackage fontProviderQuery
 styleable FontFamilyFont android_font android_fontStyle android_fontVariationSettings android_fontWeight android_ttcIndex font fontStyle fontVariationSettings fontWeight ttcIndex

@@ -18,6 +18,7 @@
     <color name="color_classiffy2">#22000000</color>
     <color name="color_lightred">#ed3f3f</color>
     <color name="color_white">#fff</color>
+    <color name="colorcheckedRed">#DD2E1C</color>
     <color name="gray_dark_bg">#ffbababa</color>
     <color name="mine_back_color">#f00</color>
     <color name="mine_color_gray">#eee</color>
