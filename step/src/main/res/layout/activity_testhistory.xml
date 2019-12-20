@@ -7,22 +7,17 @@
         android:id="@+id/tb_history"
         android:layout_width="match_parent"
         android:layout_height="@dimen/titleBar_height" />
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/history_tableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titleBar_height">
 
-    <Spinner
-        android:id="@+id/history_Spinner"
-        android:layout_width="90dip"
-        android:layout_height="wrap_content"
-        android:spinnerMode="dialog"
-        android:layout_gravity="right"
-
-        >
-
-    </Spinner>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/history_RecyclerView"
+    </com.google.android.material.tabs.TabLayout>
+    <com.example.step.CustomView.NoScrollViewPage
+        android:id="@+id/history_viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </androidx.recyclerview.widget.RecyclerView>
+    </com.example.step.CustomView.NoScrollViewPage>
 
 </LinearLayout>

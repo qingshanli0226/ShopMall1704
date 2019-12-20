@@ -4,45 +4,40 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.common.OrmUtils;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
+import com.example.framework.base.IPostBaseView;
 import com.example.framework.bean.ShopStepBean;
+import com.example.framework.manager.UserManager;
 import com.example.step.CustomView.RunView;
-import com.example.framework.bean.ShopStepBean;
 import com.example.step.CustomView.StepArcView;
 import com.example.framework.manager.StepManager;
+import com.example.step.PointBresenter;
+import com.example.step.PonitBean;
 import com.example.step.R;
-import com.litesuits.orm.LiteOrm;
-import com.litesuits.orm.db.assit.SQLiteHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
-public class IntegralActivity extends BaseActivity {
+public class IntegralActivity extends BaseActivity implements StepManager.StepManagerListener, IPostBaseView<PonitBean> {
 
     TitleBar tb_integral;
     TextView intergral_Step,integral;
     RunView runView;
     StepArcView step_ArcView;
-    RecyclerView History_recyclerView;
 
    TextView tvHistory;
 
-   boolean isFirst=false;
-    SharedPreferences preferences;
+    PointBresenter pointBresenter;
+
     @Override
     protected int setLayout() {
         return R.layout.activity_integral;
@@ -57,7 +52,6 @@ public class IntegralActivity extends BaseActivity {
         integral=findViewById(R.id.Integral_integral);
         runView=findViewById(R.id.runView);
         step_ArcView=findViewById(R.id.StepView);
-        History_recyclerView=findViewById(R.id.history_RecyclerView);
         tvHistory=findViewById(R.id.find_History);
     }
 
@@ -107,46 +101,22 @@ public class IntegralActivity extends BaseActivity {
         }else{
             //      当前步数和积分
             List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
-            intergral_Step.setText(queryAll.get(queryAll.size()-1).getCurrent_step()+"");
             integral.setText(queryAll.get(queryAll.size()-1).getIntegral()+"");
+            int count=0;
+            for (int i=0;i<queryAll.size();i++){
+                String current_step = queryAll.get(i).getCurrent_step();
+                count+=Integer.parseInt(current_step);
+               intergral_Step.setText(count+"");
+            }
             String current_step = queryAll.get(queryAll.size() - 1).getCurrent_step();
             int i = Integer.parseInt(current_step);
             step_ArcView.setCurrentCount(10000,i);
         }
 
-
-
-
-
-
-
         //实时获取步数
-        StepManager.getInstance().registerListener(new StepManager.StepManagerListener() {
-            @Override
-            public void onStepChange(int count) {
-
-                intergral_Step.setText(count+"");
-                step_ArcView.setCurrentCount(10000,count);
-
-            }
-
-            @Override
-            public void onIntegral(int intgal) {
-
-              integral.setText(intgal+"");
-            }
-        });
-
-
-
-
-
-
-
+        StepManager.getInstance().registerListener(this);
 
     }
-
-
 
 
 
@@ -160,5 +130,46 @@ public class IntegralActivity extends BaseActivity {
                     step_ArcView.setCurrentCount(10000,i);
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        StepManager.getInstance().unRegisterLisener(this);
+        if(pointBresenter!=null){
+         pointBresenter.detachView();
+        }
+    }
+
+    @Override
+    public void onStepChange(int count) {
+        intergral_Step.setText(count+"");
+        step_ArcView.setCurrentCount(10000,count);
+    }
+
+    @Override
+    public void onIntegral(int intgal) {
+
+        integral.setText(intgal+"");
+        if(UserManager.getInstance().getToken()!=null){
+            pointBresenter= new PointBresenter(intgal);
+            pointBresenter.attachPostView(this);
+            pointBresenter.getCipherTextData();
+        }else{
+
+        }
+
+    }
+
+    @Override
+    public void onPostDataSucess(PonitBean data) {
+
+        Log.e("Data","Data" + data.toString());
+    }
+
+    @Override
+    public void onPostDataFailed(String ErrorMsg) {
+
+        Log.e("Data","ErrorMsg" + ErrorMsg);
     }
 }

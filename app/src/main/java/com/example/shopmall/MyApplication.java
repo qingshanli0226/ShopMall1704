@@ -5,6 +5,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.multidex.MultiDex;
+
 import com.example.framework.manager.ConnectManager;
 import com.example.framework.manager.CrashHandler;
 import com.example.framework.manager.MessageManager;
@@ -54,6 +56,8 @@ public class MyApplication extends Application {
         // 基础统计API
         StatService.registerActivityLifecycleCallbacks(this);
         LeakCanary.install(this);
+
+        MultiDex.install(this);
     }
 
     public static Context getContext() {
