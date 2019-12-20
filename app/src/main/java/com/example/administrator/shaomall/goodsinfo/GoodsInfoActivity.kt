@@ -45,7 +45,7 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
     override fun initView() {
         //点击关闭
         mIbGoodInfoBack.setOnClickListener {
-            ActivityInstanceManager.removeActivity(this)
+            animOutActivity()
         }
 
         //获取intent

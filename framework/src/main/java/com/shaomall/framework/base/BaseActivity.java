@@ -82,11 +82,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-    protected void animStartActivity(Class<? extends Activity> clazz){
-        startActivity(new Intent(this,clazz));
-        overridePendingTransition(R.anim.anim_in,R.anim.anim_out);
-    }
-
     protected void animOutActivity(){
         finish();
         overridePendingTransition(R.anim.anim_in,R.anim.anim_out);
@@ -123,6 +118,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             intent.putExtras(bundle);
         }
         startActivity(intent);
+        overridePendingTransition(R.anim.anim_in,R.anim.anim_out);
     }
 
 
@@ -139,6 +135,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             intent.putExtras(bundle);
         }
         startActivityForResult(intent, requestCode);
+        overridePendingTransition(R.anim.anim_in,R.anim.anim_out);
     }
 
 

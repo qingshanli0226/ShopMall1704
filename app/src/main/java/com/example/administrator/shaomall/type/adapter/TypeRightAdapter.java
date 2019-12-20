@@ -186,16 +186,10 @@ public class TypeRightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     public void onClick(View v) {
                         int i = (int) myLinear.getTag();
                         TypeBean.HotProductListBean listBean = hot_product_list.get(i);
-                        //                        String cover_price = listBean.getCover_price();
-                        //                        String name = listBean.getName();
-                        //                        String figure = listBean.getFigure();
-                        //                        String product_id = listBean.getProduct_id();
-
                         GoodsInfoBean goodsInfoBean = new GoodsInfoBean(listBean.getProduct_id(), listBean.getName(), null, listBean.getCover_price(), listBean.getBrief(), listBean.getFigure());
                         Intent intent = new Intent(mContext, GoodsInfoActivity.class);
                         intent.putExtra("goodsInfo", goodsInfoBean);
                         mContext.startActivity(intent);
-                        // Toast.makeText(mContext, "position" + i, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
