@@ -1,5 +1,11 @@
 package com.example.buy.databeans;
 
+import android.widget.ImageView;
+
+import androidx.databinding.BindingAdapter;
+
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 public class GetSearchBeanTwo {
@@ -209,6 +215,11 @@ public class GetSearchBeanTwo {
 
         public void setComment_list(List<String> comment_list) {
             this.comment_list = comment_list;
+        }
+
+        @BindingAdapter("url")
+        public static void setImage(ImageView imageView, String url) {
+            Glide.with(imageView.getContext()).load(url).into(imageView);
         }
     }
 }

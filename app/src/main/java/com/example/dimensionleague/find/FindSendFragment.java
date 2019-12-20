@@ -51,13 +51,11 @@ public class FindSendFragment extends BaseNetConnectFragment {
         homePresenter.attachView(this);
         homePresenter.doHttpGetRequest();
         recommendAdapter = new MineRecommendAdapter(R.layout.item_mine_rv_recommend, list);
-        recommendAdapter.setClickListener(new OnClickItemListener() {
-            @Override
-            public void onClickListener(int position) {
-                Intent intent =new Intent(getContext(), GoodsActiviy.class);
-                intent.putExtra(IntentUtil.SHOW_GOOD,list.get(position));
-                startActivity(intent);
-            }
+
+        recommendAdapter.setClickListener(position -> {
+            Intent intent =new Intent(getContext(), GoodsActiviy.class);
+            intent.putExtra(IntentUtil.GOTO_GOOD,list.get(position));
+            startActivity(intent);
         });
     }
 
@@ -70,7 +68,7 @@ public class FindSendFragment extends BaseNetConnectFragment {
 
     @Override
     public int getRelativeLayout() {
-        return 0;
+        return R.id.find_relativeLayout;
     }
 
 

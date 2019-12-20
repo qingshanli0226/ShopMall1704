@@ -6,12 +6,14 @@
     <application
         android:screenOrientation="portrait">
         <activity android:name="com.example.buy.activity.GoodsActiviy">
-
         </activity>
         <activity android:name="com.example.buy.activity.PayActivity"
             android:launchMode="singleTask"/>
-        <activity android:name="com.example.buy.activity.OrderActivity"/>
-        <activity android:name=".activity.ShoppCartActivity"/>
-        <activity android:name=".activity.SearchActivity"/>
+        <activity android:name="com.example.buy.activity.OrderActivity"
+            android:launchMode="singleTask"/>
+        <activity android:name=".activity.ShoppCartActivity"
+            android:launchMode="singleTask"/>
+        <activity android:name=".activity.SearchActivity"
+            android:launchMode="singleTask"/>
     </application>
 </manifest>

@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddressActivity extends BaseNetConnectActivity {
-    private Button addressSure;
     private OptionsPickerView<AddressBean.CityBean.AreaBean> pvOptions;
 
     private IPresenter updateAddressPresenter;
@@ -32,7 +31,7 @@ public class AddressActivity extends BaseNetConnectActivity {
     @Override
     public void init() {
         super.init();
-        addressSure = findViewById(R.id.addressSure);
+        Button addressSure = findViewById(R.id.addressSure);
 
         addressSure.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -25,14 +25,14 @@ import java.util.List;
 public class IntegralActivity extends BaseNetConnectActivity {
     private ImageView integral_img;
     private TextView integral_title;
-    private TextView integral_point;
-    private RelativeLayout exchange_gift;
-    private RelativeLayout exchange_record;
-    private RelativeLayout exchange_point;
+
+
+
+
 
     private UpdatePointBean pointBean;
     private IPresenter iPresenter;
-    private MyToolBar integral_tool;
+
 
     @Override
     public int getLayoutId() {
@@ -47,7 +47,8 @@ public class IntegralActivity extends BaseNetConnectActivity {
     @Override
     public void init() {
         super.init();
-        integral_tool = (MyToolBar) findViewById(R.id.integral_tool);
+
+        MyToolBar integral_tool = (MyToolBar) findViewById(R.id.integral_tool);
         integral_tool.init(Constant.OTHER_STYLE);
         integral_tool.getOther_title().setText("积分页面");
         integral_tool.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
@@ -61,10 +62,10 @@ public class IntegralActivity extends BaseNetConnectActivity {
             }
         });
         integral_img = findViewById(R.id.integral_img);
-        integral_point = findViewById(R.id.integral_point);
-        exchange_gift = findViewById(R.id.exchange_gift);
-        exchange_record = findViewById(R.id.exchange_record);
-        exchange_point = findViewById(R.id.exchange_point);
+        TextView integral_point = findViewById(R.id.integral_point);
+        RelativeLayout exchange_gift = findViewById(R.id.exchange_gift);
+        RelativeLayout exchange_record = findViewById(R.id.exchange_record);
+        RelativeLayout exchange_point = findViewById(R.id.exchange_point);
         integral_title = findViewById(R.id.integral_title);
         ifUser();
         if (pointBean == null) {

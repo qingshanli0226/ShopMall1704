@@ -39,7 +39,7 @@ class SeckillAdapter(
             home_seckill_tv_origin_price.paintFlags=Paint.STRIKE_THRU_TEXT_FLAG
             this.setOnClickListener { v->
                 val intent = Intent(context, GoodsActiviy::class.java)
-                intent.putExtra(IntentUtil.SHOW_GOOD, list!![position])
+                intent.putExtra(IntentUtil.GOTO_GOOD, list!![position])
                 context.startActivity(intent)
             }
         }

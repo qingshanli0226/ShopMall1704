@@ -22,23 +22,12 @@ public class TypeRecycleViewAdapter extends BaseRecyclerAdapter<TypeBean.ResultB
         holder.getTextView(R.id.type_right_tv_ordinary_right, "￥" + dateList.get(position).getCover_price()).setTextColor(Color.RED);
         holder.getImageView(R.id.type_right_iv_ordinary_right, AppNetConfig.BASE_URl_IMAGE + dateList.get(position).getFigure());
         setClickListener(position1 -> {
-            linkedlist.getLinkedlist(position1);
-
             Intent intent = new Intent(holder.itemView.getContext(), GoodsActiviy.class);
-            intent.putExtra(IntentUtil.SHOW_GOOD, dateList.get(position1));
+            intent.putExtra(IntentUtil.GOTO_GOOD, dateList.get(position1));
             holder.itemView.getContext().startActivity(intent);
         });
     }
 
-    Linkedlist linkedlist;
-
-    interface Linkedlist {
-        void getLinkedlist(int position);
-    }
-
-    public void setLinkedlist(Linkedlist linkedlist) {
-        this.linkedlist = linkedlist;
-    }
 
     @Override
     public int getItemCount() {

@@ -32,7 +32,7 @@ import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 public class HomeFragment extends BaseNetConnectFragment {
     private RecyclerView rv;
-    private HomeAdapter adapter;
+
     private HomeBean.ResultBean list=null;
 
     private int type = 0;
@@ -76,7 +76,7 @@ public class HomeFragment extends BaseNetConnectFragment {
         if (CacheManager.getInstance().getHomeBeanData() != null) {
             list = (((HomeBean) CacheManager.getInstance().getHomeBeanData()).getResult());
         }
-        adapter = new HomeAdapter(list, getContext());
+        HomeAdapter adapter = new HomeAdapter(list, getContext());
         rv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rv.setAdapter(adapter);
         appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {

@@ -17,11 +17,10 @@ import com.example.framework.base.BaseNetConnectActivity;
 import com.example.point.R;
 
 public class MessageItemActivity extends BaseNetConnectActivity {
-    private MyToolBar messageitem_toolbar;
-    private RecyclerView messageitem_re;
-    private ImageView messageitem_record;
-    private EditText messageitem_edit;
-    private ImageView messageitem_other;
+
+
+
+
     private LinearLayout messageitem_line;
 
     @Override
@@ -32,12 +31,12 @@ public class MessageItemActivity extends BaseNetConnectActivity {
     @Override
     public void init() {
         super.init();
-        messageitem_toolbar = findViewById(R.id.messageitem_toolbar);
-        messageitem_record = findViewById(R.id.messageitem_record);
-        messageitem_edit = findViewById(R.id.messageitem_edit);
-        messageitem_other = findViewById(R.id.messageitem_other);
+        MyToolBar messageitem_toolbar = findViewById(R.id.messageitem_toolbar);
+        ImageView messageitem_record = findViewById(R.id.messageitem_record);
+        EditText messageitem_edit = findViewById(R.id.messageitem_edit);
+        ImageView messageitem_other = findViewById(R.id.messageitem_other);
         messageitem_line = findViewById(R.id.messageitem_line);
-        messageitem_re = findViewById(R.id.messageitem_re);
+        RecyclerView messageitem_re = findViewById(R.id.messageitem_re);
         messageitem_toolbar.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
         messageitem_toolbar.init(Constant.OTHER_STYLE);
         messageitem_toolbar.getOther_back().setOnClickListener(new View.OnClickListener() {

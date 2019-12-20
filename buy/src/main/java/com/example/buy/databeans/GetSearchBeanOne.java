@@ -1,5 +1,11 @@
 package com.example.buy.databeans;
 
+import android.widget.ImageView;
+
+import androidx.databinding.BindingAdapter;
+
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 public class GetSearchBeanOne {
@@ -200,6 +206,10 @@ public class GetSearchBeanOne {
             public void setPic(String pic) {
                 this.pic = pic;
             }
+            @BindingAdapter("url")
+            public static void setImage(ImageView imageView, String url) {
+                Glide.with(imageView.getContext()).load(url).into(imageView);
+            }
         }
 
         public static class HotProductListBean {
@@ -343,6 +353,10 @@ public class GetSearchBeanOne {
 
             public void setSupplier_type(String supplier_type) {
                 this.supplier_type = supplier_type;
+            }
+            @BindingAdapter("url")
+            public static void setImage(ImageView imageView, String url) {
+                Glide.with(imageView.getContext()).load(url).into(imageView);
             }
         }
     }

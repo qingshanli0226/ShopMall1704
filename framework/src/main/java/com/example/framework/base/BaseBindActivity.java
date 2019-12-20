@@ -7,11 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
+import com.example.framework.R;
 import com.example.framework.port.IActivity;
+import com.gyf.immersionbar.ImmersionBar;
 
 import java.util.LinkedList;
 
-public abstract class BaseBindActivity<DB extends ViewDataBinding> extends AppCompatActivity implements IActivity {
+public abstract class BaseBindActivity<DB extends ViewDataBinding> extends AppCompatActivity{
     DB db;
 
     @Override
@@ -19,9 +21,16 @@ public abstract class BaseBindActivity<DB extends ViewDataBinding> extends AppCo
         super.onCreate(savedInstanceState);
         db = DataBindingUtil.setContentView(this, getLayoutId());
         initView(db);
-        init();
         initDate();
+        //TODO 沉浸式状态栏
+        ImmersionBar.with(this).init();
     }
+
+    /**
+     * 获取布局Id
+     * @return
+     */
+    protected abstract int getLayoutId();
 
     /**
      * 初始化界面
@@ -29,7 +38,14 @@ public abstract class BaseBindActivity<DB extends ViewDataBinding> extends AppCo
      */
     protected abstract void initView(DB bindView);
 
-    public interface IDataBindingListener {
-        void onViewDataBinding(ViewDataBinding viewDataBinding);
+    /**
+     * 初始化数据
+     */
+    protected abstract void initDate();
+
+    //TODO finish的入场退场动画
+    public void finishActivity() {
+        finish();
+        overridePendingTransition(R.anim.slide_to_right_in, R.anim.slide_to_right_out);
     }
 }

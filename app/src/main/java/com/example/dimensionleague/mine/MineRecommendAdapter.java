@@ -26,7 +26,7 @@ public class MineRecommendAdapter extends BaseRecyclerAdapter<HomeBean.ResultBea
         holder.getImageView(R.id.mine_rcv_recommend_img,AppNetConfig.BASE_URl_IMAGE+dateList.get(position).getFigure());
         setClickListener(position1 -> {
             Intent intent = new Intent(holder.itemView.getContext(), GoodsActiviy.class);
-            intent.putExtra(IntentUtil.SHOW_GOOD,dateList.get(position1));
+            intent.putExtra(IntentUtil.GOTO_GOOD,dateList.get(position1));
             holder.itemView.getContext().startActivity(intent);
         });
     }
