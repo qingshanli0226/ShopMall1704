@@ -37,6 +37,7 @@ public class AutomaticPresenter extends BasePresenter<LoginBean> {
 
     @Override
     protected Map<String, String> getParam() {
+        //请求加密
         Map<String, String> parmMap = SignUtil.getEmptyTreeMap();
         parmMap.put("token", token);
         String sign = SignUtil.generateSign(parmMap);//生成签名
