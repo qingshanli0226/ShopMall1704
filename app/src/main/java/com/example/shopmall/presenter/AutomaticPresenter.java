@@ -7,6 +7,9 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
+/**
+ * 自动登录
+ */
 public class AutomaticPresenter extends BasePresenter {
 
     private String token;

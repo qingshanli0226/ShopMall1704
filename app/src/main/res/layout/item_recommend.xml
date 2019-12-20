@@ -37,6 +37,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_recommend"
         android:layout_width="match_parent"
-        android:layout_height="380dp"
-        android:numColumns="3" />
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

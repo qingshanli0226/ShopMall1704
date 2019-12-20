@@ -1,6 +1,5 @@
 package com.example.shopmall.fragment;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,7 +9,7 @@ import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.common.TitleBar;
@@ -30,26 +29,25 @@ import com.example.step.Ui.IntegralActivity;
 import com.example.shopmall.activity.LoginActivity;
 import com.wyp.avatarstudio.AvatarStudio;
 
-//个人页面
+/**
+ * 个人页面
+ */
 public class MineFragment extends BaseFragment implements IPostBaseView<Object> {
 
     private TitleBar tbMine;
-    private TextView tvUserScore;
     private TextView tvUsername;
     private ImageView ivUserIconAvator;
     private TextView tvSendgoods;
     private AutomaticPresenter automaticPresenter;
     private UpImgPresenter upImgPresenter;
-    private LinearLayout llUserLocation;
-
-    private int sum = 0;
+    private RelativeLayout rlUserLocation;
+    private RelativeLayout rlUserScore;
 
     @Override
     protected void initData() {
 
         tbMine.setTitleBacKGround(Color.WHITE);
         tbMine.setCenterText("个人中心", 18, Color.BLACK);
-        tbMine.setLeftImg(R.mipmap.new_message_icon);
         tbMine.setRightImg(R.mipmap.new_user_setting);
 
         tbMine.setTitleClickLisner(new TitleBar.TitleClickLisner() {
@@ -69,13 +67,15 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
             }
         });
 
-        tvUserScore.setOnClickListener(new View.OnClickListener() {
+        //我的积分
+        rlUserScore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), IntegralActivity.class));
             }
         });
 
+        //登录
         tvUsername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,15 +99,15 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
             }
         });
 
-        SharedPreferences login = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
-        String getToken = login.getString("getToken", "");
-        boolean isAutomatic = login.getBoolean("isAutomatic", false);
-        if (isAutomatic) {
+        //登录
+        if (UserManager.getInstance().getLoginStatus(getContext())) {
+            String getToken = UserManager.getInstance().getToken();
             automaticPresenter = new AutomaticPresenter(getToken);
             automaticPresenter.attachPostView(this);
             automaticPresenter.getPostFormData();
         }
 
+        //头像判断
         ivUserIconAvator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,22 +134,23 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
                             });
                 } else {
                     Toast.makeText(getContext(), "请先登录账号", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
                 }
             }
 
         });
 
-        llUserLocation.setOnClickListener(new View.OnClickListener() {
+        //收货地址
+        rlUserLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences token1 = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
-                boolean isLogin = token1.getBoolean("isLogin", false);
-                if (isLogin){
+                if (UserManager.getInstance().getLoginStatus(getContext())){
                     startActivity(new Intent(getContext(), AddressBarActivity.class));
                 }else {
                     Toast.makeText(getContext(), "请先登录", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getContext(),LoginActivity.class));
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -167,20 +168,12 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
     private TextView mTvName;
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (automaticPresenter != null){
-            automaticPresenter.detachView();
-        }
-    }
-
-    @Override
     protected void initView(View view) {
         tbMine = view.findViewById(R.id.tb_mine);
-        tvUserScore = view.findViewById(R.id.tv_user_score);
         tvUsername = view.findViewById(R.id.tv_username);
         ivUserIconAvator = view.findViewById(R.id.iv_user_icon_avator);
-        llUserLocation = view.findViewById(R.id.ll_user_location);
+        rlUserLocation = view.findViewById(R.id.rl_user_location);
+        rlUserScore = view.findViewById(R.id.rl_user_score);
         mTvName = view.findViewById(R.id.tv_user_name);
         tvSendgoods = view.findViewById(R.id.tv_app_sendgoods);
     }
@@ -206,4 +199,13 @@ public class MineFragment extends BaseFragment implements IPostBaseView<Object> 
     public void onPostDataFailed(String ErrorMsg) {
 
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (automaticPresenter != null){
+            automaticPresenter.detachView();
+        }
+    }
+
 }

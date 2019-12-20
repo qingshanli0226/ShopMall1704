@@ -7,6 +7,9 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
+/**
+ * 退出登录
+ */
 public class LogOutPresenter extends BasePresenter {
 
     private String path;

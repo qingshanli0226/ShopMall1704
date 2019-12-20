@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -35,18 +36,23 @@ import java.util.HashMap;
  */
 public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<InsertBean> {
 
-    TitleBar tbGoodsInfo;
-    RecyclerView rvGoodsInfo;
-    BottomBar bbGoodsInfo;
-    MyOKButton btGoodsInfo;
-    LinearLayout layoutBottom;
+    private TitleBar tbGoodsInfo;
+    private RecyclerView rvGoodsInfo;
+    private BottomBar bbGoodsInfo;
+    private MyOKButton btGoodsInfo;
+    private LinearLayout layoutBottom;
 
-    ArrayList<GoodsBean> list_goods = new ArrayList<>();
+    private ArrayList<GoodsBean> list_goods = new ArrayList<>();
 
-    int x = 1;
+    private int x = 1;
 
     private InsertPresenter addOneProduct;
     private GoodsBean goods_bean;
+    private int mainitem;
+    private GoodsInfoAdapter goodsInfoAdapter;
+    private Drawable mine;
+    private Drawable collect;
+    private Drawable shoppingcart;
 
     @Override
     protected int setLayout() {
@@ -67,6 +73,9 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
 
     @Override
     public void initData() {
+
+        initIntent();
+
         tbGoodsInfo.setTitleBacKGround(Color.WHITE);
         tbGoodsInfo.setCenterText("商品详情", 18, Color.BLACK);
         tbGoodsInfo.setLeftImg(R.drawable.left);
@@ -74,7 +83,6 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
         tbGoodsInfo.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
             public void LeftClick() {
-                ShoppingManager.getInstance().setMainitem(0);
                 finish();
             }
 
@@ -90,9 +98,9 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
         });
 
         String[] strs = new String[]{"联系客服", "收藏", "购物车"};
-        final Drawable mine = getResources().getDrawable(R.drawable.mine);
-        final Drawable collect = getResources().getDrawable(R.drawable.collect);
-        final Drawable shoppingcart = getResources().getDrawable(R.drawable.shoppingcart);
+        mine = getResources().getDrawable(R.drawable.mine);
+        collect = getResources().getDrawable(R.drawable.collect);
+        shoppingcart = getResources().getDrawable(R.drawable.shoppingcart);
         Drawable[] drawables = new Drawable[]{mine, collect, shoppingcart};
         bbGoodsInfo.setBottombarName(strs);
         bbGoodsInfo.setTapDrables(drawables);
@@ -114,15 +122,10 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
                 }
             }
         });
-        Intent intent = getIntent();
-        goods_bean = (GoodsBean) intent.getSerializableExtra("goods_bean");
-        list_goods.add(goods_bean);
 
-        GoodsInfoAdapter goodsInfoAdapter = new GoodsInfoAdapter();
+        goodsInfoAdapter = new GoodsInfoAdapter(this);
         goodsInfoAdapter.reFresh(list_goods);
         rvGoodsInfo.setAdapter(goodsInfoAdapter);
-        rvGoodsInfo.setAdapter(goodsInfoAdapter);
-
 
         //加入购物车
         btGoodsInfo.setOnClickListener(new View.OnClickListener() {
@@ -152,6 +155,13 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
                 Toast.makeText(GoodsInfoActivity.this, "购物车内物品数量+1", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    //跳转传过来的数据
+    private void initIntent() {
+        Intent intent = getIntent();
+        goods_bean = (GoodsBean) intent.getSerializableExtra("goods_bean");
+        list_goods.add(goods_bean);
     }
 
     //购物车
@@ -185,6 +195,10 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+//        ShoppingManager.getInstance().setMainitem(mainitem);
+
+        goodsInfoAdapter.getWebView();
 
         if (addOneProduct != null){
             addOneProduct.detachView();

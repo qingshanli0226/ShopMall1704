@@ -16,7 +16,7 @@
 
     <TextView
         android:id="@+id/tv_hot_name"
-        android:layout_width="180dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:ellipsize="end"
@@ -33,4 +33,5 @@
         android:layout_marginTop="3dp"
         android:text="￥88.00"
         android:textColor="#ff4242" />
+
 </LinearLayout>

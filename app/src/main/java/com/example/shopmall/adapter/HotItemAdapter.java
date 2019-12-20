@@ -1,5 +1,6 @@
 package com.example.shopmall.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
@@ -59,6 +60,7 @@ public class HotItemAdapter extends BaseAdapter<HomepageBean.ResultBean.HotInfoB
 
         }
 
+        @SuppressLint("SetTextI18n")
         public void setData(List<HomepageBean.ResultBean.HotInfoBean> hotInfoBeans, final int position) {
             Glide.with(mContext).load(Constant.BASE_URL_IMAGE + hotInfoBeans.get(position).getFigure()).into(ivHotFigure);
             tvHotName.setText(hotInfoBeans.get(position).getName());

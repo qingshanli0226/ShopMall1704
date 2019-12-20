@@ -113,7 +113,9 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
     protected void onDestroy() {
         super.onDestroy();
 
-        integerPresenter.detachView();
+        if (integerPresenter != null){
+            integerPresenter.detachView();
+        }
 
         handler.removeCallbacksAndMessages(this);
 

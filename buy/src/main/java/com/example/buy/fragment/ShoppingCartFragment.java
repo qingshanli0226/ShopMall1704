@@ -388,8 +388,8 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
 
     //设置TitleBar
     protected void setTitleBar() {
-        tbShoppingCart.setCenterText("购物车", 18, Color.RED);
-        tbShoppingCart.setRightText("编辑", 14, Color.BLACK);
+        tbShoppingCart.setCenterText("购物车", 18, Color.BLACK);
+        tbShoppingCart.setRightText("编辑", 14, Color.BLUE);
     }
 
     //初始化控件

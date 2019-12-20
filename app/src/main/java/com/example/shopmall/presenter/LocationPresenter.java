@@ -7,6 +7,9 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
+/**
+ * 收货地址详细地址
+ */
 public class LocationPresenter extends BasePresenter {
 
     private String address;

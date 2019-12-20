@@ -8,7 +8,7 @@
     <WebView
         android:id="@+id/wb_figure_goods_info"
         android:layout_width="match_parent"
-        android:layout_height="390dp"
+        android:layout_height="380dp"
         tools:ignore="WebViewLayout" />
 
     <TextView

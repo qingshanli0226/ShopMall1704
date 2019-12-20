@@ -9,6 +9,7 @@ import android.graphics.Color;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IGetBaseView;
+import com.example.framework.manager.ShoppingManager;
 import com.example.net.Constant;
 import com.example.shopmall.R;
 import com.example.shopmall.adapter.GoodsListAdapter;

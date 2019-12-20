@@ -7,6 +7,9 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
+/**
+ * 登录
+ */
 public class LoginPresenter extends BasePresenter<LoginBean> {
 
     private String name;

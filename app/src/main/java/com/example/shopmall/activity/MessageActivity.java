@@ -10,6 +10,7 @@ import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.bean.MessageBean;
 import com.example.framework.manager.MessageManager;
+import com.example.framework.manager.ShoppingManager;
 import com.example.shopmall.R;
 import com.example.shopmall.adapter.MessageItemAdapter;
 import com.yanzhenjie.recyclerview.OnItemMenuClickListener;
@@ -95,7 +96,7 @@ public class MessageActivity extends BaseActivity {
         //数据库获取数据，添加到消息界面
         final List<MessageBean> messages = MessageManager.getMessageManager().getMessage();
         if (messages.size() > 0){
-            messageItemAdapter = new MessageItemAdapter(this);
+            messageItemAdapter = new MessageItemAdapter();
             messageItemAdapter.reFresh(messages);
             srvMessage.setAdapter(messageItemAdapter);
 

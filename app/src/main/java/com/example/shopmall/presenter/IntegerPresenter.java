@@ -5,6 +5,9 @@ import com.example.framework.base.BasePresenter;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
+/**
+ * 分类商品
+ */
 public class IntegerPresenter extends BasePresenter {
 
     private String Config;

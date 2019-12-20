@@ -43,13 +43,13 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
     //记录当前正在显示的Fragment
     private Fragment currentFragment;
 
+    //底部导航
     private BottomBar bbMain;
 
     //购物车商品数量
     private int allNumber;
 
     private ShoppingCartView mRedMessage;
-    private RelativeLayout mRlBottom;
     private ShoppingCartPresenter shoppingCartPresenter;
 
     @Override
@@ -60,7 +60,6 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
     public void initView() {
         bbMain = findViewById(R.id.bb_main);
         mRedMessage = findViewById(R.id.shopping_message);
-        mRlBottom = findViewById(R.id.rl_main);
         fragmentArrayList.add(new HomePageFragment());
         fragmentArrayList.add(new ClassifyFragment());
         fragmentArrayList.add(new HorizontalFragment());
@@ -72,8 +71,8 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
     protected void onResume() {
         super.onResume();
         int mainitem = ShoppingManager.getInstance().getMainitem();
-        bbMain.setCheckedItem(mainitem);
         if (mainitem == 3) {
+            bbMain.setCheckedItem(mainitem);
             refreshShoppingCartData();
         }
     }

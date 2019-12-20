@@ -45,7 +45,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:text="加入购物车"
+                android:text="@string/goods_info_shopping_cart"
                 android:textSize="20sp"
                 android:textColor="@color/colorWhite"/>
 

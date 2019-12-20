@@ -7,6 +7,9 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
+/**
+ * 注册
+ */
 public class RegisterPresenter extends BasePresenter {
     private String name;
     private String pwd;
