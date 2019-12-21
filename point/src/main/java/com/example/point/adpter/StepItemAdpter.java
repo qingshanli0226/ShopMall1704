@@ -5,7 +5,7 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.point.R;
-import com.example.point.service.StepBean;
+import com.example.framework.bean.StepBean;
 
 import java.util.List;
 

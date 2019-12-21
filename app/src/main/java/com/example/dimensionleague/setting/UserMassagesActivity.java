@@ -158,21 +158,19 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
                 if (permission != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, Constant.REQUSET_CODE);
                     return;
-                } else {
-                    new AvatarStudio.Builder(UserMassagesActivity.this)
-                            .needCrop(true)
-                            .dimEnabled(true)
-                            .setAspect(1, 1)
-                            .setOutput(50, 50)
-                            .setText(getString(R.string.camera), getString(R.string.albums), getString(R.string.cancel))
-                            .setTextColor(Color.BLUE)
-                            .show(uri -> {
-                                File file = new File(uri);
-                                upload(file);
-                            });
                 }
             }
-
+            new AvatarStudio.Builder(UserMassagesActivity.this)
+                    .needCrop(true)
+                    .dimEnabled(true)
+                    .setAspect(1, 1)
+                    .setOutput(50, 50)
+                    .setText(getString(R.string.camera), getString(R.string.albums), getString(R.string.cancel))
+                    .setTextColor(Color.BLUE)
+                    .show(uri -> {
+                        File file = new File(uri);
+                        upload(file);
+                    });
 
         });
         adapter.setOnItemClickListener((adapter, view, position) -> {

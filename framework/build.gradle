@@ -1,5 +1,10 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
+apply plugin: 'kotlin-android-extensions'
+//添加插件依赖 在文件最上面
+//添加依赖库
+apply plugin: 'org.greenrobot.greendao'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -25,40 +30,49 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    dataBinding {
-        enabled true
+
+    greendao {
+        schemaVersion 2 //当前数据库版本
+        daoPackage 'com.example.framework' //包名 需要更改
+        targetGenDir 'src/main/java' //存放greendao库生成文件的目录
+        dataBinding {
+            enabled true
+        }
     }
-}
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    // 基础依赖包，必须要依赖
-    api 'com.gyf.immersionbar:immersionbar:3.0.0'
+    dependencies {
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+        implementation 'org.greenrobot:greendao:3.2.2' // 添加库
+//
+        implementation 'androidx.appcompat:appcompat:1.1.0'
+        testImplementation 'junit:junit:4.12'
+        androidTestImplementation 'androidx.test:runner:1.2.0'
+        androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+        // 基础依赖包，必须要依赖
+        api 'com.gyf.immersionbar:immersionbar:3.0.0'
 // fragment快速实现（可选）
-    api 'com.gyf.immersionbar:immersionbar-components:3.0.0'
+        api 'com.gyf.immersionbar:immersionbar-components:3.0.0'
 // kotlin扩展（可选）
-    api 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
+        api 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
 
-    api 'androidx.recyclerview:recyclerview:1.1.0'
+        api 'androidx.recyclerview:recyclerview:1.1.0'
 
-    api 'androidx.recyclerview:recyclerview:1.0.0'
-    api 'com.jaeger.statusbarutil:library:1.4.0'
+        api 'androidx.recyclerview:recyclerview:1.0.0'
+        api 'com.jaeger.statusbarutil:library:1.4.0'
 
-    implementation project(path: ':net')
-    implementation project(path: ':common')
-    //PushSDK必须依赖基础组件库，所以需要加入对应依赖
-    api 'com.umeng.umsdk:common:2.1.0'
+        implementation project(path: ':net')
+        implementation project(path: ':common')
+        //PushSDK必须依赖基础组件库，所以需要加入对应依赖
+        api 'com.umeng.umsdk:common:2.1.0'
 //PushSDK必须依赖utdid库，所以需要加入对应依赖
-    api 'com.umeng.umsdk:utdid:1.1.5.3'
+        api 'com.umeng.umsdk:utdid:1.1.5.3'
 //PushSDK
-    api 'com.umeng.umsdk:push:6.0.1'
-    api 'com.umeng.umsdk:analytics:8.0.0'
-    api 'com.umeng.umsdk:common:2.0.0'
-    api 'com.umeng.umsdk:utdid:1.1.5.3'
-    api "android.arch.lifecycle:extensions:1.1.1"
+        api 'com.umeng.umsdk:push:6.0.1'
+        api 'com.umeng.umsdk:analytics:8.0.0'
+        api 'com.umeng.umsdk:common:2.0.0'
+        api 'com.umeng.umsdk:utdid:1.1.5.3'
+
+        api "android.arch.lifecycle:extensions:1.1.1"
+
+    }
 }
