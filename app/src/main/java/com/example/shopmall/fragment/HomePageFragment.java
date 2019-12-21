@@ -47,7 +47,7 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
     public void onStart() {
         super.onStart();
 
-        if (UserManager.getInstance().getLoginStatus(getContext())) {
+        if (UserManager.getInstance().getLoginStatus()) {
             handler.sendEmptyMessage(100);
         }else {
             tbHomepage.setMessageShow(false);
@@ -96,7 +96,7 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
             @Override
             public void RightClick() {
                 //跳转到消息
-                if (UserManager.getInstance().getLoginStatus(getContext())){ //判断登录，登录后跳转到消息
+                if (UserManager.getInstance().getLoginStatus()){ //判断登录，登录后跳转到消息
                     startActivity(new Intent(getContext(), MessageActivity.class));
                 }else {//没有登录跳转到登录页登录
                     Intent intent = new Intent(getContext(), LoginActivity.class);

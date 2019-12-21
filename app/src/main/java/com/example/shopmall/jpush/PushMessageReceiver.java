@@ -73,8 +73,8 @@ public class PushMessageReceiver extends JPushMessageReceiver {
     @Override
     public void onNotifyMessageArrived(Context context, NotificationMessage message) {
         Log.e(TAG, "[onNotifyMessageArrived] " + message);
-        Log.e("####", message.notificationContent);//接受消息的内容
-        Log.e("####", message.notificationTitle);//接受消息的标题
+//        Log.e("####", message.notificationContent);//接受消息的内容
+//        Log.e("####", message.notificationTitle);//接受消息的标题
 
        MessageManager.getMessageManager().setMessageManager(message.notificationTitle,message.notificationContent);
 

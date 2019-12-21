@@ -62,7 +62,7 @@ public class SetActivity extends BaseActivity implements IPostBaseView<AddressBe
             }
         });
 
-        if (!UserManager.getInstance().getLoginStatus(SetActivity.this)){
+        if (!UserManager.getInstance().getLoginStatus()){
             initLogin();
         }
 
@@ -73,9 +73,13 @@ public class SetActivity extends BaseActivity implements IPostBaseView<AddressBe
 
                 String getToken = UserManager.getInstance().getToken();
                 Log.d("####", "handleMessage: " + getToken);
-                logOutPresenter = new LogOutPresenter("logout",getToken);
-                logOutPresenter.attachPostView(SetActivity.this);
-                logOutPresenter.getCipherTextData();
+                if (UserManager.getInstance().getLoginStatus()){
+                    logOutPresenter = new LogOutPresenter("logout",getToken);
+                    logOutPresenter.attachPostView(SetActivity.this);
+                    logOutPresenter.getCipherTextData();
+                }else {
+                    initLogin();
+                }
             }
         });
     }

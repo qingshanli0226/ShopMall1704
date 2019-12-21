@@ -1,5 +1,7 @@
 package com.example.shopmall.presenter;
 
+import android.util.Log;
+
 import com.example.framework.base.BasePresenter;
 import com.example.shopmall.bean.RegisterBean;
 import com.google.gson.reflect.TypeToken;
@@ -15,7 +17,7 @@ import okhttp3.RequestBody;
 /**
  * 上传头像
  */
-public class UpImgPresenter extends BasePresenter {
+public class UpImgPresenter extends BasePresenter<RegisterBean> {
 
     private String uri;
     private String token;
@@ -51,8 +53,8 @@ public class UpImgPresenter extends BasePresenter {
     @Override
     public MultipartBody.Part getFile() {
         File file = new File(uri);
-        final RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
         return body;
     }
 }
