@@ -2,22 +2,12 @@ package com.example.buy.activity;
 
 
 import android.content.Context;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.core.widget.NestedScrollView;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.buy.R;
 import com.example.buy.databeans.GetSearchBeanOne;
 import com.example.buy.databeans.GetSearchBeanTwo;
@@ -27,13 +17,10 @@ import com.example.buy.databinding.ItemSearchHotBinding;
 import com.example.buy.databinding.ItemSearchResultBinding;
 import com.example.buy.viewmodel.SearchViewModel;
 import com.example.common.code.Constant;
-import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseBindActivity;
 import com.example.framework.base.BaseRVAdapter;
-import com.example.framework.base.BaseViewModel;
 import com.example.net.AppNetConfig;
 import com.google.gson.Gson;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -77,7 +64,6 @@ public class SearchActivity extends BaseBindActivity<ActivitySearchBinding> {
 
             @Override
             public void onBind(BindViewHolder holder, int position) {
-                Log.d("lhf", "hot---adapter");
                 hotList.get(position).setFigure(AppNetConfig.BASE_URl_IMAGE + hotList.get(position).getFigure());
                 holder.bindView.setBean(hotList.get(position));
                 holder.bindView.setRvAdapter((BaseRVAdapter) activitySearchBinding.hotRecyclerView.getAdapter());
@@ -88,7 +74,6 @@ public class SearchActivity extends BaseBindActivity<ActivitySearchBinding> {
 
             @Override
             public void onBind(BindViewHolder holder, int position) {
-                Log.d("lhf", "child---adapter");
                 childList.get(position).setPic(AppNetConfig.BASE_URl_IMAGE + childList.get(position).getPic());
                 holder.bindView.setBean(childList.get(position));
                 holder.bindView.setRvAdapter((BaseRVAdapter) activitySearchBinding.childRecyclerView.getAdapter());
@@ -99,7 +84,6 @@ public class SearchActivity extends BaseBindActivity<ActivitySearchBinding> {
 
             @Override
             public void onBind(BindViewHolder holder, int position) {
-                Log.d("lhf", "resultRecyclerView---adapter");
                 resultList.get(position).setAvatar(AppNetConfig.BASE_URl_IMAGE + resultList.get(position).getAvatar());
                 resultList.get(position).setFigure(AppNetConfig.BASE_URl_IMAGE + resultList.get(position).getFigure());
                 holder.bindView.setBean(resultList.get(position));
@@ -136,7 +120,6 @@ public class SearchActivity extends BaseBindActivity<ActivitySearchBinding> {
         searchViewModel.getLiveData().observe(this, responseBody -> {
             try {
                 String str = responseBody.string();
-                Log.d("lhf", "doSearch: 运行一次");
                 try {
                     GetSearchBeanOne dateOne = new Gson().fromJson(str, GetSearchBeanOne.class);
                     hotList.addAll(dateOne.getResult().get(0).getHot_product_list());
@@ -182,12 +165,8 @@ public class SearchActivity extends BaseBindActivity<ActivitySearchBinding> {
             resultList.clear();
             hotList.clear();
             childList.clear();
-
-
-
             searchViewModel.setName(name);
             searchViewModel.doGetData();
-            Log.e("xxx", "doGetData");
         } else {
             Toast.makeText(SearchActivity.this, "请输入英文或拼音", Toast.LENGTH_SHORT).show();
         }
