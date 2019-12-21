@@ -32,11 +32,16 @@ import java.util.List;
  */
 public class AddressBarActivity extends BaseActivity implements IPostBaseView<AutoLoginBean> {
 
+    //头部导航栏
     private TitleBar tbAddressBar;
+    //RecyclerView显示地址信息
     private RecyclerView rvAddressBar;
+    //点击新建收货地址
     private Button btNewReceivingAddress;
 
+    //用户token
     private String token;
+    //自动登录
     private AutoLoginPresenter autoLoginPresenter;
 
     @Override
