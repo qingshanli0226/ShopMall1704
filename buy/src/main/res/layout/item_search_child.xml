@@ -1,18 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/dp_5">
-    <ImageView
-        android:id="@+id/child_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher"/>
-    <TextView
-        android:id="@+id/child_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="汉风"/>
-</LinearLayout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View"/>
+        <import type="com.example.buy.databeans.GetSearchBeanOne.ResultBean.ChildBean"/>
+        <import type="com.example.framework.base.BaseRVAdapter"/>
+        <variable
+                name="rvAdapter"
+                type="BaseRVAdapter"/>
+
+        <variable
+                name="bean"
+                type="ChildBean"/>
+    </data>
+    <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_5">
+        <ImageView
+                android:id="@+id/child_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:url="@{bean.pic}"
+                android:src="@mipmap/ic_launcher"/>
+        <TextView
+                android:id="@+id/child_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{bean.name}"/>
+    </LinearLayout>
+
+</layout>

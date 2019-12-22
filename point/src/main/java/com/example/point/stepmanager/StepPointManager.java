@@ -40,20 +40,16 @@ public class StepPointManager {
     private ServiceConnection connection= new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-
                stepService = ((StepService.StepBinder) iBinder).getService();
                 stepService.registerCallback(new StepService.UpdateUiCallBack() {
                     @Override
                     public void updateUi(int stepCount) {
                         if (getStepListener!=null){
                             getStepListener.onsetStep(stepCount);
-                            Log.i("updateUi", "updateUi: "+stepCount);
                         }
                     }
                 });
-
         }
-
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
 

@@ -11,4 +11,5 @@
     <color name="color_pink_start">#FF8C8C</color>
     <color name="color_pink_center">#FFA4A4</color>
     <color name="color_pink_end">#FFAD9A</color>
+    <color name="color_pink_not_net">#FDCDDF</color>
 </resources>

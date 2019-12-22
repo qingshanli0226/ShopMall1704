@@ -140,5 +140,22 @@ public class AutoLoginBean {
         public void setToken(String token) {
             this.token = token;
         }
+
+        @Override
+        public String
+        toString() {
+            return "ResultBean{" +
+                    "id='" + id + '\'' +
+                    ", name='" + name + '\'' +
+                    ", password='" + password + '\'' +
+                    ", email=" + email +
+                    ", phone=" + phone +
+                    ", point=" + point +
+                    ", address=" + address +
+                    ", money=" + money +
+                    ", avatar=" + avatar +
+                    ", token='" + token + '\'' +
+                    '}';
+        }
     }
 }

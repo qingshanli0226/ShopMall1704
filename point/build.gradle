@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'org.greenrobot.greendao'
 apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 29
@@ -24,11 +23,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    greendao {
-        schemaVersion 1 //当前数据库版本
-        daoPackage 'com.example.point' //包名 需要更改
-        targetGenDir 'src/main/java' //存放greendao库生成文件的目录
-    }
 }
 
 dependencies {
@@ -43,7 +37,6 @@ dependencies {
     api project(path: ':common')
     api project(path: ':net')
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
-    api 'org.greenrobot:greendao:3.2.2' // 添加库
     api 'com.github.recruit-lifestyle:WaveSwipeRefreshLayout:1.6'
     api 'tyrant:heartlayout:1.0.1'
 

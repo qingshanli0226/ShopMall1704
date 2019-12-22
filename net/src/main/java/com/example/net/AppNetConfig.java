@@ -6,6 +6,7 @@ public class AppNetConfig {
 //    public static final String IPADDRESS = "169.254.230.253";
 
     public static final String BASE_URL = "http://" + IPADDRESS + ":8080";
+//    public static final String BASE_URL = "http://49.233.93.155:8080/atguigu/img";
 
     //请求数据
     public static final String BASE_URL_JSON="/atguigu/json/";

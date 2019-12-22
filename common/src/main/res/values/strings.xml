@@ -9,4 +9,5 @@
     <string name="logout">确定退出登录?</string>
     <string name="no">取消</string>
     <string name="yes">确定</string>
+    <string name="not_net">网络连接不可用</string>
 </resources>

@@ -167,11 +167,11 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
 
     private void ifUser() {
         if (AccountManager.getInstance().isLogin()) {
-            if (AccountManager.getInstance().user.getName() != null) {
+            if (AccountManager.getInstance().getUser().getName() != null) {
                 //登录
-                name.setText(AccountManager.getInstance().user.getName());
-                if (AccountManager.getInstance().user.getAvatar() != null) {
-                    Glide.with(Objects.requireNonNull(getContext())).load("" + AppNetConfig.BASE_URL + AccountManager.getInstance().user.getAvatar()).apply(new RequestOptions().circleCrop()).into(img);
+                name.setText(AccountManager.getInstance().getUser().getName());
+                if (AccountManager.getInstance().getUser().getAvatar() != null) {
+                    Glide.with(Objects.requireNonNull(getContext())).load("" + AppNetConfig.BASE_URL + AccountManager.getInstance().getUser().getAvatar()).apply(new RequestOptions().circleCrop()).into(img);
                 }
             }
         } else {
@@ -238,7 +238,7 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
     //TODO 用户登录成功后回调
     @Override
     public void onLogin() {
-        name.setText(AccountManager.getInstance().user.getName());
+        name.setText(AccountManager.getInstance().getUser().getName());
     }
 
     @Override
@@ -251,5 +251,16 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
     @Override
     public void onAvatarUpdate(String url) {
         Glide.with(Objects.requireNonNull(getContext())).load("" + AppNetConfig.BASE_URL + url).apply(new RequestOptions().circleCrop()).into(img);
+    }
+
+    @Override
+    public void onConnected() {
+        homePresenter.doHttpGetRequest();
+        myToolBar.isConnection(true);
+    }
+
+    @Override
+    public void onDisConnected() {
+        myToolBar.isConnection(false);
     }
 }

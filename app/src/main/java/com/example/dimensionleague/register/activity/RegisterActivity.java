@@ -18,8 +18,6 @@ import com.example.dimensionleague.userbean.RegisterBean;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.base.BaseTextWatcher;
 import com.example.framework.port.IPresenter;
-import com.umeng.analytics.MobclickAgent;
-
 import java.util.HashMap;
 
 /**
@@ -146,17 +144,6 @@ public class RegisterActivity extends BaseNetConnectActivity implements View.OnC
         }else{
             btn_register.setEnabled(false);
         }
-    }
-    @Override
-    protected void onPause() {
-        MobclickAgent.onPause(this);
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        MobclickAgent.onResume(this);
-        super.onResume();
     }
 
     @Override

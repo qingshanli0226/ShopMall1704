@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="buyDelete">delete</string>
+    <string name="buyNow">立即购买</string>
+    <string name="buyCart">购物车</string>
+    <string name="buyEditor">编辑</string>
+    <string name="buyPay">支付</string>
+    <string name="buyAdd">加入购物车</string>
+    <string name="buySelectInteger">是否选择积分减免</string>
+    <string name="buyNum">数量:</string>
+    <string name="buySure">确定</string>
+    <string name="buyMoney">¥</string>
+    <string name="buyOnePrice">单价:</string>
+    <string name="buyOneNum">数量:</string>
+    <string name="buyOneSum">总价:</string>
+    <string name="buyLoginFirst">请您先登录,蟹蟹配合</string>
+    <string name="buy_add">已加入收藏</string>
+    <string name="shop_details">商品详情</string>
+</resources>

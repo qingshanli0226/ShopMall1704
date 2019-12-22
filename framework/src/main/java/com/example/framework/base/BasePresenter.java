@@ -101,9 +101,9 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
-                            iView.hideLoading();
-                            iView.showError();
-                            ErrorDisposeManager.HandlerError(e);
+//                            iView.hideLoading();
+//                            iView.showError();
+//                            ErrorDisposeManager.HandlerError(e);
                         }
                     }
 
@@ -114,12 +114,12 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                             if (iView != null) {
                                 iView.hideLoading();
                                 iView.showError();
-                                iView.onHttpRequestDataFailed(6001, ErrorCode.HTTP_ERROR);
-                                ErrorDisposeManager.HandlerError(e);
-                                Log.d("lhf", e.getMessage());
+//                                iView.onHttpRequestDataFailed(6001, ErrorCode.HTTP_ERROR);
+//                                ErrorDisposeManager.HandlerError(e);
+//                                Log.d("lhf", e.getMessage());
                             }
                         } catch (Exception e1) {
-                            ErrorDisposeManager.HandlerError(e1);
+//                            ErrorDisposeManager.HandlerError(e1);
                         }
                     }
 
@@ -156,8 +156,8 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                                 T resEntity = new Gson().fromJson(string, getBeanType());
                                 iView.onRequestSuccess(requestCode, resEntity);
                             } catch (IOException e) {
-                                ErrorDisposeManager.HandlerError(e);
-                                throw new RuntimeException(e.getMessage());
+//                                ErrorDisposeManager.HandlerError(e);
+//                                throw new RuntimeException(e.getMessage());
                             }
                         }
 
@@ -170,10 +170,10 @@ public abstract class BasePresenter<T> implements IPresenter<T> {
                             try {
                                 iView.hideLoading();
                                 iView.onHttpRequestDataFailed(6001, ErrorCode.HTTP_ERROR);
-                                ErrorDisposeManager.HandlerError(e);
+//                                ErrorDisposeManager.HandlerError(e);
                             } catch (Exception e1) {
-                                ErrorDisposeManager.HandlerError(e1);
-                                throw new RuntimeException(e1.getMessage());
+//                                ErrorDisposeManager.HandlerError(e1);
+//                                throw new RuntimeException(e1.getMessage());
                             }
                         }
                     }

@@ -16,13 +16,13 @@ import com.example.framework.base.BaseActivity
 import com.example.framework.manager.AccountManager
 import kotlinx.android.synthetic.main.activity_setting.*
 import android.graphics.Color
+import android.util.Log
 import com.example.common.code.Constant
 import com.example.common.view.LogoutDialog
 import com.example.dimensionleague.R
 import com.example.dimensionleague.activity.MainActivity
 import com.example.dimensionleague.address.AddressActivity
 import com.example.net.AppNetConfig
-import com.umeng.analytics.MobclickAgent
 class SettingActivity : BaseActivity(),IAccountCallBack {
 
 
@@ -74,8 +74,11 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
         list.add(SettingBean(getString(R.string.setting_about), packageManager.getPackageInfo(packageName,0).versionName))
     //        判断是否登录
     if (AccountManager.getInstance().isLogin){
+
         heanTitle.text=(AccountManager.getInstance().user.name.toString())
         heanName.text=(getString(R.string.setting_user)+AccountManager.getInstance().user.name.toString())
+        Log.d("lhf--welcome--Setting",AccountManager.getInstance().getUser().toString())
+
         foodView.visibility=View.VISIBLE
         if (AccountManager.getInstance().user.avatar!=null){
             Glide.with(this).load(AppNetConfig.BASE_URL+AccountManager.getInstance().user.avatar).apply(RequestOptions().circleCrop()).into(heanImg)
@@ -154,15 +157,5 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
     override fun onDestroy() {
         super.onDestroy()
         AccountManager.getInstance().unRegisterUserCallBack(this)
-    }
-
-    override fun onPause() {
-        MobclickAgent.onPause(this)
-        super.onPause()
-    }
-
-    override fun onResume() {
-        MobclickAgent.onResume(this)
-        super.onResume()
     }
 }

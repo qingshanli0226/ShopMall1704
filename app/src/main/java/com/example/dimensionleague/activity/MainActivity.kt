@@ -15,10 +15,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 import com.example.framework.base.BaseNetConnectActivity
 import com.example.framework.listener.OnShopCartListener
 import com.example.buy.CartManager
-import com.umeng.analytics.MobclickAgent
+
 import kotlin.system.exitProcess
-
-
+import com.example.dimensionleague.login.activity.LoginActivity
 
 class MainActivity : BaseNetConnectActivity() {
 
@@ -29,15 +28,6 @@ class MainActivity : BaseNetConnectActivity() {
         return R.id.main_relative
     }
 
-    override fun onPause() {
-        MobclickAgent.onPause(this)
-        super.onPause()
-    }
-
-    override fun onResume() {
-        MobclickAgent.onResume(this)
-        super.onResume()
-    }
     override fun getLayoutId(): Int {
         return R.layout.activity_main
     }
@@ -49,7 +39,6 @@ class MainActivity : BaseNetConnectActivity() {
         val bundle = intent!!.getBundleExtra("data")
         val isAutoLogin = bundle!!.getBoolean("isAutoLogin")
         if (!isAutoLogin) {
-            AccountManager.getInstance().logout()
             Toast.makeText(this, resources.getString(R.string.timeout), Toast.LENGTH_SHORT).show()
             AccountManager.getInstance().logout()
             AccountManager.getInstance().notifyLogout()
@@ -69,11 +58,11 @@ class MainActivity : BaseNetConnectActivity() {
 
     override fun initDate() {
         super.init()
+
         main_easy.selectTextColor(R.color.colorGradualPurple)
             .normalTextColor(R.color.colorMainNormal)
             .selectIconItems(
                 intArrayOf(
-
                     R.drawable.home,
                     R.drawable.vertical_list,
                     R.drawable.find,
@@ -99,8 +88,19 @@ class MainActivity : BaseNetConnectActivity() {
                     getString(R.string.find),
                     getString(R.string.shopping_cart),
                     getString(R.string.mine)
-                )
-            )
+                )).onTabClickListener { v, position ->
+                if (position == 3) {
+                    if (!AccountManager.getInstance().isLogin){
+                        toast(this,"请先登录")
+                        startActivity(LoginActivity::class.java,null)
+                        return@onTabClickListener true
+                    }else{
+                        return@onTabClickListener false
+                    }
+                }
+                return@onTabClickListener false
+
+            }
             .build()
         //注册监听,监听购物车数量
         listener = OnShopCartListener { num ->

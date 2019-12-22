@@ -1,6 +1,7 @@
 package com.example.common.view;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.EditText;
@@ -56,6 +57,11 @@ public class MyToolBar extends Toolbar {
     private RelativeLayout other_layout;
     private ImageView other_back;
     private TextView other_title;
+
+    //TODO 无网络标题
+    private LinearLayout notLayout;
+    //TODO toolbar部分
+    private RelativeLayout toolbar;
 
     /**
      * 首页风格用到的控件
@@ -243,6 +249,18 @@ public class MyToolBar extends Toolbar {
                 break;
         }
     }
+    //TODO 设置toolbar的背景
+    public void setToolbarBackground(Drawable drawable){
+        toolbar.setBackground(drawable);
+    }
+
+    public void isConnection(boolean flag){
+        if(flag){
+            notLayout.setVisibility(GONE);
+        }else{
+            notLayout.setVisibility(VISIBLE);
+        }
+    }
 
     public void GoneAll(){
         home_layout.setVisibility(GONE);
@@ -284,5 +302,8 @@ public class MyToolBar extends Toolbar {
         other_back= findViewById(R.id.other_back);
         other_title= findViewById(R.id.other_title);
         other_layout= findViewById(R.id.other_layout);
+
+        notLayout = findViewById(R.id.not_internet);
+        toolbar = findViewById(R.id.toolbar);
     }
 }

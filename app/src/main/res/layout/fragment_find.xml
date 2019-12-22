@@ -14,7 +14,7 @@
         <com.example.common.view.MyToolBar
             android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_60"
+            android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll" />
 
         <com.flyco.tablayout.SlidingTabLayout
@@ -32,11 +32,17 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/find_vp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    <RelativeLayout
+            android:id="@+id/find_relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <androidx.viewpager.widget.ViewPager
+                android:id="@+id/find_vp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+    </RelativeLayout>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

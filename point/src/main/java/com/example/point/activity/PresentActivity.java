@@ -15,8 +15,6 @@ import com.example.framework.base.BaseNetConnectActivity;
 import com.example.point.R;
 import com.example.point.adpter.PreAdpter;
 import com.example.point.bean.PresenBean;
-import com.umeng.analytics.MobclickAgent;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,17 +80,4 @@ public class PresentActivity extends BaseNetConnectActivity {
     public int getLayoutId() {
         return R.layout.present_activity;
     }
-
-    @Override
-    protected void onPause() {
-        MobclickAgent.onPause(this);
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        MobclickAgent.onResume(this);
-        super.onResume();
-    }
-
 }

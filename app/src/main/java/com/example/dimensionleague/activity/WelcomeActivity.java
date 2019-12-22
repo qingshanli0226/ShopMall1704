@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.VideoView;
@@ -21,10 +22,7 @@ import com.example.dimensionleague.userbean.AutoLoginBean;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.port.ITaskFinishListener;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-import com.umeng.analytics.MobclickAgent;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.lang.ref.WeakReference;
 
 public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFinishListener {
@@ -103,7 +101,7 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
             public void onAutoLoginReceived(AutoLoginBean.ResultBean resultBean) {
                 if (resultBean != null) {
                     //TODO 保存用户信息
-                    AccountManager.getInstance().setUser(new User(
+                    User user = new User(
                             resultBean.getName(),
                             resultBean.getPassword(),
                             resultBean.getEmail(),
@@ -111,8 +109,10 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
                             resultBean.getPoint(),
                             resultBean.getAddress(),
                             resultBean.getMoney(),
-                            resultBean.getAvatar()
-                    ));
+                            resultBean.getAvatar());
+                    AccountManager.getInstance().setUser(user);
+                    Log.d("lhf--welcome--user",AccountManager.getInstance().getUser().toString());
+                    Log.d("lhf--welcome", ""+resultBean.toString());
                     //TODO 更新登录状态
                     AccountManager.getInstance().notifyLogin();
                     AccountManager.getInstance().saveToken(resultBean.getToken());
@@ -158,17 +158,7 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
             finish();
         }
     }
-    @Override
-    protected void onPause() {
-        MobclickAgent.onPause(this);
-        super.onPause();
-    }
 
-    @Override
-    protected void onResume() {
-        MobclickAgent.onResume(this);
-        super.onResume();
-    }
     private static class MyHandler extends Handler {
         private final WeakReference<WelcomeActivity> mWeakReference;
         private final Context mContext;

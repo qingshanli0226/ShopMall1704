@@ -32,7 +32,7 @@ class RecommendAdapter(
         //跳转
         views.setOnClickListener { v->
             val intent = Intent(views.context, GoodsActiviy::class.java)
-            intent.putExtra(IntentUtil.SHOW_GOOD, recommendInfo!![position])
+            intent.putExtra(IntentUtil.GOTO_GOOD, recommendInfo!![position])
             views.context.startActivity(intent)
         }
         return views

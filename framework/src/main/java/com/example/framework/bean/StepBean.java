@@ -1,4 +1,4 @@
-package com.example.point.service;
+package com.example.framework.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;

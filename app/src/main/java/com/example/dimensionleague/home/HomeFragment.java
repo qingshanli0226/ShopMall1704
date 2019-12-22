@@ -5,7 +5,10 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -51,6 +54,13 @@ public class HomeFragment extends BaseNetConnectFragment {
     @Override
     public void init(View view) {
         super.init(view);
+        if(!isConnectStatus()){
+            hideError();
+            hideLoading();
+            showEmpty();
+        }else{
+            hideEmpty();
+        }
         rv = view.findViewById(R.id.home_rv);
         my_toolbar = view.findViewById(R.id.my_toolbar);
         appBarLayout = view.findViewById(R.id.mApp_layout);
@@ -67,7 +77,9 @@ public class HomeFragment extends BaseNetConnectFragment {
         if (CacheManager.getInstance().getHomeBeanData() != null) {
             list = (((HomeBean) CacheManager.getInstance().getHomeBeanData()).getResult());
         }
-        HomeAdapter adapter = new HomeAdapter(list, Objects.requireNonNull(getContext()));
+
+        HomeAdapter adapter = new HomeAdapter(list, getContext());
+
         rv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rv.setAdapter(adapter);
         appBarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
@@ -155,7 +167,7 @@ public class HomeFragment extends BaseNetConnectFragment {
 
     @Override
     public int getRelativeLayout() {
-        return 0;
+        return R.id.home_relativeLayout;
     }
 
     @Override
@@ -192,4 +204,19 @@ public class HomeFragment extends BaseNetConnectFragment {
             }
         }
     }
+
+    @Override
+    public void onConnected() {
+        Toast.makeText(getContext(), "有网络了", Toast.LENGTH_SHORT).show();
+        hideEmpty();
+    }
+
+    @Override
+    public void onDisConnected() {
+        Toast.makeText(getContext(), "没网络了", Toast.LENGTH_SHORT).show();
+        hideError();
+        hideLoading();
+        showEmpty();
+    }
+
 }

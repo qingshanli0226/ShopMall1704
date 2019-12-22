@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="#ECECEC"
+    android:layout_height="wrap_content">
+    <TextView
+        android:textSize="@dimen/sp_16"
+        android:padding="@dimen/dp_10"
+        android:text="在电脑版兑换了胡百度不能"
+        android:id="@+id/conversionitem_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></TextView>
+    <View
+        android:background="@android:color/darker_gray"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"></View>
+</LinearLayout>

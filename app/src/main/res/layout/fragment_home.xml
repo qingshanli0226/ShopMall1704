@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@mipmap/style_background">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/style_background">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/mApp_layout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_150"
-        android:fitsSystemWindows="true">
+            android:id="@+id/mApp_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_150"
+            android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:toolbarId="@id/my_toolbar">
+                android:id="@+id/toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:toolbarId="@id/my_toolbar">
 
             <RelativeLayout
-                android:id="@+id/search_rl_top"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/dp_10"
-                android:background="@drawable/home_background_1"
-                app:layout_collapseMode="parallax">
+                    android:id="@+id/search_rl_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/home_background_1"
+                    android:padding="@dimen/dp_10"
+                    app:layout_collapseMode="parallax">
 
                 <ImageView
-                    android:id="@+id/home_icon"
-                    android:layout_width="@dimen/dp_30"
-                    android:layout_height="@dimen/dp_30"
-                    android:layout_marginTop="@dimen/dp_30"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/home_icon" />
+                        android:id="@+id/home_icon"
+                        android:layout_width="@dimen/dp_30"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_marginTop="@dimen/dp_30"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/home_icon" />
 
                 <TextView
                     android:id="@+id/search_tv_title"
@@ -47,31 +47,33 @@
                     android:textColor="@color/colorWhite"
                     android:textSize="@dimen/sp_20"
                     android:textStyle="bold" />
+
             </RelativeLayout>
 
             <com.example.common.view.MyToolBar
-                android:id="@+id/my_toolbar"
-                android:layout_marginTop="@dimen/dp_25"
-                android:layout_marginBottom="@dimen/dp_5"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_60"
-                app:layout_anchor="@+id/mApp_layout"
-                app:layout_anchorGravity="center"
-                app:layout_collapseMode="pin" />
+                    android:id="@+id/my_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_70"
+                    android:layout_marginTop="@dimen/dp_25"
+                    android:layout_marginBottom="@dimen/dp_5"
+                    app:layout_anchor="@+id/mApp_layout"
+                    app:layout_anchorGravity="center"
+                    app:layout_collapseMode="pin" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/home_rv"
+            android:id="@+id/home_relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#00FFFFFF" />
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/home_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF" />
     </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

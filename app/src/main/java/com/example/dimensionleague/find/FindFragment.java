@@ -82,7 +82,7 @@ public class FindFragment extends BaseNetConnectFragment {
 
     @Override
     public int getRelativeLayout() {
-        return 0;
+        return R.id.find_relativeLayout;
     }
 
     private class MyVPAdapter extends FragmentPagerAdapter {
@@ -108,5 +108,17 @@ public class FindFragment extends BaseNetConnectFragment {
         public int getCount() {
             return list.size();
         }
+    }
+
+    @Override
+    public void onConnected() {
+        hideEmpty();
+    }
+
+    @Override
+    public void onDisConnected() {
+        hideLoading();
+        hideError();
+        showEmpty();
     }
 }

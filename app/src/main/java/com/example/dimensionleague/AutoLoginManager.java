@@ -4,6 +4,7 @@ import com.example.common.code.Constant;
 import com.example.common.utils.SPUtil;
 import com.example.common.utils.SignUtil;
 import com.example.dimensionleague.userbean.AutoLoginBean;
+import com.example.framework.manager.ErrorDisposeManager;
 import com.example.net.AppNetConfig;
 import com.example.net.RetrofitCreator;
 import com.google.gson.Gson;
@@ -74,7 +75,10 @@ public class AutoLoginManager {
                     }
                     @Override
                     public void onError(Throwable e) {
-                        loginReceivedListener.onAutoDataError(e.getMessage());
+                        if (e!=null){
+                            loginReceivedListener.onAutoDataError(e.getMessage());
+                            ErrorDisposeManager.HandlerError(e);
+                        }
                     }
                     @Override
                     public void onComplete() {}

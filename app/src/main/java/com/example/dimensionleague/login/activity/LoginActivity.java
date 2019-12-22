@@ -33,8 +33,6 @@ import com.example.framework.base.BaseTextWatcher;
 import com.example.framework.port.IPresenter;
 import com.example.point.activity.IntegralActivity;
 import com.example.point.activity.StepActivity;
-import com.umeng.analytics.MobclickAgent;
-
 import java.util.HashMap;
 
 /**
@@ -42,11 +40,13 @@ import java.util.HashMap;
  */
 public class LoginActivity extends BaseNetConnectActivity implements IButtonEnabledListener,View.OnClickListener {
 
+
     private EditText user_name;
     private EditText password;
     private CheckBox password_check;
     private TextView forget_password;
     private Button btn_login;
+
     //TODO 登录的Presenter
     private IPresenter loginPresenter;
 
@@ -80,6 +80,7 @@ public class LoginActivity extends BaseNetConnectActivity implements IButtonEnab
         forget_password = findViewById(R.id.forget_password);
         btn_login = findViewById(R.id.btn_login);
         TextView user_register = findViewById(R.id.user_register);
+
         login_back.setOnClickListener(this);
         user_register.setOnClickListener(this);
         btn_login.setOnClickListener(this);
@@ -245,16 +246,5 @@ public class LoginActivity extends BaseNetConnectActivity implements IButtonEnab
                 finishActivity();
                 break;
         }
-    }
-    @Override
-    protected void onPause() {
-        MobclickAgent.onPause(this);
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        MobclickAgent.onResume(this);
-        super.onResume();
     }
 }

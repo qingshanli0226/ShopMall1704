@@ -17,8 +17,6 @@ import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseActivity;
 import com.example.point.R;
 import com.example.point.view.AnimationButton;
-import com.umeng.analytics.MobclickAgent;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -153,15 +151,5 @@ public class PhysicalActivity extends BaseActivity {
     public int getLayoutId() {
         return R.layout.physical_activity;
     }
-    @Override
-    protected void onPause() {
-        MobclickAgent.onPause(this);
-        super.onPause();
-    }
 
-    @Override
-    protected void onResume() {
-        MobclickAgent.onResume(this);
-        super.onResume();
-    }
 }

@@ -13,8 +13,6 @@ import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.port.IPresenter;
 import com.example.net.AppNetConfig;
 import com.google.gson.Gson;
-import com.umeng.analytics.MobclickAgent;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,17 +42,7 @@ public class AddressActivity extends BaseNetConnectActivity {
             Toast.makeText(this, "地址设置成功", Toast.LENGTH_SHORT).show();
         }
     }
-    @Override
-    protected void onPause() {
-        MobclickAgent.onPause(this);
-        super.onPause();
-    }
 
-    @Override
-    protected void onResume() {
-        MobclickAgent.onResume(this);
-        super.onResume();
-    }
     @Override
     public void initDate() {
         super.initDate();

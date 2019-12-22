@@ -5,18 +5,26 @@
     <TextView
         android:id="@+id/socket_message"
         android:textSize="@dimen/sp_20"
+        android:paddingLeft="@dimen/dp_30"
         android:textColor="@android:color/black"
-        android:padding="@dimen/dp_20"
+        android:paddingRight="@dimen/dp_20"
         android:layout_toLeftOf="@+id/socket_img"
         android:layout_marginTop="@dimen/dp_30"
-        android:background="@drawable/message"
+        android:background="@drawable/socket"
         android:layout_width="@dimen/dp_220"
         android:layout_height="wrap_content"></TextView>
     <ImageView
         android:id="@+id/socket_img"
         android:layout_alignParentRight="true"
         android:src="@mipmap/ic_launcher_round"
-        android:layout_margin="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_30"
+        android:paddingRight="@dimen/dp_10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"></ImageView>
+    <TextView
+        android:id="@+id/socket_date"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></TextView>
 </RelativeLayout>

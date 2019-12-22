@@ -1,6 +1,7 @@
 package com.example.dimensionleague.setting;
 
 import android.Manifest;
+
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.pm.PackageManager;
@@ -28,7 +29,6 @@ import com.example.framework.manager.AccountManager;
 import com.example.net.AppNetConfig;
 import com.example.net.RetrofitCreator;
 import com.google.gson.Gson;
-import com.umeng.analytics.MobclickAgent;
 import com.wyp.avatarstudio.AvatarStudio;
 
 import java.io.File;
@@ -75,7 +75,7 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
 
     @Override
     public void onAvatarUpdate(String url) {
-        Glide.with(this).load(AppNetConfig.BASE_URL + AccountManager.getInstance().user.getAvatar()).apply(new RequestOptions().circleCrop()).into(heanUserImg);
+        Glide.with(this).load(AppNetConfig.BASE_URL + AccountManager.getInstance().getUser().getAvatar()).apply(new RequestOptions().circleCrop()).into(heanUserImg);
     }
 
     @Override
@@ -121,10 +121,10 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
      //         判断是否登录
         if (AccountManager.getInstance().isLogin()) {
             if (AccountManager.getInstance().getUser().getName() != null) {
-                list.get(0).setMassage("" + AccountManager.getInstance().user.getName());
-                list.get(1).setMassage("" + AccountManager.getInstance().user.getName());
-                if (AccountManager.getInstance().user.getAvatar() != null) {
-                    Glide.with(this).load("" + AppNetConfig.BASE_URL + AccountManager.getInstance().user.getAvatar()).apply(new RequestOptions().circleCrop()).into(heanUserImg);
+                list.get(0).setMassage("" + AccountManager.getInstance().getUser().getName());
+                list.get(1).setMassage("" + AccountManager.getInstance().getUser().getName());
+                if (AccountManager.getInstance().getUser().getAvatar() != null) {
+                    Glide.with(this).load("" + AppNetConfig.BASE_URL + AccountManager.getInstance().getUser().getAvatar()).apply(new RequestOptions().circleCrop()).into(heanUserImg);
                 }
             }
         }
@@ -140,26 +140,25 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
 
     private void initListener() {
         headView.setOnClickListener(v -> {
+            int permission = 0;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                int permission = this.checkSelfPermission(Manifest.permission.CAMERA);
+                permission = this.checkSelfPermission(Manifest.permission.CAMERA);
                 if (permission != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, Constant.REQUSET_CODE);
-                } else {
-                    new AvatarStudio.Builder(UserMassagesActivity.this)
-                            .needCrop(true)
-                            .dimEnabled(true)
-                            .setAspect(1, 1)
-                            .setOutput(50, 50)
-                            .setText(getString(R.string.camera), getString(R.string.albums), getString(R.string.cancel))
-                            .setTextColor(Color.BLUE)
-                            .show(uri -> {
-                                File file = new File(uri);
-                                upload(file);
-                            });
+                    return;
                 }
             }
-
-
+            new AvatarStudio.Builder(UserMassagesActivity.this)
+                    .needCrop(true)
+                    .dimEnabled(true)
+                    .setAspect(1, 1)
+                    .setOutput(50, 50)
+                    .setText(getString(R.string.camera), getString(R.string.albums), getString(R.string.cancel))
+                    .setTextColor(Color.BLUE)
+                    .show(uri -> {
+                        File file = new File(uri);
+                        upload(file);
+                    });
         });
         adapter.setOnItemClickListener((adapter, view, position) -> {
 
@@ -292,17 +291,5 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-    }
-
-    @Override
-    protected void onPause() {
-        MobclickAgent.onPause(this);
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        MobclickAgent.onResume(this);
-        super.onResume();
     }
 }
