@@ -105,7 +105,6 @@ public class StepManager {
 
         Intent intentStart = new Intent(context, StepService.class);
         context.bindService(intent,serviceConnection,Context.BIND_AUTO_CREATE);
-        context.startService(intentStart);
 
 
 
@@ -353,11 +352,12 @@ public class StepManager {
     public void registerListener(StepManagerListener stepManagerListener){
         if(!stepManagerListeners.contains(stepManagerListener)){
         this.stepManagerListeners.add(stepManagerListener);
+        Log.e("##Listeners",stepManagerListeners.toString()+"");
         }
     }
     public void unRegisterLisener(StepManagerListener stepManagerListener){
         stepManagerListeners.remove(stepManagerListener);
-//        context.unbindService(serviceConnection);
+        context.unbindService(serviceConnection);
     }
 
     public boolean getState(){

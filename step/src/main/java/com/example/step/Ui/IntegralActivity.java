@@ -136,10 +136,8 @@ public class IntegralActivity extends BaseActivity implements StepManager.StepMa
     protected void onDestroy() {
         super.onDestroy();
 
-        if(StepManager.getInstance().getState()==true){
         StepManager.getInstance().unRegisterLisener(this);
 
-        }
         if(pointBresenter!=null){
          pointBresenter.detachView();
         }

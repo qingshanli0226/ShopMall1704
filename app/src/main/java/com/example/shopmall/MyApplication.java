@@ -9,6 +9,7 @@ import androidx.multidex.MultiDex;
 import androidx.versionedparcelable.ParcelUtils;
 
 import com.example.common.AppProcessUtil;
+import com.example.framework.manager.CaCheManager;
 import com.example.framework.manager.ConnectManager;
 import com.example.framework.manager.CrashHandler;
 import com.example.framework.manager.MessageManager;
@@ -16,6 +17,7 @@ import com.example.framework.manager.ShoppingManager;
 import com.example.framework.manager.UserManager;
 import com.example.shopmall.activity.MainActivity;
 import com.example.framework.manager.StepManager;
+import com.example.shopmall.activity.WelcomeActivity;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.stat.StatConfig;
 import com.tencent.stat.StatService;
@@ -46,6 +48,7 @@ public class MyApplication extends Application {
 
             StepManager.getInstance().init(getApplicationContext());
         }
+
 
 
 

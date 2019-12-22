@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.common.AppProcessUtil;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IGetBaseView;
 import com.example.framework.bean.HomepageBean;
@@ -52,9 +53,8 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
 
 
 
-
-        //初始化缓存管理类
         CaCheManager.getInstance(MyApplication.getContext()).init();
+
 
     }
 

@@ -54,7 +54,7 @@ public class History_MinutesFragment extends BaseFragment {
 
             //是否是当天
             if(StepManager.getInstance().isToday(real.get(i).getDate())){
-                
+
                 //如果是在三小时之内显示数据
                 if (beforeHour >= thrreHour && beforeHour <= hour) {
                     boolean currentTimeRange = StepManager.getInstance().isCurrentTimeRange(beforeHour, beforeMinute, hour, minute);
