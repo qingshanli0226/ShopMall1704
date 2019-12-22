@@ -34,6 +34,9 @@ public class History_WeekFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+
+        listX.clear();
+        listY.clear();
         List<ShopStepBean> real = StepManager.getInstance().getStepHistory();
         for (int w=0;w<real.size();w++){
             String date = real.get(w).getDate();
@@ -102,6 +105,8 @@ public class History_WeekFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        listX.clear();
+        listY.clear();
     }
 
     @Override

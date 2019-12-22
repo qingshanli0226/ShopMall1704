@@ -51,8 +51,12 @@ public class History_MonthFragment extends BaseFragment {
             if(NowMonth==Integer.parseInt(split[1])){
                 //在本月的日期中
                 if(Integer.parseInt(split[2])>=firstDayMonth && Integer.parseInt(split[2])<=lastDayMonth){
+
+                    Log.e("Month",shopStepTimeRealBeans.get(m).getDate());
                     mAxisValues.add(new AxisValue(m).setLabel(shopStepTimeRealBeans.get(m).getDate()));
-                    mPointValues.add(new PointValue(m,500));
+                    String current_step = shopStepTimeRealBeans.get(m).getCurrent_step();
+                    int i = Integer.parseInt(current_step);
+                    mPointValues.add(new PointValue(m,i));
                     initLineChat();
                 }
             }
