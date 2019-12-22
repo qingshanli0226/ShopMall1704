@@ -1,7 +1,10 @@
 package com.example.step.Fragment;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 
 import com.example.framework.base.BaseFragment;
 import com.example.framework.bean.ShopStepBean;
@@ -49,7 +52,6 @@ public class History_TodayFragment extends BaseFragment {
                 if(Integer.parseInt(split[2])==day){
 
                     axisValues.add(new AxisValue(0).setLabel(stepHistory.get(i).getCurrent_step()));
-                    Log.e("History",stepHistory.get(i).getCurrent_step());
                     int i1 = Integer.parseInt(stepHistory.get(i).getCurrent_step());
                     setColumnData(1,i1,false,false);
                 }
@@ -75,12 +77,9 @@ public class History_TodayFragment extends BaseFragment {
         ColumnChartData columnChartData = new ColumnChartData(columnList);
         columnChartData.setStacked(false);
         Axis axisX = new Axis();
-//        Axis axisY = new Axis().setHasLines(true);
         axisX.setValues(axisValues);
         axisX.setName("今日记录计步");
-//        axisY.setName("");
         columnChartData.setAxisXBottom(axisX);
-//        columnChartData.setAxisYLeft(axisY);
         columnChartData.setFillRatio(0.2f);
 
         columnChartView.setColumnChartData(columnChartData);
@@ -101,5 +100,18 @@ public class History_TodayFragment extends BaseFragment {
     @Override
     protected int setLayout() {
         return R.layout.history_todayfragment;
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        axisValues.clear();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        axisValues.clear();
     }
 }

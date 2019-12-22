@@ -1,8 +1,11 @@
 package com.example.step.Fragment;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 
 import com.example.framework.base.BaseFragment;
 import com.example.framework.bean.HourBean;
@@ -48,16 +51,25 @@ public class History_MinutesFragment extends BaseFragment {
             int beforeMinute = Integer.parseInt(split[1]);
             //当前小时
             int thrreHour = calendar.get(Calendar.HOUR_OF_DAY) - 3;
-            //如果是在三小时之内显示数据
-            if (beforeHour >= thrreHour && beforeHour <= hour) {
-                boolean currentTimeRange = StepManager.getInstance().isCurrentTimeRange(beforeHour, beforeMinute, hour, minute);
-                if (currentTimeRange == true) {
-                    mAxisXValues.add(new AxisValue(i).setLabel(real.get(i).getTime()));
-                    mPointValues.add(new PointValue(i,real.get(i).getCurrentStep()));
-                    initLineChart();//初始化
 
+            //是否是当天
+            if(StepManager.getInstance().isToday(real.get(i).getDate())){
+                
+                //如果是在三小时之内显示数据
+                if (beforeHour >= thrreHour && beforeHour <= hour) {
+                    boolean currentTimeRange = StepManager.getInstance().isCurrentTimeRange(beforeHour, beforeMinute, hour, minute);
+                    if (currentTimeRange == true) {
+
+                        Log.e("##Time",real.get(i).toString());
+                        mAxisXValues.add(new AxisValue(i).setLabel(real.get(i).getTime()));
+                        mPointValues.add(new PointValue(i,real.get(i).getCurrentStep()));
+                        initLineChart();//初始化
+
+                    }
                 }
+
             }
+
         }
 
 
@@ -91,9 +103,7 @@ public class History_MinutesFragment extends BaseFragment {
         axisX.setHasLines(true);
         lineChartData.setAxisXBottom(axisX);
 
-//        axisY.setName("");
-//        axisY.setTextSize(11);
-//        lineChartData.setAxisYLeft(axisY);
+
 
         lineChartView.setInteractive(true);
         lineChartView.setZoomType(ZoomType.HORIZONTAL);
@@ -120,6 +130,17 @@ public class History_MinutesFragment extends BaseFragment {
         return R.layout.fragment_minutes;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mAxisXValues.clear();
+        mPointValues.clear();
+    }
 
-
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mAxisXValues.clear();
+        mPointValues.clear();
+    }
 }

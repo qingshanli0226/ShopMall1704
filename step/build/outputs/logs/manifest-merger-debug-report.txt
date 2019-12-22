@@ -1,28 +1,28 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-21:12
-INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-21:12
-INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-21:12
-INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-21:12
-INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-21:12
-INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-21:12
-INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-21:12
+ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-22:12
+INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-22:12
+INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-22:12
+INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-22:12
+INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-22:12
+INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-22:12
+INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-22:12
 	package
 		ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:2:5-31
 		INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml
 		INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml
-		ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-21:12
+		ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-22:12
 		INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml
-		ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-21:12
+		ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-22:12
 		INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:11-69
 application
-ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:5:5-18:19
+ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:5:5-19:19
 activity#com.example.step.Ui.HistoryActivity
 ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:6:9-8:20
 	android:name
@@ -34,7 +34,7 @@ ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:9:9-13:
 	android:name
 		ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:9:19-54
 service#com.example.framework.service.StepService
-ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:15:9-17:19
+ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:15:9-18:19
 	android:name
 		ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:15:18-74
 uses-sdk

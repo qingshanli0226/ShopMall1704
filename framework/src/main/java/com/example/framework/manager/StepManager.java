@@ -14,8 +14,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.IBinder;
 import android.text.format.Time;
+import android.util.Log;
 
 
+import com.example.common.AppProcessUtil;
 import com.example.common.OrmUtils;
 import com.example.framework.bean.HourBean;
 import com.example.framework.bean.MessageStepBean;
@@ -29,7 +31,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 public class StepManager {
 
@@ -38,14 +42,16 @@ public class StepManager {
 
     StepService stepService;
     ServiceConnection serviceConnection;
-    List<StepManagerListener> stepManagerListeners=new ArrayList<>();
+    LinkedList<StepManagerListener> stepManagerListeners=new LinkedList<>();
     List<StepIntegalListener> IntegalListeners=new ArrayList<>();
 
     private Intent intent;
 
-    private int cut;
+//    private int cut;
 
     SQLiteDatabase hourDb;
+
+    boolean isRegister=false;
 
     public static StepManager getInstance() {
         if (stepManager == null) {
@@ -71,7 +77,6 @@ public class StepManager {
 
                     @Override
                     public void getUpdateStep(int count, int ingal) {
-                    cut=count;
                         for (int i=0;i<stepManagerListeners.size();i++){
                             stepManagerListeners.get(i).onIntegral(ingal);
                             stepManagerListeners.get(i).onStepChange(count);
@@ -94,10 +99,13 @@ public class StepManager {
             @Override
             public void onServiceDisconnected(ComponentName componentName) {
 
+                stepService=null;
             }
         };
 
+        Intent intentStart = new Intent(context, StepService.class);
         context.bindService(intent,serviceConnection,Context.BIND_AUTO_CREATE);
+        context.startService(intentStart);
 
 
 
@@ -196,6 +204,14 @@ public class StepManager {
 
     }
 
+    public boolean isToday(String time){
+        String format = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        if(time.equals(format)){
+            return true;
+        }else{
+            return false;
+        }
+    }
     //获取没有的最后一天
     public int getLastDayMonth(int month){
         Calendar calendar = Calendar.getInstance();
@@ -222,16 +238,19 @@ public class StepManager {
 
     //获取每周的日期
     public  List<String> getWeekDay(){
-        Calendar calendar = Calendar.getInstance();
-        //本周的第一天
-        int firstDayOfWeek = calendar.getFirstDayOfWeek();
         List<String> list=new ArrayList<>();
-        for (int i=0;i<7;i++){
-            calendar.set(Calendar.DAY_OF_WEEK,firstDayOfWeek+i);
-            String format = new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
-            list.add(format);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+        while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
+            calendar.add(Calendar.DAY_OF_WEEK, -1);
         }
-        return list;
+        String[] dates = new String[7];
+        for (int i = 0; i < 7; i++) {
+            list.add(dateFormat.format(calendar.getTime()));
+            calendar.add(Calendar.DATE, 1);
+        }
+            return list;
     }
 
     //是否在 0.0 -0.0时间段
@@ -338,10 +357,14 @@ public class StepManager {
     }
     public void unRegisterLisener(StepManagerListener stepManagerListener){
         stepManagerListeners.remove(stepManagerListener);
-        context.unbindService(serviceConnection);
+//        context.unbindService(serviceConnection);
     }
 
+    public boolean getState(){
+        return isRegister;
+    }
     public void registerIntalListenr(StepIntegalListener stepIntegalListener){
+        isRegister=true;
         if(!IntegalListeners.contains(stepIntegalListener)){
             this.IntegalListeners.add(stepIntegalListener);
         }

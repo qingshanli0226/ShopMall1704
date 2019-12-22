@@ -67,7 +67,9 @@
 
 
         <activity android:name=".activity.WelcomeActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -118,9 +120,10 @@
             </intent-filter>
         </activity>
 
+
         <service
             android:name="cn.jpush.android.service.PushService"
-            android:process=":pushcore"
+                    android:process=":pushcore"
             android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTER" />
@@ -166,7 +169,8 @@
         </activity>
 
         <service android:name=".jpush.PushService"
-            android:process=":pushcore">
+                android:process=":pushcore"
+        >
             <intent-filter>
                 <action android:name="cn.jiguang.user.service.action" />
             </intent-filter>

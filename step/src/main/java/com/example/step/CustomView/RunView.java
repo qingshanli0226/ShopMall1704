@@ -103,7 +103,7 @@ public class RunView extends SurfaceView {
         public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
 
             isRunning=false;
-
+             changeBitmapSize().recycle();
 
         }
     };

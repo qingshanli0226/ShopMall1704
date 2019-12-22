@@ -101,13 +101,13 @@ public class IntegralActivity extends BaseActivity implements StepManager.StepMa
         }else{
             //      当前步数和积分
             List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
-            integral.setText(queryAll.get(queryAll.size()-1).getIntegral()+"");
             int count=0;
             for (int i=0;i<queryAll.size();i++){
-                String current_step = queryAll.get(i).getCurrent_step();
-                count+=Integer.parseInt(current_step);
-               intergral_Step.setText(count+"");
+                int current_step = queryAll.get(i).getIntegral();
+                count+=current_step;
+            integral.setText(count+"");
             }
+               intergral_Step.setText(queryAll.get(queryAll.size()-1).getCurrent_step()+"");
             String current_step = queryAll.get(queryAll.size() - 1).getCurrent_step();
             int i = Integer.parseInt(current_step);
             step_ArcView.setCurrentCount(10000,i);
@@ -135,7 +135,11 @@ public class IntegralActivity extends BaseActivity implements StepManager.StepMa
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        if(StepManager.getInstance().getState()==true){
         StepManager.getInstance().unRegisterLisener(this);
+
+        }
         if(pointBresenter!=null){
          pointBresenter.detachView();
         }
@@ -164,12 +168,12 @@ public class IntegralActivity extends BaseActivity implements StepManager.StepMa
     @Override
     public void onPostDataSucess(PonitBean data) {
 
-        Log.e("Data","Data" + data.toString());
+//        Log.e("Data","Data" + data.toString());
     }
 
     @Override
     public void onPostDataFailed(String ErrorMsg) {
 
-        Log.e("Data","ErrorMsg" + ErrorMsg);
+//        Log.e("Data","ErrorMsg" + ErrorMsg);
     }
 }

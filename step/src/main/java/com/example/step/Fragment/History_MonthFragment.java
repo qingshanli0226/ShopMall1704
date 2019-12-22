@@ -1,8 +1,11 @@
 package com.example.step.Fragment;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 
 import com.example.framework.base.BaseFragment;
 import com.example.framework.bean.ShopStepBean;
@@ -51,7 +54,6 @@ public class History_MonthFragment extends BaseFragment {
                     mAxisValues.add(new AxisValue(m).setLabel(shopStepTimeRealBeans.get(m).getDate()));
                     mPointValues.add(new PointValue(m,500));
                     initLineChat();
-                    Log.e("Month",shopStepTimeRealBeans.get(m).getDate()+"--"+shopStepTimeRealBeans.get(m).getCurrent_step());
                 }
             }
 
@@ -74,7 +76,6 @@ public class History_MonthFragment extends BaseFragment {
         lineChartData.setLines(lines);
 
         Axis axisX = new Axis();
-//        Axis axisY = new Axis();
         axisX.setHasTiltedLabels(true);
         axisX.setTextColor(Color.GRAY);
 
@@ -85,9 +86,6 @@ public class History_MonthFragment extends BaseFragment {
         axisX.setHasLines(true);
         lineChartData.setAxisXBottom(axisX);
 
-//        axisY.setName("");
-//        axisY.setTextSize(11);
-//        lineChartData.setAxisYLeft(axisY);
 
         monthLineChat.setInteractive(true);
         monthLineChat.setZoomType(ZoomType.HORIZONTAL);
@@ -112,5 +110,20 @@ public class History_MonthFragment extends BaseFragment {
     @Override
     protected int setLayout() {
         return R.layout.history_monthfragment;
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mAxisValues.clear();
+        mPointValues.clear();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mAxisValues.clear();
+        mPointValues.clear();
     }
 }

@@ -2,17 +2,13 @@ package com.example.step.Ui;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
-import android.widget.TableLayout;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.step.Adapter.HistoryFragmentAdapter;
 import com.example.step.CustomView.NoScrollViewPage;
-import com.example.step.Fragment.History_AllFragment;
 import com.example.step.Fragment.History_MinutesFragment;
 import com.example.step.Fragment.History_MonthFragment;
 import com.example.step.Fragment.History_TodayFragment;
@@ -81,12 +77,17 @@ public class HistoryActivity extends BaseActivity {
         fragmentList.add(new History_TodayFragment());
         fragmentList.add(new History_WeekFragment());
         fragmentList.add(new History_MonthFragment());
-//        fragmentList.add(new History_AllFragment());
 
         HistoryFragmentAdapter fragmentAdapter = new HistoryFragmentAdapter(getSupportFragmentManager(), fragmentList, tableList);
         History_viewPager.setAdapter(fragmentAdapter);
 
         History_tableLayout.setupWithViewPager(History_viewPager);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        fragmentList.clear();
     }
 }
