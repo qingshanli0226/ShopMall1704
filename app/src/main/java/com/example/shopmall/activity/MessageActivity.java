@@ -51,7 +51,7 @@ public class MessageActivity extends BaseActivity {
 
             if (msg.what == 100){
                 //数据库获取数据，添加到消息界面
-                final List<MessageBean> messages = MessageManager.getMessageManager().getMessage();
+                final List<MessageBean> messages = MessageManager.getInstance().getMessage();
                 if (messages.size() > 0){
                     messageItemAdapter = new MessageItemAdapter();
                     messageItemAdapter.reFresh(messages);
@@ -66,7 +66,7 @@ public class MessageActivity extends BaseActivity {
                                 MessageBean messageBean = new MessageBean();
                                 messageBean.setId(id);
                                 messageBean.setIsMessage(true);
-                                MessageManager.getMessageManager().updateMessage(messageBean);
+                                MessageManager.getInstance().updateMessage(messageBean);
                                 messageItemAdapter.reFresh(messages);
                                 srvMessage.setAdapter(messageItemAdapter);
                                 messageItemAdapter.notifyDataSetChanged();

@@ -61,7 +61,7 @@ public class MyApplication extends Application {
 
 
         //初始化消息数据库
-        MessageManager.getMessageManager().init(this);
+        MessageManager.getInstance().init(this);
         StatConfig.setDebugEnable(true);
         // 基础统计API
         StatService.registerActivityLifecycleCallbacks(this);

@@ -63,7 +63,7 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
             super.handleMessage(msg);
 
             if (msg.what == 100){
-                List<MessageBean> messages = MessageManager.getMessageManager().getMessage();
+                List<MessageBean> messages = MessageManager.getInstance().getMessage();
                 if (messages.size() > 0) {
                     for (int i = 0; i < messages.size(); i++) {
                         if (!messages.get(i).getIsMessage()) {

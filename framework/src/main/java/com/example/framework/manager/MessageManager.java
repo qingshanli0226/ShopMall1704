@@ -18,7 +18,7 @@ public class MessageManager {
     private static MessageManager messageManager;
     private MessageBeanDao messageBeanDao;
 
-    public static MessageManager getMessageManager() {
+    public static MessageManager getInstance() {
 
         if (messageManager == null){
             messageManager = new MessageManager();
