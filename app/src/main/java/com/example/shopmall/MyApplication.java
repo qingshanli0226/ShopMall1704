@@ -6,24 +6,23 @@ import android.content.Context;
 import android.content.Intent;
 
 import androidx.multidex.MultiDex;
-import androidx.versionedparcelable.ParcelUtils;
 
 import com.example.common.AppProcessUtil;
-import com.example.framework.manager.CaCheManager;
 import com.example.framework.manager.ConnectManager;
 import com.example.framework.manager.CrashHandler;
 import com.example.framework.manager.MessageManager;
-import com.example.framework.manager.ShoppingManager;
 import com.example.framework.manager.UserManager;
+import com.example.framework.service.StepJobService;
+import com.example.framework.service.StepLocalService;
+import com.example.framework.service.StepRemoteService;
 import com.example.shopmall.activity.MainActivity;
 import com.example.framework.manager.StepManager;
-import com.example.shopmall.activity.WelcomeActivity;
+import com.squareup.haha.perflib.Main;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.stat.StatConfig;
 import com.tencent.stat.StatService;
 
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
-import cn.jiguang.api.utils.ProtocolUtil;
 import cn.jpush.android.api.JPushInterface;
 
 public class MyApplication extends Application {
@@ -47,6 +46,9 @@ public class MyApplication extends Application {
         if(AppProcessUtil.isAppProcess(this)==true){
 
             StepManager.getInstance().init(getApplicationContext());
+            startService(new Intent(this, StepJobService.class));
+            startService(new Intent(getApplicationContext(), StepLocalService.class));
+            startService(new Intent(getApplicationContext(), StepRemoteService.class));
         }
 
 

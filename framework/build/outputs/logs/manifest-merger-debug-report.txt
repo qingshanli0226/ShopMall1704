@@ -1,23 +1,23 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml:1:1-5:12
-INJECTED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml:1:1-5:12
-INJECTED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml:1:1-5:12
-INJECTED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml:1:1-5:12
-INJECTED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml:1:1-5:12
-INJECTED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml:1:1-5:12
-INJECTED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml:1:1-5:12
+ADDED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml:1:1-11:12
+INJECTED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml:1:1-11:12
+INJECTED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml:1:1-11:12
+INJECTED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml:1:1-11:12
+INJECTED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml:1:1-11:12
+INJECTED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml:1:1-11:12
+INJECTED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml:1:1-11:12
 	package
 		ADDED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml:2:5-36
 		INJECTED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml
 		INJECTED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml
-		ADDED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml:1:1-5:12
+		ADDED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml:1:1-11:12
 		INJECTED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml
-		ADDED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml:1:1-5:12
+		ADDED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml:1:1-11:12
 		INJECTED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from D:\GitHub\Shop\ShopMall1704\framework\src\main\AndroidManifest.xml:1:11-69

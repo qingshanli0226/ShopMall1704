@@ -14,6 +14,24 @@
 
         <service android:name="com.example.framework.service.StepService"
             >
+        </service>
+
+        <service android:name="com.example.framework.service.StepJobService"
+            android:exported="true"
+            android:enabled="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            >
+        </service>
+
+        <service android:name="com.example.framework.service.StepRemoteService"
+            android:exported="true"
+            android:enabled="true"
+            android:process="remote.service.two"
+            ></service>
+        <service android:name="com.example.framework.service.StepLocalService"
+            android:exported="true"
+            android:enabled="true"
+            >
 
         </service>
     </application>
