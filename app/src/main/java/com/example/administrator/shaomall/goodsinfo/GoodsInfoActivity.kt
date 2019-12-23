@@ -137,6 +137,9 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
                 }
 
                 R.id.mBtnGoodInfoAddcart -> { //点击加入购物车
+                    //禁止点击
+                    mBtnGoodInfoAddcart.isEnabled = false
+
                     if (iBasePresenter == null) {
                         iBasePresenter = AddCartPresenter()
                         iBasePresenter!!.attachView(this)
@@ -149,6 +152,7 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
                     objects["productPrice"] = productPrice
                     objects["url"] = productPic
                     (iBasePresenter as AddCartPresenter).setJsonObject(objects)
+
 
                     //给添加购物车设置动画, 贝瑟尔曲线
                     setBezierCurveAnimation() //设置贝塞尔曲线动画
@@ -256,6 +260,10 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
      * 网络请求成功回调
      */
     override fun onRequestHttpDataSuccess(message: String?, data: String?) {
+        //按钮恢复
+        mBtnGoodInfoAddcart.isEnabled = true
+
+
         var shoppingCartBean = ShoppingCartBean()
         shoppingCartBean.productId = productId
         shoppingCartBean.productNum = productNum.toString()
@@ -281,14 +289,12 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
 
     override fun onDestroy() {
         super.onDestroy()
-
         WebViewConfig.destroy(mWebView)
-
         if (iBasePresenter != null) {
             iBasePresenter!!.detachView()
             iBasePresenter = null
         }
-
         ShoppingManager.getInstance().unRegisterShoppingNumChangeListener(this)
+
     }
 }

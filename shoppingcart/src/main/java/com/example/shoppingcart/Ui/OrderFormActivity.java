@@ -422,4 +422,13 @@ public class OrderFormActivity extends BaseMVPActivity<Object> implements View.O
         Log.d("CHY", mTvAddress.getText() + "");
     }
 
+
+    @Override
+    protected void onDestroy() {
+        if (iBasePresenter != null){
+            iBasePresenter.detachView();
+        }
+        super.onDestroy();
+    }
+
 }

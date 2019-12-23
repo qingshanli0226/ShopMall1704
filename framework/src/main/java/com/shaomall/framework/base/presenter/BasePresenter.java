@@ -23,8 +23,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import io.reactivex.CompletableOperator;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
@@ -33,6 +35,8 @@ import okhttp3.ResponseBody;
 
 public abstract class BasePresenter<T> implements IBasePresenter<T> {
     private IBaseView<T> iBaseView;
+    //控制取消订阅
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Override
     public void doGetHttpRequest() {
@@ -197,26 +201,14 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
         return null;
     }
 
-    /**
-     * JSONArray数据
-     *
-     * @return
-     */
-    private RequestBody getEncryptJsonArrayParam() {
-        JSONObject[] jsonParam = (JSONObject[]) getJsonArrayParam();
-        RequestBody requestBody = null;
-        if (jsonParam != null) {
-            requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), Arrays.toString(jsonParam));
-        }
-        return requestBody;
-    }
-
     private void getData(Observable<ResponseBody> data) {
         data.subscribeOn(Schedulers.io()) //订阅
                 .observeOn(AndroidSchedulers.mainThread()) //观察
                 .subscribe(new MVPObserver<ResponseBody>() {
                     @Override
                     public void onSubscribe(Disposable d) {
+                        compositeDisposable.add(d);
+
                         //提示用户正在加载, 显示加载页
                         setLoadingPager(-1, LoadingPageConfig.STATE_LOADING_CODE);
                     }
@@ -284,6 +276,8 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                 .subscribe(new MVPObserver<ResponseBody>() {
                     @Override
                     public void onSubscribe(Disposable d) {
+                        compositeDisposable.add(d);
+
                         //提示用户正在加载, 显示加载页
                         setLoadingPager(requestCode, LoadingPageConfig.STATE_LOADING_CODE);
 
@@ -348,6 +342,9 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
     public void detachView() {
         if (iBaseView != null) {
             this.iBaseView = null;
+        }
+        if (compositeDisposable != null){
+            compositeDisposable.clear();
         }
     }
 }

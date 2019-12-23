@@ -14,12 +14,16 @@ import java.util.Map;
  * 更新积分
  */
 public class PointUpLoadPresenter extends BasePresenter<String> {
-
-
     private int pointSum;
+
+    public PointUpLoadPresenter(int pointSum) {
+        this.pointSum = pointSum;
+    }
+
     @Override
     protected Type getBeanType() {
-        return new TypeToken<ResEntity<String>>(){}.getType();
+        return new TypeToken<ResEntity<String>>() {
+        }.getType();
     }
 
     @Override
@@ -30,16 +34,8 @@ public class PointUpLoadPresenter extends BasePresenter<String> {
     @Override
     public Map<String, String> getParams() {
         HashMap<String, String> map = new HashMap<>();
-        map.put("point", getPointSum()+"");
+        map.put("point", pointSum + "");
 
         return map;
-    }
-
-    public int getPointSum() {
-        return pointSum;
-    }
-
-    public void setPointSum(int pointSum) {
-        this.pointSum = pointSum;
     }
 }

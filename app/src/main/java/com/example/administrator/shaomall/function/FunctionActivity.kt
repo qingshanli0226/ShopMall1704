@@ -15,7 +15,10 @@ import kotlinx.android.synthetic.main.activity_function.*
 class FunctionActivity : BaseActivity() {
     lateinit var presenter: IBasePresenter<FunctionBean>
     private var bundle: Bundle? = null
-    private lateinit var functionAdaptor: FunctionAdaptor
+    private lateinit var functionAdaptor: FunctionAdaptor   //适配器
+    private lateinit var functionViewModel: FunctionViewModel //ViewModel 网络请求
+
+
     override fun setLayoutId(): Int = R.layout.activity_function
     override fun initView() {
         bundle = intent.extras
@@ -40,7 +43,7 @@ class FunctionActivity : BaseActivity() {
 
     override fun initData() {
         //使用ViewModel提供者,获取ViewModel的实例
-        val functionViewModel = ViewModelProviders.of(this).get(FunctionViewModel::class.java)
+        functionViewModel = ViewModelProviders.of(this).get(FunctionViewModel::class.java)
         functionViewModel.liveData.observe(this, Observer<List<FunctionBean>> { t ->
             functionAdaptor.upDateData(t) //赋值
         })
@@ -49,5 +52,11 @@ class FunctionActivity : BaseActivity() {
         } else if ("待发货" == bundle!!.getString("type")) {
             functionViewModel.findForSend()
         }
+    }
+
+    override fun onDestroy() {
+        //解除所有订阅者
+        functionViewModel.clearDisposable()
+        super.onDestroy()
     }
 }

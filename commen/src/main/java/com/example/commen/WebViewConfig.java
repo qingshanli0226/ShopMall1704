@@ -1,5 +1,6 @@
 package com.example.commen;
 
+import android.os.Process;
 import android.view.ViewGroup;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
@@ -43,6 +44,6 @@ public class WebViewConfig {
         webview.clearCache(true); //清除缓存
         webview.clearHistory(); //清除历史
         webview.destroy(); //销毁webview自身
-        //Process.killProcess(Process.myPid()); //杀死WebView所在的进程
+//        Process.killProcess(Process.myPid());//杀死WebView所在的进程
     }
 }

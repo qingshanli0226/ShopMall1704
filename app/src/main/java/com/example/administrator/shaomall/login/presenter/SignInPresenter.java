@@ -9,7 +9,7 @@ import com.shaomall.framework.base.presenter.BasePresenter;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
-public class SigninPresenter extends BasePresenter<String> {
+public class SignInPresenter extends BasePresenter<String> {
     String username=null;
     String password=null;
 

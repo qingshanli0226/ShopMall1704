@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
@@ -52,6 +53,7 @@ public class SettingActivity extends BaseActivity {
     private ImageView settingBack;
     private LinearLayout settingLinearPhoto;
     private List<String> arr = new ArrayList<String>();
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Override
     protected int setLayoutId() {
@@ -124,7 +126,7 @@ public class SettingActivity extends BaseActivity {
         settingTextChangeName.setText(name);
         settingPhoto.setImageURI(head);
         settingYong.setText(name);
-        
+
         //点击修改名字的事件
         settingLinearName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,13 +176,22 @@ public class SettingActivity extends BaseActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new MVPObserver<ResponseBody>() {
+                    private Disposable mDisposable;
+
                     @Override
                     public void onSubscribe(Disposable d) {
-                        super.onSubscribe(d);
+                        //订阅
+                        mDisposable = d;
+                        compositeDisposable.add(d);
                     }
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
+                        //判断mDisposable.isDisposed()如果解除了则不需要处理 true为解除
+                        if (mDisposable.isDisposed()) {
+                            return;
+                        }
+
                         String str;
                         try {
                             str = responseBody.string();
@@ -218,5 +229,13 @@ public class SettingActivity extends BaseActivity {
 
         pvOptions.setPicker(arr);//三级选择器
         pvOptions.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (compositeDisposable != null) {
+            compositeDisposable.clear();
+        }
     }
 }

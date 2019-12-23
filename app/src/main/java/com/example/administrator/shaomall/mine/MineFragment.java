@@ -3,7 +3,6 @@ package com.example.administrator.shaomall.mine;
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -35,7 +34,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
     private android.widget.Button mBtLogout;
     private TextView mTvPoint;
     private UserInfoManager userInfoManager;
-    private IBasePresenter logoutPresenter;
+    private IBasePresenter iBasePresenter;
     private String point = "0";
     private PointUpLoadPresenter pointUpLoadPresenter;
     private TextView mTvNoPayment;
@@ -99,7 +98,6 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
 
         //展示用户信息
         setUserData();
-
 
     }
 
@@ -188,12 +186,11 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
      * 退出登录功能
      */
     private void setLogout() {
-        if (logoutPresenter == null) {
-            logoutPresenter = new LogOutPresenter();
-            logoutPresenter.attachView(this);
-        }
+        //是否处于登录状态
         if (userInfoManager.isLogin()) {
-            logoutPresenter.doPostHttpRequest(AppNetConfig.REQUEST_CODE_LOGOUT); //请求退出登录链接
+            iBasePresenter = new LogOutPresenter();
+            iBasePresenter.attachView(this);
+            iBasePresenter.doPostHttpRequest(AppNetConfig.REQUEST_CODE_LOGOUT); //请求退出登录链接
         }
     }
 
@@ -211,19 +208,20 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
             String address = (String) loginBean.getAddress();    //获取地址
             //获得头像
             avatar = (String) loginBean.getAvatar();
-            String email = (String) loginBean.getEmail();    //取得电子邮件
-            String money = (String) loginBean.getMoney();    //得到钱
             String name = loginBean.getName();      //得到名字
-            String phone = (String) loginBean.getPhone();    //取得电话
             point = (String) loginBean.getPoint();  //获得积分
-            //Log.d("WQS: ",point);
+            //            String email = (String) loginBean.getEmail();    //取得电子邮件
+            //            String money = (String) loginBean.getMoney();    //得到钱
+            //            String phone = (String) loginBean.getPhone();    //取得电话
+
             //TODO 设置头像
-            if (avatar == null) {
+            if (avatar == null) { //本地默认头像
                 avatar = "http://img5.imgtn.bdimg.com/it/u=1441588315,1666293982&fm=26&gp=0.jpg";
                 Glide.with(mContext).load(avatar).apply(RequestOptions.circleCropTransform()).into(mIvHeader);
             } else {
                 Glide.with(mContext).load(AppNetConfig.BASE_URL + avatar).apply(RequestOptions.circleCropTransform()).into(mIvHeader);
             }
+
             //这是昵称
             mTvUserName.setText(name);
             //设置积分
@@ -279,15 +277,12 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         pointSum = Integer.parseInt(point) + pointNum;
         mTvPoint.setText("积分: " + pointSum);
 
-        //上传当前积分数量
-        if (pointUpLoadPresenter == null) {
-            pointUpLoadPresenter = new PointUpLoadPresenter();
-            pointUpLoadPresenter.attachView(this);
-        }
-        pointUpLoadPresenter.setPointSum(pointSum);
 
+        //上传当前积分数量
+        iBasePresenter = new PointUpLoadPresenter(pointSum);
+        iBasePresenter.attachView(this);
         //上传积分
-        pointUpLoadPresenter.doPostHttpRequest(AppNetConfig.REQUEST_CODE_UPLOAD_POINT);
+        iBasePresenter.doPostHttpRequest(AppNetConfig.REQUEST_CODE_UPLOAD_POINT);
     }
 
     @SuppressLint("SetTextI18n")
@@ -329,12 +324,13 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
-        logoutPresenter.detachView();
-        pointUpLoadPresenter.detachView();
+        if (iBasePresenter != null) {
+            iBasePresenter.detachView();
+        }
         UserInfoManager.getInstance().unRegisterUserInfoStatusListener(this);
         PointManager.getInstance().unRegisterCallbackIntegralListener();
         UserInfoManager.getInstance().unRegisterAvatarUpdateListener(this);
-    }
 
+        super.onDestroy();
+    }
 }

@@ -3,7 +3,6 @@ package com.example.administrator.shaomall.login;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -26,15 +25,15 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
 
     private EditText loginUser;
     private EditText loginPass;
-    private TextView loginSignin;
+    private TextView loginSignIn;
     LoginPresenter presenter;
 
     @Override
     protected void initView() {
-        diybutton = (DIYButton) findViewById(R.id.diybutton);
-        loginUser = (EditText) findViewById(R.id.loginUser);
-        loginPass = (EditText) findViewById(R.id.loginPass);
-        loginSignin = (TextView) findViewById(R.id.loginSignin);
+        diybutton = findViewById(R.id.diybutton);
+        loginUser = findViewById(R.id.loginUser);
+        loginPass = findViewById(R.id.loginPass);
+        loginSignIn = findViewById(R.id.loginSignin);
         presenter = new LoginPresenter();
         presenter.attachView(this);
     }
@@ -50,12 +49,11 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
     protected void initData() {
         diybutton.setButtomtext("登录");
 
-
-        loginSignin.setOnClickListener(new View.OnClickListener() {
+        loginSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //跳转到注册界面
-                toClass(SigninActivity.class);
+                toClass(SignInActivity.class);
             }
         });
 
@@ -72,7 +70,6 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
                     int color = Color.parseColor("#00ced1");
                     int colorEnd = getResources().getColor(R.color.skyblue);
 
-                    //Toast.makeText(mActivity, "123", Toast.LENGTH_SHORT).show();
                     diybutton.invalidate();
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     //这是抬起时的颜色
@@ -83,7 +80,6 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
                     int color = Color.parseColor("#00ced1");
                     int colorEnd = getResources().getColor(R.color.skyblue);
 
-                    //Toast.makeText(mActivity, "松开了", Toast.LENGTH_SHORT).show();
                     diybutton.invalidate();
                     //判断用户名和密码逻辑
                     if (loginUser.getText().toString().equals("") || loginPass.getText().toString().equals("")) {
@@ -95,38 +91,11 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
                         presenter.setPassname(password);
                         presenter.doPostHttpRequest(100);
                         ActivityInstanceManager.removeActivity(LoginActivity.this);
-
                     }
                 }
                 return false;
             }
         });
-    }
-
-    @Override
-    public void onRequestHttpDataFailed(int requestCode, ShopMailError error) {
-        //登录失败
-        Toast.makeText(mActivity, "" + error.getErrorMessage(), Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        ActivityInstanceManager.removeActivity(this);
-
-        //        toClass(MainActivity.class, 0); //返回首页
-    }
-
-    @Override
-    public void onRequestHttpDataSuccess(int requestCode, String message, LoginBean data) {
-        //登录成功
-        Toast.makeText(mActivity, "" + message, Toast.LENGTH_SHORT).show();
-        UserInfoManager instance = UserInfoManager.getInstance();
-        instance.saveUserInfo(data);
-        //加载用户的购物车数据
-        ShoppingManager.getInstance().getData();
-
-        setNewActivity();
     }
 
     /**
@@ -140,5 +109,41 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
         } else {
             ActivityInstanceManager.removeActivity(this);
         }
+    }
+
+
+    @Override
+    public void onRequestHttpDataSuccess(int requestCode, String message, LoginBean data) {
+        //登录成功
+        Toast.makeText(mActivity, message, Toast.LENGTH_SHORT).show();
+        UserInfoManager instance = UserInfoManager.getInstance();
+        instance.saveUserInfo(data);
+        //加载用户的购物车数据
+        ShoppingManager.getInstance().getData();
+
+
+        setNewActivity();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ActivityInstanceManager.removeActivity(this);
+    }
+
+    @Override
+    public void onRequestHttpDataFailed(int requestCode, ShopMailError error) {
+        //登录失败
+        Toast.makeText(mActivity, "" + error.getErrorMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (presenter != null) {
+            presenter.detachView();
+            presenter = null;
+        }
+
+        super.onDestroy();
     }
 }
