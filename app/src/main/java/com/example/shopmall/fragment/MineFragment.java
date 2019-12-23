@@ -20,6 +20,7 @@ import com.example.framework.manager.ShoppingManager;
 import com.example.net.NetGetService;
 import com.example.shopmall.R;
 import com.example.shopmall.activity.AddressBarActivity;
+import com.example.shopmall.activity.CollectionActivity;
 import com.example.shopmall.activity.SetActivity;
 import com.example.framework.base.IPostBaseView;
 import com.example.framework.bean.LoginBean;
@@ -52,12 +53,14 @@ public class MineFragment extends BaseFragment implements IPostBaseView {
     private AutomaticPresenter automaticPresenter;
     private UpImgPresenter upImgPresenter;
     private LinearLayout llUserLocation;
+    private LinearLayout llCollect;
 
     private int sum = 0;
+    private LinearLayout llUserCollect;
 
     @Override
     protected void initData() {
-
+        ShoppingManager.getInstance().setMainitem(4);
         tbMine.setTitleBacKGround(Color.WHITE);
         tbMine.setCenterText("个人中心", 18, Color.BLACK);
         tbMine.setLeftImg(R.mipmap.new_message_icon);
@@ -148,6 +151,12 @@ public class MineFragment extends BaseFragment implements IPostBaseView {
             }
         });
 
+        boolean liginStatus = UserManager.getInstance().getLoginStatus();
+        if (liginStatus) {
+//            ResultBean user = UserManager.getInstance().getUser(getActivity());
+//            mTvName.setText("用户昵称:" + user.getName());
+        }
+
         SharedPreferences login = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
         String getToken = login.getString("getToken", "");
         boolean isAutomatic = login.getBoolean("isAutomatic", false);
@@ -222,7 +231,12 @@ public class MineFragment extends BaseFragment implements IPostBaseView {
                 startActivity(new Intent(getContext(), SendGoodsActivity.class));
             }
         });
-
+        llUserCollect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), CollectionActivity.class));
+            }
+        });
     }
 
     private TextView mTvName;
@@ -230,6 +244,7 @@ public class MineFragment extends BaseFragment implements IPostBaseView {
     @Override
     public void onDestroy() {
         super.onDestroy();
+
         if (automaticPresenter != null) {
             automaticPresenter.detachView();
         }
@@ -247,6 +262,7 @@ public class MineFragment extends BaseFragment implements IPostBaseView {
         llUserLocation = view.findViewById(R.id.ll_user_location);
         mTvName = view.findViewById(R.id.tv_user_name);
         tvSendgoods = view.findViewById(R.id.tv_app_sendgoods);
+        llUserCollect = view.findViewById(R.id.ll_user_collect);
     }
 
     @Override

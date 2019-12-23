@@ -27,6 +27,7 @@ import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IPostBaseView;
 import com.example.framework.bean.ResultBean;
+import com.example.framework.manager.ShoppingManager;
 import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
 import com.example.framework.bean.LoginBean;
@@ -221,6 +222,7 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
                 }
             }.start();
             startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            ShoppingManager.getInstance().setMainitem(4);
             finish();
         } else {
             LoginEvent loginEvent = new LoginEvent("用户登录", false);

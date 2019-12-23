@@ -65,7 +65,7 @@
                         android:text="@string/mine_text"
                         android:textColor="@color/color_white" />
 
-                </RelativeLayout>
+
 
                     <TextView
                         android:id="@+id/tv_user_name"
@@ -76,6 +76,8 @@
                         android:layout_toEndOf="@id/iv_user_icon_avator"
                         android:background="@null"
                         android:textColor="#B8B8B8" />
+                </RelativeLayout>
+
 
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>

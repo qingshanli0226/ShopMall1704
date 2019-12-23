@@ -108,7 +108,9 @@ public class SetActivity extends BaseActivity implements IPostBaseView<AddressBe
     protected void onDestroy() {
         super.onDestroy();
 
-        logOutPresenter.detachView();
+        if(logOutPresenter!=null){
+            logOutPresenter.detachView();
+        }
 
     }
 }

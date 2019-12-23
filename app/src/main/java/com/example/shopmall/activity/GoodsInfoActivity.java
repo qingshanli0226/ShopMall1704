@@ -1,14 +1,22 @@
 package com.example.shopmall.activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
@@ -21,6 +29,7 @@ import com.example.common.view.MyOKButton;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IPostBaseView;
 import com.example.framework.manager.ShoppingManager;
+import com.example.framework.manager.UserManager;
 import com.example.net.Constant;
 import com.example.shopmall.R;
 import com.example.shopmall.adapter.GoodsInfoAdapter;
@@ -29,6 +38,8 @@ import com.example.shopmall.bean.GoodsBean;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 商品详情
@@ -40,9 +51,11 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
     BottomBar bbGoodsInfo;
     MyOKButton btGoodsInfo;
     LinearLayout layoutBottom;
+    RelativeLayout rlGoodsinfo;
 
     ArrayList<GoodsBean> list_goods = new ArrayList<>();
 
+    int flag = 0;
     int x = 1;
 
     private InsertPresenter addOneProduct;
@@ -60,6 +73,7 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
         bbGoodsInfo = findViewById(R.id.bb_goods_info);
         btGoodsInfo = findViewById(R.id.bt_goods_info);
         layoutBottom = findViewById(R.id.ll_bottombar);
+        rlGoodsinfo = findViewById(R.id.rl_app_goodsinfo);
 
         rvGoodsInfo.setLayoutManager(new LinearLayoutManager(this));
         list_goods.clear();
@@ -69,12 +83,14 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
     public void initData() {
         tbGoodsInfo.setTitleBacKGround(Color.WHITE);
         tbGoodsInfo.setCenterText("商品详情", 18, Color.BLACK);
+        Intent intent = getIntent();
+        goods_bean = (GoodsBean) intent.getSerializableExtra("goods_bean");
+
         tbGoodsInfo.setLeftImg(R.drawable.left);
 
         tbGoodsInfo.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
             public void LeftClick() {
-                ShoppingManager.getInstance().setMainitem(0);
                 finish();
             }
 
@@ -91,7 +107,24 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
 
         String[] strs = new String[]{"联系客服", "收藏", "购物车"};
         final Drawable mine = getResources().getDrawable(R.drawable.mine);
-        final Drawable collect = getResources().getDrawable(R.drawable.collect);
+
+        Drawable collect = null;
+        List<Map<String, String>> collections = ShoppingManager.getInstance().getCollections(this);
+        flag = 0;
+        for (int i = 0; i < collections.size(); i++) {
+            Map<String, String> map = collections.get(i);
+            String id = map.get("id");
+            if(id.equals(goods_bean.getProduct_id())){
+                collect = getResources().getDrawable(R.drawable.collectred);
+                flag = 1;
+                break;
+            }
+        }
+
+        if(flag==0){
+            collect = getResources().getDrawable(R.drawable.collect);
+        }
+        Log.e("####",flag+"");
         final Drawable shoppingcart = getResources().getDrawable(R.drawable.shoppingcart);
         Drawable[] drawables = new Drawable[]{mine, collect, shoppingcart};
         bbGoodsInfo.setBottombarName(strs);
@@ -114,8 +147,7 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
                 }
             }
         });
-        Intent intent = getIntent();
-        goods_bean = (GoodsBean) intent.getSerializableExtra("goods_bean");
+
         list_goods.add(goods_bean);
 
         GoodsInfoAdapter goodsInfoAdapter = new GoodsInfoAdapter();
@@ -149,7 +181,71 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
                 addOneProduct.attachPostView(GoodsInfoActivity.this);
                 addOneProduct.getPostJsonData();
 
-                Toast.makeText(GoodsInfoActivity.this, "购物车内物品数量+1", Toast.LENGTH_SHORT).show();
+
+                addAnimation(btGoodsInfo);
+            }
+        });
+    }
+
+    int[] colors = {Color.RED,Color.BLUE,Color.BLACK,Color.GREEN,Color.YELLOW};
+    public void addAnimation(View view){
+
+        int[] startLocation = new int[2];
+
+        view.getLocationInWindow(startLocation);
+
+        PointF startF = new PointF();
+
+        startF.x = startLocation[0];
+        startF.y = startLocation[1];
+
+        final TextView textView = new TextView(this);
+        rlGoodsinfo.addView(textView);
+
+        textView.setText("+1");
+        textView.setTextColor(colors[(int) Math.floor(Math.random()*5)]);
+        textView.setTextSize(17);
+
+        textView.getLayoutParams().width = getResources().getDimensionPixelSize(R.dimen.dpsize_30);
+        textView.getLayoutParams().height = getResources().getDimensionPixelSize(R.dimen.dpsize_30);
+        textView.setVisibility(View.VISIBLE);
+        int x = (int)(startF.x+Math.floor(Math.random()*300));
+
+        textView.setX(x);
+        textView.setY(startF.y-150f);
+
+        Log.e("####",x+"/"+startF.y);
+
+        ObjectAnimator objectAnimator = new ObjectAnimator().ofFloat(textView, "translationY", startF.y-150f,startF.y-350f);
+        objectAnimator.setDuration(2000);
+
+        ObjectAnimator objectAnimator2 = new ObjectAnimator().ofFloat(textView, "Alpha", 1,0);
+        objectAnimator2.setDuration(2000);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.play(objectAnimator).with(objectAnimator2);
+        animatorSet.setDuration(2000);
+        animatorSet.start();
+
+        animatorSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                rlGoodsinfo.removeView(textView);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
             }
         });
     }
@@ -164,7 +260,66 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
 
     //收藏
     private void collect() {
+        bbGoodsInfo.setCheckedItem(0);
+        boolean loginStatus = UserManager.getInstance().getLoginStatus();
+        if(loginStatus){
+            List<Map<String, String>> collections = ShoppingManager.getInstance().getCollections(this);
+            flag = 0;
+            for (int i = 0; i < collections.size(); i++) {
+                Map<String, String> map = collections.get(i);
+                if(map.get("id").equals(goods_bean.getProduct_id())){
+                    flag = 1;
+                    collections.remove(i);
+                    i--;
+                    Drawable mine = getResources().getDrawable(R.drawable.mine);
+                    Drawable collect = getResources().getDrawable(R.drawable.collect);
+                    Drawable shoppingcart = getResources().getDrawable(R.drawable.shoppingcart);
+                    Drawable[] drawables = new Drawable[]{mine, collect, shoppingcart};
+                    bbGoodsInfo.setTapDrables(drawables);
+                    break;
+                }
+            }
+            if(flag==0){
+                Map<String,String> map = new HashMap();
+                map.put("id",goods_bean.getProduct_id());
+                map.put("title",goods_bean.getName());
+                map.put("price",goods_bean.getCover_price());
+                map.put("img",goods_bean.getFigure());
+                map.put("num",goods_bean.getNumber()+"");
+                collections.add(map);
+                Drawable mine = getResources().getDrawable(R.drawable.mine);
+                Drawable collect = getResources().getDrawable(R.drawable.collectred);
+                Drawable shoppingcart = getResources().getDrawable(R.drawable.shoppingcart);
+                Drawable[] drawables = new Drawable[]{mine, collect, shoppingcart};
+                bbGoodsInfo.setTapDrables(drawables);
+            }
+            Log.e("####collectionsize",collections.size()+"");
+            ShoppingManager.getInstance().setCollections(this,collections);
+        }else {
+            setAlertDialog();
+        }
+    }
 
+    private void setAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示：");
+        builder.setMessage("您还没有登录");
+        builder.setPositiveButton("前往登录", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                startActivity(new Intent(GoodsInfoActivity.this,LoginActivity.class));
+                dialogInterface.dismiss();
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ShoppingManager.getInstance().setMainitem(0);
+                finish();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     //联系客服

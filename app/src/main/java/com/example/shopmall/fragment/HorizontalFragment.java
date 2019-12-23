@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseFragment;
+import com.example.framework.manager.ShoppingManager;
 import com.example.shopmall.R;
 
 /**
@@ -18,6 +19,7 @@ public class HorizontalFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        ShoppingManager.getInstance().setMainitem(2);
         tbHorizontal.setTitleBacKGround(Color.WHITE);
         tbHorizontal.setCenterText("发现",18,Color.BLACK);
 
