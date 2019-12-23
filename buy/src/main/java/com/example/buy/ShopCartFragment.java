@@ -316,6 +316,7 @@ public class ShopCartFragment extends BaseNetConnectFragment {
                      * 物品改变 -->物品全变  物品单个变
                      */
                     if (list.isEmpty()) {
+                        CartManager.getInstance().clearCheck();
                         list.addAll(((GetCartBean) data).getResult());
                         CartManager.getInstance().setListGoods(list);
                         if (CartManager.getInstance().getChecks().isEmpty()) {
