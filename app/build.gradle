@@ -23,9 +23,9 @@ android {
 
         minSdkVersion 17
         targetSdkVersion 29
-        multiDexEnabled true
-        multiDexKeepProguard file('multiDexKeep.pro') // 打包到main dex的这些类的混淆规制，没特殊需求就给个空文件
-        multiDexKeepFile file('maindexlist.txt') // 指定哪些类要放到main dex
+//        multiDexEnabled true
+//        multiDexKeepProguard file('multiDexKeep.pro') // 打包到main dex的这些类的混淆规制，没特殊需求就给个空文件
+//        multiDexKeepFile file('maindexlist.txt') // 指定哪些类要放到main dex
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

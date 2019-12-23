@@ -50,8 +50,6 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
     private Switch mSwitch;
     private boolean isView = false;
 
-    private int mainitem = 0;
-
     private LoginPresenter loginPresenter;
 
     @SuppressLint("HandlerLeak")
