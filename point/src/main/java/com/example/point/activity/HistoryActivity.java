@@ -193,7 +193,7 @@ public class HistoryActivity extends BaseActivity {
     public void getSQdata() {
         //支持计步的话就查找历史记录-否则就什么也不做
         if (new StepIsSupport().isSupportStepCountSensor(this)) {
-            beans = new DaoManager(this).loadStepBean();
+            beans = DaoManager.Companion.getInstance(this).loadStepBean();
             stepItemAdpter = new StepItemAdpter(beans);
             history_re.setAdapter(stepItemAdpter);
         } else {
@@ -208,7 +208,7 @@ public class HistoryActivity extends BaseActivity {
         //支持计步的话就获取-否则就什么也不做
         if (new StepIsSupport().isSupportStepCountSensor(this)) {
             beans.clear();
-            beans = new DaoManager(this).areaStepBean(start, stop);
+            beans = DaoManager.Companion.getInstance(this).areaStepBean(start, stop);
             if (beans.size() > 0) {
                 history_re.setVisibility(View.VISIBLE);
                 recently.setVisibility(View.GONE);

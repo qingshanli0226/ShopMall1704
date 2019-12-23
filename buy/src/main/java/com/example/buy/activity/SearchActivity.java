@@ -144,13 +144,20 @@ public class SearchActivity extends BaseNetConnectActivity {
             childRecyclerView.setVisibility(View.VISIBLE);
             resultRecyclerView.setVisibility(View.GONE);
         }catch (Exception e){
-            GetSearchBeanTwo dateTwo = new Gson().fromJson(str, GetSearchBeanTwo.class);
-            resultList.addAll(dateTwo.getResult());
-            resultRecyclerView.getAdapter().notifyDataSetChanged();
+            try {
+                GetSearchBeanTwo dateTwo = new Gson().fromJson(str, GetSearchBeanTwo.class);
+                resultList.addAll(dateTwo.getResult());
+                resultRecyclerView.getAdapter().notifyDataSetChanged();
 
-            resultRecyclerView.setVisibility(View.VISIBLE);
-            hotRecyclerView.setVisibility(View.GONE);
-            childRecyclerView.setVisibility(View.GONE);
+                resultRecyclerView.setVisibility(View.VISIBLE);
+                hotRecyclerView.setVisibility(View.GONE);
+                childRecyclerView.setVisibility(View.GONE);
+            }catch (Exception e1){
+                toast(this,"这个数据太长了,而且拿不到bean");
+                resultRecyclerView.setVisibility(View.GONE);
+                hotRecyclerView.setVisibility(View.GONE);
+                childRecyclerView.setVisibility(View.GONE);
+            }
         }
     }
 

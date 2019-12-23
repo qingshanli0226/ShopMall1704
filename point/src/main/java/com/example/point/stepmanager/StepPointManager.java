@@ -7,6 +7,7 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.example.framework.manager.DaoManager;
 import com.example.point.service.StepService;
 
 import java.util.ArrayList;

@@ -33,22 +33,28 @@ public class CacheManager {
     }
 
     private static void writeObject(HomeBean data) {
-        FileOutputStream out ;
-        BufferedOutputStream bos;
+        FileOutputStream out =null;
+        BufferedOutputStream bos = null;
         try {
             out=new FileOutputStream(indexPath);
             bos =new BufferedOutputStream(out);
             @SuppressLint("Recycle") Parcel parcel = Parcel.obtain();
             parcel.writeParcelable(data,0);
             bos.write(parcel.marshall());
-            bos.flush();
-            bos.close();
-            out.flush();
-            out.close();
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (Exception e) {
             ErrorDisposeManager.HandlerError(e);
+        }finally {
+            try {
+                bos.flush();
+                bos.close();
+                out.flush();
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -67,18 +73,24 @@ public class CacheManager {
         }
     }
     private Object readObject(String indexPath) {
+        FileInputStream in=null;
         try {
-            FileInputStream in = new FileInputStream(new File(indexPath));
+            in = new FileInputStream(new File(indexPath));
             byte[] bytes = new byte[in.available()];
             in.read(bytes);
             Parcel parcel = Parcel.obtain();
             parcel.unmarshall(bytes, 0, bytes.length);
             parcel.setDataPosition(0);
             HomeBean homeBean = parcel.readParcelable(Thread.currentThread().getContextClassLoader());
-            in.close();
             return homeBean;
         } catch (Exception e) {
             ErrorDisposeManager.HandlerError(e);
+        }finally {
+            try {
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }

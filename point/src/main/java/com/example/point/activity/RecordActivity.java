@@ -3,7 +3,6 @@ package com.example.point.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.TextView;
 

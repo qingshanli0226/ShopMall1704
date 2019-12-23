@@ -40,9 +40,11 @@ dependencies {
     api 'com.alibaba:fastjson:1.1.71.android'
     api 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
 
-    implementation 'androidx.cardview:cardview:1.0.0'
-
     api 'androidx.cardview:cardview:1.0.0'
+    api files('libs\\alipaySdk-15.6.8-20191021122455-noUtdid.aar')
+
+
+    api files('libs\\lite-orm-1.9.2.jar')
 
 
 }

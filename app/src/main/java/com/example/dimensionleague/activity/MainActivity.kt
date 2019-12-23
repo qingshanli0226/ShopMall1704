@@ -3,10 +3,8 @@ package com.example.dimensionleague.activity
 import androidx.fragment.app.Fragment
 import android.view.KeyEvent
 import android.widget.Toast
-import anet.channel.util.Utils.context
 
 import com.example.dimensionleague.R
-import android.graphics.Color
 import com.example.buy.ShopCartFragment
 import com.example.common.view.MyToast
 import com.example.dimensionleague.find.FindFragment
@@ -18,6 +16,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import com.example.framework.base.BaseNetConnectActivity
 import com.example.framework.listener.OnShopCartListener
 import com.example.buy.CartManager
+import com.example.dimensionleague.login.activity.LoginActivity
+import kotlin.system.exitProcess
 
 class MainActivity : BaseNetConnectActivity() {
 
@@ -60,6 +60,7 @@ class MainActivity : BaseNetConnectActivity() {
 
     override fun initDate() {
         super.init()
+
         main_easy.selectTextColor(R.color.colorGradualPurple)
             .normalTextColor(R.color.colorMainNormal)
             .selectIconItems(
@@ -90,8 +91,19 @@ class MainActivity : BaseNetConnectActivity() {
                     getString(R.string.find),
                     getString(R.string.shopping_cart),
                     getString(R.string.mine)
-                )
-            )
+                )).onTabClickListener { v, position ->
+                if (position == 3) {
+                    if (!AccountManager.getInstance().isLogin){
+                        toast(this,"请先登录")
+                        startActivity(LoginActivity::class.java,null)
+                        return@onTabClickListener true
+                    }else{
+                        return@onTabClickListener false
+                    }
+                }
+                return@onTabClickListener false
+
+            }
             .build()
         //注册监听,监听购物车数量
         listener = OnShopCartListener { num ->
@@ -130,7 +142,7 @@ class MainActivity : BaseNetConnectActivity() {
             exitTime = System.currentTimeMillis()
         } else {
             finish()
-            System.exit(0)
+            exitProcess(0)
         }
     }
 }

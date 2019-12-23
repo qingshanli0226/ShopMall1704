@@ -24,6 +24,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import com.example.framework.bean.MessageBean;
 import com.example.framework.bean.StepBean;
 import com.example.framework.manager.DaoManager;
 import com.example.point.R;
@@ -60,8 +61,8 @@ public class StepService extends Service implements SensorEventListener {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
             int sensorStep = (int) sensorEvent.values[0];
             String s=DateFormat.format("MM-dd", System.currentTimeMillis())+"";//今日日期
-            List<StepBean> beans = new DaoManager(this).queryexcept(s);
-            List<StepBean> beanList = new DaoManager(this).loadStepBean();
+            List<StepBean> beans = DaoManager.Companion.getInstance(this).queryexcept(s);
+            List<StepBean> beanList = DaoManager.Companion.getInstance(this).loadStepBean();
             if (sensorStep==0){
                 for (StepBean bean:beanList) {
                     //获取到所有日期的总步数
@@ -224,7 +225,7 @@ public class StepService extends Service implements SensorEventListener {
     //初始化当天的步数
     private void initTodayData() {
         CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis())+"";//今日日期
-        List<StepBean> beans = new DaoManager(this).queryStepBean(CURRENT_DATE);
+        List<StepBean> beans =DaoManager.Companion.getInstance(this).queryStepBean(CURRENT_DATE);
         if (beans.size() == 0 ){
             CURRENT_STEP=0;
         }else {
@@ -234,21 +235,28 @@ public class StepService extends Service implements SensorEventListener {
     }
     //将今日步数存入数据库
     private void save(){
-        List<StepBean> beans = new DaoManager(this).queryStepBean(CURRENT_DATE);
+        List<StepBean> beans =DaoManager.Companion.getInstance(this).queryStepBean(CURRENT_DATE);
+
         if (beans.size() == 0){
             CURRENT_STEP=0;
             //数据库没有的情况下  进行第一次插入
             StepBean bean = new StepBean();
             bean.setCurr_date(CURRENT_DATE);
             bean.setStep(CURRENT_STEP);
-            new DaoManager(this).addStepBean(bean);
+            //插入计步数据库and消息数据库
+            DaoManager.Companion.getInstance(this).addStepBean(bean);
+            DaoManager.Companion.getInstance(this).addMessageBean(new MessageBean(null,R.mipmap.jiaoyazi,"次元联盟运动","客官您好，您今天行走了"+CURRENT_STEP+"步",CURRENT_DATE));
         }else {
             Long id = beans.get(0).getId();
             StepBean bean = new StepBean();
             bean.setId(id);
             bean.setCurr_date(CURRENT_DATE);
             bean.setStep(CURRENT_STEP);
-            new DaoManager(this).updateStepBean(bean);
+            DaoManager.Companion.getInstance(this).updateStepBean(bean);
+            //插入计步数据库and消息数据库
+            List<MessageBean> messbean =DaoManager.Companion.getInstance(this).queryMessageBean(CURRENT_DATE);
+            DaoManager.Companion.getInstance(this).updateMessageBean(new MessageBean(messbean.get(0).getId(),R.mipmap.jiaoyazi,"次元联盟运动","客官您好，您今天行走了"+CURRENT_STEP+"步",CURRENT_DATE));
+
         }
     }
     private void initNotification() {

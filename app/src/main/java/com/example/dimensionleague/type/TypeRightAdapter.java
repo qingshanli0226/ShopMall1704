@@ -80,12 +80,6 @@ public class TypeRightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
             TypeRecycleViewAdapter classifyRecyclerRightAdapter = new TypeRecycleViewAdapter(R.layout.type_right_rv,resultBeans.get(position).getHot_product_list());
             rv_type_right.setAdapter(classifyRecyclerRightAdapter);
-
-            classifyRecyclerRightAdapter.setLinkedlist(i -> {
-                Intent intent =  new Intent(mContext, GoodsActiviy.class);
-                intent.putExtra(IntentUtil.SHOW_GOOD, resultBeans.get(position));
-                mContext.startActivity(intent);
-            });
             TypeChildRecycleAdapter childRecycleAdapter = new TypeChildRecycleAdapter(mContext, (ArrayList<TypeBean.ResultBean.ChildBean>) resultBeans.get(position).getChild());
             rv_ordinary_right.setAdapter(childRecycleAdapter);
         }

@@ -46,7 +46,7 @@ public class ConversionActivity extends BaseNetConnectActivity {
             }
         });
         conversion_re.setLayoutManager(new LinearLayoutManager(this));
-        List<PointBean> pointBeans = new DaoManager(this).loadPointBean();
+        List<PointBean> pointBeans = DaoManager.Companion.getInstance(this).loadPointBean();
         if (pointBeans.size()==0){
             conversion_tv.setVisibility(View.VISIBLE);
             conversion_re.setVisibility(View.GONE);

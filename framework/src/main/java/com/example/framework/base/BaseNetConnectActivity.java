@@ -10,7 +10,6 @@ import com.example.framework.manager.NetConnectManager;
 import com.example.framework.port.IActivity;
 import com.example.framework.port.INetConnectListener;
 import com.example.framework.port.IView;
-import com.umeng.analytics.MobclickAgent;
 
 import java.util.logging.ErrorManager;
 

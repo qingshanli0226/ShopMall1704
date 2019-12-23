@@ -12,6 +12,20 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            //选择要添加的对应 cpu 类型的 .so 库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : "com.example.dimensionleague",
+                JPUSH_APPKEY : "04891600dae0176bf5107248", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+                MTA_APPKEY:"AHKV88TM45MP",
+                //标注应用推广渠道用以区分新用户来源，可填写如应用宝，豌豆荚等
+                MTA_CHANNEL:"developer-default"
+        ]
     }
     buildTypes {
         release {
@@ -49,9 +63,7 @@ dependencies {
     implementation project(path: ':framework')
     implementation project(path: ':buy')
     implementation project(path: ':point')
-    implementation 'com.umeng.umsdk:analytics:8.0.0'
-    implementation 'com.umeng.umsdk:common:2.0.0'
-    implementation 'com.umeng.umsdk:utdid:1.1.5.3'
+
 
     implementation  'me.thewyp:avatar:1.0.4'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5'
@@ -64,4 +76,8 @@ dependencies {
     implementation 'cn.yipianfengye.android:zxing-library:2.2'
 
 
+
+    implementation 'cn.jiguang.sdk:janalytics:2.1.0'
+    implementation 'cn.jiguang.sdk:jcore:2.2.4'
+    implementation 'cn.jiguang.sdk:jpush:3.5.0'
 }

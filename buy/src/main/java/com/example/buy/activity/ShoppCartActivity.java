@@ -20,4 +20,11 @@ public class ShoppCartActivity extends BaseNetConnectActivity {
     public int getLayoutId() {
         return R.layout.activity_shoppcart;
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        fragment=null;
+        finish();
+    }
 }

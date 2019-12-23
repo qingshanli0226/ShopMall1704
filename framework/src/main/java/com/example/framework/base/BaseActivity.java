@@ -16,9 +16,7 @@ import com.example.framework.port.IActivity;
 import com.gyf.immersionbar.ImmersionBar;
 import com.jaeger.library.StatusBarUtil;
 import com.jaeger.library.StatusBarUtil;
-import com.umeng.analytics.MobclickAgent;
 
-import com.umeng.message.PushAgent;
 
 /**
  * author:李浩帆
@@ -32,8 +30,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
-        //：该方法是【友盟+】Push后台进行日活统计及多维度推送的必调用方法，请务必调用！
-        PushAgent.getInstance(this).onAppStart();
+
 
         //只改变状态栏颜色,布局不动
 //        StatusBarUtil.setColor(this, Color.RED);
@@ -91,19 +88,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
         super.onDestroy();
         activityInstanceManager.removeActivity(this);
 
-    }
-    //确保在APP的所有Activity的onResume函数中调用MobclickAgent.onResume函数，在所有Activity的onPause函数中调用MobclickAgent.onPause函数。这两个调用将不会阻塞应用程序的主线程，也不会影响应用程序的性能。
-    //如果您的Activity之间有继承关系请不要同时在父和子Activity中重复添加onPause和onResume方法，否则会造成重复统计，导致启动次数异常增高。仅在BaseActivity中onResume和onPause函数中添加MobclickAgent.onResume和MobclickAgent.onPause函数。
-    @Override
-    protected void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
     }
 
 }

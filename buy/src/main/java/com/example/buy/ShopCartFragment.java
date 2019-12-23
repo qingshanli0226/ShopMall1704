@@ -203,7 +203,7 @@ public class ShopCartFragment extends BaseNetConnectFragment{
                             @Override
                             public void onClick(View v) {
                                 Intent intent = new Intent(getContext(), GoodsActiviy.class);
-                                intent.putExtra(IntentUtil.SHOW_GOOD,list.get(position));
+                                intent.putExtra(IntentUtil.GOTO_GOOD,list.get(position));
                                 getContext().startActivity(intent);
                             }
                         });
@@ -308,7 +308,11 @@ public class ShopCartFragment extends BaseNetConnectFragment{
             recyclerView.getAdapter().notifyDataSetChanged();
             sendCartPresenter.doHttpGetRequest(CART_GOODS);
         }else {
-            buyBut.setClickable(false);
+            list.clear();
+            recyclerView.getAdapter().notifyDataSetChanged();
+            CartManager.getInstance().setListGoods(list);
+            CartManager.getInstance().clearCheck();
+            judgeCheckAll();
         }
     }
 
@@ -391,15 +395,7 @@ public class ShopCartFragment extends BaseNetConnectFragment{
           * 每选择一个判断是否全部选中
           *  有一个为false  全选状态为false  取消全选
          **/
-         if (list.isEmpty()){
-             checkAll.setEnabled(false);
-             buyBut.setEnabled(false);
-             myToolBar.getBuy_compile().setEnabled(false);
-         }else {
-             checkAll.setEnabled(true);
-             myToolBar.getBuy_compile().setEnabled(true);
-             buyBut.setEnabled(true);
-         }
+
         checkStatus = true;
         for (CheckGoodsData i : CartManager.getInstance().getChecks()) {
             if (!i.isSelect()) {
@@ -407,13 +403,24 @@ public class ShopCartFragment extends BaseNetConnectFragment{
                 break;
             }
         }
-        if ( CartManager.getInstance().getChecks().isEmpty()){
+        if (list.isEmpty()){
+            checkAll.setEnabled(false);
+            buyBut.setEnabled(false);
+            myToolBar.getBuy_compile().setEnabled(false);
+            checkStatus=false;
+        }else {
+            checkAll.setEnabled(true);
+            myToolBar.getBuy_compile().setEnabled(true);
+            buyBut.setEnabled(true);
+        }
+        if (CartManager.getInstance().getChecks().isEmpty()){
             checkStatus=false;
         }
         if (checkAll.isChecked()!=checkStatus){
             checkAll.setChecked(checkStatus);
         }
         setAllMoney();
+
     }
 
     //更新单个数量

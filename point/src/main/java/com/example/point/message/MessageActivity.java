@@ -14,10 +14,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseNetConnectActivity;
+import com.example.framework.bean.MessageBean;
+import com.example.framework.manager.DaoManager;
 import com.example.point.R;
 import com.example.point.StepIsSupport;
 import com.example.framework.bean.StepBean;
-import com.example.framework.manager.DaoManager;
 import com.example.point.stepmanager.StepPointManager;
 
 import java.util.ArrayList;
@@ -26,12 +27,11 @@ import java.util.List;
 public class MessageActivity extends BaseNetConnectActivity {
 
     private RecyclerView message_re;
-    private MyToolBar message_tool;
-    private List<MessageBean> messageBeans;
-    private MessageAdpter messageAdpter;
-    private List<StepBean> beans;
-    private MessageBean bean;
 
+    private MyToolBar message_tool;
+    private MessageAdpter messageAdpter;
+    private MessageBean bean;
+    private List<MessageBean> messageBeans;
     @Override
     public int getLayoutId() {
         return R.layout.activity_message;
@@ -77,30 +77,13 @@ public class MessageActivity extends BaseNetConnectActivity {
         message_tool.getBuy_message_icon().setImageResource(R.mipmap.brush);
         message_tool.getBuy_message_title().setText("消息");
 
-        //消息列表
-        messageBeans = new ArrayList<>();
+        String CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis())+"";//今日日期
+        messageBeans = DaoManager.Companion.getInstance(this).queryMessageBean(CURRENT_DATE);
         messageAdpter = new MessageAdpter(R.layout.message_item, messageBeans, this);
-        String CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis()) + "";//今日日期
-        beans = new DaoManager(this).queryStepBean(CURRENT_DATE);
-
-        if (beans.size()!=0){
-            bean = new MessageBean(R.mipmap.jiaoyazi,"次元联盟运动","客官您好，您今天行走了"+beans.get(0).getStep()+"步",beans.get(0).getCurr_date());
-            messageBeans.add(bean);
+        Log.i("wzy", "initDate: "+messageBeans.size());
+        if (messageBeans.size()!=0){
             message_re.setAdapter(messageAdpter);
         }
-        //如果当前设备支持计步的话我们就可以收到服务后天发来的消息
-        if (new StepIsSupport().isSupportStepCountSensor(this)){
-            //服务按照时间的变动来更新消息步数
-            StepPointManager.getInstance(this).addGetStepListener(new StepPointManager.GetStepListener() {
-                @Override
-                public void onsetStep(int step) {
-                    bean.setMessage_message("客官您好，今天行走了"+beans.get(0).getStep()+"步");
-                    messageAdpter.notifyDataSetChanged();
-                    Log.i("receive", " 时间变动"+step);
-                }
-            });
-        }
-
         //消息列表添加点击事件
         messageAdpter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override

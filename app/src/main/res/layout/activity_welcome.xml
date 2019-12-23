@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".activity.WelcomeActivity"
     android:fitsSystemWindows="true"
-    android:background="@color/colorBlack">
+    android:background="@color/colorBlack"
+    android:id="@+id/welcomeLayout">
 
     <VideoView
         android:id="@+id/videoView"

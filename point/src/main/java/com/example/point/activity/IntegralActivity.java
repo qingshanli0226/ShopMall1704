@@ -8,12 +8,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.manager.AccountManager;
+
 import com.example.framework.manager.DaoManager;
 import com.example.framework.port.IPresenter;
+import com.example.net.AppNetConfig;
 import com.example.point.PointPresenter;
 import com.example.point.R;
 import com.example.point.bean.UpdatePointBean;
@@ -69,7 +72,7 @@ public class IntegralActivity extends BaseNetConnectActivity {
         if (pointBean == null) {
             pointBean = new UpdatePointBean();
         }
-        List<StepBean> beans = new DaoManager(this).loadStepBean();
+        List<StepBean> beans = DaoManager.Companion.getInstance(this).loadStepBean();
         //步数累加
         long count = 0;
         for (StepBean bean : beans) {
@@ -114,34 +117,6 @@ public class IntegralActivity extends BaseNetConnectActivity {
         });
 
     }
-
-    @Override
-    public boolean isConnectStatus() {
-        return super.isConnectStatus();
-    }
-
-    @Override
-    public String isNetType() {
-        return super.isNetType();
-    }
-
-    @Override
-    public void onRequestSuccess(Object data) {
-//        UpdatePointBean pointBean= (UpdatePointBean) data;
-//        String result = pointBean.result;
-//        integral_point.setText(result+"分");
-    }
-
-    @Override
-    public void showLoading() {
-        super.showLoading();
-    }
-
-    @Override
-    public void showError() {
-        super.showError();
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -156,7 +131,7 @@ public class IntegralActivity extends BaseNetConnectActivity {
                 //登录
                 integral_title.setText(AccountManager.getInstance().user.getName());
                 if (AccountManager.getInstance().user.getAvatar() != null) {
-                    Glide.with(this).load(AccountManager.getInstance().user.getAvatar()).into(integral_img);
+                    Glide.with(this).load("" + AppNetConfig.BASE_URL + AccountManager.getInstance().user.getAvatar()).apply(new RequestOptions().circleCrop()).into(integral_img);
                 }
             }
         } else {
@@ -170,4 +145,5 @@ public class IntegralActivity extends BaseNetConnectActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
 }

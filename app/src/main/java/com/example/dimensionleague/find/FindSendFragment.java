@@ -41,7 +41,7 @@ public class FindSendFragment extends BaseNetConnectFragment {
         recommendAdapter = new MineRecommendAdapter(R.layout.item_mine_rv_recommend, list);
         recommendAdapter.setClickListener(position -> {
             Intent intent =new Intent(getContext(), GoodsActiviy.class);
-            intent.putExtra(IntentUtil.SHOW_GOOD,list.get(position));
+            intent.putExtra(IntentUtil.GOTO_GOOD,list.get(position));
             startActivity(intent);
         });
     }

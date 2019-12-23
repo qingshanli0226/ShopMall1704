@@ -2,7 +2,6 @@ package com.example.point.message;
 
 import android.content.Intent;
 import android.graphics.Rect;
-import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,7 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseNetConnectActivity;
-import com.example.framework.manager.AccountManager;
+import com.example.framework.bean.MessageBean;
+import com.example.framework.manager.DaoManager;
 import com.example.point.R;
 
 import java.util.ArrayList;
@@ -62,8 +62,9 @@ public class MessageItemActivity extends BaseNetConnectActivity {
         String message_date = intent.getStringExtra("message_date");
         Integer message_img = intent.getIntExtra("message_img", 0);
         messageitem_toolbar.getOther_title().setText("" + message_title);
+
         beanList=new ArrayList<>();
-        beanList.add(new MessageBean(message_img,message_title,message_message,message_date));
+        beanList.add(new MessageBean(null,message_img,message_title,message_message,message_date));
         messageitemAdpter=new MessageitemAdpter(this,beanList);
         messageitem_re.setLayoutManager(new LinearLayoutManager(this));
         messageitem_re.setAdapter(messageitemAdpter);
@@ -89,28 +90,18 @@ public class MessageItemActivity extends BaseNetConnectActivity {
         messageitem_other.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String message = messageitem_edit.getText().toString();
-                String CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis())+"";//今日日期
-//                if (AccountManager.getInstance().isLogin()) {
-//                    if (AccountManager.getInstance().user.getName() != null) {
-//                        if (AccountManager.getInstance().user.getAvatar() != null) {
-//                            Log.i("onClick", "onClick: 11");
-//                            Integer integer= (Integer) AccountManager.getInstance().user.getAvatar();
-//                            beanList.add(new MessageBean(integer,"",message,CURRENT_DATE));
-//                            Log.i("onClick", "onClick: 33");
-//                            messageitemAdpter.notifyDataSetChanged();
-//                            messageitem_edit.setText("");
-//                        }
-//                    }
-//                } else {
+                if (messageitem_edit.getText().toString().isEmpty()){
+                    Toast.makeText(MessageItemActivity.this, "客观不能输入为空哦!", Toast.LENGTH_SHORT).show();
+                }else {
+                    String message = messageitem_edit.getText().toString();
+                    String CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis())+"";//今日日期
                     Integer integer=R.mipmap.wu;
                     Log.i("onClick", "onClick: 22");
-                    beanList.add(new MessageBean(integer,"",message,CURRENT_DATE));
+                   beanList.add(new MessageBean(null,integer,"",message,CURRENT_DATE));
                     Log.i("onClick", "onClick: 33");
                     messageitemAdpter.notifyDataSetChanged();
                     messageitem_edit.setText("");
-               // }
-
+                }
             }
         });
 

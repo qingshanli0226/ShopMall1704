@@ -32,7 +32,7 @@ android {
     }
 
     greendao {
-        schemaVersion 2 //当前数据库版本
+        schemaVersion 3 //当前数据库版本
         daoPackage 'com.example.framework' //包名 需要更改
         targetGenDir 'src/main/java' //存放greendao库生成文件的目录
     dataBinding {
@@ -62,14 +62,6 @@ dependencies {
 
     implementation project(path: ':net')
     implementation project(path: ':common')
-    //PushSDK必须依赖基础组件库，所以需要加入对应依赖
-    api 'com.umeng.umsdk:common:2.1.0'
-//PushSDK必须依赖utdid库，所以需要加入对应依赖
-    api 'com.umeng.umsdk:utdid:1.1.5.3'
-//PushSDK
-    api 'com.umeng.umsdk:push:6.0.1'
-    api 'com.umeng.umsdk:analytics:8.0.0'
-    api 'com.umeng.umsdk:common:2.0.0'
-    api 'com.umeng.umsdk:utdid:1.1.5.3'
+
     implementation "android.arch.lifecycle:extensions:1.1.1"
 }}
