@@ -188,6 +188,7 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
                 if (payResultIsOk) {
                     Log.e("####", "付款成功");
                     startActivity(new Intent(OrderActivity.this, ShoppingResultActivity.class));
+
                     finish();
                 }
             }
@@ -283,6 +284,17 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
 
         public void setOutTradeNo(String outTradeNo) {
             this.outTradeNo = outTradeNo;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(payPresenter!=null){
+            payPresenter.detachView();
+        }
+        if(payPresenter2!=null){
+            payPresenter2.detachView();
         }
     }
 }

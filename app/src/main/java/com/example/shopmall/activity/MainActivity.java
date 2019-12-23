@@ -2,6 +2,7 @@ package com.example.shopmall.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
@@ -11,6 +12,7 @@ import android.view.Display;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -22,6 +24,7 @@ import com.example.common.BottomBar;
 import com.example.common.ShoppingCartView;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.manager.ShoppingManager;
+import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
 import com.example.shopmall.fragment.ClassifyFragment;
 import com.example.shopmall.fragment.HomePageFragment;
@@ -80,6 +83,7 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
     @Override
     public void initData() {
         ShoppingManager.getInstance().setOnNumberChangedListener(this);
+        refreshShoppingCartData();
         //获取购物车商品数量
         allNumber = ShoppingManager.getInstance().getAllNumber();
         mRedMessage.setNum(allNumber);
@@ -121,13 +125,41 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
 
 
     public void refreshShoppingCartData() {
-        String token = ShoppingManager.getInstance().getToken(MainActivity.this);
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("token", token);
+        boolean loginStatus = UserManager.getInstance().getLoginStatus();
+        if(loginStatus){
+            String token = ShoppingManager.getInstance().getToken(MainActivity.this);
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("token", token);
 
-        ShoppingCartPresenter presenter = new ShoppingCartPresenter("getShortcartProducts", ShoppingCartBean.class, hashMap);
-        presenter.attachGetView((ShoppingCartFragment) fragmentArrayList.get(3));
-        presenter.getGetData();
+            ShoppingCartPresenter presenter = new ShoppingCartPresenter("getShortcartProducts", ShoppingCartBean.class, hashMap);
+            presenter.attachGetView((ShoppingCartFragment) fragmentArrayList.get(3));
+            presenter.getGetData();
+        }else {
+            setAlertDialog();
+        }
+
+    }
+
+    private void setAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示：");
+        builder.setMessage("您还没有登录");
+        builder.setPositiveButton("前往登录", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                dialogInterface.dismiss();
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ShoppingManager.getInstance().setMainitem(0);
+                finish();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     private MessageReceiver mMessageReceiver;

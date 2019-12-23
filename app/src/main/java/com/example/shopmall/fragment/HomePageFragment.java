@@ -19,6 +19,7 @@ import com.example.framework.base.ILoadView;
 import com.example.framework.manager.CaCheManager;
 import com.example.framework.base.BaseFragment;
 import com.example.framework.manager.ConnectManager;
+import com.example.framework.manager.ShoppingManager;
 import com.example.net.Constant;
 import com.example.shopmall.R;
 import com.example.shopmall.activity.LoginActivity;
@@ -40,6 +41,7 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
 
     @Override
     protected void initData() {
+        ShoppingManager.getInstance().setMainitem(0);
         SharedPreferences token1 = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
         final boolean isLogin = token1.getBoolean("isLogin", false);
         tbHomepage.setTitleBacKGround(Color.RED);

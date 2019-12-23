@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:mContext=".activity.GoodsInfoActivity"
+    android:id="@+id/rl_app_goodsinfo"
     android:orientation="vertical">
 
     <com.example.common.LoadingPage

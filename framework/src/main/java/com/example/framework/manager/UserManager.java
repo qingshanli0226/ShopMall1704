@@ -44,8 +44,8 @@ public class UserManager {
         }
     }
 
-    public boolean getLoginStatus(Context context) {
-        SharedPreferences login = context.getSharedPreferences("login", Context.MODE_PRIVATE);
+    public boolean getLoginStatus() {
+        SharedPreferences login = mContext.getSharedPreferences("login", Context.MODE_PRIVATE);
         boolean login1 = login.getBoolean("isLogin", false);
         return login1;
     }
@@ -63,8 +63,8 @@ public class UserManager {
         return getToken;
     }
 
-    public ResultBean getUser(Context context) {
-        ACache aCache = ACache.get(context);
+    public ResultBean getUser() {
+        ACache aCache = ACache.get(mContext);
         ResultBean resultBean = (ResultBean) aCache.getAsObject("CurrentUser");
         Log.e("####", "" + resultBean.toString());
         return resultBean;

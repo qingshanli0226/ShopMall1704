@@ -109,6 +109,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         }
     };
     private InsertPresenter addOneProduct;
+    private ShoppingCartPresenter presenter;
 
     @Override
     public void onResume() {
@@ -134,6 +135,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     //初始化数据
     @Override
     protected void initData() {
+        ShoppingManager.getInstance().setMainitem(3);
         initData2();
         setCheckAll();
         setSetting();
@@ -380,7 +382,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("token", token);
 
-        ShoppingCartPresenter presenter = new ShoppingCartPresenter("getShortcartProducts", ShoppingCartBean.class, hashMap);
+        presenter = new ShoppingCartPresenter("getShortcartProducts", ShoppingCartBean.class, hashMap);
         presenter.attachGetView(this);
         presenter.attachLoadView(this);
         presenter.getGetData();
@@ -605,6 +607,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     //购物车数据网址连接成功
     @Override
     public void onGetDataSucess(ShoppingCartBean data) {
+        myShoppingManager = ShoppingManager.getInstance();
         List<Map<String, String>> data2 = new ArrayList<>();
         List<ShoppingCartBean.ResultBean> result = data.getResult();
         double allcount1 = 0;
@@ -650,20 +653,23 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             data2.add(map);
         }
 
-        myShoppingBasketAdapter.reFresh(data2);
-        myShoppingManager.setData(data2);
-        judgeNumberisZero();
-        myShoppingManager.setAllCount(allcount1);
-        myShoppingBasketAdapter.setCheckedcount(checkedcount1);
-        myShoppingBasketAdapter.setAllcount(allcount1);
+        if(myShoppingBasketAdapter!=null){
+            myShoppingBasketAdapter.reFresh(data2);
+            judgeNumberisZero();
+            myShoppingBasketAdapter.setCheckedcount(checkedcount1);
+            myShoppingBasketAdapter.setAllcount(allcount1);
+            if (checkedcount1 == data2.size()) {
+                checkboxAll.setChecked(true);
+            } else {
+                checkboxAll.setChecked(false);
+            }
+            tvShopcartTotal.setText("￥" + allcount1 + "0");
 
-        if (checkedcount1 == data2.size()) {
-            checkboxAll.setChecked(true);
-        } else {
-            checkboxAll.setChecked(false);
         }
 
-        tvShopcartTotal.setText("￥" + allcount1 + "0");
+        myShoppingManager.setData(data2);
+
+        myShoppingManager.setAllCount(allcount1);
 
         int allNumber = myShoppingManager.getAllNumber();
         int myallNumber = allNumber1 - allNumber;
@@ -701,5 +707,16 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     @Override
     public void onStopLoadingPage() {
         handler.sendEmptyMessageDelayed(300, 1000);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(addOneProduct!=null){
+            addOneProduct.detachView();
+        }
+        if(presenter!=null){
+            presenter.detachView();
+        }
     }
 }

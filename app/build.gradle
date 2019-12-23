@@ -13,12 +13,12 @@ android {
         }
 
         manifestPlaceholders = [
-                JPUSH_PKGNAME : applicationId,
+                JPUSH_PKGNAME: applicationId,
                 JPUSH_APPKEY : "00069070c0ece64218196376", //JPush上注册的包名对应的appkey.
-                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
-                MTA_APPKEY:"AHKV88TM45MP",
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+                MTA_APPKEY   : "AHKV88TM45MP",
                 //标注应用推广渠道用以区分新用户来源，可填写如应用宝，豌豆荚等
-                MTA_CHANNEL:"developer-default"
+                MTA_CHANNEL  : "developer-default"
         ]
 
         minSdkVersion 17
@@ -63,9 +63,9 @@ dependencies {
 
     implementation 'cn.jiguang.sdk:janalytics:2.1.0'
     implementation 'cn.jiguang.sdk:jcore:2.2.4'
-    compile 'cn.jiguang.sdk:janalytics:2.1.0'
-    compile 'cn.jiguang.sdk:jcore:2.2.4'
-    compile 'cn.jiguang.sdk:jpush:3.5.0'
+    implementation 'cn.jiguang.sdk:janalytics:2.1.0'
+    implementation 'cn.jiguang.sdk:jcore:2.2.4'
+    implementation 'cn.jiguang.sdk:jpush:3.5.0'
 
     implementation 'me.thewyp:avatar:1.0.4'
 

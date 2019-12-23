@@ -15,6 +15,7 @@ import com.example.common.TitleBar;
 import com.example.framework.base.BaseFragment;
 import com.example.framework.base.IGetBaseView;
 import com.example.framework.base.ILoadView;
+import com.example.framework.manager.ShoppingManager;
 import com.example.net.Constant;
 import com.example.shopmall.R;
 import com.example.shopmall.adapter.ClassifyLeftAdapter;
@@ -53,6 +54,7 @@ public class ClassifyFragment extends BaseFragment implements IGetBaseView<Class
 
     @Override
     protected void initData() {
+        ShoppingManager.getInstance().setMainitem(1);
         tbClassify.setTitleBacKGround(Color.WHITE);
         tbClassify.setCenterText("分类",18,Color.BLACK);
 
