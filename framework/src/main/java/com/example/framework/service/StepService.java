@@ -135,8 +135,6 @@ public class StepService extends Service implements SensorEventListener {
     private void isNewDay() {
         if ("00:00:00".equals(new SimpleDateFormat("HH:mm:ss").format(new Date()))) {
             initToday();
-
-
             //发送消息
             List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
             String time = queryAll.get(queryAll.size() - 1).getTime();
@@ -145,6 +143,11 @@ public class StepService extends Service implements SensorEventListener {
             int cur = Integer.parseInt(current_step);
             int integral = queryAll.get(queryAll.size() - 1).getIntegral();
             StepManager.getInstance().saveMessSql(time,date,cur,integral);
+        }
+        if("22:30:00".equals(new SimpleDateFormat("HH:mm:ss").format(new Date()))){
+            //发送消息
+            List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
+            String current_step = queryAll.get(queryAll.size() - 1).getCurrent_step();
             MessageManager.getMessageManager().setMessageManager("昨日步数",current_step);
         }
     }

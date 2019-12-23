@@ -17,8 +17,6 @@ import com.example.framework.service.StepLocalService;
 import com.example.framework.service.StepRemoteService;
 import com.example.shopmall.activity.MainActivity;
 import com.example.framework.manager.StepManager;
-import com.example.shopmall.activity.WelcomeActivity;
-import com.squareup.haha.perflib.Main;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.stat.StatConfig;
 import com.tencent.stat.StatService;
@@ -47,7 +45,6 @@ public class MyApplication extends Application {
         if(AppProcessUtil.isAppProcess(this)==true){
 
             StepManager.getInstance().init(getApplicationContext());
-
 
             startService(new Intent(this, StepJobService.class));
             startService(new Intent(this, StepLocalService.class));

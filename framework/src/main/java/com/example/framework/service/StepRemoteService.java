@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 
 import com.example.framework.IMyAidlInterface;
 
+
 public class StepRemoteService extends Service {
 
     private Intent intent;
@@ -23,6 +24,7 @@ public class StepRemoteService extends Service {
         }
     }
 
+
     ServiceConnection serviceConnection=new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -31,8 +33,7 @@ public class StepRemoteService extends Service {
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
-
-            startActivity(intent);
+            startService(intent);
             bindService(intent,serviceConnection,BIND_AUTO_CREATE);
         }
     };
