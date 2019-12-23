@@ -128,7 +128,7 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
     protected void onDestroy() {
         CacheManager.getInstance().unRegisterGetDateListener();
         AutoLoginManager.getInstance().unRegisterAutoLoginListener();
-        if (videoView == null) {
+        if (videoView != null) {
             videoView.suspend();
             videoView.setOnErrorListener(null);
             videoView.setOnPreparedListener(null);
