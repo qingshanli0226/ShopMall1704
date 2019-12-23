@@ -1,22 +1,22 @@
 package com.shaomall.framework.bean;
 
-public class FindForBean {
+public class FunctionBean {
 
     /**
-     * subject : buy
-     * body : 测试数据
-     * totalPrice : 500
-     * time : 1558940014208
+     * subject : ??
+     * body : ????
+     * totalPrice : 600
+     * time : 1576296108129
      * status : null
-     * reserveOne : null
+     * tradeNo : 121412014813510
      */
 
     private String subject;
     private String body;
     private String totalPrice;
     private String time;
-    private Object status;
-    private Object reserveOne;
+    private String status;
+    private String tradeNo;
 
     public String getSubject() {
         return subject;
@@ -50,19 +50,34 @@ public class FindForBean {
         this.time = time;
     }
 
-    public Object getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Object status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public Object getReserveOne() {
-        return reserveOne;
+    public String getTradeNo() {
+        return tradeNo;
     }
 
-    public void setReserveOne(Object reserveOne) {
-        this.reserveOne = reserveOne;
+    public void setTradeNo(String tradeNo) {
+        this.tradeNo = tradeNo;
     }
+
+    @Override
+    public String toString() {
+        return "FunctionBean{" +
+                "subject='" + subject + '\'' +
+                ", body='" + body + '\'' +
+                ", totalPrice='" + totalPrice + '\'' +
+                ", time='" + time + '\'' +
+                ", status=" + status +
+                ", tradeNo='" + tradeNo + '\'' +
+                '}';
+    }
+
+
+
 }

@@ -3,6 +3,7 @@ package com.example.administrator.shaomall.login;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -105,7 +106,7 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
     @Override
     public void onRequestHttpDataFailed(int requestCode, ShopMailError error) {
         //登录失败
-        Toast.makeText(mActivity, ""+error.getErrorMessage(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(mActivity, "" + error.getErrorMessage(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -113,7 +114,7 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
         super.onBackPressed();
         ActivityInstanceManager.removeActivity(this);
 
-//        toClass(MainActivity.class, 0); //返回首页
+        //        toClass(MainActivity.class, 0); //返回首页
     }
 
     @Override
@@ -131,12 +132,12 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
     /**
      * 跳转界面
      */
-    private void setNewActivity(){
+    private void setNewActivity() {
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null){
+        if (bundle != null) {
             int index = bundle.getInt("index");
             toClass(MainActivity.class, index);
-        }else {
+        } else {
             ActivityInstanceManager.removeActivity(this);
         }
     }

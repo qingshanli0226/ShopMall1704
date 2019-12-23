@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#CCCCCC" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/page_backgroup"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_adapter_list_pic"
+            android:layout_width="@dimen/cartImageViewWidth"
+            android:layout_height="@dimen/cartImageViewHeight"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="@dimen/cartImageViewMarginTop"
+            android:layout_marginBottom="@dimen/cartImageViewMarginBottom"
+            android:scaleType="centerCrop"
+            android:src="@color/red" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/cartRelativeLayoutMarginLeft"
+            android:layout_marginTop="@dimen/cartRelativeLayoutMarginTop">
+
+            <TextView
+                android:id="@+id/tv_goods_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/cartgoodsnameMarginRight"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/grey_color1"
+                android:textSize="@dimen/cartgoodsnameTextSize" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/cartRelativeLayoutMarginBottom"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_goods_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:singleLine="true"
+                    android:text="价格"
+                    android:textColor="@color/orange_color"
+                    android:textSize="@dimen/cartTextViewpriceTextSize"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/cartAddTextVIewHeight"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="8dp"
+                    android:background="?android:selectableItemBackgroundBorderless"
+                    android:gravity="center"
+                    android:text="x1"
+                    android:textColor="@color/grey_color1"
+                    android:textSize="@dimen/cartReduceTextVIewSize"
+                    tools:targetApi="lollipop" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

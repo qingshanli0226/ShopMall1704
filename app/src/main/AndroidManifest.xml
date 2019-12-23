@@ -25,8 +25,8 @@
         <activity
 
             android:name=".goodsinfo.GoodsInfoActivity"
-            android:launchMode="singleTask"
             android:supportsPictureInPicture="true"
+            android:launchMode="singleTask"
             tools:targetApi="n" /> <!-- 欢迎界面 -->
         <activity
             android:theme="@style/launch_theme"

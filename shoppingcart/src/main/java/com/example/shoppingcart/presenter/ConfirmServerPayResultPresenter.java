@@ -8,7 +8,7 @@ import com.shaomall.framework.base.presenter.BasePresenter;
 
 import java.lang.reflect.Type;
 
-public class ConfirmServerPayResultPresenter extends BasePresenter<String> {
+public class ConfirmServerPayResultPresenter extends BasePresenter<Object> {
     private final String outTradeNo;
     private final String resultContent;
 

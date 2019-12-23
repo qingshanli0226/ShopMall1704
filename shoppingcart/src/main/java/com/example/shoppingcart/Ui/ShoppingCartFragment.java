@@ -64,12 +64,16 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
         tvGoToPay = (TextView) view.findViewById(R.id.tv_go_to_pay);
 
         rvAdp = new RvAdp(listData, getContext());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true);
+        linearLayoutManager.setStackFromEnd(true); //列表再底部开始展示，反转后由上面开始展示
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(rvAdp);
-        //是否是全选
+
+        //是否是全选, 第一次更新数据
         if (listData.size() != 0 && listData.size() == ShoppingManager.getInstance().getShoppingCartSelectionData().size()) {
             allCheckbox.setChecked(true);
         }
+        setTvTotalPriceValue();//更新合计值
     }
 
     @SuppressLint("SetTextI18n")
@@ -146,7 +150,7 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
                     bundle.putInt("payment", payment);
                     bundle.putParcelableArrayList("data", data);
                     bundle.putFloat("sum", sum);
-                    toClass(AddressManagerActivity.class, bundle);
+                    toClass(OrderFormActivity.class, bundle);
                 } else {
                     Toast.makeText(mContext, "您还没有选择要付款的商品", Toast.LENGTH_SHORT).show();
                 }
@@ -156,7 +160,9 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
         //TODO 上传数量
         rvAdp.setItemNumCallBack(new RvAdp.ItemNumCallBack() {
             @Override
-            public void onItemNumCallBack(int i, int num) {
+            public void onItemNumCallBack(int i, int num, boolean isSelect) {
+                //更新商品状态
+                listData.get(i).setSelect(isSelect);
                 uploadGoodsData(i, num);
             }
         });
@@ -212,6 +218,7 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
             upDateShoppingCartPresenter = new UpDateShoppingCartPresenter();
             upDateShoppingCartPresenter.attachView(this);
         }
+
         upDateGoodsNum = new HashMap<>();
         upDateGoodsNum.put("index", i);
         upDateGoodsNum.put("num", num);
@@ -263,6 +270,11 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
         }
         setTvTotalPriceValue();//更新合计值
         rvAdp.notifyDataSetChanged();
+
+        //始终显示到顶部
+        if (data.size() > 1) {
+            recyclerView.smoothScrollToPosition(data.size() - 1);
+        }
     }
 
     /**

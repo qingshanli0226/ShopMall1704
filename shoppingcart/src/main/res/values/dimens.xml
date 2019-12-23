@@ -31,7 +31,7 @@
     <dimen name="cartImageViewMarginTop">13dp</dimen>
     <dimen name="cartRelativeLayoutMarginLeft">13dp</dimen>
     <dimen name="cartRelativeLayoutMarginTop">10dp</dimen>
-    <dimen name="cartgoodsnameMarginRight">10dp</dimen>
+    <dimen name="cartgoodsnameMarginRight">8dp</dimen>
     <dimen name="cartgoodsnameTextSize">14sp</dimen>
     <dimen name="cartRelativeLayoutMarginBottom">30dp</dimen>
     <dimen name="cartTextViewpriceTextSize">14sp</dimen>

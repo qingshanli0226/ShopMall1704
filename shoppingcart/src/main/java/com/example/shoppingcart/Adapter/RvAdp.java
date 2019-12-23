@@ -26,6 +26,7 @@ public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler> {
         this.context = context;
     }
 
+
     @NonNull
     @Override
     public Myhodler onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -57,8 +58,10 @@ public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler> {
                 if (Integer.parseInt(arr.get(i).getProductNum()) == 1) {
                     Toast.makeText(context, "已经不能在减啦", Toast.LENGTH_SHORT).show();
                 } else {
+                    //选中
+                    myhodler.checkBox.setChecked(true);
                     int num = Integer.parseInt(arr.get(i).getProductNum()) - 1;
-                    itemNumCallBack.onItemNumCallBack(i, num);
+                    itemNumCallBack.onItemNumCallBack(i, num, myhodler.checkBox.isChecked());
                     myhodler.tvNum.setText(num + "");
                 }
             }
@@ -68,8 +71,10 @@ public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler> {
         myhodler.tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //选中
+                myhodler.checkBox.setChecked(true);
                 int num = Integer.parseInt(arr.get(i).getProductNum()) + 1;
-                itemNumCallBack.onItemNumCallBack(i, num);
+                itemNumCallBack.onItemNumCallBack(i, num, myhodler.checkBox.isChecked());
                 myhodler.tvNum.setText(num + "");
             }
         });
@@ -141,7 +146,7 @@ public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler> {
 
     //TODO 购物车数量要使用到的接口
     public interface ItemNumCallBack {
-        void onItemNumCallBack(int i, int num);
+        void onItemNumCallBack(int i, int num, boolean isSelect);
     }
 
 

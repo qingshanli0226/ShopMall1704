@@ -51,6 +51,12 @@ public interface NetApiService {
     @POST
     Observable<ResponseBody> jsonPostData(@HeaderMap HashMap<String, String> header, @Url String path, @Body RequestBody body);
 
+    /**
+     * 进行jsonArray参数请求
+     */
+    @POST("{path}")
+    Observable<ResponseBody> jsonArrayPostData(@Path(value = "path", encoded = true) String path, @Body Object body);
+
 
     /**
      * 上传文件
