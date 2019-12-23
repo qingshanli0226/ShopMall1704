@@ -39,7 +39,6 @@ import com.example.framework.manager.AccountManager;
 import com.example.framework.port.IPresenter;
 import com.example.net.AppNetConfig;
 import com.google.gson.Gson;
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +50,7 @@ import java.util.Map;
  * <p>
  * 支付完成,更新现金和积分  再退出
  */
-public class PayActivity extends BaseNetConnectActivity implements View.OnClickListener {
+public class PayActivity extends BaseNetConnectActivity{
 
     public static final int PAY = 200;
     public static final int CODE_ORDER = 100;
@@ -70,7 +69,7 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
 
     private ArrayList<GoodsBean> list = new ArrayList<>();
     //订单 支付确认  库存  积分 现金
-    private IPresenter sendOrederPresenter;
+    private IPresenter sendOrderPresenter;
     private IPresenter postOrderPresenter;
     private IPresenter verifyPresenter;
     private IPresenter pointPresenter;
@@ -79,25 +78,6 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
     private GetPayOrderBean getPayOrderBean;
     private Handler handler = new MyHandler(this);
 
-
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.payBut) {
-            //下订单
-            List<SendOrdersBean.BodyBean> bodyBeans = new ArrayList<>();
-            for (GoodsBean i : list) {
-                bodyBeans.add(new SendOrdersBean.BodyBean(i.getProductName(), i.getProductId()));
-            }
-            //直接发起订单
-            SendOrdersBean sendOrdersBean = new SendOrdersBean(
-                    "购买",
-                    getMoney(checkInegra.isChecked()),
-                    bodyBeans);
-            sendOrederPresenter = new PostOrderPresenter(sendOrdersBean);
-            sendOrederPresenter.attachView(this);
-            sendOrederPresenter.doHttpPostJSONRequest(CODE_ORDER);
-        }
-    }
 
     @Override
     public void init() {
@@ -110,7 +90,21 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
         subtractIntegra = findViewById(R.id.subtractIntegra);
         userPoint = findViewById(R.id.userPoint);
 
-        payBut.setOnClickListener(this);
+        payBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //下订单
+                List<SendOrdersBean.BodyBean> bodyBeans = new ArrayList<>();
+                for (GoodsBean i : list) {
+                    bodyBeans.add(new SendOrdersBean.BodyBean(i.getProductName(), i.getProductId()));
+                }
+                //直接发起订单
+                SendOrdersBean sendOrdersBean = new SendOrdersBean("购买", getMoney(checkInegra.isChecked()), bodyBeans);
+                sendOrderPresenter = new PostOrderPresenter(sendOrdersBean);
+                sendOrderPresenter.attachView(PayActivity.this);
+                sendOrderPresenter.doHttpPostJSONRequest(CODE_ORDER);
+            }
+        });
 
         //设置RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -154,6 +148,7 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
 
     }
 
+
     @Override
     public void onRequestSuccess(int requestCode, Object data) {
         super.onRequestSuccess(requestCode, data);
@@ -184,7 +179,7 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
                 OkBean okBean = (OkBean) data;
                 if (okBean.getCode().equals(AppNetConfig.CODE_OK)) {
                     //发送现金
-                    if (AccountManager.getInstance().user.getMoney() == null) {
+                    if (AccountManager.getInstance().getUser().getMoney() == null) {
                         moneyPresenter = new PostUpDateMoneyPresenter("0");
                     } else {
                         moneyPresenter = new PostUpDateMoneyPresenter(getMoney(checkInegra.isChecked()));
@@ -209,11 +204,14 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
                         pointPresenter = new PostUpDatePointPresenter(sum + "");
                         pointPresenter.attachView(this);
                         pointPresenter.doHttpPostRequest(COED_POINT);
+                    }else {
+                        finishActivity();
                     }
                 }
                 break;
             case COED_POINT:
                 if (((OkBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
+                    Log.e("xxxx", "用户信息:" + AccountManager.getInstance().getUser().toString());
                     finishActivity();
                 }
                 break;
@@ -251,20 +249,24 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
                     PayResult payResult = new PayResult((Map<String, String>) msg.obj);
                     String result = payResult.getResult();// 同步返回需要验证的信息
                     PayResultMessBean payResultMessBean = new Gson().fromJson(result, PayResultMessBean.class);
-                    String resultStatus = payResult.getResultStatus();
-                    // 判断resultStatus 为9000则代表支付成功
-                    if (TextUtils.equals(resultStatus, "9000")) {
-                        // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-                        Toast.makeText(activity, "支付成功", Toast.LENGTH_SHORT).show();
-                        activity.postOrderPresenter = new PostPayResultPresenter(
-                                new SendPayResultBean(activity.getPayOrderBean.getResult().getOutTradeNo(),
-                                        payResultMessBean.toString(),
-                                        true));
-                        activity.postOrderPresenter.attachView(activity);
-                        activity.postOrderPresenter.doHttpPostJSONRequest(CODE_PAY_SURE);
-                    } else {
-                        // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
-                        Toast.makeText(activity, "支付失败:" + payResult, Toast.LENGTH_SHORT).show();
+                    if (payResultMessBean==null){
+
+                    }else {
+                        String resultStatus = payResult.getResultStatus();
+                        // 判断resultStatus 为9000则代表支付成功
+                        if (TextUtils.equals(resultStatus, "9000")) {
+                            // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
+                            Toast.makeText(activity, "支付成功", Toast.LENGTH_SHORT).show();
+                            activity.postOrderPresenter = new PostPayResultPresenter(
+                                    new SendPayResultBean(activity.getPayOrderBean.getResult().getOutTradeNo(),
+                                            payResultMessBean.toString(),
+                                            true));
+                            activity.postOrderPresenter.attachView(activity);
+                            activity.postOrderPresenter.doHttpPostJSONRequest(CODE_PAY_SURE);
+                        } else {
+                            // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
+                            Toast.makeText(activity, "支付失败:" + payResult, Toast.LENGTH_SHORT).show();
+                        }
                     }
                     break;
             }
@@ -284,7 +286,7 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        disPreseter(pointPresenter, postOrderPresenter, moneyPresenter, verifyPresenter, sendOrederPresenter);
+        disPreseter(pointPresenter, postOrderPresenter, moneyPresenter, verifyPresenter, sendOrderPresenter);
     }
 
     private void disPreseter(IPresenter... iPresenter) {
@@ -294,15 +296,15 @@ public class PayActivity extends BaseNetConnectActivity implements View.OnClickL
             }
         }
     }
-
+    //设置积分
     private void setPoint() {
-        if (AccountManager.getInstance().user.getPoint() == null) {
+        if (AccountManager.getInstance().getUser().getPoint() == null) {
             subtractIntegra.setText("0");
             userPoint.setText("0");
         } else {
-            userPoint.setText(AccountManager.getInstance().user.getPoint() + "");
-            subtractIntegra.setText(AccountManager.getInstance().user.getPoint() + "");
-            if (Integer.valueOf((String) AccountManager.getInstance().user.getPoint()) > Integer.valueOf(getMoney(false))) {
+            userPoint.setText(AccountManager.getInstance().getUser().getPoint() + "");
+            subtractIntegra.setText(AccountManager.getInstance().getUser().getPoint() + "");
+            if (Integer.valueOf((String) AccountManager.getInstance().getUser().getPoint()) > Integer.valueOf(getMoney(false))) {
                 subtractIntegra.setText(getMoney(false));
             }
         }

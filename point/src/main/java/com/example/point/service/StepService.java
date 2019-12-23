@@ -236,7 +236,6 @@ public class StepService extends Service implements SensorEventListener {
     //将今日步数存入数据库
     private void save(){
         List<StepBean> beans =DaoManager.Companion.getInstance(this).queryStepBean(CURRENT_DATE);
-
         if (beans.size() == 0){
             CURRENT_STEP=0;
             //数据库没有的情况下  进行第一次插入
@@ -244,8 +243,8 @@ public class StepService extends Service implements SensorEventListener {
             bean.setCurr_date(CURRENT_DATE);
             bean.setStep(CURRENT_STEP);
             //插入计步数据库and消息数据库
-            DaoManager.Companion.getInstance(this).addStepBean(bean);
             DaoManager.Companion.getInstance(this).addMessageBean(new MessageBean(null,R.mipmap.jiaoyazi,"次元联盟运动","客官您好，您今天行走了"+CURRENT_STEP+"步",CURRENT_DATE));
+            DaoManager.Companion.getInstance(this).addStepBean(bean);
         }else {
             Long id = beans.get(0).getId();
             StepBean bean = new StepBean();
@@ -256,7 +255,6 @@ public class StepService extends Service implements SensorEventListener {
             //插入计步数据库and消息数据库
             List<MessageBean> messbean =DaoManager.Companion.getInstance(this).queryMessageBean(CURRENT_DATE);
             DaoManager.Companion.getInstance(this).updateMessageBean(new MessageBean(messbean.get(0).getId(),R.mipmap.jiaoyazi,"次元联盟运动","客官您好，您今天行走了"+CURRENT_STEP+"步",CURRENT_DATE));
-
         }
     }
     private void initNotification() {

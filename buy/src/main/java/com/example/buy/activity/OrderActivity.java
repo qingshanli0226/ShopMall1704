@@ -3,7 +3,6 @@ package com.example.buy.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -22,7 +21,6 @@ import com.example.framework.base.BaseRecyclerAdapter;
 import com.example.framework.base.BaseViewHolder;
 import com.example.framework.manager.OrderManager;
 import com.example.framework.port.IPresenter;
-
 import java.util.ArrayList;
 
 /**
@@ -37,13 +35,12 @@ public class OrderActivity extends BaseNetConnectActivity {
     public final static int CODE_All_TWO = 203;
 
     private RecyclerView recyclerView;
-    private TextView showOrderType;
     private MyToolBar myToolBar;
 
-    ArrayList<GetOrderBean> list = new ArrayList<>();
+    ArrayList<GetOrderBean.ResultBean> list = new ArrayList<>();
 
     IPresenter payOrder;
-    IPresenter watiOrder;
+    IPresenter waitOrder;
 
     @Override
     public int getLayoutId() {
@@ -58,7 +55,7 @@ public class OrderActivity extends BaseNetConnectActivity {
     @Override
     public void init() {
         super.init();
-        recyclerView=findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
 
         myToolBar = findViewById(R.id.myToolBar);
         myToolBar.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
@@ -66,27 +63,24 @@ public class OrderActivity extends BaseNetConnectActivity {
         myToolBar.getOther_back().setImageResource(R.drawable.back3);
         myToolBar.getOther_title().setTextColor(Color.WHITE);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(new BaseRecyclerAdapter<GetOrderBean>(R.layout.item_order, list) {
+        recyclerView.setAdapter(new BaseRecyclerAdapter<GetOrderBean.ResultBean>(R.layout.item_order, list) {
             @Override
             public void onBind(BaseViewHolder holder, int position) {
-                ((TextView) holder.getView(R.id.orderTitle)).setText(list.get(position).getSubject());
-                ((TextView) holder.getView(R.id.orderNum)).setText(list.get(position).getBody());
-                ((TextView) holder.getView(R.id.orderMoney)).setText(list.get(position).getTotalPrice());
+                ((TextView) holder.getView(R.id.orderTitle)).setText(list.get(position).getTotalPrice());
+                ((TextView) holder.getView(R.id.orderNum)).setText(list.get(position).getTime());
+                ((TextView) holder.getView(R.id.orderMoney)).setText(list.get(position).getTradeNo());
             }
         });
-
 
     }
 
     @Override
     public void initDate() {
         payOrder = new GetPayOrderPresenter();
-        watiOrder = new GetWaitOrderPresenter();
-        //http://49.233.93.155:8080  updateMoney  money=1333
-        //获取传递过来的数据,然后进行订单类型的显示
+        waitOrder = new GetWaitOrderPresenter();
 
         payOrder.attachView(this);
-        watiOrder.attachView(this);
+        waitOrder.attachView(this);
         myToolBar.getOther_back().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,7 +106,7 @@ public class OrderActivity extends BaseNetConnectActivity {
                 payOrder.doHttpGetRequest(CODE_PAY);
                 break;
             case Constant.WAIT_SEND:
-                watiOrder.doHttpGetRequest(CODE_WAIT);
+                waitOrder.doHttpGetRequest(CODE_WAIT);
                 break;
         }
     }
@@ -120,34 +114,32 @@ public class OrderActivity extends BaseNetConnectActivity {
     @Override
     public void onRequestSuccess(int requestCode, Object data) {
         super.onRequestSuccess(requestCode, data);
-        Log.e("xxx","订单数据:"+((GetOrderBean) data).toString());
         switch (requestCode) {
             case CODE_ALL:
-                list.add((GetOrderBean) data);
-                watiOrder.doHttpGetRequest(CODE_All_TWO);
+                list.addAll(((GetOrderBean) data).getResult());
+                waitOrder.doHttpGetRequest(CODE_All_TWO);
                 break;
             case CODE_PAY:
                 list.clear();
-                list.add((GetOrderBean) data);
+                list.addAll(((GetOrderBean) data).getResult());
                 OrderManager.getInstance().updatePayOrederNum(list.size());
                 break;
             case CODE_WAIT:
                 list.clear();
-                list.add((GetOrderBean) data);
+                list.addAll(((GetOrderBean) data).getResult());
                 OrderManager.getInstance().updateWaitOrederNum(list.size());
                 break;
             case CODE_All_TWO:
-                list.add((GetOrderBean) data);
+                list.addAll(((GetOrderBean) data).getResult());
                 OrderManager.getInstance().updateAllOrederNum(list.size());
                 break;
         }
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        disPreseter(payOrder, watiOrder);
+        disPreseter(payOrder, waitOrder);
     }
 
     private void disPreseter(IPresenter... iPresenter) {
@@ -157,4 +149,5 @@ public class OrderActivity extends BaseNetConnectActivity {
             }
         }
     }
+
 }

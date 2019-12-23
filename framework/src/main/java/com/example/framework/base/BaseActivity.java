@@ -31,7 +31,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
 
-
         //只改变状态栏颜色,布局不动
 //        StatusBarUtil.setColor(this, Color.RED);
 
@@ -89,5 +88,4 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
         activityInstanceManager.removeActivity(this);
 
     }
-
 }

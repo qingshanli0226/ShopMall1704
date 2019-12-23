@@ -20,17 +20,19 @@ import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.bean.MessageBean;
 import com.example.framework.manager.DaoManager;
-import com.example.point.R;
 
+import com.example.point.R;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MessageItemActivity extends BaseNetConnectActivity {
+
     private MyToolBar messageitem_toolbar;
     private RecyclerView messageitem_re;
     private ImageView messageitem_record;
     private EditText messageitem_edit;
     private ImageButton messageitem_other;
+
     private LinearLayout messageitem_line;
     private List<MessageBean> beanList;
     private MessageitemAdpter messageitemAdpter;
@@ -42,12 +44,12 @@ public class MessageItemActivity extends BaseNetConnectActivity {
     @Override
     public void init() {
         super.init();
-        messageitem_toolbar = findViewById(R.id.messageitem_toolbar);
-        messageitem_record = findViewById(R.id.messageitem_record);
-        messageitem_edit = findViewById(R.id.messageitem_edit);
-        messageitem_other = findViewById(R.id.messageitem_other);
+        MyToolBar messageitem_toolbar = findViewById(R.id.messageitem_toolbar);
+        ImageView messageitem_record = findViewById(R.id.messageitem_record);
+        final EditText messageitem_edit = findViewById(R.id.messageitem_edit);
+        ImageView messageitem_other = findViewById(R.id.messageitem_other);
         messageitem_line = findViewById(R.id.messageitem_line);
-        messageitem_re = findViewById(R.id.messageitem_re);
+        RecyclerView messageitem_re = findViewById(R.id.messageitem_re);
         messageitem_toolbar.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
         messageitem_toolbar.init(Constant.OTHER_STYLE);
         messageitem_toolbar.getOther_back().setOnClickListener(new View.OnClickListener() {
@@ -116,5 +118,6 @@ public class MessageItemActivity extends BaseNetConnectActivity {
     public int getRelativeLayout() {
         return super.getRelativeLayout();
     }
+
 
 }

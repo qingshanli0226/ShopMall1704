@@ -8,8 +8,8 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UpdateAddressPresenter extends BasePresenter<OkBean> {
-    private String address;
+class UpdateAddressPresenter extends BasePresenter<OkBean> {
+    private final String address;
 
     public UpdateAddressPresenter(String address) {
         this.address = address;

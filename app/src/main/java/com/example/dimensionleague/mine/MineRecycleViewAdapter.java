@@ -7,7 +7,7 @@ import com.example.framework.base.BaseRecyclerAdapter;
 
 import java.util.List;
 
-public class MineRecycleViewAdapter extends BaseRecyclerAdapter<MineBean>  {
+class MineRecycleViewAdapter extends BaseRecyclerAdapter<MineBean>  {
 //我的页面第一个RecycleView
     public MineRecycleViewAdapter(int layoutResId, @Nullable List<MineBean> data) {
         super(layoutResId, data);

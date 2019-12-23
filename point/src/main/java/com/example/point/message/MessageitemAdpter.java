@@ -62,10 +62,10 @@ public class MessageitemAdpter extends RecyclerView.Adapter<RecyclerView.ViewHol
            message_socket.socket_message.setText(beanList.get(position).getMessage_message());
            message_socket.socket_date.setText(beanList.get(position).getMessage_date());
            if (AccountManager.getInstance().isLogin()) {
-               if (AccountManager.getInstance().user.getName() != null) {
+               if (AccountManager.getInstance().getUser().getName() != null) {
                    //登录
-                   if (AccountManager.getInstance().user.getAvatar() != null) {
-                       Glide.with(context).load("" + AppNetConfig.BASE_URL + AccountManager.getInstance().user.getAvatar()).apply(new RequestOptions().circleCrop()).into(message_socket.socket_img);
+                   if (AccountManager.getInstance().getUser().getAvatar() != null) {
+                       Glide.with(context).load("" + AppNetConfig.BASE_URL + AccountManager.getInstance().getUser().getAvatar()).apply(new RequestOptions().circleCrop()).into(message_socket.socket_img);
                    }
                }
            } else {

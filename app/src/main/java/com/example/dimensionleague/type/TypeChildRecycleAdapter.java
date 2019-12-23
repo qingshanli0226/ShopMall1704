@@ -19,8 +19,8 @@ import java.util.ArrayList;
 
 public class TypeChildRecycleAdapter  extends RecyclerView.Adapter<TypeChildRecycleAdapter.ViewHolder> {
 
-    private Context mContext;
-    private ArrayList<TypeBean.ResultBean.ChildBean> childBeans;
+    private final Context mContext;
+    private final ArrayList<TypeBean.ResultBean.ChildBean> childBeans;
 
     public TypeChildRecycleAdapter(Context mContext, ArrayList<TypeBean.ResultBean.ChildBean> childBeans) {
         this.mContext = mContext;
@@ -49,10 +49,10 @@ public class TypeChildRecycleAdapter  extends RecyclerView.Adapter<TypeChildRecy
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView iv_ordinary_right;
-        public TextView tv_ordinary_right;
+        final ImageView iv_ordinary_right;
+        final TextView tv_ordinary_right;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             iv_ordinary_right = itemView.findViewById(R.id.type_right_iv_ordinary_right);
             tv_ordinary_right = itemView.findViewById(R.id.type_right_tv_ordinary_right);

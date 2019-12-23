@@ -49,34 +49,23 @@ public class FindFragment extends BaseNetConnectFragment {
     @Override
     public void initDate() {
         //TODO 用户信息
-        my_toolbar.getFind_user().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(AccountManager.getInstance().isLogin()){
-                    startActivity(SettingActivity.class,null);
-                }else{
-                    Bundle bundle = new Bundle();
-                    bundle.putString("intent","用户设置");
-                    startActivity(LoginActivity.class,bundle);
-                }
+        my_toolbar.getFind_user().setOnClickListener(v -> {
+            if(AccountManager.getInstance().isLogin()){
+                startActivity(SettingActivity.class,null);
+            }else{
+                Bundle bundle = new Bundle();
+                bundle.putString("intent","用户设置");
+                startActivity(LoginActivity.class,bundle);
             }
         });
         //TODO 搜索页面
-        my_toolbar.getFind_search().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(SearchActivity.class,null);
-            }
-        });
+        my_toolbar.getFind_search().setOnClickListener(v -> startActivity(SearchActivity.class,null));
 
         //TODO 跳转到消息页面
-        my_toolbar.getFind_message().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("intent","消息");
-                startActivity(MessageActivity.class,bundle);
-            }
+        my_toolbar.getFind_message().setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("intent","消息");
+            startActivity(MessageActivity.class,bundle);
         });
         list.add(new FindSendFragment());
         list.add(new FindSendFragment());
@@ -93,12 +82,13 @@ public class FindFragment extends BaseNetConnectFragment {
 
     @Override
     public int getRelativeLayout() {
-        return 0;
+        return R.id.find_relativeLayout;
     }
 
     private class MyVPAdapter extends FragmentPagerAdapter {
 
-        public MyVPAdapter(@NonNull FragmentManager fm) {
+        MyVPAdapter(@NonNull FragmentManager fm) {
+            //noinspection deprecation
             super(fm);
         }
 
@@ -118,5 +108,17 @@ public class FindFragment extends BaseNetConnectFragment {
         public int getCount() {
             return list.size();
         }
+    }
+
+    @Override
+    public void onConnected() {
+        hideEmpty();
+    }
+
+    @Override
+    public void onDisConnected() {
+        hideLoading();
+        hideError();
+        showEmpty();
     }
 }

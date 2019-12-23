@@ -15,7 +15,7 @@ public class AccountManager {
     private List<IAccountCallBack> list = new ArrayList<>();
 
     //TODO 缓存一份用户信息
-    public User user;
+    private User user;
     /**
      *单例模式
      */

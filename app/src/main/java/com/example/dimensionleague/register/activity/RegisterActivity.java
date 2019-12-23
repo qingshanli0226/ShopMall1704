@@ -18,7 +18,6 @@ import com.example.dimensionleague.userbean.RegisterBean;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.base.BaseTextWatcher;
 import com.example.framework.port.IPresenter;
-
 import java.util.HashMap;
 
 /**
@@ -26,14 +25,11 @@ import java.util.HashMap;
  */
 public class RegisterActivity extends BaseNetConnectActivity implements View.OnClickListener, IButtonEnabledListener {
 
-    private ImageView register_back;
     private EditText user_name;
     private EditText password;
     private EditText qr_password;
     private Button btn_register;
-
     private IPresenter iPresenter;
-
     private boolean isContentUser = false;
     private boolean isContentPassword = false;
     private boolean isContentAffirmPassword = false;
@@ -50,12 +46,11 @@ public class RegisterActivity extends BaseNetConnectActivity implements View.OnC
     @Override
     public void init() {
         super.init();
-        register_back = (ImageView) findViewById(R.id.register_back);
-        user_name = (EditText) findViewById(R.id.user_name);
-        password = (EditText) findViewById(R.id.password);
-        qr_password = (EditText) findViewById(R.id.qr_password);
-        btn_register = (Button) findViewById(R.id.btn_register);
-
+        ImageView register_back = findViewById(R.id.register_back);
+        user_name = findViewById(R.id.user_name);
+        password = findViewById(R.id.password);
+        qr_password = findViewById(R.id.qr_password);
+        btn_register = findViewById(R.id.btn_register);
         register_back.setOnClickListener(this);
         btn_register.setOnClickListener(this);
     }
@@ -148,6 +143,14 @@ public class RegisterActivity extends BaseNetConnectActivity implements View.OnC
             btn_register.setEnabled(true);
         }else{
             btn_register.setEnabled(false);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (iPresenter!=null){
+            iPresenter.detachView();
         }
     }
 }

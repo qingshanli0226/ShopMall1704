@@ -33,7 +33,6 @@ import com.example.framework.base.BaseTextWatcher;
 import com.example.framework.port.IPresenter;
 import com.example.point.activity.IntegralActivity;
 import com.example.point.activity.StepActivity;
-
 import java.util.HashMap;
 
 /**
@@ -41,19 +40,19 @@ import java.util.HashMap;
  */
 public class LoginActivity extends BaseNetConnectActivity implements IButtonEnabledListener,View.OnClickListener {
 
-    private ImageView login_back;
+
     private EditText user_name;
     private EditText password;
     private CheckBox password_check;
     private TextView forget_password;
     private Button btn_login;
-    private TextView user_register;
+
     //TODO 登录的Presenter
     private IPresenter loginPresenter;
 
     private String whence = "默认";
 
-    private AccountManager accountManager = AccountManager.getInstance();
+    private final AccountManager accountManager = AccountManager.getInstance();
     private boolean isContentUser = false;
     private boolean isContentPassword = false;
 
@@ -74,13 +73,13 @@ public class LoginActivity extends BaseNetConnectActivity implements IButtonEnab
         if(data!=null){
             whence = data.getString(IntentUtil.LOGIN);
         }
-        login_back = findViewById(R.id.login_back);
+        ImageView login_back = findViewById(R.id.login_back);
         user_name = findViewById(R.id.user_name);
         password = findViewById(R.id.password);
         password_check = findViewById(R.id.password_check);
         forget_password = findViewById(R.id.forget_password);
         btn_login = findViewById(R.id.btn_login);
-        user_register = findViewById(R.id.user_register);
+        TextView user_register = findViewById(R.id.user_register);
 
         login_back.setOnClickListener(this);
         user_register.setOnClickListener(this);
@@ -123,9 +122,7 @@ public class LoginActivity extends BaseNetConnectActivity implements IButtonEnab
                 password.setTransformationMethod(PasswordTransformationMethod.getInstance());
             }
         });
-        forget_password.setOnClickListener(v -> {
-            toast(this,getString(R.string.contact));
-        });
+        forget_password.setOnClickListener(v -> toast(this,getString(R.string.contact)));
     }
 
     @Override
@@ -214,6 +211,9 @@ public class LoginActivity extends BaseNetConnectActivity implements IButtonEnab
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(loginPresenter!=null){
+            loginPresenter.detachView();
+        }
     }
 
     @Override

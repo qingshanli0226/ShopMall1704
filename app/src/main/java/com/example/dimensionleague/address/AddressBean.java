@@ -1,8 +1,11 @@
 package com.example.dimensionleague.address;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
-public class AddressBean {
+class AddressBean {
+    @NotNull
     @Override
     public String toString() {
         return name;
@@ -43,6 +46,7 @@ public class AddressBean {
     }
 
     public static class CityBean {
+        @NotNull
         @Override
         public String toString() {
             return name;
@@ -88,6 +92,7 @@ public class AddressBean {
                 this.code = code;
             }
 
+            @NotNull
             @Override
             public String toString() {
                 return name;

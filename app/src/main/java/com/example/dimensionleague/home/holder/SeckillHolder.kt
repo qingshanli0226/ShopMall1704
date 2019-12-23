@@ -1,5 +1,6 @@
 package com.example.dimensionleague.home.holder
 
+import android.annotation.SuppressLint
 import android.os.Handler
 import android.os.Message
 import android.view.View
@@ -41,12 +42,13 @@ class SeckillHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         holder:SeckillHolder
     ):Handler(){
         private var mWeakReference= WeakReference<SeckillHolder>(holder)
+        @SuppressLint("SimpleDateFormat")
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
-            var seckillHolder = mWeakReference.get()
+            val seckillHolder = mWeakReference.get()
             if(msg.what==1){
                 seckillHolder!!.dt-=1000
-                var sdf = SimpleDateFormat("HH:mm:ss")
+                val sdf = SimpleDateFormat("HH:mm:ss")
                 seckillHolder!!.itemView.home_seckill_tv_time_seckill.text = sdf.format(Date(seckillHolder.dt.toLong()))
 
                 removeMessages(1)

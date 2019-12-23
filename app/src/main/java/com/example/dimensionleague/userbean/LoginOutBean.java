@@ -1,6 +1,6 @@
 package com.example.dimensionleague.userbean;
 
-public class LoginOutBean {
+class LoginOutBean {
 
     /**
      * code : 200

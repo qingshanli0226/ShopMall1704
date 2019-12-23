@@ -13,7 +13,7 @@ class ActViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         if(act_info==null){
             return
         }
-        var imageList:ArrayList<String> = ArrayList()
+        val imageList:ArrayList<String> = ArrayList()
         for (i in act_info){
             imageList.add("${AppNetConfig.BASE_URl_IMAGE}${i.icon_url}")
         }

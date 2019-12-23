@@ -22,19 +22,20 @@ import com.example.point.R;
 import com.example.point.bean.UpdatePointBean;
 import com.example.framework.bean.StepBean;
 
+
 import java.util.List;
 
 public class IntegralActivity extends BaseNetConnectActivity {
     private ImageView integral_img;
     private TextView integral_title;
-    private TextView integral_point;
-    private RelativeLayout exchange_gift;
-    private RelativeLayout exchange_record;
-    private RelativeLayout exchange_point;
+
+
+
+
 
     private UpdatePointBean pointBean;
     private IPresenter iPresenter;
-    private MyToolBar integral_tool;
+
 
     @Override
     public int getLayoutId() {
@@ -49,7 +50,8 @@ public class IntegralActivity extends BaseNetConnectActivity {
     @Override
     public void init() {
         super.init();
-        integral_tool = (MyToolBar) findViewById(R.id.integral_tool);
+
+        MyToolBar integral_tool = (MyToolBar) findViewById(R.id.integral_tool);
         integral_tool.init(Constant.OTHER_STYLE);
         integral_tool.getOther_title().setText("积分页面");
         integral_tool.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
@@ -63,10 +65,10 @@ public class IntegralActivity extends BaseNetConnectActivity {
             }
         });
         integral_img = findViewById(R.id.integral_img);
-        integral_point = findViewById(R.id.integral_point);
-        exchange_gift = findViewById(R.id.exchange_gift);
-        exchange_record = findViewById(R.id.exchange_record);
-        exchange_point = findViewById(R.id.exchange_point);
+        TextView integral_point = findViewById(R.id.integral_point);
+        RelativeLayout exchange_gift = findViewById(R.id.exchange_gift);
+        RelativeLayout exchange_record = findViewById(R.id.exchange_record);
+        RelativeLayout exchange_point = findViewById(R.id.exchange_point);
         integral_title = findViewById(R.id.integral_title);
         ifUser();
         if (pointBean == null) {
@@ -79,8 +81,8 @@ public class IntegralActivity extends BaseNetConnectActivity {
             count += bean.getStep();
         }
         if (AccountManager.getInstance().isLogin()) {
-            if (AccountManager.getInstance().user.getPoint() != null) {
-                String point = (String) AccountManager.getInstance().user.getPoint();
+            if (AccountManager.getInstance().getUser().getPoint() != null) {
+                String point = (String) AccountManager.getInstance().getUser().getPoint();
                 int i = Integer.parseInt(point);
                 integral_point.setText(((i + (count / 100))) + "");
             }
@@ -127,23 +129,23 @@ public class IntegralActivity extends BaseNetConnectActivity {
 
     private void ifUser() {
         if (AccountManager.getInstance().isLogin()) {
-            if (AccountManager.getInstance().user.getName() != null) {
+            if (AccountManager.getInstance().getUser().getName() != null) {
                 //登录
-                integral_title.setText(AccountManager.getInstance().user.getName());
-                if (AccountManager.getInstance().user.getAvatar() != null) {
-                    Glide.with(this).load("" + AppNetConfig.BASE_URL + AccountManager.getInstance().user.getAvatar()).apply(new RequestOptions().circleCrop()).into(integral_img);
+                integral_title.setText(AccountManager.getInstance().getUser().getName());
+                if (AccountManager.getInstance().getUser().getAvatar() != null) {
+                    Glide.with(this).load("" + AppNetConfig.BASE_URL + AccountManager.getInstance().getUser().getAvatar()).apply(new RequestOptions().circleCrop()).into(integral_img);
+
+                    integral_title.setText(AccountManager.getInstance().getUser().getName());
+                    if (AccountManager.getInstance().getUser().getAvatar() != null) {
+                        Glide.with(this).load(AccountManager.getInstance().getUser().getAvatar()).into(integral_img);
+                    }
                 }
+            } else {
+                //没有登录
+                integral_title.setText("登录/注册");
+                integral_img.setImageResource(R.mipmap.wu);
             }
-        } else {
-            //没有登录
-            integral_title.setText("登录/注册");
-            integral_img.setImageResource(R.mipmap.wu);
         }
-    }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
-
 }

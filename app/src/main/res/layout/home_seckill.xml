@@ -31,7 +31,7 @@
 
         <TextView
             android:id="@+id/home_seckill_tv_more_seckill"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawablePadding="@dimen/dp_5"

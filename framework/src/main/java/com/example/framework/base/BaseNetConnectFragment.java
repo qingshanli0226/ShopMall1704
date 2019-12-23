@@ -89,10 +89,6 @@ public abstract class BaseNetConnectFragment extends BaseFragment implements IVi
         loadingPage.hideEmpty();
     }
 
-    @Override
-    public void onConnected() {
-
-    }
 
     @Override
     public void onHttpRequestDataFailed(int requestCode, ErrorCode error) {
@@ -100,12 +96,13 @@ public abstract class BaseNetConnectFragment extends BaseFragment implements IVi
     }
 
     @Override
-    public void onDisConnected() {
+    public void getSearchDataSuccess(String str) {
 
     }
 
     @Override
-    public void getSearchDataSuccess(String str) {
+    public void getSearchDataSuccess(int requestCode, String str) {
 
     }
 }
+

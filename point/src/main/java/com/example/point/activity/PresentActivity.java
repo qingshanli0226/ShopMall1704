@@ -15,7 +15,6 @@ import com.example.framework.base.BaseNetConnectActivity;
 import com.example.point.R;
 import com.example.point.adpter.PreAdpter;
 import com.example.point.bean.PresenBean;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,7 +80,4 @@ public class PresentActivity extends BaseNetConnectActivity {
     public int getLayoutId() {
         return R.layout.present_activity;
     }
-
-
-
 }

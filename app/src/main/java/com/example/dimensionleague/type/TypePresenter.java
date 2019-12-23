@@ -6,7 +6,7 @@ import com.example.net.AppNetConfig;
 
 import java.lang.reflect.Type;
 
-public class TypePresenter extends BasePresenter<TypeBean> {
+class TypePresenter extends BasePresenter<TypeBean> {
     private String s;
 
     public void setURL(String s) {
@@ -23,7 +23,7 @@ public class TypePresenter extends BasePresenter<TypeBean> {
         return AppNetConfig.BASE_URL_JSON+getURL();
     }
 
-    public String getURL() {
+    private String getURL() {
         return s;
     }
 }

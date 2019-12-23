@@ -22,7 +22,7 @@ class BannerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             return
         }
 
-        var imageList: ArrayList<String> = ArrayList()
+        val imageList: ArrayList<String> = ArrayList()
         for (i in banner_info) {
             imageList.add("${AppNetConfig.BASE_URl_IMAGE}${i.image}")
         }

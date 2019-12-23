@@ -9,8 +9,6 @@ import com.example.point.StepIsSupport;
 import com.example.point.stepmanager.StepPointManager;
 
 import com.squareup.leakcanary.LeakCanary;
-
-
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
@@ -20,12 +18,11 @@ import cn.jpush.android.api.JPushInterface;
  * author:李浩帆
  */
 public class MineApplication extends Application {
-    private Application applicationContext;
     @Override
     public void onCreate() {
         super.onCreate();
 
-        applicationContext = this;
+        Application applicationContext = this;
         //TODO 网络
         NetConnectManager.getInstance().init(applicationContext);
         //TODO SP存储工具类
@@ -40,6 +37,7 @@ public class MineApplication extends Application {
         if (NetConnectManager.getInstance().isNetConnectStatus() && new StepIsSupport().isSupportStepCountSensor(this)) {
             StepPointManager.getInstance(this).init();
         }
+
         JAnalyticsInterface.initCrashHandler(this);
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);

@@ -22,7 +22,7 @@ import okhttp3.ResponseBody;
  */
 public class AutoLoginManager {
     //TODO 自动登录成功的监听
-    IAutoLoginReceivedListener loginReceivedListener;
+    private IAutoLoginReceivedListener loginReceivedListener;
     //TODO 单例模式
     private static AutoLoginManager autoLoginManager;
     private AutoLoginManager() {
@@ -65,14 +65,15 @@ public class AutoLoginManager {
                             String string = responseBody.string();
                             AutoLoginBean autoLoginBean = new Gson().fromJson(string, AutoLoginBean.class);
                             loginReceivedListener.onAutoLoginReceived(autoLoginBean.getResult());
-                        } catch (IOException e) {
-                            ErrorDisposeManager.HandlerError(e);
+                        } catch (IOException ignored) {
                         }
                     }
                     @Override
                     public void onError(Throwable e) {
-                        loginReceivedListener.onAutoDataError(e.getMessage());
-                        ErrorDisposeManager.HandlerError(e);
+                        if (e!=null){
+                            loginReceivedListener.onAutoDataError(e.getMessage());
+                            ErrorDisposeManager.HandlerError(e);
+                        }
                     }
                     @Override
                     public void onComplete() {}

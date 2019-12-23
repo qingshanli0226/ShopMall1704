@@ -17,11 +17,6 @@ import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.bean.MessageBean;
 import com.example.framework.manager.DaoManager;
 import com.example.point.R;
-import com.example.point.StepIsSupport;
-import com.example.framework.bean.StepBean;
-import com.example.point.stepmanager.StepPointManager;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class MessageActivity extends BaseNetConnectActivity {
@@ -81,9 +76,15 @@ public class MessageActivity extends BaseNetConnectActivity {
         messageBeans = DaoManager.Companion.getInstance(this).queryMessageBean(CURRENT_DATE);
         messageAdpter = new MessageAdpter(R.layout.message_item, messageBeans, this);
         Log.i("wzy", "initDate: "+messageBeans.size());
-        if (messageBeans.size()!=0){
+        if (messageBeans.size()!=0) {
+            messageBeans.add(bean);
             message_re.setAdapter(messageAdpter);
         }
+//        if (beans.size()!=0){
+//            bean = new MessageBean(R.mipmap.jiaoyazi,"次元联盟运动","客官您好，您今天行走了"+beans.get(0).getStep()+"步",beans.get(0).getCurr_date());
+//            messageBeans.add(bean);
+//            message_re.setAdapter(messageAdpter);
+//        }
         //消息列表添加点击事件
         messageAdpter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override

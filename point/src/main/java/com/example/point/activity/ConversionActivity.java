@@ -51,10 +51,10 @@ public class ConversionActivity extends BaseNetConnectActivity {
             conversion_tv.setVisibility(View.VISIBLE);
             conversion_re.setVisibility(View.GONE);
         }else {
-//            conversion_tv.setVisibility(View.GONE);
-//            conversion_re.setVisibility(View.VISIBLE);
-//            conversionAdpter=new ConversionAdpter(R.layout.conversion_item,pointBeans);
-//            conversion_re.setAdapter(conversionAdpter);
+            conversion_tv.setVisibility(View.GONE);
+            conversion_re.setVisibility(View.VISIBLE);
+            conversionAdpter=new ConversionAdpter(R.layout.conversion_item,pointBeans);
+            conversion_re.setAdapter(conversionAdpter);
         }
     }
 
