@@ -116,6 +116,13 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
                 myToolBar.setAlpha(1.0f);
             }
         });
+
+        rvList.setLayoutManager(new GridLayoutManager(getContext(), 5));
+        rvList.setAdapter(listAdapter);
+        rvChannel.setLayoutManager(new GridLayoutManager(getContext(), 5));
+        rvChannel.setAdapter(channelAdapter);
+        rvRecommend.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        rvRecommend.setAdapter(recommendAdapter);
     }
 
     private void mineListeners() {
@@ -196,20 +203,16 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
         super.onRequestSuccess(data);
 
         if (data != null) {
+            channelList.clear();
+            recommendlList.clear();
+
             int code = ((HomeBean) data).getCode();
             String msg = ((HomeBean) data).getMsg();
             if (code == Integer.parseInt(Constant.CODE_OK)) {
                 channelList.addAll(((HomeBean) data).getResult().getChannel_info());
                 recommendlList.addAll(((HomeBean) data).getResult().getRecommend_info());
-                rvList.setLayoutManager(new GridLayoutManager(getContext(), 5));
-                listAdapter.notifyDataSetChanged();
-                rvChannel.setLayoutManager(new GridLayoutManager(getContext(), 5));
                 channelAdapter.notifyDataSetChanged();
-                rvRecommend.setLayoutManager(new GridLayoutManager(getContext(), 2));
                 recommendAdapter.notifyDataSetChanged();
-                rvList.setAdapter(listAdapter);
-                rvChannel.setAdapter(channelAdapter);
-                rvRecommend.setAdapter(recommendAdapter);
             } else {
                 toast(getActivity(), msg);
             }

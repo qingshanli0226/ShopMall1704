@@ -60,8 +60,8 @@ public class StepService extends Service implements SensorEventListener {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_STEP_COUNTER) {
             int sensorStep = (int) sensorEvent.values[0];
             String s=DateFormat.format("MM-dd", System.currentTimeMillis())+"";//今日日期
-            List<StepBean> beans = new DaoManager(this).queryexcept(s);
-            List<StepBean> beanList = new DaoManager(this).loadStepBean();
+            List<StepBean> beans = DaoManager.Companion.getInstance(this).queryexcept(s);
+            List<StepBean> beanList =DaoManager.Companion.getInstance(this).loadStepBean();
             if (sensorStep==0){
                 for (StepBean bean:beanList) {
                     //获取到所有日期的总步数
@@ -224,7 +224,7 @@ public class StepService extends Service implements SensorEventListener {
     //初始化当天的步数
     private void initTodayData() {
         CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis())+"";//今日日期
-        List<StepBean> beans = new DaoManager(this).queryStepBean(CURRENT_DATE);
+        List<StepBean> beans = DaoManager.Companion.getInstance(this).queryStepBean(CURRENT_DATE);
         if (beans.size() == 0 ){
             CURRENT_STEP=0;
         }else {
@@ -234,21 +234,21 @@ public class StepService extends Service implements SensorEventListener {
     }
     //将今日步数存入数据库
     private void save(){
-        List<StepBean> beans = new DaoManager(this).queryStepBean(CURRENT_DATE);
+        List<StepBean> beans = DaoManager.Companion.getInstance(this).queryStepBean(CURRENT_DATE);
         if (beans.size() == 0){
             CURRENT_STEP=0;
             //数据库没有的情况下  进行第一次插入
             StepBean bean = new StepBean();
             bean.setCurr_date(CURRENT_DATE);
             bean.setStep(CURRENT_STEP);
-            new DaoManager(this).addStepBean(bean);
+            DaoManager.Companion.getInstance(this).addStepBean(bean);
         }else {
             Long id = beans.get(0).getId();
             StepBean bean = new StepBean();
             bean.setId(id);
             bean.setCurr_date(CURRENT_DATE);
             bean.setStep(CURRENT_STEP);
-            new DaoManager(this).updateStepBean(bean);
+            DaoManager.Companion.getInstance(this).updateStepBean(bean);
         }
     }
     private void initNotification() {

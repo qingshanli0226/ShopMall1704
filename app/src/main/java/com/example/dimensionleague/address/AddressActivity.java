@@ -1,7 +1,9 @@
 package com.example.dimensionleague.address;
 
 import android.graphics.Color;
+import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
@@ -10,6 +12,7 @@ import com.example.buy.databeans.OkBean;
 import com.example.common.utils.GetAssetsJson;
 import com.example.dimensionleague.R;
 import com.example.framework.base.BaseNetConnectActivity;
+import com.example.framework.manager.AccountManager;
 import com.example.framework.port.IPresenter;
 import com.example.net.AppNetConfig;
 import com.google.gson.Gson;
@@ -18,6 +21,9 @@ import java.util.List;
 
 @SuppressWarnings("unchecked")
 public class AddressActivity extends BaseNetConnectActivity {
+
+    private TextView myAddress;
+
     private OptionsPickerView<AddressBean.CityBean.AreaBean> pvOptions;
 
     private IPresenter updateAddressPresenter;
@@ -30,9 +36,18 @@ public class AddressActivity extends BaseNetConnectActivity {
     @Override
     public void init() {
         super.init();
+
         Button addressSure = findViewById(R.id.addressSure);
 
         addressSure.setOnClickListener(v -> pvOptions.show());
+        myAddress = findViewById(R.id.myAddress);
+
+        if (AccountManager.getInstance().getUser().getAddress()==null){
+            myAddress.setText("我的地址:暂无地址");
+        }else {
+            myAddress.setText("我的地址:" +((String) AccountManager.getInstance().getUser().getAddress()));
+        }
+
     }
 
     @Override
@@ -40,6 +55,7 @@ public class AddressActivity extends BaseNetConnectActivity {
         super.onRequestSuccess(data);
         if (((OkBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
             Toast.makeText(this, "地址设置成功", Toast.LENGTH_SHORT).show();
+            myAddress.setText("我的地址:" +address);
         }
     }
 

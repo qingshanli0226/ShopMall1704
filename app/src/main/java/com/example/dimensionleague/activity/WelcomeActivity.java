@@ -2,13 +2,15 @@ package com.example.dimensionleague.activity;
 
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.ContextWrapper;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.VideoView;
@@ -37,7 +39,6 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
     private boolean isRequestAutoLogin = false;
     private boolean isNotNet = false;
 
-    @SuppressLint("CheckResult")
     @Override
     public void init() {
         super.init();
@@ -68,12 +69,9 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
 
     }
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void initDate() {
-
         videoView.setVideoPath(Uri.parse("android.resource://" + getPackageName() + "/"+R.raw.peng).toString());
-
         handler.sendEmptyMessage(1);
         but.setText(count +getString(R.string.second));
         CacheManager.getInstance().getHomeDate();
@@ -131,10 +129,31 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
     }
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(new ContextWrapper(newBase) {
+            @Override
+            public Object getSystemService(String name) {
+                if (Context.AUDIO_SERVICE.equals(name))
+                    return getApplicationContext().getSystemService(name);
+                return super.getSystemService(name);
+            }
+        });
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         CacheManager.getInstance().unRegisterGetDateListener();
         AutoLoginManager.getInstance().unRegisterAutoLoginListener();
+        if (videoView != null) {
+            videoView.suspend();
+            videoView.setOnErrorListener(null);
+            videoView.setOnPreparedListener(null);
+            videoView.setOnCompletionListener(null);
+            ViewGroup welcomeLayout = findViewById(R.id.welcomeLayout);
+            videoView = null;
+            welcomeLayout.removeAllViews();
+        }
     }
 
     @Override

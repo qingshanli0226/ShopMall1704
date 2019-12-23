@@ -8,17 +8,20 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.drawable.ColorDrawable;
+import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -33,6 +36,9 @@ import com.example.buy.databeans.GoodsBean;
 import com.example.buy.databeans.OkBean;
 import com.example.buy.presenter.GetCartPresenter;
 import com.example.common.code.Constant;
+
+import com.example.common.view.LogoutDialog;
+
 import com.example.common.view.MyToolBar;
 import com.example.framework.listener.OnShopCartListener;
 import com.example.framework.manager.AccountManager;
@@ -51,10 +57,6 @@ import java.util.ArrayList;
  */
 
 public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClickListener {
-
-    public final int ADD_GOODS = 100;
-    public final int CART_GOODS = 200;
-
     private Button goPayBut;
     private Button joinCartBut;
     private ImageView collectBut;
@@ -63,25 +65,28 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
     private ImageView beiImage;
     private TextView goodsTitle;
     private WebView webView;
-    private TextView goodsOldPrice;
     private TextView goodsNewPrice;
     private TextView redNum;
+    private PopupWindow popupWindow;
+    private MyToolBar myToolBar;
 
+    //加入购物车 请求购物车
+    private IPresenter addCartPresenter;
+
+    public final int ADD_GOODS = 100;
+    private IPresenter sendCartPresenter;
+    public final int CART_GOODS = 200;
+
+    //动画
+    private AnimatorSet animatorSet;
     //初始位置   控制点  结束位置   x,y
     private int[] startLoaction = new int[2];
     private int[] controlLoaction = new int[2];
     private int[] endLoaction = new int[2];
-    //加入购物车请求
-    private IPresenter addCartPresenter;
 
-    //动画
-    private AnimatorSet animatorSet;
-    private PopupWindow popupWindow;
-    //购物车数量监听
-    private OnShopCartListener onShopCartListener;
-
-    //请求对象  商品详情
+    //商品本体  转换
     private GoodsBean goods;
+
 
 
     //暂存购物车数量
@@ -124,7 +129,6 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         }
 
         goodsTitle.setText(goods.getProductName());
-        goodsOldPrice.setText("");
         goodsNewPrice.setText(goods.getProductPrice());
         Glide.with(this)
                 .load(AppNetConfig.BASE_URl_IMAGE + goods.getUrl())
@@ -147,32 +151,29 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
     public void onClick(View v) {
         if (AccountManager.getInstance().isLogin()) {
             if (v.getId() == goPayBut.getId()) {
-                //携带商品数据跳转到支付页  并结束页面
-                Intent intent = new Intent(this, PayActivity.class);
+                //支付   携带商品数据跳转到支付页  并结束页面
                 ArrayList<GoodsBean> goodList = new ArrayList<>();
                 goodList.add(goods);
+                Intent intent = new Intent(this, PayActivity.class);
                 intent.putExtra(IntentUtil.ORDERS, goodList);
                 startActivity(intent);
-                finish();
+                finishActivity();
             } else if (v.getId() == joinCartBut.getId()) {
                 //加入购物车  弹窗
                 setBackAlph(0.7f);
                 popupWindow.showAtLocation(findViewById(R.id.goodsRel), Gravity.BOTTOM, 0, 0);
             } else if (v.getId() == collectBut.getId()) {
                 //本地sp存储收藏的商品的信息
-                toast(this, String.valueOf(R.string.buy_add));
+                toast(this,getResources().getString(R.string.buy_add));
             } else if (v.getId() == cartBut.getId()) {
-                //点击购物车
-                //设置选中
+                //点击购物车  设置选中
                 for (int i = 0; i < CartManager.getInstance().getChecks().size(); i++) {
                     if (CartManager.getInstance().getChecks().get(i).getId().equals(goods.getProductId())) {
                         CartManager.getInstance().setCheckSelect(i, true);
                         break;
                     }
                 }
-                Intent intent = new Intent(this, ShoppCartActivity.class);
-                intent.putExtra(IntentUtil.GOODS, goods.getProductId());
-                startActivity(intent);
+                startActivity(ShoppCartActivity.class,null);
             }
         } else {
             Toast.makeText(this, getResources().getString(R.string.buyLoginFirst), Toast.LENGTH_SHORT).show();
@@ -182,9 +183,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
     //加入购物车动画
     private void setAnimator() {
         //保证只有一个动画
-        if (animatorSet != null) {
-
-        } else {
+        if (animatorSet == null) {
             animatorSet = new AnimatorSet();
 
             ObjectAnimator scaleX = ObjectAnimator.ofFloat(beiImage, "scaleX", 1, 0.1f);
@@ -251,10 +250,9 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
                 if (((OkBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
                     //提示用户加入购物车完成   增加小红点
                     //只能通过再次网络请求
-//            setRed(( Integer.valueOf(redNum.getText().toString()) + 1));
 
-                    CartManager.getInstance().addCheck(true, goods.getProductId());
-                    IPresenter sendCartPresenter = new GetCartPresenter();
+                    CartManager.getInstance().addCheck(false, goods.getProductId());
+                    sendCartPresenter = new GetCartPresenter();
                     sendCartPresenter.attachView(GoodsActiviy.this);
                     sendCartPresenter.doHttpGetRequest(CART_GOODS);
                 }
@@ -288,6 +286,48 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         TextView popuNum = view.findViewById(R.id.popuNum);
         Button popuSure = view.findViewById(R.id.popuSure);
         popuNum.setText(1 + "");
+        //数量
+        popuNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //对话框
+                LogoutDialog logoutDialog =new LogoutDialog(GoodsActiviy.this);
+                logoutDialog.init(R.layout.dialog_num);
+                logoutDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                logoutDialog.setCanceledOnTouchOutside(false);
+                logoutDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+                EditText buyDialogNum=logoutDialog.findViewById(R.id.buyDialogNum);
+                buyDialogNum.setText(popuNum.getText().toString());
+                buyDialogNum.setInputType(InputType.TYPE_CLASS_NUMBER);
+                buyDialogNum.requestFocus();
+                //取消
+                logoutDialog.findViewById(R.id.buyDialogCancel).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        logoutDialog.dismiss();
+                    }
+                });
+                //确定
+                logoutDialog.findViewById(R.id.buyDialogSure).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        logoutDialog.dismiss();
+                        //数量超出处理
+                        int num=0;
+                        try {
+                            num=Integer.valueOf(buyDialogNum.getText().toString());
+                        }catch (NumberFormatException e){
+                            num=999;
+                        }
+                        if (num>999){
+                            num=999;
+                        }
+                        popuNum.setText(""+num);
+                    }
+                });
+                logoutDialog.show();
+            }
+        });
         //增加
         popuAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -321,6 +361,9 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
                 }
             }
         });
+        popupWindow.setContentView(view);
+        popupWindow.setWidth(RelativeLayout.LayoutParams.MATCH_PARENT);
+        popupWindow.setHeight(600);
         //消失监听
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
@@ -328,11 +371,6 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
                 setBackAlph(1);
             }
         });
-
-        popupWindow.setContentView(view);
-        popupWindow.setWidth(RelativeLayout.LayoutParams.MATCH_PARENT);
-        popupWindow.setHeight(600);
-
     }
 
     //设置背景透明度
@@ -389,7 +427,6 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         beiImage = findViewById(R.id.beiImage);
         goodsTitle = findViewById(R.id.goodsTitle);
         webView = findViewById(R.id.webView);
-        goodsOldPrice = findViewById(R.id.goodsOldPrice);
         goodsNewPrice = findViewById(R.id.goodsNewPrice);
         redNum = findViewById(R.id.redNum);
         MyToolBar myToolBar = findViewById(R.id.myToolBar);
@@ -407,46 +444,79 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
         collectBut.setOnClickListener(this);
         joinCartBut.setOnClickListener(this);
         goPayBut.setOnClickListener(this);
-        goodsImage.setOnClickListener(this);
         cartBut.setOnClickListener(this);
-        beiImage.setOnClickListener(this);
     }
 
     @Override
     public void initDate() {
-        setPopuWindow();
-        onShopCartListener = new OnShopCartListener() {
-            @Override
-            public void shopCartNumChange(int num) {
-                cartNum = num;
+        //      展示收到的两种商品数据  此处需要根据跳转值判断
+        Intent intent = getIntent();
+        try {
+            HomeBean.ResultBean.SeckillInfoBean.ListBean goodsBeanOne = intent.getParcelableExtra(IntentUtil.GOTO_GOOD);
+            if (goodsBeanOne != null) {
+                goods = new GoodsBean(goodsBeanOne.getProduct_id(), 1, goodsBeanOne.getName(), goodsBeanOne.getFigure(), goodsBeanOne.getCover_price());
             }
-        };
-        CartManager.getInstance().registerListener(onShopCartListener);
-        setRed();
+        } catch (Exception e) {
+            try {
+                TypeBean.ResultBean.HotProductListBean goodsBeanTwo = intent.getParcelableExtra(IntentUtil.GOTO_GOOD);
+                if (goodsBeanTwo != null) {
+                    goods = new GoodsBean(goodsBeanTwo.getProduct_id(), 1, goodsBeanTwo.getName(), goodsBeanTwo.getFigure(), goodsBeanTwo.getCover_price());
+                }
+            } catch (Exception e2) {
+                goods = intent.getParcelableExtra(IntentUtil.GOTO_GOOD);
+            }
+        }
+        //设置数据
+        goodsTitle.setText(goods.getProductName());
+        goodsNewPrice.setText(goods.getProductPrice());
+        Glide.with(this).load(AppNetConfig.BASE_URl_IMAGE + goods.getUrl()).into(beiImage);
+        Glide.with(this).load(AppNetConfig.BASE_URl_IMAGE + goods.getUrl()).into(goodsImage);
+        webView.loadUrl("http://www.baidu.com");
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                view.loadUrl(request.getUrl().toString());
+                return true;
+            }
+        });
 
+        setPopuWindow();
+        setRed();
     }
 
 
 
     @Override
     protected void onDestroy() {
+        if (animatorSet!=null){
+            animatorSet.cancel();
+        }
+        //防止内存泄漏
+        if (webView != null) {
+            //加载null内容
+            webView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
+            //清除历史记录
+            webView.clearHistory();
+            //移除WebView
+            ((ViewGroup) webView.getParent()).removeView(webView);
+            //销毁VebView
+            webView.destroy();
+            //WebView置为null
+            webView = null;
+        }
+
         if (addCartPresenter != null) {
             addCartPresenter.detachView();
         }
-        CartManager.getInstance().unregister(onShopCartListener);
-        beiImage = null;
-        goodsImage = null;
-        cartBut = null;
-        collectBut = null;
         super.onDestroy();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        finishActivity();
     }
-
+    //设置小红点
     private void setRed() {
         redNum.setText(CartManager.getInstance().getCartNum() + "");
         if (Integer.valueOf(redNum.getText().toString()) == 0) {

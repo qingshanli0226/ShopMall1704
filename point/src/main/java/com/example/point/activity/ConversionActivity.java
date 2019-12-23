@@ -46,15 +46,15 @@ public class ConversionActivity extends BaseNetConnectActivity {
             }
         });
         conversion_re.setLayoutManager(new LinearLayoutManager(this));
-        List<PointBean> pointBeans = new DaoManager(this).loadPointBean();
+        List<PointBean> pointBeans = DaoManager.Companion.getInstance(this).loadPointBean();
         if (pointBeans.size()==0){
             conversion_tv.setVisibility(View.VISIBLE);
             conversion_re.setVisibility(View.GONE);
         }else {
-//            conversion_tv.setVisibility(View.GONE);
-//            conversion_re.setVisibility(View.VISIBLE);
-//            conversionAdpter=new ConversionAdpter(R.layout.conversion_item,pointBeans);
-//            conversion_re.setAdapter(conversionAdpter);
+            conversion_tv.setVisibility(View.GONE);
+            conversion_re.setVisibility(View.VISIBLE);
+            conversionAdpter=new ConversionAdpter(R.layout.conversion_item,pointBeans);
+            conversion_re.setAdapter(conversionAdpter);
         }
     }
 

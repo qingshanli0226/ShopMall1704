@@ -80,7 +80,7 @@ public class MessageActivity extends BaseNetConnectActivity {
         messageBeans = new ArrayList<>();
         messageAdpter = new MessageAdpter(R.layout.message_item, messageBeans, this);
         String CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis()) + "";//今日日期
-        beans = new DaoManager(this).queryStepBean(CURRENT_DATE);
+        beans =DaoManager.Companion.getInstance(this).queryStepBean(CURRENT_DATE);
 
         if (beans.size()!=0){
             bean = new MessageBean(R.mipmap.jiaoyazi,"次元联盟运动","客官您好，您今天行走了"+beans.get(0).getStep()+"步",beans.get(0).getCurr_date());

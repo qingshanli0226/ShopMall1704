@@ -37,23 +37,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <TextView
-                android:id="@+id/goodsOldPrice"
-                android:layout_below="@id/goodsTitle"
-                android:text="¥:++++"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
                 android:id="@+id/reTex"
                 android:text="¥:"
                 android:textSize="@dimen/buy_text_two"
                 android:textColor="@color/buyPink"
-                android:layout_below="@id/goodsOldPrice"
+                android:layout_below="@id/goodsTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/goodsNewPrice"
                 android:layout_toRightOf="@id/reTex"
-                android:layout_below="@id/goodsOldPrice"
+                android:layout_below="@id/goodsTitle"
                 android:text="123"
                 android:textSize="@dimen/buy_text_two"
                 android:textColor="@color/buyPink"
