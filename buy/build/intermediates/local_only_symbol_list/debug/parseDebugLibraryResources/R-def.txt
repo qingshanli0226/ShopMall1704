@@ -104,6 +104,7 @@ id tv_buy_num
 id tv_buy_orderitemnum
 id tv_buy_price
 id tv_buy_shopcartTotal
+id tv_buy_shopcarttotaltitle
 id tv_buy_success
 id tv_buy_symbol
 id tv_buy_title

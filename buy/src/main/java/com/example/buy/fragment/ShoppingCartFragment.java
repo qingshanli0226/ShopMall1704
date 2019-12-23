@@ -61,6 +61,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     RecyclerView mRecyclerview;
     RelativeLayout shoppingcartlayout;
     TextView tvShopcartTotal;
+    TextView tvShopcarttotaltitle;
     CheckBox checkboxAll;
     CheckBox cbAll;
     LinearLayout llDelete;
@@ -127,8 +128,22 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             mRecyclerview.setVisibility(View.INVISIBLE);
             myShoppingManager.setisSetting(true);
             settingChanged();
+            btnCheckOut.setBackgroundColor(Color.GRAY);
+            btnCheckOut.setButtonEnabled(false);
+            tbShoppingCart.setRightText("", 14, Color.GRAY);
+            checkboxAll.setVisibility(View.INVISIBLE);
+            ivShoppingCart.setVisibility(View.INVISIBLE);
+            tvShopcartTotal.setVisibility(View.INVISIBLE);
+            tvShopcarttotaltitle.setVisibility(View.INVISIBLE);
         } else {
             mRecyclerview.setVisibility(View.VISIBLE);
+            btnCheckOut.setBackgroundColor(getResources().getColor(R.color.color_lightred));
+            btnCheckOut.setButtonEnabled(true);
+            tbShoppingCart.setRightText("编辑", 14, Color.BLACK);
+            checkboxAll.setVisibility(View.VISIBLE);
+            ivShoppingCart.setVisibility(View.VISIBLE);
+            tvShopcartTotal.setVisibility(View.VISIBLE);
+            tvShopcarttotaltitle.setVisibility(View.VISIBLE);
         }
     }
 
@@ -201,7 +216,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             public void RightClick() {
                 int allNumber = myShoppingManager.getAllNumber();
                 if (allNumber == 0) {
-                    Toast.makeText(getContext(), "购物车内空空的,快去加点什么吧~~", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "购物车内空空的,快去加点什么吧~~", Toast.LENGTH_SHORT).show();
                 } else {
                     settingChanged();
                 }
@@ -402,6 +417,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         mRecyclerview = view.findViewById(R.id.rv_buy_shoppingcart);
         shoppingcartlayout = view.findViewById(R.id.rl_buy_shoppingcartlayout);
         tvShopcartTotal = view.findViewById(R.id.tv_buy_shopcartTotal);
+        tvShopcarttotaltitle = view.findViewById(R.id.tv_buy_shopcarttotaltitle);
         checkboxAll = view.findViewById(R.id.cb_buy_checkboxAll);
         llDelete = view.findViewById(R.id.ll_buy_delete);
         llCheckAll = view.findViewById(R.id.ll_buy_checkall);
@@ -431,8 +447,10 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
                         data2.add(map);
                     }
                 }
-                myShoppingManager.setBuyThings(data2);
-                startActivity(new Intent(getContext(), OrderActivity.class));
+                if(data2.size()!=0){
+                    myShoppingManager.setBuyThings(data2);
+                    startActivity(new Intent(getContext(), OrderActivity.class));
+                }
             }
         });
     }
@@ -653,6 +671,15 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             data2.add(map);
         }
 
+        myShoppingManager.setData(data2);
+
+        myShoppingManager.setAllCount(allcount1);
+
+        int allNumber = myShoppingManager.getAllNumber();
+        int myallNumber = allNumber1 - allNumber;
+
+        myShoppingManager.setOnNumberChanged(myallNumber);
+
         if(myShoppingBasketAdapter!=null){
             myShoppingBasketAdapter.reFresh(data2);
             judgeNumberisZero();
@@ -664,17 +691,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
                 checkboxAll.setChecked(false);
             }
             tvShopcartTotal.setText("￥" + allcount1 + "0");
-
         }
-
-        myShoppingManager.setData(data2);
-
-        myShoppingManager.setAllCount(allcount1);
-
-        int allNumber = myShoppingManager.getAllNumber();
-        int myallNumber = allNumber1 - allNumber;
-
-        myShoppingManager.setOnNumberChanged(myallNumber);
     }
 
     //购物车数据网址连接失败

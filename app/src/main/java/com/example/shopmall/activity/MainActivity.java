@@ -75,9 +75,13 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
     protected void onResume() {
         super.onResume();
         int mainitem = ShoppingManager.getInstance().getMainitem();
-        bbMain.setCheckedItem(mainitem);
-        if (mainitem == 3) {
-            refreshShoppingCartData();
+        if(mainitem==5){
+            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+        }else {
+            bbMain.setCheckedItem(mainitem);
+            if (mainitem == 3) {
+                refreshShoppingCartData();
+            }
         }
     }
 
@@ -134,31 +138,9 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
             ShoppingCartPresenter presenter = new ShoppingCartPresenter("getShortcartProducts", ShoppingCartBean.class, hashMap);
             presenter.attachGetView((ShoppingCartFragment) fragmentArrayList.get(3));
             presenter.getGetData();
-        }else {
-            setAlertDialog();
         }
     }
-    private void setAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("提示：");
-        builder.setMessage("您还没有登录");
-        builder.setPositiveButton("前往登录", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                startActivity(new Intent(MainActivity.this,LoginActivity.class));
-                dialogInterface.dismiss();
-            }
-        });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                ShoppingManager.getInstance().setMainitem(0);
-                finish();
-            }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
+
 
     private MessageReceiver mMessageReceiver;
     public static final String MESSAGE_RECEIVED_ACTION = "com.example.shopmall.MESSAGE_RECEIVED_ACTION";
