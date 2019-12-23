@@ -3,6 +3,7 @@ package com.shaomall.framework.bean;
 import android.annotation.SuppressLint;
 import android.os.Parcel;
 import android.os.Parcelable;
+
 @SuppressLint("ParcelCreator")
 public class ShoppingCartBean implements Parcelable {
     /**
@@ -77,8 +78,8 @@ public class ShoppingCartBean implements Parcelable {
         public ShoppingCartBean createFromParcel(Parcel parcel) {
             ShoppingCartBean shoppingCartBean = new ShoppingCartBean();
             shoppingCartBean.productId = parcel.readString();
-            shoppingCartBean.productName = parcel.readString();
             shoppingCartBean.productNum = parcel.readString();
+            shoppingCartBean.productName = parcel.readString();
             shoppingCartBean.url = parcel.readString();
             shoppingCartBean.productPrice = parcel.readString();
             return shoppingCartBean;

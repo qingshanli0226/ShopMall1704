@@ -13,18 +13,19 @@ import com.shaomall.framework.bean.ShoppingCartBean;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class SendOrederPresenter extends BasePresenter<OrderInfoBean> {
+public class SendOrderPresenter extends BasePresenter<Object> {
     private ArrayList<ShoppingCartBean> list;
-    private Float toatalPrice;
+    private Float totalPrice;
 
-    public SendOrederPresenter(ArrayList<ShoppingCartBean> list, float toatalPrice) {
+    public SendOrderPresenter(ArrayList<ShoppingCartBean> list, float totalPrice) {
         this.list = list;
-        this.toatalPrice = toatalPrice;
+        this.totalPrice = totalPrice;
     }
 
     @Override
     protected Type getBeanType() {
-        return new TypeToken<ResEntity<OrderInfoBean>>(){}.getType();
+        return new TypeToken<ResEntity<OrderInfoBean>>() {
+        }.getType();
     }
 
     @Override
@@ -43,8 +44,8 @@ public class SendOrederPresenter extends BasePresenter<OrderInfoBean> {
                 jsonObject.put("productName", i.getProductName());
                 jsonArray.add(jsonObject);
             }
-            object.put("subject","购买");
-            object.put("totalPrice", toatalPrice);
+            object.put("subject", "购买");
+            object.put("totalPrice", totalPrice);
             object.put("body", jsonArray);
         } catch (JSONException e) {
             e.printStackTrace();

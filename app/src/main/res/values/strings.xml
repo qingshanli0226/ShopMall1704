@@ -34,4 +34,7 @@
     <string name="mine_title_shopAttention">店铺关注</string>
     <string name="mine_title_like">喜欢的内容</string>
     <string name="mine_title_browsingHistory">浏览记录</string>
+    <string name="function_adapter_findfor_tv_text_shopping_price">商品价格:</string>
+    <string name="function_adapter_findfor_tv_text_order_number">订单号: </string>
+    <string name="function_adapter_findfor_tv_text_payment_status">待付款</string>
 </resources>

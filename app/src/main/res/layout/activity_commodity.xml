@@ -176,14 +176,14 @@
                         android:layout_height="1dp"
                         android:background="#ed3f3f" />
 
-                    <FrameLayout
+                    <LinearLayout
                         android:id="@+id/mWbGoodInfoMore"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
 
                 </LinearLayout>
             </ScrollView>
-
         </LinearLayout>
     </FrameLayout>
 

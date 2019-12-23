@@ -24,8 +24,8 @@
         <activity android:name=".function.FunctionActivity" /> <!-- 商品详情 -->
         <activity
             android:name=".goodsinfo.GoodsInfoActivity"
-            android:launchMode="singleTask"
             android:supportsPictureInPicture="true"
+            android:launchMode="singleTask"
             tools:targetApi="n" /> <!-- 欢迎界面 -->
         <activity
             android:name=".activity.WelcomeActivity"

@@ -7,7 +7,7 @@ public class AppNetConfig {
 
     //服务端
     public static final String BASE_URL = "http://49.233.93.155:8080/";
-//    public static final String BASE_URL = "http://169.254.230.253:8080/";
+    //    public static final String BASE_URL = "http://169.254.230.253:8080/";
 
 
     ////////////////////////////////////////////
@@ -126,19 +126,16 @@ public class AppNetConfig {
     public static final int REQUEST_CODE_LOGOUT = 0x000; //退出登录
     public static final int REQUEST_CODE_UPLOAD_POINT = 0x001; //上传积分请求码
 
-    //请求代码得到购物车产品
-    public static final int REQUEST_CODE_GET_SHORTCART_PRODUCTS= 0x002;
+    //检查服务端多个产品是否库存充足
+    public static final int REQUEST_CODE_CHECK_INVENTORY = 0x002;
 
-    //请求代码删除购物车数量
-    public static final int COURT_SHIP_CODE_DELETE_SHOPPINGCART_QUANTITY=0x004;
     //请求代码更新购物车数量
-    public static final int REQUEST_CODE_TOUPDATE_CARTQUANTITY= 0x003;
+    public static final int REQUEST_CODE_TOUPDATE_CARTQUANTITY = 0x003;
 
     //请求支付订单号
-    public static final int REQUEST_CODE_GET_ORDER_INFO= 0x004;
+    public static final int REQUEST_CODE_GET_ORDER_INFO = 0x004;
     //请求码支付是否成功
-    public static final int REQUEST_CODE_CONFIRM_SERVER_PAY_RESULT= 0x005;
-
+    public static final int REQUEST_CODE_CONFIRM_SERVER_PAY_RESULT = 0x005;
 
 
 }

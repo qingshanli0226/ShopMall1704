@@ -250,6 +250,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
             pointUpLoadPresenter.attachView(this);
         }
         pointUpLoadPresenter.setPointSum(pointSum);
+
         //上传积分
         pointUpLoadPresenter.doPostHttpRequest(AppNetConfig.REQUEST_CODE_UPLOAD_POINT);
     }
@@ -294,6 +295,8 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
     @Override
     public void onDestroy() {
         super.onDestroy();
+        logoutPresenter.detachView();
+        pointUpLoadPresenter.detachView();
         UserInfoManager.getInstance().unRegisterUserInfoStatusListener(this);
         PointManager.getInstance().unRegisterCallbackIntegralListener();
     }
