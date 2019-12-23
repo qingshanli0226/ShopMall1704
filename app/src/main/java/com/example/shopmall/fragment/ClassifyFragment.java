@@ -14,6 +14,7 @@ import com.example.common.TitleBar;
 import com.example.framework.base.BaseFragment;
 import com.example.framework.base.IGetBaseView;
 import com.example.framework.base.ILoadView;
+import com.example.framework.manager.ShoppingManager;
 import com.example.net.Constant;
 import com.example.shopmall.R;
 import com.example.shopmall.adapter.ClassifyLeftAdapter;
@@ -52,6 +53,7 @@ public class ClassifyFragment extends BaseFragment implements IGetBaseView<Class
 
     @Override
     protected void initData() {
+        ShoppingManager.getInstance().setMainitem(1);
         tbClassify.setTitleBacKGround(Color.WHITE);
         tbClassify.setCenterText("分类",18,Color.BLACK);
 
@@ -120,6 +122,7 @@ public class ClassifyFragment extends BaseFragment implements IGetBaseView<Class
         rvClassifyLeft.setLayoutManager(new LinearLayoutManager(getContext()));
         rvClassifyRight.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        //左侧数据
         titles.add("小裙子");
         titles.add("上衣");
         titles.add("下装");
@@ -152,11 +155,6 @@ public class ClassifyFragment extends BaseFragment implements IGetBaseView<Class
     public void onGetDataFailed(String ErrorMsg) {
         lpClassifyLoading.start(LoadingPage.LOADING_FAILURE);
     }
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        integerPresenter.detachView();
-    }
 
     //开始网络请求加载loading
     @Override
@@ -177,4 +175,11 @@ public class ClassifyFragment extends BaseFragment implements IGetBaseView<Class
             }
         },1000);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        integerPresenter.detachView();
+    }
+
 }

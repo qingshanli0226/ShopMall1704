@@ -242,11 +242,11 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
     protected abstract HashMap<String, String> getHeader();
 
     //返回请求参数
-    protected abstract HashMap<String, String> getParam();
+    protected abstract Map<String, String> getParam();
 
     private Map<String, String> getSign() {
         TreeMap<String, String> emptyTreeMap = SignUtil.getEmptyTreeMap();
-        HashMap<String, String> query = getParam();
+        Map<String, String> query = getParam();
         emptyTreeMap.putAll(query);
         String sign = SignUtil.generateSign(emptyTreeMap);
         emptyTreeMap.put("sign", sign);

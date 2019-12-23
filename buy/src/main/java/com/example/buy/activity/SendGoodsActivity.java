@@ -1,8 +1,11 @@
 package com.example.buy.activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 
@@ -14,6 +17,7 @@ import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IGetBaseView;
 import com.example.framework.manager.ShoppingManager;
+import com.example.framework.manager.UserManager;
 
 import java.util.HashMap;
 
@@ -21,6 +25,7 @@ public class SendGoodsActivity extends BaseActivity implements IGetBaseView<Send
     TitleBar tbSendgoods;
     RecyclerView rvSendgoods;
     private MyShoppingSendAdapter myShoppingSendAdapter;
+    private SendPresenter presenter;
 
     @Override
     protected int setLayout() {
@@ -35,9 +40,36 @@ public class SendGoodsActivity extends BaseActivity implements IGetBaseView<Send
 
     @Override
     public void initData() {
+        boolean loginStatus = UserManager.getInstance().getLoginStatus();
+        if(!loginStatus){
+            setAlertDialog();
+        }
         initTitle();
         initRecycler();
         initData2();
+    }
+
+    private void setAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示：");
+        builder.setMessage("您还没有登录");
+        builder.setPositiveButton("前往登录", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ShoppingManager.getInstance().setMainitem(5);
+                dialogInterface.dismiss();
+                finish();
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                finish();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     private void initData2() {
@@ -45,7 +77,7 @@ public class SendGoodsActivity extends BaseActivity implements IGetBaseView<Send
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("token", token);
 
-        SendPresenter presenter = new SendPresenter("findForSend", SendBean.class, hashMap);
+        presenter = new SendPresenter("findForSend", SendBean.class, hashMap);
         presenter.attachGetView(this);
         presenter.getGetData();
     }
@@ -90,5 +122,13 @@ public class SendGoodsActivity extends BaseActivity implements IGetBaseView<Send
     @Override
     public void onGetDataFailed(String ErrorMsg) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(presenter!=null){
+            presenter.detachView();
+        }
     }
 }

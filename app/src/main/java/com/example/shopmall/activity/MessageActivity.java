@@ -1,15 +1,20 @@
 package com.example.shopmall.activity;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.bean.MessageBean;
 import com.example.framework.manager.MessageManager;
+import com.example.framework.manager.ShoppingManager;
 import com.example.shopmall.R;
 import com.example.shopmall.adapter.MessageItemAdapter;
 import com.yanzhenjie.recyclerview.OnItemMenuClickListener;
@@ -29,6 +34,53 @@ public class MessageActivity extends BaseActivity {
     private TitleBar tbMessage;
     private SwipeRecyclerView srvMessage;
     private MessageItemAdapter messageItemAdapter;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        handler.sendEmptyMessage(100);
+
+    }
+
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+
+            if (msg.what == 100){
+                //数据库获取数据，添加到消息界面
+                final List<MessageBean> messages = MessageManager.getMessageManager().getMessage();
+                if (messages.size() > 0){
+                    messageItemAdapter = new MessageItemAdapter();
+                    messageItemAdapter.reFresh(messages);
+                    srvMessage.setAdapter(messageItemAdapter);
+
+                    messageItemAdapter.setLikeliest(new MessageItemAdapter.Likeliest() {
+                        @Override
+                        public void getLikeliest(int position) {
+                            if (!messages.get(position).getIsMessage()){
+                                Long id = messages.get(position).getId();
+                                messages.get(position).setIsMessage(true);
+                                MessageBean messageBean = new MessageBean();
+                                messageBean.setId(id);
+                                messageBean.setIsMessage(true);
+                                MessageManager.getMessageManager().updateMessage(messageBean);
+                                messageItemAdapter.reFresh(messages);
+                                srvMessage.setAdapter(messageItemAdapter);
+                                messageItemAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    });
+
+                }else {
+                    Toast.makeText(MessageActivity.this, "现在没有消息", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        }
+    };
 
     @Override
     protected int setLayout() {
@@ -91,33 +143,13 @@ public class MessageActivity extends BaseActivity {
         //侧滑点击事件
         srvMessage.setOnItemMenuClickListener(onItemMenuClickListener);
 
+    }
 
-        //数据库获取数据，添加到消息界面
-        final List<MessageBean> messages = MessageManager.getMessageManager().getMessage();
-        if (messages.size() > 0){
-            messageItemAdapter = new MessageItemAdapter(this);
-            messageItemAdapter.reFresh(messages);
-            srvMessage.setAdapter(messageItemAdapter);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
-            messageItemAdapter.setLikeliest(new MessageItemAdapter.Likeliest() {
-                @Override
-                public void getLikeliest(int position) {
-                    if (!messages.get(position).getIsMessage()){
-                        Long id = messages.get(position).getId();
-                        messages.get(position).setIsMessage(true);
-                        MessageBean messageBean = new MessageBean();
-                        messageBean.setId(id);
-                        messageBean.setIsMessage(true);
-                        MessageManager.getMessageManager().updateMessage(messageBean);
-                        messageItemAdapter.reFresh(messages);
-                        srvMessage.setAdapter(messageItemAdapter);
-                        messageItemAdapter.notifyDataSetChanged();
-                    }
-                }
-            });
+        handler.removeCallbacksAndMessages(this);
 
-        }else {
-            Toast.makeText(this, "现在没有消息", Toast.LENGTH_SHORT).show();
-        }
     }
 }

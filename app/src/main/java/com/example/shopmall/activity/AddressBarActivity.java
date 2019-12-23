@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IPostBaseView;
+import com.example.framework.manager.ShoppingManager;
 import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
 import com.example.shopmall.adapter.AddressBarAdapter;
@@ -26,14 +27,22 @@ import com.example.shopmall.presenter.AutoLoginPresenter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 收货地址
+ */
 public class AddressBarActivity extends BaseActivity implements IPostBaseView<AutoLoginBean> {
 
+    //头部导航栏
     private TitleBar tbAddressBar;
+    //RecyclerView显示地址信息
     private RecyclerView rvAddressBar;
+    //点击新建收货地址
     private Button btNewReceivingAddress;
 
+    //用户token
     private String token;
-    private SharedPreferences sharedPreferences;
+    //自动登录
+    private AutoLoginPresenter autoLoginPresenter;
 
     @Override
     protected void onStart() {
@@ -51,7 +60,7 @@ public class AddressBarActivity extends BaseActivity implements IPostBaseView<Au
             if (msg.what == 100){
                 String getToken = UserManager.getInstance().getToken();
 
-                AutoLoginPresenter autoLoginPresenter = new AutoLoginPresenter("autoLogin",getToken);
+                autoLoginPresenter = new AutoLoginPresenter("autoLogin",getToken);
                 autoLoginPresenter.attachPostView(AddressBarActivity.this);
                 autoLoginPresenter.getCipherTextData();
             }
@@ -95,6 +104,7 @@ public class AddressBarActivity extends BaseActivity implements IPostBaseView<Au
             }
         });
 
+        //新建地址
         btNewReceivingAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,7 +128,8 @@ public class AddressBarActivity extends BaseActivity implements IPostBaseView<Au
             rvAddressBar.setAdapter(addressBarAdapter);
         }else {
             Toast.makeText(this, "请先登录", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(AddressBarActivity.this,LoginActivity.class));
+            Intent intent = new Intent(AddressBarActivity.this, LoginActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -130,6 +141,10 @@ public class AddressBarActivity extends BaseActivity implements IPostBaseView<Au
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        if (autoLoginPresenter != null){
+            autoLoginPresenter.detachView();
+        }
 
         handler.removeCallbacksAndMessages(this);
 

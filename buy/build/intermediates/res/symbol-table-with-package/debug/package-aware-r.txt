@@ -981,6 +981,7 @@ id tv_buy_num
 id tv_buy_orderitemnum
 id tv_buy_price
 id tv_buy_shopcartTotal
+id tv_buy_shopcarttotaltitle
 id tv_buy_success
 id tv_buy_symbol
 id tv_buy_title
@@ -1152,6 +1153,7 @@ style AlertDialog_AppCompat_Light
 style Animation_AppCompat_Dialog
 style Animation_AppCompat_DropDownUp
 style Animation_AppCompat_Tooltip
+style AppTheme
 style Base_AlertDialog_AppCompat
 style Base_AlertDialog_AppCompat_Light
 style Base_Animation_AppCompat_Dialog

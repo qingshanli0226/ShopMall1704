@@ -8,6 +8,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_channel"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:numColumns="5" />
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

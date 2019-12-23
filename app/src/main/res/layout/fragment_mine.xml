@@ -8,17 +8,14 @@
     tools:context=".fragment.MineFragment"
     tools:mContext=".fragment.MineFragment">
 
-
     <com.example.common.TitleBar
         android:id="@+id/tb_mine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
@@ -26,7 +23,6 @@
             android:layout_height="170dp"
             android:fitsSystemWindows="true"
             android:theme="@style/Widget.Design.AppBarLayout">
-
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
@@ -65,7 +61,7 @@
                         android:text="@string/mine_text"
                         android:textColor="@color/color_white" />
 
-                </RelativeLayout>
+
 
                     <TextView
                         android:id="@+id/tv_user_name"
@@ -76,18 +72,15 @@
                         android:layout_toEndOf="@id/iv_user_icon_avator"
                         android:background="@null"
                         android:textColor="#B8B8B8" />
+                </RelativeLayout>
 
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-
         </com.google.android.material.appbar.AppBarLayout>
-
 
         <include layout="@layout/nested_scroll"></include>
 
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
 
 </LinearLayout>

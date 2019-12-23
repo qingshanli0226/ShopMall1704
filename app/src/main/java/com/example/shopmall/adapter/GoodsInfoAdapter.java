@@ -1,8 +1,11 @@
 package com.example.shopmall.adapter;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -12,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.framework.base.BaseAdapter;
 import com.example.net.Constant;
+import com.example.shopmall.MyApplication;
 import com.example.shopmall.R;
 import com.example.shopmall.bean.GoodsBean;
 import java.util.List;
@@ -20,6 +24,15 @@ import java.util.List;
  * Goods适配器
  */
 public class GoodsInfoAdapter extends BaseAdapter<GoodsBean,GoodsInfoAdapter.ViewHolder> {
+
+    private Context context;
+
+    public GoodsInfoAdapter(Context context) {
+        this.context = context;
+    }
+
+    private WebView wbFigureGoodsInfo;
+    private WebView wbAtguiguGoodsInfo;
 
     @Override
     protected GoodsInfoAdapter.ViewHolder getViewHolder(View view, int viewType) {
@@ -41,12 +54,10 @@ public class GoodsInfoAdapter extends BaseAdapter<GoodsBean,GoodsInfoAdapter.Vie
         return 0;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private WebView wbFigureGoodsInfo;
         private TextView tvGoodsName;
         private TextView tvCoverPrice;
-        private WebView wbAtguiguGoodsInfo;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -59,6 +70,22 @@ public class GoodsInfoAdapter extends BaseAdapter<GoodsBean,GoodsInfoAdapter.Vie
 
         @SuppressLint("SetTextI18n")
         private void setData(final List<GoodsBean> goodsBeans, final int position) {
+            //webview优化
+            WebSettings settings = wbFigureGoodsInfo.getSettings();
+            settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+
+            settings.setDomStorageEnabled(true);
+
+            settings.setDatabaseEnabled(true);
+            final String dbPath = context.getDir("db", Context.MODE_PRIVATE).getPath();
+            settings.setDatabasePath(dbPath);
+
+            settings.setAppCacheEnabled(true);
+            final String cachePath = context.getDir("cache", Context.MODE_PRIVATE).getPath();
+            settings.setAppCachePath(cachePath);
+            settings.setAppCacheMaxSize(5*1024*1024);
+
+            settings.setJavaScriptEnabled(true);
             //图片WebView
             wbFigureGoodsInfo.loadUrl(Constant.BASE_URL_IMAGE + goodsBeans.get(position).getFigure());
 
@@ -74,6 +101,21 @@ public class GoodsInfoAdapter extends BaseAdapter<GoodsBean,GoodsInfoAdapter.Vie
 
             tvCoverPrice.setText("￥" + goodsBeans.get(position).getCover_price());
 
+            WebSettings webSettings = wbFigureGoodsInfo.getSettings();
+            webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+
+            webSettings.setDomStorageEnabled(true);
+
+            webSettings.setDatabaseEnabled(true);
+            final String db = MyApplication.getContext().getDir("db", Context.MODE_PRIVATE).getPath();
+            webSettings.setDatabasePath(db);
+
+            webSettings.setAppCacheEnabled(true);
+            final String cache = MyApplication.getContext().getDir("cache", Context.MODE_PRIVATE).getPath();
+            webSettings.setAppCachePath(cache);
+            webSettings.setAppCacheMaxSize(5*1024*1024);
+
+            settings.setJavaScriptEnabled(true);
             //详情WebView
             wbAtguiguGoodsInfo.loadUrl("http://www.atguigu.com");
 
@@ -84,7 +126,19 @@ public class GoodsInfoAdapter extends BaseAdapter<GoodsBean,GoodsInfoAdapter.Vie
                     return true;
                 }
             });
+        }
+    }
 
+    public void getWebView(){
+        if (wbFigureGoodsInfo != null){
+            wbFigureGoodsInfo.removeAllViews();
+            wbFigureGoodsInfo.destroy();
+            wbFigureGoodsInfo = null;
+        }
+        if (wbAtguiguGoodsInfo != null){
+            wbAtguiguGoodsInfo.removeAllViews();
+            wbAtguiguGoodsInfo.destroy();
+            wbAtguiguGoodsInfo = null;
         }
     }
 

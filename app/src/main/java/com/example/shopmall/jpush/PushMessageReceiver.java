@@ -76,11 +76,7 @@ public class PushMessageReceiver extends JPushMessageReceiver {
 //        Log.e("####", message.notificationContent);//接受消息的内容
 //        Log.e("####", message.notificationTitle);//接受消息的标题
 
-        MessageBean messageBean = new MessageBean();
-        messageBean.setIsMessage(false);
-        messageBean.setNameMessage(message.notificationTitle);
-        messageBean.setContentMessage(message.notificationContent);
-        MessageManager.getMessageManager().addMessage(messageBean);
+       MessageManager.getMessageManager().setMessageManager(message.notificationTitle,message.notificationContent);
 
     }
 

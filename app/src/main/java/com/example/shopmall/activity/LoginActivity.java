@@ -27,6 +27,7 @@ import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IPostBaseView;
 import com.example.framework.bean.ResultBean;
+import com.example.framework.manager.ShoppingManager;
 import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
 import com.example.framework.bean.LoginBean;
@@ -112,7 +113,6 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
         tbLogin.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
             public void LeftClick() {
-                startActivity(new Intent(LoginActivity.this,MainActivity.class));
                 finish();
             }
 
@@ -127,6 +127,7 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
             }
         });
 
+        //自动登录
         mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -144,6 +145,7 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
             }
         });
 
+        //登录
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -156,6 +158,7 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
             }
         });
 
+        //注册
         btLoginRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -164,7 +167,7 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
             }
         });
 
-
+        //密码显示隐藏
         ivLoginWord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -183,6 +186,7 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
         });
     }
 
+    //密码光标在最后
     private void initSelection() {
         if (etLoginWord.getText().length() == 0) {
             etLoginWord.setSelection(0);
@@ -221,6 +225,7 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
                 }
             }.start();
             startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            ShoppingManager.getInstance().setMainitem(4);
             finish();
         } else {
             LoginEvent loginEvent = new LoginEvent("用户登录", false);

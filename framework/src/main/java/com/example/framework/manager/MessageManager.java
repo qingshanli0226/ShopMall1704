@@ -51,6 +51,16 @@ public class MessageManager {
         return messageBeans;
     }
 
+    //提供接口回调数据库存储
+    public void setMessageManager(String nameMessage,String contentMessage){
+        MessageBean messageBean = new MessageBean();
+        messageBean.setName("");
+        messageBean.setIsMessage(false);
+        messageBean.setNameMessage(nameMessage);
+        messageBean.setContentMessage(contentMessage);
+        addMessage(messageBean);
+    }
+
     //管理类初始化
     public void init(Context context){
         SQLiteDatabase sqLiteDatabase = new DaoMaster.DevOpenHelper(context, "message.db").getWritableDatabase();

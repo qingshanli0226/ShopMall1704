@@ -2,7 +2,6 @@ package com.example.shopmall.bean;
 
 public class AutoLoginBean {
 
-
     /**
      * code : 200
      * message : 登录成功

@@ -2,6 +2,7 @@ package com.example.shopmall.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
@@ -10,6 +11,7 @@ import android.view.Display;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -21,6 +23,7 @@ import com.example.common.BottomBar;
 import com.example.common.ShoppingCartView;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.manager.ShoppingManager;
+import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
 import com.example.framework.service.StepLocalService;
 import com.example.framework.service.StepRemoteService;
@@ -45,13 +48,13 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
     //记录当前正在显示的Fragment
     private Fragment currentFragment;
 
+    //底部导航
     private BottomBar bbMain;
 
     //购物车商品数量
     private int allNumber;
 
     private ShoppingCartView mRedMessage;
-    private RelativeLayout mRlBottom;
     private ShoppingCartPresenter shoppingCartPresenter;
 
     @Override
@@ -62,7 +65,6 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
     public void initView() {
         bbMain = findViewById(R.id.bb_main);
         mRedMessage = findViewById(R.id.shopping_message);
-        mRlBottom = findViewById(R.id.rl_main);
         fragmentArrayList.add(new HomePageFragment());
         fragmentArrayList.add(new ClassifyFragment());
         fragmentArrayList.add(new HorizontalFragment());
@@ -78,9 +80,13 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
     protected void onResume() {
         super.onResume();
         int mainitem = ShoppingManager.getInstance().getMainitem();
-        bbMain.setCheckedItem(mainitem);
-        if (mainitem == 3) {
-            refreshShoppingCartData();
+        if(mainitem==5){
+            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+        }else {
+            bbMain.setCheckedItem(mainitem);
+            if (mainitem == 3) {
+                refreshShoppingCartData();
+            }
         }
     }
 
@@ -89,6 +95,7 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
 
 
         ShoppingManager.getInstance().setOnNumberChangedListener(this);
+        refreshShoppingCartData();
         //获取购物车商品数量
         allNumber = ShoppingManager.getInstance().getAllNumber();
         mRedMessage.setNum(allNumber);
@@ -129,13 +136,16 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
 
 
     public void refreshShoppingCartData() {
-        String token = ShoppingManager.getInstance().getToken(MainActivity.this);
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("token", token);
+        boolean loginStatus = UserManager.getInstance().getLoginStatus();
+        if(loginStatus){
+            String token = ShoppingManager.getInstance().getToken(MainActivity.this);
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("token", token);
 
-        shoppingCartPresenter = new ShoppingCartPresenter("getShortcartProducts", ShoppingCartBean.class, hashMap);
-        shoppingCartPresenter.attachGetView((ShoppingCartFragment) fragmentArrayList.get(3));
-        shoppingCartPresenter.getGetData();
+            ShoppingCartPresenter presenter = new ShoppingCartPresenter("getShortcartProducts", ShoppingCartBean.class, hashMap);
+            presenter.attachGetView((ShoppingCartFragment) fragmentArrayList.get(3));
+            presenter.getGetData();
+        }
     }
 
     private MessageReceiver mMessageReceiver;

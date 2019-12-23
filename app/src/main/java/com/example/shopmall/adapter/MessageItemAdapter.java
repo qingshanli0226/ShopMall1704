@@ -19,12 +19,6 @@ import java.util.List;
  */
 public class MessageItemAdapter extends BaseAdapter<MessageBean,MessageItemAdapter.ViewHolder> {
 
-    private Context mContext;
-
-    public MessageItemAdapter(Context mContext) {
-        this.mContext = mContext;
-    }
-
     @Override
     protected ViewHolder getViewHolder(View view, int viewType) {
         return new ViewHolder(view);
@@ -83,12 +77,6 @@ public class MessageItemAdapter extends BaseAdapter<MessageBean,MessageItemAdapt
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    MessageBean bean = messageBeans.get(position);
-//                    MessageBean messageBean = new MessageBean();
-//                    messageBean.setId(bean.getId());
-//                    messageBean.setIsMessage(false);
-//                    MessageManager.getAddressBarManager().updateMessage(messageBean);
-//                    notifyDataSetChanged();
                     likeliest.getLikeliest(position);
                 }
             });

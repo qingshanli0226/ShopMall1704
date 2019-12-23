@@ -1,7 +1,6 @@
 package com.example.framework.base;
 
 import android.Manifest;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,9 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.example.framework.R;
 import com.example.framework.manager.AppActivityManager;
-
-import retrofit2.http.HEAD;
 
 /**
  * base类
@@ -32,6 +30,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme); //切换正常主题
         super.onCreate(savedInstanceState);
         setContentView(setLayout());
         AppActivityManager.addActivity(this);

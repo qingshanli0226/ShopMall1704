@@ -7,6 +7,9 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
+/**
+ * 首页
+ */
 public class WelcomePresenter extends BasePresenter<HomepageBean> {
 
     @Override

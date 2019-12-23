@@ -25,9 +25,10 @@ public class MessageBeanDao extends AbstractDao<MessageBean, Long> {
      */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property IsMessage = new Property(1, boolean.class, "isMessage", false, "IS_MESSAGE");
-        public final static Property NameMessage = new Property(2, String.class, "nameMessage", false, "NAME_MESSAGE");
-        public final static Property ContentMessage = new Property(3, String.class, "contentMessage", false, "CONTENT_MESSAGE");
+        public final static Property Name = new Property(1, String.class, "name", false, "NAME");
+        public final static Property IsMessage = new Property(2, boolean.class, "isMessage", false, "IS_MESSAGE");
+        public final static Property NameMessage = new Property(3, String.class, "nameMessage", false, "NAME_MESSAGE");
+        public final static Property ContentMessage = new Property(4, String.class, "contentMessage", false, "CONTENT_MESSAGE");
     }
 
 
@@ -44,9 +45,10 @@ public class MessageBeanDao extends AbstractDao<MessageBean, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"MESSAGE_BEAN\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"IS_MESSAGE\" INTEGER NOT NULL ," + // 1: isMessage
-                "\"NAME_MESSAGE\" TEXT," + // 2: nameMessage
-                "\"CONTENT_MESSAGE\" TEXT);"); // 3: contentMessage
+                "\"NAME\" TEXT," + // 1: name
+                "\"IS_MESSAGE\" INTEGER NOT NULL ," + // 2: isMessage
+                "\"NAME_MESSAGE\" TEXT," + // 3: nameMessage
+                "\"CONTENT_MESSAGE\" TEXT);"); // 4: contentMessage
     }
 
     /** Drops the underlying database table. */
@@ -63,16 +65,21 @@ public class MessageBeanDao extends AbstractDao<MessageBean, Long> {
         if (id != null) {
             stmt.bindLong(1, id);
         }
-        stmt.bindLong(2, entity.getIsMessage() ? 1L: 0L);
+ 
+        String name = entity.getName();
+        if (name != null) {
+            stmt.bindString(2, name);
+        }
+        stmt.bindLong(3, entity.getIsMessage() ? 1L: 0L);
  
         String nameMessage = entity.getNameMessage();
         if (nameMessage != null) {
-            stmt.bindString(3, nameMessage);
+            stmt.bindString(4, nameMessage);
         }
  
         String contentMessage = entity.getContentMessage();
         if (contentMessage != null) {
-            stmt.bindString(4, contentMessage);
+            stmt.bindString(5, contentMessage);
         }
     }
 
@@ -84,16 +91,21 @@ public class MessageBeanDao extends AbstractDao<MessageBean, Long> {
         if (id != null) {
             stmt.bindLong(1, id);
         }
-        stmt.bindLong(2, entity.getIsMessage() ? 1L: 0L);
+ 
+        String name = entity.getName();
+        if (name != null) {
+            stmt.bindString(2, name);
+        }
+        stmt.bindLong(3, entity.getIsMessage() ? 1L: 0L);
  
         String nameMessage = entity.getNameMessage();
         if (nameMessage != null) {
-            stmt.bindString(3, nameMessage);
+            stmt.bindString(4, nameMessage);
         }
  
         String contentMessage = entity.getContentMessage();
         if (contentMessage != null) {
-            stmt.bindString(4, contentMessage);
+            stmt.bindString(5, contentMessage);
         }
     }
 
@@ -106,9 +118,10 @@ public class MessageBeanDao extends AbstractDao<MessageBean, Long> {
     public MessageBean readEntity(Cursor cursor, int offset) {
         MessageBean entity = new MessageBean( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.getShort(offset + 1) != 0, // isMessage
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // nameMessage
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // contentMessage
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
+            cursor.getShort(offset + 2) != 0, // isMessage
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // nameMessage
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // contentMessage
         );
         return entity;
     }
@@ -116,9 +129,10 @@ public class MessageBeanDao extends AbstractDao<MessageBean, Long> {
     @Override
     public void readEntity(Cursor cursor, MessageBean entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setIsMessage(cursor.getShort(offset + 1) != 0);
-        entity.setNameMessage(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setContentMessage(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setIsMessage(cursor.getShort(offset + 2) != 0);
+        entity.setNameMessage(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setContentMessage(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
      }
     
     @Override

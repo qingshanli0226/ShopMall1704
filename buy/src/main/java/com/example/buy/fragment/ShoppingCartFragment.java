@@ -61,6 +61,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     RecyclerView mRecyclerview;
     RelativeLayout shoppingcartlayout;
     TextView tvShopcartTotal;
+    TextView tvShopcarttotaltitle;
     CheckBox checkboxAll;
     CheckBox cbAll;
     LinearLayout llDelete;
@@ -109,6 +110,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         }
     };
     private InsertPresenter addOneProduct;
+    private ShoppingCartPresenter presenter;
 
     @Override
     public void onResume() {
@@ -126,14 +128,29 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             mRecyclerview.setVisibility(View.INVISIBLE);
             myShoppingManager.setisSetting(true);
             settingChanged();
+            btnCheckOut.setBackgroundColor(Color.GRAY);
+            btnCheckOut.setButtonEnabled(false);
+            tbShoppingCart.setRightText("", 14, Color.GRAY);
+            checkboxAll.setVisibility(View.INVISIBLE);
+            ivShoppingCart.setVisibility(View.INVISIBLE);
+            tvShopcartTotal.setVisibility(View.INVISIBLE);
+            tvShopcarttotaltitle.setVisibility(View.INVISIBLE);
         } else {
             mRecyclerview.setVisibility(View.VISIBLE);
+            btnCheckOut.setBackgroundColor(getResources().getColor(R.color.color_lightred));
+            btnCheckOut.setButtonEnabled(true);
+            tbShoppingCart.setRightText("编辑", 14, Color.BLACK);
+            checkboxAll.setVisibility(View.VISIBLE);
+            ivShoppingCart.setVisibility(View.VISIBLE);
+            tvShopcartTotal.setVisibility(View.VISIBLE);
+            tvShopcarttotaltitle.setVisibility(View.VISIBLE);
         }
     }
 
     //初始化数据
     @Override
     protected void initData() {
+        ShoppingManager.getInstance().setMainitem(3);
         initData2();
         setCheckAll();
         setSetting();
@@ -199,7 +216,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             public void RightClick() {
                 int allNumber = myShoppingManager.getAllNumber();
                 if (allNumber == 0) {
-                    Toast.makeText(getContext(), "购物车内空空的,快去加点什么吧~~", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "购物车内空空的,快去加点什么吧~~", Toast.LENGTH_SHORT).show();
                 } else {
                     settingChanged();
                 }
@@ -380,7 +397,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("token", token);
 
-        ShoppingCartPresenter presenter = new ShoppingCartPresenter("getShortcartProducts", ShoppingCartBean.class, hashMap);
+        presenter = new ShoppingCartPresenter("getShortcartProducts", ShoppingCartBean.class, hashMap);
         presenter.attachGetView(this);
         presenter.attachLoadView(this);
         presenter.getGetData();
@@ -388,8 +405,8 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
 
     //设置TitleBar
     protected void setTitleBar() {
-        tbShoppingCart.setCenterText("购物车", 18, Color.RED);
-        tbShoppingCart.setRightText("编辑", 14, Color.BLACK);
+        tbShoppingCart.setCenterText("购物车", 18, Color.BLACK);
+        tbShoppingCart.setRightText("编辑", 14, Color.BLUE);
     }
 
     //初始化控件
@@ -400,6 +417,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         mRecyclerview = view.findViewById(R.id.rv_buy_shoppingcart);
         shoppingcartlayout = view.findViewById(R.id.rl_buy_shoppingcartlayout);
         tvShopcartTotal = view.findViewById(R.id.tv_buy_shopcartTotal);
+        tvShopcarttotaltitle = view.findViewById(R.id.tv_buy_shopcarttotaltitle);
         checkboxAll = view.findViewById(R.id.cb_buy_checkboxAll);
         llDelete = view.findViewById(R.id.ll_buy_delete);
         llCheckAll = view.findViewById(R.id.ll_buy_checkall);
@@ -429,8 +447,10 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
                         data2.add(map);
                     }
                 }
-                myShoppingManager.setBuyThings(data2);
-                startActivity(new Intent(getContext(), OrderActivity.class));
+                if(data2.size()!=0){
+                    myShoppingManager.setBuyThings(data2);
+                    startActivity(new Intent(getContext(), OrderActivity.class));
+                }
             }
         });
     }
@@ -605,6 +625,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     //购物车数据网址连接成功
     @Override
     public void onGetDataSucess(ShoppingCartBean data) {
+        myShoppingManager = ShoppingManager.getInstance();
         List<Map<String, String>> data2 = new ArrayList<>();
         List<ShoppingCartBean.ResultBean> result = data.getResult();
         double allcount1 = 0;
@@ -650,25 +671,27 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             data2.add(map);
         }
 
-        myShoppingBasketAdapter.reFresh(data2);
         myShoppingManager.setData(data2);
-        judgeNumberisZero();
+
         myShoppingManager.setAllCount(allcount1);
-        myShoppingBasketAdapter.setCheckedcount(checkedcount1);
-        myShoppingBasketAdapter.setAllcount(allcount1);
-
-        if (checkedcount1 == data2.size()) {
-            checkboxAll.setChecked(true);
-        } else {
-            checkboxAll.setChecked(false);
-        }
-
-        tvShopcartTotal.setText("￥" + allcount1 + "0");
 
         int allNumber = myShoppingManager.getAllNumber();
         int myallNumber = allNumber1 - allNumber;
 
         myShoppingManager.setOnNumberChanged(myallNumber);
+
+        if(myShoppingBasketAdapter!=null){
+            myShoppingBasketAdapter.reFresh(data2);
+            judgeNumberisZero();
+            myShoppingBasketAdapter.setCheckedcount(checkedcount1);
+            myShoppingBasketAdapter.setAllcount(allcount1);
+            if (checkedcount1 == data2.size()) {
+                checkboxAll.setChecked(true);
+            } else {
+                checkboxAll.setChecked(false);
+            }
+            tvShopcartTotal.setText("￥" + allcount1 + "0");
+        }
     }
 
     //购物车数据网址连接失败
@@ -701,5 +724,16 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     @Override
     public void onStopLoadingPage() {
         handler.sendEmptyMessageDelayed(300, 1000);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(addOneProduct!=null){
+            addOneProduct.detachView();
+        }
+        if(presenter!=null){
+            presenter.detachView();
+        }
     }
 }

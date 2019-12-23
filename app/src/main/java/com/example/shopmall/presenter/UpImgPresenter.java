@@ -14,10 +14,13 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
+/**
+ * 上传头像
+ */
 public class UpImgPresenter extends BasePresenter<RegisterBean> {
 
-    String uri;
-    String token;
+    private String uri;
+    private String token;
 
     public UpImgPresenter(String uri, String token) {
         this.uri = uri;

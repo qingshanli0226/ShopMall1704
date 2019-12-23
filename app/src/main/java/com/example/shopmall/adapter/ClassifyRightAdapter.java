@@ -80,6 +80,7 @@ public class ClassifyRightAdapter extends BaseAdapter<ClassifyBean.ResultBean,Cl
                     GoodsBean goodsBean = new GoodsBean(name, cover_price, figure, product_id);
                     Intent intent = new Intent(mContext,GoodsInfoActivity.class);
                     intent.putExtra("goods_bean",goodsBean);
+                    intent.putExtra("mainitem",1);
                     mContext.startActivity(intent);
                 }
             });

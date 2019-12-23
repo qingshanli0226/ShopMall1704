@@ -93,8 +93,6 @@ public class RegisterActivity extends BaseActivity implements IPostBaseView<Regi
         tbRegister.setLeftImg(R.drawable.left);
         tbRegister.setCenterText("注册", 18, Color.BLACK);
 
-
-
         tbRegister.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
             public void LeftClick() {
@@ -112,6 +110,7 @@ public class RegisterActivity extends BaseActivity implements IPostBaseView<Regi
             }
         });
 
+        //注册
         btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,6 +125,7 @@ public class RegisterActivity extends BaseActivity implements IPostBaseView<Regi
             }
         });
 
+        //自动登录按钮
         ivWord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

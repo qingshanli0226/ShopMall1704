@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
@@ -62,15 +63,23 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
     @Override
     public void initData() {
 
-         for (int i=0;i<prems.length;i++){
-             if(checkSelfPermission(prems[i])!= PackageManager.PERMISSION_GRANTED){
-                 isJump=false;
-                 requestPermissions(prems,100);
-             }else{
+         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+             for (int i=0;i<prems.length;i++){
 
-             isJump=true;
+                 if(  checkSelfPermission(prems[i])
+                         != PackageManager.PERMISSION_GRANTED){
+                     isJump=false;
+                     requestPermissions(prems,100);
+                 }else{
+
+                     isJump=true;
+                 }
              }
+         }else{
+             JumpActivity();
+
          }
+
 
          if(isJump==true){
             JumpActivity();
@@ -161,7 +170,9 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
     protected void onDestroy() {
         super.onDestroy();
 
-        integerPresenter.detachView();
+        if (integerPresenter != null){
+            integerPresenter.detachView();
+        }
 
         handler.removeCallbacksAndMessages(this);
 

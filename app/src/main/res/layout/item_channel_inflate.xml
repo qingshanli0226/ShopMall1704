@@ -20,4 +20,5 @@
         android:gravity="center_horizontal"
         android:text="硅谷视频"
         style="@style/ShopMallText" />
+
 </LinearLayout>

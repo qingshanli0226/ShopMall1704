@@ -10,22 +10,35 @@ import android.widget.Toast;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IPostBaseView;
+import com.example.framework.manager.ShoppingManager;
 import com.example.shopmall.R;
 import com.example.shopmall.bean.AddressBean;
 import com.example.shopmall.presenter.AddressPresenter;
 import com.example.shopmall.presenter.LocationPresenter;
 
+/**
+ * 新建收货地址
+ */
 public class LocationActivity extends BaseActivity implements IPostBaseView<AddressBean> {
 
+    //头部导航
     private TitleBar tbLocation;
+    //收货人
     private EditText etConsignee;
+    //手机号
     private EditText etCellPhoneNumber;
+    //所在地区
     private EditText etLocation;
+    //详细地址
     private EditText etDetailed;
+    //保存
     private Button btLocationInflate;
 
+    //登录用户token
     private String token;
+    //上传手机号的presenter
     private AddressPresenter addressPresenter;
+    //上传地址的presenter
     private LocationPresenter locationPresenter;
 
     @Override
@@ -69,6 +82,7 @@ public class LocationActivity extends BaseActivity implements IPostBaseView<Addr
             }
         });
 
+        //新建地址上传到服务器
         btLocationInflate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,6 +106,10 @@ public class LocationActivity extends BaseActivity implements IPostBaseView<Addr
     @Override
     public void onPostDataSucess(AddressBean data) {
         if (data.getCode().equals("200")){
+            etConsignee.setText("");
+            etCellPhoneNumber.setText("");
+            etLocation.setText("");
+            etDetailed.setText("");
             Toast.makeText(this, "新建成功", Toast.LENGTH_SHORT).show();
             finish();
         }
@@ -106,8 +124,9 @@ public class LocationActivity extends BaseActivity implements IPostBaseView<Addr
     protected void onDestroy() {
         super.onDestroy();
 
-        addressPresenter.detachView();
-        locationPresenter.detachView();
-
+        if (addressPresenter != null && locationPresenter != null){
+            addressPresenter.detachView();
+            locationPresenter.detachView();
+        }
     }
 }

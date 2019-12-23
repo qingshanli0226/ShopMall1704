@@ -10,6 +10,9 @@ public class MessageBean {
     @Id(autoincrement = true)
     private Long id;
 
+    //用户
+    private String name;
+
     //消息是否读取
     private boolean isMessage;
 
@@ -22,10 +25,11 @@ public class MessageBean {
     public MessageBean() {
     }
 
-    @Generated(hash = 1939778456)
-    public MessageBean(Long id, boolean isMessage, String nameMessage,
+    @Generated(hash = 1123981566)
+    public MessageBean(Long id, String name, boolean isMessage, String nameMessage,
             String contentMessage) {
         this.id = id;
+        this.name = name;
         this.isMessage = isMessage;
         this.nameMessage = nameMessage;
         this.contentMessage = contentMessage;
@@ -61,5 +65,13 @@ public class MessageBean {
 
     public void setContentMessage(String contentMessage) {
         this.contentMessage = contentMessage;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
