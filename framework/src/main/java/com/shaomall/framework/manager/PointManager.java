@@ -3,6 +3,7 @@ package com.shaomall.framework.manager;
 public class PointManager {
     private static PointManager instance;
     private CallbackIntegralListener callbackIntegralListener = null;
+    //老的积分
     private long oldPoint = 0;
 
     private PointManager() {

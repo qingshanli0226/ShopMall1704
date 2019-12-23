@@ -295,6 +295,8 @@ public class ShoppingManager {
     }
 
 
+
+
     //设置监听
     public void registerShoppingNumChangeListener(ShoppingNumChangeListener listener) {
         if (!shoppingNumChangeListeners.contains(listener)) {

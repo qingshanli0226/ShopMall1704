@@ -151,9 +151,9 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
                     if (daychange == day) {
                         //TODO 还是同一天
                         //TODO step代表和上一次运行相差了多少步
-                        long step = sp.getLong("step", 0);
+                       // long step = sp.getLong("step", 0);
                         //TODO 这个是算出程序没有运行期间走了多少步
-                        plus=X-step;
+                        //plus=X-step;
                     } else {
                         //TODO 不是同一天了
                         daychange = day;
