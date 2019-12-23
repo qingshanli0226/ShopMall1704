@@ -6,27 +6,27 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="17"
-8-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml
+8-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml
 9        android:targetSdkVersion="29" />
-9-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml
+9-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml
 10
 11    <application>
-11-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:5:5-19:19
+11-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:5:5-19:19
 12        <activity android:name="com.example.step.Ui.HistoryActivity" >
-12-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:6:9-8:20
-12-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:6:19-53
+12-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:6:9-8:20
+12-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:6:19-53
 13        </activity>
 14        <activity
-14-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:9:9-13:20
+14-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:9:9-13:20
 15            android:name="com.example.step.Ui.IntegralActivity"
-15-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:9:19-54
+15-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:9:19-54
 16            android:screenOrientation="portrait" >
-16-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:10:13-49
+16-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:10:13-49
 17        </activity>
 18
 19        <service android:name="com.example.framework.service.StepService" >
-19-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:15:9-18:19
-19-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:15:18-74
+19-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:15:9-18:19
+19-->D:\Android_WorkSpace\ShopMall1704\step\src\main\AndroidManifest.xml:15:18-74
 20        </service>
 21    </application>
 22
