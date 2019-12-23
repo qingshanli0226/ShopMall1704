@@ -59,7 +59,7 @@ public interface NetApiService {
      * @return
      */
     @Multipart
-    @POST
+    @POST(AppNetConfig.UPLOAD_HEAD_ICON_URL)
     Observable<ResponseBody> upload(@Part MultipartBody.Part file);
 
     /**

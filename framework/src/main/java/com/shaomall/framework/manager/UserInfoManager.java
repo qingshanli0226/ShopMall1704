@@ -14,7 +14,10 @@ public class UserInfoManager {
     private static UserInfoManager instance;
     private ACache aCache;
     private SharedPreferences sharedPreferences;
-    private LinkedList<UserInfoStatusListener> userInfoStatusListeners = new LinkedList<>();
+    private final LinkedList<UserInfoStatusListener> userInfoStatusListeners = new LinkedList<>();
+    private LinkedList<AvatarUpdateListener> avatarUpdateListeners = new LinkedList<>();
+    private AvatarUpdateListener avatarUpdateListener;
+
 
     private UserInfoManager() {
     }
@@ -33,6 +36,8 @@ public class UserInfoManager {
     public void init(Context context, ACache aCache) {
         this.mContext = context;
         this.aCache = aCache;
+
+
         sharedPreferences = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         TokenUtil.sharedPreferences = sharedPreferences;
     }
@@ -111,6 +116,14 @@ public class UserInfoManager {
         return null;
     }
 
+    public LoginBean upDataAvater(String path) {
+        LoginBean loginBean = readUserInfo();
+        loginBean.setAvatar(path);
+        aCache.put("userInfo", loginBean); //缓存用户信息
+        notifyUserAvatarUpdate(path);
+        return readUserInfo();
+    }
+
 
     /**
      * 注册监听
@@ -140,5 +153,45 @@ public class UserInfoManager {
      */
     public interface UserInfoStatusListener {
         void onUserStatus(boolean isLogin, LoginBean userInfo);//用户登录状态
+
+
+    }
+
+
+    /**
+     * 注册监听
+     *
+     * @param avatarUpdateListener
+     */
+    public void registerAvatarUpdateListener(AvatarUpdateListener avatarUpdateListener) {
+        if (!avatarUpdateListeners.contains(avatarUpdateListener)) {
+            avatarUpdateListeners.add(avatarUpdateListener);
+        }
+    }
+
+
+    /**
+     * 注销监听
+     *
+     * @param avatarUpdateListener
+     */
+    public void unRegisterAvatarUpdateListener(AvatarUpdateListener avatarUpdateListener) {
+        if (avatarUpdateListeners.contains(avatarUpdateListener)) {
+            avatarUpdateListeners.remove(avatarUpdateListener);
+        }
+    }
+
+    public interface AvatarUpdateListener {
+        void onAvatarUpdate(String path);
+    }
+
+
+    //TODO 更新头像后通知
+    private void notifyUserAvatarUpdate(String path) {
+        synchronized (userInfoStatusListeners) {
+            for (AvatarUpdateListener updateListener : avatarUpdateListeners) {
+                updateListener.onAvatarUpdate(path);
+            }
+        }
     }
 }

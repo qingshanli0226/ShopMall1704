@@ -3,13 +3,13 @@
     package="com.example.remindsteporgan">
 
     <application>
-        <activity android:name=".RemindActivity"></activity>
+        <activity android:name=".RemindActivity" />
 
         <service
             android:name=".Util.LiveService"
             android:process=":live_service" />
 
-        <activity android:name=".HistoryActivity"></activity>
+        <activity android:name=".HistoryActivity" />
     </application>
 
 </manifest>

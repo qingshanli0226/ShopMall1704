@@ -2,6 +2,7 @@ package com.example.administrator.shaomall.mine;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -27,7 +29,9 @@ import com.shaomall.framework.manager.PointManager;
 import com.shaomall.framework.manager.ShoppingManager;
 import com.shaomall.framework.manager.UserInfoManager;
 
-public class MineFragment extends BaseMVPFragment<String> implements View.OnClickListener, UserInfoManager.UserInfoStatusListener, PointManager.CallbackIntegralListener {
+import java.io.File;
+
+public class MineFragment extends BaseMVPFragment<String> implements View.OnClickListener, UserInfoManager.UserInfoStatusListener, PointManager.CallbackIntegralListener, UserInfoManager.AvatarUpdateListener {
     private android.widget.ImageView mIvHeader;
     private android.widget.TextView mTvUserName;
     private android.widget.Button mBtLogout;
@@ -41,6 +45,8 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
     private android.widget.LinearLayout mLlLayoutShow;
     private TextView mTvUserSetting;
     private ImageView mIvMessage;
+    private String avatar;
+    private int pointSum;
 
     @Override
     public int setLayoutId() {
@@ -51,9 +57,12 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
     protected void initView(View view, Bundle savedInstanceState) {
         //注册登录监听
         UserInfoManager.getInstance().registerUserInfoStatusListener(this);
-        userInfoManager = UserInfoManager.getInstance(); //用户信息管理类
         //积分更新
         PointManager.getInstance().registerCallbackIntegralListener(this);
+        //头像监听
+        UserInfoManager.getInstance().registerAvatarUpdateListener(this);
+
+        userInfoManager = UserInfoManager.getInstance(); //用户信息管理类
 
 
         mTvUserSetting = (TextView) view.findViewById(R.id.tv_userSetting); //设置
@@ -89,11 +98,11 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
     @Override
     protected void initData() {
         super.initData();
+
         //展示用户信息
         setUserData();
 
-        //积分更新
-        PointManager.getInstance().registerCallbackIntegralListener(this);
+
     }
 
 
@@ -111,7 +120,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
 
                 Bundle bundle=new Bundle();
                 bundle.putString("name",mTvUserName.getText().toString());
-                bundle.putString("head",mIvHeader.toString());
+                bundle.putString("head",AppNetConfig.BASE_URL+avatar);
                 toClass(SettingActivity.class,bundle);
                 break;
             case R.id.iv_message:   //消息界面
@@ -195,25 +204,27 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
      * 设置用户数据
      */
     private void setUserData() {
+
         //判断是否处于登录状态
         if (userInfoManager.isLogin()) {
             showLayoutInfo(true); //显示界面
-
+            mTvPoint.setText("积分: " + pointSum);
             LoginBean loginBean = userInfoManager.readUserInfo();
             String address = (String) loginBean.getAddress();    //获取地址
-            String avatar = (String) loginBean.getAvatar();  //获得头像
+            //获得头像
+            avatar = (String) loginBean.getAvatar();
             String email = (String) loginBean.getEmail();    //取得电子邮件
             String money = (String) loginBean.getMoney();    //得到钱
             String name = loginBean.getName();      //得到名字
             String phone = (String) loginBean.getPhone();    //取得电话
             point = (String) loginBean.getPoint();  //获得积分
             //Log.d("WQS: ",point);
-            //设置头像
+            //TODO 设置头像
             if (avatar == null) {
                 avatar = "http://img5.imgtn.bdimg.com/it/u=1441588315,1666293982&fm=26&gp=0.jpg";
                 Glide.with(mContext).load(avatar).apply(RequestOptions.circleCropTransform()).into(mIvHeader);
             } else {
-                Glide.with(mContext).load(avatar).apply(RequestOptions.circleCropTransform()).into(mIvHeader);
+                Glide.with(mContext).load(AppNetConfig.BASE_URL+avatar).apply(RequestOptions.circleCropTransform()).into(mIvHeader);
             }
             //这是昵称
             mTvUserName.setText(name);
@@ -250,9 +261,10 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
      *
      * @param pointNum
      */
+    @SuppressLint("SetTextI18n")
     @Override
     public void onCallbacksIntegral(int pointNum) {
-        int pointSum = Integer.parseInt(point) + pointNum;
+        pointSum = Integer.parseInt(point) + pointNum;
         mTvPoint.setText("积分: " + pointSum);
 
         //上传当前积分数量
@@ -276,7 +288,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
             ShoppingManager.getInstance().removeShoppingCartAllData();
         }
         if (requestCode == AppNetConfig.REQUEST_CODE_UPLOAD_POINT) {
-            mTvPoint.setText("积分: " + data);
+            mTvPoint.setText("积分: " + pointSum);
         }
     }
 
@@ -307,5 +319,20 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         super.onDestroy();
         UserInfoManager.getInstance().unRegisterUserInfoStatusListener(this);
         PointManager.getInstance().unRegisterCallbackIntegralListener();
+        UserInfoManager.getInstance().unRegisterAvatarUpdateListener(this);
+    }
+
+
+    /**
+     * 头像更新
+     * @param path
+     */
+    @Override
+    public void onAvatarUpdate(String path) {
+            avatar=path;
+            mIvHeader.setImageURI(Uri.fromFile(new File(path)));
+            Glide.with(mContext).load(AppNetConfig.BASE_URL+path).apply(RequestOptions.circleCropTransform()).into(mIvHeader);
+            Log.d("WQSSSH",AppNetConfig.BASE_URL+path);
+
     }
 }
