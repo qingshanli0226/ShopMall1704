@@ -13,6 +13,8 @@ import com.example.common.R;
 @SuppressLint("AppCompatCustomView")
 public class MyOKButton extends Button {
 
+    boolean enabled = true;
+
     public MyOKButton(Context context) {
         super(context);
         initView(context);
@@ -34,14 +36,21 @@ public class MyOKButton extends Button {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                this.setBackgroundColor(getResources().getColor(R.color.colorcheckedRed));
-                break;
-            case MotionEvent.ACTION_UP:
-                this.setBackgroundColor(getResources().getColor(R.color.color_lightred));
-                break;
+        if(enabled){
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    this.setBackgroundColor(getResources().getColor(R.color.colorcheckedRed));
+                    break;
+                case MotionEvent.ACTION_UP:
+                    this.setBackgroundColor(getResources().getColor(R.color.color_lightred));
+                    break;
+            }
         }
         return super.onTouchEvent(event);
+    }
+
+    public void setButtonEnabled(boolean enabled){
+        this.setEnabled(enabled);
+        this.enabled = enabled;
     }
 }

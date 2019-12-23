@@ -94,6 +94,7 @@
                 android:textSize="@dimen/dpsize_15" />
 
             <TextView
+                android:id="@+id/tv_buy_shopcarttotaltitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dpsize_10"
