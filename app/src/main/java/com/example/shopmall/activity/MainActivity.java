@@ -93,7 +93,6 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
         //获取购物车商品数量
         allNumber = ShoppingManager.getInstance().getAllNumber();
         mRedMessage.setNum(allNumber);
-        ShoppingManager.getInstance().setOnNumberChangedListener(this);
 
         replaceFragment(fragmentArrayList.get(0));
 
@@ -111,6 +110,7 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
         bbMain.setOnTapListener(new BottomBar.OnTapListener() {
             @Override
             public void tapItemClick(int i) {
+                ShoppingManager.getInstance().setMainitem(i);
                 replaceFragment(fragmentArrayList.get(i));
                 ShoppingManager.getInstance().setAllCount(0);
                 ShoppingManager.getInstance().setisSetting(false);

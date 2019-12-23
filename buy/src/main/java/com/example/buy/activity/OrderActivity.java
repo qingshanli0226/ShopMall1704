@@ -27,6 +27,7 @@ import com.example.buy.presenter.PayPresenter;
 import com.example.common.SignUtil;
 import com.example.common.view.MyOKButton;
 import com.example.framework.base.IPostBaseView;
+import com.example.framework.manager.MessageManager;
 import com.example.framework.manager.ShoppingManager;
 import com.example.buy.adapter.MyShoppingOrderAdapter;
 import com.example.common.TitleBar;
@@ -187,7 +188,11 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
                 if (payResultIsOk) {
                     Log.e("####", "付款成功");
                     startActivity(new Intent(OrderActivity.this, ShoppingResultActivity.class));
-
+                    List<Map<String, String>> buyThings = ShoppingManager.getInstance().getBuyThings();
+                    for (int i = 0; i < buyThings.size(); i++) {
+                        Map<String, String> map = buyThings.get(i);
+                        MessageManager.getMessageManager().setMessageManager(map.get("title"),"购买成功");
+                    }
                     finish();
                 }
             }
