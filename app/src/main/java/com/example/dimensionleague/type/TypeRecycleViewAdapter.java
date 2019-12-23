@@ -12,7 +12,7 @@ import com.example.net.AppNetConfig;
 
 import java.util.List;
 
-public class TypeRecycleViewAdapter extends BaseRecyclerAdapter<TypeBean.ResultBean.HotProductListBean> {
+class TypeRecycleViewAdapter extends BaseRecyclerAdapter<TypeBean.ResultBean.HotProductListBean> {
     public TypeRecycleViewAdapter(int layoutId, List<TypeBean.ResultBean.HotProductListBean> dateList) {
         super(layoutId, dateList);
     }
@@ -26,6 +26,16 @@ public class TypeRecycleViewAdapter extends BaseRecyclerAdapter<TypeBean.ResultB
             intent.putExtra(IntentUtil.GOTO_GOOD, dateList.get(position1));
             holder.itemView.getContext().startActivity(intent);
         });
+    }
+
+    private Linkedlist linkedlist;
+
+    interface Linkedlist {
+        void getLinkedlist(int position);
+    }
+
+    public void setLinkedlist(Linkedlist linkedlist) {
+        this.linkedlist = linkedlist;
     }
 
 

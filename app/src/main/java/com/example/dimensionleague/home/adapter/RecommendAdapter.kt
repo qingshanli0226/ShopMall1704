@@ -16,19 +16,19 @@ import kotlinx.android.synthetic.main.home_recommend_item.view.*
 class RecommendAdapter(
     recommendInfo:List<HomeBean.ResultBean.SeckillInfoBean.ListBean>
 ) : BaseAdapter() {
-    var recommendInfo:List<HomeBean.ResultBean.SeckillInfoBean.ListBean>? = null
+    private var recommendInfo:List<HomeBean.ResultBean.SeckillInfoBean.ListBean>? = null
     init {
         this.recommendInfo = recommendInfo
     }
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
-        lateinit var views:View
+        val views:View =
+            LayoutInflater.from(parent!!.context).inflate(R.layout.home_recommend_item,parent,false)
         lateinit var holder:ViewHolder
-            views = LayoutInflater.from(parent!!.context).inflate(R.layout.home_recommend_item,parent,false)
-            holder = ViewHolder(views)
-            views.setTag(holder)
-        Glide.with(parent.context).load("${AppNetConfig.BASE_URl_IMAGE}${recommendInfo!!.get(position).figure}").into(holder.iv_recommend)
-        holder.tv_name.text = recommendInfo?.get(position)?.name
-        holder.tv_price.text = "${recommendInfo?.get(position)?.cover_price}￥"
+        holder = ViewHolder(views)
+        views.tag = holder
+        Glide.with(parent.context).load("${AppNetConfig.BASE_URl_IMAGE}${recommendInfo!![position].figure}").into(holder.ivRecommend)
+        holder.tvName.text = recommendInfo?.get(position)?.name
+        holder.tvPrice.text = "${recommendInfo?.get(position)?.cover_price}￥"
         //跳转
         views.setOnClickListener { v->
             val intent = Intent(views.context, GoodsActiviy::class.java)
@@ -39,7 +39,7 @@ class RecommendAdapter(
     }
 
     override fun getItem(position: Int): Any {
-        return recommendInfo!!.get(position)
+        return recommendInfo!![position]
     }
 
     override fun getItemId(position: Int): Long {
@@ -51,8 +51,8 @@ class RecommendAdapter(
     }
 
     inner class ViewHolder(itemView: View){
-        var iv_recommend = itemView.home_recommend_iv_recommend
-        var tv_name = itemView.home_recommend_tv_name
-        var tv_price = itemView.home_recommend_tv_price
+        var ivRecommend = itemView.home_recommend_iv_recommend!!
+        var tvName = itemView.home_recommend_tv_name!!
+        var tvPrice = itemView.home_recommend_tv_price!!
     }
 }

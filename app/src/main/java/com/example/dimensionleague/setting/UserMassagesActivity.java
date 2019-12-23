@@ -1,31 +1,24 @@
 package com.example.dimensionleague.setting;
 
 import android.Manifest;
+
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.common.code.Constant;
 import com.example.common.port.IAccountCallBack;
 import com.example.common.view.MyToolBar;
@@ -33,11 +26,9 @@ import com.example.dimensionleague.R;
 import com.example.dimensionleague.userbean.UploadBean;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.manager.AccountManager;
-import com.example.framework.manager.ErrorDisposeManager;
 import com.example.net.AppNetConfig;
 import com.example.net.RetrofitCreator;
 import com.google.gson.Gson;
-import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.wyp.avatarstudio.AvatarStudio;
 
 import java.io.File;
@@ -55,6 +46,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
+@SuppressWarnings({"ALL", "ResultOfMethodCallIgnored"})
 public class UserMassagesActivity extends BaseActivity implements IAccountCallBack {
     private List<SettingBean> list;
     private String[] sexArry;
@@ -62,7 +54,7 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
     private ImageView heanUserImg;
     private TextView heanUserName;
     private View headView;
-    private Calendar nowdate = Calendar.getInstance();
+    private final Calendar nowdate = Calendar.getInstance();
     private int mYear;
     private int mMonth;
     private int mDay;
@@ -83,7 +75,7 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
 
     @Override
     public void onAvatarUpdate(String url) {
-        Glide.with(this).load(AppNetConfig.BASE_URL + AccountManager.getInstance().user.getAvatar()).apply(new RequestOptions().circleCrop()).into(heanUserImg);
+        Glide.with(this).load(AppNetConfig.BASE_URL + AccountManager.getInstance().getUser().getAvatar()).apply(new RequestOptions().circleCrop()).into(heanUserImg);
     }
 
     @Override
@@ -92,6 +84,7 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
     }
 
     @Override
+    @SuppressLint("InflateParams")
     public void init() {
         user_toolbar = findViewById(R.id.user_toolbar);
         user_toolbar.init(Constant.OTHER_STYLE);
@@ -99,7 +92,7 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
         user_toolbar.getOther_back().setImageResource(R.drawable.back2);
         user_toolbar.getOther_title().setText("个人设置");
         user_toolbar.getOther_title().setTextColor(Color.BLACK);
-        headView = LayoutInflater.from(this).inflate(R.layout.user_item_head, null);
+        headView = LayoutInflater.from(this).inflate(R.layout.user_item_head,null);
 
         heanUserImg = headView.findViewById(R.id.user_massage_item_img);
         heanUserName = headView.findViewById(R.id.user_massage_item_title);
@@ -124,19 +117,14 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
         mYear = nowdate.get(Calendar.YEAR);
         mMonth = nowdate.get(Calendar.MONTH);
         mDay = nowdate.get(Calendar.DAY_OF_MONTH);
-        user_toolbar.getOther_back().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finishActivity();
-            }
-        });
+        user_toolbar.getOther_back().setOnClickListener(v -> finishActivity());
      //         判断是否登录
         if (AccountManager.getInstance().isLogin()) {
             if (AccountManager.getInstance().getUser().getName() != null) {
-                list.get(0).setMassage("" + AccountManager.getInstance().user.getName());
-                list.get(1).setMassage("" + AccountManager.getInstance().user.getName());
-                if (AccountManager.getInstance().user.getAvatar() != null) {
-                    Glide.with(this).load("" + AppNetConfig.BASE_URL + AccountManager.getInstance().user.getAvatar()).apply(new RequestOptions().circleCrop()).into(heanUserImg);
+                list.get(0).setMassage("" + AccountManager.getInstance().getUser().getName());
+                list.get(1).setMassage("" + AccountManager.getInstance().getUser().getName());
+                if (AccountManager.getInstance().getUser().getAvatar() != null) {
+                    Glide.with(this).load("" + AppNetConfig.BASE_URL + AccountManager.getInstance().getUser().getAvatar()).apply(new RequestOptions().circleCrop()).into(heanUserImg);
                 }
             }
         }
@@ -158,22 +146,19 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
                 if (permission != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, Constant.REQUSET_CODE);
                     return;
-                } else {
-                    new AvatarStudio.Builder(UserMassagesActivity.this)
-                            .needCrop(true)
-                            .dimEnabled(true)
-                            .setAspect(1, 1)
-                            .setOutput(50, 50)
-                            .setText(getString(R.string.camera), getString(R.string.albums), getString(R.string.cancel))
-                            .setTextColor(Color.BLUE)
-                            .show(uri -> {
-                                File file = new File(uri);
-                                upload(file);
-                            });
                 }
             }
-
-
+            new AvatarStudio.Builder(UserMassagesActivity.this)
+                    .needCrop(true)
+                    .dimEnabled(true)
+                    .setAspect(1, 1)
+                    .setOutput(50, 50)
+                    .setText(getString(R.string.camera), getString(R.string.albums), getString(R.string.cancel))
+                    .setTextColor(Color.BLUE)
+                    .show(uri -> {
+                        File file = new File(uri);
+                        upload(file);
+                    });
         });
         adapter.setOnItemClickListener((adapter, view, position) -> {
 
@@ -184,6 +169,7 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
                     toast.show();
                     break;
                 case 1:
+                    @SuppressLint("InflateParams")
                     View inflate = LayoutInflater.from(UserMassagesActivity.this).inflate(R.layout.user_item_set_name, null);
                     AlertDialog.Builder builder = new AlertDialog.Builder(UserMassagesActivity.this)
                             .setView(inflate)
@@ -201,9 +187,9 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
                     break;
                 case 3:
                     new DatePickerDialog(UserMassagesActivity.this, DatePickerDialog.THEME_HOLO_LIGHT, (view1, year, month, dayOfMonth) -> {
-                        String s = new StringBuffer().append(mYear).append(getString(R.string.year)).append(mMonth)
-                                .append(getString(R.string.moth))
-                                .append(mDay).append(getString(R.string.day)).toString();
+                        String s = mYear + getString(R.string.year) + mMonth +
+                                getString(R.string.moth) +
+                                mDay + getString(R.string.day);
                         list.get(position).setMassage("" + s);
                         adapter.notifyDataSetChanged();
                     }, mYear, mMonth, mDay).show();
@@ -237,6 +223,7 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
             return;
         }
         //创建上传文件的请求体.
+        //noinspection deprecation
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
         //创建上传文件的part参数.
         MultipartBody.Part uploadPart = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
@@ -248,32 +235,29 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
                     public void onSubscribe(Disposable d) {
                     }
 
+                    @SuppressWarnings("ResultOfMethodCallIgnored")
                     @Override
                     public void onNext(ResponseBody responseBody) {
-                        String s = null;
+                        String s;
+
                         try {
                             s = responseBody.string();
                             UploadBean uploadBean = new Gson().fromJson(s, UploadBean.class);
-                            if (Constant.CODE_OK.equals(uploadBean.getCode())){
+                            if (Constant.CODE_OK.equals(uploadBean.getCode())) {
                                 AccountManager.getInstance().getUser().setAvatar(uploadBean.getResult());
                                 AccountManager.getInstance().notifyUserAvatarUpdate(AccountManager.getInstance().getUser().getAvatar().toString());
                             }
                         } catch (IOException e) {
-                            ErrorDisposeManager.HandlerError(e);
+                            e.printStackTrace();
                         }
-
                     }
-
                     @Override
                     public void onError(Throwable e) {
-                        ErrorDisposeManager.HandlerError(e);
+                        e.printStackTrace();
                     }
-
                     @Override
-                    public void onComplete() {
-                    }
+                    public void onComplete() {}
                 });
-
     }
 
     @Override
@@ -286,30 +270,26 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case Constant.REQUSET_CODE:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    new AvatarStudio.Builder(UserMassagesActivity.this)
-                            .needCrop(true)
-                            .dimEnabled(true)
-                            .setAspect(1, 1)
-                            .setOutput(50, 50)
-                            .setText(getString(R.string.camera), getString(R.string.albums), getString(R.string.cancel))
-                            .setTextColor(Color.BLUE)
-                            .show(uri -> {
-                                File file = new File(uri);
-                                upload(file);
-                            });
+        if (requestCode == Constant.REQUSET_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                new AvatarStudio.Builder(UserMassagesActivity.this)
+                        .needCrop(true)
+                        .dimEnabled(true)
+                        .setAspect(1, 1)
+                        .setOutput(50, 50)
+                        .setText(getString(R.string.camera), getString(R.string.albums), getString(R.string.cancel))
+                        .setTextColor(Color.BLUE)
+                        .show(uri -> {
+                            File file = new File(uri);
+                            upload(file);
+                        });
 
-                } else {
-                    // Permission Denied 拒绝
-                    toast(this, getString(R.string.request_no));
-                }
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            } else {
+                // Permission Denied 拒绝
+                toast(this, getString(R.string.request_no));
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
-
-
 }

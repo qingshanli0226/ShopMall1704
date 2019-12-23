@@ -1,5 +1,7 @@
 package com.example.dimensionleague.userbean;
 
+import org.jetbrains.annotations.NotNull;
+
 public class RegisterBean {
 
     /**
@@ -36,6 +38,7 @@ public class RegisterBean {
         this.result = result;
     }
 
+    @NotNull
     @Override
     public String toString() {
         return "RegisterBean{" +

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">DimensionLeague</string>
     <string name="top_hint">jianjiColleagues</string>
     <string name="look_more">see more</string>
@@ -77,9 +77,9 @@
     <string name="moth">Moth</string>
     <string name="year">Year</string>
     <string name="camera">camera</string>
-    <string name="albums">albums</string>
-    <string name="cancel">cancel</string>
-    <string name="privary">privary</string>
+    <string name="albums">ALBUMS</string>
+    <string name="cancel" tools:ignore="ButtonCase">cancel</string>
+    <string name="privary">PRIVARY</string>
     <string name="woman">woman</string>
     <string name="man">man</string>
     <string name="birth">birth</string>

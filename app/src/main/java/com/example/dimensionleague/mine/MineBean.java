@@ -1,9 +1,12 @@
 package com.example.dimensionleague.mine;
 
-public class MineBean {
+import org.jetbrains.annotations.NotNull;
+
+class MineBean {
     private Integer img;
     private String title;
 
+    @NotNull
     @Override
     public String toString() {
         return "MineBean{" +

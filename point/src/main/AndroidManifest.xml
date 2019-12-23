@@ -63,6 +63,9 @@
         <activity
             android:name=".message.MessageItemActivity"
             android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.ConversionActivity"
+            android:launchMode="singleTop" />
     </application>
 
 

@@ -3,10 +3,7 @@ package com.example.dimensionleague.activity
 import androidx.fragment.app.Fragment
 import android.view.KeyEvent
 import android.widget.Toast
-import anet.channel.util.Utils.context
-
 import com.example.dimensionleague.R
-import android.graphics.Color
 import com.example.buy.ShopCartFragment
 import com.example.common.view.MyToast
 import com.example.dimensionleague.find.FindFragment
@@ -18,18 +15,18 @@ import kotlinx.android.synthetic.main.activity_main.*
 import com.example.framework.base.BaseNetConnectActivity
 import com.example.framework.listener.OnShopCartListener
 import com.example.buy.CartManager
-import com.example.dimensionleague.login.activity.LoginActivity
+
 import kotlin.system.exitProcess
+import com.example.dimensionleague.login.activity.LoginActivity
 
 class MainActivity : BaseNetConnectActivity() {
 
     private lateinit var listener: OnShopCartListener
 
-    var exitTime = 0L
+    private var exitTime = 0L
     override fun getRelativeLayout(): Int {
         return R.id.main_relative
     }
-
 
     override fun getLayoutId(): Int {
         return R.layout.activity_main
@@ -42,7 +39,6 @@ class MainActivity : BaseNetConnectActivity() {
         val bundle = intent!!.getBundleExtra("data")
         val isAutoLogin = bundle!!.getBoolean("isAutoLogin")
         if (!isAutoLogin) {
-            AccountManager.getInstance().logout()
             Toast.makeText(this, resources.getString(R.string.timeout), Toast.LENGTH_SHORT).show()
             AccountManager.getInstance().logout()
             AccountManager.getInstance().notifyLogout()
@@ -67,7 +63,6 @@ class MainActivity : BaseNetConnectActivity() {
             .normalTextColor(R.color.colorMainNormal)
             .selectIconItems(
                 intArrayOf(
-
                     R.drawable.home,
                     R.drawable.vertical_list,
                     R.drawable.find,
@@ -135,7 +130,7 @@ class MainActivity : BaseNetConnectActivity() {
     }
 
 
-    fun exit() {
+    private fun exit() {
         if (System.currentTimeMillis() - exitTime > 2000) {
             Toast.makeText(
                 applicationContext, "再按一次退出程序",

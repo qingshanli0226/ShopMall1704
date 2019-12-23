@@ -14,4 +14,6 @@
     <string name="buyOneSum">总价:</string>
     <string name="buyLoginFirst">请您先登录,蟹蟹配合</string>
     <string name="buy_add">已加入收藏</string>
+    <string name="shop_details">商品详情</string>
+    <string name="net_appConfig_base_url">http://49.233.93.155:8080/atguigu/img</string>
 </resources>

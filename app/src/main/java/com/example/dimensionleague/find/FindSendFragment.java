@@ -2,6 +2,10 @@ package com.example.dimensionleague.find;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.LinearLayout;
+
+import androidx.databinding.ViewDataBinding;
+
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.buy.activity.GoodsActiviy;
@@ -11,12 +15,19 @@ import com.example.common.code.Constant;
 import com.example.common.utils.IntentUtil;
 import com.example.dimensionleague.R;
 import com.example.dimensionleague.home.HomePresenter;
+import com.example.dimensionleague.home.adapter.RecommendAdapter;
 import com.example.dimensionleague.mine.MineRecommendAdapter;
+import com.example.framework.base.BaseBindFragment;
 import com.example.framework.base.BaseNetConnectFragment;
+import com.example.framework.port.OnClickItemListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class FindSendFragment extends BaseNetConnectFragment {
+
     private List<HomeBean.ResultBean.SeckillInfoBean.ListBean> list;
     private RecyclerView rv;
     private HomePresenter homePresenter;
@@ -26,8 +37,9 @@ public class FindSendFragment extends BaseNetConnectFragment {
         return R.layout.find_send_rv;
     }
 
+
     @Override
-    public void init(View view) {
+    public void init(View view ) {
         super.init(view);
         rv=view.findViewById(R.id.find_rv);
         list=new ArrayList<>();
@@ -39,12 +51,14 @@ public class FindSendFragment extends BaseNetConnectFragment {
         homePresenter.attachView(this);
         homePresenter.doHttpGetRequest();
         recommendAdapter = new MineRecommendAdapter(R.layout.item_mine_rv_recommend, list);
+
         recommendAdapter.setClickListener(position -> {
             Intent intent =new Intent(getContext(), GoodsActiviy.class);
             intent.putExtra(IntentUtil.GOTO_GOOD,list.get(position));
             startActivity(intent);
         });
     }
+
 
     @Override
     public void showLoading() {}
@@ -54,8 +68,9 @@ public class FindSendFragment extends BaseNetConnectFragment {
 
     @Override
     public int getRelativeLayout() {
-        return 0;
+        return R.id.find_relativeLayout;
     }
+
 
     @Override
     public void onRequestSuccess(Object data) {
@@ -71,5 +86,16 @@ public class FindSendFragment extends BaseNetConnectFragment {
                 toast(getActivity(), msg);
             }
         }
+    }
+    @Override
+    public void onConnected() {
+        hideEmpty();
+    }
+
+    @Override
+    public void onDisConnected() {
+        hideLoading();
+        hideError();
+        showEmpty();
     }
 }

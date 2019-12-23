@@ -3,9 +3,7 @@ package com.example.point.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.format.DateFormat;
@@ -21,11 +19,10 @@ import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseActivity;
 import com.example.point.R;
 import com.example.point.StepIsSupport;
-import com.example.point.service.StepBean;
-import com.example.point.stepmanager.DaoManager;
+import com.example.framework.bean.StepBean;
+import com.example.framework.manager.DaoManager;
 import com.example.point.stepmanager.StepPointManager;
 import com.example.point.view.StepView;
-
 import java.lang.ref.WeakReference;
 import java.util.List;
 
@@ -127,14 +124,20 @@ public class StepActivity extends BaseActivity {
 
         if (new StepIsSupport().isSupportStepCountSensor(this)) {
             String CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis())+"";//今日日期
+
             List<StepBean> beans =DaoManager.Companion.getInstance(this).queryStepBean(CURRENT_DATE);
-            stepView.setCurrentCount(stepInt, beans.get(0).getStep());
+
+            if (beans.size()!=0){
+                stepView.setCurrentCount(stepInt, beans.get(0).getStep());
+            }else {
+                stepView.setCurrentCount(stepInt,0);
+            }
+
             tv_isSupport.setText("计步中...");
             StepPointManager.getInstance(this).addGetStepListener(new StepPointManager.GetStepListener() {
                 @Override
                 public void onsetStep(int step) {
                     stepView.setCurrentCount(stepInt, step);
-                    Log.i("wzy", "onsetStep: " + stepInt + "   " + step);
                 }
             });
         } else {
@@ -147,6 +150,4 @@ public class StepActivity extends BaseActivity {
 
         return R.layout.step_activity;
     }
-
-
 }

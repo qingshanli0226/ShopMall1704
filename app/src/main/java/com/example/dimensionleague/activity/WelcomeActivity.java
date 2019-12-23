@@ -2,12 +2,14 @@ package com.example.dimensionleague.activity;
 
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.ContextWrapper;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -22,10 +24,11 @@ import com.example.dimensionleague.userbean.AutoLoginBean;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.port.ITaskFinishListener;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import org.jetbrains.annotations.NotNull;
 import java.lang.ref.WeakReference;
 
 public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFinishListener {
-    private Handler handler =new MyHandler(this);
+    private final Handler handler =new MyHandler(this);
 
     private VideoView videoView;
     private Button but;
@@ -41,6 +44,7 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
         super.init();
         //初始化需要的权限
         final RxPermissions rxPermissions = new RxPermissions(this);
+        //noinspection ResultOfMethodCallIgnored
         rxPermissions.request(
                 Manifest.permission.INTERNET,
                 Manifest.permission.ACCESS_NETWORK_STATE,
@@ -48,11 +52,9 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)
                        .subscribe(permission -> {
-                           if (permission) {
-                             // 成功
-                          } else {
-                             // 失败
-                          } });
+                           // 成功
+                           // 失败
+                       });
 
         videoView = findViewById(R.id.videoView);
         but = findViewById(R.id.welcome_button);
@@ -97,7 +99,7 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
             public void onAutoLoginReceived(AutoLoginBean.ResultBean resultBean) {
                 if (resultBean != null) {
                     //TODO 保存用户信息
-                    AccountManager.getInstance().setUser(new User(
+                    User user = new User(
                             resultBean.getName(),
                             resultBean.getPassword(),
                             resultBean.getEmail(),
@@ -105,8 +107,10 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
                             resultBean.getPoint(),
                             resultBean.getAddress(),
                             resultBean.getMoney(),
-                            resultBean.getAvatar()
-                    ));
+                            resultBean.getAvatar());
+                    AccountManager.getInstance().setUser(user);
+                    Log.d("lhf--welcome--user",AccountManager.getInstance().getUser().toString());
+                    Log.d("lhf--welcome", ""+resultBean.toString());
                     //TODO 更新登录状态
                     AccountManager.getInstance().notifyLogin();
                     AccountManager.getInstance().saveToken(resultBean.getToken());
@@ -125,7 +129,20 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
     }
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(new ContextWrapper(newBase) {
+            @Override
+            public Object getSystemService(String name) {
+                if (Context.AUDIO_SERVICE.equals(name))
+                    return getApplicationContext().getSystemService(name);
+                return super.getSystemService(name);
+            }
+        });
+    }
+
+    @Override
     protected void onDestroy() {
+        super.onDestroy();
         CacheManager.getInstance().unRegisterGetDateListener();
         AutoLoginManager.getInstance().unRegisterAutoLoginListener();
         if (videoView != null) {
@@ -136,9 +153,7 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
             ViewGroup welcomeLayout = findViewById(R.id.welcomeLayout);
             videoView = null;
             welcomeLayout.removeAllViews();
-            welcomeLayout=null;
         }
-        super.onDestroy();
     }
 
     @Override
@@ -164,16 +179,16 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
     }
 
     private static class MyHandler extends Handler {
-        private WeakReference<WelcomeActivity> mWeakReference;
-        private Context mContext;
+        private final WeakReference<WelcomeActivity> mWeakReference;
+        private final Context mContext;
 
-        public MyHandler(WelcomeActivity activity) {
+        MyHandler(WelcomeActivity activity) {
             mWeakReference = new WeakReference<>(activity);
             mContext=activity;
         }
 
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NotNull Message msg) {
             super.handleMessage(msg);
             WelcomeActivity activity = mWeakReference.get();
             if(msg.what==1){

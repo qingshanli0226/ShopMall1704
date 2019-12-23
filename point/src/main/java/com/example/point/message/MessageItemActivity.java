@@ -3,27 +3,37 @@ package com.example.point.message;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.point.R;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MessageItemActivity extends BaseNetConnectActivity {
+
     private MyToolBar messageitem_toolbar;
     private RecyclerView messageitem_re;
     private ImageView messageitem_record;
     private EditText messageitem_edit;
-    private ImageView messageitem_other;
-    private LinearLayout messageitem_line;
+    private ImageButton messageitem_other;
 
+    private LinearLayout messageitem_line;
+    private List<MessageBean> beanList;
+    private MessageitemAdpter messageitemAdpter;
     @Override
     public int getLayoutId() {
         return R.layout.messageitem_activity;
@@ -32,12 +42,12 @@ public class MessageItemActivity extends BaseNetConnectActivity {
     @Override
     public void init() {
         super.init();
-        messageitem_toolbar = findViewById(R.id.messageitem_toolbar);
-        messageitem_record = findViewById(R.id.messageitem_record);
-        messageitem_edit = findViewById(R.id.messageitem_edit);
-        messageitem_other = findViewById(R.id.messageitem_other);
+        MyToolBar messageitem_toolbar = findViewById(R.id.messageitem_toolbar);
+        ImageView messageitem_record = findViewById(R.id.messageitem_record);
+        final EditText messageitem_edit = findViewById(R.id.messageitem_edit);
+        ImageView messageitem_other = findViewById(R.id.messageitem_other);
         messageitem_line = findViewById(R.id.messageitem_line);
-        messageitem_re = findViewById(R.id.messageitem_re);
+        RecyclerView messageitem_re = findViewById(R.id.messageitem_re);
         messageitem_toolbar.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
         messageitem_toolbar.init(Constant.OTHER_STYLE);
         messageitem_toolbar.getOther_back().setOnClickListener(new View.OnClickListener() {
@@ -52,7 +62,12 @@ public class MessageItemActivity extends BaseNetConnectActivity {
         String message_date = intent.getStringExtra("message_date");
         Integer message_img = intent.getIntExtra("message_img", 0);
         messageitem_toolbar.getOther_title().setText("" + message_title);
-
+        beanList=new ArrayList<>();
+        beanList.add(new MessageBean(message_img,message_title,message_message,message_date));
+        messageitemAdpter=new MessageitemAdpter(this,beanList);
+        messageitem_re.setLayoutManager(new LinearLayoutManager(this));
+        messageitem_re.setAdapter(messageitemAdpter);
+        //为了让系统输入法弹出的时候不挡住输入框
         messageitem_line.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -70,6 +85,34 @@ public class MessageItemActivity extends BaseNetConnectActivity {
 
             }
         });
+         //发送按钮
+        messageitem_other.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String message = messageitem_edit.getText().toString();
+                String CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis())+"";//今日日期
+//                if (AccountManager.getInstance().isLogin()) {
+//                    if (AccountManager.getInstance().user.getName() != null) {
+//                        if (AccountManager.getInstance().user.getAvatar() != null) {
+//                            Log.i("onClick", "onClick: 11");
+//                            Integer integer= (Integer) AccountManager.getInstance().user.getAvatar();
+//                            beanList.add(new MessageBean(integer,"",message,CURRENT_DATE));
+//                            Log.i("onClick", "onClick: 33");
+//                            messageitemAdpter.notifyDataSetChanged();
+//                            messageitem_edit.setText("");
+//                        }
+//                    }
+//                } else {
+                    Integer integer=R.mipmap.wu;
+                    Log.i("onClick", "onClick: 22");
+                    beanList.add(new MessageBean(integer,"",message,CURRENT_DATE));
+                    Log.i("onClick", "onClick: 33");
+                    messageitemAdpter.notifyDataSetChanged();
+                    messageitem_edit.setText("");
+               // }
+
+            }
+        });
 
     }
 
@@ -83,9 +126,5 @@ public class MessageItemActivity extends BaseNetConnectActivity {
         return super.getRelativeLayout();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) and run LayoutCreator again
-    }
+
 }

@@ -16,10 +16,9 @@ import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.point.R;
 import com.example.point.StepIsSupport;
-import com.example.point.service.StepBean;
-import com.example.point.stepmanager.DaoManager;
+import com.example.framework.bean.StepBean;
+import com.example.framework.manager.DaoManager;
 import com.example.point.stepmanager.StepPointManager;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,7 +83,7 @@ public class MessageActivity extends BaseNetConnectActivity {
         beans =DaoManager.Companion.getInstance(this).queryStepBean(CURRENT_DATE);
 
         if (beans.size()!=0){
-            bean = new MessageBean(R.mipmap.sport,"次元联盟运动","今天行走了"+beans.get(0).getStep(),beans.get(0).getCurr_date());
+            bean = new MessageBean(R.mipmap.jiaoyazi,"次元联盟运动","客官您好，您今天行走了"+beans.get(0).getStep()+"步",beans.get(0).getCurr_date());
             messageBeans.add(bean);
             message_re.setAdapter(messageAdpter);
         }
@@ -94,7 +93,7 @@ public class MessageActivity extends BaseNetConnectActivity {
             StepPointManager.getInstance(this).addGetStepListener(new StepPointManager.GetStepListener() {
                 @Override
                 public void onsetStep(int step) {
-                    bean.setMessage_message("今天行走了"+beans.get(0).getStep());
+                    bean.setMessage_message("客官您好，今天行走了"+beans.get(0).getStep()+"步");
                     messageAdpter.notifyDataSetChanged();
                     Log.i("receive", " 时间变动"+step);
                 }

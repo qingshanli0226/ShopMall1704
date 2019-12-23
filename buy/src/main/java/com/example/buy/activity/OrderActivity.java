@@ -21,7 +21,6 @@ import com.example.framework.base.BaseRecyclerAdapter;
 import com.example.framework.base.BaseViewHolder;
 import com.example.framework.manager.OrderManager;
 import com.example.framework.port.IPresenter;
-
 import java.util.ArrayList;
 
 /**
@@ -150,4 +149,5 @@ public class OrderActivity extends BaseNetConnectActivity {
             }
         }
     }
+
 }

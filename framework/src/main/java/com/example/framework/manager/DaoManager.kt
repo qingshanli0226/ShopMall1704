@@ -1,12 +1,16 @@
-package com.example.point.stepmanager
+package com.example.framework.manager
 
 import android.content.Context
-import com.example.point.DaoMaster
-import com.example.point.service.StepBean
-import com.example.point.StepBeanDao
+import com.example.framework.DaoMaster
+import com.example.framework.PointBeanDao
+import com.example.framework.StepBeanDao
+import com.example.framework.bean.StepBean
+import com.example.framework.bean.PointBean
 
 class DaoManager {
     private var stepBeanDao: StepBeanDao
+
+    private var pointBeanDao: PointBeanDao
 
     private constructor(ctx: Context) {
         //创建一个db 数据库
@@ -15,6 +19,7 @@ class DaoManager {
         var daoMaster = DaoMaster(db)
         var daoSession = daoMaster.newSession()
         stepBeanDao = daoSession.stepBeanDao
+        pointBeanDao = daoSession.pointBeanDao
     }
 
     //通过伴生对象，实现单例
@@ -78,5 +83,15 @@ class DaoManager {
     fun queryexcept(curr_date:String):MutableList<StepBean> {
         var stuList:MutableList<StepBean> = stepBeanDao.queryRaw("where curr_date!=?", curr_date)
         return stuList
+    }
+
+    //添加一个兑换记录类
+    fun addPointBean(poi: PointBean) {
+        pointBeanDao.insert(poi)
+    }
+    //加载所有兑换记录
+    fun loadPointBean():MutableList<PointBean> {
+        var poiList:MutableList<PointBean> =pointBeanDao.queryBuilder().orderDesc(PointBeanDao.Properties.Id).list()
+        return poiList
     }
 }

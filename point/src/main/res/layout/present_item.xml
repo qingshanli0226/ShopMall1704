@@ -12,7 +12,6 @@
         <ImageView
             android:id="@+id/present_img"
             android:layout_marginBottom="10dp"
-            android:background="@mipmap/qq"
             android:layout_width="@dimen/dp_80"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="40dp"

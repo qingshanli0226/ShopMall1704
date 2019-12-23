@@ -11,8 +11,8 @@ import com.example.dimensionleague.R;
 
 class TypeTagAdapter extends BaseAdapter {
 
-    private String[] titles ;
-    private Context mContext;
+    private final String[] titles ;
+    private final Context mContext;
     private int mSelect = 0;
 
     public TypeTagAdapter(Context mContext) {

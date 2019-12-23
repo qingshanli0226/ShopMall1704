@@ -89,19 +89,10 @@ public abstract class BaseNetConnectFragment extends BaseFragment implements IVi
         loadingPage.hideEmpty();
     }
 
-    @Override
-    public void onConnected() {
-
-    }
 
     @Override
     public void onHttpRequestDataFailed(int requestCode, ErrorCode error) {
         toast(getActivity(),error.getErrorMessage());
-    }
-
-    @Override
-    public void onDisConnected() {
-
     }
 
     @Override

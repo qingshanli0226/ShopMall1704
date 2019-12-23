@@ -11,7 +11,6 @@ import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseActivity;
 import com.example.point.R;
-
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -84,6 +83,4 @@ public class RecordActivity extends BaseActivity {
     private int randomColor() {
         return Color.rgb(mRandom.nextInt(255), mRandom.nextInt(255), mRandom.nextInt(255));
     }
-
-
 }

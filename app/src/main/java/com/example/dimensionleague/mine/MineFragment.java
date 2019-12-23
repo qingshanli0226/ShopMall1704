@@ -2,7 +2,6 @@ package com.example.dimensionleague.mine;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -27,13 +26,13 @@ import com.example.dimensionleague.R;
 import com.example.dimensionleague.home.HomePresenter;
 import com.example.dimensionleague.login.activity.LoginActivity;
 import com.example.framework.base.BaseNetConnectFragment;
-import com.example.framework.port.OnClickItemListener;
 import com.example.net.AppNetConfig;
 import com.example.point.activity.IntegralActivity;
 import com.example.point.activity.StepActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MineFragment extends BaseNetConnectFragment implements IAccountCallBack {
 
@@ -117,6 +116,13 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
                 myToolBar.setAlpha(1.0f);
             }
         });
+
+        rvList.setLayoutManager(new GridLayoutManager(getContext(), 5));
+        rvList.setAdapter(listAdapter);
+        rvChannel.setLayoutManager(new GridLayoutManager(getContext(), 5));
+        rvChannel.setAdapter(channelAdapter);
+        rvRecommend.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        rvRecommend.setAdapter(recommendAdapter);
     }
 
     private void mineListeners() {
@@ -144,12 +150,6 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
                         bundle.putString(IntentUtil.ORDER_SHOW, Constant.WAIT_SEND);
                         startActivity(OrderActivity.class, bundle);
                         break;
-                    case 2:
-                        //待评价
-                    case 3:
-                        //退换/售后
-                        toast(getActivity(), list.get(position).getTitle());
-                        break;
                     case 4:
                         //我的订单
                         bundle.putString(IntentUtil.ORDER_SHOW, Constant.ALL_ORDER);
@@ -159,65 +159,14 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
                         //我的积分
                         startActivity(IntegralActivity.class, null);
                         break;
-                    case 6:
-                        //白条
-                    case 7:
-                        //优惠券
-                        toast(getActivity(), list.get(position).getTitle());
-                        break;
                     case 8:
                         //运动
                         startActivity(StepActivity.class, null);
                         break;
-                    case 9:
-                        //我的钱包
-                        break;
+                    default:toast(getActivity(), list.get(position).getTitle());
                 }
             } else {
-                switch (position) {
-                    case 0:
-                        //待付款
-                        bundle.putString(IntentUtil.LOGIN, Constant.WAIT_PAY);
-                        startActivity(LoginActivity.class, bundle);
-                        break;
-                    case 1:
-                        //待发货
-                        bundle.putString(IntentUtil.LOGIN, Constant.WAIT_SEND);
-                        startActivity(LoginActivity.class, bundle);
-                        break;
-                    case 2:
-                        //待评价
-                    case 3:
-                        //退换/售后
-                        startActivity(LoginActivity.class, null);
-                        break;
-                    case 4:
-                        //我的订单
-                        bundle.putString(IntentUtil.LOGIN, Constant.ALL_ORDER);
-                        startActivity(LoginActivity.class, bundle);
-                        break;
-                    case 5:
-                        //我的积分
-                        bundle.putString(IntentUtil.LOGIN, Constant.MINE_INTEGRAL);
-                        startActivity(LoginActivity.class, bundle);
-                        break;
-                    case 6:
-                        //白条
-                    case 7:
-                        //优惠券
-                        startActivity(LoginActivity.class, null);
-                        break;
-                    case 8:
-                        //运动
-                        bundle.putString(IntentUtil.LOGIN, Constant.EXERCISE);
-                        startActivity(LoginActivity.class, bundle);
-                        break;
-                    case 9:
-                        //我的钱包
-                        startActivity(LoginActivity.class, null);
-                        break;
-                }
-
+                startActivity(LoginActivity.class, null);
             }
         });
     }
@@ -225,11 +174,11 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
 
     private void ifUser() {
         if (AccountManager.getInstance().isLogin()) {
-            if (AccountManager.getInstance().user.getName() != null) {
+            if (AccountManager.getInstance().getUser().getName() != null) {
                 //登录
-                name.setText(AccountManager.getInstance().user.getName());
-                if (AccountManager.getInstance().user.getAvatar() != null) {
-                    Glide.with(getContext()).load("" + AppNetConfig.BASE_URL + AccountManager.getInstance().user.getAvatar()).apply(new RequestOptions().circleCrop()).into(img);
+                name.setText(AccountManager.getInstance().getUser().getName());
+                if (AccountManager.getInstance().getUser().getAvatar() != null) {
+                    Glide.with(Objects.requireNonNull(getContext())).load("" + AppNetConfig.BASE_URL + AccountManager.getInstance().getUser().getAvatar()).apply(new RequestOptions().circleCrop()).into(img);
                 }
             }
         } else {
@@ -254,20 +203,16 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
         super.onRequestSuccess(data);
 
         if (data != null) {
+            channelList.clear();
+            recommendlList.clear();
+
             int code = ((HomeBean) data).getCode();
             String msg = ((HomeBean) data).getMsg();
             if (code == Integer.parseInt(Constant.CODE_OK)) {
                 channelList.addAll(((HomeBean) data).getResult().getChannel_info());
                 recommendlList.addAll(((HomeBean) data).getResult().getRecommend_info());
-                rvList.setLayoutManager(new GridLayoutManager(getContext(), 5));
-                listAdapter.notifyDataSetChanged();
-                rvChannel.setLayoutManager(new GridLayoutManager(getContext(), 5));
                 channelAdapter.notifyDataSetChanged();
-                rvRecommend.setLayoutManager(new GridLayoutManager(getContext(), 2));
                 recommendAdapter.notifyDataSetChanged();
-                rvList.setAdapter(listAdapter);
-                rvChannel.setAdapter(channelAdapter);
-                rvRecommend.setAdapter(recommendAdapter);
             } else {
                 toast(getActivity(), msg);
             }
@@ -296,7 +241,7 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
     //TODO 用户登录成功后回调
     @Override
     public void onLogin() {
-        name.setText(AccountManager.getInstance().user.getName());
+        name.setText(AccountManager.getInstance().getUser().getName());
     }
 
     @Override
@@ -308,6 +253,17 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
     //TODO 用户更新头像后回调
     @Override
     public void onAvatarUpdate(String url) {
-        Glide.with(getContext()).load("" + AppNetConfig.BASE_URL + url).apply(new RequestOptions().circleCrop()).into(img);
+        Glide.with(Objects.requireNonNull(getContext())).load("" + AppNetConfig.BASE_URL + url).apply(new RequestOptions().circleCrop()).into(img);
+    }
+
+    @Override
+    public void onConnected() {
+        homePresenter.doHttpGetRequest();
+        myToolBar.isConnection(true);
+    }
+
+    @Override
+    public void onDisConnected() {
+        myToolBar.isConnection(false);
     }
 }

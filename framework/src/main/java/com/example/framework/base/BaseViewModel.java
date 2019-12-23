@@ -14,15 +14,17 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 
 /**
  * author:李浩帆
  */
-public abstract class BaseViewModel<T> extends ViewModel {
+public abstract class BaseViewModel extends ViewModel {
 
-    private MutableLiveData<T> liveData = new MutableLiveData<>();
+    private MutableLiveData<ResponseBody> liveData = new MutableLiveData<>();
 
-    public LiveData<T> getLiveData() {
+    public LiveData<ResponseBody> getLiveData() {
         return liveData;
     }
     //TODO get请求
@@ -30,16 +32,17 @@ public abstract class BaseViewModel<T> extends ViewModel {
         RetrofitCreator.getNetInterence().getData(getHeaders(),getPath(),getParams())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<T>(){
+                .subscribe(new Observer<ResponseBody>(){
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(T t) {
-                        liveData.setValue(t);
+                    public void onNext(ResponseBody requestBody) {
+                        liveData.setValue(requestBody);
                     }
+
 
                     @Override
                     public void onError(Throwable e) {

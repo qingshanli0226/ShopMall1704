@@ -9,7 +9,6 @@ import androidx.databinding.ViewDataBinding;
 
 import com.example.framework.port.IActivity;
 
-import java.util.LinkedList;
 
 public abstract class BaseVMActivity extends AppCompatActivity implements IActivity {
     ViewDataBinding viewDataBinding;

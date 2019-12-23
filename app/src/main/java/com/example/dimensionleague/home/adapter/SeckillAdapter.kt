@@ -22,7 +22,6 @@ class SeckillAdapter(
         this.list = list
     }
 
-    private var onSeckill: OnSeckill? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
         return RecyclerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.home_seckill_item,parent,false))
     }
@@ -33,9 +32,9 @@ class SeckillAdapter(
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         with(holder.itemView){
-            Glide.with(holder.itemView.context).load("${AppNetConfig.BASE_URl_IMAGE}${list!!.get(position).figure}").into(home_seckill_iv_figure)
-            home_seckill_tv_cover_price.text = "${list!!.get(position).cover_price}￥"
-            home_seckill_tv_origin_price.text = "${list!!.get(position).origin_price}￥"
+            Glide.with(holder.itemView.context).load("${AppNetConfig.BASE_URl_IMAGE}${list!![position].figure}").into(home_seckill_iv_figure)
+            home_seckill_tv_cover_price.text = "${list!![position].cover_price}￥"
+            home_seckill_tv_origin_price.text = "${list!![position].origin_price}￥"
             home_seckill_tv_origin_price.paintFlags=Paint.STRIKE_THRU_TEXT_FLAG
             this.setOnClickListener { v->
                 val intent = Intent(context, GoodsActiviy::class.java)
@@ -43,13 +42,6 @@ class SeckillAdapter(
                 context.startActivity(intent)
             }
         }
-    }
-    interface OnSeckill {
-        fun onClick(position: Int)
-    }
-
-    fun setOnSeckillRecyclerView(onSeckillRecyclerView: OnSeckill) {
-        this.onSeckill = onSeckillRecyclerView
     }
 
     inner class RecyclerViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView)

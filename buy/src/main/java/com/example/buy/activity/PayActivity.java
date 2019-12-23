@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -38,7 +39,6 @@ import com.example.framework.manager.AccountManager;
 import com.example.framework.port.IPresenter;
 import com.example.net.AppNetConfig;
 import com.google.gson.Gson;
-
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -148,6 +148,7 @@ public class PayActivity extends BaseNetConnectActivity{
 
     }
 
+
     @Override
     public void onRequestSuccess(int requestCode, Object data) {
         super.onRequestSuccess(requestCode, data);
@@ -178,7 +179,7 @@ public class PayActivity extends BaseNetConnectActivity{
                 OkBean okBean = (OkBean) data;
                 if (okBean.getCode().equals(AppNetConfig.CODE_OK)) {
                     //发送现金
-                    if (AccountManager.getInstance().user.getMoney() == null) {
+                    if (AccountManager.getInstance().getUser().getMoney() == null) {
                         moneyPresenter = new PostUpDateMoneyPresenter("0");
                     } else {
                         moneyPresenter = new PostUpDateMoneyPresenter(getMoney(checkInegra.isChecked()));
@@ -210,6 +211,7 @@ public class PayActivity extends BaseNetConnectActivity{
                 break;
             case COED_POINT:
                 if (((OkBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
+                    Log.e("xxxx", "用户信息:" + AccountManager.getInstance().getUser().toString());
                     finishActivity();
                 }
                 break;
@@ -296,13 +298,13 @@ public class PayActivity extends BaseNetConnectActivity{
     }
     //设置积分
     private void setPoint() {
-        if (AccountManager.getInstance().user.getPoint() == null) {
+        if (AccountManager.getInstance().getUser().getPoint() == null) {
             subtractIntegra.setText("0");
             userPoint.setText("0");
         } else {
-            userPoint.setText(AccountManager.getInstance().user.getPoint() + "");
-            subtractIntegra.setText(AccountManager.getInstance().user.getPoint() + "");
-            if (Integer.valueOf((String) AccountManager.getInstance().user.getPoint()) > Integer.valueOf(getMoney(false))) {
+            userPoint.setText(AccountManager.getInstance().getUser().getPoint() + "");
+            subtractIntegra.setText(AccountManager.getInstance().getUser().getPoint() + "");
+            if (Integer.valueOf((String) AccountManager.getInstance().getUser().getPoint()) > Integer.valueOf(getMoney(false))) {
                 subtractIntegra.setText(getMoney(false));
             }
         }

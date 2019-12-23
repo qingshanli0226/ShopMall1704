@@ -506,4 +506,15 @@ public class ShopCartFragment extends BaseNetConnectFragment {
     public void showLoading() {
 
     }
+
+    @Override
+    public void onConnected() {
+        myToolBar.isConnection(true);
+    }
+
+    @Override
+    public void onDisConnected() {
+        myToolBar.isConnection(false);
+    }
+
 }
