@@ -29,6 +29,7 @@ import com.example.shopmall.fragment.HomePageFragment;
 import com.example.shopmall.fragment.HorizontalFragment;
 import com.example.shopmall.fragment.MineFragment;
 import com.example.shopmall.jpush.ExampleUtil;
+import com.squareup.haha.perflib.Main;
 
 import java.util.ArrayList;
 import java.util.HashMap;

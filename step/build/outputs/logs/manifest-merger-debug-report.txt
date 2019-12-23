@@ -1,28 +1,28 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-40:12
-INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-40:12
-INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-40:12
-INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-40:12
-INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-40:12
-INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-40:12
-INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-40:12
+ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-30:12
+INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-30:12
+INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-30:12
+INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-30:12
+INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-30:12
+INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-30:12
+INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-30:12
 	package
 		ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:2:5-31
 		INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml
 		INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml
-		ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-40:12
+		ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-30:12
 		INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml
-		ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-40:12
+		ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:1-30:12
 		INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:1:11-69
 application
-ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:5:5-37:19
+ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:5:5-27:19
 activity#com.example.step.Ui.HistoryActivity
 ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:6:9-8:20
 	android:name
@@ -47,24 +47,6 @@ ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:19:9-24
 		ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:22:13-69
 	android:name
 		ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:19:18-77
-service#com.example.framework.service.StepRemoteService
-ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:26:9-30:24
-	android:process
-		ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:29:13-49
-	android:enabled
-		ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:28:13-35
-	android:exported
-		ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:27:13-36
-	android:name
-		ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:26:18-80
-service#com.example.framework.service.StepLocalService
-ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:31:9-36:19
-	android:enabled
-		ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:33:13-35
-	android:exported
-		ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:32:13-36
-	android:name
-		ADDED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:31:18-79
 uses-sdk
 INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml

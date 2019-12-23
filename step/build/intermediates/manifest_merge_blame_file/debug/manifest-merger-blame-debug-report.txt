@@ -11,7 +11,7 @@
 9-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml
 10
 11    <application>
-11-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:5:5-37:19
+11-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:5:5-27:19
 12        <activity android:name="com.example.step.Ui.HistoryActivity" >
 12-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:6:9-8:20
 12-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:6:19-53
@@ -39,25 +39,6 @@
 25            android:permission="android.permission.BIND_JOB_SERVICE" >
 25-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:22:13-69
 26        </service>
-27        <service
-27-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:26:9-30:24
-28            android:name="com.example.framework.service.StepRemoteService"
-28-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:26:18-80
-29            android:enabled="true"
-29-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:28:13-35
-30            android:exported="true"
-30-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:27:13-36
-31            android:process="remote.service.two" />
-31-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:29:13-49
-32        <service
-32-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:31:9-36:19
-33            android:name="com.example.framework.service.StepLocalService"
-33-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:31:18-79
-34            android:enabled="true"
-34-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:33:13-35
-35            android:exported="true" >
-35-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:32:13-36
-36        </service>
-37    </application>
-38
-39</manifest>
+27    </application>
+28
+29</manifest>
