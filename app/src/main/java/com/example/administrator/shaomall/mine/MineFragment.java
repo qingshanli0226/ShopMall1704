@@ -1,7 +1,6 @@
 package com.example.administrator.shaomall.mine;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,7 +9,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -118,10 +116,10 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         switch (v.getId()) {
             case R.id.tv_userSetting: //设置界面
 
-                Bundle bundle=new Bundle();
-                bundle.putString("name",mTvUserName.getText().toString());
-                bundle.putString("head",AppNetConfig.BASE_URL+avatar);
-                toClass(SettingActivity.class,bundle);
+                Bundle bundle = new Bundle();
+                bundle.putString("name", mTvUserName.getText().toString());
+                bundle.putString("head", AppNetConfig.BASE_URL + avatar);
+                toClass(SettingActivity.class, bundle);
                 break;
             case R.id.iv_message:   //消息界面
                 toClass(MessageActivity.class);
@@ -180,9 +178,9 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
     private void setPoint() {
         //        mTvPoint.setText();
         //把用户名先传到计步器的页面可以使用数据库存储用户名
-        Bundle bundle=new Bundle();
-        bundle.putString("username",mTvUserName.getText().toString());
-        toClass(RemindActivity.class,bundle);
+        Bundle bundle = new Bundle();
+        bundle.putString("username", mTvUserName.getText().toString());
+        toClass(RemindActivity.class, bundle);
 
     }
 
@@ -224,7 +222,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
                 avatar = "http://img5.imgtn.bdimg.com/it/u=1441588315,1666293982&fm=26&gp=0.jpg";
                 Glide.with(mContext).load(avatar).apply(RequestOptions.circleCropTransform()).into(mIvHeader);
             } else {
-                Glide.with(mContext).load(AppNetConfig.BASE_URL+avatar).apply(RequestOptions.circleCropTransform()).into(mIvHeader);
+                Glide.with(mContext).load(AppNetConfig.BASE_URL + avatar).apply(RequestOptions.circleCropTransform()).into(mIvHeader);
             }
             //这是昵称
             mTvUserName.setText(name);
@@ -232,12 +230,26 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
             if (point == null) {
                 point = "0";
             }
-            mTvPoint.setText("积分: " + this.point);
+
+            String str = "积分: " + this.point;
+            mTvPoint.setText(str);
 
         } else {
             mTvPoint.setVisibility(View.GONE);
             mLlLayoutShow.setVisibility(View.GONE);
         }
+    }
+
+    /**
+     * 头像更新
+     *
+     * @param path
+     */
+    @Override
+    public void onAvatarUpdate(String path) {
+        avatar = path;
+        mIvHeader.setImageURI(Uri.fromFile(new File(path)));
+        Glide.with(mContext).load(AppNetConfig.BASE_URL + path).apply(RequestOptions.circleCropTransform()).into(mIvHeader);
     }
 
 
@@ -325,17 +337,4 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         UserInfoManager.getInstance().unRegisterAvatarUpdateListener(this);
     }
 
-
-    /**
-     * 头像更新
-     * @param path
-     */
-    @Override
-    public void onAvatarUpdate(String path) {
-            avatar=path;
-            mIvHeader.setImageURI(Uri.fromFile(new File(path)));
-            Glide.with(mContext).load(AppNetConfig.BASE_URL+path).apply(RequestOptions.circleCropTransform()).into(mIvHeader);
-            Log.d("WQSSSH",AppNetConfig.BASE_URL+path);
-
-    }
 }

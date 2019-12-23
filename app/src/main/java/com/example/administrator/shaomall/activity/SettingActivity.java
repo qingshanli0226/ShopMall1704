@@ -1,12 +1,9 @@
 package com.example.administrator.shaomall.activity;
 
-import android.accounts.AccountManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -19,27 +16,20 @@ import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.example.administrator.shaomall.R;
-import com.example.net.AppNetConfig;
 import com.example.net.MVPObserver;
 import com.example.net.RetrofitCreator;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.shaomall.framework.base.BaseActivity;
-import com.shaomall.framework.bean.LoginBean;
 import com.shaomall.framework.bean.UploadBean;
 import com.shaomall.framework.manager.HandPortraitManager;
 import com.shaomall.framework.manager.UserInfoManager;
 import com.wyp.avatarstudio.AvatarStudio;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -51,20 +41,18 @@ import okhttp3.ResponseBody;
 
 public class SettingActivity extends BaseActivity {
     private LinearLayout settingLinearSex;
-    private TextView settingTextsex;
+    private TextView settingTextSex;
     private LinearLayout settingLinearDate;
     private TextView settingTextDate;
     private DatePicker settingDatePicker;
     private LinearLayout settingLinearName;
     private TextView settingTextChangeName;
     private SimpleDraweeView settingPhoto;
-    private TextView settingyong;
-    private ImageView settingback;
-    private LinearLayout settingLinearphoto;
+    private TextView settingYong;
+    private ImageView settingBack;
+    private LinearLayout settingLinearPhoto;
+    private List<String> arr = new ArrayList<String>();
 
-
-
-    ArrayList<String> arr=new ArrayList<String>();
     @Override
     protected int setLayoutId() {
         return R.layout.activity_setting;
@@ -72,17 +60,17 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        settingLinearphoto = (LinearLayout) findViewById(R.id.settingLinearphoto);
-        settingback = (ImageView) findViewById(R.id.settingback);
+        settingLinearPhoto = (LinearLayout) findViewById(R.id.settingLinearphoto);
+        settingBack = (ImageView) findViewById(R.id.settingback);
         settingLinearName = (LinearLayout) findViewById(R.id.settingLinearName);
         settingTextChangeName = (TextView) findViewById(R.id.settingTextChangeName);
         settingDatePicker = (DatePicker) findViewById(R.id.settingDatePicker);
         settingLinearSex = (LinearLayout) findViewById(R.id.settingLinearSex);
-        settingTextsex = (TextView) findViewById(R.id.settingTextsex);
+        settingTextSex = (TextView) findViewById(R.id.settingTextsex);
         settingLinearDate = (LinearLayout) findViewById(R.id.settingLinearDate);
         settingTextDate = (TextView) findViewById(R.id.settingTextDate);
         settingPhoto = (SimpleDraweeView) findViewById(R.id.settingPhoto);
-        settingyong = (TextView) findViewById(R.id.settingyong);
+        settingYong = (TextView) findViewById(R.id.settingyong);
 
 
         arr.add("男");
@@ -93,15 +81,15 @@ public class SettingActivity extends BaseActivity {
     @Override
     protected void initData() {
         //选择头像拍照裁剪
-        settingLinearphoto.setOnClickListener(new View.OnClickListener() {
+        settingLinearPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AvatarStudio.Builder builder = new AvatarStudio.Builder(SettingActivity.this);
-                builder.setAspect(1,1)
-                        .setOutput(100,100)
+                builder.setAspect(1, 1)
+                        .setOutput(100, 100)
                         .needCrop(true)
                         .dimEnabled(true)
-                        .setText("相机","本地相册","取消")
+                        .setText("相机", "本地相册", "取消")
                         .setTextColor(Color.GREEN)
                         .show(new AvatarStudio.CallBack() {
                             @Override
@@ -122,7 +110,7 @@ public class SettingActivity extends BaseActivity {
 
 
         //退出按钮
-        settingback.setOnClickListener(new View.OnClickListener() {
+        settingBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -135,8 +123,8 @@ public class SettingActivity extends BaseActivity {
         String head = extras.getString("head");
         settingTextChangeName.setText(name);
         settingPhoto.setImageURI(head);
-        settingyong.setText(name);
-        Toast.makeText(mActivity, ""+head, Toast.LENGTH_SHORT).show();
+        settingYong.setText(name);
+        
         //点击修改名字的事件
         settingLinearName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,6 +140,7 @@ public class SettingActivity extends BaseActivity {
                 showPickerView();
             }
         });
+
         //这个就是日期选择器
         settingLinearDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,18 +155,18 @@ public class SettingActivity extends BaseActivity {
                 int dayOfMonth = settingDatePicker.getDayOfMonth();
 
 
-                Toast.makeText(mActivity, year+"  "+month+"  "+"  "+dayOfMonth, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mActivity, year + "  " + month + "  " + "  " + dayOfMonth, Toast.LENGTH_SHORT).show();
             }
         });
 
     }
 
     private void upLode(File file) {
-        if (!file.exists()){
+        if (!file.exists()) {
             Toast.makeText(mActivity, "上传的文件不存在", Toast.LENGTH_SHORT).show();
         }
         //创建上传文件的请求体
-        RequestBody requestBody=RequestBody.create(MediaType.parse("image/*"),file);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
         //创建上传文件的part参数
         MultipartBody.Part uploadPart = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
         //进行网络请求
@@ -192,18 +181,16 @@ public class SettingActivity extends BaseActivity {
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
-                        String s=null;
+                        String str;
                         try {
-                            s=responseBody.string();
-                            UploadBean uploadBean=new Gson().fromJson(s,UploadBean.class);
-
+                            str = responseBody.string();
+                            UploadBean uploadBean = new Gson().fromJson(str, UploadBean.class);
                             if ("200".equals(uploadBean.getCode())) {
-                                LoginBean loginBean = UserInfoManager.getInstance().upDataAvater(uploadBean.getResult());
+                                UserInfoManager.getInstance().upDataAvater(uploadBean.getResult());
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-
                     }
 
                     @Override
@@ -211,17 +198,15 @@ public class SettingActivity extends BaseActivity {
 
                     }
                 });
-
     }
 
     // 弹出选择器
     private void showPickerView() {
-
         OptionsPickerView pvOptions = new OptionsPickerBuilder(this, new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
                 //返回的分别是三个级别的选中位置
-                settingTextsex.setText(arr.get(options1));
+                settingTextSex.setText(arr.get(options1));
 
             }
         })
