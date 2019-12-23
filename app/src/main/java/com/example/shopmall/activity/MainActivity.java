@@ -74,9 +74,13 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
     protected void onResume() {
         super.onResume();
         int mainitem = ShoppingManager.getInstance().getMainitem();
-        if (mainitem == 3) {
+        if(mainitem==5){
+            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+        }else {
             bbMain.setCheckedItem(mainitem);
-            refreshShoppingCartData();
+            if (mainitem == 3) {
+                refreshShoppingCartData();
+            }
         }
     }
 
