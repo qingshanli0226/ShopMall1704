@@ -225,6 +225,7 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
                 }
             }.start();
             startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            ShoppingManager.getInstance().setMainitem(4);
             finish();
         } else {
             LoginEvent loginEvent = new LoginEvent("用户登录", false);

@@ -24,21 +24,19 @@ INJECTED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml
 application
 ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:5:5-19:19
 activity#com.example.step.Ui.HistoryActivity
-ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:6:9-9:25
-	android:screenOrientation
-		ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:7:13-49
+ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:6:9-8:20
 	android:name
 		ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:6:19-53
 activity#com.example.step.Ui.IntegralActivity
-ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:10:9-14:20
+ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:9:9-13:20
 	android:screenOrientation
-		ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:11:13-49
+		ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:10:13-49
 	android:name
-		ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:10:19-54
+		ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:9:19-54
 service#com.example.framework.service.StepService
-ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:16:9-18:19
+ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:15:9-18:19
 	android:name
-		ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:16:18-74
+		ADDED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml:15:18-74
 uses-sdk
 INJECTED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from F:\Android-7\GitHup\ShopMall1704\step\src\main\AndroidManifest.xml

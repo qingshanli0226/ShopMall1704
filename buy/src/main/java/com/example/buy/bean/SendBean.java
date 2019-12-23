@@ -2,13 +2,14 @@ package com.example.buy.bean;
 
 public class SendBean {
 
+
     /**
-     * subject : buy
-     * body : 测试数据
-     * totalPrice : 500
-     * time : 1558940014208
+     * subject : ??
+     * body : ????
+     * totalPrice : 600
+     * time : 1576296108129
      * status : null
-     * reserveOne : null
+     * tradeNo : 121412014813510
      */
 
     private String subject;
@@ -16,7 +17,7 @@ public class SendBean {
     private String totalPrice;
     private String time;
     private Object status;
-    private Object reserveOne;
+    private String tradeNo;
 
     public String getSubject() {
         return subject;
@@ -58,12 +59,12 @@ public class SendBean {
         this.status = status;
     }
 
-    public Object getReserveOne() {
-        return reserveOne;
+    public String getTradeNo() {
+        return tradeNo;
     }
 
-    public void setReserveOne(Object reserveOne) {
-        this.reserveOne = reserveOne;
+    public void setTradeNo(String tradeNo) {
+        this.tradeNo = tradeNo;
     }
 
     @Override
@@ -74,7 +75,7 @@ public class SendBean {
                 ", totalPrice='" + totalPrice + '\'' +
                 ", time='" + time + '\'' +
                 ", status=" + status +
-                ", reserveOne=" + reserveOne +
+                ", tradeNo='" + tradeNo + '\'' +
                 '}';
     }
 }

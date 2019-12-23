@@ -22,6 +22,7 @@ import com.example.framework.base.BaseFragment;
 import com.example.framework.manager.ConnectManager;
 import com.example.framework.manager.MessageManager;
 import com.example.framework.manager.UserManager;
+import com.example.framework.manager.ShoppingManager;
 import com.example.net.Constant;
 import com.example.shopmall.R;
 import com.example.shopmall.activity.LoginActivity;

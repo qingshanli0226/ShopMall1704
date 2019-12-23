@@ -21,6 +21,7 @@ public class SendGoodsActivity extends BaseActivity implements IGetBaseView<Send
     TitleBar tbSendgoods;
     RecyclerView rvSendgoods;
     private MyShoppingSendAdapter myShoppingSendAdapter;
+    private SendPresenter presenter;
 
     @Override
     protected int setLayout() {
@@ -45,7 +46,7 @@ public class SendGoodsActivity extends BaseActivity implements IGetBaseView<Send
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("token", token);
 
-        SendPresenter presenter = new SendPresenter("findForSend", SendBean.class, hashMap);
+        presenter = new SendPresenter("findForSend", SendBean.class, hashMap);
         presenter.attachGetView(this);
         presenter.getGetData();
     }
@@ -90,5 +91,13 @@ public class SendGoodsActivity extends BaseActivity implements IGetBaseView<Send
     @Override
     public void onGetDataFailed(String ErrorMsg) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(presenter!=null){
+            presenter.detachView();
+        }
     }
 }

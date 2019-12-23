@@ -1,8 +1,14 @@
 package com.example.framework.manager;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Environment;
+import android.util.Log;
 
+import com.example.framework.bean.ResultBean;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +25,8 @@ public class ShoppingManager {
     private List<Map<String, String>> data = new ArrayList<>();
     //购物车内选中的购买物品
     private List<Map<String, String>> data2 = new ArrayList<>();
-
+    //收藏物品
+    private List<Map<String, String>> data3 = new ArrayList<>();
     //购物车内改变前和改变后的数目
     private int beforenum = 0;
     private int afternum = 0;
@@ -42,6 +49,59 @@ public class ShoppingManager {
             }
         }
         return shoppingManager;
+    }
+
+    public List<Map<String, String>> getCollections(Context context) {
+        SharedPreferences collection = context.getSharedPreferences("collection", Context.MODE_PRIVATE);
+        ResultBean user = UserManager.getInstance().getUser();
+        String name = user.getName();
+        String collections = collection.getString(name+"collections", null);
+        if(collections!=null){
+            String[] s = collections.split("///");
+            data3.clear();
+            for (int i = 0; i < s.length; i++) {
+                String s1 = s[i];
+                String[] split = s1.split(":");
+                Log.e("####",s1);
+                Map<String,String> map = new HashMap<>();
+                map.put("id",split[0]);
+                map.put("title",split[1]);
+                map.put("price",split[2]);
+                map.put("img",split[3]);
+                map.put("num",split[4]);
+                data3.add(map);
+                Log.e("####",map.toString());
+            }
+        }
+        return data3;
+    }
+
+    @SuppressLint("CommitPrefEdits")
+    public void setCollections(Context context, List<Map<String, String>> data3) {
+        this.data3 = data3;
+        ResultBean user = UserManager.getInstance().getUser();
+        String name = user.getName();
+        SharedPreferences collection = context.getSharedPreferences("collection", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = collection.edit();
+        StringBuffer buffer = new StringBuffer();
+        Map<String, String> map = data3.get(0);
+        String id = map.get("id");
+        String title = map.get("title");
+        String price = map.get("price");
+        String img = map.get("img");
+        String num = map.get("num");
+        buffer.append(id+":"+title+":"+price+":"+img+":"+num);
+        for (int i = 1; i < data3.size(); i++) {
+            Map<String, String> map1 = data3.get(i);
+            String id1 = map1.get("id");
+            String title1 = map1.get("title");
+            String price1 = map1.get("price");
+            String img1 = map1.get("img");
+            String num1 = map1.get("num");
+            buffer.append("///"+id1+":"+title1+":"+price1+":"+img1+":"+num1);
+        }
+        edit.putString(name+"collections",buffer.toString());
+        edit.apply();
     }
 
     public int getMainitem() {

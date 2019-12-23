@@ -191,14 +191,19 @@ public class StepService extends Service implements SensorEventListener {
                 for (int s=0;s<all.size();s++){
                     count+=all.get(s).getIntegral();
                 }
+                Log.e("##Up",count+"");
+                if (updateUi != null) {
+                    updateUi.getUpdateStep(currentStep,count);
+                }
             }else{
                 count=i;
+                Log.e("##Up",count+"");
+                if (updateUi != null) {
+                    updateUi.getUpdateStep(currentStep,count);
+                }
             }
 
-            Log.e("##Up",count+"");
-            if (updateUi != null) {
-                updateUi.getUpdateStep(currentStep,count);
-            }
+
         }
 
     }

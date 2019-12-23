@@ -22,7 +22,6 @@ public class AddressBarBean {
     private String detailed_address;
     //标签
     private String tag;
-
     @Generated(hash = 1648776116)
     public AddressBarBean(Long id, String name, String consignee,
             String cell_phone_number, String location, String detailed_address,
@@ -80,6 +79,8 @@ public class AddressBarBean {
     public void setTag(String tag) {
         this.tag = tag;
     }
+
+   
     
 
 }
