@@ -5,17 +5,25 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.multidex.MultiDex;
+import androidx.versionedparcelable.ParcelUtils;
+
+import com.example.common.AppProcessUtil;
+import com.example.framework.manager.CaCheManager;
 import com.example.framework.manager.ConnectManager;
 import com.example.framework.manager.CrashHandler;
 import com.example.framework.manager.MessageManager;
+import com.example.framework.manager.ShoppingManager;
 import com.example.framework.manager.UserManager;
 import com.example.shopmall.activity.MainActivity;
 import com.example.framework.manager.StepManager;
+import com.example.shopmall.activity.WelcomeActivity;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.stat.StatConfig;
 import com.tencent.stat.StatService;
 
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
+import cn.jiguang.api.utils.ProtocolUtil;
 import cn.jpush.android.api.JPushInterface;
 
 public class MyApplication extends Application {
@@ -27,16 +35,23 @@ public class MyApplication extends Application {
         super.onCreate();
         context = this;
 
+
+
         ConnectManager.getInstance().init(this);
         //初始化异常
         CrashHandler.getInstance(this).init();
+            JAnalyticsInterface.setDebugMode(true);
+            JAnalyticsInterface.init(this);
+            JPushInterface.init(this);
 
-        JAnalyticsInterface.setDebugMode(true);
-        JAnalyticsInterface.init(this);
-        JPushInterface.init(this);
+        if(AppProcessUtil.isAppProcess(this)==true){
 
-        JAnalyticsInterface.setDebugMode(true);
-        JAnalyticsInterface.init(context);
+            StepManager.getInstance().init(getApplicationContext());
+        }
+
+
+
+
         //点击通知跳转MainActivity
         Intent intent = new Intent(this, MainActivity.class);
 
@@ -44,9 +59,6 @@ public class MyApplication extends Application {
 
         UserManager.getInstance().init(this);
 
-        ConnectManager.getInstance().init(this);
-        //初始化异常
-        CrashHandler.getInstance(this).init();
 
         //初始化消息数据库
         MessageManager.getMessageManager().init(this);
@@ -54,6 +66,8 @@ public class MyApplication extends Application {
         // 基础统计API
         StatService.registerActivityLifecycleCallbacks(this);
         LeakCanary.install(this);
+
+        MultiDex.install(this);
     }
 
     public static Context getContext() {

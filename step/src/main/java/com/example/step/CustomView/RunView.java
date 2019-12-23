@@ -42,6 +42,9 @@ public class RunView extends SurfaceView {
     };
 
 
+    public void removeSurfaceView(){
+        holder.removeCallback(callback);
+    }
 
     public RunView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -100,7 +103,7 @@ public class RunView extends SurfaceView {
         public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
 
             isRunning=false;
-
+             changeBitmapSize().recycle();
 
         }
     };
@@ -166,6 +169,7 @@ public class RunView extends SurfaceView {
 
         }
     }
+
 
 
 

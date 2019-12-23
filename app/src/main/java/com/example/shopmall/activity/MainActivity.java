@@ -24,7 +24,11 @@ import com.example.common.BottomBar;
 import com.example.common.ShoppingCartView;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.manager.ShoppingManager;
+<<<<<<< HEAD
 import com.example.framework.manager.UserManager;
+=======
+import com.example.framework.manager.StepManager;
+>>>>>>> bing
 import com.example.shopmall.R;
 import com.example.shopmall.fragment.ClassifyFragment;
 import com.example.shopmall.fragment.HomePageFragment;
@@ -83,6 +87,8 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
 
     @Override
     public void initData() {
+
+
         ShoppingManager.getInstance().setOnNumberChangedListener(this);
         refreshShoppingCartData();
         //获取购物车商品数量

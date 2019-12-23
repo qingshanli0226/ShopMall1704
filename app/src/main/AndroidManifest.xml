@@ -69,9 +69,10 @@
             android:name="com.example.step.Ui.IntegralActivity"
             android:screenOrientation="portrait"
             tools:ignore="InnerclassSeparator" />
-        <activity
-            android:name=".activity.WelcomeActivity"
-            android:screenOrientation="portrait">
+        <activity android:name=".activity.WelcomeActivity"
+            android:screenOrientation="portrait"
+
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -123,10 +124,11 @@
             </intent-filter>
         </activity>
 
+
         <service
             android:name="cn.jpush.android.service.PushService"
-            android:exported="false"
-            android:process=":pushcore">
+            android:process=":pushcore"
+            android:exported="false">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.REGISTER" />
                 <action android:name="cn.jpush.android.intent.REPORT" />
@@ -171,9 +173,9 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name=".jpush.PushService"
-            android:process=":pushcore">
+        <service android:name=".jpush.PushService"
+                android:process=":pushcore"
+        >
             <intent-filter>
                 <action android:name="cn.jiguang.user.service.action" />
             </intent-filter>
