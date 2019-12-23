@@ -36,7 +36,9 @@ dependencies {
     implementation project(path: ':framework')
     implementation project(path: ':common')
 
-    implementation 'com.github.lecho:hellocharts-android:v1.5.8'
+//    implementation 'com.github.lecho:hellocharts-android:v1.5.8'
+
+    implementation 'com.github.aliwh1203:HelloChartNew:v1.1'
 
     implementation 'com.android.support:design:28.0.0'
     implementation project(path: ':net')

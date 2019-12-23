@@ -56,6 +56,10 @@ public class History_WeekFragment extends BaseFragment {
     }
 
     private void initColumnChart() {
+
+
+        columnChartView.getMaximumViewport().set(Float.MAX_VALUE,Float.MIN_VALUE,Float.MIN_VALUE,Float.MAX_VALUE);
+
         columnChartView.setZoomEnabled(true);
         columnChartView.setInteractive(true);
         columnChartView.setZoomType(ZoomType.HORIZONTAL);
@@ -84,6 +88,7 @@ public class History_WeekFragment extends BaseFragment {
         }
         ColumnChartData data = new ColumnChartData(columns);
         data.setAxisXBottom(axisX);
+        data.setFillRatio(0.14f);
         columnChartView.setColumnChartData(data);
 
 

@@ -6,7 +6,8 @@
     <lecho.lib.hellocharts.view.LineChartView
         android:id="@+id/history_monthChart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
     </lecho.lib.hellocharts.view.LineChartView>
 

@@ -81,7 +81,7 @@ public class History_MinutesFragment extends BaseFragment {
         Line line = new Line(mPointValues).setColor(ChartUtils.pickColor());
         List<Line> lines=new ArrayList<>();
         line.setShape(ValueShape.CIRCLE);
-        line.setCubic(true);
+        line.setCubic(false);
         line.setFilled(false);
         line.setHasLabels(true);
         line.setHasLines(true);

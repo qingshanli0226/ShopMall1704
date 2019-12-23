@@ -677,6 +677,7 @@ color mtrl_textinput_filled_box_default_background_color
 color mtrl_textinput_hovered_box_stroke_color
 color notification_action_color_filter
 color notification_icon_bg_color
+color notification_material_background_media_default_color
 color other_text_color
 color primary_dark_material_dark
 color primary_dark_material_light
@@ -923,6 +924,10 @@ dimen step_margin20
 dimen step_paddingLeft
 dimen step_tvSize20
 dimen step_tvSize24
+dimen subtitle_corner_radius
+dimen subtitle_outline_width
+dimen subtitle_shadow_offset
+dimen subtitle_shadow_radius
 dimen titleBar_height
 dimen tooltip_corner_radius
 dimen tooltip_horizontal_padding
@@ -1099,6 +1104,7 @@ id accessibility_custom_action_6
 id accessibility_custom_action_7
 id accessibility_custom_action_8
 id accessibility_custom_action_9
+id action0
 id action_bar
 id action_bar_activity_content
 id action_bar_container
@@ -1127,6 +1133,7 @@ id bottom
 id btn_common_add
 id btn_common_sub
 id buttonPanel
+id cancel_action
 id center
 id checkbox
 id checked
@@ -1147,6 +1154,7 @@ id design_navigation_view
 id dialog_button
 id edit_query
 id end
+id end_padder
 id et_search
 id expand_activities_button
 id expanded_menu
@@ -1183,6 +1191,7 @@ id listMode
 id list_item
 id ll_bottombar
 id masked
+id media_actions
 id message
 id mini
 id mtrl_child_content_container
@@ -1245,6 +1254,7 @@ id src_atop
 id src_in
 id src_over
 id start
+id status_bar_latest_event_content
 id step_item_count
 id step_item_day
 id step_item_time
@@ -1376,8 +1386,17 @@ layout mtrl_layout_snackbar
 layout mtrl_layout_snackbar_include
 layout notification_action
 layout notification_action_tombstone
+layout notification_media_action
+layout notification_media_cancel_action
+layout notification_template_big_media
+layout notification_template_big_media_custom
+layout notification_template_big_media_narrow
+layout notification_template_big_media_narrow_custom
 layout notification_template_custom_big
 layout notification_template_icon_group
+layout notification_template_lines_media
+layout notification_template_media
+layout notification_template_media_custom
 layout notification_template_part_chronometer
 layout notification_template_part_time
 layout number_add_sub_layout
@@ -1763,9 +1782,14 @@ style TextAppearance_AppCompat_Widget_Switch
 style TextAppearance_AppCompat_Widget_TextView_SpinnerItem
 style TextAppearance_Compat_Notification
 style TextAppearance_Compat_Notification_Info
+style TextAppearance_Compat_Notification_Info_Media
 style TextAppearance_Compat_Notification_Line2
+style TextAppearance_Compat_Notification_Line2_Media
+style TextAppearance_Compat_Notification_Media
 style TextAppearance_Compat_Notification_Time
+style TextAppearance_Compat_Notification_Time_Media
 style TextAppearance_Compat_Notification_Title
+style TextAppearance_Compat_Notification_Title_Media
 style TextAppearance_Design_CollapsingToolbar_Expanded
 style TextAppearance_Design_Counter
 style TextAppearance_Design_Counter_Overflow
