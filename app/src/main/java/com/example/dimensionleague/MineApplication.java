@@ -28,7 +28,7 @@ public class MineApplication extends Application {
         //TODO SP存储工具类
         SPUtil.init(applicationContext);
         //TODO 异常捕获
-        CrashHandler.getInstance().initErrorHandler(applicationContext);
+        // CrashHandler.getInstance().initErrorHandler(applicationContext);
         if (LeakCanary.isInAnalyzerProcess(this)) {
             return;
         }

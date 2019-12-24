@@ -31,7 +31,7 @@
             android:name=".activity.HistoryActivity"
             android:launchMode="singleTop" />
 
-
+        <service android:name=".service.RemoterSerive"></service>
         <service android:name=".service.StepService"
             >
             <intent-filter>

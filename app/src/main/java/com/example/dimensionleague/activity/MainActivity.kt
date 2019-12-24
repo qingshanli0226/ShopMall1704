@@ -1,5 +1,6 @@
 package com.example.dimensionleague.activity
 
+import android.content.Intent
 import androidx.fragment.app.Fragment
 import android.view.KeyEvent
 import android.widget.Toast
@@ -15,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import com.example.framework.base.BaseNetConnectActivity
 import com.example.framework.listener.OnShopCartListener
 import com.example.buy.CartManager
+import com.example.dimensionleague.JobService
 
 import kotlin.system.exitProcess
 import com.example.dimensionleague.login.activity.LoginActivity
@@ -58,7 +60,7 @@ class MainActivity : BaseNetConnectActivity() {
 
     override fun initDate() {
         super.init()
-
+        startService(Intent(this@MainActivity,JobService::class.java))
         main_easy.selectTextColor(R.color.colorGradualPurple)
             .normalTextColor(R.color.colorMainNormal)
             .selectIconItems(

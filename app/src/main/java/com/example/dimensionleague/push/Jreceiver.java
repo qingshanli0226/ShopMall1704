@@ -4,7 +4,6 @@ import android.content.Context;
 import android.text.format.DateFormat;
 import android.util.Log;
 
-import com.example.dimensionleague.R;
 import com.example.framework.bean.MessageBean;
 import com.example.framework.manager.DaoManager;
 
@@ -41,6 +40,7 @@ public class Jreceiver extends JPushMessageReceiver {
     public void onAliasOperatorResult(Context context, JPushMessage jPushMessage) {
         super.onAliasOperatorResult(context, jPushMessage);
         Log.e(TAG, jPushMessage.toString());
+
     }
 
     /**
@@ -52,6 +52,10 @@ public class Jreceiver extends JPushMessageReceiver {
     public void onNotifyMessageArrived(Context context, NotificationMessage notificationMessage) {
         super.onNotifyMessageArrived(context, notificationMessage);
         Log.e(TAG, notificationMessage.toString());
+        String CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis())+"";//今日日期
+        String message = notificationMessage.notificationContent.toString();
+        String title = notificationMessage.notificationTitle.toString();
+        DaoManager.Companion.getInstance(context).addMessageBean(new MessageBean(null, com.example.point.R.mipmap.tui,message,title,CURRENT_DATE));
     }
 
     /**
@@ -65,7 +69,6 @@ public class Jreceiver extends JPushMessageReceiver {
         Log.e(TAG, notificationMessage.notificationExtras);
     }
 
-
     /**
      * TODO 接收到推送下来的自定义消息
      *      自定义消息不是通知，默认不会被SDK展示到通知栏上，极光推送仅负责透传给SDK。其内容和展示形式完全由开发者自己定义。
@@ -74,12 +77,5 @@ public class Jreceiver extends JPushMessageReceiver {
     @Override
     public void onMessage(Context context, CustomMessage customMessage) {
         super.onMessage(context, customMessage);
-        Log.e(TAG, "onMessage");
-       String CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis())+"";//今日日期
-        String messageId = customMessage.messageId;
-        String message = customMessage.message;
-        String title = customMessage.title;
-        Log.e("www", "onMessage: "+message );
-       DaoManager.Companion.getInstance(context).addMessageBean(new MessageBean(null, com.example.point.R.mipmap.ic_launcher_round,customMessage.message,customMessage.title,CURRENT_DATE));
     }
 }

@@ -131,14 +131,12 @@ public class CacheManager {
                             }
                         }
                     }
-
                     @Override
                     public void onError(Throwable e) {
                         synchronized (CacheManager.class) {
                             listener.onHomeDataError(e.getMessage());
                         }
                     }
-
                     @Override
                     public void onComplete() {
                     }
@@ -147,7 +145,6 @@ public class CacheManager {
 
     public interface IHomeReceivedListener {
         void onHomeDataReceived(HomeBean.ResultBean homeBean);
-
         void onHomeDataError(String s);
     }
 }
