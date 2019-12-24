@@ -2,15 +2,13 @@ package com.example.administrator.shaomall.goodsinfo
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
-import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.PointF
 import android.view.Gravity
 import android.view.View
 import android.webkit.WebView
-import android.webkit.WebViewClient
-import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.alibaba.fastjson.JSONObject
 import com.bumptech.glide.Glide
@@ -18,12 +16,12 @@ import com.example.administrator.shaomall.R
 import com.example.administrator.shaomall.activity.MainActivity
 import com.example.administrator.shaomall.goodsinfo.bean.GoodsInfoBean
 import com.example.administrator.shaomall.login.LoginActivity
+import com.example.commen.WebViewConfig
 import com.example.commen.util.ShopMailError
 import com.example.net.AppNetConfig
 import com.shaomall.framework.base.BaseMVPActivity
 import com.shaomall.framework.base.presenter.IBasePresenter
 import com.shaomall.framework.bean.ShoppingCartBean
-import com.shaomall.framework.manager.ActivityInstanceManager
 import com.shaomall.framework.manager.ShoppingManager
 import com.shaomall.framework.manager.UserInfoManager
 import kotlinx.android.synthetic.main.activity_commodity.*
@@ -40,17 +38,21 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
     private lateinit var productPrice: String
     private var productDescribe: String? = null
     private lateinit var qBadgeView: QBadgeView //小红点显示
-    lateinit var frameLayout: FrameLayout
+    private lateinit var linearLayout: LinearLayout
     private lateinit var mWebView: WebView
 
     override fun setLayoutId(): Int = R.layout.activity_commodity
 
-    @SuppressLint("SetTextI18n", "SetJavaScriptEnabled")
     override fun initView() {
+        //购物车商品数量更新监听
+        ShoppingManager.getInstance().registerShoppingNumChangeListener(this)
+
+
         //点击关闭
-        mIbGoodInfoBack.setOnClickListener {
+        mTc_top.setLeftBackImageViewOnClickListener {
             animOutActivity()
         }
+
 
         //获取intent
         val intent = intent
@@ -102,9 +104,6 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
                 .setBadgeGravity(Gravity.END or Gravity.TOP or Gravity.CENTER)
                 .setBadgeBackgroundColor(Color.RED)
                 .badgeNumber = ShoppingManager.getInstance().shoppingNum
-
-        //购物车商品数量更新监听
-        ShoppingManager.getInstance().registerShoppingNumChangeListener(this)
     }
 
     /**
@@ -113,13 +112,11 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
     private fun productDetails() {
         //创建webView控件
         mWebView = WebView(applicationContext)
-        frameLayout = this.findViewByMe(R.id.mWbGoodInfoMore)
-        frameLayout.addView(mWebView)
-
+        //配置webView
+        WebViewConfig.initWebViewConfig(mWebView)
+        linearLayout = this.findViewByMe(R.id.mWbGoodInfoMore)
+        linearLayout.addView(mWebView)
         mWebView.loadUrl(productPic)
-        mWebView.webViewClient = WebViewClient()
-        val settings = mWebView.settings
-        settings.javaScriptEnabled = true //允许使用js
     }
 
 
@@ -140,6 +137,9 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
                 }
 
                 R.id.mBtnGoodInfoAddcart -> { //点击加入购物车
+                    //禁止点击
+                    mBtnGoodInfoAddcart.isEnabled = false
+
                     if (iBasePresenter == null) {
                         iBasePresenter = AddCartPresenter()
                         iBasePresenter!!.attachView(this)
@@ -152,6 +152,7 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
                     objects["productPrice"] = productPrice
                     objects["url"] = productPic
                     (iBasePresenter as AddCartPresenter).setJsonObject(objects)
+
 
                     //给添加购物车设置动画, 贝瑟尔曲线
                     setBezierCurveAnimation() //设置贝塞尔曲线动画
@@ -259,6 +260,10 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
      * 网络请求成功回调
      */
     override fun onRequestHttpDataSuccess(message: String?, data: String?) {
+        //按钮恢复
+        mBtnGoodInfoAddcart.isEnabled = true
+
+
         var shoppingCartBean = ShoppingCartBean()
         shoppingCartBean.productId = productId
         shoppingCartBean.productNum = productNum.toString()
@@ -284,9 +289,12 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
 
     override fun onDestroy() {
         super.onDestroy()
-        frameLayout.removeView(mWebView)
-        mWebView.removeAllViews()
-        mWebView.destroy()
+        WebViewConfig.destroy(mWebView)
+        if (iBasePresenter != null) {
+            iBasePresenter!!.detachView()
+            iBasePresenter = null
+        }
         ShoppingManager.getInstance().unRegisterShoppingNumChangeListener(this)
+
     }
 }

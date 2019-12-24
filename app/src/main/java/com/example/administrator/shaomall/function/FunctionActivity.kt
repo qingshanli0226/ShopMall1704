@@ -1,85 +1,87 @@
 package com.example.administrator.shaomall.function
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.example.administrator.shaomall.R
-import com.example.administrator.shaomall.function.adapter.FindForAdapter
-import com.example.commen.util.ShopMailError
-import com.shaomall.framework.bean.FindForBean
-import com.example.net.AppNetConfig
-import com.shaomall.framework.base.BaseMVPActivity
+import com.example.administrator.shaomall.function.adapter.FunctionAdaptor
+import com.shaomall.framework.base.BaseActivity
+import com.shaomall.framework.bean.FunctionBean
+import com.shaomall.framework.base.presenter.IBasePresenter
 import com.shaomall.framework.manager.ActivityInstanceManager
 import kotlinx.android.synthetic.main.activity_function.*
 
-class FunctionActivity : BaseMVPActivity<FindForBean>() {
-    private var listOf = mutableListOf<FindForBean>()
-    private lateinit var forAdapter: FindForAdapter
-    private var forPresenter: FindForPresenter? = null
+class FunctionActivity : BaseActivity() {
+    lateinit var presenter: IBasePresenter<FunctionBean>
     private var bundle: Bundle? = null
+    private lateinit var functionAdaptor: FunctionAdaptor   //适配器
+    private lateinit var functionViewModel: FunctionViewModel //ViewModel 网络请求
+
+
     override fun setLayoutId(): Int = R.layout.activity_function
     override fun initView() {
         bundle = intent.extras
-
-
-
         //更新标题
-        val stringExtra = bundle!!.getString("title")
-        if (stringExtra != null) {
-            mTvTitle.text = stringExtra
+        val title = bundle!!.getString("title")
+
+        if (!title.isNullOrBlank()) {
+            mToolBarCustom.title = title
         }
+
         //点击返回
-        mIvBack.setOnClickListener {
+        mToolBarCustom.setLeftBackImageViewOnClickListener {
             ActivityInstanceManager.removeActivity(this)
         }
 
-        mRv.layoutManager = LinearLayoutManager(this)
-        forAdapter = FindForAdapter(listOf)
-        mRv.adapter = forAdapter
+
+        val linearLayoutManager = LinearLayoutManager(this)
+        linearLayoutManager.stackFromEnd = true //列表再底部开始展示，反转后由上面开始展示
+        linearLayoutManager.reverseLayout = true //列表翻转
+        mRv.layoutManager = linearLayoutManager
+        mRv.smoothScrollBy(0, 0)
+        functionAdaptor = FunctionAdaptor(this)
+        mRv.adapter = functionAdaptor
     }
 
     override fun initData() {
-        if (forPresenter == null) {
-            forPresenter = FindForPresenter()
-            forPresenter!!.attachView(this)
-        }
+        //使用ViewModel提供者,获取ViewModel的实例
+        functionViewModel = ViewModelProviders.of(this).get(FunctionViewModel::class.java)
+        functionViewModel.liveData.observe(this, Observer<List<FunctionBean>> { t ->
+            functionAdaptor.upDateData(t) //赋值
+        })
         if ("待支付" == bundle!!.getString("type")) {
-            findForPayData() //待支付
+            functionViewModel.findForPay()
         } else if ("待发货" == bundle!!.getString("type")) {
-            findForSendData() //待发货
-        }
-
-        //进行网络请求
-        forPresenter!!.doGetHttpRequest()
-    }
-
-    override fun onRequestHttpDataListSuccess(message: String?, data: MutableList<FindForBean>?) {
-        if (data != null) {
-            listOf.clear()
-            listOf.addAll(data)
-            forAdapter.notifyDataSetChanged()
+            functionViewModel.findForSend()
         }
     }
 
-
-    override fun onRequestHttpDataFailed(error: ShopMailError?) {
-        if (error != null) {
-            toast(error.errorMessage, false)
-        }
-    }
 
     /**
-     * 代发货
+     * 点击事件监听
      */
-    private fun findForSendData() {
-        forPresenter!!.path = AppNetConfig.FIND_FOR_SEND //待发货
+    fun itemViewClick(functionBean: FunctionBean, postion: Int) {
+        if ("待发货" == mToolBarCustom.title) {
+            return
+        }
+
+        //        val shoppingCartBean = ShoppingCartBean()
+        //
+        //        val listOf = arrayListOf<ShoppingCartBean>()
+        //        listOf.add(shoppingCartBean)
+        //        val bundle = Bundle()
+        //        bundle.putParcelableArrayList("data", listOf)
+        //        bundle.putFloat("sum", sum)
+        //        toClass(OrderFormActivity::class.java, bundle)
+
+        toast("$postion", false)
     }
 
-    /**
-     * 待支付
-     */
-    private fun findForPayData() {
-        forPresenter!!.path = AppNetConfig.FIND_FOR_PAY
+
+    override fun onDestroy() {
+        //解除所有订阅者
+        functionViewModel.clearDisposable()
+        super.onDestroy()
     }
-
-
 }

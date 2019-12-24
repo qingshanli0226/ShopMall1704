@@ -83,7 +83,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     protected void animOutActivity(){
-        finish();
+//        finish();
+        ActivityInstanceManager.removeActivity(this);
         overridePendingTransition(R.anim.anim_in,R.anim.anim_out);
     }
     /**

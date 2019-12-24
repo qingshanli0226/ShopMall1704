@@ -65,7 +65,7 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> implements MessageM
         titleLayoutParams = (ViewGroup.MarginLayoutParams) tv_title.getLayoutParams();
 
         //加载购物车数据
-//        ShoppingManager.getInstance().notifyUpdatedShoppingData();
+        //        ShoppingManager.getInstance().notifyUpdatedShoppingData();
     }
 
     @Override
@@ -95,7 +95,7 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> implements MessageM
         message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             animStartActivity(MessageActivity.class);
+                animStartActivity(MessageActivity.class);
             }
         });
         List<MessageBean> messageBeans = MessageManager.getInstance(getContext()).qurayNotReadData();
@@ -105,7 +105,7 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> implements MessageM
         searchTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-           animStartActivity(SearchActivity.class);
+                animStartActivity(SearchActivity.class);
             }
         });
     }

@@ -2,6 +2,7 @@ package com.shaomall.framework.base.presenter;
 
 import android.util.Log;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.commen.util.ErrorUtil;
 import com.example.commen.LoadingPageConfig;
@@ -15,14 +16,17 @@ import com.shaomall.framework.base.view.IBaseView;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import io.reactivex.CompletableOperator;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
@@ -31,6 +35,8 @@ import okhttp3.ResponseBody;
 
 public abstract class BasePresenter<T> implements IBasePresenter<T> {
     private IBaseView<T> iBaseView;
+    //控制取消订阅
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Override
     public void doGetHttpRequest() {
@@ -73,6 +79,10 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
         getData(requestCode, RetrofitCreator.getNetApiService().jsonPostData(getHeaderParams(), getPath(), getEncryptJsonParam()));
     }
 
+    @Override
+    public void doJsonArrayPostHttpRequest(int requestCode) {
+        getData(requestCode, RetrofitCreator.getNetApiService().jsonArrayPostData(getPath(), getJsonArrayParam()));
+    }
 
     //设置加载页状态
     private void setLoadingPager(int requestCode, int type) {
@@ -181,6 +191,15 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
         return requestBody;
     }
 
+    /**
+     * JSONArray数据
+     *
+     * @return
+     */
+    protected Object getJsonArrayParam() {
+
+        return null;
+    }
 
     private void getData(Observable<ResponseBody> data) {
         data.subscribeOn(Schedulers.io()) //订阅
@@ -188,12 +207,15 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                 .subscribe(new MVPObserver<ResponseBody>() {
                     @Override
                     public void onSubscribe(Disposable d) {
+                        compositeDisposable.add(d);
+
                         //提示用户正在加载, 显示加载页
                         setLoadingPager(-1, LoadingPageConfig.STATE_LOADING_CODE);
                     }
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
+
                         //判断iBaseView是否为null
                         if (iBaseView == null) {
                             return;
@@ -203,7 +225,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                             setLoadingPager(-1, LoadingPageConfig.STATE_SUCCESS_CODE);
 
                             String string = responseBody.string();
-
+                            Log.e("xxx", string);
                             //判断数据是否是列表
                             if (isList()) {
                                 ResEntity<List<T>> resEntityList = new Gson().fromJson(string, getBeanType());
@@ -254,6 +276,8 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                 .subscribe(new MVPObserver<ResponseBody>() {
                     @Override
                     public void onSubscribe(Disposable d) {
+                        compositeDisposable.add(d);
+
                         //提示用户正在加载, 显示加载页
                         setLoadingPager(requestCode, LoadingPageConfig.STATE_LOADING_CODE);
 
@@ -318,6 +342,9 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
     public void detachView() {
         if (iBaseView != null) {
             this.iBaseView = null;
+        }
+        if (compositeDisposable != null){
+            compositeDisposable.clear();
         }
     }
 }

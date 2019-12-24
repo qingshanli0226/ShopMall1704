@@ -1,82 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <!--        书写监听事件-->
+        <import type="com.example.administrator.shaomall.function.adapter.FunctionAdaptor" />
+
+        <variable
+            name="functionAdapter"
+            type="FunctionAdaptor" />
+
+        <!--        功能界面-->
+        <import type="com.example.administrator.shaomall.function.FunctionActivity" />
+
+        <variable
+            name="functionActivity"
+            type="FunctionActivity" />
+
+
+        <!--        adapter数据-->
+        <import type="com.shaomall.framework.bean.FunctionBean" />
+
+        <variable
+            name="functionBean"
+            type="FunctionBean" />
+
+        <variable
+            name="position"
+            type="int" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginBottom="2dp"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_function_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="测试数据"
-            android:textSize="22sp" />
+            android:background="#60af"
+            android:gravity="center_vertical"
+            android:padding="2dp"
+            android:text='@{@string/function_adapter_findfor_tv_text_order_number+functionBean.getTradeNo()}'
+            android:textSize="18sp" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/tv_function_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2019年12月13日15:20:58" />
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center">
+            android:id="@+id/ll_function"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="#e6e6e6"
+            android:onClick="@{()->functionActivity.itemViewClick(functionBean, position)}"
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="商品价格: "
-                android:textSize="16sp" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
 
-            <TextView
-                android:id="@+id/tv_function_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:text="399.00"
-                android:textColor="@color/red"
-                android:textSize="22sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/function_adapter_findfor_tv_text_shopping_price"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_function_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:text="@{functionBean.getTotalPrice()}"
+                    android:textColor="@color/red"
+                    android:textSize="22sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_function_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{functionBean.getStatus()}"
+                    android:textSize="24sp" />
+            </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_function_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="未付款"
-                android:textSize="24sp" />
-
-            <TextView
-                android:id="@+id/tv_function_reserveOne"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-
     </LinearLayout>
-</LinearLayout>
+</layout>

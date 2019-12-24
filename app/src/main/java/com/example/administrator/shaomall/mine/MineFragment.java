@@ -1,11 +1,11 @@
 package com.example.administrator.shaomall.mine;
 
 import android.annotation.SuppressLint;
+
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -25,20 +25,22 @@ import com.shaomall.framework.manager.PointManager;
 import com.shaomall.framework.manager.ShoppingManager;
 import com.shaomall.framework.manager.UserInfoManager;
 
-public class MineFragment extends BaseMVPFragment<String> implements View.OnClickListener, UserInfoManager.UserInfoStatusListener, PointManager.CallbackIntegralListener {
+import java.io.File;
+
+public class MineFragment extends BaseMVPFragment<String> implements View.OnClickListener, UserInfoManager.UserInfoStatusListener, PointManager.CallbackIntegralListener, UserInfoManager.AvatarUpdateListener {
     private android.widget.ImageView mIvHeader;
     private android.widget.TextView mTvUserName;
     private android.widget.Button mBtLogout;
     private TextView mTvPoint;
     private UserInfoManager userInfoManager;
-    private IBasePresenter logoutPresenter;
+    private IBasePresenter iBasePresenter;
     private String point = "0";
-    private PointUpLoadPresenter pointUpLoadPresenter;
     private TextView mTvNoPayment;
     private TextView mTvSendGoods;
     private android.widget.LinearLayout mLlLayoutShow;
-    private TextView mTvUserSetting;
-    private ImageView mIvMessage;
+    private String avatar;
+    private int pointSum;
+    private com.example.commen.ToolbarCustom mTcAppFragmentMineTop;
 
     @Override
     public int setLayoutId() {
@@ -49,28 +51,29 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
     protected void initView(View view, Bundle savedInstanceState) {
         //注册登录监听
         UserInfoManager.getInstance().registerUserInfoStatusListener(this);
-        userInfoManager = UserInfoManager.getInstance(); //用户信息管理类
         //积分更新
         PointManager.getInstance().registerCallbackIntegralListener(this);
+        //头像监听
+        UserInfoManager.getInstance().registerAvatarUpdateListener(this);
+
+        userInfoManager = UserInfoManager.getInstance(); //用户信息管理类
+
+        mTcAppFragmentMineTop = view.findViewById(R.id.tc_app_fragment_mine_top);
+        mIvHeader = view.findViewById(R.id.iv_header);
+        mTvUserName = view.findViewById(R.id.tv_userName);
+        TextView mTvProductAttention = view.findViewById(R.id.tv_productAttention);
+        TextView mTvShopAttention = view.findViewById(R.id.tv_shopAttention);
+        TextView mTvFavoriteContent = view.findViewById(R.id.tv_favoriteContent);
+        TextView mTvBrowsingHistory = view.findViewById(R.id.tv_browsingHistory);
+        mBtLogout = view.findViewById(R.id.bt_logout);
+        mTvPoint = view.findViewById(R.id.tv_point);
+        mTvNoPayment = view.findViewById(R.id.tv_noPayment); //待支付
+        mTvSendGoods = view.findViewById(R.id.tv_sendGoods); //待发货
+        mLlLayoutShow = view.findViewById(R.id.ll_layout_show);
 
 
-        mTvUserSetting = (TextView) view.findViewById(R.id.tv_userSetting); //设置
-        mIvMessage = (ImageView) view.findViewById(R.id.iv_message); //消息
-        mIvHeader = (ImageView) view.findViewById(R.id.iv_header);
-        mTvUserName = (TextView) view.findViewById(R.id.tv_userName);
-        TextView mTvProductAttention = (TextView) view.findViewById(R.id.tv_productAttention);
-        TextView mTvShopAttention = (TextView) view.findViewById(R.id.tv_shopAttention);
-        TextView mTvFavoriteContent = (TextView) view.findViewById(R.id.tv_favoriteContent);
-        TextView mTvBrowsingHistory = (TextView) view.findViewById(R.id.tv_browsingHistory);
-        mBtLogout = (Button) view.findViewById(R.id.bt_logout);
-        mTvPoint = (TextView) view.findViewById(R.id.tv_point);
-        mTvNoPayment = (TextView) view.findViewById(R.id.tv_noPayment); //待支付
-        mTvSendGoods = (TextView) view.findViewById(R.id.tv_sendGoods); //待发货
-        mLlLayoutShow = (LinearLayout) view.findViewById(R.id.ll_layout_show);
-
-
-        mTvUserSetting.setOnClickListener(this);        //设置
-        mIvMessage.setOnClickListener(this);            //消息
+        mTcAppFragmentMineTop.setSettingTextViewOnClickListener(this); //设置
+        mTcAppFragmentMineTop.setRightImageViewOnClickListener(this); //消息
         mIvHeader.setOnClickListener(this);             //用户头像
         mTvUserName.setOnClickListener(this);           //用户名称
         mTvProductAttention.setOnClickListener(this);   //商品关注
@@ -87,11 +90,9 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
     @Override
     protected void initData() {
         super.initData();
+
         //展示用户信息
         setUserData();
-
-        //积分更新
-        PointManager.getInstance().registerCallbackIntegralListener(this);
     }
 
 
@@ -105,19 +106,19 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         }
 
         switch (v.getId()) {
-            case R.id.tv_userSetting: //设置界面
-
-                Bundle bundle=new Bundle();
-                bundle.putString("name",mTvUserName.getText().toString());
-                bundle.putString("head",mIvHeader.toString());
-                toClass(SettingActivity.class,bundle);
+            case R.id.tv_toolbar_setting: //设置界面
+            case R.id.iv_header: //点击头像
+                Bundle bundle = new Bundle();
+                bundle.putString("name", mTvUserName.getText().toString());
+                bundle.putString("head", AppNetConfig.BASE_URL + avatar);
+                toClass(SettingActivity.class, bundle);
                 break;
-            case R.id.iv_message:   //消息界面
+
+
+            case R.id.iv_toolbar_message_right:   //消息界面
                 toClass(MessageActivity.class);
                 break;
-            case R.id.iv_header: //点击头像
-                toast("点击了头像", false);
-                break;
+
             case R.id.tv_userName:
                 toast("点击了用户名", false);
                 break;
@@ -169,9 +170,9 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
     private void setPoint() {
         //        mTvPoint.setText();
         //把用户名先传到计步器的页面可以使用数据库存储用户名
-        Bundle bundle=new Bundle();
-        bundle.putString("username",mTvUserName.getText().toString());
-        toClass(RemindActivity.class,bundle);
+        Bundle bundle = new Bundle();
+        bundle.putString("username", mTvUserName.getText().toString());
+        toClass(RemindActivity.class, bundle);
 
     }
 
@@ -179,12 +180,11 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
      * 退出登录功能
      */
     private void setLogout() {
-        if (logoutPresenter == null) {
-            logoutPresenter = new LogOutPresenter();
-            logoutPresenter.attachView(this);
-        }
+        //是否处于登录状态
         if (userInfoManager.isLogin()) {
-            logoutPresenter.doPostHttpRequest(AppNetConfig.REQUEST_CODE_LOGOUT); //请求退出登录链接
+            iBasePresenter = new LogOutPresenter();
+            iBasePresenter.attachView(this);
+            iBasePresenter.doPostHttpRequest(AppNetConfig.REQUEST_CODE_LOGOUT); //请求退出登录链接
         }
     }
 
@@ -193,38 +193,55 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
      * 设置用户数据
      */
     private void setUserData() {
+
         //判断是否处于登录状态
         if (userInfoManager.isLogin()) {
             showLayoutInfo(true); //显示界面
-
+            mTvPoint.setText("积分: " + pointSum);
             LoginBean loginBean = userInfoManager.readUserInfo();
             String address = (String) loginBean.getAddress();    //获取地址
-            String avatar = (String) loginBean.getAvatar();  //获得头像
-            String email = (String) loginBean.getEmail();    //取得电子邮件
-            String money = (String) loginBean.getMoney();    //得到钱
+            //获得头像
+            avatar = (String) loginBean.getAvatar();
             String name = loginBean.getName();      //得到名字
-            String phone = (String) loginBean.getPhone();    //取得电话
             point = (String) loginBean.getPoint();  //获得积分
-            //Log.d("WQS: ",point);
-            //设置头像
-            if (avatar == null) {
+            //            String email = (String) loginBean.getEmail();    //取得电子邮件
+            //            String money = (String) loginBean.getMoney();    //得到钱
+            //            String phone = (String) loginBean.getPhone();    //取得电话
+
+            //TODO 设置头像
+            if (avatar == null) { //本地默认头像
                 avatar = "http://img5.imgtn.bdimg.com/it/u=1441588315,1666293982&fm=26&gp=0.jpg";
                 Glide.with(mContext).load(avatar).apply(RequestOptions.circleCropTransform()).into(mIvHeader);
             } else {
-                Glide.with(mContext).load(avatar).apply(RequestOptions.circleCropTransform()).into(mIvHeader);
+                Glide.with(mContext).load(AppNetConfig.BASE_URL + avatar).apply(RequestOptions.circleCropTransform()).into(mIvHeader);
             }
+
             //这是昵称
             mTvUserName.setText(name);
             //设置积分
             if (point == null) {
                 point = "0";
             }
-            mTvPoint.setText("积分: " + this.point);
+
+            String str = "积分: " + this.point;
+            mTvPoint.setText(str);
 
         } else {
             mTvPoint.setVisibility(View.GONE);
             mLlLayoutShow.setVisibility(View.GONE);
         }
+    }
+
+    /**
+     * 头像更新
+     *
+     * @param path
+     */
+    @Override
+    public void onAvatarUpdate(String path) {
+        avatar = path;
+        mIvHeader.setImageURI(Uri.fromFile(new File(path)));
+        Glide.with(mContext).load(AppNetConfig.BASE_URL + path).apply(RequestOptions.circleCropTransform()).into(mIvHeader);
     }
 
 
@@ -248,19 +265,18 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
      *
      * @param pointNum
      */
+    @SuppressLint("SetTextI18n")
     @Override
     public void onCallbacksIntegral(int pointNum) {
-        int pointSum = Integer.parseInt(point) + pointNum;
+        pointSum = Integer.parseInt(point) + pointNum;
         mTvPoint.setText("积分: " + pointSum);
 
+
         //上传当前积分数量
-        if (pointUpLoadPresenter == null) {
-            pointUpLoadPresenter = new PointUpLoadPresenter();
-            pointUpLoadPresenter.attachView(this);
-        }
-        pointUpLoadPresenter.setPointSum(pointSum);
+        iBasePresenter = new PointUpLoadPresenter(pointSum);
+        iBasePresenter.attachView(this);
         //上传积分
-        pointUpLoadPresenter.doPostHttpRequest(AppNetConfig.REQUEST_CODE_UPLOAD_POINT);
+        iBasePresenter.doPostHttpRequest(AppNetConfig.REQUEST_CODE_UPLOAD_POINT);
     }
 
     @SuppressLint("SetTextI18n")
@@ -274,7 +290,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
             ShoppingManager.getInstance().removeShoppingCartAllData();
         }
         if (requestCode == AppNetConfig.REQUEST_CODE_UPLOAD_POINT) {
-            mTvPoint.setText("积分: " + data);
+            mTvPoint.setText("积分: " + pointSum);
         }
     }
 
@@ -302,8 +318,13 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
+        if (iBasePresenter != null) {
+            iBasePresenter.detachView();
+        }
         UserInfoManager.getInstance().unRegisterUserInfoStatusListener(this);
         PointManager.getInstance().unRegisterCallbackIntegralListener();
+        UserInfoManager.getInstance().unRegisterAvatarUpdateListener(this);
+
+        super.onDestroy();
     }
 }

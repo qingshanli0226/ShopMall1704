@@ -34,12 +34,12 @@
             android:text="@string/look_more" />
     </LinearLayout>
 
-    <GridView
+    <com.example.administrator.shaomall.MyGridView
         android:id="@+id/gv_hot"
         android:layout_width="match_parent"
-        android:layout_height="1020dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:horizontalSpacing="10dp"
         android:numColumns="2"
-        android:verticalSpacing="10dp"></GridView>
+        android:verticalSpacing="10dp" />
 </LinearLayout>

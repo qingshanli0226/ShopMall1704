@@ -12,35 +12,36 @@ import android.widget.Toast;
 import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.login.diyview.DIYButton;
 import com.example.administrator.shaomall.login.diyview.Headportrait;
-import com.example.administrator.shaomall.login.presenter.SigninPresenter;
+import com.example.administrator.shaomall.login.presenter.SignInPresenter;
 import com.example.commen.util.ShopMailError;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.shaomall.framework.base.BaseMVPActivity;
+import com.shaomall.framework.manager.ActivityInstanceManager;
 import com.wyp.avatarstudio.AvatarStudio;
 
 import java.io.File;
 
-public class SigninActivity extends BaseMVPActivity<String> {
+public class SignInActivity extends BaseMVPActivity<String> {
 
-    private Headportrait signinhead;
-    private SimpleDraweeView signinPhoto;
-
+    private Headportrait signInHead;
+    private SimpleDraweeView signInPhoto;
 
     private DIYButton diybutton;
-    private EditText signinUser;
-    private EditText signinPass;
-    private TextView signinSignin;
-    SigninPresenter presenter = new SigninPresenter();
+    private EditText signInUser;
+    private EditText signInPass;
+    private TextView signInSignIn;
+    SignInPresenter presenter;
 
     @Override
     protected void initView() {
+        presenter = new SignInPresenter();
         presenter.attachView(this);
-        signinUser = (EditText) findViewById(R.id.signinUser);
-        signinPass = (EditText) findViewById(R.id.signinPass);
-        signinSignin = (TextView) findViewById(R.id.signinSignin);
-        diybutton = (DIYButton) findViewById(R.id.diybutton);
-        signinhead = (Headportrait) findViewById(R.id.signinhead);
-        signinPhoto = (SimpleDraweeView) findViewById(R.id.signinPhoto);
+        signInUser = findViewById(R.id.signinUser);
+        signInPass = findViewById(R.id.signinPass);
+        signInSignIn = findViewById(R.id.signinSignin);
+        diybutton = findViewById(R.id.diybutton);
+        signInHead = findViewById(R.id.signinhead);
+        signInPhoto = findViewById(R.id.signinPhoto);
 
 
     }
@@ -55,17 +56,17 @@ public class SigninActivity extends BaseMVPActivity<String> {
     protected void initData() {
         diybutton.setButtomtext("注册");
 
-        signinSignin.setOnClickListener(new View.OnClickListener() {
+        signInSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
         //头像
-        signinhead.setOnClickListener(new View.OnClickListener() {
+        signInHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AvatarStudio.Builder builder = new AvatarStudio.Builder(SigninActivity.this);
+                AvatarStudio.Builder builder = new AvatarStudio.Builder(SignInActivity.this);
                 builder.setTextColor(R.color.darkturquoise);
                 builder.setText("拍照", "本地选择", "取消");
                 builder.needCrop(true);
@@ -75,19 +76,19 @@ public class SigninActivity extends BaseMVPActivity<String> {
                 builder.show(new AvatarStudio.CallBack() {
                     @Override
                     public void callback(String uri) {
-                        signinPhoto.setVisibility(View.VISIBLE);
-                        signinPhoto.setImageURI(Uri.fromFile(new File(uri)));
-                        signinhead.setVisibility(View.GONE);
+                        signInPhoto.setVisibility(View.VISIBLE);
+                        signInPhoto.setImageURI(Uri.fromFile(new File(uri)));
+                        signInHead.setVisibility(View.GONE);
                     }
                 });
             }
         });
 
         //点击圆形图片
-        signinPhoto.setOnClickListener(new View.OnClickListener() {
+        signInPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AvatarStudio.Builder builder = new AvatarStudio.Builder(SigninActivity.this);
+                AvatarStudio.Builder builder = new AvatarStudio.Builder(SignInActivity.this);
                 builder.setTextColor(R.color.darkturquoise);
                 builder.setText("拍照", "本地选择", "取消");
                 builder.needCrop(true);
@@ -97,9 +98,9 @@ public class SigninActivity extends BaseMVPActivity<String> {
                 builder.show(new AvatarStudio.CallBack() {
                     @Override
                     public void callback(String uri) {
-                        signinPhoto.setVisibility(View.VISIBLE);
-                        signinPhoto.setImageURI(Uri.fromFile(new File(uri)));
-                        signinhead.setVisibility(View.GONE);
+                        signInPhoto.setVisibility(View.VISIBLE);
+                        signInPhoto.setImageURI(Uri.fromFile(new File(uri)));
+                        signInHead.setVisibility(View.GONE);
                     }
                 });
             }
@@ -131,15 +132,15 @@ public class SigninActivity extends BaseMVPActivity<String> {
                     //Toast.makeText(mActivity, "松开了", Toast.LENGTH_SHORT).show();
                     diybutton.invalidate();
                     //判断用户名和密码逻辑
-                    if (signinUser.getText().toString().equals("") || signinPass.getText().toString().equals("")) {
+                    if (signInUser.getText().toString().equals("") || signInPass.getText().toString().equals("")) {
                         Toast.makeText(mActivity, "用户名和密码或密码不可为空", Toast.LENGTH_SHORT).show();
                     } else {
-                        String username = signinUser.getText().toString();
-                        String password = signinPass.getText().toString();
+                        String username = signInUser.getText().toString();
+                        String password = signInPass.getText().toString();
                         presenter.setUsername(username);
                         presenter.setPassword(password);
                         presenter.doPostHttpRequest(100);
-                        finish();
+                        //                        finish();
                     }
                 }
                 return false;
@@ -151,13 +152,23 @@ public class SigninActivity extends BaseMVPActivity<String> {
     public void onRequestHttpDataSuccess(int requestCode, String message, String data) {
         //注册成功
         Toast.makeText(mActivity, "" + message, Toast.LENGTH_SHORT).show();
+        ActivityInstanceManager.removeActivity(this);
     }
-
 
 
     @Override
     public void onRequestHttpDataFailed(int requestCode, ShopMailError error) {
         //注册失败
-        Toast.makeText(mActivity, "" + error.getErrorMessage(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(mActivity, "用户已存在, 注册失败", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (presenter != null) {
+            presenter.detachView();
+            presenter = null;
+        }
+        super.onDestroy();
     }
 }

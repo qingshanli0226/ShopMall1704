@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">commen</string>
+    <string name="commen_boolbar_tv_setting">设置</string>
 </resources>

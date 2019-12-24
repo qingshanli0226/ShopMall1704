@@ -26,10 +26,15 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    dataBinding {
+        enabled true
+    }
+
 }
 
 androidExtensions {
@@ -68,4 +73,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     //标签视图
     implementation 'co.lujun:androidtagview:1.0.3'
+
+    implementation 'com.android.support:design:28.0.0'
+
 }

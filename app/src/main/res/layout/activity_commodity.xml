@@ -1,65 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="28dp"
     android:orientation="vertical"
     tools:context=".goodsinfo.GoodsInfoActivity">
 
-    <LinearLayout
-        android:id="@+id/ll_top"
+
+    <com.example.commen.ToolbarCustom
+        android:id="@+id/mTc_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:padding="10dp">
+        app:isShowRightImageView="false"
+        app:isShowSettingTextView="false"
+        android:background="#7474"
+        app:title="商品详情" />
 
-        <ImageView
-            android:id="@+id/mIbGoodInfoBack"
-             style="@style/DefaultImage"
-            android:src="@drawable/top_bar_left_back"
-            android:background="?android:selectableItemBackgroundBorderless"
-            tools:ignore="NewApi" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/title_productDetails"
-            android:textColor="#564c4c"
-            android:textSize="20sp" />
-
-        <ImageView
-            android:id="@+id/mIbGoodINfoMore"
-           style="@style/DefaultImage"
-            android:src="@drawable/icon_more"
-            android:background="?android:selectableItemBackgroundBorderless"
-            tools:ignore="NewApi" />
-
-    </LinearLayout>
     <!--分割线-->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/ll_top"
+        android:layout_below="@id/mTc_top"
         android:background="#eeee" />
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_above="@id/ll_goods_root"
-        android:layout_below="@id/ll_top"
-        android:layout_marginTop="5dp"
-        android:layout_weight="1">
+        android:layout_below="@id/mTc_top">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ScrollView
+            <com.example.administrator.shaomall.MyScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scrollbars="none">
@@ -71,6 +48,7 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:layout_marginTop="2dp"
                         android:id="@+id/mIvGoodInfoImage"
                         android:layout_width="match_parent"
                         android:layout_height="350dp"
@@ -178,14 +156,14 @@
                         android:layout_height="1dp"
                         android:background="#ed3f3f" />
 
-                    <FrameLayout
+                    <LinearLayout
                         android:id="@+id/mWbGoodInfoMore"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
 
                 </LinearLayout>
-            </ScrollView>
-
+            </com.example.administrator.shaomall.MyScrollView>
         </LinearLayout>
     </FrameLayout>
 

@@ -1,13 +1,10 @@
 package com.example.administrator.shaomall.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -33,7 +30,7 @@ import java.util.List;
 
 public class MainActivity extends BaseMVPActivity<Object> implements ShoppingManager.ShoppingNumChangeListener {
     private int[] icon = {R.drawable.main_home, R.drawable.main_type, R.drawable.cry, R.drawable.main_cart, R.drawable.main_user};
-    private int[] unicon = {R.drawable.main_home_press, R.drawable.main_type_press, R.drawable.smile, R.drawable.main_cart_press, R.drawable.main_user_press};
+    private int[] unIcon = {R.drawable.main_home_press, R.drawable.main_type_press, R.drawable.smile, R.drawable.main_cart_press, R.drawable.main_user_press};
     private String[] titles = {"首页", "分类", "发现", "购物车", "我的"};
     private FrameLayout mMainFragmentHome;
     private CommonTabLayout mMainTab;
@@ -137,7 +134,7 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
     private void setTab() {
         switchFragment(fragments.get(0));
         for (int i = 0; i < titles.length; i++) {
-            tabEntities.add(new TabData(unicon[i], icon[i], titles[i]));
+            tabEntities.add(new TabData(unIcon[i], icon[i], titles[i]));
         }
         mMainTab.setTabData(tabEntities);
 
@@ -190,12 +187,12 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
      */
     class TabData implements CustomTabEntity {
         private int icon;
-        private int unicon;
+        private int unIcon;
         private String title;
 
-        public TabData(int icon, int unicon, String title) {
+        public TabData(int icon, int unIcon, String title) {
             this.icon = icon;
-            this.unicon = unicon;
+            this.unIcon = unIcon;
             this.title = title;
         }
 
@@ -211,7 +208,7 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
 
         @Override
         public int getTabUnselectedIcon() {
-            return unicon;
+            return unIcon;
         }
     }
 
