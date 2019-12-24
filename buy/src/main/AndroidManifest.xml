@@ -11,8 +11,7 @@
             android:launchMode="singleTask"/>
         <activity android:name="com.example.buy.activity.OrderActivity"
             android:launchMode="singleTask"/>
-        <activity android:name=".activity.ShoppCartActivity"
-            android:launchMode="singleTask"/>
+        <activity android:name=".activity.ShoppCartActivity"/>
         <activity android:name=".activity.SearchActivity"
             android:launchMode="singleTask"/>
     </application>

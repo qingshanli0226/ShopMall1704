@@ -31,10 +31,11 @@ public class Constant {
     public static final String MESSAGE = "消息";
     public static final String USER_SETTING = "用户设置";
     public static final String ALL_ORDER = "全部订单";
-    public final static String WAIT_PAY = "待支付订单";
-    public final static String WAIT_SEND = "待发货订单";
-    public final static String MINE_INTEGRAL = "我的积分";
-    public final static String EXERCISE = "运动";
-    public final static String BUY_CAR = "购物车";
-
+    public static final String WAIT_PAY = "待支付订单";
+    public static final String WAIT_SEND = "待发货订单";
+    public static final String MINE_INTEGRAL = "我的积分";
+    public static final String EXERCISE = "运动";
+    public static final String BUY_CAR = "购物车";
+    //TODO sp存储搜索历史
+    public static final String SEARCH="search";
 }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,7 @@ import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import java.util.Objects;
+import java.util.Timer;
 
 
 public class HomeFragment extends BaseNetConnectFragment {
@@ -40,6 +42,7 @@ public class HomeFragment extends BaseNetConnectFragment {
     private MyToolBar my_toolbar;
     private AppBarLayout appBarLayout;
     private CollapsingToolbarLayout toolbar_layout;
+    private ImageView home_icon;
 
 
     public HomeFragment(int i) {
@@ -65,6 +68,15 @@ public class HomeFragment extends BaseNetConnectFragment {
         my_toolbar = view.findViewById(R.id.my_toolbar);
         appBarLayout = view.findViewById(R.id.mApp_layout);
         toolbar_layout = view.findViewById(R.id.toolbar_layout);
+        home_icon = view.findViewById(R.id.home_icon);
+
+        home_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"123", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 //        判断type值来显示隐藏搜索框
         if (type == 1) {
             appBarLayout.setVisibility(View.GONE);

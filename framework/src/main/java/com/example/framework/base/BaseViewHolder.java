@@ -9,7 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.framework.R;
 
 /**
  * author:李浩帆
@@ -46,7 +48,12 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     public ImageView getImageView(int viewId,Object path){
         ImageView imageView = (ImageView)getView(viewId);
         if(imageView!=null){
-            Glide.with(itemView.getContext()).load(path).into(imageView);
+            Glide.with(itemView.getContext())
+                    .load(path)
+                    .apply(new RequestOptions()
+                            .placeholder(R.mipmap.register_icon)
+                            .error(R.drawable.error_image))
+                    .into(imageView);
         }
         return imageView;
     }

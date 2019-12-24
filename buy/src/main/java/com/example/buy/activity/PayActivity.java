@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -35,7 +36,9 @@ import com.example.common.utils.IntentUtil;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.base.BaseRecyclerAdapter;
 import com.example.framework.base.BaseViewHolder;
+import com.example.framework.bean.PointBean;
 import com.example.framework.manager.AccountManager;
+import com.example.framework.manager.DaoManager;
 import com.example.framework.port.IPresenter;
 import com.example.net.AppNetConfig;
 import com.google.gson.Gson;
@@ -211,7 +214,10 @@ public class PayActivity extends BaseNetConnectActivity{
                 break;
             case COED_POINT:
                 if (((OkBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
-                    Log.e("xxxx", "用户信息:" + AccountManager.getInstance().getUser().toString());
+                    Integer point = Integer.valueOf(userPoint.getText().toString());
+                    String time = DateFormat.format("MM月dd日HH时mm分", System.currentTimeMillis())+"";
+                    PointBean pointBean = new PointBean(null, time, "购买了" + list.size() + "个商品", point);
+                    DaoManager.Companion.getInstance(this).addPointBean(pointBean);
                     finishActivity();
                 }
                 break;
