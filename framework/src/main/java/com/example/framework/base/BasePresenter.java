@@ -55,6 +55,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.e("####", e.getMessage());
                         if (iGetBaseView != null)
                             iGetBaseView.onGetDataFailed(ErrorUtil.handleError(e));
                     }
@@ -122,7 +123,6 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         try {
-                            Log.e("####", "" + responseBody.string());
                             T data = new Gson().fromJson(responseBody.string(), getBeanType());
                             if (iPostBaseView != null)
                                 iPostBaseView.onPostDataSucess(data);
@@ -133,6 +133,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.e("####", e.getMessage());
                         if (iPostBaseView != null)
                             iPostBaseView.onPostDataFailed(ErrorUtil.handleError(e));
                     }
