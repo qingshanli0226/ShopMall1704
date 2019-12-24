@@ -80,8 +80,33 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
             bbMain.setCheckedItem(mainitem);
             if (mainitem == 3) {
                 refreshShoppingCartData();
+                boolean loginStatus = UserManager.getInstance().getLoginStatus();
+                if(!loginStatus){
+                    setAlertDialog();
+                }
             }
         }
+    }
+
+    private void setAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示：");
+        builder.setMessage("您还没有登录");
+        builder.setPositiveButton("前往登录", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                dialogInterface.dismiss();
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                bbMain.setCheckedItem(0);
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @Override
@@ -115,6 +140,10 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
                 ShoppingManager.getInstance().setAllCount(0);
                 ShoppingManager.getInstance().setisSetting(false);
                 if (i == 3) {
+                    boolean loginStatus = UserManager.getInstance().getLoginStatus();
+                    if(!loginStatus){
+                        setAlertDialog();
+                    }
                     refreshShoppingCartData();
                 }
             }
