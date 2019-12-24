@@ -44,6 +44,7 @@ public class MyApplication extends Application {
 
         if(AppProcessUtil.isAppProcess(this)==true){
 
+
             StepManager.getInstance().init(getApplicationContext());
 
             startService(new Intent(this, StepJobService.class));
@@ -64,6 +65,8 @@ public class MyApplication extends Application {
 
         //初始化消息数据库
         MessageManager.getInstance().init(this);
+
+
         StatConfig.setDebugEnable(true);
         // 基础统计API
         StatService.registerActivityLifecycleCallbacks(this);

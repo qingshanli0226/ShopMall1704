@@ -47,7 +47,7 @@ public class MessageManager {
 
     //查询消息数据
     public List<MessageBean> getMessage(){
-        List<MessageBean> messageBeans = messageBeanDao.loadAll();
+            List<MessageBean> messageBeans = messageBeanDao.loadAll();
         return messageBeans;
     }
 
