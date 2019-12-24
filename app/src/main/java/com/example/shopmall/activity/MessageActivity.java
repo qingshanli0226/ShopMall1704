@@ -66,6 +66,8 @@ public class MessageActivity extends BaseActivity {
                                 MessageBean messageBean = new MessageBean();
                                 messageBean.setId(id);
                                 messageBean.setIsMessage(true);
+                                messageBean.setNameMessage(messages.get(position).getNameMessage());
+                                messageBean.setContentMessage(messages.get(position).getContentMessage());
                                 MessageManager.getInstance().updateMessage(messageBean);
                                 messageItemAdapter.reFresh(messages);
                                 srvMessage.setAdapter(messageItemAdapter);

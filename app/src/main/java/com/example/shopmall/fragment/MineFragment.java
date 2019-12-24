@@ -54,7 +54,7 @@ public class MineFragment extends BaseFragment implements IPostBaseView {
     private AutomaticPresenter automaticPresenter;
     private UpImgPresenter upImgPresenter;
     private RelativeLayout rlUserLocation;
-
+    private TextView mTvName;
     private RelativeLayout rlUserCollect;
 
     @Override
@@ -100,7 +100,7 @@ public class MineFragment extends BaseFragment implements IPostBaseView {
                         @Override
                         public void onNext(ResponseBody body) {
                             try {
-                                Log.e("####", body.string());
+                                Log.d("####", "onNext: " + body.string());
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -108,7 +108,7 @@ public class MineFragment extends BaseFragment implements IPostBaseView {
 
                         @Override
                         public void onError(Throwable e) {
-                            Log.e("####", ""+e.getMessage());
+                            Log.d("####", "onError: " + e.getMessage());
                         }
 
                         @Override
@@ -152,13 +152,9 @@ public class MineFragment extends BaseFragment implements IPostBaseView {
 
         boolean liginStatus = UserManager.getInstance().getLoginStatus();
         if (liginStatus) {
-//            ResultBean user = UserManager.getInstance().getUser(getActivity());
-//            mTvName.setText("用户昵称:" + user.getName());
+            ResultBean user = UserManager.getInstance().getUser();
+            mTvName.setText("用户昵称:" + user.getName());
         }
-
-        SharedPreferences login = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
-        String getToken = login.getString("getToken", "");
-        boolean isAutomatic = login.getBoolean("isAutomatic", false);
 
         //判断是否登录
         if (UserManager.getInstance().getLoginStatus()) {
@@ -182,7 +178,7 @@ public class MineFragment extends BaseFragment implements IPostBaseView {
                             .show(new AvatarStudio.CallBack() {
                                 @Override
                                 public void callback(String uri) {
-                                    Log.e("####", uri);
+                                    Log.d("####", "callback: " + uri);
                                     ivUserIconAvator.setImageURI(Uri.parse(uri));
                                     if (uri != null) {
                                         String token = UserManager.getInstance().getToken();
@@ -190,7 +186,7 @@ public class MineFragment extends BaseFragment implements IPostBaseView {
                                         upImgPresenter.attachPostView(new IPostBaseView() {
                                             @Override
                                             public void onPostDataSucess(Object data) {
-                                                Log.e("####", "" + data.toString());
+                                                Log.d("####", "onPostDataSucess: " + data.toString());
                                             }
 
                                             @Override
@@ -237,8 +233,6 @@ public class MineFragment extends BaseFragment implements IPostBaseView {
         });
     }
 
-    private TextView mTvName;
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -274,7 +268,6 @@ public class MineFragment extends BaseFragment implements IPostBaseView {
             ResultBean result = ((LoginBean) data).getResult();
             UserManager.getInstance().savaToken(result.getToken());
             Toast.makeText(getActivity(), "自动登录成功", Toast.LENGTH_SHORT).show();
-            ShoppingManager.getInstance().setMainitem(0);
         }
     }
 

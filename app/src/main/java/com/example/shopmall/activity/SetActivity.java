@@ -87,7 +87,6 @@ public class SetActivity extends BaseActivity implements IPostBaseView<AddressBe
     private void initLogin() {
         Toast.makeText(SetActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(SetActivity.this, LoginActivity.class);
-        intent.putExtra("mainitem",4);
         startActivity(intent);
         finish();
     }

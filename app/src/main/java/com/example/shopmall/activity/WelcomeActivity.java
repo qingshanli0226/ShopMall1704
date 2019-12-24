@@ -2,9 +2,12 @@ package com.example.shopmall.activity;
 
 import android.Manifest;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -43,7 +46,9 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
 
     private String[] prems=new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
     private boolean isJump=false;
-     @Override
+    private ObjectAnimator objectAnimator;
+
+    @Override
     protected int setLayout() {
         return R.layout.activity_welcome;
     }
@@ -52,10 +57,7 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
     public void initView() {
         iv_welcome = findViewById(R.id.iv_welcome);
 
-
-
         CaCheManager.getInstance(MyApplication.getContext()).init();
-
 
     }
 
@@ -89,7 +91,8 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
     }
 
     private void JumpActivity(){
-        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(iv_welcome, "Alpha", 0, 1);
+
+        objectAnimator = ObjectAnimator.ofFloat(iv_welcome, "Alpha", 0, 1);
         objectAnimator.setDuration(3000);
         objectAnimator.start();
 
@@ -175,6 +178,15 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
         }
 
         handler.removeCallbacksAndMessages(this);
+
+        if (objectAnimator != null){
+            objectAnimator.cancel();
+        }
+
+//        Bitmap bitmap = ((BitmapDrawable)iv_welcome.getBackground()).getBitmap();
+//        if (bitmap.isRecycled()){
+//            bitmap.recycle();
+//        }
 
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -45,15 +46,13 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
     private int sum = 0;
 
     @Override
-    public void onStart() {
-        super.onStart();
-
+    public void onResume() {
+        super.onResume();
         if (UserManager.getInstance().getLoginStatus()) {
             handler.sendEmptyMessage(100);
         }else {
-            tbHomepage.setMessageShow(false);
+            handler.sendEmptyMessage(101);
         }
-
     }
 
     @SuppressLint("HandlerLeak")
@@ -78,6 +77,8 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
                         }
                     }
                 }
+            }else if (msg.what == 101){
+                tbHomepage.setMessageShow(false);
             }
         }
     };
