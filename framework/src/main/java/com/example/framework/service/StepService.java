@@ -68,7 +68,7 @@ public class StepService extends Service implements SensorEventListener {
     public void onCreate() {
         super.onCreate();
         //初始化通知,提到前台
-        initNotification();
+//        initNotification();
         //初始化当前日期
         initToday();
         //初始化广播
@@ -172,7 +172,7 @@ public class StepService extends Service implements SensorEventListener {
         }
 
 
-        updateNotification();
+//        updateNotification();
     }
 
 
@@ -194,29 +194,7 @@ public class StepService extends Service implements SensorEventListener {
         }
         notificationManager.notify(100, nbuilder.build());
 
-        int count=0;
 
-        if(currentStep>0){
-            int i = currentStep / 100;
-            List<ShopStepBean> all = OrmUtils.getQueryAll(ShopStepBean.class);
-            if(all.size()>1){
-                for (int s=0;s<all.size();s++){
-                    count+=all.get(s).getIntegral();
-                }
-                Log.e("##Up",count+"");
-                if (updateUi != null) {
-                    updateUi.getUpdateStep(currentStep,count);
-                }
-            }else{
-                count=i;
-                Log.e("##Up",count+"");
-                if (updateUi != null) {
-                    updateUi.getUpdateStep(currentStep,count);
-                }
-            }
-
-
-        }
 
     }
 
@@ -293,7 +271,34 @@ public class StepService extends Service implements SensorEventListener {
             }
         }
 
-        updateNotification();
+
+
+        int count=0;
+
+        if(currentStep>0){
+            int i = currentStep / 100;
+            List<ShopStepBean> all = OrmUtils.getQueryAll(ShopStepBean.class);
+            if(all.size()>1){
+                for (int s=0;s<all.size();s++){
+                    count+=all.get(s).getIntegral();
+                }
+                Log.e("##Up",count+"");
+                if (updateUi != null) {
+                    updateUi.getUpdateStep(currentStep,count);
+                }
+            }else{
+                count=i;
+                Log.e("##Up",count+"");
+                if (updateUi != null) {
+                    updateUi.getUpdateStep(currentStep,count);
+                }
+            }
+
+
+        }
+
+
+//        updateNotification();
     }
 
     @Override
