@@ -148,7 +148,7 @@ public class StepService extends Service implements SensorEventListener {
             //发送消息
             List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
             String current_step = queryAll.get(queryAll.size() - 1).getCurrent_step();
-            MessageManager.getMessageManager().setMessageManager("昨日步数",current_step);
+            MessageManager.getMessageManager().setMessageManager("今日步数",current_step);
         }
     }
 
