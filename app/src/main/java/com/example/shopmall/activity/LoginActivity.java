@@ -164,6 +164,7 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
             public void onClick(View view) {
                 initButton();
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                handler.removeCallbacksAndMessages(this);
             }
         });
 
@@ -224,7 +225,7 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
                     edit.apply();
                 }
             }.start();
-            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            ShoppingManager.getInstance().setMainitem(0);
             finish();
         } else {
             LoginEvent loginEvent = new LoginEvent("用户登录", false);

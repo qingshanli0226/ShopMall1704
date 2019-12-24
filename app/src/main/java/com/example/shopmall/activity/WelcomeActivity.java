@@ -79,9 +79,7 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
              }
          }else{
              JumpActivity();
-
          }
-
 
          if(isJump==true){
             JumpActivity();
@@ -172,21 +170,14 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         if (integerPresenter != null){
             integerPresenter.detachView();
         }
-
         handler.removeCallbacksAndMessages(this);
 
         if (objectAnimator != null){
             objectAnimator.cancel();
         }
-
-//        Bitmap bitmap = ((BitmapDrawable)iv_welcome.getBackground()).getBitmap();
-//        if (bitmap.isRecycled()){
-//            bitmap.recycle();
-//        }
 
     }
 }

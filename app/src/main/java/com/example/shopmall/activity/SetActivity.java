@@ -98,7 +98,7 @@ public class SetActivity extends BaseActivity implements IPostBaseView<AddressBe
             UserManager.getInstance().setActiveUser(SetActivity.this,resultBean);
             sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
             sharedPreferences.edit().putBoolean("isLogin",false).apply();
-            startActivity(new Intent(this,MainActivity.class));
+            ShoppingManager.getInstance().setMainitem(0);
             finish();
         }else {
             initLogin();

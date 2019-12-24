@@ -352,8 +352,6 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
     protected void onDestroy() {
         super.onDestroy();
 
-//        ShoppingManager.getInstance().setMainitem(mainitem);
-
         goodsInfoAdapter.getWebView();
 
         if (addOneProduct != null){

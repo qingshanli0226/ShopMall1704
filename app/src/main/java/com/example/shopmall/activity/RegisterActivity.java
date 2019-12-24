@@ -97,6 +97,7 @@ public class RegisterActivity extends BaseActivity implements IPostBaseView<Regi
             @Override
             public void LeftClick() {
                 finish();
+                handler.removeCallbacksAndMessages(this);
             }
 
             @Override
@@ -182,7 +183,9 @@ public class RegisterActivity extends BaseActivity implements IPostBaseView<Regi
     protected void onDestroy() {
         super.onDestroy();
 
-        integerPresenter.detachView();
+        if (integerPresenter != null){
+            integerPresenter.detachView();
+        }
 
         handler.removeCallbacksAndMessages(this);
 

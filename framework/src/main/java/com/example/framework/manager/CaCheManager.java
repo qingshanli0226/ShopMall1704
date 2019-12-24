@@ -95,7 +95,6 @@ public class CaCheManager {
 
     //把bean类存储到sp中
     public void savaBean(HomepageBean homepageBean) {
-        Log.e("####", homepageBean.toString());
         ACache aCache = ACache.get(context);
         aCache.put("HomepageBean", homepageBean);
     }

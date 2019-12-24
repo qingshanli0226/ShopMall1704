@@ -33,8 +33,8 @@ public class AutomaticPresenter extends BasePresenter<LoginBean> {
 
     @Override
     protected HashMap<String, String> getHeader() {
-//        HashMap<String, String> hashMap = new HashMap<>();
-//        hashMap.put("token", token);
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("token", token);
         return new HashMap<>();
     }
 

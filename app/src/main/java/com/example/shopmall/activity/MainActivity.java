@@ -6,11 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
-import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
@@ -74,7 +72,9 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
     protected void onResume() {
         super.onResume();
         int mainitem = ShoppingManager.getInstance().getMainitem();
-        if (mainitem == 3){
+        if (mainitem == 0){
+            bbMain.setCheckedItem(0);
+        }else if (mainitem == 3){
             bbMain.setCheckedItem(mainitem);
             refreshShoppingCartData();
         }else if (mainitem == 5){
@@ -82,16 +82,34 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
         }
     }
 
+    private void setAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示：");
+        builder.setMessage("您还没有登录");
+        builder.setPositiveButton("前往登录", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                dialogInterface.dismiss();
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                bbMain.setCheckedItem(0);
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
     @Override
     public void initData() {
-
-
         ShoppingManager.getInstance().setOnNumberChangedListener(this);
         refreshShoppingCartData();
         //获取购物车商品数量
         allNumber = ShoppingManager.getInstance().getAllNumber();
         mRedMessage.setNum(allNumber);
-        ShoppingManager.getInstance().setOnNumberChangedListener(this);
 
         replaceFragment(fragmentArrayList.get(0));
 
@@ -109,10 +127,15 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
         bbMain.setOnTapListener(new BottomBar.OnTapListener() {
             @Override
             public void tapItemClick(int i) {
+                ShoppingManager.getInstance().setMainitem(i);
                 replaceFragment(fragmentArrayList.get(i));
                 ShoppingManager.getInstance().setAllCount(0);
                 ShoppingManager.getInstance().setisSetting(false);
                 if (i == 3) {
+                    boolean loginStatus = UserManager.getInstance().getLoginStatus();
+                    if(!loginStatus){
+                        setAlertDialog();
+                    }
                     refreshShoppingCartData();
                 }
             }

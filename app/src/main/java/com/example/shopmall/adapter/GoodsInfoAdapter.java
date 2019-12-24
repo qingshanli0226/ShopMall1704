@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -101,7 +103,9 @@ public class GoodsInfoAdapter extends BaseAdapter<GoodsBean,GoodsInfoAdapter.Vie
 
             tvCoverPrice.setText("￥" + goodsBeans.get(position).getCover_price());
 
-            WebSettings webSettings = wbFigureGoodsInfo.getSettings();
+
+
+            WebSettings webSettings = wbAtguiguGoodsInfo.getSettings();
             webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
 
             webSettings.setDomStorageEnabled(true);
@@ -131,11 +135,27 @@ public class GoodsInfoAdapter extends BaseAdapter<GoodsBean,GoodsInfoAdapter.Vie
 
     public void getWebView(){
         if (wbFigureGoodsInfo != null){
+            ViewParent parent = wbFigureGoodsInfo.getParent();
+            if (parent != null){
+                ((ViewGroup)parent).removeView(wbFigureGoodsInfo);
+            }
+            wbFigureGoodsInfo.stopLoading();
+            wbFigureGoodsInfo.getSettings().setJavaScriptEnabled(false);
+            wbFigureGoodsInfo.clearHistory();
+            wbFigureGoodsInfo.clearView();
             wbFigureGoodsInfo.removeAllViews();
             wbFigureGoodsInfo.destroy();
             wbFigureGoodsInfo = null;
         }
         if (wbAtguiguGoodsInfo != null){
+            ViewParent parent = wbAtguiguGoodsInfo.getParent();
+            if (parent != null){
+                ((ViewGroup)parent).removeView(wbAtguiguGoodsInfo);
+            }
+            wbAtguiguGoodsInfo.stopLoading();
+            wbAtguiguGoodsInfo.getSettings().setJavaScriptEnabled(false);
+            wbAtguiguGoodsInfo.clearHistory();
+            wbAtguiguGoodsInfo.clearView();
             wbAtguiguGoodsInfo.removeAllViews();
             wbAtguiguGoodsInfo.destroy();
             wbAtguiguGoodsInfo = null;

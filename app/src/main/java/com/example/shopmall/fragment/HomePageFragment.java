@@ -74,6 +74,7 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
                             }
                         }else {
                             sum = 0;
+                            tbHomepage.setMessageShow(false);
                         }
                     }
                 }
