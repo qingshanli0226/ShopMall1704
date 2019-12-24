@@ -66,8 +66,8 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
          if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
              for (int i=0;i<prems.length;i++){
 
-                 if(  checkSelfPermission(prems[i])
-                         != PackageManager.PERMISSION_GRANTED){
+                 if(checkSelfPermission(prems[0])
+                         != PackageManager.PERMISSION_GRANTED||checkSelfPermission(prems[1])!=PackageManager.PERMISSION_GRANTED){
                      isJump=false;
                      requestPermissions(prems,100);
                  }else{
@@ -79,8 +79,6 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
              JumpActivity();
 
          }
-
-
          if(isJump==true){
             JumpActivity();
          }
@@ -142,12 +140,11 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(requestCode==100){
             for (int i=0;i<grantResults.length;i++){
-                if(grantResults[i]!=PackageManager.PERMISSION_GRANTED){
+                if(grantResults[0]!=PackageManager.PERMISSION_GRANTED||grantResults[1]!=PackageManager.PERMISSION_GRANTED){
                     Toast.makeText(this, "请手动添加权限后,然后重启应用", Toast.LENGTH_SHORT).show();
                     return;
                 }else{
                     isJump=true;
-
                 }
             }
             if(isJump==true){
