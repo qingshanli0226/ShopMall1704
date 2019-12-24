@@ -75,7 +75,7 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
 
     @Override
     public void onAvatarUpdate(String url) {
-        Glide.with(this).load(AppNetConfig.BASE_URL + AccountManager.getInstance().getUser().getAvatar()).apply(new RequestOptions().circleCrop()).into(heanUserImg);
+        Glide.with(this).load(url).apply(new RequestOptions().circleCrop()).into(heanUserImg);
     }
 
     @Override
@@ -245,7 +245,7 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
                             UploadBean uploadBean = new Gson().fromJson(s, UploadBean.class);
                             if (Constant.CODE_OK.equals(uploadBean.getCode())) {
                                 AccountManager.getInstance().getUser().setAvatar(uploadBean.getResult());
-                                AccountManager.getInstance().notifyUserAvatarUpdate(AccountManager.getInstance().getUser().getAvatar().toString());
+                                AccountManager.getInstance().notifyUserAvatarUpdate(AppNetConfig.BASE_URL+AccountManager.getInstance().getUser().getAvatar().toString());
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
