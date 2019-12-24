@@ -23,7 +23,7 @@ public class MessageAdpter extends BaseQuickAdapter<MessageBean, BaseViewHolder>
 
     @Override
     protected void convert(BaseViewHolder helper, MessageBean item) {
-        helper.setText(R.id.message_title,item.getMessage_title().toString()).setText(R.id.message_message,item.getMessage_message().toString())
+        helper.setText(R.id.message_title,item.getMessage_message().toString()).setText(R.id.message_message,item.getMessage_title().toString())
         .setText(R.id.message_date,item.getMessage_date());
         ImageView view = helper.getView(R.id.message_img);
         Glide.with(context).load(item.getMessage_img()).into(view);

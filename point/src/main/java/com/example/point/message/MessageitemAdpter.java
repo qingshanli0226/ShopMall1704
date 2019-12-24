@@ -53,13 +53,13 @@ public class MessageitemAdpter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
        if (holder instanceof Message_server){
            Message_server  message_server= (Message_server) holder;
-           message_server.server_message.setText(beanList.get(position).getMessage_message());
+           message_server.server_message.setText(beanList.get(position).getMessage_title());
            message_server.server_date.setText(beanList.get(position).getMessage_date());
            Glide.with(context).load(beanList.get(position).getMessage_img()).into(message_server.server_img);
 
        }else   if (holder instanceof Message_socket){
            Message_socket  message_socket= (Message_socket) holder;
-           message_socket.socket_message.setText(beanList.get(position).getMessage_message());
+           message_socket.socket_message.setText(beanList.get(position).getMessage_title());
            message_socket.socket_date.setText(beanList.get(position).getMessage_date());
            if (AccountManager.getInstance().isLogin()) {
                if (AccountManager.getInstance().getUser().getName() != null) {

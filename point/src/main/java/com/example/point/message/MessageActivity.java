@@ -76,7 +76,6 @@ public class MessageActivity extends BaseNetConnectActivity {
         String CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis())+"";//今日日期
         messageBeans= DaoManager.Companion.getInstance(this).queryMessageBean(CURRENT_DATE);
         messageAdpter = new MessageAdpter(R.layout.message_item, this.messageBeans, this);
-        Log.i("wzy", "initDate: "+ this.messageBeans.get(0).getMessage_title());
         if (this.messageBeans.size()!=0) {
             message_re.setAdapter(messageAdpter);
         }

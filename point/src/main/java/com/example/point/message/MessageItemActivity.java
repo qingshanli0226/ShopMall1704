@@ -63,7 +63,7 @@ public class MessageItemActivity extends BaseNetConnectActivity {
         String message_message = intent.getStringExtra("message_message");
         String message_date = intent.getStringExtra("message_date");
         Integer message_img = intent.getIntExtra("message_img", 0);
-        messageitem_toolbar.getOther_title().setText("" + message_title);
+        messageitem_toolbar.getOther_title().setText("" + message_message);
 
         beanList=new ArrayList<>();
         beanList.add(new MessageBean(null,message_img,message_title,message_message,message_date));
