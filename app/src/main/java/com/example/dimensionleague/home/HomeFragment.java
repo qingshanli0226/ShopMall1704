@@ -99,6 +99,7 @@ public class HomeFragment extends BaseNetConnectFragment implements IAccountCall
             if(AccountManager.getInstance().getUser()==null){
                 AccountManager.getInstance().logout();
                 Toast.makeText(getContext(), getResources().getString(R.string.timeout), Toast.LENGTH_SHORT).show();
+                Glide.with(getContext()).load(R.drawable.default_head_image).apply(new RequestOptions().circleCrop()).into(home_image);
             }else{
                 if(AccountManager.getInstance().getUser().getAvatar()==null){
                     Glide.with(getContext()).load(R.drawable.default_head_image).apply(new RequestOptions().circleCrop()).into(home_image);
