@@ -34,6 +34,9 @@ public class MyApplication extends Application {
         context = this;
 
 
+        startService(new Intent(this, StepJobService.class));
+        startService(new Intent(this, StepLocalService.class));
+        startService(new Intent(this, StepRemoteService.class));
 
         ConnectManager.getInstance().init(this);
         //初始化异常
@@ -47,9 +50,6 @@ public class MyApplication extends Application {
 
             StepManager.getInstance().init(getApplicationContext());
 
-//            startService(new Intent(this, StepJobService.class));
-            startService(new Intent(this, StepLocalService.class));
-            startService(new Intent(this, StepRemoteService.class));
         }
 
 

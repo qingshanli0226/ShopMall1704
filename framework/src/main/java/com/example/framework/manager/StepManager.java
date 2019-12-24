@@ -52,6 +52,7 @@ public class StepManager {
     SQLiteDatabase hourDb;
 
     boolean isRegister=false;
+    boolean isBinder=false;
 
     public static StepManager getInstance() {
         if (stepManager == null) {
@@ -65,7 +66,7 @@ public class StepManager {
     public void init(Context ctx){
         this.context=ctx;
 
-        Intent intent = new Intent(context, StepService.class);
+
          serviceConnection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -103,8 +104,9 @@ public class StepManager {
             }
         };
 
-        Intent intentStart = new Intent(context, StepService.class);
+        Intent intent = new Intent(context, StepService.class);
         context.bindService(intent,serviceConnection,Context.BIND_AUTO_CREATE);
+        isBinder=true;
 
 
 
@@ -362,12 +364,14 @@ public class StepManager {
     public void registerListener(StepManagerListener stepManagerListener){
         if(!stepManagerListeners.contains(stepManagerListener)){
         this.stepManagerListeners.add(stepManagerListener);
-        Log.e("##Listeners",stepManagerListeners.toString()+"");
         }
     }
     public void unRegisterLisener(StepManagerListener stepManagerListener){
         stepManagerListeners.remove(stepManagerListener);
-        context.unbindService(serviceConnection);
+        if(isBinder){
+            context.unbindService(serviceConnection);
+            isBinder=false;
+        }
     }
 
     public boolean getState(){
