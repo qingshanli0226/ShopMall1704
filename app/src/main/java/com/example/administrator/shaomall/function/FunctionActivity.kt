@@ -23,21 +23,24 @@ class FunctionActivity : BaseActivity() {
     override fun initView() {
         bundle = intent.extras
         //更新标题
-        val stringExtra = bundle!!.getString("title")
-        if (stringExtra != null) {
-            mTvTitle.text = stringExtra
+        val title = bundle!!.getString("title")
+
+        if (!title.isNullOrBlank()) {
+            mToolBarCustom.title = title
         }
+
         //点击返回
-        mIvBack.setOnClickListener {
+        mToolBarCustom.setLeftBackImageViewOnClickListener {
             ActivityInstanceManager.removeActivity(this)
         }
+
 
         val linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.stackFromEnd = true //列表再底部开始展示，反转后由上面开始展示
         linearLayoutManager.reverseLayout = true //列表翻转
         mRv.layoutManager = linearLayoutManager
         mRv.smoothScrollBy(0, 0)
-        functionAdaptor = FunctionAdaptor()
+        functionAdaptor = FunctionAdaptor(this)
         mRv.adapter = functionAdaptor
     }
 
@@ -53,6 +56,28 @@ class FunctionActivity : BaseActivity() {
             functionViewModel.findForSend()
         }
     }
+
+
+    /**
+     * 点击事件监听
+     */
+    fun itemViewClick(functionBean: FunctionBean, postion: Int) {
+        if ("待发货" == mToolBarCustom.title) {
+            return
+        }
+
+        //        val shoppingCartBean = ShoppingCartBean()
+        //
+        //        val listOf = arrayListOf<ShoppingCartBean>()
+        //        listOf.add(shoppingCartBean)
+        //        val bundle = Bundle()
+        //        bundle.putParcelableArrayList("data", listOf)
+        //        bundle.putFloat("sum", sum)
+        //        toClass(OrderFormActivity::class.java, bundle)
+
+        toast("$postion", false)
+    }
+
 
     override fun onDestroy() {
         //解除所有订阅者

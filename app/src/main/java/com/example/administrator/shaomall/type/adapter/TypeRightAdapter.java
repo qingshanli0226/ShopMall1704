@@ -107,17 +107,18 @@ public class TypeRightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         public OrdinaryViewHolder(View itemView, final Context mContext) {
             super(itemView);
             this.mContext = mContext;
-            iv_ordinary_right = (ImageView) itemView.findViewById(R.id.type_item_right_iv);
-            tv_ordinary_right = (TextView) itemView.findViewById(R.id.type_item_right_tv);
-            ll_root = (LinearLayout) itemView.findViewById(R.id.type_item_right_root_linear);
+            iv_ordinary_right = itemView.findViewById(R.id.type_item_right_iv);
+            tv_ordinary_right = itemView.findViewById(R.id.type_item_right_tv);
+            ll_root = itemView.findViewById(R.id.type_item_right_root_linear);
 
 
         }
 
         public void setData(TypeBean.ChildBean childBean, final int position) {
+            String path = AppNetConfig.BASE_URl_IMAGE + childBean.getPic();
             //加载图片
             Glide.with(mContext)
-                    .load(AppNetConfig.BASE_URl_IMAGE + childBean.getPic())
+                    .load(path)
                     .into(iv_ordinary_right);
             //设置名称
             tv_ordinary_right.setText(childBean.getName());

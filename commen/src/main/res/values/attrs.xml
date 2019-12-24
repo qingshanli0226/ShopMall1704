@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ToolbarCustom">
+        <attr name="rightImageViewIcon" format="reference" />
+
+        <attr name="leftImageViewIcon" format="reference" />
+        <attr name="isShowLeftImageView" format="boolean" />
+        <attr name="isShowRightImageView" format="boolean" />
+        <attr name="isShowTitleTextView" format="boolean" />
+
+        <attr name="title" format="string" />
+        <attr name="titleSize" format="dimension" />
+        <attr name="titleColor" format="reference|color" />
+
+        <attr name="isShowSettingTextView" format="boolean" />
+    </declare-styleable>
+</resources>

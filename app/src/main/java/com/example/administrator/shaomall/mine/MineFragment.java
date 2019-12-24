@@ -16,6 +16,7 @@ import com.example.administrator.shaomall.activity.MessageActivity;
 import com.example.administrator.shaomall.activity.SettingActivity;
 import com.example.administrator.shaomall.function.FunctionActivity;
 import com.example.administrator.shaomall.login.LoginActivity;
+import com.example.commen.ToolbarCustom;
 import com.example.commen.util.ShopMailError;
 import com.example.net.AppNetConfig;
 import com.example.remindsteporgan.RemindActivity;
@@ -36,14 +37,12 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
     private UserInfoManager userInfoManager;
     private IBasePresenter iBasePresenter;
     private String point = "0";
-    private PointUpLoadPresenter pointUpLoadPresenter;
     private TextView mTvNoPayment;
     private TextView mTvSendGoods;
     private android.widget.LinearLayout mLlLayoutShow;
-    private TextView mTvUserSetting;
-    private ImageView mIvMessage;
     private String avatar;
     private int pointSum;
+    private com.example.commen.ToolbarCustom mTcAppFragmentMineTop;
 
     @Override
     public int setLayoutId() {
@@ -61,24 +60,22 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
 
         userInfoManager = UserInfoManager.getInstance(); //用户信息管理类
 
-
-        mTvUserSetting = (TextView) view.findViewById(R.id.tv_userSetting); //设置
-        mIvMessage = (ImageView) view.findViewById(R.id.iv_message); //消息
-        mIvHeader = (ImageView) view.findViewById(R.id.iv_header);
-        mTvUserName = (TextView) view.findViewById(R.id.tv_userName);
-        TextView mTvProductAttention = (TextView) view.findViewById(R.id.tv_productAttention);
-        TextView mTvShopAttention = (TextView) view.findViewById(R.id.tv_shopAttention);
-        TextView mTvFavoriteContent = (TextView) view.findViewById(R.id.tv_favoriteContent);
-        TextView mTvBrowsingHistory = (TextView) view.findViewById(R.id.tv_browsingHistory);
-        mBtLogout = (Button) view.findViewById(R.id.bt_logout);
-        mTvPoint = (TextView) view.findViewById(R.id.tv_point);
-        mTvNoPayment = (TextView) view.findViewById(R.id.tv_noPayment); //待支付
-        mTvSendGoods = (TextView) view.findViewById(R.id.tv_sendGoods); //待发货
-        mLlLayoutShow = (LinearLayout) view.findViewById(R.id.ll_layout_show);
+        mTcAppFragmentMineTop = view.findViewById(R.id.tc_app_fragment_mine_top);
+        mIvHeader = view.findViewById(R.id.iv_header);
+        mTvUserName = view.findViewById(R.id.tv_userName);
+        TextView mTvProductAttention = view.findViewById(R.id.tv_productAttention);
+        TextView mTvShopAttention = view.findViewById(R.id.tv_shopAttention);
+        TextView mTvFavoriteContent = view.findViewById(R.id.tv_favoriteContent);
+        TextView mTvBrowsingHistory = view.findViewById(R.id.tv_browsingHistory);
+        mBtLogout = view.findViewById(R.id.bt_logout);
+        mTvPoint = view.findViewById(R.id.tv_point);
+        mTvNoPayment = view.findViewById(R.id.tv_noPayment); //待支付
+        mTvSendGoods = view.findViewById(R.id.tv_sendGoods); //待发货
+        mLlLayoutShow = view.findViewById(R.id.ll_layout_show);
 
 
-        mTvUserSetting.setOnClickListener(this);        //设置
-        mIvMessage.setOnClickListener(this);            //消息
+        mTcAppFragmentMineTop.setSettingTextViewOnClickListener(this); //设置
+        mTcAppFragmentMineTop.setRightImageViewOnClickListener(this); //消息
         mIvHeader.setOnClickListener(this);             //用户头像
         mTvUserName.setOnClickListener(this);           //用户名称
         mTvProductAttention.setOnClickListener(this);   //商品关注
@@ -98,7 +95,6 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
 
         //展示用户信息
         setUserData();
-
     }
 
 
@@ -112,19 +108,19 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         }
 
         switch (v.getId()) {
-            case R.id.tv_userSetting: //设置界面
-
+            case R.id.tv_toolbar_setting: //设置界面
+            case R.id.iv_header: //点击头像
                 Bundle bundle = new Bundle();
                 bundle.putString("name", mTvUserName.getText().toString());
                 bundle.putString("head", AppNetConfig.BASE_URL + avatar);
                 toClass(SettingActivity.class, bundle);
                 break;
-            case R.id.iv_message:   //消息界面
+
+
+            case R.id.iv_toolbar_message_right:   //消息界面
                 toClass(MessageActivity.class);
                 break;
-            case R.id.iv_header: //点击头像
-                toast("点击了头像", false);
-                break;
+
             case R.id.tv_userName:
                 toast("点击了用户名", false);
                 break;

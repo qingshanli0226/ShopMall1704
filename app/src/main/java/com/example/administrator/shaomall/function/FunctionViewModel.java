@@ -75,7 +75,9 @@ public class FunctionViewModel extends ViewModel {
                                 String string = responseBody.string();
                                 ResEntity<List<FunctionBean>> listResEntity = new Gson().fromJson(string, new TypeToken<ResEntity<List<FunctionBean>>>() {
                                 }.getType());
-                                liveData.setValue(listResEntity.getResult());
+
+                                if (listResEntity.getResult().size() != 0)
+                                    liveData.setValue(listResEntity.getResult());
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -83,6 +85,4 @@ public class FunctionViewModel extends ViewModel {
                     }
                 });
     }
-
-
 }

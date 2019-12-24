@@ -1,182 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    tools:context=".activity.SettingActivity"
-    android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-        <ImageView
-            android:id="@+id/settingback"
-            android:src="@drawable/top_bar_left_back"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            tools:ignore="NestedWeights" />
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.7"/>
-        <TextView
-            android:textSize="@dimen/settingTextSize"
-            android:gravity="left|center"
-            android:text="个人信息"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="5"/>
+    android:orientation="vertical"
+    tools:context=".activity.SettingActivity">
 
-    </LinearLayout>
+    <com.example.commen.ToolbarCustom
+        android:id="@+id/tc_app_activity_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#6af"
+        app:isShowRightImageView="false"
+        app:isShowSettingTextView="false"
+        app:titleColor="#fff" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#a6a6a6" />
+
     <LinearLayout
         android:id="@+id/settingLinearphoto"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+
         <TextView
-            android:textSize="@dimen/settingTextSize"
-            android:gravity="center|left"
-            android:text="头像"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:text="头像"
+            android:textSize="@dimen/settingTextSize" />
+
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="4"/>
+            android:layout_weight="4" />
+
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/settingPhoto"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             fresco:roundAsCircle="true"
-            fresco:roundedCornerRadius="@dimen/signinFacebookRadius"
-            android:layout_weight="1"/>
-        <TextView
-            android:textSize="30dp"
-            android:gravity="center"
-            android:text=">"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"/>
+            fresco:roundedCornerRadius="@dimen/signinFacebookRadius" />
+
+        <ImageView
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_gravity="center"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_action_right" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#a6a6a6" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+
         <TextView
-            android:textSize="@dimen/settingTextSize"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
             android:gravity="center|left"
             android:text="用户名"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"/>
+            android:textSize="@dimen/settingTextSize" />
+
         <TextView
             android:id="@+id/settingyong"
-            android:textSize="@dimen/settingTextSize"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="12dp"
+            android:layout_weight="3"
             android:gravity="right|center"
             android:text="金闪闪"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"/>
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"/>
+            android:textSize="@dimen/settingTextSize" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#a6a6a6" />
+
     <LinearLayout
         android:id="@+id/settingLinearName"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+
         <TextView
-            android:textSize="@dimen/settingTextSize"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center|left"
             android:text="昵称"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:textSize="@dimen/settingTextSize" />
+
         <TextView
             android:id="@+id/settingTextChangeName"
-            android:textSize="@dimen/settingTextSize"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="12dp"
+            android:layout_weight="5"
             android:gravity="right|center"
             android:text="金闪闪"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="5"/>
-        <TextView
-            android:textSize="30dp"
-            android:gravity="center"
-            android:text=">"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"/>
+            android:textSize="@dimen/settingTextSize" />
+
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#a6a6a6" />
+
     <LinearLayout
         android:id="@+id/settingLinearSex"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+
         <TextView
-            android:textSize="@dimen/settingTextSize"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center|left"
             android:text="性别"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:textSize="@dimen/settingTextSize" />
+
         <TextView
             android:id="@+id/settingTextsex"
-            android:textSize="@dimen/settingTextSize"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
             android:gravity="right|center"
             android:text="保密"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="5"/>
-        <TextView
-            android:textSize="30dp"
-            android:gravity="center"
-            android:text=">"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"/>
+            android:textSize="@dimen/settingTextSize" />
+
+        <ImageView
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_gravity="center"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_action_right" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#a6a6a6" />
+
     <LinearLayout
         android:id="@+id/settingLinearDate"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+
         <TextView
-            android:gravity="center|left"
-            android:textSize="@dimen/settingTextSize"
-            android:text="出生日期"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:text="出生日期"
+            android:textSize="@dimen/settingTextSize" />
+
         <TextView
             android:id="@+id/settingTextDate"
-            android:textSize="@dimen/settingTextSize"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
             android:gravity="right|center"
             android:text="保密"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"/>
-        <TextView
-            android:textSize="30dp"
-            android:gravity="center"
-            android:text=">"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"/>
+            android:textSize="@dimen/settingTextSize" />
+
+        <ImageView
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_gravity="center"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_action_right" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#a6a6a6" />
+
     <DatePicker
-        android:visibility="invisible"
         android:id="@+id/settingDatePicker"
-        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5">
+        android:layout_gravity="center"
+        android:layout_weight="5"
+        android:visibility="invisible">
 
     </DatePicker>
 

@@ -22,7 +22,6 @@ import com.example.net.AppNetConfig
 import com.shaomall.framework.base.BaseMVPActivity
 import com.shaomall.framework.base.presenter.IBasePresenter
 import com.shaomall.framework.bean.ShoppingCartBean
-import com.shaomall.framework.manager.ActivityInstanceManager
 import com.shaomall.framework.manager.ShoppingManager
 import com.shaomall.framework.manager.UserInfoManager
 import kotlinx.android.synthetic.main.activity_commodity.*
@@ -50,9 +49,10 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
 
 
         //点击关闭
-        mIbGoodInfoBack.setOnClickListener {
+        mTc_top.setLeftBackImageViewOnClickListener {
             animOutActivity()
         }
+
 
         //获取intent
         val intent = intent

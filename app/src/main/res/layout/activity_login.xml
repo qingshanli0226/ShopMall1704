@@ -91,9 +91,7 @@
             android:gravity="right|center"
             android:text="@string/login_user_goRegister"
             android:textColor="@color/darkturquoise"
-            android:textSize="@dimen/loginLoginSigninTextViewTextSize"
-            android:background="?android:selectableItemBackgroundBorderless"
-       />
+            android:textSize="@dimen/loginLoginSigninTextViewTextSize" />
 
     </LinearLayout>
 

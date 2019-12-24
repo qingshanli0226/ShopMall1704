@@ -21,6 +21,7 @@ import com.alipay.sdk.app.PayTask;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.example.commen.ToolbarCustom;
 import com.example.commen.util.ShopMailError;
 import com.example.net.AppNetConfig;
 import com.example.shoppingcart.Adapter.RvShoppingPayAdapter;
@@ -53,7 +54,6 @@ public class OrderFormActivity extends BaseMVPActivity<Object> implements View.O
     private TextView mTvOrderTotalPrice;
     private TextView mTvAddress;
     private IBasePresenter iBasePresenter;
-    private ImageView mIvBack;
     private RecyclerView mRvOrderGoods;
     private TextView mTvPoint;
     private CheckBox mCbOrderPointStatus;
@@ -83,7 +83,6 @@ public class OrderFormActivity extends BaseMVPActivity<Object> implements View.O
                     String resultContent = result.get("result");
                     boolean payResultIsOk = false;
                     if (resultStatus.equals("9000")) {//如果支付成功, 在这里可以在UI上提示用户支付成功.
-                        ActivityInstanceManager.removeActivity(OrderFormActivity.this);
                         payResultIsOk = true;
                     }
                     //到服务端去拿到支付结果.
@@ -94,6 +93,7 @@ public class OrderFormActivity extends BaseMVPActivity<Object> implements View.O
             }
         }
     };
+    private ToolbarCustom mTcCartTop;
 
 
     @Override
@@ -103,7 +103,8 @@ public class OrderFormActivity extends BaseMVPActivity<Object> implements View.O
 
     @Override
     protected void initView() {
-        mIvBack = findViewById(R.id.iv_order_back); //返回按钮
+
+        mTcCartTop = findViewByMe(R.id.tc_cart_top);
         mTvAddress = findViewById(R.id.tv_order_address);  //地址信息
         mEtInputAddress = findViewById(R.id.et_input_address); //编辑的地址信息
         mTvOrderTotalPrice = findViewById(R.id.tv_order_total_price); //总价
@@ -115,15 +116,46 @@ public class OrderFormActivity extends BaseMVPActivity<Object> implements View.O
         mLlOrderInformation = findViewById(R.id.ll_order_information); //展示商品错误信息
         mTvOrderInfo = findViewById(R.id.tv_order_info);
 
-        Log.i("token", "initView: " + UserInfoManager.getInstance().getToken());
-
         //点击事件监听
-        mIvBack.setOnClickListener(this);
+        mTcCartTop.setLeftBackImageViewOnClickListener(this);
         mTvAddress.setOnClickListener(this);
         mBtOrderCommit.setOnClickListener(this);
         mCbOrderPointStatus.setOnClickListener(this);
 
     }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    protected void initData() {
+        //初始化JSON省份数据
+        initJsonData();
+
+        //获取数据
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        data = extras.getParcelableArrayList("data");
+        //总价
+        totalPrice = extras.getFloat("sum");
+        String point = (String) UserInfoManager.getInstance().readUserInfo().getPoint();
+        if (point != null){
+            //积分
+            mPoint = Integer.parseInt(point);
+        }
+
+        //展示要购买的数据
+        payAdapter = new RvShoppingPayAdapter(data);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        mRvOrderGoods.setLayoutManager(linearLayoutManager);
+        mRvOrderGoods.setAdapter(payAdapter);
+
+
+        //设置积分 和总价
+        setTvPoint2TotalPrice(mPoint, totalPrice);
+    }
+
+
+
+
 
     /**
      * 点击事件处理
@@ -133,7 +165,7 @@ public class OrderFormActivity extends BaseMVPActivity<Object> implements View.O
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if (id == R.id.iv_order_back) { //返回按钮
+        if (id == R.id.iv_toolbar_back_left) { //返回按钮
             ActivityInstanceManager.removeActivity(OrderFormActivity.this);
 
         } else if (id == R.id.tv_order_address) { //地址信息
@@ -173,32 +205,6 @@ public class OrderFormActivity extends BaseMVPActivity<Object> implements View.O
         } else {
             setTvPoint2TotalPrice(mPoint, totalPrice);
         }
-    }
-
-    @SuppressLint("SetTextI18n")
-    @Override
-    protected void initData() {
-        //初始化JSON省份数据
-        initJsonData();
-
-        //获取数据
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        data = extras.getParcelableArrayList("data");
-        //总价
-        totalPrice = extras.getFloat("sum");
-        //积分
-        mPoint = Integer.parseInt((String) UserInfoManager.getInstance().readUserInfo().getPoint());
-
-        //展示要购买的数据
-        payAdapter = new RvShoppingPayAdapter(data);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        mRvOrderGoods.setLayoutManager(linearLayoutManager);
-        mRvOrderGoods.setAdapter(payAdapter);
-
-
-        //设置积分 和总价
-        setTvPoint2TotalPrice(mPoint, totalPrice);
     }
 
     /**
@@ -247,7 +253,7 @@ public class OrderFormActivity extends BaseMVPActivity<Object> implements View.O
     private void confirmServerPayResult(String outTradeNo, String resultContent, boolean payResultIsOk) {
         if (payResultIsOk) { //支付成功
             //向服务器拿结果
-            iBasePresenter = new ConfirmServerPayResultPresenter(outTradeNo, resultContent);
+            iBasePresenter = new ConfirmServerPayResultPresenter(outTradeNo, resultContent, payResultIsOk);
             iBasePresenter.attachView(this);
             iBasePresenter.doJsonPostHttpRequest(AppNetConfig.REQUEST_CODE_CONFIRM_SERVER_PAY_RESULT);
         }
@@ -310,8 +316,10 @@ public class OrderFormActivity extends BaseMVPActivity<Object> implements View.O
 
         } else if (requestCode == AppNetConfig.REQUEST_CODE_CONFIRM_SERVER_PAY_RESULT) {//支付结果
             boolean isPayResult = data.equals("true");//支付成功
+
             if (isPayResult) {
                 ShoppingManager.getInstance().removeShoppingCartData();
+                ActivityInstanceManager.removeActivity(this); //关闭本页面
             } else {
                 toast("支付失败", false);
             }
@@ -425,7 +433,7 @@ public class OrderFormActivity extends BaseMVPActivity<Object> implements View.O
 
     @Override
     protected void onDestroy() {
-        if (iBasePresenter != null){
+        if (iBasePresenter != null) {
             iBasePresenter.detachView();
         }
         super.onDestroy();

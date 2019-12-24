@@ -29,7 +29,7 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> {
             AppNetConfig.ACCESSORY_URL, AppNetConfig.BAG_URL, AppNetConfig.DRESS_UP_URL, AppNetConfig.HOME_PRODUCTS_URL, AppNetConfig.STATIONERY_URL,
             AppNetConfig.DIGIT_URL, AppNetConfig.GAME_URL};
     private TypeLeftAdapter typeLeftAdapter;
-    private boolean isFirest = true;
+    private boolean isFirst = true;
 
 
     @Override
@@ -65,7 +65,7 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> {
                 adapter.changeSelected(position);
                 if (position!=0)
                 {
-                    isFirest = false;
+                    isFirst = false;
                 }
                 getDataFormNet(urls[position]);
                 typeLeftAdapter.notifyDataSetChanged();
@@ -85,7 +85,7 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> {
     public void onRequestHttpDataListSuccess(int requestCode, String message, List<TypeBean> data) {
         super.onRequestHttpDataListSuccess(requestCode, message, data);
         if (requestCode == Constants.TYPE_DATA_CODE) {
-            if (isFirest)
+            if (isFirst)
             {
                 typeLeftAdapter = new TypeLeftAdapter(getContext());
                 mTypeLeftLv.setAdapter(typeLeftAdapter);
@@ -109,6 +109,14 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> {
             });
             mTypeRightRv.setLayoutManager(manager);
         }
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (typePresenter != null){
+            typePresenter.detachView();
+            typePresenter = null;
+        }
     }
 }

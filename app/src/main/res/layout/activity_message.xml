@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
         <include layout="@layout/title_common"/>
-
                 <TextView
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
@@ -28,8 +27,4 @@
                     android:textColor="@color/colorDiscount"
                     android:gravity="center_vertical"
                     />
-
-
-
-
 </LinearLayout>

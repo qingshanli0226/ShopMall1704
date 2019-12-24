@@ -7,7 +7,7 @@ public class AppNetConfig {
 
     //服务端
     public static final String BASE_URL = "http://49.233.93.155:8080/";
-    //    public static final String BASE_URL = "http://169.254.230.253:8080/";
+//        public static final String BASE_URL = "http://169.254.230.253:8080/";
 
 
     ////////////////////////////////////////////

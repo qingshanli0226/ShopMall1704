@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_about"
     android:layout_width="match_parent"
@@ -16,43 +17,18 @@
             android:layout_height="180dp"
             android:background="#6af">
 
-            <LinearLayout
-                android:id="@+id/top"
+            <com.example.commen.ToolbarCustom
+                android:id="@+id/tc_app_fragment_mine_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:gravity="right"
-                android:paddingTop="40dp">
-
-                <TextView
-                    android:id="@+id/tv_userSetting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="12dp"
-                    android:drawablePadding="4dp"
-                    android:gravity="center"
-                    android:text="设置"
-                    android:textColor="@color/black"
-                    android:background="?android:selectableItemBackgroundBorderless"/>
-
-                <ImageView
-                    android:id="@+id/iv_message"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="18dp"
-                    android:src="@drawable/message_icon"
-                    tools:ignore="ContentDescription"
-                    android:background="?android:selectableItemBackgroundBorderless"/>
-            </LinearLayout>
+                app:isShowLeftImageView="false"
+                app:isShowTitleTextView="false" />
 
             <LinearLayout
                 android:id="@+id/ll_header"
                 android:layout_width="match_parent"
                 android:layout_height="68dp"
-                android:layout_below="@id/top"
+                android:layout_below="@+id/tc_app_fragment_mine_top"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -60,10 +36,10 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginLeft="20dp"
+                    android:background="?android:selectableItemBackgroundBorderless"
                     android:scaleType="fitXY"
                     android:src="@drawable/app_icon"
-                    tools:ignore="ContentDescription"
-                    android:background="?android:selectableItemBackgroundBorderless"/>
+                    tools:ignore="ContentDescription,NewApi" />
 
                 <TextView
                     android:id="@+id/tv_userName"
@@ -71,10 +47,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
+                    android:background="?android:selectableItemBackgroundBorderless"
                     android:gravity="center"
                     android:text="@string/app_fragment_mine_tv_text_user_name"
                     android:textColor="@color/black"
-                    android:background="?android:selectableItemBackgroundBorderless"/>
+                    tools:ignore="NewApi" />
 
 
                 <View
@@ -88,12 +65,14 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginRight="18dp"
+                    android:background="?android:selectableItemBackgroundBorderless"
                     android:gravity="center"
                     android:text="积分: "
                     android:textColor="#FFF"
                     android:visibility="gone"
-                    android:background="?android:selectableItemBackgroundBorderless"/>
+                    tools:targetApi="lollipop" />
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -205,11 +184,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="?android:selectableItemBackgroundBorderless"
                     android:drawableTop="@mipmap/icon_no_payment64"
                     android:drawablePadding="4dp"
                     android:gravity="center"
                     android:text="@string/mine_toBePaid"
-                    android:background="?android:selectableItemBackgroundBorderless"/>
+                    tools:ignore="NewApi" />
 
 
                 <TextView
@@ -217,17 +197,18 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="?android:selectableItemBackgroundBorderless"
                     android:drawableTop="@mipmap/icon_send_goods64"
                     android:drawablePadding="4dp"
                     android:gravity="center"
                     android:text="@string/mine_toBeDelivered"
-                    android:background="?android:selectableItemBackgroundBorderless"/>
+                    tools:ignore="NewApi" />
             </LinearLayout>
 
 
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="300dp" />
+                android:layout_height="200dp" />
 
             <Button
                 android:id="@+id/bt_logout"

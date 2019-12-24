@@ -16,12 +16,14 @@ import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.example.administrator.shaomall.R;
+import com.example.commen.ToolbarCustom;
 import com.example.net.MVPObserver;
 import com.example.net.RetrofitCreator;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.shaomall.framework.base.BaseActivity;
 import com.shaomall.framework.bean.UploadBean;
+import com.shaomall.framework.manager.ActivityInstanceManager;
 import com.shaomall.framework.manager.HandPortraitManager;
 import com.shaomall.framework.manager.UserInfoManager;
 import com.wyp.avatarstudio.AvatarStudio;
@@ -50,10 +52,10 @@ public class SettingActivity extends BaseActivity {
     private TextView settingTextChangeName;
     private SimpleDraweeView settingPhoto;
     private TextView settingYong;
-    private ImageView settingBack;
     private LinearLayout settingLinearPhoto;
     private List<String> arr = new ArrayList<String>();
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private com.example.commen.ToolbarCustom mTcAppActivitySetting;
 
     @Override
     protected int setLayoutId() {
@@ -62,22 +64,24 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        settingLinearPhoto = (LinearLayout) findViewById(R.id.settingLinearphoto);
-        settingBack = (ImageView) findViewById(R.id.settingback);
-        settingLinearName = (LinearLayout) findViewById(R.id.settingLinearName);
-        settingTextChangeName = (TextView) findViewById(R.id.settingTextChangeName);
-        settingDatePicker = (DatePicker) findViewById(R.id.settingDatePicker);
-        settingLinearSex = (LinearLayout) findViewById(R.id.settingLinearSex);
-        settingTextSex = (TextView) findViewById(R.id.settingTextsex);
-        settingLinearDate = (LinearLayout) findViewById(R.id.settingLinearDate);
-        settingTextDate = (TextView) findViewById(R.id.settingTextDate);
-        settingPhoto = (SimpleDraweeView) findViewById(R.id.settingPhoto);
-        settingYong = (TextView) findViewById(R.id.settingyong);
+        mTcAppActivitySetting = findViewById(R.id.tc_app_activity_setting);
+
+        settingLinearPhoto = findViewById(R.id.settingLinearphoto);
+        settingLinearName = findViewById(R.id.settingLinearName);
+        settingTextChangeName = findViewById(R.id.settingTextChangeName);
+        settingDatePicker = findViewById(R.id.settingDatePicker);
+        settingLinearSex = findViewById(R.id.settingLinearSex);
+        settingTextSex = findViewById(R.id.settingTextsex);
+        settingLinearDate = findViewById(R.id.settingLinearDate);
+        settingTextDate = findViewById(R.id.settingTextDate);
+        settingPhoto = findViewById(R.id.settingPhoto);
+        settingYong = findViewById(R.id.settingyong);
 
 
         arr.add("男");
         arr.add("女");
         arr.add("保密");
+
     }
 
     @Override
@@ -112,10 +116,10 @@ public class SettingActivity extends BaseActivity {
 
 
         //退出按钮
-        settingBack.setOnClickListener(new View.OnClickListener() {
+        mTcAppActivitySetting.setLeftBackImageViewOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                ActivityInstanceManager.removeActivity(SettingActivity.this);
             }
         });
 

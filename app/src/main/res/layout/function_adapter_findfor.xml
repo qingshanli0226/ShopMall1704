@@ -9,12 +9,24 @@
             name="functionAdapter"
             type="FunctionAdaptor" />
 
+        <!--        功能界面-->
+        <import type="com.example.administrator.shaomall.function.FunctionActivity" />
+
+        <variable
+            name="functionActivity"
+            type="FunctionActivity" />
+
+
         <!--        adapter数据-->
         <import type="com.shaomall.framework.bean.FunctionBean" />
 
         <variable
             name="functionBean"
             type="FunctionBean" />
+
+        <variable
+            name="position"
+            type="int" />
     </data>
 
     <LinearLayout
@@ -36,9 +48,11 @@
 
 
         <LinearLayout
+            android:id="@+id/ll_function"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:background="#e6e6e6"
+            android:onClick="@{()->functionActivity.itemViewClick(functionBean, position)}"
             android:orientation="horizontal">
 
             <LinearLayout

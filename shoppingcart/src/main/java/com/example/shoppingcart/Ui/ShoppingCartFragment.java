@@ -55,13 +55,13 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
         //数据更新监听
         ShoppingManager.getInstance().registerNotifyUpdatedShoppingDataListener(this);
 
-        LinearLayout topBar = (LinearLayout) view.findViewById(R.id.top_bar);
-        TextView title = (TextView) view.findViewById(R.id.title);
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_choppingCart);
-        allCheckbox = (CheckBox) view.findViewById(R.id.all_chekbox);
-        tvTotalPrice = (TextView) view.findViewById(R.id.tv_total_price);
-        tvDelete = (TextView) view.findViewById(R.id.tv_delete);
-        tvGoToPay = (TextView) view.findViewById(R.id.tv_go_to_pay);
+        LinearLayout topBar =  view.findViewById(R.id.top_bar);
+        TextView title =  view.findViewById(R.id.title);
+        recyclerView =  view.findViewById(R.id.rv_choppingCart);
+        allCheckbox =  view.findViewById(R.id.all_chekbox);
+        tvTotalPrice =  view.findViewById(R.id.tv_total_price);
+        tvDelete =  view.findViewById(R.id.tv_delete);
+        tvGoToPay =  view.findViewById(R.id.tv_go_to_pay);
 
         rvAdp = new RvAdp(listData, getContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true);
@@ -145,9 +145,8 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
                 //TODO 付款的判断
                 if (data.size() != 0) {
                     //选中的商品数量
-                    int payment = ShoppingManager.getInstance().getShoppingCartSelectionData().size();
+//                    int payment = ShoppingManager.getInstance().getShoppingCartSelectionData().size();
                     Bundle bundle = new Bundle();
-                    bundle.putInt("payment", payment);
                     bundle.putParcelableArrayList("data", data);
                     bundle.putFloat("sum", sum);
                     toClass(OrderFormActivity.class, bundle);

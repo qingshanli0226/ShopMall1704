@@ -1,36 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Ui.OrderFormActivity">
 
-    <RelativeLayout
-        android:id="@+id/rl_order_top"
+
+    <com.example.commen.ToolbarCustom
+        android:id="@+id/tc_cart_top"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_alignParentTop="true">
-
-        <ImageView
-            android:id="@+id/iv_order_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:src="@drawable/top_bar_left_back" />
-
-        <TextView
-            android:id="@+id/tv_order_title"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="填写订单"
-            android:textSize="22sp" />
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        app:isShowRightImageView="false"
+        android:background="#edc"
+        app:isShowSettingTextView="false"
+        app:title="填写订单" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/rl_order_top"
+        android:layout_below="@+id/tc_cart_top"
         android:background="#CCCCCC" />
 
     <ScrollView
@@ -38,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/layout_bottom"
-        android:layout_below="@+id/rl_order_top"
+        android:layout_below="@+id/tc_cart_top"
         android:layout_marginTop="2dp"
         android:background="#e6e6e6">
 
@@ -121,8 +110,8 @@
                 android:layout_marginTop="8dp"
                 android:background="#aaa"
                 android:orientation="vertical"
-                android:visibility="gone"
-                android:padding="8dp">
+                android:padding="8dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -156,7 +145,10 @@
             android:layout_marginRight="6dp"
             android:gravity="center|right"
             android:text="合计:"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="6dp"
+            tools:ignore="RtlHardcoded" />
 
         <TextView
             android:id="@+id/tv_order_total_price"
@@ -166,7 +158,8 @@
             android:gravity="center|left"
             android:text="$0.00"
             android:textColor="#f00"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            tools:ignore="RtlHardcoded" />
 
         <Button
             android:id="@+id/bt_order_commit"
