@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.example.framework.bean.MessageBean;
 import com.example.point.R;
 
 
@@ -22,9 +23,9 @@ public class MessageAdpter extends BaseQuickAdapter<MessageBean, BaseViewHolder>
 
     @Override
     protected void convert(BaseViewHolder helper, MessageBean item) {
-        helper.setText(R.id.message_title,item.message_title).setText(R.id.message_message,item.message_message)
-        .setText(R.id.message_date,item.message_date);
+        helper.setText(R.id.message_title,item.getMessage_message().toString()).setText(R.id.message_message,item.getMessage_title().toString())
+        .setText(R.id.message_date,item.getMessage_date());
         ImageView view = helper.getView(R.id.message_img);
-        Glide.with(context).load(item.message_img).into(view);
+        Glide.with(context).load(item.getMessage_img()).into(view);
     }
 }

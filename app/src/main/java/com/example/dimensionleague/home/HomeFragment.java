@@ -93,10 +93,19 @@ public class HomeFragment extends BaseNetConnectFragment implements IAccountCall
         }
 
         home_image = view.findViewById(R.id.home_icon);
-        if(!AccountManager.getInstance().isLogin() && AccountManager.getInstance().getUser().getAvatar()!=null){
+        if(!AccountManager.getInstance().isLogin()){
             Glide.with(getContext()).load(R.drawable.default_head_image).apply(new RequestOptions().circleCrop()).into(home_image);
         }else{
-            Glide.with(getContext()).load(AppNetConfig.BASE_URL+AccountManager.getInstance().getUser().getAvatar()).apply(new RequestOptions().circleCrop()).into(home_image);
+            if(AccountManager.getInstance().getUser()==null){
+                AccountManager.getInstance().logout();
+                Toast.makeText(getContext(), getResources().getString(R.string.timeout), Toast.LENGTH_SHORT).show();
+            }else{
+                if(AccountManager.getInstance().getUser().getAvatar()==null){
+                    Glide.with(getContext()).load(R.drawable.default_head_image).apply(new RequestOptions().circleCrop()).into(home_image);
+                }else{
+                    Glide.with(getContext()).load(AppNetConfig.BASE_URL+AccountManager.getInstance().getUser().getAvatar()).apply(new RequestOptions().circleCrop()).into(home_image);
+                }
+            }
         }
         home_image.setOnClickListener(new View.OnClickListener() {
             @Override

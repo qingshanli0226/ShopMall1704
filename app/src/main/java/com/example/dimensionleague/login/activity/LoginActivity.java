@@ -21,6 +21,7 @@ import com.example.common.code.Constant;
 import com.example.common.User;
 import com.example.common.code.ErrorCode;
 import com.example.common.utils.IntentUtil;
+import com.example.common.utils.SPUtil;
 import com.example.common.view.MyToast;
 import com.example.dimensionleague.setting.SettingActivity;
 import com.example.framework.manager.AccountManager;
@@ -157,6 +158,7 @@ public class LoginActivity extends BaseNetConnectActivity implements IButtonEnab
             accountManager.saveToken(result.getToken());
             //TODO 通知别的页面用户已登录
             accountManager.notifyLogin();
+            SPUtil.FirstLogin();
             if (accountManager.getUser().getAvatar() != null) {
                 accountManager.notifyUserAvatarUpdate( AppNetConfig.BASE_URL+accountManager.getUser().getAvatar().toString());
             }

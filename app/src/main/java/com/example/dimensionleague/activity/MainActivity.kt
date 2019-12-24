@@ -1,5 +1,6 @@
 package com.example.dimensionleague.activity
 
+import android.content.Intent
 import androidx.fragment.app.Fragment
 import android.view.KeyEvent
 import android.widget.Toast
@@ -15,6 +16,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import com.example.framework.base.BaseNetConnectActivity
 import com.example.framework.listener.OnShopCartListener
 import com.example.buy.CartManager
+import com.example.common.utils.SPUtil
+import com.example.dimensionleague.JobService
 
 import kotlin.system.exitProcess
 import com.example.dimensionleague.login.activity.LoginActivity
@@ -38,14 +41,18 @@ class MainActivity : BaseNetConnectActivity() {
     override fun init() {
         super.init()
         val bundle = intent!!.getBundleExtra("data")
-        val isAutoLogin = bundle!!.getBoolean("isAutoLogin")
-        if (!isAutoLogin) {
-            Toast.makeText(this, resources.getString(R.string.timeout), Toast.LENGTH_SHORT).show()
-            AccountManager.getInstance().logout()
-        } else {
-            AccountManager.getInstance().notifyLogin()
-            if(AccountManager.getInstance().user.avatar!=null){
-                AccountManager.getInstance().notifyUserAvatarUpdate(AppNetConfig.BASE_URL+AccountManager.getInstance().user.avatar)
+        if(bundle!=null){
+            val isAutoLogin = bundle!!.getBoolean("isAutoLogin")
+            if(!SPUtil.isFirstLogin()){
+                if (!isAutoLogin) {
+                    Toast.makeText(this, resources.getString(R.string.timeout), Toast.LENGTH_SHORT).show()
+                    AccountManager.getInstance().logout()
+                } else {
+                    AccountManager.getInstance().notifyLogin()
+                    if(AccountManager.getInstance().user.avatar!=null){
+                        AccountManager.getInstance().notifyUserAvatarUpdate(AppNetConfig.BASE_URL+AccountManager.getInstance().user.avatar)
+                    }
+                }
             }
         }
 
@@ -61,7 +68,7 @@ class MainActivity : BaseNetConnectActivity() {
 
     override fun initDate() {
         super.init()
-
+        startService(Intent(this@MainActivity,JobService::class.java))
         main_easy.selectTextColor(R.color.colorGradualPurple)
             .normalTextColor(R.color.colorMainNormal)
             .selectIconItems(

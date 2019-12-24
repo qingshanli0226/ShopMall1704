@@ -1,7 +1,7 @@
 package com.example.point.message;
 
 import android.content.Context;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +12,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.framework.bean.MessageBean;
+import com.example.framework.manager.AccountManager;
+import com.example.net.AppNetConfig;
 import com.example.point.R;
+
+import java.util.HashMap;
 import java.util.List;
 
 public class MessageitemAdpter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -47,15 +53,25 @@ public class MessageitemAdpter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
        if (holder instanceof Message_server){
            Message_server  message_server= (Message_server) holder;
-           message_server.server_message.setText(beanList.get(position).message_message);
-           message_server.server_date.setText(beanList.get(position).message_date);
-           Glide.with(context).load(beanList.get(position).message_img).into(message_server.server_img);
-           Log.i("onBindViewHolder", "onBindViewHolder: "+beanList.get(position).message_img);
+           message_server.server_message.setText(beanList.get(position).getMessage_title());
+           message_server.server_date.setText(beanList.get(position).getMessage_date());
+           Glide.with(context).load(beanList.get(position).getMessage_img()).into(message_server.server_img);
+
        }else   if (holder instanceof Message_socket){
            Message_socket  message_socket= (Message_socket) holder;
-           message_socket.socket_message.setText(beanList.get(position).message_message);
-           message_socket.socket_date.setText(beanList.get(position).message_date);
-           Glide.with(context).load(beanList.get(position).message_img).into(message_socket.socket_img);
+           message_socket.socket_message.setText(beanList.get(position).getMessage_title());
+           message_socket.socket_date.setText(beanList.get(position).getMessage_date());
+           if (AccountManager.getInstance().isLogin()) {
+               if (AccountManager.getInstance().getUser().getName() != null) {
+                   //登录
+                   if (AccountManager.getInstance().getUser().getAvatar() != null) {
+                       Glide.with(context).load("" + AppNetConfig.BASE_URL + AccountManager.getInstance().getUser().getAvatar()).apply(new RequestOptions().circleCrop()).into(message_socket.socket_img);
+                   }
+               }
+           } else {
+               //没有登录
+               Glide.with(context).load(beanList.get(position).getMessage_img()).into(message_socket.socket_img);
+           }
        }
     }
 

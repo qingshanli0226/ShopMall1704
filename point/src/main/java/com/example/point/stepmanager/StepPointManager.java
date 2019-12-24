@@ -7,6 +7,8 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.example.framework.manager.DaoManager;
+import com.example.point.service.RemoterSerive;
 import com.example.point.service.StepService;
 
 import java.util.ArrayList;
@@ -29,10 +31,9 @@ public class StepPointManager {
         return stepPointManager;
     }
     public void init(){
-
-
         Intent intent = new Intent(context, StepService.class);
         context.startService(intent);
+      //  context.startService(new Intent(context, RemoterSerive.class));
         //绑定服务
         context. bindService(intent,connection , Context.BIND_AUTO_CREATE);
         context.startService(intent);

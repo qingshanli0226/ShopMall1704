@@ -290,12 +290,18 @@ public class ShopCartFragment extends BaseNetConnectFragment {
     @Override
     public void onResume() {
         super.onResume();
-        //刷新选中
-        CartManager.getInstance().notifyChecks();
-        list.clear();
-        list.addAll(CartManager.getInstance().getListGoods());
-        recyclerView.getAdapter().notifyDataSetChanged();
-        sendCartPresenter.doHttpGetRequest(CART_GOODS);
+        if (AccountManager.getInstance().isLogin()){
+            //刷新选中
+            CartManager.getInstance().notifyChecks();
+            list.clear();
+            list.addAll(CartManager.getInstance().getListGoods());
+            recyclerView.getAdapter().notifyDataSetChanged();
+            sendCartPresenter.doHttpGetRequest(CART_GOODS);
+        }else {
+            CartManager.getInstance().clearCheck();
+            list.clear();
+            recyclerView.getAdapter().notifyDataSetChanged();
+        }
     }
 
     @Override
