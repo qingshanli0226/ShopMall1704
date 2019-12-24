@@ -32,6 +32,16 @@ public class SPUtil {
         return sp.getString(Constant.TOKEN, "");
     }
 
+    //TODO 是否第一次登录
+    public static boolean isFirstLogin(){
+        return sp.getBoolean("firstLogin",true);
+    }
+    //TODO 存取登录信息
+    public static void FirstLogin(){
+        SharedPreferences.Editor edit = sp.edit();
+        edit.putBoolean("firstLogin",false);
+        edit.apply();
+    }
     //TODO 是否登录
     public static boolean isLogin() {
         return !TextUtils.isEmpty(getToken());

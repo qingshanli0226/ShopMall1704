@@ -290,12 +290,19 @@ public class ShopCartFragment extends BaseNetConnectFragment {
     @Override
     public void onResume() {
         super.onResume();
-        //刷新选中
-        CartManager.getInstance().notifyChecks();
-        list.clear();
-        list.addAll(CartManager.getInstance().getListGoods());
-        recyclerView.getAdapter().notifyDataSetChanged();
-        sendCartPresenter.doHttpGetRequest(CART_GOODS);
+        if (AccountManager.getInstance().isLogin()){
+            //刷新选中
+            CartManager.getInstance().notifyChecks();
+            list.clear();
+            list.addAll(CartManager.getInstance().getListGoods());
+            Log.e("qqq","数据长度:"+CartManager.getInstance().getListGoods().size());
+            recyclerView.getAdapter().notifyDataSetChanged();
+            sendCartPresenter.doHttpGetRequest(CART_GOODS);
+        }else {
+            CartManager.getInstance().clearCheck();
+            list.clear();
+            recyclerView.getAdapter().notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -318,7 +325,7 @@ public class ShopCartFragment extends BaseNetConnectFragment {
                     if (list.isEmpty()) {
                         CartManager.getInstance().clearCheck();
                         list.addAll(((GetCartBean) data).getResult());
-                        CartManager.getInstance().setListGoods(list);
+                        CartManager.getInstance().setListGoods((ArrayList<GoodsBean>) list.clone());
                         if (CartManager.getInstance().getChecks().isEmpty()) {
                             for (int i = 0; i < list.size(); i++) {
                                 CartManager.getInstance().addCheck(false, list.get(i).getProductId());
@@ -327,7 +334,7 @@ public class ShopCartFragment extends BaseNetConnectFragment {
                     } else {
                         list.clear();
                         list.addAll(((GetCartBean) data).getResult());
-                        CartManager.getInstance().setListGoods(list);
+                        CartManager.getInstance().setListGoods((ArrayList<GoodsBean>) list.clone());
                         CartManager.getInstance().notifyChecks();
                     }
                     recyclerView.getAdapter().notifyDataSetChanged();

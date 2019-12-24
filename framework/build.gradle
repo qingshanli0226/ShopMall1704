@@ -32,7 +32,7 @@ android {
     }
 
     greendao {
-        schemaVersion 2 //当前数据库版本
+        schemaVersion 3 //当前数据库版本
         daoPackage 'com.example.framework' //包名 需要更改
         targetGenDir 'src/main/java' //存放greendao库生成文件的目录
         dataBinding {
@@ -64,6 +64,7 @@ android {
         implementation project(path: ':common')
         //PushSDK必须依赖基础组件库，所以需要加入对应依赖
         api "android.arch.lifecycle:extensions:1.1.1"
-
+        implementation "android.arch.lifecycle:extensions:1.1.1"
     }
 }
+

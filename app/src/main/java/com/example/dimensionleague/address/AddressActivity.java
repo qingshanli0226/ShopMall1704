@@ -9,7 +9,9 @@ import android.widget.Toast;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.example.buy.databeans.OkBean;
+import com.example.common.code.Constant;
 import com.example.common.utils.GetAssetsJson;
+import com.example.common.view.MyToolBar;
 import com.example.dimensionleague.R;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.manager.AccountManager;
@@ -33,15 +35,20 @@ public class AddressActivity extends BaseNetConnectActivity {
     private final List<List<List<AddressBean.CityBean.AreaBean>>> areaList=new ArrayList<>();
 
     private String address;
+
+    private MyToolBar addressMyToolBar;
     @Override
     public void init() {
         super.init();
-
+        addressMyToolBar = findViewById(R.id.addressMyToolBar);
         Button addressSure = findViewById(R.id.addressSure);
 
         addressSure.setOnClickListener(v -> pvOptions.show());
         myAddress = findViewById(R.id.myAddress);
-
+        addressMyToolBar.init(Constant.OTHER_STYLE);
+        addressMyToolBar.getOther_back().setImageResource(R.drawable.back3);
+        addressMyToolBar.getOther_title().setTextColor(Color.WHITE);
+        addressMyToolBar.getOther_title().setText(getResources().getString(R.string.address_manage));
         if (AccountManager.getInstance().getUser().getAddress()==null){
             myAddress.setText("我的地址:暂无地址");
         }else {
@@ -56,12 +63,19 @@ public class AddressActivity extends BaseNetConnectActivity {
         if (((OkBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
             Toast.makeText(this, "地址设置成功", Toast.LENGTH_SHORT).show();
             myAddress.setText("我的地址:" +address);
+            AccountManager.getInstance().getUser().setAddress(address);
         }
     }
 
     @Override
     public void initDate() {
         super.initDate();
+        addressMyToolBar.getOther_back().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishActivity();
+            }
+        });
         if (provinceList.isEmpty()) {
             AddressBean[] addressBean = new Gson().fromJson(GetAssetsJson.getJsonString(AddressActivity.this,
                     "city_code.json"),

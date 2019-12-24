@@ -17,10 +17,10 @@ import androidx.annotation.RequiresApi;
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseActivity;
+import com.example.framework.manager.DaoManager;
 import com.example.point.R;
 import com.example.point.StepIsSupport;
 import com.example.framework.bean.StepBean;
-import com.example.framework.manager.DaoManager;
 import com.example.point.stepmanager.StepPointManager;
 import com.example.point.view.StepView;
 import java.lang.ref.WeakReference;
@@ -125,14 +125,12 @@ public class StepActivity extends BaseActivity {
         if (new StepIsSupport().isSupportStepCountSensor(this)) {
             String CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis())+"";//今日日期
 
-            List<StepBean> beans =DaoManager.Companion.getInstance(this).queryStepBean(CURRENT_DATE);
-
+            List<StepBean> beans = DaoManager.Companion.getInstance(this).queryStepBean(CURRENT_DATE);
             if (beans.size()!=0){
                 stepView.setCurrentCount(stepInt, beans.get(0).getStep());
             }else {
                 stepView.setCurrentCount(stepInt,0);
             }
-
             tv_isSupport.setText("计步中...");
             StepPointManager.getInstance(this).addGetStepListener(new StepPointManager.GetStepListener() {
                 @Override

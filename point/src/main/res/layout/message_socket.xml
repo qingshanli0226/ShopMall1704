@@ -20,8 +20,8 @@
         android:layout_marginRight="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_30"
         android:paddingRight="@dimen/dp_10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></ImageView>
+        android:layout_width="50dp"
+        android:layout_height="@dimen/dp_50"></ImageView>
     <TextView
         android:id="@+id/socket_date"
         android:layout_centerHorizontal="true"

@@ -2,8 +2,10 @@ package com.example.framework.manager
 
 import android.content.Context
 import com.example.framework.DaoMaster
+import com.example.framework.MessageBeanDao
 import com.example.framework.PointBeanDao
 import com.example.framework.StepBeanDao
+import com.example.framework.bean.MessageBean
 import com.example.framework.bean.StepBean
 import com.example.framework.bean.PointBean
 
@@ -12,7 +14,10 @@ class DaoManager {
 
     private var pointBeanDao: PointBeanDao
 
+    private var messageBeanDao: MessageBeanDao
+
     private constructor(ctx: Context) {
+
         //创建一个db 数据库
         //通过DaoMaster内部类DaoMaster.DevOpenHelper创建一个SqliteOpenHelper类实例， 通过openhelper获取数据db
         var db = DaoMaster.DevOpenHelper(ctx, "1704.db", null).writableDatabase
@@ -20,6 +25,7 @@ class DaoManager {
         var daoSession = daoMaster.newSession()
         stepBeanDao = daoSession.stepBeanDao
         pointBeanDao = daoSession.pointBeanDao
+        messageBeanDao=daoSession.messageBeanDao
     }
 
     //通过伴生对象，实现单例
@@ -93,5 +99,26 @@ class DaoManager {
     fun loadPointBean():MutableList<PointBean> {
         var poiList:MutableList<PointBean> =pointBeanDao.queryBuilder().orderDesc(PointBeanDao.Properties.Id).list()
         return poiList
+    }
+
+
+
+    //添加一个消息类
+    fun addMessageBean(poi: MessageBean) {
+        messageBeanDao.insert(poi)
+    }
+    //加载所有消息记录
+    fun loadMessageBean():MutableList<MessageBean> {
+        var mesList:MutableList<MessageBean> =messageBeanDao.queryBuilder().orderDesc(MessageBeanDao.Properties.Id).list()
+        return mesList
+    }
+    //更新
+    fun updateMessageBean(stu: MessageBean) {
+        messageBeanDao.update(stu)
+    }
+    //查询日期
+    fun queryMessageBean(curr_date:String):MutableList<MessageBean> {
+        var stuList:MutableList<MessageBean> = messageBeanDao.queryRaw("where message_date=?", curr_date)
+        return stuList
     }
 }

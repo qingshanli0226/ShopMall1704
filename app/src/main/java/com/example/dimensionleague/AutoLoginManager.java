@@ -25,29 +25,24 @@ public class AutoLoginManager {
     private IAutoLoginReceivedListener loginReceivedListener;
     //TODO 单例模式
     private static AutoLoginManager autoLoginManager;
-
     private AutoLoginManager() {
 
     }
-
     public static AutoLoginManager getInstance() {
         if (autoLoginManager == null) {
             autoLoginManager = new AutoLoginManager();
         }
         return autoLoginManager;
     }
-
     //TODO 注册监听
     public void registerAutoLoginListener(IAutoLoginReceivedListener loginReceivedListener) {
         this.loginReceivedListener = loginReceivedListener;
     }
-
     //TODO 注销监听
     public void unRegisterAutoLoginListener() {
         if (loginReceivedListener != null)
             loginReceivedListener = null;
     }
-
     public void getLoginData() {
         //TODO 创建一个hashMap来存储token
         TreeMap<String, String> treeMap = SignUtil.getEmptyTreeMap();
@@ -84,7 +79,6 @@ public class AutoLoginManager {
                     public void onComplete() {}
                 });
     }
-
     public interface IAutoLoginReceivedListener {
         void onAutoLoginReceived(AutoLoginBean.ResultBean resultBean);
         void onAutoDataError(String s);
