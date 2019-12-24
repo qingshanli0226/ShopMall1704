@@ -93,21 +93,21 @@ public class PayActivity extends BaseNetConnectActivity{
         subtractIntegra = findViewById(R.id.subtractIntegra);
         userPoint = findViewById(R.id.userPoint);
 
-        payBut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //下订单
-                List<SendOrdersBean.BodyBean> bodyBeans = new ArrayList<>();
-                for (GoodsBean i : list) {
-                    bodyBeans.add(new SendOrdersBean.BodyBean(i.getProductName(), i.getProductId()));
-                }
-                //直接发起订单
-                SendOrdersBean sendOrdersBean = new SendOrdersBean("购买", getMoney(checkInegra.isChecked()), bodyBeans);
-                sendOrderPresenter = new PostOrderPresenter(sendOrdersBean);
-                sendOrderPresenter.attachView(PayActivity.this);
-                sendOrderPresenter.doHttpPostJSONRequest(CODE_ORDER);
-            }
-        });
+//        payBut.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //下订单
+//                List<SendOrdersBean.BodyBean> bodyBeans = new ArrayList<>();
+//                for (GoodsBean i : list) {
+//                    bodyBeans.add(new SendOrdersBean.BodyBean(i.getProductName(), i.getProductId()));
+//                }
+//                //直接发起订单
+//                SendOrdersBean sendOrdersBean = new SendOrdersBean("购买", getMoney(checkInegra.isChecked()), bodyBeans);
+//                sendOrderPresenter = new PostOrderPresenter(sendOrdersBean);
+//                sendOrderPresenter.attachView(PayActivity.this);
+//                sendOrderPresenter.doHttpPostJSONRequest(CODE_ORDER);
+//            }
+//        });
 
         //设置RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

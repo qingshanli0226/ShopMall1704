@@ -18,6 +18,7 @@ import com.example.buy.CartManager
 
 import kotlin.system.exitProcess
 import com.example.dimensionleague.login.activity.LoginActivity
+import com.example.net.AppNetConfig
 
 class MainActivity : BaseNetConnectActivity() {
 
@@ -41,9 +42,11 @@ class MainActivity : BaseNetConnectActivity() {
         if (!isAutoLogin) {
             Toast.makeText(this, resources.getString(R.string.timeout), Toast.LENGTH_SHORT).show()
             AccountManager.getInstance().logout()
-            AccountManager.getInstance().notifyLogout()
         } else {
             AccountManager.getInstance().notifyLogin()
+            if(AccountManager.getInstance().user.avatar!=null){
+                AccountManager.getInstance().notifyUserAvatarUpdate(AppNetConfig.BASE_URL+AccountManager.getInstance().user.avatar)
+            }
         }
 
         if (isNetType == getString(R.string.ascend)) {

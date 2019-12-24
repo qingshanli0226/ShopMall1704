@@ -151,7 +151,7 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
     override fun onLogout() {}
     //    更新头像
     override fun onAvatarUpdate(url: String?) {
-        Glide.with(this).load(AppNetConfig.BASE_URL+url).apply(RequestOptions().circleCrop()).into(heanImg)
+        Glide.with(this).load(url).apply(RequestOptions().circleCrop()).into(heanImg)
     }
 
     override fun onDestroy() {

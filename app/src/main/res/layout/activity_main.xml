@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity"
-    android:id="@+id/main_relative">
+    android:id="@+id/main_relative"
+    android:background="@mipmap/style_background">
 
     <com.next.easynavigation.view.EasyNavigationBar
         android:layout_width="match_parent"
