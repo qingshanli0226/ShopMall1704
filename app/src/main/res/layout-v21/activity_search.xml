@@ -13,7 +13,7 @@
         android:orientation="horizontal"
         android:paddingTop="30dp">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/search_iv_back"
             style="@style/DefaultImage"
             android:layout_gravity="center_vertical"
@@ -21,7 +21,7 @@
             android:src="@drawable/back_icon_white" 
             android:background="?android:selectableItemBackgroundBorderless"/>
 
-        <com.example.commen.view.SearchEditText
+        <com.example.commen.view.ClearEditText
             android:id="@+id/search_view"
             android:layout_width="0dp"
             android:layout_height="35dp"
@@ -29,7 +29,6 @@
             android:layout_marginRight="@dimen/dp_10"
             android:layout_weight="1"
             android:background="@drawable/words"
-            android:drawableLeft="@drawable/search_ion_white"
             android:drawablePadding="6dp"
             android:hint="@string/search_hint"
             android:singleLine="true"
@@ -40,7 +39,7 @@
             android:textSize="16dp" />
 
 
-        <ImageView
+        <ImageButton
             android:id="@+id/search_button"
             style="@style/DefaultImage"
             android:layout_gravity="center_vertical"
@@ -50,11 +49,44 @@
 
     </LinearLayout>
 
+
+    <TextView
+        android:id="@+id/search_history"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="@string/HistorySearch"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_below="@+id/search_layout"
+        />
+
+    <ImageButton
+        style="@style/LittleImage"
+        android:src="@drawable/clear_history"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_alignTop="@+id/search_history"
+        android:layout_alignParentRight="true"
+        android:id="@+id/search_clear"
+        android:background="?android:selectableItemBackgroundBorderless"
+        />
+
+    <com.example.commen.view.FlowLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/search_flow"
+        android:layout_below="@+id/search_history"
+        />
+
     <com.example.commen.view.KeyWordFramLayout
+        android:background="@color/colorWhite"
         android:id="@+id/keywordsflow"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/search_layout" />
+        android:layout_below="@+id/search_flow"
+        android:layout_marginTop="-1dp" />
+
 
     <ImageView
         android:id="@+id/back_arrow"

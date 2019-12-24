@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.commen.database.DataBaseHelper;
+import com.example.commen.database.MessageSQLiteHelper;
 import com.shaomall.framework.bean.MessageBean;
 
 import java.util.ArrayList;
@@ -14,13 +14,13 @@ import java.util.List;
 public class MessageManager {
     private Context context;
     private static MessageManager instache;
-    private DataBaseHelper mHelper;
+    private MessageSQLiteHelper mHelper;
     private SQLiteDatabase db;
     private MessageListener messageListener;
 
     public MessageManager(Context context) {
         this.context = context;
-        mHelper = new DataBaseHelper(context, "message.db", null, 1);
+        mHelper = new MessageSQLiteHelper(context, "message.db", null, 1);
         db = mHelper.getWritableDatabase();
     }
 

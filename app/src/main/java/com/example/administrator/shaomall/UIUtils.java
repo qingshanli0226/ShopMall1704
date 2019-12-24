@@ -44,7 +44,7 @@ public class UIUtils {
         float density = getContext().getResources().getDisplayMetrics().density;
         return (int) (dp * density + 0.5);//实现四舍五入
     }
-
+    //将px转化为dp
     public static int px2dp(int px){
         //获取手机密度
         float density = getContext().getResources().getDisplayMetrics().density;

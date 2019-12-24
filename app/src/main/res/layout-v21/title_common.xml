@@ -36,14 +36,15 @@
 
 
         <RelativeLayout
-            android:id="@+id/title_search"
+            android:id="@+id/title_search_rv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_weight="1">
 
-            <TextView
+            <EditText
+                android:id="@+id/title_search_tv"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_gravity="center_vertical"
@@ -67,7 +68,7 @@
 
         <ImageView
             android:id="@+id/title_message"
-            style="@style/LittleImage"
+            style="@style/DefaultImage"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="10dp"
             android:src="@drawable/message_icon" 

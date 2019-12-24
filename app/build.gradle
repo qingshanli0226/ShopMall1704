@@ -66,4 +66,6 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.android.support:multidex:1.0.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    //标签视图
+    implementation 'co.lujun:androidtagview:1.0.3'
 }

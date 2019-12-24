@@ -14,5 +14,6 @@ public class FindFragment extends BaseMVPFragment {
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
 
+
     }
 }

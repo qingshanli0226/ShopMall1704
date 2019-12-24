@@ -24,4 +24,10 @@
         <item name="android:layout_width">25dp</item>
         <item name="android:layout_height">25dp</item>
     </style>
+
+
+    <style name="BigImage">
+        <item name="android:layout_width">@dimen/dp_40</item>
+        <item name="android:layout_height">@dimen/dp_40</item>
+    </style>
 </resources>

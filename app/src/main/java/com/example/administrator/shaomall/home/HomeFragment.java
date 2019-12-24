@@ -11,8 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.administrator.shaomall.R;
-import com.example.administrator.shaomall.activity.MessageActivity;
-import com.example.administrator.shaomall.activity.SearchActivity;
+import com.example.administrator.shaomall.message.MessageActivity;
+import com.example.administrator.shaomall.search.SearchActivity;
 import com.example.administrator.shaomall.app.ShaoHuaApplication;
 import com.example.commen.Constants;
 import com.example.commen.view.AnimationNestedScrollView;
@@ -26,7 +26,6 @@ import com.shaomall.framework.bean.HomeBean;
 import com.shaomall.framework.bean.LoginBean;
 import com.shaomall.framework.bean.MessageBean;
 import com.shaomall.framework.manager.MessageManager;
-import com.shaomall.framework.manager.ShoppingManager;
 
 import java.util.List;
 

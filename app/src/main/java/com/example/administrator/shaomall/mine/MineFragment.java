@@ -1,9 +1,7 @@
 package com.example.administrator.shaomall.mine;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,7 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.administrator.shaomall.R;
-import com.example.administrator.shaomall.activity.MessageActivity;
+import com.example.administrator.shaomall.message.MessageActivity;
 import com.example.administrator.shaomall.activity.SettingActivity;
 import com.example.administrator.shaomall.function.FunctionActivity;
 import com.example.administrator.shaomall.login.LoginActivity;

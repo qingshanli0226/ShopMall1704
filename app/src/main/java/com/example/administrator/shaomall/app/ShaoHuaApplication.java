@@ -10,6 +10,7 @@ import com.example.commen.Constants;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.shaomall.framework.base.BaseApplication;
 import com.shaomall.framework.manager.NetConnectManager;
+import com.shaomall.framework.manager.SearchManager;
 import com.shaomall.framework.manager.ShoppingManager;
 import com.shaomall.framework.manager.UserInfoManager;
 import com.squareup.leakcanary.LeakCanary;
@@ -39,7 +40,7 @@ public class ShaoHuaApplication extends BaseApplication {
         NetConnectManager.getInstance().init(this);
         UserInfoManager.getInstance().init(this, aCache); //用户数据管理类
         ShoppingManager.getInstance().init(this); //商品数据管理类
-
+        SearchManager.getInstance().init(this);
         // 初始化 JPush
         JPushInterface.init(this);
         //发布时关闭日志

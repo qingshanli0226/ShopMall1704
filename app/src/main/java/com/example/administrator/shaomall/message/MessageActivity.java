@@ -1,4 +1,4 @@
-package com.example.administrator.shaomall.activity;
+package com.example.administrator.shaomall.message;
 
 import android.util.Log;
 import android.view.Gravity;
@@ -49,7 +49,7 @@ public class MessageActivity extends BaseActivity implements MessageManager.Mess
         MessageManager.getInstance(ShaoHuaApplication.context).registerMessageListener(this);
         mTitleScanning = findViewById(R.id.title_scanning);
         mTitleBlack = findViewById(R.id.title_black);
-        mTitleSearch = findViewById(R.id.title_search);
+        mTitleSearch = findViewById(R.id.title_search_rv);
         mNotReadMessageLv = findViewById(R.id.message_lv);
         mTitleCamera = findViewById(R.id.title_camera);
         mTitleMessage = findViewById(R.id.title_message);
