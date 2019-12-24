@@ -35,7 +35,6 @@ public class StepJobService extends JobService {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.e("start","onCreate");
         JobScheduler jobScheduler =(JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
         JobInfo.Builder jobInfo = new JobInfo.Builder(1, new ComponentName(getPackageName(), StepJobService.class.getName()));
         JobInfo jobBuild = jobInfo.setPeriodic(3000)
@@ -47,7 +46,6 @@ public class StepJobService extends JobService {
     @Override
     public boolean onStartJob(JobParameters jobParameters) {
 
-        Log.e("start","start");
         Message message = new Message();
         message.what=1;
         message.obj=jobParameters;

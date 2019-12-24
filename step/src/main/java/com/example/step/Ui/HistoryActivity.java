@@ -70,7 +70,7 @@ public class HistoryActivity extends BaseActivity {
         tableList.add("今天");
         tableList.add("一周内");
         tableList.add("一月内");
-        tableList.add("所有");
+
 
 
         fragmentList.add(new History_MinutesFragment());

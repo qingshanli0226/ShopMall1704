@@ -141,6 +141,7 @@ public class IntegralActivity extends BaseActivity implements StepManager.StepMa
         if(pointBresenter!=null){
          pointBresenter.detachView();
         }
+        finish();
     }
 
     @Override

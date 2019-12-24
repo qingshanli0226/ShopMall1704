@@ -13,6 +13,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
+
     }
 
     buildTypes {
@@ -31,5 +32,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.alibaba:fastjson:1.1.71.android'
-    implementation files('libs/lite-orm-1.9.2.jar')
+
+    compile files('libs/lite-orm-1.9.2.jar')
 }

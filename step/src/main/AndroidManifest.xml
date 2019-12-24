@@ -3,7 +3,9 @@
     >
 
     <application >
-        <activity android:name=".Ui.HistoryActivity">
+        <activity android:name=".Ui.HistoryActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            >
 
         </activity>
         <activity android:name=".Ui.IntegralActivity"

@@ -117,6 +117,16 @@ public class StepManager {
 
 
 
+    public boolean isDifferentStep(){
+        List<HourBean> hour = StepManager.getInstance().findHour();
+        if(hour.get(hour.size()-1).getCurrentStep()==hour.get(hour.size()-2).getCurrentStep()){
+            return true;
+        }else{
+            return false;
+        }
+
+
+    }
     public List<MessageStepBean> getMessDate(){
         Cursor cursor = hourDb.rawQuery("select time,date,currentStep,integral from mess", null);
         List<MessageStepBean> messageBeans=new ArrayList<>();

@@ -10,12 +10,14 @@ import androidx.annotation.NonNull;
 import com.example.framework.base.BaseFragment;
 import com.example.framework.bean.HourBean;
 import com.example.framework.manager.StepManager;
+import com.example.step.Bean.DateLine;
 import com.example.step.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import lecho.lib.hellocharts.gesture.ContainerScrollType;
 import lecho.lib.hellocharts.gesture.ZoomType;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
@@ -27,12 +29,13 @@ import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.util.ChartUtils;
 import lecho.lib.hellocharts.view.LineChartView;
 
-public class History_MinutesFragment extends BaseFragment {
+public class History_MinutesFragment extends BaseFragment  {
     LineChartView lineChartView;
 
 
     private List<PointValue> mPointValues = new ArrayList<PointValue>();
     private List<AxisValue> mAxisXValues = new ArrayList<AxisValue>();
+    ArrayList<DateLine> list = new ArrayList<>();;
     @Override
     protected void initData() {
 
@@ -60,10 +63,17 @@ public class History_MinutesFragment extends BaseFragment {
                     boolean currentTimeRange = StepManager.getInstance().isCurrentTimeRange(beforeHour, beforeMinute, hour, minute);
                     if (currentTimeRange == true) {
 
-                        Log.e("##Time",real.get(i).toString());
+
+//                        list.add(new DateLine(real.get(i).getTime(),real.get(i).getCurrentStep()));
+
+//                        Log.e("##Time",real.get(i).toString());
                         mAxisXValues.add(new AxisValue(i).setLabel(real.get(i).getTime()));
                         mPointValues.add(new PointValue(i,real.get(i).getCurrentStep()));
                         initLineChart();//初始化
+
+
+
+//                        setKlin(list);
 
                     }
                 }
@@ -73,6 +83,50 @@ public class History_MinutesFragment extends BaseFragment {
         }
 
 
+
+
+    }
+
+    private void setKlin(ArrayList<DateLine> list) {
+
+        for (int i=0;i<list.size();i++){
+            String dateTime = list.get(i).getDateTime();
+            mAxisXValues.add(new AxisValue(i).setLabel(dateTime));
+        }
+        for (int j=0;j<list.size();j++){
+            int currents = list.get(j).getCurrents();
+            mPointValues.add(new PointValue(j,currents));
+        }
+        Line chartLine = new Line();
+        chartLine.setValues(mPointValues);
+        chartLine.setColor(ChartUtils.pickColor());
+        chartLine.setShape(ValueShape.CIRCLE);
+        chartLine.setPointRadius(2);
+        chartLine.setCubic(true);
+        chartLine.setFilled(false);
+        chartLine.setHasLabels(true);
+        chartLine.setStrokeWidth(2);
+        List<Line> lines=new ArrayList<>();
+        lines.add(chartLine);
+        LineChartData lineChartData = new LineChartData();
+        lineChartData.setLines(lines);
+
+        Axis axisX = new Axis();
+//        Axis axisY = new Axis();
+
+        axisX.setValues(mAxisXValues).setHasLines(true).setTextColor(Color.BLACK).setLineColor(Color.WHITE).setTextSize(12);
+//        axisY.setHasLines(true).setTe
+        lineChartData.setAxisXBottom(axisX);
+
+        lineChartData.setValueLabelBackgroundColor(Color.TRANSPARENT);
+        lineChartData.setValueLabelBackgroundEnabled(false);
+
+        lineChartView.setLineChartData(lineChartData);
+
+        lineChartView.setInteractive(true);
+        lineChartView.setZoomEnabled(true);
+        lineChartView.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
+        Viewport viewport = new Viewport(lineChartView.getMaximumViewport());
 
 
     }
