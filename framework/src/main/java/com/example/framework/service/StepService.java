@@ -135,7 +135,7 @@ public class StepService extends Service implements SensorEventListener {
     private void isNewDay() {
 
 
-        if("09:17:00".equals(new SimpleDateFormat("HH:mm:ss").format(new Date()))){
+        if("22:00:00".equals(new SimpleDateFormat("HH:mm:ss").format(new Date()))){
             Log.e("##Nine","999");
             //发送消息
             List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
