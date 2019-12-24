@@ -62,13 +62,7 @@
             android:screenOrientation="portrait"
             android:launchMode="singleTask"/>
         <activity android:name=".activity.CollectionActivity" />
-        <activity
-            android:name="com.example.step.Ui.HistoryActivity"
-            tools:ignore="InnerclassSeparator" />
-        <activity
-            android:name="com.example.step.Ui.IntegralActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="InnerclassSeparator" />
+
         <activity android:name=".activity.WelcomeActivity"
             android:theme="@style/AppThemeWelcome"
             android:screenOrientation="portrait">
@@ -87,7 +81,10 @@
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+        >
+
+        </activity>
 
         <receiver android:name=".jpush.PushMessageReceiver">
             <intent-filter>

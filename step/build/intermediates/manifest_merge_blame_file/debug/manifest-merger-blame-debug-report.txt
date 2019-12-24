@@ -11,37 +11,34 @@
 9-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml
 10
 11    <application>
-11-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:5:5-29:19
-12        <activity
-12-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:6:9-10:20
-13            android:name="com.example.step.Ui.HistoryActivity"
-13-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:6:19-53
-14            android:configChanges="keyboardHidden|screenSize|orientation" >
-14-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:7:13-74
-15        </activity>
-16        <activity
-16-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:11:9-15:20
-17            android:name="com.example.step.Ui.IntegralActivity"
-17-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:11:19-54
-18            android:screenOrientation="portrait" >
-18-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:12:13-49
-19        </activity>
-20
-21        <service android:name="com.example.framework.service.StepService" >
-21-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:17:9-19:19
-21-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:17:18-74
-22        </service>
-23        <service
-23-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:21:9-26:19
-24            android:name="com.example.framework.service.StepJobService"
-24-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:21:18-77
-25            android:enabled="true"
-25-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:23:13-35
-26            android:exported="true"
-26-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:22:13-36
-27            android:permission="android.permission.BIND_JOB_SERVICE" >
-27-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:24:13-69
-28        </service>
-29    </application>
-30
-31</manifest>
+11-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:5:5-28:19
+12        <activity android:name="com.example.step.Ui.HistoryActivity" >
+12-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:6:9-9:20
+12-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:6:19-53
+13        </activity>
+14        <activity
+14-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:10:9-14:20
+15            android:name="com.example.step.Ui.IntegralActivity"
+15-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:10:19-54
+16            android:screenOrientation="portrait" >
+16-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:11:13-49
+17        </activity>
+18
+19        <service android:name="com.example.framework.service.StepService" >
+19-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:16:9-18:19
+19-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:16:18-74
+20        </service>
+21        <service
+21-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:20:9-25:19
+22            android:name="com.example.framework.service.StepJobService"
+22-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:20:18-77
+23            android:enabled="true"
+23-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:22:13-35
+24            android:exported="true"
+24-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:21:13-36
+25            android:permission="android.permission.BIND_JOB_SERVICE" >
+25-->D:\GitHub\Shop\ShopMall1704\step\src\main\AndroidManifest.xml:23:13-69
+26        </service>
+27    </application>
+28
+29</manifest>

@@ -171,8 +171,11 @@ public class StepManager {
             String time = cursor.getString(cursor.getColumnIndex("time"));
             String date = cursor.getString(cursor.getColumnIndex("date"));
             int currentStep = cursor.getInt(cursor.getColumnIndex("currentStep"));
+
             HourBean hourBean = new HourBean(time, date, currentStep);
             mlist.add(hourBean);
+
+
         }
         return mlist;
 

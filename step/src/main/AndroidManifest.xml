@@ -4,7 +4,6 @@
 
     <application >
         <activity android:name=".Ui.HistoryActivity"
-            android:configChanges="keyboardHidden|screenSize|orientation"
             >
 
         </activity>

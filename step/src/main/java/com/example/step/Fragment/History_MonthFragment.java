@@ -38,10 +38,7 @@ public class History_MonthFragment extends BaseFragment {
     List<PointValue> mPointValues=new ArrayList<>();
     List<AxisValue>mAxisValues=new ArrayList<>();
 
-    List<String> ss=new ArrayList<>();
     float[] dataY={0,1000,3000,5000,6000,7000,10000};
-    private float mFirstX;
-    private float mLastX;
 
 
     @Override
@@ -56,20 +53,22 @@ public class History_MonthFragment extends BaseFragment {
             String date = shopStepTimeRealBeans.get(m).getDate();
             String[] split = date.split("-");
             //获取每月的第一天和最后一天
-            int firstDayMonth = StepManager.getInstance().getFirstDayMonth(2);
-            int lastDayMonth = StepManager.getInstance().getLastDayMonth(2);
+            int firstDayMonth = StepManager.getInstance().getFirstDayMonth(NowMonth);
+            int lastDayMonth = StepManager.getInstance().getLastDayMonth(NowMonth);
             //是本月
             if(NowMonth==Integer.parseInt(split[1])){
                 //在本月的日期中
                 if(Integer.parseInt(split[2])>=firstDayMonth && Integer.parseInt(split[2])<=lastDayMonth){
 
 
-                    ss.add(shopStepTimeRealBeans.get(m).getDate());
+//                    ss.add(shopStepTimeRealBeans.get(m).getDate());
                     mAxisValues.add(new AxisValue(m).setLabel(shopStepTimeRealBeans.get(m).getDate()));
                     String current_step = shopStepTimeRealBeans.get(m).getCurrent_step();
                     int i = Integer.parseInt(current_step);
                     mPointValues.add(new PointValue(m,i));
                     initLineChat();
+
+                    Log.e("##",i+"");
                 }
             }
 
@@ -77,9 +76,6 @@ public class History_MonthFragment extends BaseFragment {
     }
 
     private void initLineChat() {
-
-
-
 
         Line line = new Line(mPointValues).setColor(ChartUtils.pickColor());
         List<Line> lines=new ArrayList<>();
@@ -91,15 +87,16 @@ public class History_MonthFragment extends BaseFragment {
         line.setHasPoints(true);
         lines.add(line);
         LineChartData lineChartData = new LineChartData();
+
         lineChartData.setLines(lines);
 
         Axis axisX = new Axis();
+        axisX.setHasTiltedLabels(false);
         axisX.setTextColor(Color.BLACK);
-        axisX.setHasTiltedLabels(true);
 
         axisX.setName("一月以内步数,(须有两天以上记录)");
         axisX.setTextSize(10);
-        axisX.setMaxLabelChars(8);
+        axisX.setMaxLabelChars(0);
         axisX.setValues(mAxisValues);
         axisX.setHasLines(true);
         axisX.setHasSeparationLine(false);
@@ -123,18 +120,23 @@ public class History_MonthFragment extends BaseFragment {
 
 
         monthLineChat.setInteractive(true);
-        monthLineChat.setZoomType(ZoomType.HORIZONTAL);
-        monthLineChat.setMaxZoom((float)2);
-        monthLineChat.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
+        monthLineChat.setZoomType(ZoomType.HORIZONTAL_AND_VERTICAL);
+        monthLineChat.setSaveEnabled(false);
         monthLineChat.setLineChartData(lineChartData);
-
-
+        monthLineChat.setValueTouchEnabled(false);
         monthLineChat.setVisibility(View.VISIBLE);
+        monthLineChat.startDataAnimation();
+
+        Log.e("##P",lineChartData.getBaseValue()+"--"+lineChartData.toString()+"--"+lineChartData.getAxisXBottom().getValues());
+//        monthLineChat.setMaxZoom((float)2);
+//        monthLineChat.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
+
+
 
         final Viewport v = new Viewport(monthLineChat.getMaximumViewport());
         v.left=0;
         v.right=7;
-        v.bottom=0;
+
         monthLineChat.setCurrentViewport(v);
 
 
@@ -162,10 +164,5 @@ public class History_MonthFragment extends BaseFragment {
         mPointValues.clear();
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        mAxisValues.clear();
-        mPointValues.clear();
-    }
+
 }

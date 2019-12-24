@@ -4,6 +4,8 @@ package com.example.shopmall;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.util.Log;
 
 import androidx.multidex.MultiDex;
 
@@ -34,9 +36,7 @@ public class MyApplication extends Application {
         context = this;
 
 
-        startService(new Intent(this, StepJobService.class));
-        startService(new Intent(this, StepLocalService.class));
-        startService(new Intent(this, StepRemoteService.class));
+
 
         ConnectManager.getInstance().init(this);
         //初始化异常
@@ -50,7 +50,16 @@ public class MyApplication extends Application {
 
             StepManager.getInstance().init(getApplicationContext());
 
+            startService(new Intent(this, StepLocalService.class));
+            startService(new Intent(this, StepRemoteService.class));
+
+            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+                startService(new Intent(this, StepJobService.class));
+            }else{
+                startService(new Intent(this, StepJobService.class));
+            }
         }
+
 
 
 

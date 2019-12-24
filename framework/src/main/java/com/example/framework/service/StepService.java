@@ -28,6 +28,7 @@ import androidx.core.app.NotificationCompat;
 
 
 import com.example.common.OrmUtils;
+import com.example.framework.bean.HourBean;
 import com.example.framework.bean.ShopStepBean;
 import com.example.framework.R;
 import com.example.framework.manager.MessageManager;
@@ -114,20 +115,18 @@ public class StepService extends Service implements SensorEventListener {
                         isNewDay();
                         break;
                     case Intent.ACTION_TIME_TICK:
+                        StepManager.getInstance().save(CURRENT_DATE,currentStep,previousStep);
                         if(StepManager.getInstance().findHour().size()<=1){
                             StepManager.getInstance().insertHour(CURRENT_TIME,CURRENT_DATE,currentStep);
                         } else{
-                            if(StepManager.getInstance().isDifferentStep()==true){
-
-                            }else{
+                                    StepManager.getInstance().insertHour(CURRENT_TIME,CURRENT_DATE,currentStep);
+//                            if(StepManager.getInstance().isDifferentStep()==false){
+//                            }else{
+//                                return;
                                 StepManager.getInstance().insertHour(CURRENT_TIME,CURRENT_DATE,currentStep);
-                            }
+//                            }
                         }
-
-                        StepManager.getInstance().save(CURRENT_DATE,currentStep,previousStep);
                         isNewDay();
-
-
                         break;
 
                 }

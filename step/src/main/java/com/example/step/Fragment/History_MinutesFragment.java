@@ -64,16 +64,12 @@ public class History_MinutesFragment extends BaseFragment  {
                     if (currentTimeRange == true) {
 
 
-//                        list.add(new DateLine(real.get(i).getTime(),real.get(i).getCurrentStep()));
-
-//                        Log.e("##Time",real.get(i).toString());
                         mAxisXValues.add(new AxisValue(i).setLabel(real.get(i).getTime()));
                         mPointValues.add(new PointValue(i,real.get(i).getCurrentStep()));
                         initLineChart();//初始化
 
 
 
-//                        setKlin(list);
 
                     }
                 }
@@ -87,49 +83,6 @@ public class History_MinutesFragment extends BaseFragment  {
 
     }
 
-    private void setKlin(ArrayList<DateLine> list) {
-
-        for (int i=0;i<list.size();i++){
-            String dateTime = list.get(i).getDateTime();
-            mAxisXValues.add(new AxisValue(i).setLabel(dateTime));
-        }
-        for (int j=0;j<list.size();j++){
-            int currents = list.get(j).getCurrents();
-            mPointValues.add(new PointValue(j,currents));
-        }
-        Line chartLine = new Line();
-        chartLine.setValues(mPointValues);
-        chartLine.setColor(ChartUtils.pickColor());
-        chartLine.setShape(ValueShape.CIRCLE);
-        chartLine.setPointRadius(2);
-        chartLine.setCubic(true);
-        chartLine.setFilled(false);
-        chartLine.setHasLabels(true);
-        chartLine.setStrokeWidth(2);
-        List<Line> lines=new ArrayList<>();
-        lines.add(chartLine);
-        LineChartData lineChartData = new LineChartData();
-        lineChartData.setLines(lines);
-
-        Axis axisX = new Axis();
-//        Axis axisY = new Axis();
-
-        axisX.setValues(mAxisXValues).setHasLines(true).setTextColor(Color.BLACK).setLineColor(Color.WHITE).setTextSize(12);
-//        axisY.setHasLines(true).setTe
-        lineChartData.setAxisXBottom(axisX);
-
-        lineChartData.setValueLabelBackgroundColor(Color.TRANSPARENT);
-        lineChartData.setValueLabelBackgroundEnabled(false);
-
-        lineChartView.setLineChartData(lineChartData);
-
-        lineChartView.setInteractive(true);
-        lineChartView.setZoomEnabled(true);
-        lineChartView.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
-        Viewport viewport = new Viewport(lineChartView.getMaximumViewport());
-
-
-    }
 
     private void initLineChart() {
         Line line = new Line(mPointValues).setColor(ChartUtils.pickColor());
@@ -146,13 +99,13 @@ public class History_MinutesFragment extends BaseFragment  {
         lineChartData.setLines(lines);
 
         Axis axisX = new Axis();
-        Axis axisY = new Axis();
-        axisX.setHasTiltedLabels(true);
+
+        axisX.setHasTiltedLabels(false);
         axisX.setTextColor(Color.GRAY);
 
         axisX.setName("三小时以内步数");
-        axisX.setTextSize(11);
-        axisX.setMaxLabelChars(7);
+        axisX.setTextSize(8);
+        axisX.setMaxLabelChars(0);
         axisX.setValues(mAxisXValues);
         axisX.setHasLines(true);
         lineChartData.setAxisXBottom(axisX);
