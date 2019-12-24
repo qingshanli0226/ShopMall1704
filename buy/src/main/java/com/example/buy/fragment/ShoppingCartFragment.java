@@ -130,7 +130,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             settingChanged();
             btnCheckOut.setBackgroundColor(Color.GRAY);
             btnCheckOut.setButtonEnabled(false);
-            tbShoppingCart.setRightText("", 14, Color.GRAY);
+            tbShoppingCart.setRightText("编辑", 14, Color.GRAY);
             checkboxAll.setVisibility(View.INVISIBLE);
             ivShoppingCart.setVisibility(View.INVISIBLE);
             tvShopcartTotal.setVisibility(View.INVISIBLE);
@@ -735,5 +735,6 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         if(presenter!=null){
             presenter.detachView();
         }
+        handler.removeCallbacksAndMessages(null);
     }
 }
