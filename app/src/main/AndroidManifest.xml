@@ -180,12 +180,17 @@
             </intent-filter>
         </service>
 
-        <meta-data
-            android:name="JPUSH_APPKEY"
-            android:value="00069070c0ece64218196376" />
-        <meta-data
-            android:name="JPUSH_CHANNEL"
-            android:value="${JPUSH_CHANNEL}" />
+        <meta-data android:name="JPUSH_APPKEY" android:value="00069070c0ece64218196376"/>
+        <meta-data android:name="JPUSH_CHANNEL" android:value="${JPUSH_CHANNEL}"/>
+
+
+
+
+
+
+
+
+
     </application>
 
 </manifest>

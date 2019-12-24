@@ -39,6 +39,7 @@ public class History_MonthFragment extends BaseFragment {
     List<AxisValue>mAxisValues=new ArrayList<>();
 
     List<String> ss=new ArrayList<>();
+    float[] dataY={0,1000,3000,5000,6000,7000,10000};
     private float mFirstX;
     private float mLastX;
 
@@ -108,7 +109,17 @@ public class History_MonthFragment extends BaseFragment {
 
 
         Axis axisY = new Axis();
-        axisY.setHasTiltedLabels(false);
+        axisY.setName("");
+        axisY.setTextSize(8);
+        axisY.setHasLines(true);
+        axisY.setMaxLabelChars(6);
+        ArrayList<AxisValue> values = new ArrayList<>();
+        for (int i=0;i<dataY.length;i++){
+            AxisValue value=new AxisValue(dataY[i]);
+            values.add(value);
+        }
+        axisY.setValues(values);
+        lineChartData.setAxisYLeft(axisY);
 
 
         monthLineChat.setInteractive(true);

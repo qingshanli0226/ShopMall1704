@@ -30,6 +30,7 @@ import androidx.core.app.NotificationCompat;
 import com.example.common.OrmUtils;
 import com.example.framework.bean.ShopStepBean;
 import com.example.framework.R;
+import com.example.framework.manager.MessageManager;
 import com.example.framework.manager.StepManager;
 
 import java.text.SimpleDateFormat;
@@ -142,6 +143,12 @@ public class StepService extends Service implements SensorEventListener {
             int cur = Integer.parseInt(current_step);
             int integral = queryAll.get(queryAll.size() - 1).getIntegral();
             StepManager.getInstance().saveMessSql(time,date,cur,integral);
+        }
+        if("22:30:00".equals(new SimpleDateFormat("HH:mm:ss").format(new Date()))){
+            //发送消息
+            List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
+            String current_step = queryAll.get(queryAll.size() - 1).getCurrent_step();
+            MessageManager.getInstance().setMessageManager("今日步数",current_step);
         }
     }
 
