@@ -50,9 +50,9 @@ public class MyApplication extends Application {
 
             StepManager.getInstance().init(getApplicationContext());
 
+            //保活
             startService(new Intent(this, StepLocalService.class));
             startService(new Intent(this, StepRemoteService.class));
-
             if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
                 startService(new Intent(this, StepJobService.class));
             }else{
