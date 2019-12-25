@@ -101,9 +101,7 @@ public class CacheManager {
     }
 
     public void unregisterListener(IHomeReceivedListener iHomeReceivedListener) {
-        if (iHomeReceivedListeners.contains(iHomeReceivedListener)) {
-            iHomeReceivedListeners.remove(iHomeReceivedListener);
-        }
+        iHomeReceivedListeners.remove(iHomeReceivedListener);
     }
 
     public void registerListener(IHomeReceivedListener iHomeReceivedListener) {

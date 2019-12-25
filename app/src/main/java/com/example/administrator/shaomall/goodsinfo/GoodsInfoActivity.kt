@@ -16,12 +16,14 @@ import com.example.administrator.shaomall.R
 import com.example.administrator.shaomall.activity.MainActivity
 import com.example.administrator.shaomall.goodsinfo.bean.GoodsInfoBean
 import com.example.administrator.shaomall.login.LoginActivity
+import com.example.commen.ToolbarCustom
 import com.example.commen.WebViewConfig
 import com.example.commen.util.ShopMailError
 import com.example.net.AppNetConfig
 import com.shaomall.framework.base.BaseMVPActivity
 import com.shaomall.framework.base.presenter.IBasePresenter
 import com.shaomall.framework.bean.ShoppingCartBean
+import com.shaomall.framework.manager.ActivityInstanceManager
 import com.shaomall.framework.manager.ShoppingManager
 import com.shaomall.framework.manager.UserInfoManager
 import kotlinx.android.synthetic.main.activity_commodity.*
@@ -96,7 +98,6 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
         //点击了联系客服
         mTvGoodInfoCallcenter.setOnClickListener(this)
 
-
         //设置小红点
         qBadgeView = QBadgeView(this)
         qBadgeView.bindTarget(mTvFGoodInfoCart) //给购物车加红点
@@ -134,6 +135,8 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
             when (v.id) {
                 R.id.mTvFGoodInfoCart -> { //点击进入购物车
                     toClass(MainActivity::class.java, 3)
+
+                    ActivityInstanceManager.removeActivity(this)
                 }
 
                 R.id.mBtnGoodInfoAddcart -> { //点击加入购物车
@@ -215,9 +218,7 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
 
         val p2 = PointF()
         p2.x = endLoc[0].toFloat() + mTvFGoodInfoCart.width.toFloat() / 2
-        p2.y = endLoc[1].toFloat() - mTvFGoodInfoCart.height.toFloat() / 2
-
-        println("按钮: ${mBtnGoodInfoAddcart.width}, ${mBtnGoodInfoAddcart.height}  || 购物车:  ${mTvFGoodInfoCart.width}, ${mTvFGoodInfoCart.height}")
+        p2.y = endLoc[1].toFloat() - mTvFGoodInfoCart.height.toFloat() / 2 + ToolbarCustom.getStatusBarHeight(this)
 
         val goInAnim = ObjectAnimator()
         goInAnim.setFloatValues(0f, 1f)
@@ -240,6 +241,9 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
             }
 
             override fun onAnimationEnd(animation: Animator?) {
+                //按钮恢复
+                mBtnGoodInfoAddcart.isEnabled = true
+
                 //将商品添加进入购物车 进行网络请求
                 iBasePresenter!!.doJsonPostHttpRequest()
 
@@ -260,9 +264,6 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
      * 网络请求成功回调
      */
     override fun onRequestHttpDataSuccess(message: String?, data: String?) {
-        //按钮恢复
-        mBtnGoodInfoAddcart.isEnabled = true
-
 
         var shoppingCartBean = ShoppingCartBean()
         shoppingCartBean.productId = productId
@@ -295,6 +296,5 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
             iBasePresenter = null
         }
         ShoppingManager.getInstance().unRegisterShoppingNumChangeListener(this)
-
     }
 }

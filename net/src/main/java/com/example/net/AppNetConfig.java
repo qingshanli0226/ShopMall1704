@@ -124,18 +124,18 @@ public class AppNetConfig {
     //////////////////////////////////////////////////////////////////
     //请求码判断
     public static final int REQUEST_CODE_LOGOUT = 0x000; //退出登录
-    public static final int REQUEST_CODE_UPLOAD_POINT = 0x001; //上传积分请求码
+    public static final int REQUEST_CODE_UPLOAD_POINT = 0x1001; //上传积分请求码
 
     //检查服务端多个产品是否库存充足
-    public static final int REQUEST_CODE_CHECK_INVENTORY = 0x002;
+    public static final int REQUEST_CODE_CHECK_INVENTORY = 0x1002;
 
     //请求代码更新购物车数量
-    public static final int REQUEST_CODE_TOUPDATE_CARTQUANTITY = 0x003;
+    public static final int REQUEST_CODE_TOUPDATE_CARTQUANTITY = 0x1003;
 
     //请求支付订单号
-    public static final int REQUEST_CODE_GET_ORDER_INFO = 0x004;
+    public static final int REQUEST_CODE_GET_ORDER_INFO = 0x1004;
     //请求码支付是否成功
-    public static final int REQUEST_CODE_CONFIRM_SERVER_PAY_RESULT = 0x005;
+    public static final int REQUEST_CODE_CONFIRM_SERVER_PAY_RESULT = 0x1005;
 
 
 }

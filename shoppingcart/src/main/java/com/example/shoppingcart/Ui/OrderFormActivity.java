@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alipay.sdk.app.EnvUtils;
@@ -27,6 +26,7 @@ import com.example.net.AppNetConfig;
 import com.example.shoppingcart.Adapter.RvShoppingPayAdapter;
 import com.example.shoppingcart.OutsideClass.GetJsonDataUtil;
 import com.example.shoppingcart.R;
+import com.example.shoppingcart.bean.CheckInventoryBean;
 import com.example.shoppingcart.bean.JsonBean;
 import com.example.shoppingcart.bean.OrderInfoBean;
 import com.example.shoppingcart.pay.PayMessage;
@@ -44,6 +44,7 @@ import com.shaomall.framework.manager.UserInfoManager;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 
@@ -130,14 +131,28 @@ public class OrderFormActivity extends BaseMVPActivity<Object> implements View.O
         //初始化JSON省份数据
         initJsonData();
 
+        EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX); //使用支付宝沙箱
+
         //获取数据
         Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        data = extras.getParcelableArrayList("data");
+        Bundle bundle = intent.getExtras();
+
+        String tradeNo = bundle.getString("tradeNo");
+        if (tradeNo != null) { //直接调起支付功能,否则生成订单
+            String orderInfo = bundle.getString("orderInfo");
+            OrderInfoBean orderInfoBean = new OrderInfoBean();
+            orderInfoBean.setOutTradeNo(tradeNo);
+            orderInfoBean.setOrderInfo(orderInfo);
+            payByZhiFuBao(orderInfoBean); //跳转支付界面
+            return;
+        }
+
+
         //总价
-        totalPrice = extras.getFloat("sum");
+        totalPrice = bundle.getFloat("sum");
+        data = bundle.getParcelableArrayList("data");
         String point = (String) UserInfoManager.getInstance().readUserInfo().getPoint();
-        if (point != null){
+        if (point != null) {
             //积分
             mPoint = Integer.parseInt(point);
         }
@@ -152,9 +167,6 @@ public class OrderFormActivity extends BaseMVPActivity<Object> implements View.O
         //设置积分 和总价
         setTvPoint2TotalPrice(mPoint, totalPrice);
     }
-
-
-
 
 
     /**
@@ -256,6 +268,9 @@ public class OrderFormActivity extends BaseMVPActivity<Object> implements View.O
             iBasePresenter = new ConfirmServerPayResultPresenter(outTradeNo, resultContent, payResultIsOk);
             iBasePresenter.attachView(this);
             iBasePresenter.doJsonPostHttpRequest(AppNetConfig.REQUEST_CODE_CONFIRM_SERVER_PAY_RESULT);
+        }else {
+//            ShoppingManager.getInstance().removeShoppingCartData();
+            ActivityInstanceManager.removeActivity(this); //支付失败也是销毁界面并清空购物车
         }
     }
 
@@ -286,10 +301,26 @@ public class OrderFormActivity extends BaseMVPActivity<Object> implements View.O
         Thread thread = new Thread(runnable);
         thread.start();
     }
-
     @Override
     public void onRequestHttpDataSuccess(int requestCode, String message, Object data) {
+        if (requestCode == AppNetConfig.REQUEST_CODE_GET_ORDER_INFO) { //请求订单号
+            payByZhiFuBao((OrderInfoBean) data); //跳转支付界面
 
+        } else if (requestCode == AppNetConfig.REQUEST_CODE_CONFIRM_SERVER_PAY_RESULT) {//支付结果
+            boolean isPayResult = data.equals("true");//支付成功
+
+            if (isPayResult) {
+                ShoppingManager.getInstance().removeShoppingCartData();
+                ActivityInstanceManager.removeActivity(this); //关闭本页面
+            } else {
+                toast("支付失败", false);
+            }
+        }
+    }
+
+
+    @Override
+    public void onRequestHttpDataListSuccess(int requestCode, String message, List<Object> data) {
         //检查服务端多个产品是否库存充足
         if (requestCode == AppNetConfig.REQUEST_CODE_CHECK_INVENTORY) {
             if (message.equals("请求成功")) {
@@ -306,25 +337,14 @@ public class OrderFormActivity extends BaseMVPActivity<Object> implements View.O
 
             } else {
                 mLlOrderInformation.setVisibility(View.VISIBLE);
-                mTvOrderInfo.setText((String) data); //展示错误详情
+                //                mTvOrderInfo.setText((String) data); //展示错误详情
+                List<CheckInventoryBean> datas = (List) data;
+
+
                 toast(message, false);
             }
-
-        } else if (requestCode == AppNetConfig.REQUEST_CODE_GET_ORDER_INFO) { //请求订单号
-            EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX); //使用支付宝沙箱
-            payByZhiFuBao((OrderInfoBean) data); //跳转支付界面
-
-        } else if (requestCode == AppNetConfig.REQUEST_CODE_CONFIRM_SERVER_PAY_RESULT) {//支付结果
-            boolean isPayResult = data.equals("true");//支付成功
-
-            if (isPayResult) {
-                ShoppingManager.getInstance().removeShoppingCartData();
-                ActivityInstanceManager.removeActivity(this); //关闭本页面
-            } else {
-                toast("支付失败", false);
-            }
-
         }
+
     }
 
     @Override
@@ -435,6 +455,7 @@ public class OrderFormActivity extends BaseMVPActivity<Object> implements View.O
     protected void onDestroy() {
         if (iBasePresenter != null) {
             iBasePresenter.detachView();
+            iBasePresenter = null;
         }
         super.onDestroy();
     }

@@ -22,6 +22,7 @@ public class RvShoppingPayAdapter extends IBaseRecyclerAdapter<ShoppingCartBean>
         helper.setText(R.id.tv_goods_name, item.getProductName());
         helper.setText(R.id.tv_goods_price, item.getProductPrice());
         helper.setText(R.id.tv_num, "x" + item.getProductNum());
-        Glide.with(helper.getConvertView()).load(item.getUrl()).into((ImageView) helper.getView(R.id.iv_adapter_list_pic));
+        ImageView imageView = helper.getView(R.id.iv_adapter_list_pic);
+        Glide.with(imageView.getContext()).load(item.getUrl()).into(imageView);
     }
 }

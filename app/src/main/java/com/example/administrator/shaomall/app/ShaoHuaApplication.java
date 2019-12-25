@@ -4,9 +4,14 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
+import android.util.Log;
 
 import com.example.commen.ACache;
 import com.example.commen.Constants;
+import com.example.commen.ShaoHuaCrashHandler;
+import com.example.commen.network.NetChangeObserver;
+import com.example.commen.network.NetType;
+import com.example.commen.network.NetworkManager;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.shaomall.framework.base.BaseApplication;
 import com.shaomall.framework.manager.NetConnectManager;
@@ -35,7 +40,13 @@ public class ShaoHuaApplication extends BaseApplication {
         mainThread = Thread.currentThread();//实例化当前的Application的线程为主线程
         mainThreadId = android.os.Process.myTid();//获取当前线程的Id
 
+        NetworkManager.getDefault().init(this); //网络状态管理类
+
+        //未捕获异常
+        ShaoHuaCrashHandler.getInstance().init(this);
         ACache aCache = ACache.get(this);
+
+
         NetConnectManager.getInstance().init(this);
         UserInfoManager.getInstance().init(this, aCache); //用户数据管理类
         ShoppingManager.getInstance().init(this); //商品数据管理类
@@ -51,4 +62,5 @@ public class ShaoHuaApplication extends BaseApplication {
         super.attachBaseContext(base);
         MultiDex.install(this);
     }
+
 }

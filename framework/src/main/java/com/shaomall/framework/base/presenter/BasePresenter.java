@@ -2,7 +2,6 @@ package com.shaomall.framework.base.presenter;
 
 import android.util.Log;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.commen.util.ErrorUtil;
 import com.example.commen.LoadingPageConfig;
@@ -16,14 +15,12 @@ import com.shaomall.framework.base.view.IBaseView;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import io.reactivex.CompletableOperator;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -158,7 +155,6 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
             //根据getParams()返回的参数, 生成对应的签名
             String sign = SignUtil.generateSign(emptyTreeMap);
             params.put("sign", sign);
-            Log.i("Wang", "getEncryptParamMap: " + sign);
             //进行加密, 利用TreeMap
             Map<String, String> encryptParamMap = SignUtil.encryptParamsByBase64(params);
 
@@ -183,6 +179,7 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
         JSONObject jsonParam = getJsonParam();
         RequestBody requestBody = null;
         if (jsonParam != null) {
+            //TODO 取消加密
             jsonParam.put("sign", SignUtil.generateJsonSign(jsonParam));
             SignUtil.encryptJsonParamsByBase64(jsonParam);
             requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonParam.toString());

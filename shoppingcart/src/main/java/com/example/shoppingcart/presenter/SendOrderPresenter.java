@@ -41,6 +41,7 @@ public class SendOrderPresenter extends BasePresenter<Object> {
             for (ShoppingCartBean i : list) {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("productId", i.getProductId());
+                jsonObject.put("productNum", i.getProductNum());
                 jsonObject.put("productName", i.getProductName());
                 jsonArray.add(jsonObject);
             }

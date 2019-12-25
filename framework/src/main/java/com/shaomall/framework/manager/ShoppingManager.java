@@ -1,6 +1,8 @@
 package com.shaomall.framework.manager;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
@@ -295,6 +297,14 @@ public class ShoppingManager {
     }
 
 
+//    //接收广播
+//    public BroadcastReceiver mReceiverShoppingManagerState = new BroadcastReceiver() {
+//
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//
+//        }
+//    };
 
 
     //设置监听
@@ -305,9 +315,7 @@ public class ShoppingManager {
     }
 
     public void unRegisterShoppingNumChangeListener(ShoppingNumChangeListener listener) {
-        if (shoppingNumChangeListeners.contains(listener)) {
-            shoppingNumChangeListeners.remove(listener);
-        }
+        shoppingNumChangeListeners.remove(listener);
     }
 
     //商品数量发生改变监听
@@ -323,9 +331,7 @@ public class ShoppingManager {
     }//设置监听
 
     public void unRegisterNotifyUpdatedShoppingDataListener(NotifyUpdatedShoppingDataListener listener) {
-        if (notifyUpdatedShoppingDataListeners.contains(listener)) {
-            notifyUpdatedShoppingDataListeners.remove(listener);
-        }
+        notifyUpdatedShoppingDataListeners.remove(listener);
     }
 
     //    通知更新的购物数据监听器

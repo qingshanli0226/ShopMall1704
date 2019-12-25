@@ -111,14 +111,14 @@ public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler> {
 
         public Myhodler(@NonNull View itemView) {
             super(itemView);
-            checkBox = (CheckBox) itemView.findViewById(R.id.check_box);
-            ivAdapterListPic = (ImageView) itemView.findViewById(R.id.iv_adapter_list_pic);
-            tvGoodsName = (TextView) itemView.findViewById(R.id.tv_goods_name);
-            tvGoodsPrice = (TextView) itemView.findViewById(R.id.tv_goods_price);
-            tvTypeSize = (TextView) itemView.findViewById(R.id.tv_type_size);
-            tvReduce = (TextView) itemView.findViewById(R.id.tv_reduce);
-            tvNum = (TextView) itemView.findViewById(R.id.tv_num);
-            tvAdd = (TextView) itemView.findViewById(R.id.tv_add);
+            checkBox = itemView.findViewById(R.id.check_box);
+            ivAdapterListPic = itemView.findViewById(R.id.iv_adapter_list_pic);
+            tvGoodsName = itemView.findViewById(R.id.tv_goods_name);
+            tvGoodsPrice = itemView.findViewById(R.id.tv_goods_price);
+            tvTypeSize = itemView.findViewById(R.id.tv_type_size);
+            tvReduce = itemView.findViewById(R.id.tv_reduce);
+            tvNum = itemView.findViewById(R.id.tv_num);
+            tvAdd = itemView.findViewById(R.id.tv_add);
 
         }
     }

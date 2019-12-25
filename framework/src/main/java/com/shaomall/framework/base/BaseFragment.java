@@ -28,7 +28,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.mContext = context;
+        this.mContext = context.getApplicationContext();
     }
 
     @Nullable
@@ -80,6 +80,7 @@ public abstract class BaseFragment extends Fragment {
 
     /**
      * 可以传送下标
+     *
      * @param clazz
      * @param index
      */
@@ -140,9 +141,9 @@ public abstract class BaseFragment extends Fragment {
         Toast.makeText(mContext, resId, isLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
     }
 
-    protected void animStartActivity(Class<? extends Activity> clazz){
-        startActivity(new Intent(getContext(),clazz));
-        getActivity().overridePendingTransition(R.anim.anim_in,R.anim.anim_out);
+    protected void animStartActivity(Class<? extends Activity> clazz) {
+        startActivity(new Intent(getContext(), clazz));
+        getActivity().overridePendingTransition(R.anim.anim_in, R.anim.anim_out);
     }
 
     @Override

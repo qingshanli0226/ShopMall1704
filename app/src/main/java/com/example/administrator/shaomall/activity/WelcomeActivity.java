@@ -50,6 +50,7 @@ public class WelcomeActivity extends BaseActivity implements CacheManager.IHomeR
         //        iHomePresenter.attachView(this);
         //        iHomePresenter.doGetHttpRequest(AppNetConfig.HOME_DATA_CODE);
 
+
         //动态申请权限的结果
         checkPermisson();
         //0完全透明到1完全不透明

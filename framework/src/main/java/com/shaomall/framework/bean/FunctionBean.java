@@ -3,20 +3,22 @@ package com.shaomall.framework.bean;
 public class FunctionBean {
 
     /**
-     * subject : ??
-     * body : ????
-     * totalPrice : 600
-     * time : 1576296108129
+     * subject : buy
+     * body : 测试数据
+     * totalPrice : 500
+     * time : 1576032465028
      * status : null
-     * tradeNo : 121412014813510
+     * tradeNo : 121110474516759
+     * orderInfo : null
      */
 
     private String subject;
     private String body;
     private String totalPrice;
     private String time;
-    private String status;
+    private Object status;
     private String tradeNo;
+    private Object orderInfo;
 
     public String getSubject() {
         return subject;
@@ -50,11 +52,11 @@ public class FunctionBean {
         this.time = time;
     }
 
-    public String getStatus() {
+    public Object getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Object status) {
         this.status = status;
     }
 
@@ -66,6 +68,15 @@ public class FunctionBean {
         this.tradeNo = tradeNo;
     }
 
+    public Object getOrderInfo() {
+        return orderInfo;
+    }
+
+    public void setOrderInfo(Object orderInfo) {
+        this.orderInfo = orderInfo;
+    }
+
+
     @Override
     public String toString() {
         return "FunctionBean{" +
@@ -75,9 +86,7 @@ public class FunctionBean {
                 ", time='" + time + '\'' +
                 ", status=" + status +
                 ", tradeNo='" + tradeNo + '\'' +
+                ", orderInfo=" + orderInfo +
                 '}';
     }
-
-
-
 }

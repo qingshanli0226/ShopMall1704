@@ -181,7 +181,7 @@ public class MyPassometView extends View {
 
     private String getText() {
         StringBuffer sb = new StringBuffer();
-        return sb.append(String.valueOf(countText)).append("步").toString();
+        return sb.append(countText).append("步").toString();
     }
 
     @Override

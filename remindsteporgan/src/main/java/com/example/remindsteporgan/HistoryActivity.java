@@ -42,14 +42,14 @@ public class HistoryActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        mChartView = (LineChartView) findViewById(R.id.chart);
+        mChartView = findViewById(R.id.chart);
         timer = new Timer();
 
     }
 
     @Override
     protected void initData() {
-        lineChartView = (LineChartView) findViewById(R.id.chart);
+        lineChartView = findViewById(R.id.chart);
         pointValueList = new ArrayList<>();
         linesList = new ArrayList<>();
 

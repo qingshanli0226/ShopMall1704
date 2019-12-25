@@ -3,12 +3,14 @@ package com.example.shoppingcart.presenter;
 import com.alibaba.fastjson.JSONObject;
 import com.example.net.AppNetConfig;
 import com.example.net.ResEntity;
+import com.example.shoppingcart.bean.CheckInventoryBean;
 import com.google.gson.reflect.TypeToken;
 import com.shaomall.framework.base.presenter.BasePresenter;
 import com.shaomall.framework.bean.ShoppingCartBean;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CheckInventoryPresenter extends BasePresenter<Object> {
     private final ArrayList<ShoppingCartBean> list;
@@ -19,8 +21,13 @@ public class CheckInventoryPresenter extends BasePresenter<Object> {
 
     @Override
     protected Type getBeanType() {
-        return new TypeToken<ResEntity<String>>() {
+        return new TypeToken<ResEntity<List<CheckInventoryBean>>>() {
         }.getType();
+    }
+
+    @Override
+    protected boolean isList() {
+        return true;
     }
 
     @Override

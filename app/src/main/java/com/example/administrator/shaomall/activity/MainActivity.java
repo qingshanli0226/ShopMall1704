@@ -28,7 +28,7 @@ import com.shaomall.framework.manager.UserInfoManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseMVPActivity<Object> implements ShoppingManager.ShoppingNumChangeListener {
+public class MainActivity extends BaseMVPActivity<Object> implements ShoppingManager.ShoppingNumChangeListener, UserInfoManager.UserInfoStatusListener {
     private int[] icon = {R.drawable.main_home, R.drawable.main_type, R.drawable.cry, R.drawable.main_cart, R.drawable.main_user};
     private int[] unIcon = {R.drawable.main_home_press, R.drawable.main_type_press, R.drawable.smile, R.drawable.main_cart_press, R.drawable.main_user_press};
     private String[] titles = {"首页", "分类", "发现", "购物车", "我的"};
@@ -39,12 +39,16 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
     private List<Fragment> fragments = new ArrayList<>();
     private AutoLoginPresenter autoLoginPresenter;
 
+
     @Override
     public int setLayoutId() {
         return R.layout.activity_main;
     }
 
     protected void initView() {
+        ShoppingManager.getInstance().registerShoppingNumChangeListener(this);
+        UserInfoManager.getInstance().registerUserInfoStatusListener(this);
+
         mMainFragmentHome = findViewById(R.id.main_fragmentHome);
         mMainTab = findViewById(R.id.main_tab);
         fragments.add(new HomeFragment());
@@ -53,48 +57,17 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
         fragments.add(new ShoppingCartFragment());
         fragments.add(new MineFragment());
 
-    }
 
-//    @Override
-//    protected void onRestart() {
-//        super.onRestart();
-//        //        //实现自动登录
-//        //        if (autoLoginPresenter == null) {
-//        //            autoLoginPresenter = new AutoLoginPresenter();
-//        //            autoLoginPresenter.attachView(this);
-//        //        }
-//        //        if (UserInfoManager.getInstance().isLogin()) {
-//        //            autoLoginPresenter.doPostHttpRequest();
-//        //        }
-//    }
+        //        //实现自动登录
+        //        if (autoLoginPresenter == null) {
+        //            autoLoginPresenter = new AutoLoginPresenter();
+        //            autoLoginPresenter.attachView(this);
+        //        }
+        //        if (UserInfoManager.getInstance().isLogin()) {
+        //            autoLoginPresenter.doPostHttpRequest();
+        //        }
 
-    @Override
-    public void onRequestHttpDataFailed(ShopMailError error) {
-        super.onRequestHttpDataFailed(error);
-        toast(error.getErrorMessage(), false);
-    }
 
-    @Override
-    public void onRequestHttpDataSuccess(String message, Object data) {
-        UserInfoManager.getInstance().saveUserInfo((LoginBean) data);
-    }
-
-    private void showTabSelect(int position) {
-        if (position == 3) {
-            //判断登录
-            UserInfoManager instance = UserInfoManager.getInstance();
-            if (instance.isLogin()) {
-                //已经登录了
-                switchFragment(fragments.get(position));
-                mMainTab.setCurrentTab(position);
-            } else {
-                //还没有登录
-                toClass(LoginActivity.class, position);
-                switchFragment(fragments.get(position));
-            }
-        } else {
-            switchFragment(fragments.get(position));
-        }
     }
 
     @Override
@@ -108,10 +81,19 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
         } else {
             mMainTab.showMsg(3, ShoppingManager.getInstance().getShoppingNum());
         }
-        ShoppingManager.getInstance().registerShoppingNumChangeListener(this);
+
     }
 
+    @Override
+    public void onRequestHttpDataFailed(ShopMailError error) {
+        super.onRequestHttpDataFailed(error);
+        toast(error.getErrorMessage(), false);
+    }
 
+    @Override
+    public void onRequestHttpDataSuccess(String message, Object data) {
+        UserInfoManager.getInstance().saveUserInfo((LoginBean) data);
+    }
 
 
     /**
@@ -151,9 +133,41 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
         });
     }
 
+    private int oldPosition;
+    private int position;
+
+    private void showTabSelect(int position) {
+        this.position = position;
+        if (position == 3) {
+            mMainTab.setCurrentTab(oldPosition);
+            //判断登录
+            UserInfoManager instance = UserInfoManager.getInstance();
+            if (instance.isLogin()) {
+                //已经登录了
+                switchFragment(fragments.get(position));
+                mMainTab.setCurrentTab(position);
+            } else {
+                //还没有登录
+                toClass(LoginActivity.class, position);
+            }
+        } else {
+            this.oldPosition = position;
+            switchFragment(fragments.get(position));
+        }
+    }
+
+    @Override
+    public void onUserStatus(boolean isLogin, LoginBean userInfo) {
+        if (isLogin && position == 3) {
+            switchFragment(fragments.get(position));
+            mMainTab.setCurrentTab(position);
+        }
+    }
+
 
     /**
      * 被跳转改变
+     *
      * @param intent
      */
     @Override
@@ -168,6 +182,7 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
 
     /**
      * 优化fragment的切换
+     *
      * @param targetFragment
      */
     private void switchFragment(Fragment targetFragment) {
@@ -175,9 +190,9 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
         if (!targetFragment.isAdded()) {
             if (currentFragment != null)
                 fragmentTransaction.hide(currentFragment);
-            fragmentTransaction.add(R.id.main_fragmentHome, targetFragment).commit();
+            fragmentTransaction.add(R.id.main_fragmentHome, targetFragment).commitAllowingStateLoss();
         } else
-            fragmentTransaction.hide(currentFragment).show(targetFragment).commit();
+            fragmentTransaction.hide(currentFragment).show(targetFragment).commitAllowingStateLoss();
         currentFragment = targetFragment;
     }
 

@@ -112,35 +112,22 @@ public class SignInActivity extends BaseMVPActivity<String> {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    //这是按下时的颜色
-                    int colorStart = getResources().getColor(R.color.mediumspringgreen);
                     //传过去false代表是按下
                     diybutton.setType(false);
-                    int color = Color.parseColor("#00ced1");
-                    int colorEnd = getResources().getColor(R.color.skyblue);
-
-                    //Toast.makeText(mActivity, "123", Toast.LENGTH_SHORT).show();
                     diybutton.invalidate();
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    //这是抬起时的颜色
-                    int colorStart = getResources().getColor(R.color.mediumspringgreen);
                     //true抬起
                     diybutton.setType(true);
-                    int color = Color.parseColor("#00ced1");
-                    int colorEnd = getResources().getColor(R.color.skyblue);
-
-                    //Toast.makeText(mActivity, "松开了", Toast.LENGTH_SHORT).show();
                     diybutton.invalidate();
                     //判断用户名和密码逻辑
                     if (signInUser.getText().toString().equals("") || signInPass.getText().toString().equals("")) {
-                        Toast.makeText(mActivity, "用户名和密码或密码不可为空", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "用户名和密码或密码不可为空", Toast.LENGTH_SHORT).show();
                     } else {
                         String username = signInUser.getText().toString();
                         String password = signInPass.getText().toString();
                         presenter.setUsername(username);
                         presenter.setPassword(password);
                         presenter.doPostHttpRequest(100);
-                        //                        finish();
                     }
                 }
                 return false;
@@ -151,7 +138,7 @@ public class SignInActivity extends BaseMVPActivity<String> {
     @Override
     public void onRequestHttpDataSuccess(int requestCode, String message, String data) {
         //注册成功
-        Toast.makeText(mActivity, "" + message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, "" + message, Toast.LENGTH_SHORT).show();
         ActivityInstanceManager.removeActivity(this);
     }
 
@@ -159,8 +146,7 @@ public class SignInActivity extends BaseMVPActivity<String> {
     @Override
     public void onRequestHttpDataFailed(int requestCode, ShopMailError error) {
         //注册失败
-        Toast.makeText(mActivity, "用户已存在, 注册失败", Toast.LENGTH_SHORT).show();
-
+        Toast.makeText(mContext, "用户已存在, 注册失败", Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -72,7 +72,6 @@ public class UserInfoManager {
             edit.clear();
             edit.apply();
 
-
             //退出登录监听
             for (UserInfoStatusListener listener : userInfoStatusListeners) {
                 listener.onUserStatus(isLogin(), readUserInfo());
@@ -143,9 +142,7 @@ public class UserInfoManager {
      * @param userInfoStatusListener
      */
     public void unRegisterUserInfoStatusListener(UserInfoStatusListener userInfoStatusListener) {
-        if (userInfoStatusListeners.contains(userInfoStatusListener)) {
-            userInfoStatusListeners.remove(userInfoStatusListener);
-        }
+        userInfoStatusListeners.remove(userInfoStatusListener);
     }
 
     /**
@@ -176,9 +173,7 @@ public class UserInfoManager {
      * @param avatarUpdateListener
      */
     public void unRegisterAvatarUpdateListener(AvatarUpdateListener avatarUpdateListener) {
-        if (avatarUpdateListeners.contains(avatarUpdateListener)) {
-            avatarUpdateListeners.remove(avatarUpdateListener);
-        }
+        avatarUpdateListeners.remove(avatarUpdateListener);
     }
 
     public interface AvatarUpdateListener {

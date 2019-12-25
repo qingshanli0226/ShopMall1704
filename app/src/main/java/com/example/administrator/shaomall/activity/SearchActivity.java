@@ -73,10 +73,10 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         keywordsFlow = findViewById(R.id.keywordsflow);
         keywordsFlow.setDuration(1000l);
         keywordsFlow.setOnItemClickListener(this);
-        back_arrow = (ImageView) findViewById(R.id.back_arrow);
+        back_arrow = findViewById(R.id.back_arrow);
         back_arrow.setAnimation(shakeAnim);
         searchEdit = findViewById(R.id.search_view);
-        search_button=(ImageView)findViewById(R.id.search_button);
+        search_button= findViewById(R.id.search_button);
         search_button.setOnClickListener(this);
         search_back = findViewById(R.id.search_iv_back);
         search_back.setOnClickListener(this);

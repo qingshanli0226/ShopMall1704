@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/welcome_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/start_background"
-    android:id="@+id/welcome_background"
     tools:context=".activity.WelcomeActivity">
+
     <TextView
+        android:id="@+id/welcome_time_tv"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:text="5"
-        android:id="@+id/welcome_time_tv"
+        android:layout_margin="18dp"
         android:background="@drawable/time_background"
-        android:gravity="center"
         android:clickable="false"
-        />
+        android:gravity="center"
+        android:text="5" />
+
     <ImageView
         android:id="@+id/iv_welcome_icon"
         android:layout_width="wrap_content"
