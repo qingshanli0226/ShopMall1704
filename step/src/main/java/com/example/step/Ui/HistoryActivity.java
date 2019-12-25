@@ -1,7 +1,11 @@
 package com.example.step.Ui;
 
 import android.annotation.SuppressLint;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Color;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -28,6 +32,9 @@ public class HistoryActivity extends BaseActivity {
     List<Fragment> fragmentList=new ArrayList<>();
     @Override
     protected int setLayout() {
+
+//        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
         return R.layout.activity_testhistory;
     }
 
@@ -70,7 +77,7 @@ public class HistoryActivity extends BaseActivity {
         tableList.add("今天");
         tableList.add("一周内");
         tableList.add("一月内");
-        tableList.add("所有");
+
 
 
         fragmentList.add(new History_MinutesFragment());
@@ -90,4 +97,9 @@ public class HistoryActivity extends BaseActivity {
         super.onDestroy();
         fragmentList.clear();
     }
+
+
+
+
+
 }

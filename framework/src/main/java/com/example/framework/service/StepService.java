@@ -28,6 +28,7 @@ import androidx.core.app.NotificationCompat;
 
 
 import com.example.common.OrmUtils;
+import com.example.framework.bean.HourBean;
 import com.example.framework.bean.ShopStepBean;
 import com.example.framework.R;
 import com.example.framework.manager.MessageManager;
@@ -114,8 +115,17 @@ public class StepService extends Service implements SensorEventListener {
                         isNewDay();
                         break;
                     case Intent.ACTION_TIME_TICK:
-                        StepManager.getInstance().insertHour(CURRENT_TIME,CURRENT_DATE,currentStep);
                         StepManager.getInstance().save(CURRENT_DATE,currentStep,previousStep);
+                        if(StepManager.getInstance().findHour().size()<=1){
+                            StepManager.getInstance().insertHour(CURRENT_TIME,CURRENT_DATE,currentStep);
+                        } else{
+                                    StepManager.getInstance().insertHour(CURRENT_TIME,CURRENT_DATE,currentStep);
+//                            if(StepManager.getInstance().isDifferentStep()==false){
+//                            }else{
+//                                return;
+                                StepManager.getInstance().insertHour(CURRENT_TIME,CURRENT_DATE,currentStep);
+//                            }
+                        }
                         isNewDay();
                         break;
 
@@ -136,7 +146,6 @@ public class StepService extends Service implements SensorEventListener {
 
 
         if("22:00:00".equals(new SimpleDateFormat("HH:mm:ss").format(new Date()))){
-            Log.e("##Nine","999");
             //发送消息
             List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
             String current_step = queryAll.get(queryAll.size() - 1).getCurrent_step();
@@ -164,7 +173,6 @@ public class StepService extends Service implements SensorEventListener {
         CURRENT_TIME=StepManager.getInstance().getToadyTime();
         OrmUtils.createDb(this, "DbStep");
         List<ShopStepBean> shopStepBeans = OrmUtils.getQueryByWhere(ShopStepBean.class, "day", new String[]{CURRENT_DATE});
-        Log.e("##day", shopStepBeans.toString());
         if (shopStepBeans.size() == 0 || shopStepBeans.isEmpty()) {
             currentStep = 0;
         } else {
@@ -282,13 +290,11 @@ public class StepService extends Service implements SensorEventListener {
                 for (int s=0;s<all.size();s++){
                     count+=all.get(s).getIntegral();
                 }
-                Log.e("##Up",count+"");
                 if (updateUi != null) {
                     updateUi.getUpdateStep(currentStep,count);
                 }
             }else{
                 count=i;
-                Log.e("##Up",count+"");
                 if (updateUi != null) {
                     updateUi.getUpdateStep(currentStep,count);
                 }

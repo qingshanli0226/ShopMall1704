@@ -35,8 +35,12 @@ public class StepLocalService extends Service {
         public void onServiceDisconnected(ComponentName componentName) {
             startService(intent);
             bindService(intent,serviceConnection,BIND_AUTO_CREATE);
+
+
+
         }
     };
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -49,5 +53,6 @@ public class StepLocalService extends Service {
 
         intent=new Intent(this,StepRemoteService.class);
         bindService(intent,serviceConnection,BIND_AUTO_CREATE);
+
     }
 }

@@ -66,25 +66,25 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
     @Override
     public void initData() {
 
-         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
-             for (int i=0;i<prems.length;i++){
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+            for (int i=0;i<prems.length;i++){
 
-                 if(  checkSelfPermission(prems[i])
-                         != PackageManager.PERMISSION_GRANTED){
-                     isJump=false;
-                     requestPermissions(prems,100);
-                 }else{
+                if(  checkSelfPermission(prems[i])
+                        != PackageManager.PERMISSION_GRANTED){
+                    isJump=false;
+                    requestPermissions(prems,100);
+                }else{
 
-                     isJump=true;
-                 }
-             }
-         }else{
-             JumpActivity();
-         }
+                    isJump=true;
+                }
+            }
+        }else{
+            JumpActivity();
+        }
 
-         if(isJump==true){
-             initAutoLogin();
-         }
+        if(isJump==true){
+            initAutoLogin();
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
