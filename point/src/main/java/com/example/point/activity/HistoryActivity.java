@@ -28,8 +28,6 @@ import com.example.framework.bean.StepBean;
 import java.util.Calendar;
 import java.util.List;
 
-import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
-
 public class HistoryActivity extends BaseActivity {
 
     private RecyclerView history_re;
@@ -41,31 +39,19 @@ public class HistoryActivity extends BaseActivity {
     private int year, monthOfYear, dayOfMonth;
     private List<StepBean> beans;
     private Spinner history_spinner;
-    private WaveSwipeRefreshLayout main_swipe;
     private MyToolBar history_tool;
     private Button show;
+
     @Override
     public void init() {
-        history_tool = (MyToolBar) findViewById(R.id.history_tool);
+        history_tool = findViewById(R.id.history_tool);
         history_tool.init(Constant.OTHER_STYLE);
-        history_tool.setBackgroundColor(Color.rgb(34,150,243));
+        history_tool.setBackgroundColor(Color.rgb(34, 150, 243));
         history_re = findViewById(R.id.history_re);
         start = findViewById(R.id.start);
         stop = findViewById(R.id.stop);
-        show=findViewById(R.id.show);
-        recently = (TextView) findViewById(R.id.recently);
-        main_swipe = (WaveSwipeRefreshLayout) findViewById(R.id.main_swipe);
-        main_swipe.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                try {
-                    Thread.sleep(100);
-                    main_swipe.setRefreshing(false);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        show = findViewById(R.id.show);
+        recently = findViewById(R.id.recently);
 
         // 通过Calendar对象来获取年、月、日、时、分的信息
         Calendar calendar = Calendar.getInstance();
@@ -196,7 +182,7 @@ public class HistoryActivity extends BaseActivity {
 
             beans = DaoManager.Companion.getInstance(this).loadStepBean();
 
-            beans =DaoManager.Companion.getInstance(this).loadStepBean();
+            beans = DaoManager.Companion.getInstance(this).loadStepBean();
             stepItemAdpter = new StepItemAdpter(beans);
             history_re.setAdapter(stepItemAdpter);
         } else {
@@ -214,7 +200,7 @@ public class HistoryActivity extends BaseActivity {
 
             beans = DaoManager.Companion.getInstance(this).areaStepBean(start, stop);
 
-            beans =DaoManager.Companion.getInstance(this).areaStepBean(start, stop);
+            beans = DaoManager.Companion.getInstance(this).areaStepBean(start, stop);
             if (beans.size() > 0) {
                 history_re.setVisibility(View.VISIBLE);
                 recently.setVisibility(View.GONE);
@@ -231,9 +217,4 @@ public class HistoryActivity extends BaseActivity {
             recently.setVisibility(View.VISIBLE);
         }
     }
-
-    private void initView() {
-        history_spinner = (Spinner) findViewById(R.id.history_spinner);
-    }
-
 }

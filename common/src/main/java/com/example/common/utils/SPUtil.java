@@ -8,6 +8,7 @@ import android.util.Log;
 import com.example.common.code.Constant;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * author:李浩帆
@@ -33,15 +34,17 @@ public class SPUtil {
     }
 
     //TODO 是否第一次登录
-    public static boolean isFirstLogin(){
-        return sp.getBoolean("firstLogin",true);
+    public static boolean isFirstLogin() {
+        return sp.getBoolean("firstLogin", true);
     }
+
     //TODO 存取登录信息
-    public static void FirstLogin(){
+    public static void FirstLogin() {
         SharedPreferences.Editor edit = sp.edit();
-        edit.putBoolean("firstLogin",false);
+        edit.putBoolean("firstLogin", false);
         edit.apply();
     }
+
     //TODO 是否登录
     public static boolean isLogin() {
         return !TextUtils.isEmpty(getToken());
@@ -55,20 +58,19 @@ public class SPUtil {
     }
 
     public static void puSearch(String searchStr) {
-        for (int i = 10; i > -1; i--) {
-            if (sp.getString(Constant.SEARCH + i, "").isEmpty()) {
-                SharedPreferences.Editor edit = sp.edit();
-                edit.putString(Constant.SEARCH + i, searchStr);
-                edit.commit();
-                return;
+        ArrayList<String> list = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            String spStr = sp.getString(Constant.SEARCH + i, "");
+            if (searchStr.equals(spStr)) {
+                list.remove(spStr);
+            }else {
+                list.add(spStr);
             }
         }
-        ArrayList<String> list = new ArrayList<>();
+        Collections.reverse(list);
         list.add(searchStr);
-        for (int i = 1; i < 10; i++) {
-            list.add(sp.getString(Constant.SEARCH + (i-1), ""));
-        }
-        for (int i = 9; i > -1; i--) {
+        Collections.reverse(list);
+        for (int i = 0; i < list.size(); i++) {
             SharedPreferences.Editor edit = sp.edit();
             edit.putString(Constant.SEARCH + i, list.get(i));
             edit.commit();

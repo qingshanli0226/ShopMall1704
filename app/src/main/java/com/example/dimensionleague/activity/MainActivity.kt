@@ -49,15 +49,20 @@ class MainActivity : BaseNetConnectActivity() {
 
         val bundle = intent!!.getBundleExtra("data")
         if(bundle!=null){
-            val isAutoLogin = bundle!!.getBoolean("isAutoLogin")
+            val isAutoLogin = bundle.getBoolean("isAutoLogin")
             if(!SPUtil.isFirstLogin()){
                 if (!isAutoLogin) {
                     Toast.makeText(this, resources.getString(R.string.timeout), Toast.LENGTH_SHORT).show()
                     AccountManager.getInstance().logout()
                 } else {
                     AccountManager.getInstance().notifyLogin()
-                    if(AccountManager.getInstance().user.avatar!=null){
-                        AccountManager.getInstance().notifyUserAvatarUpdate(AppNetConfig.BASE_URL+AccountManager.getInstance().user.avatar)
+                    if(AccountManager.getInstance().user==null){
+                        Toast.makeText(this, resources.getString(R.string.timeout), Toast.LENGTH_SHORT).show()
+                        AccountManager.getInstance().logout()
+                    }else{
+                        if(AccountManager.getInstance().user.avatar!=null){
+                            AccountManager.getInstance().notifyUserAvatarUpdate(AppNetConfig.BASE_URL+AccountManager.getInstance().user.avatar)
+                        }
                     }
                 }
             }
@@ -69,7 +74,7 @@ class MainActivity : BaseNetConnectActivity() {
         list.add(HomeFragment())
         list.add(TypeFragment())
         list.add(FindFragment())
-        list.add(ShopCartFragment())
+        list.add(ShopCartFragment(1))
         list.add(MineFragment())
     }
 

@@ -3,16 +3,12 @@ package com.example.dimensionleague;
 import android.app.Application;
 
 import com.example.common.utils.SPUtil;
-import com.example.framework.manager.CrashHandler;
 import com.example.framework.manager.NetConnectManager;
-import com.example.point.StepIsSupport;
-import com.example.point.stepmanager.StepPointManager;
 
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 import cn.jpush.android.api.JPushInterface;
-import leakcanary.LeakCanary;
 
 
 /**

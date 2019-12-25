@@ -2,7 +2,6 @@ package com.example.buy;
 
 import android.content.Intent;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -73,6 +72,11 @@ public class ShopCartFragment extends BaseNetConnectFragment {
     private boolean checkStatus = false;
     //更新库存下标
     private int index;
+
+    private int style;
+    public ShopCartFragment(int style) {
+        this.style = style;
+    }
 
     @Override
     public void init(View view) {
@@ -232,7 +236,7 @@ public class ShopCartFragment extends BaseNetConnectFragment {
                             public void onClick(View v) {
                                 Intent intent = new Intent(getContext(), GoodsActiviy.class);
                                 intent.putExtra(IntentUtil.GOTO_GOOD, list.get(position));
-                                getContext().startActivity(intent);
+                                boundActivity(intent);
                             }
                         });
 
@@ -278,7 +282,19 @@ public class ShopCartFragment extends BaseNetConnectFragment {
     public void initDate() {
         //初始化ToolBar
         myToolBar.init(Constant.BUY_MESSAGE_STYLE);
+        if(style==0){
+            myToolBar.getBuy_car_back().setImageResource(R.drawable.back3);
+            myToolBar.getBuy_car_back().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finishActivity();
+                }
+            });
+        }else{
+            myToolBar.getBuy_car_back().setClickable(false);
+        }
         myToolBar.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
+
         showBar();
         //获取购物车数据绑定
         sendCartPresenter = new GetCartPresenter();
@@ -295,12 +311,12 @@ public class ShopCartFragment extends BaseNetConnectFragment {
             CartManager.getInstance().notifyChecks();
             list.clear();
             list.addAll(CartManager.getInstance().getListGoods());
-            Log.e("qqq","数据长度:"+CartManager.getInstance().getListGoods().size());
             recyclerView.getAdapter().notifyDataSetChanged();
             sendCartPresenter.doHttpGetRequest(CART_GOODS);
         }else {
             CartManager.getInstance().clearCheck();
             list.clear();
+            CartManager.getInstance().setListGoods(list);
             recyclerView.getAdapter().notifyDataSetChanged();
         }
     }
@@ -310,7 +326,7 @@ public class ShopCartFragment extends BaseNetConnectFragment {
         super.onRequestSuccess(requestCode, data);
         switch (requestCode) {
             case CART_GOODS:
-                if (((GetCartBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
+                if (((GetCartBean) data).getCode().equals(Constant.CODE_OK)) {
                     /**
                      *以网络获取到的数据为准
                      * 请求购物车数据情况:  第一次请求  下拉刷新=onResume刷新  刷新库存
@@ -344,13 +360,13 @@ public class ShopCartFragment extends BaseNetConnectFragment {
                 }
                 break;
             case UPDATE_GOODS:
-                if (((OkBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
+                if (((OkBean) data).getCode().equals(Constant.CODE_OK)) {
                     //更新数据成功
                     sendCartPresenter.doHttpGetRequest(CART_GOODS);
                 }
                 break;
             case DEL_CODE:
-                if (((OkBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
+                if (((OkBean) data).getCode().equals(Constant.CODE_OK)) {
                     waitDelList.remove(0);
                     deleteGoods();
                 } else {
@@ -358,7 +374,7 @@ public class ShopCartFragment extends BaseNetConnectFragment {
                 }
                 break;
             case VERIFY_CODE:
-                if (((OkBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
+                if (((OkBean) data).getCode().equals(Constant.CODE_OK)) {
                     //数量超出处理
                     int num = 0;
                     try {
@@ -517,11 +533,17 @@ public class ShopCartFragment extends BaseNetConnectFragment {
     @Override
     public void onConnected() {
         myToolBar.isConnection(true);
+        checkAll.setEnabled(true);
+        myToolBar.getBuy_compile().setEnabled(true);
+        judgeCheckAll();
     }
 
     @Override
     public void onDisConnected() {
         myToolBar.isConnection(false);
+        buyBut.setEnabled(false);
+        myToolBar.getBuy_compile().setEnabled(false);
+        checkStatus = false;
     }
 
 }

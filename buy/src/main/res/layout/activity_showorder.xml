@@ -1,19 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/orderRel"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    android:id="@+id/orderRel"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <com.example.common.view.MyToolBar
-            android:id="@+id/myToolBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/myToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:id="@+id/body"
+        android:layout_below="@id/myToolBar"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:gravity="center"
+            android:text="待支付订单"
+            android:textColor="@color/buyPink"
+            android:textSize="@dimen/sp_18"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:gravity="center"
+            android:text="待发货订单"
+            android:textColor="@color/buyPink"
+            android:textSize="@dimen/sp_18"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_below="@id/body"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/myToolBar" />
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewTwo"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
 </RelativeLayout>
 
 

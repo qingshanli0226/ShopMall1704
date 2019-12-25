@@ -8,9 +8,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.buy.activity.GoodsActiviy
-import com.example.dimensionleague.R
+import com.example.buy.databeans.GoodsBean
 import com.example.common.HomeBean
 import com.example.common.utils.IntentUtil
+import com.example.dimensionleague.R
 import com.example.net.AppNetConfig
 import kotlinx.android.synthetic.main.home_seckill_item.view.*
 
@@ -37,9 +38,14 @@ class SeckillAdapter(
             home_seckill_tv_origin_price.text = "${list!![position].origin_price}￥"
             home_seckill_tv_origin_price.paintFlags=Paint.STRIKE_THRU_TEXT_FLAG
             this.setOnClickListener { v->
+
                 val intent = Intent(context, GoodsActiviy::class.java)
-                intent.putExtra(IntentUtil.GOTO_GOOD, list!![position])
-                context.startActivity(intent)
+                intent.putExtra(IntentUtil.GOTO_GOOD, GoodsBean(
+                        list!![position].product_id,
+                        0, list!![position].name,
+                        list!![position].figure,
+                    list!![position].cover_price))
+                context.startActivity(intent, null)
             }
         }
     }

@@ -56,7 +56,7 @@
             android:name=".login.activity.LoginActivity"
             android:launchMode="singleTask"/>
         <activity android:name=".address.AddressActivity"/>
-
+        <activity android:name=".search.SearchActivity"/>
         <service android:name=".JobService"
             android:enabled="true"
             android:exported="true"

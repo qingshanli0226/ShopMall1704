@@ -1,5 +1,6 @@
 package com.example.framework.base;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -48,4 +49,11 @@ public abstract class BaseBindActivity<DB extends ViewDataBinding> extends AppCo
         finish();
         overridePendingTransition(R.anim.slide_to_right_in, R.anim.slide_to_right_out);
     }
+
+    public void boundActivity(Intent intent) {
+        startActivity(intent);
+        //TODO 添加入场动画以及退场动画
+        overridePendingTransition(R.anim.slide_to_right_in, R.anim.slide_to_right_out);
+    }
+
 }

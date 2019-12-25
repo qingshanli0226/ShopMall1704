@@ -1,98 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    style="@style/w_match">
+    style="@style/w_match"
+    android:orientation="vertical">
+
     <com.example.common.view.MyToolBar
         android:id="@+id/history_tool"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></com.example.common.view.MyToolBar>
-    <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
-        android:id="@+id/main_swipe"
-       style="@style/w_match">
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <Spinner
-                    style="@style/Widget.AppCompat.DropDownItem.Spinner"
-                    android:layout_margin="@dimen/dp_10"
-                    android:background="@drawable/edit_background"
-                    android:entries="@array/spinner"
-                    android:id="@+id/history_spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"></Spinner>
-                <TextView
-                    android:id="@+id/tv"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:text="从"
-                    android:textSize="20sp"
-                    android:textColor="@android:color/black"
-                    style="@style/w_wrap">
-                </TextView>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/start"
-                    style="@style/history_edit"
-                    android:layout_marginLeft="5dp"
-                    android:textSize="@dimen/sp_18"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/tv"
-                    android:text="开始日期"></TextView>
-                <TextView
-                    android:id="@+id/tv1"
-                    android:layout_marginTop="10dp"
+            <Spinner
+                android:id="@+id/history_spinner"
+                style="@style/Widget.AppCompat.DropDownItem.Spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_10"
+                android:background="@drawable/edit_background"
+                android:entries="@array/spinner" />
 
-                    android:text="到"
-                    android:textSize="20sp"
-                    android:textColor="@android:color/black"
-                    style="@style/w_wrap">
-                </TextView>
+            <TextView
+                android:id="@+id/tv"
+                style="@style/w_wrap"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="从"
+                android:textColor="@android:color/black"
+                android:textSize="20sp" />
 
-                <TextView
-                    android:id="@+id/stop"
-                    android:textSize="@dimen/sp_18"
-                    style="@style/history_edit"
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="结束日期"></TextView>
+            <TextView
+                android:id="@+id/start"
+                style="@style/history_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/tv"
+                android:text="开始日期"
+                android:textSize="@dimen/sp_18" />
 
-                <Button
-                    android:id="@+id/show"
-                    android:layout_width="52dp"
-                    android:layout_height="27dp"
-                    android:layout_marginTop="@dimen/dp_5"
-                    android:background="@drawable/edit_background"
+            <TextView
+                android:id="@+id/tv1"
+                style="@style/w_wrap"
 
-                    android:text="查询"
-                    android:textSize="@dimen/sp_10"></Button>
-            </LinearLayout>
-            <View
-                android:background="@android:color/darker_gray"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"></View>
-            <RelativeLayout
-                style="@style/w_match">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/history_re"
-                    style="@style/w_match"></androidx.recyclerview.widget.RecyclerView>
-                <TextView
-                    android:layout_centerInParent="true"
-                    android:visibility="gone"
-                    android:textSize="25sp"
-                    android:textColor="@android:color/black"
-                    android:id="@+id/recently"
-                    android:text="@string/history"
-                    style="@style/w_wrap"></TextView>
-            </RelativeLayout>
+                android:layout_marginTop="10dp"
+                android:text="到"
+                android:textColor="@android:color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/stop"
+                style="@style/history_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="结束日期"
+                android:textSize="@dimen/sp_18" />
+
+            <Button
+                android:id="@+id/show"
+                android:layout_width="52dp"
+                android:layout_height="27dp"
+                android:layout_marginTop="@dimen/dp_5"
+                android:background="@drawable/edit_background"
+                android:text="查询"
+                android:textSize="@dimen/sp_10" />
         </LinearLayout>
-    </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
 
+        <RelativeLayout style="@style/w_match">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/history_re"
+                style="@style/w_match" />
+
+            <TextView
+                android:id="@+id/recently"
+                style="@style/w_wrap"
+                android:layout_centerInParent="true"
+                android:text="@string/history"
+                android:textColor="@android:color/black"
+                android:textSize="25sp"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

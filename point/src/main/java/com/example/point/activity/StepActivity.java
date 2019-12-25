@@ -86,8 +86,7 @@ public class StepActivity extends BaseActivity {
         tv_set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(StepActivity.this, PhysicalActivity.class);
-                startActivity(intent);
+                startActivity(PhysicalActivity.class,null);
 
             }
         });
@@ -96,8 +95,7 @@ public class StepActivity extends BaseActivity {
         tv_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(StepActivity.this, HistoryActivity.class);
-                startActivity(intent);
+                startActivity(HistoryActivity.class,null);
             }
         });
 
