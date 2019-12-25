@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.buy.bean.ShoppingCartBean;
+import com.example.buy.fragment.ShoppingCartFragment;
+import com.example.buy.presenter.ShoppingCartPresenter;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IPostBaseView;
@@ -18,6 +21,8 @@ import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
 import com.example.shopmall.bean.AddressBean;
 import com.example.shopmall.presenter.LogOutPresenter;
+
+import java.util.HashMap;
 
 /**
  * 设置
@@ -100,6 +105,8 @@ public class SetActivity extends BaseActivity implements IPostBaseView<AddressBe
             sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
             sharedPreferences.edit().putBoolean("isLogin",false).apply();
             startActivity(new Intent(this,MainActivity.class));
+            Toast.makeText(this, "退出登录成功", Toast.LENGTH_SHORT).show();
+            ShoppingManager.getInstance().setMainitem(4);
             finish();
         }else {
             initLogin();

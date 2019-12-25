@@ -107,6 +107,7 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
 
         initRecycler();
         initPayButton();
+
     }
 
     private void initPayButton() {
@@ -178,6 +179,7 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
         jsonObject.put("result", resultContent);
         jsonObject.put("clientPayResult", payResultIsOk);
         jsonObject.put("sign", SignUtil.generateJsonSign(jsonObject));
+        Log.e("####","out"+outTradeNo+"result"+resultContent+"client"+payResultIsOk);
 
         SignUtil.encryptJsonParamsByBase64(jsonObject);
 

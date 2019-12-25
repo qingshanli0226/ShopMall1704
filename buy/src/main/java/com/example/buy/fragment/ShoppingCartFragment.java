@@ -692,6 +692,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             }
             tvShopcartTotal.setText("￥" + allcount1 + "0");
         }
+        ShoppingManager.getInstance().setOnNumberChanged(0);
     }
 
     //购物车数据网址连接失败
