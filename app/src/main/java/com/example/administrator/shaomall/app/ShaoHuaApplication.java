@@ -14,6 +14,7 @@ import com.example.commen.network.NetType;
 import com.example.commen.network.NetworkManager;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.shaomall.framework.base.BaseApplication;
+import com.shaomall.framework.manager.MessageManager;
 import com.shaomall.framework.manager.NetConnectManager;
 import com.shaomall.framework.manager.SearchManager;
 import com.shaomall.framework.manager.ShoppingManager;
@@ -51,6 +52,7 @@ public class ShaoHuaApplication extends BaseApplication {
         UserInfoManager.getInstance().init(this, aCache); //用户数据管理类
         ShoppingManager.getInstance().init(this); //商品数据管理类
         SearchManager.getInstance().init(this);
+        MessageManager.getInstance().init(this);
         // 初始化 JPush
         JPushInterface.init(this);
         //发布时关闭日志

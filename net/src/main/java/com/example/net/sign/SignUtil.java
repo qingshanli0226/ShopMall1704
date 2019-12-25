@@ -1,6 +1,8 @@
 package com.example.net.sign;
 
 import android.os.Build;
+
+import android.support.annotation.RequiresApi;
 import android.util.Base64;
 import android.util.Log;
 
@@ -13,6 +15,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
+
+import static java.nio.charset.StandardCharsets.*;
 
 public class SignUtil {
     public static TreeMap<String, String> getEmptyTreeMap() {
@@ -63,6 +67,7 @@ public class SignUtil {
      * @param object
      * @return
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String generateJsonSign(JSONObject object) {
         TreeMap<String, String> params = getEmptyTreeMap();
         Iterator<String> keys = object.keySet().iterator();
@@ -106,6 +111,7 @@ public class SignUtil {
      * @param params
      * @return
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String generateSign(Map<String, String> params) {
 
         StringBuilder str = new StringBuilder();
@@ -121,12 +127,14 @@ public class SignUtil {
         return signValue;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String stringToMD5(String string) {
         byte[] hash = new byte[0];
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 hash = MessageDigest.getInstance("MD5").digest(string.getBytes(StandardCharsets.UTF_8));
             }
+
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
 

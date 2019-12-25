@@ -24,14 +24,17 @@
             android:layout_marginTop="@dimen/cartImageViewMarginTop"
             android:layout_marginBottom="@dimen/cartImageViewMarginBottom"
             android:scaleType="centerCrop"
-            android:src="@color/red" />
+            android:src="@color/red"
+            tools:ignore="ContentDescription"
+            android:layout_marginStart="8dp" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/cartRelativeLayoutMarginLeft"
-            android:layout_marginTop="@dimen/cartRelativeLayoutMarginTop">
+            android:layout_marginTop="@dimen/cartRelativeLayoutMarginTop"
+            android:layout_marginStart="@dimen/cartRelativeLayoutMarginLeft">
 
             <TextView
                 android:id="@+id/tv_goods_name"
@@ -41,7 +44,8 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="@color/grey_color1"
-                android:textSize="@dimen/cartgoodsnameTextSize" />
+                android:textSize="@dimen/cartgoodsnameTextSize"
+                android:layout_marginEnd="@dimen/cartgoodsnameMarginRight" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -72,7 +76,9 @@
                     android:text="x1"
                     android:textColor="@color/grey_color1"
                     android:textSize="@dimen/cartReduceTextVIewSize"
-                    tools:targetApi="lollipop" />
+                    tools:targetApi="lollipop"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="8dp" />
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>

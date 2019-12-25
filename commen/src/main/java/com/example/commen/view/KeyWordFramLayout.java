@@ -1,5 +1,6 @@
 package com.example.commen.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -250,6 +251,7 @@ public class KeyWordFramLayout extends FrameLayout implements ViewTreeObserver.O
     }
 
 //    /** 修正TextView的Y坐标将将其添加到容器上。 */
+    @SuppressLint("RtlHardcoded")
     private void attach2Screen(LinkedList<TextView> listTxt, int xCenter,
                                int yCenter, int yItem) {
         int size = listTxt.size();

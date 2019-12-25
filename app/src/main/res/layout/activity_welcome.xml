@@ -16,7 +16,9 @@
         android:background="@drawable/time_background"
         android:clickable="false"
         android:gravity="center"
-        android:text="5" />
+        android:text="5"
+        android:layout_alignParentEnd="true" />
+
 
     <ImageView
         android:id="@+id/iv_welcome_icon"
@@ -24,7 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
-        android:background="@drawable/app_icon_big" />
+        android:background="@drawable/app_icon_big"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:layout_width="wrap_content"

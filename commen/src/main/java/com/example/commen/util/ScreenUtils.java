@@ -1,5 +1,6 @@
 package com.example.commen.util;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -57,7 +58,7 @@ public class ScreenUtils {
         int statusHeight = -1;
         try
         {
-            Class<?> clazz = Class.forName("com.android.internal.R$dimen");
+            @SuppressLint("PrivateApi") Class<?> clazz = Class.forName("com.android.internal.R$dimen");
             Object object = clazz.newInstance();
             int height = Integer.parseInt(clazz.getField("status_bar_height")
                     .get(object).toString());

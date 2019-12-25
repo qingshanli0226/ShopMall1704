@@ -18,15 +18,19 @@ public class MessageManager {
     private SQLiteDatabase db;
     private MessageListener messageListener;
 
-    public MessageManager(Context context) {
-        this.context = context;
-        mHelper = new MessageSQLiteHelper(context, "message.db", null, 1);
-        db = mHelper.getWritableDatabase();
-    }
 
-    public static MessageManager getInstance(Context context) {
+    public void init(final Context context)
+    {
+        this.context = context;
+        mHelper = new MessageSQLiteHelper(context);
+        db = mHelper.getReadableDatabase();
+    }
+    public static MessageManager getInstance() {
         if (instache == null) {
-            instache = new MessageManager(context);
+           synchronized (MessageManager.class){
+               if (instache == null)
+                   instache = new MessageManager();
+           }
         }
         return instache;
     }

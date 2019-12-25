@@ -38,4 +38,8 @@
     <string name="function_adapter_findfor_tv_text_shopping_price">商品价格:</string>
     <string name="function_adapter_findfor_tv_text_order_number">订单号: </string>
     <string name="function_adapter_findfor_tv_text_payment_status">待付款</string>
+    <string name="cimmodity_detail">预售截止10月15日，预售期为限量礼盒版，包括特制木盒x1、画集x1、邮票x1套、书签x1、贴纸x1、信封x1、礼盒特</string>
+    <string name="commodity_by">由</string>
+    <string name="chooseStyle">请选择款式</string>
+    <string name="commodity_prompt">提示：普通商品享有质量问题7天退货，签收后3个工作日内可换货。其他特殊商品（如手办）的售后以页面说明为准</string>
 </resources>

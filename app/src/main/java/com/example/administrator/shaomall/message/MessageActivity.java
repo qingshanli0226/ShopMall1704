@@ -1,5 +1,6 @@
 package com.example.administrator.shaomall.message;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -10,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.shaomall.R;
-import com.example.administrator.shaomall.app.ShaoHuaApplication;
 import com.shaomall.framework.base.BaseActivity;
 import com.shaomall.framework.bean.MessageBean;
 import com.shaomall.framework.manager.MessageManager;
@@ -46,7 +46,7 @@ public class MessageActivity extends BaseActivity implements MessageManager.Mess
 
     @Override
     protected void initView() {
-        MessageManager.getInstance(ShaoHuaApplication.context).registerMessageListener(this);
+        MessageManager.getInstance().registerMessageListener(this);
         mTitleScanning = findViewById(R.id.title_scanning);
         mTitleBlack = findViewById(R.id.title_black);
         mTitleSearch = findViewById(R.id.title_search_rv);
@@ -75,7 +75,7 @@ public class MessageActivity extends BaseActivity implements MessageManager.Mess
     }
 
     private void changeMessageDatas() {
-        List<MessageBean> messageBeans = MessageManager.getInstance(ShaoHuaApplication.context).selectAll();
+        List<MessageBean> messageBeans = MessageManager.getInstance().selectAll();
         messages = messageBeans;
     }
 
@@ -97,6 +97,7 @@ public class MessageActivity extends BaseActivity implements MessageManager.Mess
             return position;
         }
 
+        @SuppressLint("CutPasteId")
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             Holder holder;
@@ -124,7 +125,7 @@ public class MessageActivity extends BaseActivity implements MessageManager.Mess
                     @Override
                     public void onDragStateChanged(int dragState, Badge badge, View targetView) {
                         if (dragState == STATE_SUCCEED) {
-                            MessageManager.getInstance(MessageActivity.this).updateData(messages.get(position).getMessageId());
+                            MessageManager.getInstance().updateData(messages.get(position).getMessageId());
                             messages.get(position).setIsRead("yes");
                         }
                     }
@@ -146,6 +147,6 @@ public class MessageActivity extends BaseActivity implements MessageManager.Mess
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        MessageManager.getInstance(ShaoHuaApplication.context).unRegisterMessageListener(this);
+        MessageManager.getInstance().unRegisterMessageListener(this);
     }
 }

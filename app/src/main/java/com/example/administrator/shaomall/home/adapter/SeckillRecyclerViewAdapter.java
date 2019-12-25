@@ -1,5 +1,6 @@
 package com.example.administrator.shaomall.home.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ public class SeckillRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         list = data.getList();
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_seckill_item, null));

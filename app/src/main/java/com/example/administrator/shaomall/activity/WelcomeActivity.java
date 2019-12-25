@@ -21,6 +21,7 @@ import com.shaomall.framework.base.BaseActivity;
 import java.util.Timer;
 import java.util.TimerTask;
 
+@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
 public class WelcomeActivity extends BaseActivity implements CacheManager.IHomeReceivedListener {
     private android.widget.RelativeLayout mWelcomeBackground;
     private android.widget.ImageView mIvWelcomeIcon;

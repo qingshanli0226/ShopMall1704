@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -8,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="217dp"
         android:scaleType="fitXY"
-        android:src="@drawable/home_title_background" />
+        android:src="@drawable/home_title_background"
+        tools:ignore="ContentDescription" />
 
     <RelativeLayout
         android:id="@+id/search_rl_top"
@@ -32,7 +34,8 @@
                 android:drawableTop="@drawable/user_channel_icon_feedback"
                 android:gravity="center"
                 android:text="@string/message"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:layout_marginEnd="20dp" />
 
             <TextView
                 android:id="@+id/search_tv_title"
@@ -44,8 +47,10 @@
                 android:gravity="center"
                 android:text="@string/app_name"
                 android:textColor="#fff"
-                android:textSize="17dp"
-                android:textStyle="bold" />
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:layout_marginStart="20dp"
+                android:drawableStart="@drawable/app_icon" />
 
 
         </RelativeLayout>
@@ -62,12 +67,15 @@
             android:background="@drawable/home_seach_square"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:visibility="visible">
+            android:visibility="visible"
+            android:layout_alignParentStart="true">
 
             <ImageView
                 style="@style/LittleImage"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/icon_search_white" />
+                android:src="@drawable/icon_search_white"
+                tools:ignore="ContentDescription"
+                android:layout_marginStart="10dp" />
 
             <TextView
                 android:id="@+id/search_tv_search"
@@ -79,12 +87,17 @@
                 android:cursorVisible="false"
                 android:gravity="center_vertical"
                 android:hint="@string/search_hint"
-                android:textSize="15dp" />
+                android:textSize="15sp"
+                tools:ignore="TextViewEdits"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="10dp" />
 
             <ImageView
                 style="@style/LittleImage"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/camera_icon" />
+                android:src="@drawable/camera_icon"
+                tools:ignore="ContentDescription"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp" />
 
         </LinearLayout>
 

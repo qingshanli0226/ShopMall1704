@@ -74,7 +74,8 @@
                     android:layout_marginLeft="4dp"
                     android:text="@{functionBean.getTotalPrice()}"
                     android:textColor="@color/red"
-                    android:textSize="22sp" />
+                    android:textSize="22sp"
+                    android:layout_marginStart="4dp" />
             </LinearLayout>
 
             <LinearLayout

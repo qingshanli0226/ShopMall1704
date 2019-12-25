@@ -115,7 +115,7 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
         mWebView = WebView(applicationContext)
         //配置webView
         WebViewConfig.initWebViewConfig(mWebView)
-        linearLayout = this.findViewByMe(R.id.mWbGoodInfoMore)
+        linearLayout = this.findViewById(R.id.mWbGoodInfoMore)
         linearLayout.addView(mWebView)
         mWebView.loadUrl(productPic)
     }
