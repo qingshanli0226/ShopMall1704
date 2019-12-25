@@ -67,7 +67,7 @@ public class SignInActivity extends BaseMVPActivity<String> {
             @Override
             public void onClick(View v) {
                 AvatarStudio.Builder builder = new AvatarStudio.Builder(SignInActivity.this);
-                builder.setTextColor(R.color.darkturquoise);
+                builder.setTextColor(R.color.ColorDark);
                 builder.setText("拍照", "本地选择", "取消");
                 builder.needCrop(true);
                 builder.dimEnabled(true);
@@ -89,7 +89,7 @@ public class SignInActivity extends BaseMVPActivity<String> {
             @Override
             public void onClick(View v) {
                 AvatarStudio.Builder builder = new AvatarStudio.Builder(SignInActivity.this);
-                builder.setTextColor(R.color.darkturquoise);
+                builder.setTextColor(R.color.ColorDark);
                 builder.setText("拍照", "本地选择", "取消");
                 builder.needCrop(true);
                 builder.dimEnabled(true);

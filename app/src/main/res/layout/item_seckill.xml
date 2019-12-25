@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/kill_background"
@@ -23,14 +24,16 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/home_arrow_left_flash" />
+            android:src="@drawable/home_arrow_left_flash"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="@string/skill_title"
-            android:textColor="#000" />
+            android:textColor="#000"
+            android:layout_marginStart="10dp" />
 
         <TextView
             android:id="@+id/seckill_item_tv_time"
@@ -39,7 +42,8 @@
             android:layout_marginLeft="10dp"
             android:background="@drawable/time_shape"
             android:padding="2dp"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            android:layout_marginStart="10dp" />
 
         <TextView
             android:id="@+id/seckill_item_tv_more"
@@ -49,7 +53,8 @@
             android:drawablePadding="5dp"
             android:drawableRight="@drawable/home_arrow_right"
             android:gravity="end"
-            android:text="@string/look_more" />
+            android:text="@string/look_more"
+            android:drawableEnd="@drawable/home_arrow_right" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

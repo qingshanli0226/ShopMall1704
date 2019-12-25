@@ -104,7 +104,7 @@ public class OrderFormActivity extends BaseMVPActivity<Object> implements View.O
     @Override
     protected void initView() {
 
-        mTcCartTop = findViewByMe(R.id.tc_cart_top);
+        mTcCartTop = findViewById(R.id.tc_cart_top);
         mTvAddress = findViewById(R.id.tv_order_address);  //地址信息
         mEtInputAddress = findViewById(R.id.et_input_address); //编辑的地址信息
         mTvOrderTotalPrice = findViewById(R.id.tv_order_total_price); //总价

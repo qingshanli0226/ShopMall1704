@@ -1,5 +1,6 @@
 package com.shaomall.framework.manager;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Environment;
 import android.widget.Toast;
@@ -64,6 +65,7 @@ public class HandPortraitManager {
                         super.onSubscribe(d);
                     }
 
+                    @SuppressLint("SdCardPath")
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         //获取sd卡的路径

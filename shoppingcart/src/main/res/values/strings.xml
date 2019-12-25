@@ -6,4 +6,6 @@
     <string name="shoopingcartPayText">付款(0)</string>
     <string name="cartReduceTextVIewText">一</string>
     <string name="cartNumTextVIewText">1</string>
+    <string name="orderform_address">点击选择地址</string>
+    <string name="orderform_hint">请输入详细地址</string>
 </resources>

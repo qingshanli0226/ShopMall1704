@@ -70,20 +70,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * 简化findViewById()
-     *
-     * @param resId
-     * @param <T>
-     * @return
-     */
-    protected <T extends View> T findViewByMe(@IdRes int resId) {
-        return (T) findViewById(resId);
-    }
 
+    protected void animOutActivity(){
+//        finish();
 
-    protected void animOutActivity() {
-        //        finish();
         ActivityInstanceManager.removeActivity(this);
         overridePendingTransition(R.anim.anim_in, R.anim.anim_out);
     }

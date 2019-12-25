@@ -22,8 +22,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/cartMarginLeft"
-            android:layout_marginRight="@dimen/cartMarginRight"
+            android:layout_marginStart="@dimen/cartMarginLeft"
+            android:layout_marginEnd="@dimen/cartMarginRight"
             android:checkMark="?android:attr/listChoiceIndicatorMultiple"
             android:gravity="center"
             android:minWidth="@dimen/cartminWidth"
@@ -37,20 +37,21 @@
             android:layout_height="@dimen/cartImageViewHeight"
             android:layout_marginTop="@dimen/cartImageViewMarginTop"
             android:layout_marginBottom="@dimen/cartImageViewMarginBottom"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            tools:ignore="ContentDescription" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/cartRelativeLayoutMarginLeft"
+            android:layout_marginStart="@dimen/cartRelativeLayoutMarginLeft"
             android:layout_marginTop="@dimen/cartRelativeLayoutMarginTop">
 
             <TextView
                 android:id="@+id/tv_goods_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/cartgoodsnameMarginRight"
+                android:layout_marginEnd="@dimen/cartgoodsnameMarginRight"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="@color/grey_color1"
@@ -78,8 +79,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/carttypeTextViewMarginLeft"
-                    android:layout_toRightOf="@+id/tv_goods_price"
+                    android:layout_marginStart="@dimen/carttypeTextViewMarginLeft"
+                    android:layout_toEndOf="@+id/tv_goods_price"
                     android:singleLine="true"
                     android:textColor="@color/grey_color3"
                     android:textSize="@dimen/carttypeTextViewTextSize"
@@ -88,9 +89,9 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/cartLinearLayoutMarginRight"
+                    android:layout_marginEnd="@dimen/cartLinearLayoutMarginRight"
                     android:orientation="horizontal">
 
                     <TextView

@@ -1,5 +1,7 @@
 package com.example.net.sign;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 
 import java.io.UnsupportedEncodingException;
@@ -8,6 +10,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Md5Util {
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String md5(String content){
         if (TextUtils.isEmpty(content)){
             return null;
@@ -17,6 +20,7 @@ public class Md5Util {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
                 b = content.getBytes(StandardCharsets.UTF_8);
             }
+
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.reset();
             md.update(b);

@@ -1,5 +1,6 @@
 package com.example.commen.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,7 @@ public class PageUtil {
         this.context = context;
         init();
     }
+    @SuppressLint("InflateParams")
     public void init(){
         //TODO 找到加载页面的布局
         inflate= LayoutInflater.from(context).inflate(R.layout.loadphoto, null);
