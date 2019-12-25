@@ -35,14 +35,19 @@ public class NetWorkUtils {
      * @return 网络类型
      */
     public static NetType getNetworkType() {
+        //获取连接管理器
         ConnectivityManager manager = (ConnectivityManager) NetworkManager.getDefault().getApplication().getSystemService(Context.CONNECTIVITY_SERVICE);
         if (manager == null) {
             return NetType.NONE;
         }
+
+        //获取网络信息
         NetworkInfo networkInfo = manager.getActiveNetworkInfo();
         if (networkInfo == null) {
             return NetType.NONE;
         }
+
+        //获取网络类型
         int type = networkInfo.getType();
         if (type == ConnectivityManager.TYPE_MOBILE) {
             if (networkInfo.getExtraInfo().toLowerCase().equals("cmnet")) {

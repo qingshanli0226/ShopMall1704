@@ -3,6 +3,7 @@ package com.example.commen.network;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.util.Log;
 
 import com.example.commen.Constants;
@@ -29,15 +30,19 @@ public class NetStateReceiver extends BroadcastReceiver {
             Log.e(Constants.TAG, "广播异常了");
             return;
         }
-        if (intent.getAction().equalsIgnoreCase(Constants.ANDROID_NET_CHANGE_ACTION)) {
+        if (intent.getAction().equalsIgnoreCase(ConnectivityManager.CONNECTIVITY_ACTION)) {
             Log.e(Constants.TAG, "网络状态变化了");
+
             type = NetWorkUtils.getNetworkType();
+
             if (NetWorkUtils.isNetWorkAvailable()) {
                 Log.i(Constants.TAG, "网络连上了");
                 mNetChangeObserver.onConnected(type);
+
             } else {
                 Log.i(Constants.TAG, "网络断开了");
                 mNetChangeObserver.onDisConnected();
+                
             }
         }
     }

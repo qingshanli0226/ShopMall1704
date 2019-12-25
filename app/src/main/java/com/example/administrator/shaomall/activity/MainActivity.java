@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -15,6 +16,10 @@ import com.example.administrator.shaomall.type.TypeFragment;
 import com.example.administrator.shaomall.home.HomeFragment;
 import com.example.administrator.shaomall.login.LoginActivity;
 
+import com.example.commen.Constants;
+import com.example.commen.network.NetChangeObserver;
+import com.example.commen.network.NetType;
+import com.example.commen.network.NetworkManager;
 import com.example.commen.util.ShopMailError;
 import com.example.shoppingcart.ShoppingCartFragment;
 import com.flyco.tablayout.CommonTabLayout;
@@ -28,7 +33,7 @@ import com.shaomall.framework.manager.UserInfoManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseMVPActivity<Object> implements ShoppingManager.ShoppingNumChangeListener, UserInfoManager.UserInfoStatusListener {
+public class MainActivity extends BaseMVPActivity<Object> implements ShoppingManager.ShoppingNumChangeListener, UserInfoManager.UserInfoStatusListener, NetChangeObserver {
     private int[] icon = {R.drawable.main_home, R.drawable.main_type, R.drawable.cry, R.drawable.main_cart, R.drawable.main_user};
     private int[] unIcon = {R.drawable.main_home_press, R.drawable.main_type_press, R.drawable.smile, R.drawable.main_cart_press, R.drawable.main_user_press};
     private String[] titles = {"首页", "分类", "发现", "购物车", "我的"};
@@ -48,6 +53,8 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
     protected void initView() {
         ShoppingManager.getInstance().registerShoppingNumChangeListener(this);
         UserInfoManager.getInstance().registerUserInfoStatusListener(this);
+        NetworkManager.getDefault().init(getApplication()); //网络状态管理类
+        NetworkManager.getDefault().setListener(this); //网络监听
 
         mMainFragmentHome = findViewById(R.id.main_fragmentHome);
         mMainTab = findViewById(R.id.main_tab);
@@ -196,6 +203,18 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
         currentFragment = targetFragment;
     }
 
+    @Override
+    public void onConnected(NetType type) {
+        Log.i(Constants.TAG, "网络连上了---type=" + type);
+        toast("网络连上了=" + type, false);
+    }
+
+    @Override
+    public void onDisConnected() {
+        Log.i(Constants.TAG, "网络断开了");
+        toast("网络断开了", false);
+    }
+
 
     /**
      * 填充数据
@@ -247,6 +266,7 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        NetworkManager.getDefault().logout();
         ShoppingManager.getInstance().unRegisterShoppingNumChangeListener(this);
     }
 }

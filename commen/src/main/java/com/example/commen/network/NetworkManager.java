@@ -2,8 +2,7 @@ package com.example.commen.network;
 
 import android.app.Application;
 import android.content.IntentFilter;
-
-import com.example.commen.Constants;
+import android.net.ConnectivityManager;
 
 public class NetworkManager {
     private static volatile NetworkManager instance;
@@ -37,7 +36,8 @@ public class NetworkManager {
     public void init(Application application) {
         this.mApplication = application;
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(Constants.ANDROID_NET_CHANGE_ACTION);
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+
         mApplication.registerReceiver(mReceiver, intentFilter);
     }
 

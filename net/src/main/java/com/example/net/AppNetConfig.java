@@ -6,8 +6,8 @@ public class AppNetConfig {
     public static final String TOKEN = "token";
 
     //服务端
-    public static final String BASE_URL = "http://49.233.93.155:8080/";
-//        public static final String BASE_URL = "http://169.254.230.253:8080/";
+        public static final String BASE_URL = "http://49.233.93.155:8080/";
+//    public static final String BASE_URL = "http://169.254.230.253:8080/";
 
 
     ////////////////////////////////////////////
@@ -136,8 +136,6 @@ public class AppNetConfig {
     public static final int REQUEST_CODE_GET_ORDER_INFO = 0x1004;
     //请求码支付是否成功
     public static final int REQUEST_CODE_CONFIRM_SERVER_PAY_RESULT = 0x1005;
-
-
 
 
 }

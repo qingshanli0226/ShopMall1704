@@ -41,12 +41,11 @@ public class ShaoHuaApplication extends BaseApplication {
         mainThread = Thread.currentThread();//实例化当前的Application的线程为主线程
         mainThreadId = android.os.Process.myTid();//获取当前线程的Id
 
-        NetworkManager.getDefault().init(this); //网络状态管理类
+
 
         //未捕获异常
         ShaoHuaCrashHandler.getInstance().init(this);
         ACache aCache = ACache.get(this);
-
 
         NetConnectManager.getInstance().init(this);
         UserInfoManager.getInstance().init(this, aCache); //用户数据管理类

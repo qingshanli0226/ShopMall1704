@@ -15,7 +15,6 @@ public class Constants {
 
     //网络状态使用
     public static final String TAG = "AliFei";
-    public static final String ANDROID_NET_CHANGE_ACTION = "com.example.commen.network";
 
 
 }

@@ -452,6 +452,7 @@ public class OrderFormActivity extends BaseMVPActivity<Object> implements View.O
 
     @Override
     protected void onDestroy() {
+        ShoppingManager.getInstance().getData();
         if (iBasePresenter != null) {
             iBasePresenter.detachView();
             iBasePresenter = null;
