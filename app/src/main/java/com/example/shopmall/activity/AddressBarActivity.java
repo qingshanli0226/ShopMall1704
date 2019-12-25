@@ -44,9 +44,10 @@ public class AddressBarActivity extends BaseActivity implements IPostBaseView<Au
     //自动登录
     private AutoLoginPresenter autoLoginPresenter;
 
+
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
 
         handler.sendEmptyMessage(100);
 
