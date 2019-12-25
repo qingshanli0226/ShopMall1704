@@ -33,7 +33,7 @@ public class HistoryActivity extends BaseActivity {
     @Override
     protected int setLayout() {
 
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
         return R.layout.activity_testhistory;
     }

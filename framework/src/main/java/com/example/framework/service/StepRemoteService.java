@@ -15,7 +15,6 @@ import com.example.framework.IMyAidlInterface;
 public class StepRemoteService extends Service {
 
     private Intent intent;
-
     private class RemoteBinder extends IMyAidlInterface.Stub{
 
         @Override
@@ -35,8 +34,10 @@ public class StepRemoteService extends Service {
         public void onServiceDisconnected(ComponentName componentName) {
             startService(intent);
             bindService(intent,serviceConnection,BIND_AUTO_CREATE);
+
         }
     };
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {

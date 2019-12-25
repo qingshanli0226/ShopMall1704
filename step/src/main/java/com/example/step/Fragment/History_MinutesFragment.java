@@ -1,8 +1,11 @@
 package com.example.step.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -66,6 +69,9 @@ public class History_MinutesFragment extends BaseFragment  {
 
                         mAxisXValues.add(new AxisValue(i).setLabel(real.get(i).getTime()));
                         mPointValues.add(new PointValue(i,real.get(i).getCurrentStep()));
+
+
+
                         initLineChart();//初始化
 
 
@@ -84,7 +90,11 @@ public class History_MinutesFragment extends BaseFragment  {
     }
 
 
+    @SuppressLint("NewApi")
     private void initLineChart() {
+
+
+
         Line line = new Line(mPointValues).setColor(ChartUtils.pickColor());
         List<Line> lines=new ArrayList<>();
         line.setShape(ValueShape.CIRCLE);
@@ -95,7 +105,7 @@ public class History_MinutesFragment extends BaseFragment  {
         line.setHasPoints(true);
         lines.add(line);
         LineChartData lineChartData = new LineChartData();
-        lines.add(line);
+//        lines.add(line);
         lineChartData.setLines(lines);
 
         Axis axisX = new Axis();
@@ -108,19 +118,27 @@ public class History_MinutesFragment extends BaseFragment  {
         axisX.setMaxLabelChars(0);
         axisX.setValues(mAxisXValues);
         axisX.setHasLines(true);
+        axisX.setHasSeparationLine(false);
         lineChartData.setAxisXBottom(axisX);
 
 
 
         lineChartView.setInteractive(true);
         lineChartView.setZoomType(ZoomType.HORIZONTAL);
+        lineChartView.setSaveEnabled(false);
         lineChartView.setMaxZoom((float)3);
         lineChartView.setLineChartData(lineChartData);
+        lineChartView.setValueTouchEnabled(false);
         lineChartView.setVisibility(View.VISIBLE);
+
+//        lineChartView.moveTo(mPointValues.get(mPointValues.size()-1).getX(),mPointValues.get(mPointValues.size()-1).getY());
+//        int x = (int)mPointValues.get(mPointValues.size() - 1).getX();
+//        int y=(int)mPointValues.get(mPointValues.size()-1).getY();
+//        lineChartView.moveTo(x,y);
 
         Viewport v = new Viewport(lineChartView.getMaximumViewport());
         v.left=0;
-        v.right=7;
+        v.right=mPointValues.size()-1;
         lineChartView.setCurrentViewport(v);
 
 

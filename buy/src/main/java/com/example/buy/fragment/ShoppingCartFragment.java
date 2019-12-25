@@ -697,7 +697,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     //购物车数据网址连接失败
     @Override
     public void onGetDataFailed(String ErrorMsg) {
-        lpLoading.start(LoadingPage.LOADING_FAILURE);
+//        lpLoading.start(LoadingPage.LOADING_FAILURE);
     }
 
     //更新购物车物品数量网址连接成功
