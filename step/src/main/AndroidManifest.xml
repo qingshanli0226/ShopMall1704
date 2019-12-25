@@ -16,6 +16,7 @@
             >
         </service>
 
+<!--        //进程保活-->
         <service android:name="com.example.framework.service.StepJobService"
             android:exported="true"
             android:enabled="true"
