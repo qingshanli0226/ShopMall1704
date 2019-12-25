@@ -1,147 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@drawable/toolbar_style"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:id="@+id/integralLinear">
     <com.example.common.view.MyToolBar
         android:id="@+id/integral_tool"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></com.example.common.view.MyToolBar>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="203dp"
-        android:background="@mipmap/wzy">
-
-        <ImageView
-            android:id="@+id/integral_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:background="@mipmap/wu"></ImageView>
-
-        <TextView
-            android:id="@+id/integral_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="160dp"
-            android:text="没有登录"
-            android:textColor="@android:color/black"
-            android:textSize="25sp"></TextView>
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="@android:color/white"></View>
 
     <RelativeLayout
+        android:id="@+id/rel1"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:background="@android:color/holo_orange_light">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:text="我的积分:"
-            android:textColor="@android:color/black"
-            android:textSize="23sp"></TextView>
+        android:layout_height="301dp"
+        android:layout_below="@+id/integral_tool">
 
         <TextView
             android:id="@+id/integral_point"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_margin="15dp"
-            android:text="20"
-            android:textSize="23sp"></TextView>
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="@android:color/white"></View>
-
-    <RelativeLayout
-        android:id="@+id/exchange_gift"
-        android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:background="@android:color/holo_orange_light">
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_70"
+            android:text="236"
+            android:textColor="@android:color/white"
+            android:textSize="75sp"></TextView>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_below="@+id/integral_point"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="---------\t\t我的积分\t\t---------"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp_18"></TextView>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_below="@+id/rel1"
+        android:background="#F5F5F5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:background="@android:color/white"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_60"
+            android:layout_width="match_parent"
+            android:layout_height="270dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:maxLines="1"
+                android:lineSpacingMultiplier="1.3"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="积分规则"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/sp_18"></TextView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:paddingLeft="@dimen/dp_15"
+                android:lineSpacingMultiplier="1.3"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="1:\t积分可以用来兑换商品"
+                android:textSize="@dimen/sp_16"></TextView>
+            <TextView
+                android:lineSpacingMultiplier="1.3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:paddingLeft="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="2:积分可以在商品付款时根据积分数减去一定的金额及享有优惠"
+                android:textSize="@dimen/sp_16"></TextView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:paddingLeft="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_10"
+                android:lineSpacingMultiplier="1.3"
+                android:text="3:积分获取由来,通过每日计步,每晚24点自动兑换,兑换比例为(1000步=1积分)"
+                android:textSize="@dimen/sp_16"></TextView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:paddingLeft="@dimen/dp_15"
+                android:lineSpacingMultiplier="1.3"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="4:本产品最终解释权由王泽云掌管，有事反馈建议，详情拨打10086!"
+                android:textSize="@dimen/sp_16"></TextView>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:background="@android:color/white"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/dp_20"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_margin="@dimen/dp_10"
+            android:gravity="center"
+            android:drawableTop="@drawable/duihuan"
+            android:id="@+id/exchange_gift"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/dp_10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:text="兑换礼品"
-            android:textColor="@android:color/black"
-            android:textSize="23sp"></TextView>
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-            android:layout_margin="15dp"
-            android:background="@mipmap/right"></ImageView>
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="@android:color/white"></View>
-
-    <RelativeLayout
-        android:id="@+id/exchange_record"
-        android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:background="@android:color/holo_orange_light">
-
+            android:textSize="@dimen/sp_15"></TextView>
+        <View
+            android:layout_marginTop="@dimen/dp_25"
+            android:background="#F5F5F5"
+            android:layout_width="2dp"
+            android:layout_height="@dimen/dp_30"></View>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_margin="@dimen/dp_10"
+            android:gravity="center"
+            android:drawableTop="@drawable/duihuanjilu"
+            android:id="@+id/exchange_record"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
             android:text="兑换记录"
-            android:textColor="@android:color/black"
-            android:textSize="23sp"></TextView>
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-            android:layout_margin="15dp"
-            android:background="@mipmap/right"></ImageView>
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="@android:color/white"></View>
-
-    <RelativeLayout
-        android:id="@+id/exchange_point"
-        android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:background="@android:color/holo_orange_light">
-
+            android:drawablePadding="@dimen/dp_10"
+            android:textSize="@dimen/sp_15"></TextView>
+        <View
+            android:layout_marginTop="@dimen/dp_25"
+            android:background="#F5F5F5"
+            android:layout_width="2dp"
+            android:layout_height="@dimen/dp_30"></View>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_margin="@dimen/dp_10"
+            android:gravity="center"
+            android:drawableTop="@drawable/jibu"
+            android:id="@+id/exchange_point"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/dp_10"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
             android:text="我的计步"
-            android:textColor="@android:color/black"
-            android:textSize="23sp"></TextView>
+            android:textSize="@dimen/sp_15"></TextView>
+    </LinearLayout>
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-            android:layout_margin="15dp"
-            android:background="@mipmap/right"></ImageView>
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/white"></View>
-</LinearLayout>
+</RelativeLayout>

@@ -8,91 +8,60 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
+    <com.example.point.view.MiuiWeatherView
+        android:id="@+id/muiview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="397dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+    <RelativeLayout style="@style/w_match">
 
-            <Spinner
-                android:id="@+id/history_spinner"
-                style="@style/Widget.AppCompat.DropDownItem.Spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_10"
-                android:background="@drawable/edit_background"
-                android:entries="@array/spinner" />
+        <TextView
+            style="@style/w_wrap"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="@dimen/dp_100"
+            android:drawableLeft="@mipmap/licheng"
+            android:drawablePadding="@dimen/dp_5"
+            android:gravity="center_vertical"
+            android:text="里程"
+            android:textColor="@android:color/darker_gray" />
 
-            <TextView
-                android:id="@+id/tv"
-                style="@style/w_wrap"
-                android:layout_marginTop="@dimen/dp_10"
-                android:text="从"
-                android:textColor="@android:color/black"
-                android:textSize="20sp" />
+        <TextView
+            style="@style/w_wrap"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/dp_100"
+            android:layout_marginRight="@dimen/dp_50"
+            android:drawableLeft="@mipmap/kaluli"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:text="卡路里"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/sp_15" />
 
-            <TextView
-                android:id="@+id/start"
-                style="@style/history_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/tv"
-                android:text="开始日期"
-                android:textSize="@dimen/sp_18" />
+        <TextView
+            android:id="@+id/history_mileage"
+            style="@style/w_wrap"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="@dimen/dp_50"
+            android:gravity="center_vertical"
+            android:text="公里"
+            android:textColor="@android:color/black"
+            android:textSize="21sp" />
 
-            <TextView
-                android:id="@+id/tv1"
-                style="@style/w_wrap"
-
-                android:layout_marginTop="10dp"
-                android:text="到"
-                android:textColor="@android:color/black"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/stop"
-                style="@style/history_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="结束日期"
-                android:textSize="@dimen/sp_18" />
-
-            <Button
-                android:id="@+id/show"
-                android:layout_width="52dp"
-                android:layout_height="27dp"
-                android:layout_marginTop="@dimen/dp_5"
-                android:background="@drawable/edit_background"
-                android:text="查询"
-                android:textSize="@dimen/sp_10" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
-
-        <RelativeLayout style="@style/w_match">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/history_re"
-                style="@style/w_match" />
-
-            <TextView
-                android:id="@+id/recently"
-                style="@style/w_wrap"
-                android:layout_centerInParent="true"
-                android:text="@string/history"
-                android:textColor="@android:color/black"
-                android:textSize="25sp"
-                android:visibility="gone" />
-        </RelativeLayout>
-    </LinearLayout>
-
+        <TextView
+            android:id="@+id/history_calorie"
+            style="@style/w_wrap"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/dp_50"
+            android:layout_marginRight="@dimen/dp_50"
+            android:gravity="center_vertical"
+            android:text="千卡"
+            android:textColor="@android:color/black"
+            android:textSize="21sp" />
+    </RelativeLayout>
 </LinearLayout>

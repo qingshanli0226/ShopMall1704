@@ -80,7 +80,7 @@ class MainActivity : BaseNetConnectActivity() {
 
     override fun initDate() {
         super.init()
-        startService(Intent(this@MainActivity,JobService::class.java))
+        //startService(Intent(this@MainActivity,JobService::class.java))
         main_easy.selectTextColor(R.color.colorGradualPurple)
             .normalTextColor(R.color.colorMainNormal)
             .selectIconItems(
