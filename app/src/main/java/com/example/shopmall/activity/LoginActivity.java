@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -13,6 +14,8 @@ import android.os.Message;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -106,6 +109,11 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
 
     @Override
     public void initData() {
+
+        View decorView = getWindow().getDecorView();
+        View contentView = findViewById(Window.ID_ANDROID_CONTENT);
+        decorView.getViewTreeObserver().addOnGlobalLayoutListener(getGlobalLayoutListener(decorView, contentView));
+
         tbLogin.setBackgroundColor(Color.WHITE);
         tbLogin.setLeftImg(R.drawable.left);
         tbLogin.setCenterText("登录", 18, Color.BLACK);
@@ -185,6 +193,29 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
                 }
             }
         });
+    }
+
+    private ViewTreeObserver.OnGlobalLayoutListener getGlobalLayoutListener(final View decorView, final View contentView) {
+        return new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Rect r = new Rect();
+                decorView.getWindowVisibleDisplayFrame(r);
+
+                int height = decorView.getContext().getResources().getDisplayMetrics().heightPixels;
+                int diff = height - r.bottom;
+
+                if (diff != 0) {
+                    if (contentView.getPaddingBottom() != diff) {
+                        contentView.setPadding(0, 0, 0, diff);
+                    }
+                } else {
+                    if (contentView.getPaddingBottom() != 0) {
+                        contentView.setPadding(0, 0, 0, 0);
+                    }
+                }
+            }
+        };
     }
 
     //密码光标在最后

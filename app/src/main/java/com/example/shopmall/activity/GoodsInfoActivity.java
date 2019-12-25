@@ -48,7 +48,7 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
     private RecyclerView rvGoodsInfo;
     private BottomBar bbGoodsInfo;
     private MyOKButton btGoodsInfo;
-    RelativeLayout rlGoodsinfo;
+    private RelativeLayout rlGoodsinfo;
 
     private ArrayList<GoodsBean> list_goods = new ArrayList<>();
 
@@ -57,7 +57,6 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
 
     private InsertPresenter addOneProduct;
     private GoodsBean goods_bean;
-    private int mainitem;
     private GoodsInfoAdapter goodsInfoAdapter;
     private Drawable mine;
     private Drawable collect;

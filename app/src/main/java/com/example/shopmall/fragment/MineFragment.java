@@ -1,5 +1,6 @@
 package com.example.shopmall.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -76,7 +77,8 @@ public class MineFragment extends BaseFragment implements IPostBaseView<LoginBea
             tbMine.setLeftImg(R.mipmap.new_message_icon);
             tbMine.setRightImg(R.mipmap.new_user_setting);
             SharedPreferences login = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
-            String getToken = login.getString("getToken", "");
+
+            String getToken = UserManager.getInstance().getToken();
 
             tbMine.setTitleClickLisner(new TitleBar.TitleClickLisner() {
                 @Override
@@ -94,6 +96,7 @@ public class MineFragment extends BaseFragment implements IPostBaseView<LoginBea
 
                 }
             });
+
             boolean loginStatus = UserManager.getInstance().getLoginStatus();
             if (loginStatus) {
                 String avatar = UserManager.getInstance().getUser().getAvatar();
@@ -133,7 +136,7 @@ public class MineFragment extends BaseFragment implements IPostBaseView<LoginBea
                 Toast.makeText(getActivity(), "未登录", Toast.LENGTH_SHORT).show();
             }
 
-
+            //积分
             tvUserScore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -141,6 +144,7 @@ public class MineFragment extends BaseFragment implements IPostBaseView<LoginBea
                 }
             });
 
+            //登录
             tvUsername.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -152,6 +156,7 @@ public class MineFragment extends BaseFragment implements IPostBaseView<LoginBea
                 @Override
                 public void setUserDesc(final ResultBean resultBean) {
                     getActivity().runOnUiThread(new Runnable() {
+                        @SuppressLint("SetTextI18n")
                         @Override
                         public void run() {
                             if (resultBean.getName() != null) {
@@ -180,7 +185,6 @@ public class MineFragment extends BaseFragment implements IPostBaseView<LoginBea
                 } else {
                     tvUsername.setVisibility(View.VISIBLE);
                 }
-
 
                 ivUserIconAvator.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -275,12 +279,15 @@ public class MineFragment extends BaseFragment implements IPostBaseView<LoginBea
                     }
                 });
 
+                //收藏
                 rlUserCollect.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         startActivity(new Intent(getContext(), CollectionActivity.class));
                     }
                 });
+            }else {
+                Toast.makeText(getContext(), "未登录", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -313,6 +320,7 @@ public class MineFragment extends BaseFragment implements IPostBaseView<LoginBea
             return R.layout.fragment_mine;
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public void onPostDataSucess(LoginBean data) {
             if (data != null) {

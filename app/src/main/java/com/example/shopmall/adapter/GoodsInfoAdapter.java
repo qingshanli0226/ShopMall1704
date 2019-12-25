@@ -119,7 +119,7 @@ public class GoodsInfoAdapter extends BaseAdapter<GoodsBean,GoodsInfoAdapter.Vie
             webSettings.setAppCachePath(cache);
             webSettings.setAppCacheMaxSize(5*1024*1024);
 
-            settings.setJavaScriptEnabled(true);
+            webSettings.setJavaScriptEnabled(true);
             //详情WebView
             wbAtguiguGoodsInfo.loadUrl("http://www.atguigu.com");
 

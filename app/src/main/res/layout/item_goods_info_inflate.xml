@@ -17,6 +17,8 @@
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
         android:hint="中华园"
+        android:textSize="18sp"
+        android:textColor="@color/colorBlack"
         style="@style/ShopMallText"/>
 
     <TextView
@@ -25,7 +27,7 @@
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:hint="预售截止10月15日，预售期为限量礼盒版，包括特制木盒x1、画集x1、邮票x1套、书签x1、贴纸x1、信封x1、礼盒特"
-        android:textSize="18sp"/>
+        android:textSize="16sp"/>
 
     <TextView
         android:id="@+id/tv_cover_price"
