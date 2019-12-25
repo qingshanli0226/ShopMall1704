@@ -525,6 +525,4 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
             redNum.setVisibility(View.VISIBLE);
         }
     }
-
-
 }

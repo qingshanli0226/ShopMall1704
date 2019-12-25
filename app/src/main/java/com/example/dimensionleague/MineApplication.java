@@ -8,6 +8,7 @@ import com.example.framework.manager.NetConnectManager;
 import com.example.point.StepIsSupport;
 import com.example.point.stepmanager.StepPointManager;
 
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
@@ -19,6 +20,7 @@ import leakcanary.LeakCanary;
  * author:李浩帆
  */
 public class MineApplication extends Application {
+
     @Override
     public void onCreate() {
         super.onCreate();

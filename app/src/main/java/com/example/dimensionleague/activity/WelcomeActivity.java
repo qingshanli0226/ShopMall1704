@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.VideoView;
+
 import com.example.common.User;
 import com.example.framework.manager.AccountManager;
 import com.example.dimensionleague.AutoLoginManager;
@@ -26,6 +27,8 @@ import com.example.framework.port.ITaskFinishListener;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import org.jetbrains.annotations.NotNull;
 import java.lang.ref.WeakReference;
+
+import io.reactivex.Observer;
 
 public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFinishListener {
     private final Handler handler =new MyHandler(this);
@@ -62,11 +65,14 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
                 Manifest.permission.SYSTEM_ALERT_WINDOW,
                 Manifest.permission.ACCESS_BACKGROUND_LOCATION
 
-        )
-                       .subscribe(permission -> {
-                           // 成功
-                           // 失败
-                       });
+        ).subscribe(permission->{
+            if(permission){
+                //TODO 成功
+
+            }else{//TODO 失败
+
+            }
+        });
 
         videoView = findViewById(R.id.videoView);
         but = findViewById(R.id.welcome_button);
