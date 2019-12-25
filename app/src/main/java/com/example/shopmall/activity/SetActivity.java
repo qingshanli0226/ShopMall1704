@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.buy.bean.ShoppingCartBean;
+import com.example.buy.fragment.ShoppingCartFragment;
+import com.example.buy.presenter.ShoppingCartPresenter;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IPostBaseView;
@@ -18,6 +21,8 @@ import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
 import com.example.shopmall.bean.AddressBean;
 import com.example.shopmall.presenter.LogOutPresenter;
+
+import java.util.HashMap;
 
 /**
  * 设置
@@ -43,7 +48,7 @@ public class SetActivity extends BaseActivity implements IPostBaseView<AddressBe
     @Override
     public void initData() {
         tbSet.setTitleBacKGround(Color.WHITE);
-        tbSet.setCenterText("设置",18,Color.BLACK);
+        tbSet.setCenterText("设置", 18, Color.BLACK);
         tbSet.setLeftImg(R.drawable.left);
         tbSet.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
@@ -62,7 +67,7 @@ public class SetActivity extends BaseActivity implements IPostBaseView<AddressBe
             }
         });
 
-        if (!UserManager.getInstance().getLoginStatus()){
+        if (!UserManager.getInstance().getLoginStatus()) {
             initLogin();
         }
 
@@ -73,11 +78,11 @@ public class SetActivity extends BaseActivity implements IPostBaseView<AddressBe
 
                 String getToken = UserManager.getInstance().getToken();
                 Log.d("####", "handleMessage: " + getToken);
-                if (UserManager.getInstance().getLoginStatus()){
-                    logOutPresenter = new LogOutPresenter("logout",getToken);
+                if (UserManager.getInstance().getLoginStatus()) {
+                    logOutPresenter = new LogOutPresenter("logout", getToken);
                     logOutPresenter.attachPostView(SetActivity.this);
                     logOutPresenter.getCipherTextData();
-                }else {
+                } else {
                     initLogin();
                 }
             }
@@ -93,14 +98,21 @@ public class SetActivity extends BaseActivity implements IPostBaseView<AddressBe
 
     @Override
     public void onPostDataSucess(AddressBean data) {
-        if (data.getCode().equals("200")){
+
+        if (data.getCode().equals("200")) {
             ResultBean resultBean = new ResultBean();
-            UserManager.getInstance().setActiveUser(SetActivity.this,resultBean);
+            UserManager.getInstance().setActiveUser(SetActivity.this, resultBean);
             sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
             sharedPreferences.edit().putBoolean("isLogin",false).apply();
             ShoppingManager.getInstance().setMainitem(0);
+            SharedPreferences.Editor edit = sharedPreferences.edit();
+            edit.putBoolean("isLogin", false);
+            edit.apply();
+            startActivity(new Intent(this, MainActivity.class));
+            Toast.makeText(this, "退出登录成功", Toast.LENGTH_SHORT).show();
+            ShoppingManager.getInstance().setMainitem(4);
             finish();
-        }else {
+        } else {
             initLogin();
         }
     }
@@ -114,7 +126,7 @@ public class SetActivity extends BaseActivity implements IPostBaseView<AddressBe
     protected void onDestroy() {
         super.onDestroy();
 
-        if(logOutPresenter!=null){
+        if (logOutPresenter != null) {
             logOutPresenter.detachView();
         }
     }

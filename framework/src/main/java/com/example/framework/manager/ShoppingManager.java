@@ -36,6 +36,7 @@ public class ShoppingManager {
 
     //数目变化监听
     private OnNumberChangedListener onNumberChangedListener;
+    private OnNumberChangedListener onNumberChangedListener2;
 
     public ShoppingManager() {
     }
@@ -155,10 +156,17 @@ public class ShoppingManager {
         if (onNumberChangedListener != null) {
             onNumberChangedListener.NumberChanged(getAllNumber() + x);
         }
+        if (onNumberChangedListener2 != null) {
+            onNumberChangedListener2.NumberChanged(getAllNumber() + x);
+        }
     }
 
     public void setOnNumberChangedListener(OnNumberChangedListener onNumberChangedListener) {
         this.onNumberChangedListener = onNumberChangedListener;
+    }
+
+    public void setOnNumberChangedListener2(OnNumberChangedListener onNumberChangedListener) {
+        this.onNumberChangedListener2 = onNumberChangedListener;
     }
 
     public interface OnNumberChangedListener {

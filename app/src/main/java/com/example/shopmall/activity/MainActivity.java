@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -151,16 +152,13 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
 
 
     public void refreshShoppingCartData() {
-        boolean loginStatus = UserManager.getInstance().getLoginStatus();
-        if(loginStatus){
-            String token = ShoppingManager.getInstance().getToken(MainActivity.this);
-            HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("token", token);
+        String token = ShoppingManager.getInstance().getToken(MainActivity.this);
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("token", token);
 
-            ShoppingCartPresenter presenter = new ShoppingCartPresenter("getShortcartProducts", ShoppingCartBean.class, hashMap);
-            presenter.attachGetView((ShoppingCartFragment) fragmentArrayList.get(3));
-            presenter.getGetData();
-        }
+        shoppingCartPresenter = new ShoppingCartPresenter("getShortcartProducts", ShoppingCartBean.class, hashMap);
+        shoppingCartPresenter.attachGetView((ShoppingCartFragment) fragmentArrayList.get(3));
+        shoppingCartPresenter.getGetData();
     }
 
     private MessageReceiver mMessageReceiver;

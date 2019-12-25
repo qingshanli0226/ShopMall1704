@@ -12,8 +12,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,6 +24,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.buy.bean.InsertBean;
 import com.example.buy.presenter.InsertPresenter;
 import com.example.common.BottomBar;
+import com.example.common.ShoppingCartView;
 import com.example.common.SignUtil;
 import com.example.common.TitleBar;
 import com.example.common.view.MyOKButton;
@@ -42,7 +46,7 @@ import java.util.Map;
 /**
  * 商品详情
  */
-public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<InsertBean> {
+public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<InsertBean>, ShoppingManager.OnNumberChangedListener {
 
     private TitleBar tbGoodsInfo;
     private RecyclerView rvGoodsInfo;
@@ -62,6 +66,8 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
     private Drawable collect;
     private Drawable shoppingcart;
 
+    private ShoppingCartView svRedpoint;
+
     @Override
     protected int setLayout() {
         return R.layout.activity_goods_info;
@@ -74,14 +80,28 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
         bbGoodsInfo = findViewById(R.id.bb_goods_info);
         btGoodsInfo = findViewById(R.id.bt_goods_info);
         rlGoodsinfo = findViewById(R.id.rl_app_goodsinfo);
+        svRedpoint = findViewById(R.id.sv_app_redpoint);
 
         rvGoodsInfo.setLayoutManager(new LinearLayoutManager(this));
         list_goods.clear();
+
+        initRedPoint();
+    }
+
+    private void initRedPoint() {
+        WindowManager windowManager = getWindowManager();
+        Display defaultDisplay = windowManager.getDefaultDisplay();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        defaultDisplay.getMetrics(displayMetrics);
+        int widthPixels = displayMetrics.widthPixels;
+        svRedpoint.setX(widthPixels/2+20);
+        int allNumber = ShoppingManager.getInstance().getAllNumber();
+        svRedpoint.setNum(allNumber);
     }
 
     @Override
     public void initData() {
-
+        ShoppingManager.getInstance().setOnNumberChangedListener2(this);
         initIntent();
 
         tbGoodsInfo.setTitleBacKGround(Color.WHITE);
@@ -130,7 +150,6 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
         if(flag==0){
             collect = getResources().getDrawable(R.drawable.collect);
         }
-        Log.e("####",flag+"");
         final Drawable shoppingcart = getResources().getDrawable(R.drawable.shoppingcart);
         Drawable[] drawables = new Drawable[]{mine, collect, shoppingcart};
         bbGoodsInfo.setBottombarName(strs);
@@ -163,7 +182,6 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
         btGoodsInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("####", "点击");
                 String token = ShoppingManager.getInstance().getToken(GoodsInfoActivity.this);
                 ShoppingManager.getInstance().setOnNumberChanged(x);
                 x++;
@@ -216,8 +234,6 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
 
         textView.setX(x);
         textView.setY(startF.y-150f);
-
-        Log.e("####",x+"/"+startF.y);
 
         ObjectAnimator objectAnimator = new ObjectAnimator().ofFloat(textView, "translationY", startF.y-150f,startF.y-350f);
         objectAnimator.setDuration(2000);
@@ -303,7 +319,6 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
                 Drawable[] drawables = new Drawable[]{mine, collect, shoppingcart};
                 bbGoodsInfo.setTapDrables(drawables);
             }
-            Log.e("####collectionsize",collections.size()+"");
             ShoppingManager.getInstance().setCollections(this,collections);
         }else {
             setAlertDialog();
@@ -355,6 +370,18 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
 
         if (addOneProduct != null){
             addOneProduct.detachView();
+        }
+
+    }
+
+    int nums = 0;
+    @Override
+    public void NumberChanged(int num) {
+        if(nums!=num){
+            nums = num;
+            ShoppingManager.getInstance().setAfternum(num);
+            ShoppingManager.getInstance().setBeforenum(num);
+            svRedpoint.setNum(num);
         }
 
     }
