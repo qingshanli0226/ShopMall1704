@@ -65,7 +65,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     protected int setLayout() {
         return R.layout.fragment_mine;
     }
-
+    //
     @Override
     protected void initView(View view) {
         tbMine = view.findViewById(R.id.tb_mine);
