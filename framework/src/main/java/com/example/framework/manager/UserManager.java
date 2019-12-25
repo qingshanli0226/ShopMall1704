@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.common.ACache;
+import com.example.framework.bean.HomepageBean;
 import com.example.framework.bean.ResultBean;
 import com.example.framework.greendao.DaoMaster;
 import com.example.framework.greendao.DaoSession;
@@ -44,6 +45,7 @@ public class UserManager {
         }
     }
 
+
     public boolean getLoginStatus() {
         SharedPreferences login = mContext.getSharedPreferences("login", Context.MODE_PRIVATE);
         boolean login1 = login.getBoolean("isLogin", false);
@@ -60,14 +62,19 @@ public class UserManager {
     public String getToken() {
         SharedPreferences token1 = mContext.getSharedPreferences("login", Context.MODE_PRIVATE);
         String getToken = token1.getString("getToken", "");
-        return getToken;
+        if (getToken != null) {
+            return getToken;
+        }
+        throw new NullPointerException();
     }
 
     public ResultBean getUser() {
         ACache aCache = ACache.get(mContext);
         ResultBean resultBean = (ResultBean) aCache.getAsObject("CurrentUser");
-        Log.e("####", "" + resultBean.toString());
-        return resultBean;
+        if (resultBean != null) {
+            return resultBean;
+        }
+        return null;
     }
 
     IUserInterface iUserInterface;

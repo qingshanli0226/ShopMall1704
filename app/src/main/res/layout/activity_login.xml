@@ -75,16 +75,6 @@
 
         </LinearLayout>
 
-        <Switch
-            android:id="@+id/st_automatic"
-            style="@style/ShopMallText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginEnd="@dimen/login_mEnd_30"
-            android:switchPadding="10dp"
-            android:text="@string/login_automatic" />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">

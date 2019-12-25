@@ -57,6 +57,7 @@ public class LoadingPage extends LinearLayout {
         removeAllViews();//移除view
         init();
     }
+
     //加载成功时调用
     public void isSucceed() {
         if (animationDrawable.isRunning()) {
@@ -65,5 +66,10 @@ public class LoadingPage extends LinearLayout {
         this.setVisibility(GONE);
     }
 
+    public void DetachLoadingView() {
+        animationDrawable.stop();
+        this.setVisibility(GONE);
+        animationDrawable = null;
+    }
 
 }

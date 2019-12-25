@@ -43,7 +43,7 @@ public class SetActivity extends BaseActivity implements IPostBaseView<AddressBe
     @Override
     public void initData() {
         tbSet.setTitleBacKGround(Color.WHITE);
-        tbSet.setCenterText("设置",18,Color.BLACK);
+        tbSet.setCenterText("设置", 18, Color.BLACK);
         tbSet.setLeftImg(R.drawable.left);
         tbSet.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
@@ -62,7 +62,7 @@ public class SetActivity extends BaseActivity implements IPostBaseView<AddressBe
             }
         });
 
-        if (!UserManager.getInstance().getLoginStatus()){
+        if (!UserManager.getInstance().getLoginStatus()) {
             initLogin();
         }
 
@@ -73,11 +73,11 @@ public class SetActivity extends BaseActivity implements IPostBaseView<AddressBe
 
                 String getToken = UserManager.getInstance().getToken();
                 Log.d("####", "handleMessage: " + getToken);
-                if (UserManager.getInstance().getLoginStatus()){
-                    logOutPresenter = new LogOutPresenter("logout",getToken);
+                if (UserManager.getInstance().getLoginStatus()) {
+                    logOutPresenter = new LogOutPresenter("logout", getToken);
                     logOutPresenter.attachPostView(SetActivity.this);
                     logOutPresenter.getCipherTextData();
-                }else {
+                } else {
                     initLogin();
                 }
             }
@@ -87,21 +87,24 @@ public class SetActivity extends BaseActivity implements IPostBaseView<AddressBe
     private void initLogin() {
         Toast.makeText(SetActivity.this, "请先登录", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(SetActivity.this, LoginActivity.class);
-        intent.putExtra("mainitem",4);
+        intent.putExtra("mainitem", 4);
         startActivity(intent);
         finish();
     }
 
     @Override
     public void onPostDataSucess(AddressBean data) {
-        if (data.getCode().equals("200")){
+
+        if (data.getCode().equals("200")) {
             ResultBean resultBean = new ResultBean();
-            UserManager.getInstance().setActiveUser(SetActivity.this,resultBean);
+            UserManager.getInstance().setActiveUser(SetActivity.this, resultBean);
             sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
-            sharedPreferences.edit().putBoolean("isLogin",false).apply();
-            startActivity(new Intent(this,MainActivity.class));
+            SharedPreferences.Editor edit = sharedPreferences.edit();
+            edit.putBoolean("isLogin", false);
+            edit.apply();
+            startActivity(new Intent(this, MainActivity.class));
             finish();
-        }else {
+        } else {
             initLogin();
         }
     }
@@ -115,7 +118,7 @@ public class SetActivity extends BaseActivity implements IPostBaseView<AddressBe
     protected void onDestroy() {
         super.onDestroy();
 
-        if(logOutPresenter!=null){
+        if (logOutPresenter != null) {
             logOutPresenter.detachView();
         }
     }

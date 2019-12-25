@@ -42,7 +42,7 @@ public class TitleBar extends LinearLayout {
     private RelativeLayout mTitle;
     private TitleClickLisner titleClickLisner;
     private TextView mTvMessage;
-
+    private RelativeLayout mRlLineTitle;
     //初始化
     private void init() {
         View view = LayoutInflater.from(context).inflate(R.layout.titlebar_layout, this);
@@ -54,6 +54,7 @@ public class TitleBar extends LinearLayout {
         mIvRight = view.findViewById(R.id.iv_right);
         mTitle = view.findViewById(R.id.rl_title);
         mTvMessage = view.findViewById(R.id.tv_red_message);
+        mRlLineTitle=view.findViewById(R.id.rl_title_line);
 
         mIvRight.setOnClickListener(new OnClickListener() {
             @Override
@@ -191,6 +192,7 @@ public class TitleBar extends LinearLayout {
     //设置标题栏背景
     public void setTitleBacKGround(@ColorInt int colorRes) {
         mTitle.setBackgroundColor(colorRes);
+        mRlLineTitle.setBackgroundColor(colorRes);
     }
 
     //标题栏监听

@@ -10,27 +10,26 @@ import java.util.HashMap;
 /**
  * 自动登录
  */
-public class AutoLoginPresenter extends BasePresenter {
+public class AutoLoginPresenter extends BasePresenter<AutoLoginBean> {
 
-    private String path;
     private String token;
 
     public AutoLoginPresenter() {
     }
 
-    public AutoLoginPresenter(String path, String token) {
-        this.path = path;
+    public AutoLoginPresenter(String token) {
         this.token = token;
     }
 
     @Override
     protected Type getBeanType() {
-        return new TypeToken<AutoLoginBean>() {}.getType();
+        return new TypeToken<AutoLoginBean>() {
+        }.getType();
     }
 
     @Override
     protected String getPath() {
-        return path;
+        return "autoLogin";
     }
 
     @Override

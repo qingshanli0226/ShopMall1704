@@ -47,9 +47,7 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
     private EditText etLoginWord;
     private Button btLoginRegister;
     private ImageView ivLoginWord;
-    private Switch mSwitch;
     private boolean isView = false;
-
     private LoginPresenter loginPresenter;
 
     @SuppressLint("HandlerLeak")
@@ -101,7 +99,6 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
         etLoginWord = findViewById(R.id.et_login_word);
         btLoginRegister = findViewById(R.id.bt_login_register);
         ivLoginWord = findViewById(R.id.iv_login_word);
-        mSwitch = findViewById(R.id.st_automatic);
     }
 
     @Override
@@ -124,24 +121,6 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
             @Override
             public void CenterClick() {
 
-            }
-        });
-
-        //自动登录
-        mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    SharedPreferences login = getSharedPreferences("login", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor edit = login.edit();
-                    edit.putBoolean("isAutomatic", true);
-                    edit.apply();
-                } else {
-                    SharedPreferences login = getSharedPreferences("login", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor edit = login.edit();
-                    edit.putBoolean("isAutomatic", false);
-                    edit.apply();
-                }
             }
         });
 
@@ -244,11 +223,9 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         if (loginPresenter != null){
             loginPresenter.detachView();
         }
-
         handler.removeCallbacksAndMessages(this);
 
     }

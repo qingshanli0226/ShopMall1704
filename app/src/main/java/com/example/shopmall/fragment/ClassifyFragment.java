@@ -5,8 +5,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Handler;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.example.common.LoadingPage;
@@ -28,7 +31,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ClassifyFragment extends BaseFragment implements IGetBaseView<ClassifyBean>,ILoadView {
+public class ClassifyFragment extends BaseFragment implements IGetBaseView<ClassifyBean>, ILoadView {
 
     private TitleBar tbClassify;
     private LoadingPage lpClassifyLoading;
@@ -55,7 +58,7 @@ public class ClassifyFragment extends BaseFragment implements IGetBaseView<Class
     protected void initData() {
         ShoppingManager.getInstance().setMainitem(1);
         tbClassify.setTitleBacKGround(Color.WHITE);
-        tbClassify.setCenterText("分类",18,Color.BLACK);
+        tbClassify.setCenterText("分类", 18, Color.BLACK);
 
         tbClassify.setTitleClickLisner(new TitleBar.TitleClickLisner() {
             @Override
@@ -74,7 +77,7 @@ public class ClassifyFragment extends BaseFragment implements IGetBaseView<Class
             }
         });
 
-        if (isFirst){
+        if (isFirst) {
             classifyLeftAdapter = new ClassifyLeftAdapter();
             classifyLeftAdapter.reFresh(titles);
             rvClassifyLeft.setAdapter(classifyLeftAdapter);
@@ -91,7 +94,7 @@ public class ClassifyFragment extends BaseFragment implements IGetBaseView<Class
             @Override
             public void getLikeliest(int position) {
                 classifyLeftAdapter.changeSelected(position);
-                if (position != 0){
+                if (position != 0) {
                     isFirst = false;
                 }
                 getDataPresenter(urls[position]);
@@ -104,7 +107,7 @@ public class ClassifyFragment extends BaseFragment implements IGetBaseView<Class
 
     //网络获取数据
     private void getDataPresenter(String url) {
-        integerPresenter = new IntegerPresenter(url,ClassifyBean.class);
+        integerPresenter = new IntegerPresenter(url, ClassifyBean.class);
         integerPresenter.attachGetView(this);
         integerPresenter.attachLoadView(this);
         integerPresenter.getGetData();
@@ -173,13 +176,14 @@ public class ClassifyFragment extends BaseFragment implements IGetBaseView<Class
                 lpClassifyLoading.isSucceed();
                 llClassify.setVisibility(View.VISIBLE);
             }
-        },1000);
+        }, 1000);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         integerPresenter.detachView();
+        lpClassifyLoading.DetachLoadingView();
     }
 
 }

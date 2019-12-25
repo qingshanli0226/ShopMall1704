@@ -1,6 +1,8 @@
 package com.example.shopmall.bean;
 
-public class AutoLoginBean {
+import java.io.Serializable;
+
+public class AutoLoginBean implements Serializable {
 
     /**
      * code : 200
@@ -36,7 +38,8 @@ public class AutoLoginBean {
         this.result = result;
     }
 
-    public static class ResultBean {
+    public static class ResultBean implements Serializable {
+        private static final long serialVersionUID = 7739136488851049711L;
         /**
          * id : 1610
          * name : 1610

@@ -60,7 +60,7 @@ public class AddressBarActivity extends BaseActivity implements IPostBaseView<Au
             if (msg.what == 100){
                 String getToken = UserManager.getInstance().getToken();
 
-                autoLoginPresenter = new AutoLoginPresenter("autoLogin",getToken);
+                autoLoginPresenter = new AutoLoginPresenter(getToken);
                 autoLoginPresenter.attachPostView(AddressBarActivity.this);
                 autoLoginPresenter.getCipherTextData();
             }

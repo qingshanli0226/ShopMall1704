@@ -24,7 +24,6 @@ public class StepRemoteService extends Service {
         }
     }
 
-
     ServiceConnection serviceConnection=new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -37,6 +36,7 @@ public class StepRemoteService extends Service {
             bindService(intent,serviceConnection,BIND_AUTO_CREATE);
         }
     };
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
