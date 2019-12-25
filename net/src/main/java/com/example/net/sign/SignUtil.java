@@ -1,16 +1,21 @@
 package com.example.net.sign;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Base64;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
+
+import static java.nio.charset.StandardCharsets.*;
 
 public class SignUtil {
     public static TreeMap<String, String> getEmptyTreeMap() {
@@ -119,10 +124,11 @@ public class SignUtil {
         return signValue;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String stringToMD5(String string) {
         byte[] hash;
         try {
-            hash = MessageDigest.getInstance("MD5").digest(string.getBytes("UTF-8"));
+            hash = MessageDigest.getInstance("MD5").digest(string.getBytes(UTF_8));
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
 

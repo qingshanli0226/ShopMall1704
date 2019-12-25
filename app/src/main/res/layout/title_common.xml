@@ -25,14 +25,15 @@
                 android:layout_height="match_parent"
                 android:background="?android:selectableItemBackgroundBorderless"
                 android:src="@drawable/sao_img"
-                tools:ignore="NewApi" />
+                tools:ignore="ContentDescription,NewApi" />
 
             <ImageView
                 android:id="@+id/title_black"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/top_bar_left_back"
-                android:visibility="gone" />
+                android:visibility="gone"
+                tools:ignore="ContentDescription" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -52,7 +53,8 @@
                 android:drawableLeft="@drawable/home_search_icon"
                 android:gravity="center_vertical"
                 android:hint="@string/search_hint"
-                android:paddingLeft="10dp" />
+                android:paddingLeft="10dp"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
 
             <ImageView
                 android:id="@+id/title_camera"
@@ -62,7 +64,9 @@
                 android:layout_marginRight="10dp"
                 android:background="?android:selectableItemBackgroundBorderless"
                 android:src="@drawable/camera_icon"
-                tools:ignore="NewApi" />
+                tools:ignore="ContentDescription,NewApi"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp" />
 
 
         </RelativeLayout>
@@ -70,11 +74,13 @@
         <ImageView
             android:id="@+id/title_message"
             style="@style/DefaultImage"
+            android:layout_height="19dp"
             android:layout_gravity="center_vertical"
+            android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
             android:background="?android:selectableItemBackgroundBorderless"
             android:src="@drawable/message_icon"
-            tools:ignore="NewApi" />
+            tools:ignore="ContentDescription,NewApi" />
     </LinearLayout>
 
 </RelativeLayout>

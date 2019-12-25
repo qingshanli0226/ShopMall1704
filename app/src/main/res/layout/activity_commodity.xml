@@ -52,30 +52,31 @@
                         android:id="@+id/mIvGoodInfoImage"
                         android:layout_width="match_parent"
                         android:layout_height="350dp"
-                        android:layout_gravity="center_horizontal" />
+                        android:layout_gravity="center_horizontal"
+                        tools:ignore="ContentDescription" />
 
                     <TextView
                         android:id="@+id/mTvGoodInfoName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:text="【预售】《来年就交给你啦》珍藏画册 限量礼盒版"
-                        android:textColor="#323427" />
+                        android:textColor="#323427"
+                        tools:ignore="RtlHardcoded" />
 
                     <TextView
                         android:id="@+id/mTvGoodInfoDesc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:text="预售截止10月15日，预售期为限量礼盒版，包括特制木盒x1、画集x1、邮票x1套、书签x1、贴纸x1、信封x1、礼盒特"
+                        android:text="@string/cimmodity_detail"
                         android:textColor="#767f86" />
+
 
                     <TextView
                         android:id="@+id/mTvGoodInfoPrice"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:text="￥150.00"
                         android:textColor="#ed3f3f"
                         android:textSize="20sp" />
 
@@ -94,7 +95,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="由"
+                            android:text="@string/commodity_by"
                             android:textColor="#3c3d40" />
 
                         <TextView
@@ -122,8 +123,9 @@
                         android:layout_height="wrap_content"
                         android:drawableRight="@drawable/home_arrow_right"
                         android:padding="10dp"
-                        android:text="请选择款式"
-                        android:textColor="#3c3d40" />
+                        android:text="@string/chooseStyle"
+                        android:textColor="#3c3d40"
+                        tools:ignore="RtlHardcoded" />
 
                     <View
                         android:layout_width="match_parent"
@@ -134,7 +136,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:text="提示：普通商品享有质量问题7天退货，签收后3个工作日内可换货。其他特殊商品（如手办）的售后以页面说明为准"
+                        android:text="@string/commodity_prompt"
                         android:textColor="#3c3d40" />
 
                     <View

@@ -1,5 +1,6 @@
 package com.example.commen.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.Editable;
@@ -12,9 +13,9 @@ import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 
+@SuppressLint("AppCompatCustomView")
 public class SearchEditText extends EditText {
     private Drawable mRightDrawable;
-    private boolean isHasFocus;
 
 
     public SearchEditText(Context context) {
@@ -62,6 +63,7 @@ public class SearchEditText extends EditText {
 //     * 控件左边到clean的图标右边缘的区域
 //     * 所以这两者之间的区域刚好是clean的图标的区域
 //     */
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
@@ -83,8 +85,7 @@ public class SearchEditText extends EditText {
     private class FocusChangeListenerImpl implements OnFocusChangeListener{
         @Override
         public void onFocusChange(View v, boolean hasFocus) {
-            isHasFocus=hasFocus;
-            if (isHasFocus) {
+            if (hasFocus) {
                 boolean isVisible=getText().toString().length()>=1;
                 setClearDrawableVisible(isVisible);
             } else {

@@ -1,5 +1,6 @@
 package com.example.commen.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -90,26 +91,25 @@ public class ClearEditText extends AppCompatEditText {
      * 步骤4：对删除图标区域设置点击事件，即"点击 = 清空搜索框内容"
      * 原理：当手指抬起的位置在删除图标的区域，即视为点击了删除图标 = 清空搜索框内容
      */
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            // 原理：当手指抬起的位置在删除图标的区域，即视为点击了删除图标 = 清空搜索框内容
-            case MotionEvent.ACTION_UP:
-                Drawable drawable = clearDrawable;
-                if (drawable != null && event.getX() <= (getWidth() - getPaddingRight())
-                        && event.getX() >= (getWidth() - getPaddingRight() - drawable.getBounds().width())) {
-                    setText("");
-                }
-                // 判断条件说明
-                // event.getX() ：抬起时的位置坐标
-                // getWidth()：控件的宽度
-                // getPaddingRight():删除图标图标右边缘至EditText控件右边缘的距离
-                // 即：getWidth() - getPaddingRight() = 删除图标的右边缘坐标 = X1
-                // getWidth() - getPaddingRight() - drawable.getBounds().width() = 删除图标左边缘的坐标 = X2
-                // 所以X1与X2之间的区域 = 删除图标的区域
-                // 当手指抬起的位置在删除图标的区域（X2=<event.getX() <=X1），即视为点击了删除图标 = 清空搜索框内容
-                // 具体示意图请看下图
-                break;
+        // 原理：当手指抬起的位置在删除图标的区域，即视为点击了删除图标 = 清空搜索框内容
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            Drawable drawable = clearDrawable;
+            if (drawable != null && event.getX() <= (getWidth() - getPaddingRight())
+                    && event.getX() >= (getWidth() - getPaddingRight() - drawable.getBounds().width())) {
+                setText("");
+            }
+            // 判断条件说明
+            // event.getX() ：抬起时的位置坐标
+            // getWidth()：控件的宽度
+            // getPaddingRight():删除图标图标右边缘至EditText控件右边缘的距离
+            // 即：getWidth() - getPaddingRight() = 删除图标的右边缘坐标 = X1
+            // getWidth() - getPaddingRight() - drawable.getBounds().width() = 删除图标左边缘的坐标 = X2
+            // 所以X1与X2之间的区域 = 删除图标的区域
+            // 当手指抬起的位置在删除图标的区域（X2=<event.getX() <=X1），即视为点击了删除图标 = 清空搜索框内容
+            // 具体示意图请看下图
         }
         return super.onTouchEvent(event);
     }

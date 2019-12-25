@@ -60,8 +60,9 @@ public class SearchActivity extends BaseMVPActivity<SearchBean> implements View.
             boolean data = SearchManager.getInstance().hasData(editString);
             if (!data) {
                 SearchManager.getInstance().insertData(editString);
+                addTag(editString);
             }
-            addTag(editString);
+
             String pingYin = PinYinUtil.getPingYin(editString);
             searchPresenter = new SearchPresenter(pingYin);
             searchPresenter.attachView(this);

@@ -20,8 +20,7 @@ import java.util.List;
 public class CacheManager {
     private static CacheManager instace;
     private List<IHomeReceivedListener> iHomeReceivedListeners = new LinkedList<>();
-    private Context context;
-    private ACache mAcache;//缓存
+    private ACache Acache;//缓存
     private CacheService cacheService;
 
     private CacheManager() {
@@ -37,8 +36,7 @@ public class CacheManager {
     }
 
     public void init(Context context) {
-        this.context = context;
-        mAcache = ACache.get(this.context);
+        Acache = ACache.get(context);
         Intent intent = new Intent();
         intent.setClass(context, CacheService.class);
 
@@ -91,12 +89,12 @@ public class CacheManager {
 
     private void saveLocal(HomeBean.ResultBean bean) {
         //把Bean存储到ACache
-        mAcache.put(Constants.KEY_HOME_DATA, bean);
+        Acache.put(Constants.KEY_HOME_DATA, bean);
     }
 
     //获取缓存的bean
     public HomeBean.ResultBean getHomeBean() {
-        HomeBean.ResultBean acache = (HomeBean.ResultBean) mAcache.getAsObject(Constants.KEY_HOME_DATA);
+        HomeBean.ResultBean acache = (HomeBean.ResultBean) Acache.getAsObject(Constants.KEY_HOME_DATA);
         return acache;
     }
 

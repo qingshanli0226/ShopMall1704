@@ -34,7 +34,8 @@
             android:layout_weight="1"
             android:gravity="center|left"
             android:text="头像"
-            android:textSize="@dimen/settingTextSize" />
+            android:textSize="@dimen/settingTextSize"
+            tools:ignore="RtlHardcoded" />
 
         <View
             android:layout_width="0dp"
@@ -54,7 +55,8 @@
             android:layout_height="38dp"
             android:layout_gravity="center"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_action_right" />
+            android:src="@drawable/ic_action_right"
+            tools:ignore="ContentDescription" />
     </LinearLayout>
 
     <View
@@ -73,7 +75,8 @@
             android:layout_weight="2"
             android:gravity="center|left"
             android:text="用户名"
-            android:textSize="@dimen/settingTextSize" />
+            android:textSize="@dimen/settingTextSize"
+            tools:ignore="NestedWeights,RtlHardcoded" />
 
         <TextView
             android:id="@+id/settingyong"
@@ -83,7 +86,8 @@
             android:layout_weight="3"
             android:gravity="right|center"
             android:text="金闪闪"
-            android:textSize="@dimen/settingTextSize" />
+            android:textSize="@dimen/settingTextSize"
+            tools:ignore="RtlHardcoded" />
     </LinearLayout>
 
     <View
@@ -103,7 +107,8 @@
             android:layout_weight="1"
             android:gravity="center|left"
             android:text="昵称"
-            android:textSize="@dimen/settingTextSize" />
+            android:textSize="@dimen/settingTextSize"
+            tools:ignore="RtlHardcoded" />
 
         <TextView
             android:id="@+id/settingTextChangeName"
@@ -113,7 +118,8 @@
             android:layout_weight="5"
             android:gravity="right|center"
             android:text="金闪闪"
-            android:textSize="@dimen/settingTextSize" />
+            android:textSize="@dimen/settingTextSize"
+            tools:ignore="RtlHardcoded" />
 
     </LinearLayout>
 
@@ -134,7 +140,8 @@
             android:layout_weight="1"
             android:gravity="center|left"
             android:text="性别"
-            android:textSize="@dimen/settingTextSize" />
+            android:textSize="@dimen/settingTextSize"
+            tools:ignore="RtlHardcoded" />
 
         <TextView
             android:id="@+id/settingTextsex"
@@ -143,14 +150,16 @@
             android:layout_weight="5"
             android:gravity="right|center"
             android:text="保密"
-            android:textSize="@dimen/settingTextSize" />
+            android:textSize="@dimen/settingTextSize"
+            tools:ignore="RtlHardcoded" />
 
         <ImageView
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:layout_gravity="center"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_action_right" />
+            android:src="@drawable/ic_action_right"
+            tools:ignore="ContentDescription" />
     </LinearLayout>
 
     <View
@@ -170,7 +179,8 @@
             android:layout_weight="1"
             android:gravity="center|left"
             android:text="出生日期"
-            android:textSize="@dimen/settingTextSize" />
+            android:textSize="@dimen/settingTextSize"
+            tools:ignore="RtlHardcoded" />
 
         <TextView
             android:id="@+id/settingTextDate"
@@ -179,14 +189,16 @@
             android:layout_weight="3"
             android:gravity="right|center"
             android:text="保密"
-            android:textSize="@dimen/settingTextSize" />
+            android:textSize="@dimen/settingTextSize"
+            tools:ignore="RtlHardcoded" />
 
         <ImageView
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:layout_gravity="center"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_action_right" />
+            android:src="@drawable/ic_action_right"
+            tools:ignore="ContentDescription" />
     </LinearLayout>
 
     <View

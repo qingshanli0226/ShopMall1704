@@ -1,5 +1,6 @@
 package com.example.commen.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -207,7 +208,7 @@ public class KeyWordFramLayout extends FrameLayout implements ViewTreeObserver.O
                 // 随机颜色
                 // int ranColor = 0xff000000 | random.nextInt(0x0077ffff);
                 // 随机位置，糙值
-                int xy[] = randomXY(random, listX, listY, xItem);
+                int[] xy = randomXY(random, listX, listY, xItem);
                 // 随机字体大小
                 int txtSize = TEXT_SIZE_MIN
                         + random.nextInt(TEXT_SIZE_MAX - TEXT_SIZE_MIN + 1);
@@ -250,6 +251,7 @@ public class KeyWordFramLayout extends FrameLayout implements ViewTreeObserver.O
     }
 
 //    /** 修正TextView的Y坐标将将其添加到容器上。 */
+    @SuppressLint("RtlHardcoded")
     private void attach2Screen(LinkedList<TextView> listTxt, int xCenter,
                                int yCenter, int yItem) {
         int size = listTxt.size();

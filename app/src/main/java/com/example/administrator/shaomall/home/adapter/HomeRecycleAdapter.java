@@ -1,5 +1,6 @@
 package com.example.administrator.shaomall.home.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -47,6 +48,7 @@ public class HomeRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private TextView timeTv;
     private boolean isFirst = true;
     private int dt = 0;
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -70,6 +72,7 @@ public class HomeRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         this.context = context;
     }
 
+    @SuppressLint("InflateParams")
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {

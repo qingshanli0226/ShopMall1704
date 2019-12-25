@@ -1,5 +1,6 @@
 package com.example.shoppingcart.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -30,12 +31,12 @@ public class RvAdp extends RecyclerView.Adapter<RvAdp.Myhodler> {
     @NonNull
     @Override
     public Myhodler onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_cart, null);
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(context).inflate(R.layout.item_cart, null);
         return new Myhodler(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final Myhodler myhodler, final int i) {
+    public void onBindViewHolder(@NonNull final Myhodler myhodler, @SuppressLint("RecyclerView") final int i) {
         Picasso.with(context).load(arr.get(i).getUrl()).into(myhodler.ivAdapterListPic);
         myhodler.tvGoodsName.setText(arr.get(i).getProductName());
         myhodler.tvGoodsPrice.setText(arr.get(i).getProductPrice());

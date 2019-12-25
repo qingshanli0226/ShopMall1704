@@ -39,7 +39,8 @@
                     android:background="?android:selectableItemBackgroundBorderless"
                     android:scaleType="fitXY"
                     android:src="@drawable/app_icon"
-                    tools:ignore="ContentDescription,NewApi" />
+                    tools:ignore="ContentDescription,NewApi"
+                    android:layout_marginStart="20dp" />
 
                 <TextView
                     android:id="@+id/tv_userName"
@@ -51,7 +52,8 @@
                     android:gravity="center"
                     android:text="@string/app_fragment_mine_tv_text_user_name"
                     android:textColor="@color/black"
-                    tools:ignore="NewApi" />
+                    tools:ignore="NewApi"
+                    android:layout_marginStart="8dp" />
 
 
                 <View
@@ -70,7 +72,8 @@
                     android:text="积分: "
                     android:textColor="#FFF"
                     android:visibility="gone"
-                    tools:targetApi="lollipop" />
+                    tools:targetApi="lollipop"
+                    android:layout_marginEnd="18dp" />
             </LinearLayout>
 
 

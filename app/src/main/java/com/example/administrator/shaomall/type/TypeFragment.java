@@ -1,24 +1,37 @@
 package com.example.administrator.shaomall.type;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 
 import com.example.administrator.shaomall.R;
+import com.example.administrator.shaomall.message.MessageActivity;
+import com.example.administrator.shaomall.search.SearchActivity;
 import com.example.administrator.shaomall.type.adapter.TypeLeftAdapter;
 import com.example.administrator.shaomall.type.adapter.TypeRightAdapter;
 import com.example.commen.Constants;
 import com.example.net.AppNetConfig;
 import com.shaomall.framework.base.BaseMVPFragment;
+import com.shaomall.framework.bean.MessageBean;
 import com.shaomall.framework.bean.TypeBean;
+import com.shaomall.framework.manager.MessageManager;
 
 import java.util.List;
 
-public class TypeFragment extends BaseMVPFragment<TypeBean> {
+import q.rorbin.badgeview.QBadgeView;
+
+public class TypeFragment extends BaseMVPFragment<TypeBean> implements MessageManager.MessageListener {
     private android.widget.ListView mTypeLeftLv;
     private android.support.v7.widget.RecyclerView mTypeRightRv;
     private TypePresenter typePresenter;
+    private android.widget.EditText titleSearchTv;
+    private QBadgeView qBadgeView;
+    private android.widget.ImageView titleMessage;
+
 
     @Override
     public int setLayoutId() {
@@ -36,12 +49,31 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> {
     protected void initView(View view, Bundle savedInstanceState) {
         mTypeLeftLv = view.findViewById(R.id.type_left_lv);
         mTypeRightRv = view.findViewById(R.id.type_right_rv);
+        titleSearchTv = view.findViewById(R.id.title_search_tv);
+        titleSearchTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toClass(SearchActivity.class);
+            }
+        });
+        titleMessage = view.findViewById(R.id.title_message);
+        qBadgeView = new QBadgeView(getContext());
+        qBadgeView.bindTarget(titleMessage)
+                .setBadgeTextSize(10f,true)
+                .setBadgeGravity(Gravity.START | Gravity.TOP)
+                .setBadgeBackgroundColor(Color.BLUE);
     }
 
     @Override
     protected void initData() {
         getDataFormNet(urls[0]);
 
+        titleMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toClass(MessageActivity.class);
+            }
+        });
 
     }
 
@@ -63,8 +95,7 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 adapter.changeSelected(position);
-                if (position!=0)
-                {
+                if (position != 0) {
                     isFirst = false;
                 }
                 getDataFormNet(urls[position]);
@@ -72,6 +103,7 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> {
             }
         });
     }
+
     private void getDataFormNet(String url) {
         typePresenter = new TypePresenter();
         typePresenter.setPath(url);
@@ -85,8 +117,7 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> {
     public void onRequestHttpDataListSuccess(int requestCode, String message, List<TypeBean> data) {
         super.onRequestHttpDataListSuccess(requestCode, message, data);
         if (requestCode == Constants.TYPE_DATA_CODE) {
-            if (isFirst)
-            {
+            if (isFirst) {
                 typeLeftAdapter = new TypeLeftAdapter(getContext());
                 mTypeLeftLv.setAdapter(typeLeftAdapter);
             }
@@ -114,9 +145,21 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (typePresenter != null){
+        if (typePresenter != null) {
             typePresenter.detachView();
             typePresenter = null;
         }
+    }
+
+    @Override
+    public void getMessage(MessageBean messageBean, int messageNum) {
+        qBadgeView.setBadgeNumber(messageNum);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        int i = MessageManager.getInstance().gitNotReadNum();
+        qBadgeView.setBadgeNumber(i);
     }
 }

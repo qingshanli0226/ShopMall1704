@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="217dp"
         android:scaleType="fitXY"
-        android:src="@drawable/home_title_background" />
+        android:src="@drawable/home_title_background"
+        tools:ignore="ContentDescription" />
+
     <RelativeLayout
-        android:layout_marginTop="30dp"
         android:id="@+id/search_rl_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-     >
+        android:layout_marginTop="30dp">
 
         <RelativeLayout
             android:id="@+id/search_layout"
@@ -24,29 +26,29 @@
                 android:id="@+id/search_iv_back"
                 android:layout_width="30dp"
                 android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="20dp"
+                android:background="?android:selectableItemBackgroundBorderless"
                 android:drawableTop="@drawable/user_channel_icon_feedback"
+                android:gravity="center"
                 android:text="@string/message"
                 android:textColor="@color/colorWhite"
-                android:gravity="center"
-                android:layout_alignParentEnd="true"
-                android:background="?android:selectableItemBackgroundBorderless"/>
+                tools:ignore="NewApi" />
 
             <TextView
                 android:id="@+id/search_tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="11.5dp"
+                android:drawableLeft="@drawable/app_icon"
                 android:gravity="center"
                 android:text="@string/app_name"
                 android:textColor="#fff"
-                android:textSize="17dp"
-                android:drawableLeft="@drawable/app_icon"
-                android:layout_marginLeft="20dp"
-                android:textStyle="bold"
-                />
+                android:textSize="17sp"
+                android:textStyle="bold" />
 
 
         </RelativeLayout>
@@ -69,7 +71,8 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/icon_search_white" />
+                android:src="@drawable/icon_search_white"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/search_tv_search"
@@ -80,14 +83,16 @@
                 android:layout_weight="1"
                 android:cursorVisible="false"
                 android:gravity="center_vertical"
-                android:hint="这是搜索框"
-                android:textSize="15dp" />
+                android:hint="@string/search_hint"
+                android:textSize="15sp"
+                tools:ignore="TextViewEdits" />
 
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/home_search_icon" />
+                android:src="@drawable/home_search_icon"
+                tools:ignore="ContentDescription" />
 
         </LinearLayout>
 

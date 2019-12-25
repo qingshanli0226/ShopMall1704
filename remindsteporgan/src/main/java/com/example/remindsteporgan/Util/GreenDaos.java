@@ -1,5 +1,6 @@
 package com.example.remindsteporgan.Util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -12,9 +13,9 @@ import java.util.List;
 
 public class GreenDaos {
     public Context context;
-    BeanDao beanDao;
-    private DaoSession daoSession;
-    public static GreenDaos greenDaos;
+    private BeanDao beanDao;
+    @SuppressLint("StaticFieldLeak")
+    private static GreenDaos greenDaos;
 
     public static GreenDaos getGreenDaos() {
         if (greenDaos==null){
@@ -30,7 +31,7 @@ public class GreenDaos {
         DaoMaster.DevOpenHelper openHelper = new DaoMaster.DevOpenHelper(context, "ssh");
         SQLiteDatabase writableDatabase = openHelper.getWritableDatabase();
         DaoMaster daoMaster = new DaoMaster(writableDatabase);
-        daoSession = daoMaster.newSession();
+        DaoSession daoSession = daoMaster.newSession();
         beanDao = daoSession.getBeanDao();
 
     }

@@ -35,4 +35,6 @@
         <item name="android:layout_width">@dimen/dp_40</item>
         <item name="android:layout_height">@dimen/dp_40</item>
     </style>
+
+
 </resources>

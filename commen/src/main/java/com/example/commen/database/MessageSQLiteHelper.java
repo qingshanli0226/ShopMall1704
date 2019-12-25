@@ -7,8 +7,8 @@ import android.util.Log;
 
 public class MessageSQLiteHelper extends SQLiteOpenHelper {
     //带全部参数的构造函数，此构造函数必不可少
-    public MessageSQLiteHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public MessageSQLiteHelper(Context context) {
+        super(context,"message.db",null,1);
     }
     @Override
     public void onCreate(SQLiteDatabase db) {

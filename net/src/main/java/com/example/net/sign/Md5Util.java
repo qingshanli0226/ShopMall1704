@@ -1,18 +1,22 @@
 package com.example.net.sign;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Md5Util {
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String md5(String content){
         if (TextUtils.isEmpty(content)){
             return null;
         }
         try{
-            byte[] b = content.getBytes("UTF-8");
+            byte[] b = content.getBytes(StandardCharsets.UTF_8);
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.reset();
             md.update(b);
@@ -30,8 +34,6 @@ public class Md5Util {
             return outStrBuf.toString();
 
 
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }

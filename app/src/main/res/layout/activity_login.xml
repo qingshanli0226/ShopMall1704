@@ -27,8 +27,9 @@
             android:gravity="right|center_vertical"
             android:paddingRight="8dp"
             android:text="@string/login_user_name"
-            android:textColor="@color/darkturquoise"
-            android:textSize="@dimen/loginUserTextViewSize" />
+            android:textColor="@color/ColorDark"
+            android:textSize="@dimen/loginUserTextViewSize"
+            tools:ignore="RtlHardcoded,RtlSymmetry" />
 
         <EditText
             android:id="@+id/loginUser"
@@ -38,8 +39,10 @@
             android:background="@null"
             android:maxLength="11"
             android:singleLine="true"
-            android:textColor="@color/darkturquoise"
-            android:textCursorDrawable="@drawable/cursor_color" />
+            android:textColor="@color/ColorDark"
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:importantForAutofill="no"
+            tools:ignore="LabelFor,TextFields" />
 
 
     </LinearLayout>
@@ -59,8 +62,10 @@
             android:gravity="right|center_vertical"
             android:paddingRight="8dp"
             android:text="@string/login_user_pwd"
-            android:textColor="@color/darkturquoise"
-            android:textSize="@dimen/loginPassWordTextviewTextSize" />
+            android:textColor="@color/ColorDark"
+            android:textSize="@dimen/loginPassWordTextviewTextSize"
+            android:layout_marginStart="@dimen/loginPassWordTextviewMarginLeft"
+            tools:ignore="NestedWeights,RtlHardcoded,RtlSymmetry" />
 
         <EditText
             android:id="@+id/loginPass"
@@ -71,8 +76,9 @@
             android:inputType="textPassword"
             android:maxLength="11"
             android:singleLine="true"
-            android:textColor="@color/darkturquoise"
-            android:textCursorDrawable="@drawable/cursor_color" />
+            android:textColor="@color/ColorDark"
+            android:textCursorDrawable="@drawable/cursor_color"
+            tools:ignore="Autofill,LabelFor" />
     </LinearLayout>
 
     <LinearLayout
@@ -90,8 +96,9 @@
             android:layout_weight="1"
             android:gravity="right|center"
             android:text="@string/login_user_goRegister"
-            android:textColor="@color/darkturquoise"
-            android:textSize="@dimen/loginLoginSigninTextViewTextSize" />
+            android:textColor="@color/ColorDark"
+            android:textSize="@dimen/loginLoginSigninTextViewTextSize"
+            tools:ignore="RtlHardcoded" />
 
     </LinearLayout>
 

@@ -2,10 +2,15 @@ package com.example.administrator.shaomall.mine;
 
 import android.annotation.SuppressLint;
 
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.view.Gravity;
 import android.view.View;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -21,13 +26,17 @@ import com.example.remindsteporgan.RemindActivity;
 import com.shaomall.framework.base.BaseMVPFragment;
 import com.shaomall.framework.base.presenter.IBasePresenter;
 import com.shaomall.framework.bean.LoginBean;
+import com.shaomall.framework.bean.MessageBean;
+import com.shaomall.framework.manager.MessageManager;
 import com.shaomall.framework.manager.PointManager;
 import com.shaomall.framework.manager.ShoppingManager;
 import com.shaomall.framework.manager.UserInfoManager;
 
 import java.io.File;
 
-public class MineFragment extends BaseMVPFragment<String> implements View.OnClickListener, UserInfoManager.UserInfoStatusListener, PointManager.CallbackIntegralListener, UserInfoManager.AvatarUpdateListener {
+import q.rorbin.badgeview.QBadgeView;
+
+public class MineFragment extends BaseMVPFragment<String> implements View.OnClickListener, UserInfoManager.UserInfoStatusListener, PointManager.CallbackIntegralListener, UserInfoManager.AvatarUpdateListener , MessageManager.MessageListener {
     private android.widget.ImageView mIvHeader;
     private android.widget.TextView mTvUserName;
     private android.widget.Button mBtLogout;
@@ -40,6 +49,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
     private android.widget.LinearLayout mLlLayoutShow;
     private String avatar;
     private int pointSum;
+    private QBadgeView qBadgeView;
     private com.example.commen.ToolbarCustom mTcAppFragmentMineTop;
 
     @Override
@@ -65,6 +75,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         TextView mTvShopAttention = view.findViewById(R.id.tv_shopAttention);
         TextView mTvFavoriteContent = view.findViewById(R.id.tv_favoriteContent);
         TextView mTvBrowsingHistory = view.findViewById(R.id.tv_browsingHistory);
+
         mBtLogout = view.findViewById(R.id.bt_logout);
         mTvPoint = view.findViewById(R.id.tv_point);
         mTvNoPayment = view.findViewById(R.id.tv_noPayment); //待支付
@@ -85,6 +96,13 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
 
         mTvNoPayment.setOnClickListener(this);          //待支付
         mTvSendGoods.setOnClickListener(this);          //待发货
+
+        ImageView image = mTcAppFragmentMineTop.findViewById(R.id.iv_toolbar_message_right);
+        qBadgeView = new QBadgeView(getContext());
+        qBadgeView.bindTarget(image)
+                .setBadgeTextSize(10f, true)
+                .setBadgeGravity(Gravity.START | Gravity.TOP)
+                .setBadgeBackgroundColor(Color.BLUE);
     }
 
     @Override
@@ -96,6 +114,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View v) {
 
@@ -144,6 +163,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
     /**
      * 待发货
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void findForSendData() {
         String title = mTvSendGoods.getText().toString().trim();
         Bundle bundle = new Bundle();
@@ -155,6 +175,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
     /**
      * 待支付
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void findForPayData() {
         String title = mTvNoPayment.getText().toString().trim();
         Bundle bundle = new Bundle();
@@ -167,6 +188,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
     /**
      * 跳转积分界面
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void setPoint() {
         //        mTvPoint.setText();
         //把用户名先传到计步器的页面可以使用数据库存储用户名
@@ -326,5 +348,17 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         UserInfoManager.getInstance().unRegisterAvatarUpdateListener(this);
 
         super.onDestroy();
+    }
+
+    @Override
+    public void getMessage(MessageBean messageBean, int messageNum) {
+        qBadgeView.setBadgeNumber(messageNum);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        int i = MessageManager.getInstance().gitNotReadNum();
+        qBadgeView.setBadgeNumber(i);
     }
 }

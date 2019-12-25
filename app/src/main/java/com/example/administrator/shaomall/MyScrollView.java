@@ -1,5 +1,6 @@
 package com.example.administrator.shaomall;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -77,6 +78,7 @@ public class MyScrollView extends ScrollView {
         return isIntercept;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         if (childView == null || !isFinishAnimation) {

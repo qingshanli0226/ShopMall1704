@@ -55,7 +55,11 @@
                     android:minHeight="@dimen/shoopingcartCheckBoxminHeight"
                     android:paddingLeft="@dimen/shoopingcartCheckBoxpadingLeft"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:visibility="visible" />
+                    android:visibility="visible"
+                    android:paddingStart="@dimen/shoopingcartCheckBoxpadingLeft"
+                    tools:ignore="RtlSymmetry"
+                    android:layout_marginStart="@dimen/shoopingcartCheckBoxMarginLeft"
+                    android:layout_marginEnd="@dimen/shoopingcartCheckBoxMarginRight" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -63,7 +67,8 @@
                     android:layout_marginLeft="@dimen/shoopingcartsumMarginLeft"
                     android:text="@string/shoopingcartsumText"
                     android:textSize="@dimen/shoopingcartsumTextSize"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_marginStart="@dimen/shoopingcartsumMarginLeft" />
 
                 <TextView
                     android:id="@+id/tv_total_price"
@@ -84,7 +89,8 @@
                 android:clickable="true"
                 android:gravity="center"
                 android:text="@string/shoopingcartdeleteText"
-                android:textColor="#FAFAFA" />
+                android:textColor="#FAFAFA"
+                android:focusable="true" />
 
             <TextView
                 android:id="@+id/tv_go_to_pay"
@@ -95,7 +101,8 @@
                 android:clickable="true"
                 android:gravity="center"
                 android:text="@string/shoopingcartPayText"
-                android:textColor="#FAFAFA" />
+                android:textColor="#FAFAFA"
+                android:focusable="true" />
         </LinearLayout>
 
     </LinearLayout>

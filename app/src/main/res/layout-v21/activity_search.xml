@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,15 +12,17 @@
         android:layout_alignParentTop="true"
         android:background="@drawable/background_img1"
         android:orientation="horizontal"
-        android:paddingTop="30dp">
+        android:paddingTop="30dp"
+        tools:ignore="RtlHardcoded">
 
         <ImageButton
             android:id="@+id/search_iv_back"
             style="@style/DefaultImage"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
             android:src="@drawable/back_icon_white" 
-            android:background="?android:selectableItemBackgroundBorderless"/>
+            android:background="?android:selectableItemBackgroundBorderless"
+            tools:ignore="ContentDescription" />
 
         <com.example.commen.view.ClearEditText
             android:id="@+id/search_view"
@@ -36,16 +39,17 @@
             android:textColorHint="@color/colorWhite"
             android:textCursorDrawable="@null"
             android:layout_gravity="center_vertical"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
 
 
         <ImageButton
             android:id="@+id/search_button"
             style="@style/DefaultImage"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
             android:src="@drawable/right_icon_white"
-            android:background="?android:selectableItemBackgroundBorderless"/>
+            android:background="?android:selectableItemBackgroundBorderless"
+            tools:ignore="ContentDescription" />
 
     </LinearLayout>
 
@@ -65,12 +69,12 @@
     <ImageButton
         style="@style/LittleImage"
         android:src="@drawable/clear_history"
-        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
         android:layout_alignTop="@+id/search_history"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:id="@+id/search_clear"
         android:background="?android:selectableItemBackgroundBorderless"
-        />
+        tools:ignore="ContentDescription" />
 
     <com.example.commen.view.FlowLayout
         android:layout_width="match_parent"
@@ -95,5 +99,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="14dp"
-        android:src="@drawable/filter_list_selected" />
+        android:src="@drawable/filter_list_selected"
+        tools:ignore="ContentDescription" />
 </RelativeLayout>

@@ -49,7 +49,7 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> implements MessageM
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
-        MessageManager.getInstance(ShaoHuaApplication.context).registerMessageListener(this);
+        MessageManager.getInstance().registerMessageListener(this);
         mHomeRecycler = view.findViewById(R.id.home_recycler);
         sv_view = view.findViewById(R.id.search_sv_view);
         ll_search = view.findViewById(R.id.search_ll_search);
@@ -95,17 +95,17 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> implements MessageM
         message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                animStartActivity(MessageActivity.class);
+              toClass(MessageActivity.class);
             }
         });
-        List<MessageBean> messageBeans = MessageManager.getInstance(getContext()).qurayNotReadData();
+        List<MessageBean> messageBeans = MessageManager.getInstance().qurayNotReadData();
         int size = messageBeans.size();
         qBadgeView.setBadgeNumber(size);
 
         searchTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                animStartActivity(SearchActivity.class);
+                toClass(SearchActivity.class);
             }
         });
     }
@@ -165,13 +165,13 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> implements MessageM
     @Override
     public void onResume() {
         super.onResume();
-        int i = MessageManager.getInstance(getContext()).gitNotReadNum();
+        int i = MessageManager.getInstance().gitNotReadNum();
         qBadgeView.setBadgeNumber(i);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        MessageManager.getInstance(ShaoHuaApplication.context).unRegisterMessageListener(this);
+        MessageManager.getInstance().unRegisterMessageListener(this);
     }
 }
