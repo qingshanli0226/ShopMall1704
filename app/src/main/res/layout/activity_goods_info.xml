@@ -35,6 +35,11 @@
             android:layout_height="0dp"
             android:layout_weight="1">
 
+            <com.example.common.ShoppingCartView
+                android:id="@+id/sv_app_redpoint"
+                android:layout_width="@dimen/dpsize_20"
+                android:layout_height="@dimen/dpsize_20"/>
+
             <com.example.common.BottomBar
                 android:id="@+id/bb_goods_info"
                 android:layout_width="0dp"

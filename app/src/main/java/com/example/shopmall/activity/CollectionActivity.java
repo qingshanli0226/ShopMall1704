@@ -42,6 +42,14 @@ public class CollectionActivity extends BaseActivity implements CollectionAdapte
         initData2();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(collectionAdapter!=null){
+            initData2();
+        }
+    }
+
     private void initData2() {
         boolean loginStatus = UserManager.getInstance().getLoginStatus();
         if(loginStatus){
