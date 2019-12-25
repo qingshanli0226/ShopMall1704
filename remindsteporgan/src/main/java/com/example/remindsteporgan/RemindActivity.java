@@ -19,10 +19,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.commen.util.PageUtil;
-import com.example.remindsteporgan.Base.Bean;
-import com.example.remindsteporgan.DIYView.MyPassometView;
-import com.example.remindsteporgan.Util.ScreenBroadcastListener;
-import com.example.remindsteporgan.Util.ScreenManager;
+import com.example.remindsteporgan.base.Bean;
+import com.example.remindsteporgan.diy.MyPassometView;
+import com.example.remindsteporgan.util.ScreenBroadcastListener;
+import com.example.remindsteporgan.util.ScreenManager;
 import com.example.view.demogreendao.BeanDao;
 import com.example.view.demogreendao.DaoMaster;
 import com.example.view.demogreendao.DaoSession;
@@ -30,7 +30,6 @@ import com.shaomall.framework.base.BaseActivity;
 import com.shaomall.framework.manager.PointManager;
 
 import java.util.Calendar;
-import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
 public class RemindActivity extends BaseActivity implements SensorEventListener {

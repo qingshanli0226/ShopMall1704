@@ -1,4 +1,4 @@
-package com.example.remindsteporgan.Util;
+package com.example.remindsteporgan.util;
 
 import android.app.Activity;
 import android.content.Context;

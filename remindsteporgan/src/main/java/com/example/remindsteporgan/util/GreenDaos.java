@@ -1,9 +1,9 @@
-package com.example.remindsteporgan.Util;
+package com.example.remindsteporgan.util;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.remindsteporgan.Base.Bean;
+import com.example.remindsteporgan.base.Bean;
 import com.example.view.demogreendao.BeanDao;
 import com.example.view.demogreendao.DaoMaster;
 import com.example.view.demogreendao.DaoSession;

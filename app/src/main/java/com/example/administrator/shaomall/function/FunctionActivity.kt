@@ -6,12 +6,10 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.example.administrator.shaomall.R
 import com.example.administrator.shaomall.function.adapter.FunctionAdaptor
-import com.example.shoppingcart.Ui.OrderFormActivity
-import com.example.shoppingcart.bean.OrderInfoBean
+import com.example.shoppingcart.OrderFormActivity
 import com.shaomall.framework.base.BaseActivity
 import com.shaomall.framework.bean.FunctionBean
 import com.shaomall.framework.base.presenter.IBasePresenter
-import com.shaomall.framework.bean.ShoppingCartBean
 import com.shaomall.framework.manager.ActivityInstanceManager
 import kotlinx.android.synthetic.main.activity_function.*
 

@@ -1,4 +1,4 @@
-package com.example.remindsteporgan.Base;
+package com.example.remindsteporgan.base;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;

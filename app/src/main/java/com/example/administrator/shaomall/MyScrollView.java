@@ -1,5 +1,6 @@
 package com.example.administrator.shaomall;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -9,7 +10,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ScrollView;
-
 
 
 public class MyScrollView extends ScrollView {
@@ -28,10 +28,10 @@ public class MyScrollView extends ScrollView {
         super(context, attrs, defStyleAttr);
     }
 
-//    @Override
-//    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-//        super.onLayout(changed, l, t, r, b);
-//    }
+    //    @Override
+    //    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+    //        super.onLayout(changed, l, t, r, b);
+    //    }
 
     //获取子视图
     @Override
@@ -65,7 +65,7 @@ public class MyScrollView extends ScrollView {
                 int absX = Math.abs(eventX - downX);
                 int absY = Math.abs(eventY - downY);
 
-                if(absY > absX && absY >= UIUtils.dp2px(10)){
+                if (absY > absX && absY >= UIUtils.dp2px(10)) {
                     isIntercept = true;//执行拦截
                 }
 
@@ -77,6 +77,7 @@ public class MyScrollView extends ScrollView {
         return isIntercept;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         if (childView == null || !isFinishAnimation) {
@@ -110,7 +111,7 @@ public class MyScrollView extends ScrollView {
                     int translateY = childView.getBottom() - normal.bottom;
                     TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, 0, -translateY);
                     translateAnimation.setDuration(200);
-//                translateAnimation.setFillAfter(true);//停留在最终位置上
+                    //                translateAnimation.setFillAfter(true);//停留在最终位置上
 
                     translateAnimation.setAnimationListener(new Animation.AnimationListener() {
                         @Override

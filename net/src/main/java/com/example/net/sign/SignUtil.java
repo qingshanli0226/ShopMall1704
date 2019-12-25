@@ -1,5 +1,6 @@
 package com.example.net.sign;
 
+import android.os.Build;
 import android.util.Base64;
 import android.util.Log;
 
@@ -121,9 +122,11 @@ public class SignUtil {
     }
 
     public static String stringToMD5(String string) {
-        byte[] hash;
+        byte[] hash = new byte[0];
         try {
-            hash = MessageDigest.getInstance("MD5").digest(string.getBytes(StandardCharsets.UTF_8));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                hash = MessageDigest.getInstance("MD5").digest(string.getBytes(StandardCharsets.UTF_8));
+            }
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
 

@@ -6,7 +6,7 @@
         <activity android:name=".RemindActivity" />
 
         <service
-            android:name=".Util.LiveService"
+            android:name=".util.LiveService"
             android:process=":live_service" />
 
         <activity android:name=".HistoryActivity" />

@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">邵华商城</string>
     <string name="message">消息</string>
     <string name="app_name_vertical">邵\n华\n商\n城</string>
@@ -27,7 +27,7 @@
     <string name="login_user_pwd">密码:</string>
     <string name="message_new_mesaage">最新消息</string>
     <string name="message_old_message">已读消息</string>
-    <string name="search_hint" >请输入您要搜索的内容...</string>
+    <string name="search_hint">请输入您要搜索的内容...</string>
     <string name="mine_toBeDelivered">待发货</string>
     <string name="mine_toBePaid">待支付</string>
     <string name="mine_title_goodsAttention">商品关注</string>

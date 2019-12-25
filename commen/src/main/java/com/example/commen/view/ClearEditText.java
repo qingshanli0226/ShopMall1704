@@ -1,5 +1,6 @@
 package com.example.commen.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -90,6 +91,7 @@ public class ClearEditText extends AppCompatEditText {
      * 步骤4：对删除图标区域设置点击事件，即"点击 = 清空搜索框内容"
      * 原理：当手指抬起的位置在删除图标的区域，即视为点击了删除图标 = 清空搜索框内容
      */
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {

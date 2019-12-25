@@ -64,6 +64,7 @@ public class SearchEditText extends EditText {
 //     * 控件左边到clean的图标右边缘的区域
 //     * 所以这两者之间的区域刚好是clean的图标的区域
 //     */
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {

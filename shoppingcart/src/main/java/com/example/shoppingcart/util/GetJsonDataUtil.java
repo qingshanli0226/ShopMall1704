@@ -1,4 +1,4 @@
-package com.example.shoppingcart.OutsideClass;
+package com.example.shoppingcart.util;
 
 import android.content.Context;
 import android.content.res.AssetManager;

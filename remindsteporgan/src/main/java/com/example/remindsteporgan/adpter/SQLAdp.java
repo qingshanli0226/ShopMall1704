@@ -1,4 +1,4 @@
-package com.example.remindsteporgan.Adpter;
+package com.example.remindsteporgan.adpter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;

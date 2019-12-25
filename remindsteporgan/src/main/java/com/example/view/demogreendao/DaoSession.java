@@ -8,7 +8,7 @@ import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.identityscope.IdentityScopeType;
 import org.greenrobot.greendao.internal.DaoConfig;
 
-import com.example.remindsteporgan.Base.Bean;
+import com.example.remindsteporgan.base.Bean;
 
 import com.example.view.demogreendao.BeanDao;
 

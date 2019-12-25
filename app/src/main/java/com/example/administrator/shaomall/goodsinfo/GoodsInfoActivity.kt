@@ -265,7 +265,7 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
      */
     override fun onRequestHttpDataSuccess(message: String?, data: String?) {
 
-        var shoppingCartBean = ShoppingCartBean()
+        val shoppingCartBean = ShoppingCartBean()
         shoppingCartBean.productId = productId
         shoppingCartBean.productNum = productNum.toString()
         shoppingCartBean.productName = productName

@@ -1,4 +1,4 @@
-package com.example.shoppingcart.Ui;
+package com.example.shoppingcart;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -23,9 +23,8 @@ import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.example.commen.ToolbarCustom;
 import com.example.commen.util.ShopMailError;
 import com.example.net.AppNetConfig;
-import com.example.shoppingcart.Adapter.RvShoppingPayAdapter;
-import com.example.shoppingcart.OutsideClass.GetJsonDataUtil;
-import com.example.shoppingcart.R;
+import com.example.shoppingcart.adapter.RvShoppingPayAdapter;
+import com.example.shoppingcart.util.GetJsonDataUtil;
 import com.example.shoppingcart.bean.CheckInventoryBean;
 import com.example.shoppingcart.bean.JsonBean;
 import com.example.shoppingcart.bean.OrderInfoBean;

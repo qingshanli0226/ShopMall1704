@@ -13,7 +13,10 @@ public class Md5Util {
             return null;
         }
         try{
-            byte[] b = content.getBytes(StandardCharsets.UTF_8);
+            byte[] b = new byte[0];
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                b = content.getBytes(StandardCharsets.UTF_8);
+            }
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.reset();
             md.update(b);

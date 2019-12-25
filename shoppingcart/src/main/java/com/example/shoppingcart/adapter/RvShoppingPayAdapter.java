@@ -1,4 +1,4 @@
-package com.example.shoppingcart.Adapter;
+package com.example.shoppingcart.adapter;
 
 import android.support.annotation.Nullable;
 import android.widget.ImageView;

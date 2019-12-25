@@ -1,4 +1,4 @@
-package com.example.remindsteporgan.DIYView;
+package com.example.remindsteporgan.diy;
 
 import android.content.Context;
 import android.graphics.Canvas;

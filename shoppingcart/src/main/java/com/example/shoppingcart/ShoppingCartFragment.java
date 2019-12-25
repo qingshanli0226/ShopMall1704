@@ -1,4 +1,4 @@
-package com.example.shoppingcart.Ui;
+package com.example.shoppingcart;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -15,7 +15,8 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSONObject;
 import com.example.commen.util.ShopMailError;
 import com.example.net.AppNetConfig;
-import com.example.shoppingcart.Adapter.RvAdp;
+import com.example.shoppingcart.OrderFormActivity;
+import com.example.shoppingcart.adapter.RvAdp;
 import com.example.shoppingcart.R;
 import com.shaomall.framework.bean.LoginBean;
 import com.shaomall.framework.bean.ShoppingCartBean;
