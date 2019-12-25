@@ -50,7 +50,7 @@
                     android:background="?android:selectableItemBackgroundBorderless"
                     android:gravity="center"
                     android:text="@string/app_fragment_mine_tv_text_user_name"
-                    android:textColor="@color/black"
+                    android:textColor="@color/colorBlack"
                     tools:ignore="NewApi" />
 
 
@@ -176,7 +176,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
                 android:layout_marginBottom="18dp"
-                android:background="@color/white"
+                android:background="@color/colorWhite"
                 android:padding="8dp">
 
                 <TextView

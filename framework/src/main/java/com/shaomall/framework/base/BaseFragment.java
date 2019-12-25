@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.shaomall.framework.R;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 public abstract class BaseFragment extends Fragment {
     protected Context mContext;
 
@@ -59,17 +61,6 @@ public abstract class BaseFragment extends Fragment {
     protected abstract void initData();
 
     /**
-     * 简化findViewById()
-     *
-     * @param resId
-     * @param <T>
-     * @return
-     */
-    protected <T extends View> T findViewByMe(@IdRes int resId) {
-        return (T) getView().findViewById(resId);
-    }
-
-    /**
      * Intent 跳转
      *
      * @param clazz
@@ -101,6 +92,7 @@ public abstract class BaseFragment extends Fragment {
         if (bundle != null && bundle.size() != 0) {
             intent.putExtras(bundle);
         }
+        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(intent);
     }
 

@@ -9,13 +9,10 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 读取联系人的权限： -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-
-
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
 
     <application
@@ -68,9 +65,7 @@
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:supportsPictureInPicture="true"
-            tools:ignore="UnusedAttribute"
-            tools:targetApi="n" />
+            android:supportsPictureInPicture="true" />
 
         <!--功能界面-->
         <activity
@@ -97,13 +92,18 @@
         <!--    搜索商品界面-->
         <activity
             android:name=".search.SearchInfoActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
 
         <!--        消息界面-->
-        <activity android:name=".message.MessageActivity" />
+        <activity
+            android:name=".message.MessageActivity"
+            android:screenOrientation="portrait" />
 
         <!--        搜索界面-->
-        <activity android:name=".search.SearchActivity" />
+        <activity
+            android:name=".search.SearchActivity"
+            android:screenOrientation="portrait" />
 
         <!-- 服务 -->
         <service android:name=".cache.CacheService" />
@@ -140,10 +140,10 @@
         <!--    注册网络状态监听广播-->
         <receiver
             android:name="com.example.commen.network.NetStateReceiver"
-			android:enabled="true"
+            android:enabled="true"
             android:exported="false">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
 

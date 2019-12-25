@@ -32,7 +32,8 @@ public class CacheManager {
             instace = new CacheManager();
         return instace;
     }
-    public CacheService getCacheService(){
+
+    public CacheService getCacheService() {
         return this.cacheService;
     }
 
@@ -46,7 +47,6 @@ public class CacheManager {
         context.bindService(intent, new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
-                Log.d("LW-", "onServiceConnected.......");
                 CacheService.CacheBinder serviceBinder = (CacheService.CacheBinder) service;
                 cacheService = serviceBinder.getCacheService();
                 cacheService.getHomeDate();
@@ -56,7 +56,6 @@ public class CacheManager {
                     public void onHomeDateRecived(HomeBean.ResultBean bean) {
                         if (bean != null) {
                             saveLocal(bean);
-                            Log.i("lw", "onHomeDateRecived------: "+bean.getBanner_info().size());
                             //service通知数据已经获取到
                             for (IHomeReceivedListener listener : iHomeReceivedListeners) {
                                 listener.onHomeDataReceived(bean);
@@ -101,20 +100,20 @@ public class CacheManager {
     }
 
     public void unregisterListener(IHomeReceivedListener iHomeReceivedListener) {
-        iHomeReceivedListeners.remove(iHomeReceivedListener);
+        if (iHomeReceivedListeners.contains(iHomeReceivedListener)) {
+            iHomeReceivedListeners.remove(iHomeReceivedListener);
+        }
+        if (cacheService != null) {
+            cacheService.UNRegisterListener();
+        }
     }
 
     public void registerListener(IHomeReceivedListener iHomeReceivedListener) {
-        if (iHomeReceivedListeners.contains(iHomeReceivedListener))
-            return;
-        else
+        if (!iHomeReceivedListeners.contains(iHomeReceivedListener))
             iHomeReceivedListeners.add(iHomeReceivedListener);
     }
 
     public interface IHomeReceivedListener {
         void onHomeDataReceived(HomeBean.ResultBean homeBean);
     }
-
-
-
 }
