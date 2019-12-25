@@ -184,7 +184,7 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
         } else {
             //没有登录
             name.setText(R.string.mine_login);
-            img.setImageResource(R.mipmap.ic_launcher_round);
+            Glide.with(getContext()).load(R.drawable.default_head_image).apply(new RequestOptions().circleCrop()).into(img);
         }
     }
 
@@ -247,13 +247,13 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
     @Override
     public void onLogout() {
         name.setText(R.string.mine_login);
-        img.setImageResource(R.mipmap.ic_launcher_round);
+        Glide.with(getContext()).load(R.drawable.default_head_image).apply(new RequestOptions().circleCrop()).into(img);
     }
 
     //TODO 用户更新头像后回调
     @Override
     public void onAvatarUpdate(String url) {
-        Glide.with(Objects.requireNonNull(getContext())).load("" + AppNetConfig.BASE_URL + url).apply(new RequestOptions().circleCrop()).into(img);
+        Glide.with(Objects.requireNonNull(getContext())).load(url).apply(new RequestOptions().circleCrop()).into(img);
     }
 
     @Override

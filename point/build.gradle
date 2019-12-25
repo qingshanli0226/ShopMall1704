@@ -37,7 +37,6 @@ dependencies {
     api project(path: ':common')
     api project(path: ':net')
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
-    api 'com.github.recruit-lifestyle:WaveSwipeRefreshLayout:1.6'
-    api 'tyrant:heartlayout:1.0.1'
 
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

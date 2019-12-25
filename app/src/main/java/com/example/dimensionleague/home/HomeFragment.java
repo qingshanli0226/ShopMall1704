@@ -3,26 +3,40 @@ package com.example.dimensionleague.home;
 import android.content.Intent;
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.buy.activity.SearchActivity;
 import com.example.common.HomeBean;
+import com.example.common.port.IAccountCallBack;
 import com.example.common.utils.IntentUtil;
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.dimensionleague.CacheManager;
 import com.example.dimensionleague.R;
 import com.example.dimensionleague.home.adapter.HomeAdapter;
+import com.example.dimensionleague.login.activity.LoginActivity;
+import com.example.dimensionleague.setting.SettingActivity;
 import com.example.framework.base.BaseNetConnectFragment;
+import com.example.framework.manager.AccountManager;
 import com.example.framework.port.AppBarStateChangeListener;
+import com.example.net.AppNetConfig;
 import com.example.point.message.MessageActivity;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -30,9 +44,10 @@ import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import java.util.Objects;
+import java.util.Timer;
 
 
-public class HomeFragment extends BaseNetConnectFragment {
+public class HomeFragment extends BaseNetConnectFragment implements IAccountCallBack {
     private RecyclerView rv;
     private HomeBean.ResultBean list=null;
 
@@ -40,8 +55,11 @@ public class HomeFragment extends BaseNetConnectFragment {
     private MyToolBar my_toolbar;
     private AppBarLayout appBarLayout;
     private CollapsingToolbarLayout toolbar_layout;
+    private ImageView home_icon;
 
+    private ImageView home_image;
 
+    boolean flag_head = true;
     public HomeFragment(int i) {
         super();
         this.type = i;
@@ -61,14 +79,45 @@ public class HomeFragment extends BaseNetConnectFragment {
         }else{
             hideEmpty();
         }
+        AccountManager.getInstance().registerUserCallBack(this);
+
         rv = view.findViewById(R.id.home_rv);
         my_toolbar = view.findViewById(R.id.my_toolbar);
         appBarLayout = view.findViewById(R.id.mApp_layout);
         toolbar_layout = view.findViewById(R.id.toolbar_layout);
+        home_icon = view.findViewById(R.id.home_icon);
+
 //        判断type值来显示隐藏搜索框
         if (type == 1) {
             appBarLayout.setVisibility(View.GONE);
         }
+
+        home_image = view.findViewById(R.id.home_icon);
+        if(!AccountManager.getInstance().isLogin()){
+            Glide.with(getContext()).load(R.drawable.default_head_image).apply(new RequestOptions().circleCrop()).into(home_image);
+        }else{
+            if(AccountManager.getInstance().getUser()==null){
+                AccountManager.getInstance().logout();
+                Toast.makeText(getContext(), getResources().getString(R.string.timeout), Toast.LENGTH_SHORT).show();
+                Glide.with(getContext()).load(R.drawable.default_head_image).apply(new RequestOptions().circleCrop()).into(home_image);
+            }else{
+                if(AccountManager.getInstance().getUser().getAvatar()==null){
+                    Glide.with(getContext()).load(R.drawable.default_head_image).apply(new RequestOptions().circleCrop()).into(home_image);
+                }else{
+                    Glide.with(getContext()).load(AppNetConfig.BASE_URL+AccountManager.getInstance().getUser().getAvatar()).apply(new RequestOptions().circleCrop()).into(home_image);
+                }
+            }
+        }
+        home_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!AccountManager.getInstance().isLogin()){
+                    startActivity(LoginActivity.class,null);
+                }else{
+                    startActivity(SettingActivity.class,null);
+                }
+            }
+        });
     }
 
     @Override
@@ -86,13 +135,16 @@ public class HomeFragment extends BaseNetConnectFragment {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
                 if (state == State.EXPANDED) { //TODO 展开状态
+                    //TODO 展开后分发事件
+                    my_toolbar.setVisibility(View.GONE);
                     my_toolbar.GoneAll();
                 } else if (state == State.COLLAPSED) {//TODO 折叠状态
+                    //TODO 当折叠后拦截事件
+                    my_toolbar.setVisibility(View.VISIBLE);
                     my_toolbar.init(Constant.HOME_STYLE);
 //                    扫一扫及消息的点击事件
                     toolbarMessenger();
-                }  //TODO 中间状态
-
+                }
             }
         });
 
@@ -139,8 +191,13 @@ public class HomeFragment extends BaseNetConnectFragment {
         });
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        AccountManager.getInstance().unRegisterUserCallBack(this);
+    }
 
-//    处理权限
+    //    处理权限
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -219,4 +276,22 @@ public class HomeFragment extends BaseNetConnectFragment {
         showEmpty();
     }
 
+    @Override
+    public void onRegisterSuccess() {
+
+    }
+
+    @Override
+    public void onLogin() {
+     }
+
+    @Override
+    public void onLogout() {
+        Glide.with(getContext()).load(R.drawable.default_head_image).apply(new RequestOptions().circleCrop()).into(home_image);
+    }
+
+    @Override
+    public void onAvatarUpdate(String url) {
+        Glide.with(getContext()).load(url).apply(new RequestOptions().circleCrop()).into(home_image);
+    }
 }

@@ -26,16 +26,8 @@ import com.example.framework.bean.StepBean;
 import java.util.List;
 
 public class IntegralActivity extends BaseNetConnectActivity {
-    private ImageView integral_img;
-    private TextView integral_title;
-
-
-
-
-
     private UpdatePointBean pointBean;
     private IPresenter iPresenter;
-
 
     @Override
     public int getLayoutId() {
@@ -53,9 +45,8 @@ public class IntegralActivity extends BaseNetConnectActivity {
 
         MyToolBar integral_tool = (MyToolBar) findViewById(R.id.integral_tool);
         integral_tool.init(Constant.OTHER_STYLE);
-        integral_tool.getOther_title().setText("积分页面");
-        integral_tool.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
-
+        integral_tool.getOther_title().setText("我的积分");
+     //   integral_tool.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
 
         //返回我的页面
         integral_tool.getOther_back().setOnClickListener(new View.OnClickListener() {
@@ -64,13 +55,10 @@ public class IntegralActivity extends BaseNetConnectActivity {
                 finish();
             }
         });
-        integral_img = findViewById(R.id.integral_img);
         TextView integral_point = findViewById(R.id.integral_point);
-        RelativeLayout exchange_gift = findViewById(R.id.exchange_gift);
-        RelativeLayout exchange_record = findViewById(R.id.exchange_record);
-        RelativeLayout exchange_point = findViewById(R.id.exchange_point);
-        integral_title = findViewById(R.id.integral_title);
-        ifUser();
+        TextView exchange_gift = findViewById(R.id.exchange_gift);
+        TextView exchange_record = findViewById(R.id.exchange_record);
+        TextView exchange_point = findViewById(R.id.exchange_point);
         if (pointBean == null) {
             pointBean = new UpdatePointBean();
         }
@@ -117,7 +105,6 @@ public class IntegralActivity extends BaseNetConnectActivity {
                 startActivity(intent);
             }
         });
-
     }
     @Override
     protected void onDestroy() {
@@ -127,25 +114,6 @@ public class IntegralActivity extends BaseNetConnectActivity {
         }
     }
 
-    private void ifUser() {
-        if (AccountManager.getInstance().isLogin()) {
-            if (AccountManager.getInstance().getUser().getName() != null) {
-                //登录
-                integral_title.setText(AccountManager.getInstance().getUser().getName());
-                if (AccountManager.getInstance().getUser().getAvatar() != null) {
-                    Glide.with(this).load("" + AppNetConfig.BASE_URL + AccountManager.getInstance().getUser().getAvatar()).apply(new RequestOptions().circleCrop()).into(integral_img);
 
-                    integral_title.setText(AccountManager.getInstance().getUser().getName());
-                    if (AccountManager.getInstance().getUser().getAvatar() != null) {
-                        Glide.with(this).load(AccountManager.getInstance().getUser().getAvatar()).into(integral_img);
-                    }
-                }
-            } else {
-                //没有登录
-                integral_title.setText("登录/注册");
-                integral_img.setImageResource(R.mipmap.wu);
-            }
-        }
 
-    }
 }

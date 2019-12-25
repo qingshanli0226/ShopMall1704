@@ -22,6 +22,6 @@ public class ShoppCartActivity extends BaseNetConnectActivity {
     protected void onDestroy() {
         super.onDestroy();
         fragment=null;
-        finish();
+        finishActivity();
     }
 }

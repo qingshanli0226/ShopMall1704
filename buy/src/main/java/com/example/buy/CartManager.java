@@ -87,10 +87,10 @@ public class CartManager {
         }
         clearCheck();
         for (int i = 0; i < listGoods.size(); i++) {
-            CartManager.getInstance().addCheck(false,listGoods.get(i).getProductId());
+            checks.add(new CheckGoodsData(false,listGoods.get(i).getProductId()));
             for (String good:littleChecks){
                 if (listGoods.get(i).getProductId().equals(good)){
-                    CartManager.getInstance().setCheckSelect(i,true);
+                    checks.set(i,new CheckGoodsData(true,good));
                     break;
                 }
             }

@@ -8,11 +8,12 @@ import com.example.framework.manager.NetConnectManager;
 import com.example.point.StepIsSupport;
 import com.example.point.stepmanager.StepPointManager;
 
-import com.squareup.leakcanary.LeakCanary;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 import cn.jpush.android.api.JPushInterface;
+import leakcanary.LeakCanary;
+
 
 /**
  * author:李浩帆
@@ -29,10 +30,7 @@ public class MineApplication extends Application {
         SPUtil.init(applicationContext);
         //TODO 异常捕获
         // CrashHandler.getInstance().initErrorHandler(applicationContext);
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            return;
-        }
-        LeakCanary.install(this);
+
         //支持计步的话就查找历史记录-否则就什么也不做
         if (NetConnectManager.getInstance().isNetConnectStatus() && new StepIsSupport().isSupportStepCountSensor(this)) {
             StepPointManager.getInstance(this).init();

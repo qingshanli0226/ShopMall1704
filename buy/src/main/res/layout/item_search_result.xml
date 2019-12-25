@@ -1,67 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
-        <import type="android.view.View"/>
-        <import type="com.example.buy.databeans.GetSearchBeanTwo.ResultBean"/>
-        <import type="com.example.framework.base.BaseRVAdapter"/>
-        <variable
-                name="rvAdapter"
-                type="BaseRVAdapter"/>
+
+        <import type="android.view.View" />
+
+        <import type="com.example.buy.databeans.GetSearchBeanTwo.ResultBean" />
+
+        <import type="com.example.framework.base.BaseRVAdapter" />
 
         <variable
-                name="bean"
-                type="ResultBean"/>
+            name="rvAdapter"
+            type="BaseRVAdapter" />
+
+        <variable
+            name="bean"
+            type="ResultBean" />
     </data>
+
     <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
         <androidx.appcompat.widget.AppCompatImageView
-                android:layout_margin="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_50"
-                android:layout_alignParentRight="true"
-                android:id="@+id/itemSearchAvatar"
-                android:layout_width="@dimen/dp_50"
-                app:url="@{bean.avatar}"
-                android:layout_height="@dimen/dp_50"/>
+            android:id="@+id/itemSearchAvatar"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_50"
+            app:url="@{bean.avatar}" />
+
         <androidx.appcompat.widget.AppCompatTextView
-                android:layout_toRightOf="@+id/itemSearchFigure"
-                android:layout_marginTop="@dimen/dp_5"
-                android:textSize="@dimen/sp_15"
-                android:layout_below="@+id/itemSearchSaying"
-                android:id="@+id/itemSearchComment"
-                android:text="@{bean.comment_list.toString()}"
-                android:layout_width="@dimen/dp_220"
-                android:layout_height="wrap_content"/>
+            android:id="@+id/itemSearchComment"
+            android:layout_width="@dimen/dp_220"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/itemSearchSaying"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_toRightOf="@+id/itemSearchFigure"
+            android:text="@{bean.comment_list.toString()}"
+            android:textSize="@dimen/sp_15" />
+
         <androidx.appcompat.widget.AppCompatImageView
-                android:layout_margin="@dimen/dp_5"
-                android:id="@+id/itemSearchFigure"
-                app:url="@{bean.figure}"
-                android:layout_width="@dimen/dp_100"
-                android:layout_height="@dimen/dp_100"/>
+            android:id="@+id/itemSearchFigure"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_100"
+            android:layout_margin="@dimen/dp_5"
+            app:url="@{bean.figure}" />
+
         <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/itemSearchSaying"
-                android:textSize="@dimen/sp_15"
-                android:text="@{bean.saying}"
-                android:layout_alignTop="@id/itemSearchFigure"
-                android:layout_toRightOf="@id/itemSearchFigure"
-                android:layout_width="@dimen/dp_220"
-                android:layout_height="wrap_content"/>
+            android:id="@+id/itemSearchSaying"
+            android:layout_width="@dimen/dp_220"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/itemSearchFigure"
+            android:layout_toRightOf="@id/itemSearchFigure"
+            android:text="@{bean.saying}"
+            android:textSize="@dimen/sp_15" />
+
         <androidx.appcompat.widget.AppCompatTextView
-                android:textSize="@dimen/sp_16"
-                android:textColor="@android:color/black"
-                android:layout_marginTop="@dimen/dp_60"
-                android:id="@+id/itemSearchUsername"
-                android:text="@{bean.username}"
-                android:layout_toRightOf="@id/itemSearchFigure"
-                android:layout_below="@+id/itemSearchSaying"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            android:id="@+id/itemSearchUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/itemSearchSaying"
+            android:layout_marginTop="@dimen/dp_60"
+            android:layout_toRightOf="@id/itemSearchFigure"
+            android:text="@{bean.username}"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp_16" />
+
         <View
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_below="@+id/itemSearchUsername"
-                android:background="@android:color/darker_gray"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"></View>
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/itemSearchUsername"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@android:color/darker_gray"></View>
     </RelativeLayout>
 </layout>

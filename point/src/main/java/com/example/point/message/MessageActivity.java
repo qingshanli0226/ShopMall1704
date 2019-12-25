@@ -37,7 +37,7 @@ public class MessageActivity extends BaseNetConnectActivity {
     public void init() {
         super.init();
         message_re = findViewById(R.id.message_re);
-        message_tool = (MyToolBar) findViewById(R.id.message_tool);
+        message_tool =  findViewById(R.id.message_tool);
     }
 
     @Override

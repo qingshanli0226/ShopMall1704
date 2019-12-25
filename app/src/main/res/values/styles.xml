@@ -27,4 +27,5 @@
         <item name="android:drawableRight">@drawable/camera</item>
 
     </style>
+
 </resources>

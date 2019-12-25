@@ -222,7 +222,4 @@ public class TypeFragment extends BaseNetConnectFragment {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
-    @Override
-    public void showLoading() {
-    }
 }
