@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewParent;
 
 import androidx.annotation.NonNull;
 
@@ -113,9 +114,9 @@ public class History_MinutesFragment extends BaseFragment  {
         axisX.setHasTiltedLabels(false);
         axisX.setTextColor(Color.GRAY);
 
-        axisX.setName("三小时以内步数");
+        axisX.setName("三小时以内步数,过多 请横屏查看");
         axisX.setTextSize(8);
-        axisX.setMaxLabelChars(0);
+        axisX.setMaxLabelChars(6);
         axisX.setValues(mAxisXValues);
         axisX.setHasLines(true);
         axisX.setHasSeparationLine(false);
@@ -125,20 +126,18 @@ public class History_MinutesFragment extends BaseFragment  {
 
         lineChartView.setInteractive(true);
         lineChartView.setZoomType(ZoomType.HORIZONTAL);
-        lineChartView.setSaveEnabled(false);
-        lineChartView.setMaxZoom((float)3);
+        lineChartView.setMaxZoom((float)5);
+        lineChartView.setZoomEnabled(true);
         lineChartView.setLineChartData(lineChartData);
-        lineChartView.setValueTouchEnabled(false);
         lineChartView.setVisibility(View.VISIBLE);
 
-//        lineChartView.moveTo(mPointValues.get(mPointValues.size()-1).getX(),mPointValues.get(mPointValues.size()-1).getY());
-//        int x = (int)mPointValues.get(mPointValues.size() - 1).getX();
-//        int y=(int)mPointValues.get(mPointValues.size()-1).getY();
-//        lineChartView.moveTo(x,y);
+        int x = (int)mPointValues.get(mPointValues.size() - 1).getX();
+        int y=(int)mPointValues.get(mPointValues.size()-1).getY();
+
 
         Viewport v = new Viewport(lineChartView.getMaximumViewport());
         v.left=0;
-        v.right=mPointValues.size()-1;
+        v.right=7;
         lineChartView.setCurrentViewport(v);
 
 
