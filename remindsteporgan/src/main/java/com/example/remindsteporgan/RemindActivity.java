@@ -69,11 +69,11 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void initView() {
-        viewPassometView = (MyPassometView) findViewById(R.id.view_passomet_view);
-        review = (RelativeLayout) findViewById(R.id.review);
-        tv1 = (TextView) this.findViewById(R.id.tv1);
-        historySteps = (TextView) findViewById(R.id.historySteps);
-        TextView historySteps = (TextView) findViewById(R.id.historySteps);
+        viewPassometView = findViewById(R.id.view_passomet_view);
+        review = findViewById(R.id.review);
+        tv1 = this.findViewById(R.id.tv1);
+        historySteps = findViewById(R.id.historySteps);
+        TextView historySteps = findViewById(R.id.historySteps);
         sp = getSharedPreferences("ssh", 0);
 
         Intent intent=getIntent();

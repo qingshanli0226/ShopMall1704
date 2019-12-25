@@ -139,7 +139,7 @@ public class TypeRightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         public HotViewHolder(View itemView, Context mContext) {
             super(itemView);
             this.mContext = mContext;
-            linear = (LinearLayout) itemView.findViewById(R.id.type_item_right_linear);
+            linear = itemView.findViewById(R.id.type_item_right_linear);
 
         }
 

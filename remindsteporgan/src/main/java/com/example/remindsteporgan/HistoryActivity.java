@@ -1,7 +1,6 @@
 package com.example.remindsteporgan;
 
 
-
 import android.graphics.Color;
 
 import com.shaomall.framework.base.BaseActivity;
@@ -22,7 +21,6 @@ import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.LineChartView;
 
 public class HistoryActivity extends BaseActivity {
-    private LineChartView mChartView;
     private List<PointValue> values;
     private List<Line> lines;
     private LineChartData lineChartData;
@@ -35,6 +33,7 @@ public class HistoryActivity extends BaseActivity {
     private boolean isFinish = true;
     private Axis axisY, axisX;
     private Random random = new Random();
+
     @Override
     protected int setLayoutId() {
         return R.layout.activity_history;
@@ -42,14 +41,15 @@ public class HistoryActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        mChartView = (LineChartView) findViewById(R.id.history_chart);
+        lineChartView = findViewById(R.id.history_chart);
         timer = new Timer();
 
     }
 
     @Override
     protected void initData() {
-        lineChartView = (LineChartView) findViewById(R.id.history_chart);
+
+
         pointValueList = new ArrayList<>();
         linesList = new ArrayList<>();
 

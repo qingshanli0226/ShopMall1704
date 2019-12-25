@@ -34,11 +34,7 @@ public class NetConnectManager {
         this.applicationContext = applicationContext;
         connectivityManager = (ConnectivityManager) applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            connectStatus = true;
-        } else {
-            connectStatus = false;
-        }
+        connectStatus = networkInfo != null && networkInfo.isConnected();
         //注册广播监听当前网络连接的变化
         IntentFilter intentFilter = new IntentFilter();
         //监听系统广播
@@ -64,11 +60,7 @@ public class NetConnectManager {
             if (intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
                 connectivityManager = (ConnectivityManager) applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-                if (networkInfo != null && networkInfo.isConnected()) {
-                    connectStatus = true;
-                } else {
-                    connectStatus = false;
-                }
+                connectStatus = networkInfo != null && networkInfo.isConnected();
                 notifyConnectChanged();//回调通知网络连接的变化
             }
         }

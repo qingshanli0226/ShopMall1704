@@ -1,6 +1,7 @@
 package com.shaomall.framework.base;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Build;
@@ -22,7 +23,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 获取TAG的activity名称
      */
-    protected Activity mActivity;
+    protected Context mContext;
     private ImmersionBar immersionBar;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -31,9 +32,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         flagFullScreen();
         setContentView(setLayoutId());
-        mActivity = this;
-
-
+        mContext = this.getApplicationContext();
 
         immersionBar = ImmersionBar.with(this);
         immersionBar.init();
@@ -58,10 +57,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * 获取android手机状态栏的高度
+     *
      * @return
      */
-    public int getStatusBarHeight(){
-        Resources resources = mActivity.getResources();
+    public int getStatusBarHeight() {
+        Resources resources = mContext.getResources();
         //获取标志符
         int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
         //获取尺寸像素大小
@@ -82,11 +82,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-    protected void animOutActivity(){
-//        finish();
+    protected void animOutActivity() {
+        //        finish();
         ActivityInstanceManager.removeActivity(this);
-        overridePendingTransition(R.anim.anim_in,R.anim.anim_out);
+        overridePendingTransition(R.anim.anim_in, R.anim.anim_out);
     }
+
     /**
      * Intent 跳转
      *
@@ -95,6 +96,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void toClass(Class<? extends Activity> clazz) {
         toClass(clazz, null);
     }
+
     /**
      * 可以传送下标
      *
@@ -114,12 +116,12 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param bundle
      */
     protected void toClass(Class<? extends Activity> clazz, Bundle bundle) {
-        Intent intent = new Intent(mActivity, clazz);
+        Intent intent = new Intent(mContext, clazz);
         if (bundle != null && bundle.size() != 0) {
             intent.putExtras(bundle);
         }
         startActivity(intent);
-        overridePendingTransition(R.anim.anim_in,R.anim.anim_out);
+        overridePendingTransition(R.anim.anim_in, R.anim.anim_out);
     }
 
 
@@ -131,12 +133,12 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param requestCode
      */
     protected void toClass(Class<? extends Activity> clazz, Bundle bundle, int requestCode) {
-        Intent intent = new Intent(mActivity, clazz);
+        Intent intent = new Intent(mContext, clazz);
         if (bundle != null && bundle.size() != 0) {
             intent.putExtras(bundle);
         }
         startActivityForResult(intent, requestCode);
-        overridePendingTransition(R.anim.anim_in,R.anim.anim_out);
+        overridePendingTransition(R.anim.anim_in, R.anim.anim_out);
     }
 
 
@@ -147,7 +149,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param isLong 显示时长
      */
     public void toast(String text, boolean isLong) {
-        Toast.makeText(mActivity, text, isLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, text, isLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -157,15 +159,16 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param isLong 显示时长
      */
     public void toast(int resId, boolean isLong) {
-        Toast.makeText(mActivity, resId, isLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, resId, isLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
     }
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         ActivityInstanceManager.removeActivity(this);
         if (immersionBar != null) {
-            immersionBar.destroy(this, null);
+            ImmersionBar.destroy(this, null);
         }
 
         //内存泄漏检测

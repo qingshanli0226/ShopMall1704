@@ -162,10 +162,7 @@ public class MyScrollView extends ScrollView {
         int dy = childMeasuredHeight - scrollViewMeasuredHeight;//dy >= 0
 
         int scrollY = this.getScrollY();//获取用户在y轴方向上的偏移量 （上 + 下 -）
-        if (scrollY <= 0 || scrollY >= dy) {
-            return true;//按照我们自定义的MyScrollView的方式处理
-        }
+        return scrollY <= 0 || scrollY >= dy;//按照我们自定义的MyScrollView的方式处理
         //其他处在临界范围内的，返回false。即表示，仍按照ScrollView的方式处理
-        return false;
     }
 }

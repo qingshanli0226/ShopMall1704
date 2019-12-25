@@ -9,6 +9,12 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 读取联系人的权限： -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+
     <application
         android:name=".app.ShaoHuaApplication"
         android:allowBackup="true"
@@ -124,6 +130,17 @@
                 <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
 
                 <category android:name="com.example.administrator.shaomall" /> <!-- JPush上注册的包名 -->
+            </intent-filter>
+        </receiver>
+
+
+        <!--    注册网络状态监听广播-->
+        <receiver
+            android:name="com.example.commen.network.NetStateReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
 

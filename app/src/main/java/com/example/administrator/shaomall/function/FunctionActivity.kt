@@ -6,9 +6,12 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.example.administrator.shaomall.R
 import com.example.administrator.shaomall.function.adapter.FunctionAdaptor
+import com.example.shoppingcart.Ui.OrderFormActivity
+import com.example.shoppingcart.bean.OrderInfoBean
 import com.shaomall.framework.base.BaseActivity
 import com.shaomall.framework.bean.FunctionBean
 import com.shaomall.framework.base.presenter.IBasePresenter
+import com.shaomall.framework.bean.ShoppingCartBean
 import com.shaomall.framework.manager.ActivityInstanceManager
 import kotlinx.android.synthetic.main.activity_function.*
 
@@ -50,9 +53,11 @@ class FunctionActivity : BaseActivity() {
         functionViewModel.liveData.observe(this, Observer<List<FunctionBean>> { t ->
             functionAdaptor.upDateData(t) //赋值
         })
-        if ("待支付" == bundle!!.getString("type")) {
+
+        val string = bundle!!.getString("type")
+        if ("待支付" == string && !string.isNullOrBlank()) {
             functionViewModel.findForPay()
-        } else if ("待发货" == bundle!!.getString("type")) {
+        } else if ("待发货" == string && !string.isNullOrBlank()) {
             functionViewModel.findForSend()
         }
     }
@@ -66,16 +71,13 @@ class FunctionActivity : BaseActivity() {
             return
         }
 
-        //        val shoppingCartBean = ShoppingCartBean()
-        //
-        //        val listOf = arrayListOf<ShoppingCartBean>()
-        //        listOf.add(shoppingCartBean)
-        //        val bundle = Bundle()
-        //        bundle.putParcelableArrayList("data", listOf)
-        //        bundle.putFloat("sum", sum)
-        //        toClass(OrderFormActivity::class.java, bundle)
-
-        toast("$postion", false)
+        //再次调起支付功能
+        val orderInfo = functionBean.orderInfo as String
+        val tradeNo = functionBean.tradeNo //订单号
+        val bundle = Bundle()
+        bundle.putString("orderInfo", orderInfo)
+        bundle.putString("tradeNo", tradeNo)
+        toClass(OrderFormActivity::class.java, bundle)
     }
 
 

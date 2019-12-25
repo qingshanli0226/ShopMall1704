@@ -1,7 +1,6 @@
 package com.example.administrator.shaomall.login;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -63,39 +62,43 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     //这是按下时的颜色
-                    int colorStart = getResources().getColor(R.color.mediumspringgreen);
                     //传过去false代表是按下
                     diybutton.setType(false);
-
-                    int color = Color.parseColor("#00ced1");
-                    int colorEnd = getResources().getColor(R.color.skyblue);
-
                     diybutton.invalidate();
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     //这是抬起时的颜色
 
-                    int colorStart = getResources().getColor(R.color.mediumspringgreen);
                     //true抬起
                     diybutton.setType(true);
-                    int color = Color.parseColor("#00ced1");
-                    int colorEnd = getResources().getColor(R.color.skyblue);
 
                     diybutton.invalidate();
                     //判断用户名和密码逻辑
                     if (loginUser.getText().toString().equals("") || loginPass.getText().toString().equals("")) {
-                        Toast.makeText(mActivity, "用户名和密码或密码不可为空", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "用户名和密码或密码不可为空", Toast.LENGTH_SHORT).show();
                     } else {
                         String username = loginUser.getText().toString();
                         String password = loginPass.getText().toString();
                         presenter.setUsername(username);
                         presenter.setPassname(password);
                         presenter.doPostHttpRequest(100);
-                        ActivityInstanceManager.removeActivity(LoginActivity.this);
                     }
                 }
                 return false;
             }
         });
+    }
+
+
+    @Override
+    public void onRequestHttpDataSuccess(int requestCode, String message, LoginBean data) {
+        //登录成功
+        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+        UserInfoManager.getInstance().saveUserInfo(data);
+
+        setNewActivity();
+
+        //加载用户的购物车数据
+        ShoppingManager.getInstance().getData();
     }
 
     /**
@@ -113,29 +116,21 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
 
 
     @Override
-    public void onRequestHttpDataSuccess(int requestCode, String message, LoginBean data) {
-        //登录成功
-        Toast.makeText(mActivity, message, Toast.LENGTH_SHORT).show();
-        UserInfoManager instance = UserInfoManager.getInstance();
-        instance.saveUserInfo(data);
-        //加载用户的购物车数据
-        ShoppingManager.getInstance().getData();
+    public void onRequestHttpDataFailed(int requestCode, ShopMailError error) {
+        loginUser.setText("");
+        loginPass.setText("");
 
+        //登录失败
+        toast(error.getErrorMessage(), false);
 
-        setNewActivity();
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         ActivityInstanceManager.removeActivity(this);
+        super.onBackPressed();
     }
 
-    @Override
-    public void onRequestHttpDataFailed(int requestCode, ShopMailError error) {
-        //登录失败
-        Toast.makeText(mActivity, "" + error.getErrorMessage(), Toast.LENGTH_SHORT).show();
-    }
 
     @Override
     protected void onDestroy() {

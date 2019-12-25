@@ -53,10 +53,10 @@ public class SeckillRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            ivFigure = (ImageView) itemView.findViewById(R.id.seckill_item_iv_figure);
-            tvCoverPrice = (TextView) itemView.findViewById(R.id.seckill_item_tv_cover_price);
-            tvOriginPrice = (TextView) itemView.findViewById(R.id.seckill_item_tv_origin_price);
-            ll_root = (LinearLayout) itemView.findViewById(R.id.seckill_item_ll_root);
+            ivFigure = itemView.findViewById(R.id.seckill_item_iv_figure);
+            tvCoverPrice = itemView.findViewById(R.id.seckill_item_tv_cover_price);
+            tvOriginPrice = itemView.findViewById(R.id.seckill_item_tv_origin_price);
+            ll_root = itemView.findViewById(R.id.seckill_item_ll_root);
         }
 
         public void setData(final int position) {

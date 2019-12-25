@@ -1,5 +1,6 @@
 package com.example.commen.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.Editable;
@@ -12,6 +13,7 @@ import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 
+@SuppressLint("AppCompatCustomView")
 public class SearchEditText extends EditText {
     private Drawable mRightDrawable;
     private boolean isHasFocus;

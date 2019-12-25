@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,7 +15,6 @@ import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.example.administrator.shaomall.R;
-import com.example.commen.ToolbarCustom;
 import com.example.net.MVPObserver;
 import com.example.net.RetrofitCreator;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -161,7 +159,7 @@ public class SettingActivity extends BaseActivity {
                 int dayOfMonth = settingDatePicker.getDayOfMonth();
 
 
-                Toast.makeText(mActivity, year + "  " + month + "  " + "  " + dayOfMonth, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, year + "  " + month + "  " + "  " + dayOfMonth, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -169,7 +167,7 @@ public class SettingActivity extends BaseActivity {
 
     private void upLode(File file) {
         if (!file.exists()) {
-            Toast.makeText(mActivity, "上传的文件不存在", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "上传的文件不存在", Toast.LENGTH_SHORT).show();
         }
         //创建上传文件的请求体
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
