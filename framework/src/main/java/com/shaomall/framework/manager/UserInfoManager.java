@@ -16,7 +16,6 @@ public class UserInfoManager {
     private SharedPreferences sharedPreferences;
     private final LinkedList<UserInfoStatusListener> userInfoStatusListeners = new LinkedList<>();
     private LinkedList<AvatarUpdateListener> avatarUpdateListeners = new LinkedList<>();
-    private AvatarUpdateListener avatarUpdateListener;
 
 
     private UserInfoManager() {
@@ -39,7 +38,9 @@ public class UserInfoManager {
 
 
         sharedPreferences = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-        TokenUtil.sharedPreferences = sharedPreferences;
+        //        TokenUtil.sharedPreferences = sharedPreferences;
+
+
     }
 
 
@@ -72,6 +73,10 @@ public class UserInfoManager {
             edit.clear();
             edit.apply();
 
+            if (TokenUtil.sharedPreferences != null) {
+                TokenUtil.sharedPreferences = sharedPreferences;
+            }
+
             //退出登录监听
             for (UserInfoStatusListener listener : userInfoStatusListeners) {
                 listener.onUserStatus(isLogin(), readUserInfo());
@@ -94,6 +99,11 @@ public class UserInfoManager {
             //通过token值, 判断是否登录
             edit.putString("token", dataBean.getToken());
             edit.apply();
+
+            if (TokenUtil.sharedPreferences == null) {
+                TokenUtil.sharedPreferences = sharedPreferences;
+            }
+
 
             //登录状态监听
             for (UserInfoStatusListener listener : userInfoStatusListeners) {

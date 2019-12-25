@@ -19,6 +19,7 @@ import java.util.HashMap;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
@@ -26,6 +27,7 @@ import okhttp3.ResponseBody;
 
 public class CacheService extends Service {
     private IHomeDataListener iHomeDataListener;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public void getHomeDate() {
         RetrofitCreator.getNetApiService().getData(new HashMap<String, String>(), AppNetConfig.HOME_URL, new HashMap<String, String>())
@@ -34,7 +36,7 @@ public class CacheService extends Service {
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        compositeDisposable.add(d);
                     }
 
                     @Override
@@ -85,7 +87,6 @@ public class CacheService extends Service {
     //注销监听
     public void UNRegisterListener() {
         this.iHomeDataListener = null;
+        compositeDisposable.clear();
     }
-
-
 }

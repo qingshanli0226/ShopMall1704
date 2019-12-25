@@ -103,7 +103,7 @@ public class ToolbarCustom extends LinearLayout {
 
 
             //字体颜色
-            int titleColor = tintTypedArray.getColor(R.styleable.ToolbarCustom_titleColor, Color.argb(255, 78, 78, 78));
+            int titleColor = tintTypedArray.getColor(R.styleable.ToolbarCustom_titleColor, Color.argb(255, 74, 74, 74));
             mTvToolbarTitle.setTextColor(titleColor);
 
 

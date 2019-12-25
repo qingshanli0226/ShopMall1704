@@ -5,21 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.shaomall.framework.R;
-
-import java.util.Objects;
 
 public abstract class BaseFragment extends Fragment {
     protected Context mContext;
@@ -32,7 +28,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.mContext = context.getApplicationContext();
+        this.mContext = context;
     }
 
     @Nullable
@@ -62,8 +58,6 @@ public abstract class BaseFragment extends Fragment {
     //设置数据等逻辑
     protected abstract void initData();
 
-
-
     /**
      * Intent 跳转
      *
@@ -80,7 +74,6 @@ public abstract class BaseFragment extends Fragment {
      * @param clazz
      * @param index
      */
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     protected void toClass(Class<? extends Activity> clazz, int index) {
         Bundle bundle = new Bundle();
         bundle.putInt("index", index);
@@ -93,14 +86,13 @@ public abstract class BaseFragment extends Fragment {
      * @param clazz
      * @param bundle
      */
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     protected void toClass(Class<? extends Activity> clazz, Bundle bundle) {
         Intent intent = new Intent(mContext, clazz);
         if (bundle != null && bundle.size() != 0) {
             intent.putExtras(bundle);
         }
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(intent);
-        Objects.requireNonNull(getActivity()).overridePendingTransition(R.anim.anim_in,R.anim.anim_out);
     }
 
 
@@ -111,13 +103,11 @@ public abstract class BaseFragment extends Fragment {
      * @param bundle
      * @param requestCode
      */
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     protected void toClass(Class<? extends Activity> clazz, Bundle bundle, int requestCode) {
         Intent intent = new Intent(mContext, clazz);
         if (bundle != null && bundle.size() != 0) {
             intent.putExtras(bundle);
         }
-        Objects.requireNonNull(getActivity()).startActivityForResult(intent, requestCode);
         getActivity().overridePendingTransition(R.anim.anim_in,R.anim.anim_out);
 
     }
