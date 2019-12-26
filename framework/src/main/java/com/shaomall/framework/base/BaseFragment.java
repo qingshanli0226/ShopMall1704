@@ -63,7 +63,6 @@ public abstract class BaseFragment extends Fragment {
      *
      * @param clazz
      */
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     protected void toClass(Class<? extends Activity> clazz) {
         toClass(clazz, null);
     }

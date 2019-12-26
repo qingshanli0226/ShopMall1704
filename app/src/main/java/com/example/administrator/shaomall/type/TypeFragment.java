@@ -140,7 +140,7 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> implements MessageMa
         super.onRequestHttpDataListSuccess(requestCode, message, data);
         if (requestCode == Constants.TYPE_DATA_CODE) {
 
-            if (isFirest) {
+            if (isFirst) {
                 typeLeftAdapter = new TypeLeftAdapter(getContext());
                 mTypeLeftLv.setAdapter(typeLeftAdapter);
             }

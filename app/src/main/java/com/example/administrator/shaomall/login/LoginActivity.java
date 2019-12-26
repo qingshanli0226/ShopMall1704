@@ -84,25 +84,11 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
                         presenter.doPostHttpRequest(100);
                         ActivityInstanceManager.removeActivity(LoginActivity.this);
 
-                    }0
+                    }
                 }
                 return false;
             }
         });
-    }
-
-
-    @Override
-    public void onRequestHttpDataFailed(int requestCode, ShopMailError error) {
-        //登录失败
-        Toast.makeText(mActivity, "123"+error.getErrorMessage(), Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        ActivityInstanceManager.removeActivity(this);
-
     }
 
 
