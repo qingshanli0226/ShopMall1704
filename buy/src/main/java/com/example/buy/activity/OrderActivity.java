@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -22,6 +23,7 @@ import com.alipay.sdk.app.EnvUtils;
 import com.alipay.sdk.app.PayTask;
 import com.example.buy.R;
 import com.example.buy.bean.PayBean;
+import com.example.buy.bean.PayGoodsBean;
 import com.example.buy.bean.PayResultBean;
 import com.example.buy.presenter.PayPresenter;
 import com.example.common.SignUtil;
@@ -36,6 +38,7 @@ import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,31 +117,41 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String token = ShoppingManager.getInstance().getToken(OrderActivity.this);
-                HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put("token", token);
+                Intent intent = getIntent();
+                int isPaying = intent.getIntExtra("isPaying", 0);
+                if(isPaying==0){
+                    String token = ShoppingManager.getInstance().getToken(OrderActivity.this);
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    hashMap.put("token", token);
 
-                JSONObject jsonObject1 = new JSONObject();
+                    JSONObject jsonObject1 = new JSONObject();
 
-                JSONArray array = new JSONArray();
-                for (int i = 0; i < data.size(); i++) {
-                    Map<String, String> map = data.get(i);
-                    JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("productId", map.get("id"));
-                    jsonObject.put("productName", map.get("title"));
-                    array.add(jsonObject);
+                    JSONArray array = new JSONArray();
+                    for (int i = 0; i < data.size(); i++) {
+                        Map<String, String> map = data.get(i);
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("productId", map.get("id"));
+                        jsonObject.put("productName", map.get("title"));
+                        array.add(jsonObject);
+                    }
+
+                    jsonObject1.put("subject", "buy");
+                    jsonObject1.put("totalPrice", shoppingManager.getAllMoney() + "");
+                    jsonObject1.put("body", array);
+                    jsonObject1.put("sign", SignUtil.generateJsonSign(jsonObject1));
+
+                    SignUtil.encryptJsonParamsByBase64(jsonObject1);
+
+                    payPresenter = new PayPresenter("getOrderInfo", PayBean.class, hashMap, jsonObject1);
+                    payPresenter.attachPostView(OrderActivity.this);
+                    payPresenter.getPostJsonData();
+                }else {
+                    PayGoodsBean.ResultBean pays = (PayGoodsBean.ResultBean) intent.getSerializableExtra("pays");
+                    PayBean.ResultBean resultBean = new PayBean.ResultBean();
+                    resultBean.setOrderInfo(pays.getOrderInfo().toString());
+                    resultBean.setOutTradeNo(pays.getTradeNo());
+                    payV2(resultBean);
                 }
-
-                jsonObject1.put("subject", "buy");
-                jsonObject1.put("totalPrice", shoppingManager.getAllMoney() + "");
-                jsonObject1.put("body", array);
-                jsonObject1.put("sign", SignUtil.generateJsonSign(jsonObject1));
-
-                SignUtil.encryptJsonParamsByBase64(jsonObject1);
-
-                payPresenter = new PayPresenter("getOrderInfo", PayBean.class, hashMap, jsonObject1);
-                payPresenter.attachPostView(OrderActivity.this);
-                payPresenter.getPostJsonData();
 
             }
         });
@@ -148,6 +161,28 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
      * 支付宝支付
      */
     public void payV2(final PayBean.ResultBean resultBean) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                PayTask payTask = new PayTask(OrderActivity.this);
+                //调用支付宝API，发起支付。第一个参数是服务端生成的订单信息。第二个参数是显示加载过程.
+                Map<String, String> result = payTask.payV2(resultBean.getOrderInfo(), true);
+                PayMessage payMessage = new PayMessage();
+                payMessage.setOutTradeNo(resultBean.getOutTradeNo()); //将订单号存在paymessage里.
+                payMessage.setResult(result);//将支付宝的支付结果存在paymessage里.
+                Log.d("LQS", "支付结果：" + payMessage.getOutTradeNo());
+                Message message = new Message();
+                message.what = 1;
+                message.obj = payMessage;
+                handler.sendMessage(message);
+            }
+        };
+
+        Thread thread = new Thread(runnable);
+        thread.start();
+    }
+
+    public void payV22(final PayBean.ResultBean resultBean) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -246,9 +281,19 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
     }
 
     private void setAllMoney() {
-        allMoney = shoppingManager.getAllMoney();
-        String text = "￥" + allMoney + "0";
-        tvShopcartTotal.setText(text);
+        Intent intent = getIntent();
+        int isPaying = intent.getIntExtra("isPaying", 0);
+        if(isPaying==0){
+            allMoney = shoppingManager.getAllMoney();
+            String text = "￥" + allMoney + "0";
+            tvShopcartTotal.setText(text);
+        }else {
+            PayGoodsBean.ResultBean bean = (PayGoodsBean.ResultBean) intent.getSerializableExtra("pays");
+            String totalPrice = bean.getTotalPrice();
+            allMoney = Double.parseDouble(totalPrice);
+            String text = "￥" + allMoney + "0";
+            tvShopcartTotal.setText(text);
+        }
     }
 
     @Override
@@ -263,8 +308,12 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
 
     private void initShoppingData() {
         shoppingManager = ShoppingManager.getInstance();
-        data = shoppingManager.getBuyThings();
-        myShoppingOrderAdapter.reFresh(data);
+        Intent intent = getIntent();
+        int isPaying = intent.getIntExtra("isPaying", 0);
+        if(isPaying==0){
+            data = shoppingManager.getBuyThings();
+            myShoppingOrderAdapter.reFresh(data);
+        }
     }
 
     @Override

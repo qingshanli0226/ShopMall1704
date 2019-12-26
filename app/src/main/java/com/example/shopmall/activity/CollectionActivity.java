@@ -93,7 +93,6 @@ public class CollectionActivity extends BaseActivity implements CollectionAdapte
 
     private void initTitle() {
         tbCollection.setCenterText("我的收藏",20, Color.WHITE);
-        tbCollection.setRightText("编辑",13,Color.WHITE);
         tbCollection.setLeftText("返回",13,Color.WHITE);
         tbCollection.setBackgroundColor(Color.RED);
 

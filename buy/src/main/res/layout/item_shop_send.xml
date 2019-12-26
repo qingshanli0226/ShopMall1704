@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/ll_buy_itemlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="@dimen/dpsize_10">
 
-        <ImageView
-            android:id="@+id/iv_buy_gov"
-            android:layout_width="@dimen/recyclerimgsize"
-            android:layout_height="@dimen/recyclerimgsize"
-            android:layout_marginLeft="@dimen/dpsize_10"
-            android:background="@mipmap/ic_launcher"
-            android:scaleType="fitXY" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,54 +18,61 @@
             android:layout_marginLeft="@dimen/dpsize_20"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_buy_title"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ellipsize="end"
-                android:lines="2"
-                android:text="123"
-                android:textColor="@color/color4040"
-                android:textSize="@dimen/dpsize_20" />
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="订单号："
+                    android:textColor="@color/color4040"
+                    android:textSize="@dimen/dpsize_20"/>
+                <TextView
+                    android:id="@+id/tv_buy_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="123"
+                    android:textColor="@color/color4040"
+                    android:textSize="@dimen/dpsize_20" />
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dpsize_10">
 
                 <TextView
-                    android:id="@+id/tv_buy_leftnum"
+                    android:id="@+id/tv_buy_pricetitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="共"
-                    android:textSize="@dimen/dpsize_15" />
-
-                <TextView
-                    android:id="@+id/tv_buy_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/tv_buy_leftnum"
-                    android:text="0"
-                    android:textSize="@dimen/dpsize_15" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/tv_buy_num"
-                    android:text="件商品" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@id/tv_buy_price"
-                    android:text="实付款：" />
+                    android:text="实付款："
+                    android:textSize="@dimen/dpsize_10"/>
 
                 <TextView
                     android:id="@+id/tv_buy_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="￥0.00" />
+                    android:layout_toRightOf="@id/tv_buy_pricetitle"
+                    android:text="￥0.00"
+                    android:textSize="@dimen/dpsize_10"/>
+
+                <TextView
+                    android:id="@+id/tv_buy_leftnum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="订单时间："
+                    android:textSize="@dimen/dpsize_10"
+                    android:layout_centerHorizontal="true"/>
+
+                <TextView
+                    android:id="@+id/tv_buy_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/tv_buy_leftnum"
+                    android:text="123"
+                    android:textSize="@dimen/dpsize_10" />
+
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

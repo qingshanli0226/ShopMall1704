@@ -294,7 +294,8 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             llCheckAll.setVisibility(View.VISIBLE);
             llDelete.setVisibility(View.GONE);
             tbShoppingCart.setRightText("编辑", 14, Color.BLACK);
-            initData2();
+            List<Map<String, String>> data = myShoppingManager.getData();
+            myShoppingBasketAdapter.reFresh(data);
         } else {
             data3.clear();
             List<Map<String, String>> data4 = myShoppingManager.getData();
@@ -692,7 +693,6 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             }
             tvShopcartTotal.setText("￥" + allcount1 + "0");
         }
-        ShoppingManager.getInstance().setOnNumberChanged(0);
     }
 
     //购物车数据网址连接失败

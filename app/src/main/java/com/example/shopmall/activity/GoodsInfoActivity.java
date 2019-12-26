@@ -13,7 +13,6 @@ import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
@@ -184,8 +183,6 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
             @Override
             public void onClick(View view) {
                 String token = ShoppingManager.getInstance().getToken(GoodsInfoActivity.this);
-                ShoppingManager.getInstance().setOnNumberChanged(x);
-                x++;
                 HashMap<String, String> hashMap = new HashMap<>();
                 hashMap.put("token", token);
 
@@ -280,8 +277,7 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
     //购物车
     private void shoppingcart() {
         ShoppingManager.getInstance().setMainitem(3);
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        finish();
 
     }
 
@@ -333,8 +329,9 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
         builder.setPositiveButton("前往登录", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                startActivity(new Intent(GoodsInfoActivity.this,LoginActivity.class));
+                ShoppingManager.getInstance().setMainitem(5);
                 dialogInterface.dismiss();
+                finish();
             }
         });
         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -355,7 +352,8 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
 
     @Override
     public void onPostDataSucess(InsertBean data) {
-
+        ShoppingManager.getInstance().setOnNumberChanged(x);
+        x++;
     }
 
     @Override
@@ -373,6 +371,7 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
             addOneProduct.detachView();
         }
 
+        ShoppingManager.getInstance().setOnNumberChangedListener2(null);
     }
 
     int nums = 0;
@@ -384,7 +383,6 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
             ShoppingManager.getInstance().setBeforenum(num);
             svRedpoint.setNum(num);
         }
-
     }
 }
 

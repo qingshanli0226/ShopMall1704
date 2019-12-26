@@ -7,17 +7,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.buy.activity.PayGoodsActivity;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseFragment;
 import com.example.buy.activity.SendGoodsActivity;
@@ -52,6 +50,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private File file1;
     private TitleBar tbMine;
     private TextView tvUserScore;
+    private TextView tvPay;
     private TextView tvUsername;
     private ImageView ivUserIconAvator;
     private TextView tvSendgoods;
@@ -71,6 +70,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         tbMine = view.findViewById(R.id.tb_mine);
         tvUserScore = view.findViewById(R.id.tv_user_score);
         tvUsername = view.findViewById(R.id.tv_username);
+        tvPay = view.findViewById(R.id.tv_user_pay);
         ivUserIconAvator = view.findViewById(R.id.iv_user_icon_avator);
         rlUserLocation = view.findViewById(R.id.rl_user_location);
         rlUserCollect = view.findViewById(R.id.rl_user_collect);
@@ -249,10 +249,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         tvUsername.setOnClickListener(this);
         //跳转收货地址页面
         rlUserLocation.setOnClickListener(this);
-        //跳转代发货页面
+        //跳转待发货页面
         tvSendgoods.setOnClickListener(this);
         //跳转我的收藏页面
         rlUserCollect.setOnClickListener(this);
+        //跳转待支付页面
+        tvPay.setOnClickListener(this);
     }
 
 
@@ -293,6 +295,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                     break;
                 case R.id.tv_user_score:
                     intent.setClass(getContext(), IntegralActivity.class);
+                    break;
+                case R.id.tv_user_pay:
+                    intent.setClass(getContext(), PayGoodsActivity.class);
                     break;
                 default:
                     break;
