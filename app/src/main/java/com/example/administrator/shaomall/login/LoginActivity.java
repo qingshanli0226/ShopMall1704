@@ -43,6 +43,7 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
     }
 
 
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void initData() {

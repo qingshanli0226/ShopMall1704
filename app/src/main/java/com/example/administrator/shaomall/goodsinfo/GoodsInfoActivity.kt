@@ -2,8 +2,13 @@ package com.example.administrator.shaomall.goodsinfo
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
+
+import android.annotation.TargetApi
+
 import android.graphics.Color
 import android.graphics.PointF
+import android.os.Build
+import android.support.annotation.RequiresApi
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -147,6 +152,8 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
     /**
      * 点击事件监听处理
      */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    @RequiresApi(Build.VERSION_CODES.HONEYCOMB)
     override fun onClick(v: View?) {
         if (!UserInfoManager.getInstance().isLogin) {
             toast("请先登录", false)
@@ -209,6 +216,7 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
     /**
      * 设置贝塞尔曲线动画
      */
+    @RequiresApi(Build.VERSION_CODES.HONEYCOMB)
     private fun setBezierCurveAnimation() {
         x = 0f
         y = 0f
