@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">ShopMall</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_name">UserName：</string>
+    <string name="login_pwd">PassWord：</string>
+    <string name="login_text">Login</string>
+    <string name="login_register_text">Register</string>
+    <string name="register_name">UserName：</string>
+    <string name="register_pwd">PassWord：</string>
+    <string name="register_text">Register</string>
+    <string name="mine_text">Login/Register</string>
+    <string name="mine_indent_text">my order</string>
+    <string name="look_all_indent">View all orders</string>
+    <string name="obligation_text">obligation</string>
+    <string name="drop_shipping">To send the goods</string>
+    <string name="wait_for_receiving">wait for receiving </string>
+    <string name="off_the_stocks">Done</string>
+    <string name="after_sale_text">After sale/refund</string>
+    <string name="address_text">delivery address</string>
+    <string name="mine_collect">my favorite</string>
+    <string name="mine_coupon">My coupon</string>
+    <string name="mine_integral">my bonus points </string>
+    <string name="mine_prize">My prize</string>
+    <string name="mine_ticket">My e-ticket</string>
+    <string name="mine_share">Invited to share</string>
+    <string name="mine_service_center">call center</string>
+    <string name="mine_feedback">Service feedback</string>
+    <string name="login_automatic">automatic login </string>
+    <string name="goods_info_shopping_cart">add to shopping cart </string>
+</resources>

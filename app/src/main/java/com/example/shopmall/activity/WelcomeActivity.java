@@ -63,8 +63,8 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
     @Override
     public void initData() {
 
+        handlerThread.start();
         initAutoLogin();
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -113,8 +113,6 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
         integerPresenter.attachGetView(this);
         integerPresenter.getGetData();
 
-        handlerThread.start();
-
         Thread welcomeThread = new Thread() {
             @Override
             public void run() {
@@ -134,6 +132,7 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
                 }
             }
         };
+
         boolean connectStatus = ConnectManager.getInstance().getConnectStatus();
         if (connectStatus) {
             welcomeThread.start();
@@ -164,7 +163,6 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
                     return;
                 } else {
                     isJump = true;
-
                 }
             }
             if (isJump == true) {
