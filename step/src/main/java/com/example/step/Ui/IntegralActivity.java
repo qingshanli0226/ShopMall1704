@@ -59,7 +59,7 @@ public class IntegralActivity extends BaseActivity implements StepManager.StepMa
     @Override
     public void initData() {
 
-        tb_integral.setBackgroundColor(getResources().getInteger(R.color.color2));
+        tb_integral.setBackgroundColor(getResources().getInteger(R.color.intgalColor));
         tb_integral.setCenterText("我的积分",18, Color.WHITE);
 
         tb_integral.setLeftImg(R.drawable.left);

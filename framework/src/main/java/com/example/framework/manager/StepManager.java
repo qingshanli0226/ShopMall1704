@@ -47,7 +47,6 @@ public class StepManager {
 
     private Intent intent;
 
-//    private int cut;
 
     SQLiteDatabase hourDb;
 

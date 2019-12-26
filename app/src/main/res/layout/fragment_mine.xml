@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context=".fragment.MineFragment"
     tools:mContext=".fragment.MineFragment">
 
@@ -21,7 +22,6 @@
             android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="170dp"
-            android:background="@null"
             android:fitsSystemWindows="true">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout

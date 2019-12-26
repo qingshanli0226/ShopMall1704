@@ -120,11 +120,6 @@ public class StepService extends Service implements SensorEventListener {
                             StepManager.getInstance().insertHour(CURRENT_TIME,CURRENT_DATE,currentStep);
                         } else{
                                     StepManager.getInstance().insertHour(CURRENT_TIME,CURRENT_DATE,currentStep);
-//                            if(StepManager.getInstance().isDifferentStep()==false){
-//                            }else{
-//                                return;
-                                StepManager.getInstance().insertHour(CURRENT_TIME,CURRENT_DATE,currentStep);
-//                            }
                         }
                         isNewDay();
                         break;

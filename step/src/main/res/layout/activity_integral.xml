@@ -10,7 +10,8 @@
     <com.example.common.TitleBar
         android:id="@+id/tb_integral"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/titleBar_height" />
+        android:layout_weight="0.5"
+        android:layout_height="0dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
