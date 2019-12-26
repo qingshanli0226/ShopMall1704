@@ -9,6 +9,7 @@ import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import cn.jiguang.analytics.android.api.JAnalyticsInterface;
 import cn.jpush.android.api.JPushInterface;
+import me.jessyan.autosize.AutoSizeConfig;
 
 
 /**
@@ -29,7 +30,7 @@ public class MineApplication extends Application {
         JAnalyticsInterface.initCrashHandler(this);
         JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
-
+        AutoSizeConfig.getInstance().setCustomFragment(false).setUseDeviceSize(true);
         ZXingLibrary.initDisplayOpinion(this);
     }
 }
