@@ -103,6 +103,7 @@ public class ShoppingManager {
         }
         edit.putString(name+"collections",buffer.toString());
         edit.apply();
+
     }
 
     public int getMainitem() {

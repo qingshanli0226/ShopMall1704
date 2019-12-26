@@ -72,14 +72,19 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
     @Override
     protected void onResume() {
         super.onResume();
+        refreshShoppingCartData();
         int mainitem = ShoppingManager.getInstance().getMainitem();
-        if (mainitem == 0){
-            bbMain.setCheckedItem(0);
-        }else if (mainitem == 3){
-            bbMain.setCheckedItem(mainitem);
-            refreshShoppingCartData();
-        }else if (mainitem == 5){
+
+        if (mainitem == 5){
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
+        }else{
+            bbMain.setCheckedItem(mainitem);
+            if (mainitem == 3) {
+                boolean loginStatus = UserManager.getInstance().getLoginStatus();
+                if(!loginStatus){
+                    setAlertDialog();
+                }
+            }
         }
     }
 
@@ -244,6 +249,6 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
         if (shoppingCartPresenter != null){
             shoppingCartPresenter.detachView();
         }
-
+        ShoppingManager.getInstance().setOnNumberChangedListener(null);
     }
 }

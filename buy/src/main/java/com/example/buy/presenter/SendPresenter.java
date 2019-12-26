@@ -1,13 +1,11 @@
 package com.example.buy.presenter;
 
-import com.example.buy.bean.SendBean;
-import com.example.buy.bean.ShoppingCartBean;
 import com.example.framework.base.BasePresenter;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
 
-public class SendPresenter extends BasePresenter<SendBean> {
+public class SendPresenter extends BasePresenter {
 
     private String Config;
     private Type type;

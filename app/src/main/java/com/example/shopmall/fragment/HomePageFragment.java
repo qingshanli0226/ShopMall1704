@@ -25,6 +25,7 @@ import com.example.framework.manager.CaCheManager;
 import com.example.framework.base.BaseFragment;
 import com.example.framework.manager.ConnectManager;
 import com.example.framework.manager.MessageManager;
+import com.example.framework.manager.ShoppingManager;
 import com.example.framework.manager.UserManager;
 import com.example.net.Constant;
 import com.example.shopmall.R;
@@ -88,6 +89,7 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
 
     @Override
     protected void initData() {
+        ShoppingManager.getInstance().setMainitem(0);
         tbHomepage.setTitleBacKGround(Color.RED);
         tbHomepage.setCenterText("首页", 18, Color.WHITE);
         tbHomepage.setRightImg(R.mipmap.new_message_icon);

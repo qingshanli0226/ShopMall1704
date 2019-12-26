@@ -1,71 +1,75 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-17:12
-INJECTED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-17:12
-INJECTED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-17:12
-INJECTED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-17:12
-INJECTED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-17:12
-INJECTED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-17:12
-INJECTED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-17:12
+ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-18:12
+INJECTED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-18:12
+INJECTED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-18:12
+INJECTED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-18:12
+INJECTED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-18:12
+INJECTED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-18:12
+INJECTED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-18:12
 	package
-		ADDED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:3:5-30
-		INJECTED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml
-		INJECTED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml
+		ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:3:5-30
+		INJECTED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml
+		INJECTED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml
 	android:versionName
-		INJECTED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml
-		ADDED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-17:12
-		INJECTED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml
+		INJECTED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml
+		ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-18:12
+		INJECTED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml
 	android:versionCode
-		INJECTED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml
-		ADDED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-17:12
-		INJECTED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml
+		INJECTED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml
+		ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:2:1-18:12
+		INJECTED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:2:11-69
+		ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:2:11-69
 uses-permission#android.permission.INTERNET
-ADDED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:5:5-67
+ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:5:5-67
 	android:name
-		ADDED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:5:22-64
+		ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:5:22-64
 uses-permission#android.permission.READ_PHONE_STATE
-ADDED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:6:5-75
+ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:6:5-75
 	android:name
-		ADDED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:6:22-72
+		ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:6:22-72
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:7:5-79
+ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:7:5-79
 	android:name
-		ADDED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:7:22-76
+		ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:7:22-76
 uses-permission#android.permission.ACCESS_WIFI_STATE
-ADDED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:8:5-76
+ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:8:5-76
 	android:name
-		ADDED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:8:22-73
+		ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:8:22-73
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:9:5-81
+ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:9:5-81
 	android:name
-		ADDED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:9:22-78
+		ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:9:22-78
 application
-ADDED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:11:5-15:19
+ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:11:5-16:19
+activity#com.example.buy.activity.PayGoodsActivity
+ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:12:9-87
+	android:name
+		ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:12:19-75
 activity#com.example.buy.activity.SendGoodsActivity
-ADDED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:12:9-73
+ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:13:9-64
 	android:name
-		ADDED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:12:19-61
+		ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:13:19-61
 activity#com.example.buy.activity.ShoppingResultActivity
-ADDED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:13:9-69
+ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:14:9-69
 	android:name
-		ADDED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:13:19-66
+		ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:14:19-66
 activity#com.example.buy.activity.OrderActivity
-ADDED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:14:9-60
+ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:15:9-60
 	android:name
-		ADDED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml:14:19-57
+		ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:15:19-57
 uses-sdk
-INJECTED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml
-INJECTED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml
-INJECTED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml
-INJECTED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml
+INJECTED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml
+INJECTED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml
+INJECTED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml
+INJECTED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml
-		ADDED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml
-		INJECTED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml
+		INJECTED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml
+		ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml
+		INJECTED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml
-		ADDED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml
-		INJECTED from D:\Android_WorkSpace\ShopMall1704\buy\src\main\AndroidManifest.xml
+		INJECTED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml
+		ADDED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml
+		INJECTED from E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml

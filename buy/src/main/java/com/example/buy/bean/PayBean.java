@@ -60,5 +60,13 @@ public class PayBean {
         public void setOutTradeNo(String outTradeNo) {
             this.outTradeNo = outTradeNo;
         }
+
+        @Override
+        public String toString() {
+            return "ResultBean{" +
+                    "orderInfo='" + orderInfo + '\'' +
+                    ", outTradeNo='" + outTradeNo + '\'' +
+                    '}';
+        }
     }
 }

@@ -6,31 +6,31 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="17"
-8-->D:\Android_WorkSpace\ShopMall1704\framework\src\main\AndroidManifest.xml
+8-->E:\GitLearn\ShopMall1704\framework\src\main\AndroidManifest.xml
 9        android:targetSdkVersion="29" />
-9-->D:\Android_WorkSpace\ShopMall1704\framework\src\main\AndroidManifest.xml
+9-->E:\GitLearn\ShopMall1704\framework\src\main\AndroidManifest.xml
 10
 11    <application>
-11-->D:\Android_WorkSpace\ShopMall1704\framework\src\main\AndroidManifest.xml:7:5-24:19
+11-->E:\GitLearn\ShopMall1704\framework\src\main\AndroidManifest.xml:7:5-24:19
 12        <service
-12-->D:\Android_WorkSpace\ShopMall1704\framework\src\main\AndroidManifest.xml:8:9-16:19
+12-->E:\GitLearn\ShopMall1704\framework\src\main\AndroidManifest.xml:8:9-16:19
 13            android:name="com.example.framework.service.StepRemoteService"
-13-->D:\Android_WorkSpace\ShopMall1704\framework\src\main\AndroidManifest.xml:8:18-80
+13-->E:\GitLearn\ShopMall1704\framework\src\main\AndroidManifest.xml:8:18-80
 14            android:enabled="true"
-14-->D:\Android_WorkSpace\ShopMall1704\framework\src\main\AndroidManifest.xml:10:13-35
+14-->E:\GitLearn\ShopMall1704\framework\src\main\AndroidManifest.xml:10:13-35
 15            android:exported="true"
-15-->D:\Android_WorkSpace\ShopMall1704\framework\src\main\AndroidManifest.xml:9:13-36
+15-->E:\GitLearn\ShopMall1704\framework\src\main\AndroidManifest.xml:9:13-36
 16            android:process="remote.service.two" >
-16-->D:\Android_WorkSpace\ShopMall1704\framework\src\main\AndroidManifest.xml:11:13-49
+16-->E:\GitLearn\ShopMall1704\framework\src\main\AndroidManifest.xml:11:13-49
 17        </service>
 18        <service
-18-->D:\Android_WorkSpace\ShopMall1704\framework\src\main\AndroidManifest.xml:17:9-23:19
+18-->E:\GitLearn\ShopMall1704\framework\src\main\AndroidManifest.xml:17:9-23:19
 19            android:name="com.example.framework.service.StepLocalService"
-19-->D:\Android_WorkSpace\ShopMall1704\framework\src\main\AndroidManifest.xml:17:18-79
+19-->E:\GitLearn\ShopMall1704\framework\src\main\AndroidManifest.xml:17:18-79
 20            android:enabled="true"
-20-->D:\Android_WorkSpace\ShopMall1704\framework\src\main\AndroidManifest.xml:19:13-35
+20-->E:\GitLearn\ShopMall1704\framework\src\main\AndroidManifest.xml:19:13-35
 21            android:exported="true" >
-21-->D:\Android_WorkSpace\ShopMall1704\framework\src\main\AndroidManifest.xml:18:13-36
+21-->E:\GitLearn\ShopMall1704\framework\src\main\AndroidManifest.xml:18:13-36
 22        </service>
 23    </application>
 24
