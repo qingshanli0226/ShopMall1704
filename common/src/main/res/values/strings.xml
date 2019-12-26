@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">common</string>
     <string name="login_help">帮助</string>
     <string name="btn_text_login">登 录</string>
     <string name="register_title">快速注册</string>

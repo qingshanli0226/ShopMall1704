@@ -23,7 +23,10 @@ import com.example.dimensionleague.R;
 import com.example.common.HomeBean;
 import com.example.dimensionleague.userbean.AutoLoginBean;
 import com.example.framework.base.BaseNetConnectActivity;
+import com.example.framework.manager.NetConnectManager;
 import com.example.framework.port.ITaskFinishListener;
+import com.example.point.StepIsSupport;
+import com.example.point.stepmanager.StepPointManager;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import org.jetbrains.annotations.NotNull;
 import java.lang.ref.WeakReference;
@@ -63,6 +66,7 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
                 Manifest.permission.CHANGE_WIFI_STATE,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.SYSTEM_ALERT_WINDOW,
+
                 Manifest.permission.ACCESS_BACKGROUND_LOCATION
 
         ).subscribe(permission->{
@@ -127,8 +131,6 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
                             resultBean.getMoney(),
                             resultBean.getAvatar());
                     AccountManager.getInstance().setUser(user);
-                    Log.d("lhf--welcome--user",AccountManager.getInstance().getUser().toString());
-                    Log.d("lhf--welcome", ""+resultBean.toString());
                     //TODO 更新登录状态
                     AccountManager.getInstance().notifyLogin();
                     AccountManager.getInstance().saveToken(resultBean.getToken());
@@ -160,7 +162,6 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         CacheManager.getInstance().unRegisterGetDateListener();
         AutoLoginManager.getInstance().unRegisterAutoLoginListener();
         if (videoView != null) {
@@ -173,6 +174,8 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
             welcomeLayout.removeAllViews();
             welcomeLayout=null;
         }
+        handler.removeCallbacksAndMessages(null);
+        super.onDestroy();
     }
 
     @Override

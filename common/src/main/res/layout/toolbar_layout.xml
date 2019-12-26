@@ -1,308 +1,348 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#00FFFFFF">
+    android:background="#00FFFFFF"
+    android:orientation="vertical">
+
     <RelativeLayout
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_70">
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_70">
+
         <RelativeLayout
-                android:id="@+id/home_layout"
-                style="@style/ToolBarChildViewGroup">
-            <TextView
-                    android:id="@+id/home_search"
-                    android:background="@drawable/white_text_background"
-                    android:layout_width="match_parent"
-                    android:drawableLeft="@drawable/search"
-                    android:hint="超级百亿补贴"
-                    android:paddingTop="@dimen/dp_5"
-                    android:paddingBottom="@dimen/dp_5"
-                    android:paddingLeft="@dimen/dp_10"
-                    android:paddingRight="@dimen/dp_20"
-                    android:drawablePadding="@dimen/dp_10"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/dp_10"
-                    android:layout_toLeftOf="@id/home_search_back"/>
-            <ImageView
-                    android:id="@+id/home_camera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/camera"
-                    android:layout_toLeftOf="@id/home_search_back"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dp_25"/>
-            <TextView
-                    android:id="@+id/home_search_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dp_10"
-                    android:layout_toLeftOf="@id/home_message"
-                    android:drawableTop="@drawable/home_scan"
-                    android:gravity="center"
-                    android:text="@string/top_scan"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/dp_10" />
+            android:id="@+id/home_layout"
+            style="@style/ToolBarChildViewGroup">
 
             <TextView
-                    android:id="@+id/home_message"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:drawableTop="@drawable/home_message"
-                    android:gravity="center"
-                    android:text="@string/messenger"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/dp_10" />
-        </RelativeLayout>
-        <LinearLayout
-                android:id="@+id/search_layout"
-                style="@style/ToolBarChildViewGroup"
-                android:gravity="center">
+                android:id="@+id/home_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_toLeftOf="@id/home_search_back"
+                android:background="@drawable/white_text_background"
+                android:drawableLeft="@drawable/search"
+                android:drawablePadding="@dimen/dp_10"
+                android:hint="超级百亿补贴"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_5"
+                android:paddingRight="@dimen/dp_20"
+                android:paddingBottom="@dimen/dp_5" />
+
             <ImageView
-                    android:id="@+id/scan"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:padding="@dimen/dp_5"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/scan_code"/>
-            <RelativeLayout
-                    android:layout_weight="10"
-                    android:layout_width="@dimen/dp_0"
-                    android:layout_height="wrap_content">
-                <EditText
-                        android:id="@+id/search_edit"
-                        android:imeOptions="actionSearch"
-                        android:singleLine="true"
-                        android:maxLines="1"
-                        android:background="@drawable/white_text_background"
-                        android:layout_width="match_parent"
-                        android:drawableLeft="@drawable/search"
-                        android:hint="超级百亿补贴"
-                        android:paddingTop="@dimen/dp_5"
-                        android:paddingBottom="@dimen/dp_5"
-                        android:paddingLeft="@dimen/dp_10"
-                        android:layout_marginLeft="@dimen/dp_10"
-                        android:layout_marginRight="@dimen/dp_10"
-                        android:paddingRight="@dimen/dp_20"
-                        android:drawablePadding="@dimen/dp_10"
-                        android:textCursorDrawable="@null"
-                        android:layout_height="wrap_content"/>
-                <ImageView
-                        android:id="@+id/search_camera"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/camera"
-                        android:layout_centerVertical="true"
-                        android:layout_alignRight="@id/search_edit"
-                        android:layout_marginRight="@dimen/dp_20"/>
-            </RelativeLayout>
-            <ImageView
-                    android:id="@+id/search_message"
-                    android:padding="@dimen/dp_5"
-                    android:layout_weight="1"
-                    android:layout_centerVertical="true"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/message"
-                    android:layout_alignParentRight="true"/>
-            <TextView
-                    android:id="@+id/search_text"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="搜索"
-                    android:layout_centerVertical="true"
-                    android:textColor="@color/colorWhite"
-                    android:layout_alignParentRight="true"
-                    android:visibility="gone"/>
-        </LinearLayout>
-        <RelativeLayout
-                android:id="@+id/find_layout"
-                style="@style/ToolBarChildViewGroup">
-            <ImageView
-                    android:id="@+id/find_user"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/user_icon"/>
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="发现"
-                    android:gravity="center"
-                    android:textSize="@dimen/sp_25"
-                    android:textColor="@color/colorWhite"/>
-            <ImageView
-                    android:id="@+id/find_search"
-                    android:layout_toLeftOf="@id/find_message"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/find_search"
-                    android:layout_marginRight="@dimen/dp_10"/>
-            <ImageView
-                    android:id="@+id/find_message"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/message"
-                    android:layout_alignParentRight="true"/>
-        </RelativeLayout>
-        <LinearLayout
-                android:id="@+id/buy_message_layout"
-                style="@style/ToolBarChildViewGroup"
-                android:gravity="center">
-            <ImageView
-                    android:id="@+id/message_back"
-                    android:layout_weight="1"
-                    android:layout_width="@dimen/dp_0"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/back3"
-                    android:visibility="gone"/>
-            <ImageView
-                    android:id="@+id/buy_car_back"
-                    android:layout_weight="1"
-                    android:layout_width="@dimen/dp_0"
-                    android:layout_height="wrap_content"/>
-            <ImageView
-                    android:layout_weight="1"
-                    android:layout_width="@dimen/dp_0"
-                    android:layout_height="wrap_content"/>
-            <LinearLayout
-                    android:layout_weight="8"
-                    android:layout_width="0dp"
-                    android:gravity="center"
-                    android:layout_height="wrap_content">
-                <TextView
-                        android:id="@+id/buy_message_title"
-                        android:layout_width="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_height="wrap_content"
-                        android:text="购物车"
-                        android:layout_marginRight="@dimen/dp_5"
-                        android:gravity="center"
-                        android:textSize="@dimen/sp_18"
-                        android:textColor="@color/colorWhite"/>
-                <ImageView
-                        android:id="@+id/buy_message_icon"
-                        android:layout_marginLeft="@dimen/dp_5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/delivery"/>
-            </LinearLayout>
-            <TextView
-                    android:id="@+id/buy_compile"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="编辑"
-                    android:layout_toLeftOf="@id/buy_menu"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/dp_10"
-                    android:textColor="@color/colorWhite"/>
-            <ImageView
-                    android:id="@+id/buy_menu"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/menu_icon"
-                    android:layout_alignParentRight="true"/>
-            <ImageView
-                    android:id="@+id/message_calendar"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/calendar"
-                    android:layout_alignParentRight="true"
-                    android:layout_toLeftOf="@id/message_menu"
-                    android:visibility="gone"/>
-            <ImageView
-                    android:id="@+id/message_menu"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/add"
-                    android:layout_alignParentRight="true"
-                    android:visibility="gone"/>
-        </LinearLayout>
-        <RelativeLayout
-                android:id="@+id/mine_layout"
-                style="@style/ToolBarChildViewGroup">
-            <ImageView
-                    android:id="@+id/mine_head"
-                    android:layout_width="@dimen/dp_20"
-                    android:layout_height="@dimen/dp_20"
-                    android:layout_centerVertical="true"/>
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="我的"
-                    android:gravity="center"
-                    android:textSize="@dimen/sp_18"
-                    android:textColor="@color/colorWhite"/>
-            <ImageView
-                    android:id="@+id/mine_setting"
-                    android:layout_toLeftOf="@id/mine_message"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/setting"
-                    android:layout_marginRight="@dimen/dp_15"/>
-            <ImageView
-                    android:id="@+id/mine_message"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/message"
-                    android:layout_alignParentRight="true"/>
-        </RelativeLayout>
-        <RelativeLayout
-                android:id="@+id/other_layout"
-                style="@style/ToolBarChildViewGroup">
-            <ImageView
-                    android:id="@+id/other_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/back3"/>
-            <TextView
-                    android:id="@+id/other_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="账号设置"
-                    android:textColor="@color/colorWhite"
-                    android:layout_centerInParent="true"
-                    android:textSize="@dimen/sp_18"/>
-        </RelativeLayout>
-    </RelativeLayout>
-    <LinearLayout
-            android:layout_below="@id/toolbar"
-            android:id="@+id/not_internet"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_50"
-            android:orientation="horizontal"
-            android:padding="@dimen/dp_15"
-            android:gravity="center_vertical"
-            android:background="@color/color_pink_not_net">
-        <ImageView
-                android:layout_marginLeft="@dimen/dp_10"
+                android:id="@+id/home_camera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/plaint"/>
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_25"
+                android:layout_toLeftOf="@id/home_search_back"
+                android:src="@drawable/camera" />
+
             <TextView
-                    android:layout_marginLeft="@dimen/dp_20"
+                android:id="@+id/home_search_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_toLeftOf="@id/home_message"
+                android:drawableTop="@drawable/home_scan"
+                android:gravity="center"
+                android:text="@string/top_scan"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/dp_10" />
+
+            <TextView
+                android:id="@+id/home_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:drawableTop="@drawable/home_message"
+                android:gravity="center"
+                android:text="@string/messenger"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/dp_10" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/search_layout"
+            style="@style/ToolBarChildViewGroup"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/scan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:padding="@dimen/dp_5"
+                android:src="@drawable/scan_code" />
+
+            <RelativeLayout
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:layout_weight="10">
+
+                <EditText
+                    android:id="@+id/search_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:background="@drawable/white_text_background"
+                    android:drawableLeft="@drawable/search"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:hint="超级百亿补贴"
+                    android:imeOptions="actionSearch"
+                    android:maxLines="1"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_5"
+                    android:paddingRight="@dimen/dp_20"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:singleLine="true"
+                    android:textCursorDrawable="@null" />
+
+                <ImageView
+                    android:id="@+id/search_camera"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/not_net"
-                    android:textSize="@dimen/sp_15"
-                    android:textColor="#7C7171"/>
+                    android:layout_alignRight="@id/search_edit"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:src="@drawable/camera" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/search_message"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:padding="@dimen/dp_5"
+                android:src="@drawable/message" />
+
+            <TextView
+                android:id="@+id/search_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:text="搜索"
+                android:textColor="@color/colorWhite"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/find_layout"
+            style="@style/ToolBarChildViewGroup">
+
+            <ImageView
+                android:id="@+id/find_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/user_icon" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="发现"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/sp_25" />
+
+            <ImageView
+                android:id="@+id/find_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_toLeftOf="@id/find_message"
+                android:src="@drawable/find_search" />
+
+            <ImageView
+                android:id="@+id/find_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/message" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/buy_message_layout"
+            style="@style/ToolBarChildViewGroup"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/message_back"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/back3"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/buy_car_back"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/buy_message_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="@dimen/dp_5"
+                    android:gravity="center"
+                    android:text="购物车"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sp_18" />
+
+                <ImageView
+                    android:id="@+id/buy_message_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:src="@drawable/delivery" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/buy_compile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_toLeftOf="@id/buy_menu"
+                android:layout_weight="1"
+                android:text="编辑"
+                android:textColor="@color/colorWhite" />
+
+            <ImageView
+                android:id="@+id/buy_menu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:src="@drawable/menu_icon" />
+
+            <ImageView
+                android:id="@+id/message_calendar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/message_menu"
+                android:layout_weight="1"
+                android:src="@drawable/calendar"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/message_menu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:src="@drawable/add"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/mine_layout"
+            style="@style/ToolBarChildViewGroup">
+
+            <ImageView
+                android:id="@+id/mine_head"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="我的"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/sp_18" />
+
+            <ImageView
+                android:id="@+id/mine_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_15"
+                android:layout_toLeftOf="@id/mine_message"
+                android:src="@drawable/setting" />
+
+            <ImageView
+                android:id="@+id/mine_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/message" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/other_layout"
+            style="@style/ToolBarChildViewGroup">
+
+            <ImageView
+                android:id="@+id/other_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/back3" />
+
+            <TextView
+                android:id="@+id/other_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="账号设置"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/sp_18" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/not_internet"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_below="@id/toolbar"
+        android:background="@color/color_pink_not_net"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_15"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:src="@drawable/plaint" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:text="@string/not_net"
+            android:textColor="#7C7171"
+            android:textSize="@dimen/sp_15" />
     </LinearLayout>
 </RelativeLayout>

@@ -13,10 +13,15 @@
             name="bean"
             type="String"/>
     </data>
-    <TextView
-        android:id="@+id/historyText"
-        android:text="@{bean}"
-        android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/historyText"
+            android:textColor="@color/buyPink"
+            android:text="@{bean}"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_30"/>
+    </RelativeLayout>
 </layout>

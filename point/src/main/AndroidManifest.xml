@@ -29,7 +29,8 @@
             android:launchMode="singleInstance" />
         <activity
             android:name=".activity.HistoryActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop" >
+        </activity>
 
         <service android:name=".service.RemoterSerive"></service>
         <service android:name=".service.StepService"
@@ -50,11 +51,8 @@
             android:name=".activity.StepActivity"
             android:launchMode="singleTop" />
         <activity
-            android:name=".activity.RecordActivity"
-            android:launchMode="singleTop" />
-        <activity
             android:name=".activity.IntegralActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop" ></activity>
         <activity
             android:name=".activity.PresentActivity"
             android:launchMode="singleTop" />

@@ -57,7 +57,7 @@ public class PhysicalActivity extends BaseActivity {
         physical_tool.getOther_back().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                finishActivity();
             }
         });
         btn_save.setAnimationButtonListener(new AnimationButton.AnimationButtonListener() {
@@ -82,7 +82,7 @@ public class PhysicalActivity extends BaseActivity {
                 edit.putString("time", time);
                 edit.putInt("step", i);
                 edit.commit();
-                finish();
+                finishActivity();
             }
         });
 

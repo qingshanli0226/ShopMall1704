@@ -1,27 +1,29 @@
 package com.example.dimensionleague.activity
 
 import android.content.Intent
-import androidx.fragment.app.Fragment
 import android.view.KeyEvent
 import android.widget.Toast
-import com.example.dimensionleague.R
+import androidx.fragment.app.Fragment
+import com.example.buy.CartManager
 import com.example.buy.ShopCartFragment
+import com.example.common.utils.SPUtil
 import com.example.common.view.MyToast
+import com.example.dimensionleague.JobService
+import com.example.dimensionleague.R
 import com.example.dimensionleague.find.FindFragment
-import com.example.framework.manager.AccountManager
 import com.example.dimensionleague.home.HomeFragment
+import com.example.dimensionleague.login.activity.LoginActivity
 import com.example.dimensionleague.mine.MineFragment
 import com.example.dimensionleague.type.TypeFragment
-import kotlinx.android.synthetic.main.activity_main.*
 import com.example.framework.base.BaseNetConnectActivity
 import com.example.framework.listener.OnShopCartListener
-import com.example.buy.CartManager
-import com.example.common.utils.SPUtil
-import com.example.dimensionleague.JobService
-
-import kotlin.system.exitProcess
-import com.example.dimensionleague.login.activity.LoginActivity
+import com.example.framework.manager.AccountManager
+import com.example.framework.manager.NetConnectManager
 import com.example.net.AppNetConfig
+import com.example.point.StepIsSupport
+import com.example.point.stepmanager.StepPointManager
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.system.exitProcess
 
 class MainActivity : BaseNetConnectActivity() {
 
@@ -40,17 +42,27 @@ class MainActivity : BaseNetConnectActivity() {
 
     override fun init() {
         super.init()
+        //支持计步的话就查找历史记录-否则就什么也不做
+        if (NetConnectManager.getInstance().isNetConnectStatus && StepIsSupport().isSupportStepCountSensor(this)) {
+            StepPointManager.getInstance(this).init()
+        }
+
         val bundle = intent!!.getBundleExtra("data")
         if(bundle!=null){
-            val isAutoLogin = bundle!!.getBoolean("isAutoLogin")
+            val isAutoLogin = bundle.getBoolean("isAutoLogin")
             if(!SPUtil.isFirstLogin()){
                 if (!isAutoLogin) {
                     Toast.makeText(this, resources.getString(R.string.timeout), Toast.LENGTH_SHORT).show()
                     AccountManager.getInstance().logout()
                 } else {
                     AccountManager.getInstance().notifyLogin()
-                    if(AccountManager.getInstance().user.avatar!=null){
-                        AccountManager.getInstance().notifyUserAvatarUpdate(AppNetConfig.BASE_URL+AccountManager.getInstance().user.avatar)
+                    if(AccountManager.getInstance().user==null){
+                        Toast.makeText(this, resources.getString(R.string.timeout), Toast.LENGTH_SHORT).show()
+                        AccountManager.getInstance().logout()
+                    }else{
+                        if(AccountManager.getInstance().user.avatar!=null){
+                            AccountManager.getInstance().notifyUserAvatarUpdate(AppNetConfig.BASE_URL+AccountManager.getInstance().user.avatar)
+                        }
                     }
                 }
             }
@@ -62,13 +74,13 @@ class MainActivity : BaseNetConnectActivity() {
         list.add(HomeFragment())
         list.add(TypeFragment())
         list.add(FindFragment())
-        list.add(ShopCartFragment())
+        list.add(ShopCartFragment(1))
         list.add(MineFragment())
     }
 
     override fun initDate() {
         super.init()
-        startService(Intent(this@MainActivity,JobService::class.java))
+        //startService(Intent(this@MainActivity,JobService::class.java))
         main_easy.selectTextColor(R.color.colorGradualPurple)
             .normalTextColor(R.color.colorMainNormal)
             .selectIconItems(

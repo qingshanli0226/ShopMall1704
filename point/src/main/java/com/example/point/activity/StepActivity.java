@@ -1,19 +1,11 @@
 package com.example.point.activity;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseActivity;
@@ -33,7 +25,9 @@ public class StepActivity extends BaseActivity {
     private int i = 0;//循环的初始值
     private int v = 1;//获取当前步数
     private int stepInt;
-    Handler handler=new MyHandler(this);
+
+    Handler handler = new MyHandler(this);
+
     private static class MyHandler extends Handler {
         private WeakReference<StepActivity> mWeakReference;
 
@@ -55,9 +49,11 @@ public class StepActivity extends BaseActivity {
                     CharSequence charSequence = DateFormat.format("dd-MM hh:mm:ss aa", System.currentTimeMillis());
                     activity.time.setText("时间" + charSequence);
                 }
+                sendEmptyMessageDelayed(0,1000);
             }
         }
     }
+
     private TextView tv_set;
     private TextView tv_data;
     private MyToolBar step_tool;
@@ -79,15 +75,14 @@ public class StepActivity extends BaseActivity {
         step_tool.getOther_back().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                finishActivity();
             }
         });
         //跳转到锻炼页面
         tv_set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(StepActivity.this, PhysicalActivity.class);
-                startActivity(intent);
+                startActivity(PhysicalActivity.class, null);
 
             }
         });
@@ -96,40 +91,46 @@ public class StepActivity extends BaseActivity {
         tv_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(StepActivity.this, HistoryActivity.class);
-                startActivity(intent);
+                startActivity(HistoryActivity.class, null);
             }
         });
 
     }
 
+    private Runnable mRunnable = new Runnable() {
+        @Override
+        public void run() {
+            handler.sendEmptyMessage(0);
+        }
+    };
 
     @Override
     public void initDate() {
         //时间的显示
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    handler.sendEmptyMessage(0);
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-        }).start();
+//        thread = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                while (true) {
+//                    handler.sendEmptyMessage(0);
+//                    try {
+//                        Thread.sleep(1000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }
+//            }
+//        });
+        handler.post(mRunnable);
 
         if (new StepIsSupport().isSupportStepCountSensor(this)) {
-            String CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis())+"";//今日日期
+            String CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis()) + "";//今日日期
 
             List<StepBean> beans = DaoManager.Companion.getInstance(this).queryStepBean(CURRENT_DATE);
-            if (beans.size()!=0){
+            if (beans.size() != 0) {
                 stepView.setCurrentCount(stepInt, beans.get(0).getStep());
-            }else {
-                stepView.setCurrentCount(stepInt,0);
+            } else {
+                stepView.setCurrentCount(stepInt, 0);
             }
             tv_isSupport.setText("计步中...");
             StepPointManager.getInstance(this).addGetStepListener(new StepPointManager.GetStepListener() {
@@ -147,5 +148,15 @@ public class StepActivity extends BaseActivity {
     public int getLayoutId() {
 
         return R.layout.step_activity;
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null);
+            handler.removeCallbacks(mRunnable);
+            handler = null;
+        }
+        super.onDestroy();
     }
 }

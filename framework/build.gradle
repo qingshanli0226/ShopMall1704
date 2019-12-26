@@ -48,23 +48,9 @@ android {
         testImplementation 'junit:junit:4.12'
         androidTestImplementation 'androidx.test:runner:1.2.0'
         androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-        // 基础依赖包，必须要依赖
-        api 'com.gyf.immersionbar:immersionbar:3.0.0'
-// fragment快速实现（可选）
-        api 'com.gyf.immersionbar:immersionbar-components:3.0.0'
-// kotlin扩展（可选）
-        api 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
 
-        api 'androidx.recyclerview:recyclerview:1.1.0'
-
-        api 'androidx.recyclerview:recyclerview:1.0.0'
-        api 'com.jaeger.statusbarutil:library:1.4.0'
-
-        implementation project(path: ':net')
-        implementation project(path: ':common')
-        //PushSDK必须依赖基础组件库，所以需要加入对应依赖
-        api "android.arch.lifecycle:extensions:1.1.1"
-        implementation "android.arch.lifecycle:extensions:1.1.1"
+        api project(path: ':net')
+        api project(path: ':common')
     }
 }
 

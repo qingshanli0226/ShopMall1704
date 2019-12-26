@@ -3,26 +3,21 @@ package com.example.dimensionleague.home;
 import android.content.Intent;
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.buy.activity.SearchActivity;
+import com.example.dimensionleague.search.SearchActivity;
 import com.example.common.HomeBean;
 import com.example.common.port.IAccountCallBack;
 import com.example.common.utils.IntentUtil;
@@ -44,7 +39,6 @@ import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import java.util.Objects;
-import java.util.Timer;
 
 
 public class HomeFragment extends BaseNetConnectFragment implements IAccountCallBack {
@@ -164,7 +158,6 @@ public class HomeFragment extends BaseNetConnectFragment implements IAccountCall
             }
         });
         //TODO 跳转搜索页面
-
         my_toolbar.getHome_search().setOnClickListener(v -> startActivity(SearchActivity.class,null));
         my_toolbar.getHome_message().setOnClickListener(v -> {
             Bundle bundle = new Bundle();
@@ -232,7 +225,7 @@ public class HomeFragment extends BaseNetConnectFragment implements IAccountCall
 
         if (String.valueOf(((HomeBean) data).getCode()).equals(Constant.CODE_OK)) {
             list = ((HomeBean) data).getResult();
-            Objects.requireNonNull(rv.getAdapter()).notifyDataSetChanged();
+            rv.getAdapter().notifyDataSetChanged();
         }
     }
 

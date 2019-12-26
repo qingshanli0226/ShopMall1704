@@ -7,13 +7,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></com.example.common.view.MyToolBar>
     <RelativeLayout
-        android:background="@android:color/holo_orange_light"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/present_re"
             android:layout_margin="30dp"
-            android:background="@android:color/holo_orange_light"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
     </RelativeLayout>

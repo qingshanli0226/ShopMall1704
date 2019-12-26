@@ -60,7 +60,7 @@ public class AddressActivity extends BaseNetConnectActivity {
     @Override
     public void onRequestSuccess(Object data) {
         super.onRequestSuccess(data);
-        if (((OkBean) data).getCode().equals(AppNetConfig.CODE_OK)) {
+        if (((OkBean) data).getCode().equals(Constant.CODE_OK)) {
             Toast.makeText(this, "地址设置成功", Toast.LENGTH_SHORT).show();
             myAddress.setText("我的地址:" +address);
             AccountManager.getInstance().getUser().setAddress(address);

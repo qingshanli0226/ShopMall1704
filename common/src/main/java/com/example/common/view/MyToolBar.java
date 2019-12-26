@@ -41,6 +41,7 @@ public class MyToolBar extends Toolbar {
     private LinearLayout buy_message_layout;
     private ImageView message_back;
     private TextView buy_message_title;
+    private ImageView buy_car_back;
     private ImageView buy_message_icon;
     private TextView buy_compile;
     private ImageView buy_menu;
@@ -141,6 +142,10 @@ public class MyToolBar extends Toolbar {
     public ImageView getMessage_back() {
         return message_back;
     }
+    //TODO 获取购物车页面的返回控件
+    public ImageView getBuy_Car_Back(){
+        return buy_car_back;
+    }
 
     //TODO 获取风格中的文本控件
     public TextView getBuy_message_title() {
@@ -190,6 +195,9 @@ public class MyToolBar extends Toolbar {
         return mine_message;
     }
 
+    public ImageView getBuy_car_back() {
+        return buy_car_back;
+    }
 
     /**
      * 其他风格
@@ -305,5 +313,6 @@ public class MyToolBar extends Toolbar {
 
         notLayout = findViewById(R.id.not_internet);
         toolbar = findViewById(R.id.toolbar);
+        buy_car_back = findViewById(R.id.buy_car_back);
     }
 }

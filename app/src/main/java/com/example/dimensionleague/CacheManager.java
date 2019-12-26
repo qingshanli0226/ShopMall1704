@@ -78,17 +78,14 @@ public class CacheManager {
         FileInputStream in = null;
         try {
             in = new FileInputStream(new File(CacheManager.indexPath));
-            Log.e("xxx","书卷："+in);
             byte[] bytes = new byte[in.available()];
             in.read(bytes);
             Parcel parcel = Parcel.obtain();
             parcel.unmarshall(bytes, 0, bytes.length);
             parcel.setDataPosition(0);
             HomeBean homeBean = parcel.readParcelable(Thread.currentThread().getContextClassLoader());
-            Log.d("xxx","homebean"+homeBean);
             return homeBean;
         } catch (Exception e) {
-            Log.e("xxx","书卷："+e.getMessage());
             ErrorDisposeManager.HandlerError(e);
         } finally {
             try {
@@ -117,7 +114,6 @@ public class CacheManager {
                             try {
                                 String string = responseBody.string();
                                 HomeBean homeBean = new Gson().fromJson(string, HomeBean.class);
-                                Log.e("xxx",string);
                                 writeObject(homeBean);
                                 if (string == null) {
                                     getHomeDate();

@@ -8,12 +8,13 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.buy.activity.SearchActivity;
+import com.example.dimensionleague.search.SearchActivity;
 import com.example.common.TypeBean;
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
@@ -63,12 +64,12 @@ public class TypeFragment extends BaseNetConnectFragment {
             int permission;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                 permission = Objects.requireNonNull(getContext()).checkSelfPermission(Manifest.permission.CAMERA);
-            if (permission != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.CAMERA}, Constant.REQUSET_CODE);
-            } else {
-                Intent intent = new Intent(getActivity(), CaptureActivity.class);
-                startActivityForResult(intent, Constant.REQUSET_ZXING_CODE);
-            }
+                if (permission != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.CAMERA}, Constant.REQUSET_CODE);
+                } else {
+                    Intent intent = new Intent(getActivity(), CaptureActivity.class);
+                    startActivityForResult(intent, Constant.REQUSET_ZXING_CODE);
+                }
             }
         });
         //TODO AI相机
@@ -86,12 +87,12 @@ public class TypeFragment extends BaseNetConnectFragment {
             }
         });
         //TODO 点击搜索跳转到搜索页面
-        my_toolbar.getSearch_edit().setOnClickListener(v -> startActivity(SearchActivity.class,null));
+        my_toolbar.getSearch_edit().setOnClickListener(v -> startActivity(SearchActivity.class, null));
         //TODO 点击消息跳转到消息页面
         my_toolbar.getSearch_message().setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putString("intent","消息");
-            startActivity(MessageActivity.class,bundle);
+            bundle.putString("intent", "消息");
+            startActivity(MessageActivity.class, bundle);
         });
         typeURL.add(AppNetConfig.SKIRT_URL);
         typeURL.add(AppNetConfig.JACKET_URL);
@@ -185,7 +186,7 @@ public class TypeFragment extends BaseNetConnectFragment {
             if (data != null) {
                 try {
                     Bundle bundle = data.getExtras();
-                    if (Objects.requireNonNull(bundle).getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                    if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
                         String result = bundle.getString(CodeUtils.RESULT_STRING);
                         toast(getActivity(), result);
                     } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
@@ -195,11 +196,11 @@ public class TypeFragment extends BaseNetConnectFragment {
                     e.printStackTrace();
                 }
             }
-        }else if (requestCode==Constant.REQUSET_CAMERA_CODE){
-            if (data!=null){
-                toast(getActivity(),getString(R.string.camera_ok));
-            }else{
-                toast(getActivity(),getString(R.string.camera_no));
+        } else if (requestCode == Constant.REQUSET_CAMERA_CODE) {
+            if (data != null) {
+                toast(getActivity(), getString(R.string.camera_ok));
+            } else {
+                toast(getActivity(), getString(R.string.camera_no));
             }
         }
     }

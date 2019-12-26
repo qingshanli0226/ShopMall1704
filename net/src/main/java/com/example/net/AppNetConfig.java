@@ -147,7 +147,6 @@ public class AppNetConfig {
     public static final String FINDFORSEND="findForSend";
     //TODO 加载头像 GET BASE_URL+用户的avatar
     //TODO 加载图片 GET BASE_URl_IMAGE+请求到的图片url
-    public static final String CODE_OK="200";
     //删除购物车产品  {"productId":"1512","productNum":1,"productName":"衬衫","url":"http:\/\/www.baidu.com","productPrice":"20"}
     public static final String REMOVEONEPRODUCT="removeOneProduct";
 }
