@@ -412,6 +412,29 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        goods = intent.getParcelableExtra(IntentUtil.GOTO_GOOD);
+
+        //设置数据
+        goodsTitle.setText(goods.getProductName());
+        goodsNewPrice.setText(goods.getProductPrice());
+        Glide.with(this).load(AppNetConfig.BASE_URl_IMAGE + goods.getUrl()).into(beiImage);
+        Glide.with(this).load(AppNetConfig.BASE_URl_IMAGE + goods.getUrl()).into(goodsImage);
+        webView.loadUrl("http://www.baidu.com");
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                view.loadUrl(request.getUrl().toString());
+                return true;
+            }
+        });
+
+        setPopuWindow();
+        setRed();
+    }
+
+    @Override
     protected void onDestroy() {
         if (animatorSet != null) {
             animatorSet.cancel();

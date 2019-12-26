@@ -1,61 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
-        <import type="android.view.View"/>
-        <import type="com.example.buy.databeans.GetSearchBeanOne.ResultBean.HotProductListBean"/>
-        <import type="com.example.framework.base.BaseRVAdapter"/>
-        <variable
-                name="rvAdapter"
-                type="BaseRVAdapter"/>
+
+        <import type="android.view.View" />
+
+        <import type="com.example.buy.databeans.GetSearchBeanOne.ResultBean.HotProductListBean" />
+
+        <import type="com.example.framework.base.BaseRVAdapter" />
 
         <variable
-                name="bean"
-                type="HotProductListBean"/>
+            name="rvAdapter"
+            type="BaseRVAdapter" />
+
+        <variable
+            name="bean"
+            type="HotProductListBean" />
     </data>
-    <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <ImageView
-                android:layout_margin="@dimen/dp_20"
-                android:id="@+id/itemSearchImg"
-                app:url="@{bean.figure}"
 
-                android:layout_width="@dimen/dp_100"
-                android:layout_height="@dimen/dp_100"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/itemSearchImg"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_100"
+            app:imageUrl="@{bean.figure}"
+            android:layout_margin="@dimen/dp_20" />
+
         <TextView
-                android:id="@+id/itemSearchTitle"
-                android:textSize="@dimen/sp_18"
-                android:text="@{bean.name}"
-                android:textColor="@android:color/black"
-                android:layout_marginTop="@dimen/dp_20"
-                android:layout_toRightOf="@id/itemSearchImg"
-                android:layout_centerHorizontal="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            android:id="@+id/itemSearchTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_toRightOf="@id/itemSearchImg"
+            android:text="@{bean.name}"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp_18" />
+
         <TextView
-                android:id="@+id/itemSearchBrief"
-                android:layout_marginTop="@dimen/dp_5"
-                android:layout_toRightOf="@id/itemSearchImg"
-                android:layout_below="@id/itemSearchTitle"
-                android:layout_width="wrap_content"
-                android:text="@{bean.brief}"
-                android:layout_height="wrap_content"/>
+            android:id="@+id/itemSearchBrief"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/itemSearchTitle"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_toRightOf="@id/itemSearchImg"
+            android:text="@{bean.brief}" />
+
         <TextView
-                android:id="@+id/itemSearchPrice"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_below="@id/itemSearchBrief"
-                android:layout_toRightOf="@id/itemSearchImg"
-                android:textSize="@dimen/sp_20"
-                android:textColor="@android:color/holo_red_dark"
-                android:textStyle="bold"
-                android:text="@{bean.cover_price}"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            android:id="@+id/itemSearchPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/itemSearchBrief"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_toRightOf="@id/itemSearchImg"
+            android:text="@{bean.cover_price}"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="@dimen/sp_20"
+            android:textStyle="bold" />
+
         <View
-                android:layout_below="@+id/itemSearchImg"
-                android:background="@android:color/darker_gray"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"></View>
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/itemSearchImg"
+            android:background="@android:color/darker_gray" />
     </RelativeLayout>
 </layout>

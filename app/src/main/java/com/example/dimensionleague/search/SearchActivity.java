@@ -2,15 +2,19 @@ package com.example.dimensionleague.search;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.databinding.BindingAdapter;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.bumptech.glide.Glide;
 import com.example.buy.R;
 import com.example.buy.activity.GoodsActiviy;
 import com.example.buy.databeans.GetSearchBeanOne;
@@ -71,7 +75,6 @@ public class SearchActivity extends BaseBindActivity<ActivitySearchBinding> {
 
             @Override
             public void onBind(BindViewHolder holder, int position) {
-                hotList.get(position).setFigure(AppNetConfig.BASE_URl_IMAGE + hotList.get(position).getFigure());
                 holder.bindView.setBean(hotList.get(position));
                 holder.bindView.setRvAdapter((BaseRVAdapter) activitySearchBinding.hotRecyclerView.getAdapter());
                 holder.bindView.itemSearchImg.setOnClickListener(new View.OnClickListener() {
@@ -80,8 +83,8 @@ public class SearchActivity extends BaseBindActivity<ActivitySearchBinding> {
                         Intent intent = new Intent(SearchActivity.this, GoodsActiviy.class);
                         intent.putExtra(IntentUtil.GOTO_GOOD, new GoodsBean(hotList.get(position).getProduct_id(),
                                 0,hotList.get(position).getName(),
-                                hotList.get(position).getFigure()
-                                ,hotList.get(position).getCover_price()));
+                                hotList.get(position).getFigure(),
+                                hotList.get(position).getCover_price()));
                         boundActivity(intent);
                     }
                 });

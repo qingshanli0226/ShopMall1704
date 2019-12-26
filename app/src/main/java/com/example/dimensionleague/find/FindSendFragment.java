@@ -117,6 +117,7 @@ public class FindSendFragment extends BaseNetConnectFragment {
     @Override
     public void onDestroyView() {
         rv=null;
+        homePresenter.detachView();
         super.onDestroyView();
     }
 

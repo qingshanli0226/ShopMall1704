@@ -84,30 +84,25 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="10">
 
-                <EditText
-                    android:id="@+id/search_edit"
+                <TextView
+                    android:id="@+id/type_search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp_10"
                     android:layout_marginRight="@dimen/dp_10"
                     android:background="@drawable/white_text_background"
                     android:drawableLeft="@drawable/search"
                     android:drawablePadding="@dimen/dp_10"
                     android:hint="超级百亿补贴"
-                    android:imeOptions="actionSearch"
-                    android:maxLines="1"
                     android:paddingLeft="@dimen/dp_10"
                     android:paddingTop="@dimen/dp_5"
                     android:paddingRight="@dimen/dp_20"
-                    android:paddingBottom="@dimen/dp_5"
-                    android:singleLine="true"
-                    android:textCursorDrawable="@null" />
+                    android:paddingBottom="@dimen/dp_5" />
 
                 <ImageView
                     android:id="@+id/search_camera"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignRight="@id/search_edit"
+                    android:layout_alignRight="@id/type_search"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/dp_20"
                     android:src="@drawable/camera" />
@@ -152,7 +147,7 @@
                 android:gravity="center"
                 android:text="发现"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/sp_25" />
+                android:textSize="@dimen/sp_20" />
 
             <ImageView
                 android:id="@+id/find_search"

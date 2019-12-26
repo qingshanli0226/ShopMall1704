@@ -1,10 +1,12 @@
 package com.example.buy.databeans;
 
+import android.util.Log;
 import android.widget.ImageView;
 
 import androidx.databinding.BindingAdapter;
 
 import com.bumptech.glide.Glide;
+import com.example.net.AppNetConfig;
 
 import java.util.List;
 
@@ -354,9 +356,9 @@ public class GetSearchBeanOne {
             public void setSupplier_type(String supplier_type) {
                 this.supplier_type = supplier_type;
             }
-            @BindingAdapter("url")
+            @BindingAdapter("imageUrl")
             public static void setImage(ImageView imageView, String url) {
-                Glide.with(imageView.getContext()).load(url).into(imageView);
+                Glide.with(imageView.getContext()).load(AppNetConfig.BASE_URl_IMAGE+url).into(imageView);
             }
         }
     }
