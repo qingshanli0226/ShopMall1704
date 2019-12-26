@@ -3,8 +3,11 @@ package com.example.administrator.shaomall.goodsinfo
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.graphics.Color
 import android.graphics.PointF
+import android.os.Build
+import android.support.annotation.RequiresApi
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -143,6 +146,8 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
     /**
      * 点击事件监听处理
      */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    @RequiresApi(Build.VERSION_CODES.HONEYCOMB)
     override fun onClick(v: View?) {
         if (!UserInfoManager.getInstance().isLogin) {
             toast("请先登录", false)
@@ -199,6 +204,7 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
     /**
      * 设置贝塞尔曲线动画
      */
+    @RequiresApi(Build.VERSION_CODES.HONEYCOMB)
     private fun setBezierCurveAnimation() {
         x = 0f
         y = 0f
@@ -209,7 +215,7 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
         val goods = ImageView(this)
         goods.setImageResource(R.drawable.add_cart_bg_selector)
         val params = RelativeLayout.LayoutParams(50, 50)
-        rl.addView(goods, params)
+        goodsInfoRelativeLayout.addView(goods, params)
 
         //得到加入购物车按钮的坐标（用于计算动画开始的坐标）
         val startLoc = IntArray(2)
@@ -260,7 +266,7 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
                 iBasePresenter!!.doJsonPostHttpRequest()
 
                 // 把移动的图片imageview从父布局里移除
-                rl.removeView(goods)
+                goodsInfoRelativeLayout.removeView(goods)
             }
 
             override fun onAnimationCancel(animation: Animator?) {
