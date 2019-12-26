@@ -161,22 +161,27 @@ public class StepManager {
         contentValues.put("date",date);
         contentValues.put("currentStep",current);
         hourDb.insert("history",null,contentValues);
+
+        Log.e("##Curr",current+"");
+        findHour();
     }
     public List<HourBean> findHour(){
-        Cursor cursor = hourDb.rawQuery("select distinct time,date,currentStep from history", null);
-        List<HourBean> mlist=new ArrayList<>();
-        while (cursor.moveToNext())
-        {
-            String time = cursor.getString(cursor.getColumnIndex("time"));
-            String date = cursor.getString(cursor.getColumnIndex("date"));
-            int currentStep = cursor.getInt(cursor.getColumnIndex("currentStep"));
 
-            HourBean hourBean = new HourBean(time, date, currentStep);
-            mlist.add(hourBean);
+            Cursor cursor = hourDb.rawQuery("select distinct time,date,currentStep from history", null);
+            List<HourBean> mlist=new ArrayList<>();
+            while (cursor.moveToNext())
+            {
+                String time = cursor.getString(cursor.getColumnIndex("time"));
+                String date = cursor.getString(cursor.getColumnIndex("date"));
+                int currentStep = cursor.getInt(cursor.getColumnIndex("currentStep"));
 
+                Log.e("##Cuss",currentStep+"");
+                HourBean hourBean = new HourBean(time, date, currentStep);
+                mlist.add(hourBean);
 
-        }
-        return mlist;
+            }
+            return mlist;
+
 
     }
 
