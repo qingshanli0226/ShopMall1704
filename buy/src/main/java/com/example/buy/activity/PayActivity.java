@@ -34,6 +34,7 @@ import com.example.buy.presenter.PostUpDatePointPresenter;
 import com.example.buy.presenter.PostVerifyGoodsPresenter;
 import com.example.common.code.Constant;
 import com.example.common.utils.IntentUtil;
+import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.base.BaseRecyclerAdapter;
 import com.example.framework.base.BaseViewHolder;
@@ -62,6 +63,7 @@ public class PayActivity extends BaseNetConnectActivity{
     private TextView subtractIntegra;
     private CheckBox checkInegra;
     private TextView userPoint;
+    private MyToolBar myToolBar;
 
     private ArrayList<GoodsBean> list = new ArrayList<>();
     //下订单 支付确认  库存  积分 现金
@@ -97,7 +99,17 @@ public class PayActivity extends BaseNetConnectActivity{
         checkInegra = findViewById(R.id.checkInegra);
         subtractIntegra = findViewById(R.id.subtractIntegra);
         userPoint = findViewById(R.id.userPoint);
+        myToolBar = findViewById(R.id.myToolBar);
 
+        myToolBar.init(Constant.OTHER_STYLE);
+        myToolBar.getOther_back().setImageResource(R.drawable.back3);
+        myToolBar.getOther_title().setText(getResources().getString(R.string.cashier_desk));
+        myToolBar.getOther_back().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishActivity();
+            }
+        });
         payBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

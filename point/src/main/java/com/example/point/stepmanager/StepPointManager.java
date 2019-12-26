@@ -10,11 +10,13 @@ import android.util.Log;
 import com.example.framework.manager.DaoManager;
 import com.example.point.service.RemoterSerive;
 import com.example.point.service.StepService;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class StepPointManager {
+
     public  static StepPointManager stepPointManager;
     private Context context;
     private StepService stepService;
@@ -32,16 +34,16 @@ public class StepPointManager {
     }
     public void init(){
         Intent intent = new Intent(context, StepService.class);
-        context.startService(intent);
-      //  context.startService(new Intent(context, RemoterSerive.class));
         //绑定服务
+
+
         context. bindService(intent,connection , Context.BIND_AUTO_CREATE);
         context.startService(intent);
     }
     private ServiceConnection connection= new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-               stepService = ((StepService.StepBinder) iBinder).getService();
+                stepService = ((StepService.StepBinder) iBinder).getService();
                 stepService.registerCallback(new StepService.UpdateUiCallBack() {
                     @Override
                     public void updateUi(int stepCount) {

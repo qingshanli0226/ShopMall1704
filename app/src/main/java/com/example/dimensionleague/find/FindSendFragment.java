@@ -3,15 +3,12 @@ package com.example.dimensionleague.find;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
-
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.buy.activity.GoodsActiviy;
 import com.example.buy.databeans.GoodsBean;
 import com.example.common.HomeBean;
 import com.example.common.code.Constant;
-
 import com.example.common.utils.IntentUtil;
 import com.example.dimensionleague.R;
 import com.example.dimensionleague.home.HomePresenter;
@@ -20,10 +17,8 @@ import com.example.framework.base.BaseRecyclerAdapter;
 import com.example.framework.base.BaseViewHolder;
 import com.example.framework.port.IPresenter;
 import com.example.net.AppNetConfig;
-
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class FindSendFragment extends BaseNetConnectFragment {
 
@@ -108,13 +103,6 @@ public class FindSendFragment extends BaseNetConnectFragment {
     }
 
     @Override
-    public void onDestroy() {
-        homePresenter.detachView();
-        rv=null;
-        super.onDestroy();
-    }
-
-    @Override
     public void onDestroyView() {
         rv=null;
         super.onDestroyView();
@@ -130,5 +118,15 @@ public class FindSendFragment extends BaseNetConnectFragment {
         hideLoading();
         hideError();
         showEmpty();
+    }
+
+    @Override
+    public void onDestroy() {
+        if(homePresenter!=null){
+            homePresenter.detachView();
+        }
+        rv=null;
+        super.onDestroy();
+
     }
 }
