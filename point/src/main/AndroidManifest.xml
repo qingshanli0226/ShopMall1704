@@ -53,6 +53,7 @@
         <activity
             android:name=".activity.IntegralActivity"
             android:launchMode="singleTop" ></activity>
+
         <activity
             android:name=".activity.PresentActivity"
             android:launchMode="singleTop" />

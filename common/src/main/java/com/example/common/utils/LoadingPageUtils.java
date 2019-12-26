@@ -32,7 +32,7 @@ public class LoadingPageUtils {
     private LayoutInflater inflater;
     private RequestManager requestManager;
     public LoadingPageUtils(Context context, ViewGroup viewGroup) {
-        this.relativeLayout = viewGroup;
+        relativeLayout = viewGroup;
         inflater = LayoutInflater.from(context);
         requestManager = Glide.with(context);
         init();
@@ -104,6 +104,9 @@ public class LoadingPageUtils {
             isEmpty = false;
         }
     }
-
+    //TODO 移出所有页面
+    public void hideAll(){
+        relativeLayout.removeAllViews();
+    }
 
 }
