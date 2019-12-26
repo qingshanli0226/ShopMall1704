@@ -135,10 +135,17 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
             integerPresenter.attachGetView(this);
             integerPresenter.attachLoadView(this);
             integerPresenter.getGetData();
-
         } else {
             Toast.makeText(getContext(), "无网络连接", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        integerPresenter = new IntegerPresenter(Constant.HOME_URL, HomepageBean.class);
+        integerPresenter.attachGetView(this);
+        integerPresenter.getGetData();
     }
 
     @Override

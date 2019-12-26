@@ -75,8 +75,8 @@ dependencies {
     implementation 'com.android.support:design:25.3.1'
     implementation 'com.qq.mta:mta:3.4.2'
     implementation 'com.tencent.mid:mid:3.73-release'
-    debugApi'com.squareup.leakcanary:leakcanary-android:1.6.2'
-    releaseApi'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
+    debugApi 'com.squareup.leakcanary:leakcanary-android:1.6.2'
+    releaseApi 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.2'
 
     implementation 'com.android.support:multidex:1.0.3'
 }

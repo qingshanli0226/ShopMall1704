@@ -3,7 +3,9 @@ package com.example.shopmall.activity;
 import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -64,6 +66,10 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
     public void initData() {
 
         handlerThread.start();
+        SharedPreferences welcome = getSharedPreferences("welcome", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = welcome.edit();
+        edit.putBoolean("isWelcome", true);
+        edit.apply();
         initAutoLogin();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -203,6 +209,12 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
             integerPresenter.detachView();
         }
 
+
+        SharedPreferences welcome = getSharedPreferences("welcome", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = welcome.edit();
+        edit.putBoolean("isWelcome", false);
+        edit.apply();
+
         Drawable drawable = iv_welcome.getDrawable();
         BitmapDrawable drawable1 = (BitmapDrawable) drawable;
         Bitmap bitmap = drawable1.getBitmap();
@@ -210,7 +222,9 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
         bitmap = null;
 
         handlerThread.quit();
-        handler.removeCallbacksAndMessages(this);
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(this);
+        }
 
     }
 }

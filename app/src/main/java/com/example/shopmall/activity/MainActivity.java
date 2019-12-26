@@ -66,23 +66,20 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
         fragmentArrayList.add(new HorizontalFragment());
         fragmentArrayList.add(new ShoppingCartFragment());
         fragmentArrayList.add(new MineFragment());
-
-
-
-
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        refreshShoppingCartData();
+
         int mainitem = ShoppingManager.getInstance().getMainitem();
         if(mainitem==5){
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
         }else {
             bbMain.setCheckedItem(mainitem);
             if (mainitem == 3) {
-                refreshShoppingCartData();
                 boolean loginStatus = UserManager.getInstance().getLoginStatus();
                 if(!loginStatus){
                     setAlertDialog();
@@ -207,7 +204,6 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
             }
         }
     }
-
 
     private void replaceFragment(Fragment fragment) {
         //获取管理者,开启事务

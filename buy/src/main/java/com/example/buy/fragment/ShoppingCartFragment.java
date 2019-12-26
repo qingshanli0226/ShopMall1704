@@ -10,10 +10,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PointF;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
+
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -26,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.alibaba.fastjson.JSONObject;
 import com.example.buy.BezierTypeEvaluator;
 import com.example.buy.activity.OrderActivity;
@@ -447,7 +450,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
                         data2.add(map);
                     }
                 }
-                if(data2.size()!=0){
+                if (data2.size() != 0) {
                     myShoppingManager.setBuyThings(data2);
                     startActivity(new Intent(getContext(), OrderActivity.class));
                 }
@@ -598,14 +601,17 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             public void onAnimationStart(Animator animator) {
 
             }
+
             @Override
             public void onAnimationEnd(Animator animator) {
                 shoppingcartlayout.removeView(imageView);
             }
+
             @Override
             public void onAnimationCancel(Animator animator) {
 
             }
+
             @Override
             public void onAnimationRepeat(Animator animator) {
 
@@ -680,7 +686,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
 
         myShoppingManager.setOnNumberChanged(myallNumber);
 
-        if(myShoppingBasketAdapter!=null){
+        if (myShoppingBasketAdapter != null) {
             myShoppingBasketAdapter.reFresh(data2);
             judgeNumberisZero();
             myShoppingBasketAdapter.setCheckedcount(checkedcount1);
@@ -697,7 +703,9 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     //购物车数据网址连接失败
     @Override
     public void onGetDataFailed(String ErrorMsg) {
-        lpLoading.start(LoadingPage.LOADING_FAILURE);
+        if (lpLoading != null) {
+            lpLoading.start(LoadingPage.LOADING_FAILURE);
+        }
     }
 
     //更新购物车物品数量网址连接成功
@@ -729,10 +737,10 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(addOneProduct!=null){
+        if (addOneProduct != null) {
             addOneProduct.detachView();
         }
-        if(presenter!=null){
+        if (presenter != null) {
             presenter.detachView();
         }
         handler.removeCallbacksAndMessages(null);
