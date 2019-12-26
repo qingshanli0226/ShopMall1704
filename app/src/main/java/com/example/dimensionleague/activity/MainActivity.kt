@@ -46,7 +46,6 @@ class MainActivity : BaseNetConnectActivity() {
         if (NetConnectManager.getInstance().isNetConnectStatus && StepIsSupport().isSupportStepCountSensor(this)) {
             StepPointManager.getInstance(this).init()
         }
-
         val bundle = intent!!.getBundleExtra("data")
         if(bundle!=null){
             val isAutoLogin = bundle.getBoolean("isAutoLogin")

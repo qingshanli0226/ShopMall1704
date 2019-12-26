@@ -76,7 +76,6 @@ public class FindFragment extends BaseFragment {
         titles = new String[]{getString(R.string.find_attention), getString(R.string.find_like), getString(R.string.find_recommend), getString(R.string.find_5G),getString(R.string.find_streaming),getString(R.string.find_video)};
         vp.setAdapter(new MyVPAdapter(getChildFragmentManager()));
         tab.setViewPager(vp, titles);
-
     }
 
     private class MyVPAdapter extends FragmentPagerAdapter {

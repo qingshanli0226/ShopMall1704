@@ -52,9 +52,8 @@
             android:launchMode="singleTop" />
         <activity
             android:name=".activity.IntegralActivity"
-            android:launchMode="singleTop" >
+            android:launchMode="singleTop" ></activity>
 
-        </activity>
         <activity
             android:name=".activity.PresentActivity"
             android:launchMode="singleTop" />

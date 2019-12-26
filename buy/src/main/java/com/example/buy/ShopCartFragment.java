@@ -113,7 +113,7 @@ public class ShopCartFragment extends BaseNetConnectFragment {
                             }
                             Intent intent = new Intent(getContext(), PayActivity.class);
                             intent.putExtra(IntentUtil.ORDERS, goods);
-                            startActivity(intent);
+                            IntoActivity(intent);
                         }
                     }
                 } else {
@@ -140,14 +140,7 @@ public class ShopCartFragment extends BaseNetConnectFragment {
                 }
             }
         });
-        //消息菜单
-        myToolBar.getBuy_menu().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //弹出消息和分享
 
-            }
-        });
         //下拉刷新
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -236,7 +229,11 @@ public class ShopCartFragment extends BaseNetConnectFragment {
                             public void onClick(View v) {
                                 Intent intent = new Intent(getContext(), GoodsActiviy.class);
                                 intent.putExtra(IntentUtil.GOTO_GOOD, list.get(position));
-                                boundActivity(intent);
+                                if(style==0){
+                                    boundActivity(intent);
+                                }else{
+                                    IntoActivity(intent);
+                                }
                             }
                         });
 

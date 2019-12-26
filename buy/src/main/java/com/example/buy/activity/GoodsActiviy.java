@@ -96,8 +96,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
                 goodList.add(goods);
                 Intent intent = new Intent(this, PayActivity.class);
                 intent.putExtra(IntentUtil.ORDERS, goodList);
-                startActivity(intent);
-                finishActivity();
+                IntoActivity(intent);
             } else if (v.getId() == joinCartBut.getId()) {
                 //加入购物车  弹窗
                 setBackAlph(0.7f);
@@ -474,6 +473,4 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
             redNum.setVisibility(View.VISIBLE);
         }
     }
-
-
 }
