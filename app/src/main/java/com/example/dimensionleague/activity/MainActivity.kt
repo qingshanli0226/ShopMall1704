@@ -70,8 +70,8 @@ class MainActivity : BaseNetConnectActivity() {
         if (isNetType == getString(R.string.ascend)) {
             MyToast.showToast(this, getString(R.string.ascend_messenger), null, Toast.LENGTH_LONG)
         }
-        list.add(HomeFragment())
-        list.add(TypeFragment())
+        list.add(HomeFragment(this))
+        list.add(TypeFragment(this))
         list.add(FindFragment())
         list.add(ShopCartFragment(1))
         list.add(MineFragment())

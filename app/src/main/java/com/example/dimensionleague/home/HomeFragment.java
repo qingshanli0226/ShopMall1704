@@ -1,10 +1,12 @@
 package com.example.dimensionleague.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -35,15 +37,25 @@ import com.example.net.AppNetConfig;
 import com.example.point.message.MessageActivity;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import java.util.Objects;
 
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+
 
 public class HomeFragment extends BaseNetConnectFragment implements IAccountCallBack {
+    private Activity activity;
+
+    public HomeFragment(Activity activity) {
+        this.activity = activity;
+    }
+
     private RecyclerView rv;
-    private HomeBean.ResultBean list=null;
+    private HomeBean.ResultBean list = null;
 
     private int type = 0;
     private MyToolBar my_toolbar;
@@ -54,23 +66,20 @@ public class HomeFragment extends BaseNetConnectFragment implements IAccountCall
     private ImageView home_image;
 
     boolean flag_head = true;
+
     public HomeFragment(int i) {
         super();
         this.type = i;
     }
 
-    public HomeFragment() {
-        super();
-    }
-
     @Override
     public void init(View view) {
         super.init(view);
-        if(!isConnectStatus()){
+        if (!isConnectStatus()) {
             hideError();
             hideLoading();
             showEmpty();
-        }else{
+        } else {
             hideEmpty();
         }
         AccountManager.getInstance().registerUserCallBack(this);
@@ -87,28 +96,28 @@ public class HomeFragment extends BaseNetConnectFragment implements IAccountCall
         }
 
         home_image = view.findViewById(R.id.home_icon);
-        if(!AccountManager.getInstance().isLogin()){
+        if (!AccountManager.getInstance().isLogin()) {
             Glide.with(getContext()).load(R.drawable.default_head_image).apply(new RequestOptions().circleCrop()).into(home_image);
-        }else{
-            if(AccountManager.getInstance().getUser()==null){
+        } else {
+            if (AccountManager.getInstance().getUser() == null) {
                 AccountManager.getInstance().logout();
                 Toast.makeText(getContext(), getResources().getString(R.string.timeout), Toast.LENGTH_SHORT).show();
                 Glide.with(getContext()).load(R.drawable.default_head_image).apply(new RequestOptions().circleCrop()).into(home_image);
-            }else{
-                if(AccountManager.getInstance().getUser().getAvatar()==null){
+            } else {
+                if (AccountManager.getInstance().getUser().getAvatar() == null) {
                     Glide.with(getContext()).load(R.drawable.default_head_image).apply(new RequestOptions().circleCrop()).into(home_image);
-                }else{
-                    Glide.with(getContext()).load(AppNetConfig.BASE_URL+AccountManager.getInstance().getUser().getAvatar()).apply(new RequestOptions().circleCrop()).into(home_image);
+                } else {
+                    Glide.with(getContext()).load(AppNetConfig.BASE_URL + AccountManager.getInstance().getUser().getAvatar()).apply(new RequestOptions().circleCrop()).into(home_image);
                 }
             }
         }
         home_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!AccountManager.getInstance().isLogin()){
-                    startActivity(LoginActivity.class,null);
-                }else{
-                    startActivity(SettingActivity.class,null);
+                if (!AccountManager.getInstance().isLogin()) {
+                    startActivity(LoginActivity.class, null);
+                } else {
+                    startActivity(SettingActivity.class, null);
                 }
             }
         });
@@ -117,10 +126,9 @@ public class HomeFragment extends BaseNetConnectFragment implements IAccountCall
     @Override
     public void initDate() {
 
-        if (CacheManager.getInstance().getHomeBeanData() != null) {
-            list = (((HomeBean) CacheManager.getInstance().getHomeBeanData()).getResult());
+        if (CacheManager.getInstance().getHomeBean() != null) {
+            list = ((CacheManager.getInstance().getHomeBean()).getResult());
         }
-
         HomeAdapter adapter = new HomeAdapter(list, getContext());
 
         rv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -145,42 +153,30 @@ public class HomeFragment extends BaseNetConnectFragment implements IAccountCall
         toolbar_layout.setContentScrim(getResources().getDrawable(R.drawable.toolbar_style));
         //TODO 跳转相机
         my_toolbar.getHome_camera().setOnClickListener(v -> {
-            int permission;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                permission = getContext().checkSelfPermission(Manifest.permission.CAMERA);
-                if (permission != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(new String[]{Manifest.permission.CAMERA}, Constant.REQUSET_CODE);
-                } else {
-                    Intent intent = new Intent();
-                    intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, Constant.REQUSET_CAMERA_CODE);
-                }
-            }
+
         });
         //TODO 跳转搜索页面
-        my_toolbar.getHome_search().setOnClickListener(v -> startActivity(SearchActivity.class,null));
+        my_toolbar.getHome_search().setOnClickListener(v -> startActivity(SearchActivity.class, null));
         my_toolbar.getHome_message().setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putString(IntentUtil.LOGIN,"消息");
-            startActivity(MessageActivity.class,bundle);
+            bundle.putString(IntentUtil.LOGIN, "消息");
+            startActivity(MessageActivity.class, bundle);
         });
     }
 
-    //    点击事件
+    // 扫一扫
     private void toolbarMessenger() {
         my_toolbar.getHome_search_back().setOnClickListener(v -> {
-            int permission;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                permission = Objects.requireNonNull(getContext()).checkSelfPermission(Manifest.permission.CAMERA);
-
-            if (permission != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.CAMERA}, Constant.REQUSET_CODE);
-            } else {
-                Intent intent = new Intent(getActivity(), CaptureActivity.class);
-                startActivityForResult(intent, Constant.REQUSET_ZXING_CODE);
-            }
-          }
-
+            RxPermissions rxPermissions = new RxPermissions(activity);
+            rxPermissions.request(
+                    Manifest.permission.CAMERA)
+                    .subscribe(granted -> {
+                        if (granted) {
+                            Intent intent = new Intent();
+                            intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                            startActivityForResult(intent, Constant.REQUSET_CAMERA_CODE);
+                        }
+                    });
         });
     }
 
@@ -188,25 +184,6 @@ public class HomeFragment extends BaseNetConnectFragment implements IAccountCall
     public void onDestroy() {
         super.onDestroy();
         AccountManager.getInstance().unRegisterUserCallBack(this);
-    }
-
-    //    处理权限
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == Constant.REQUSET_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission Granted 用户允许权限 继续执行（检查的是照相机权限）
-                Intent intent = new Intent(getActivity(), CaptureActivity.class);
-                startActivityForResult(intent, Constant.REQUSET_ZXING_CODE);
-
-            } else {
-                // Permission Denied 拒绝
-                toast(getActivity(), getString(R.string.request_no));
-            }
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
     }
 
 
@@ -246,11 +223,11 @@ public class HomeFragment extends BaseNetConnectFragment implements IAccountCall
                     e.printStackTrace();
                 }
             }
-        }else if (requestCode==Constant.REQUSET_CAMERA_CODE){
-            if (data!=null){
-                toast(getActivity(),getString(R.string.camera_ok));
-            }else{
-                toast(getActivity(),getString(R.string.camera_no));
+        } else if (requestCode == Constant.REQUSET_CAMERA_CODE) {
+            if (data != null) {
+                toast(getActivity(), getString(R.string.camera_ok));
+            } else {
+                toast(getActivity(), getString(R.string.camera_no));
             }
         }
     }
@@ -276,7 +253,7 @@ public class HomeFragment extends BaseNetConnectFragment implements IAccountCall
 
     @Override
     public void onLogin() {
-     }
+    }
 
     @Override
     public void onLogout() {

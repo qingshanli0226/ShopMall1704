@@ -66,16 +66,19 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
                 Manifest.permission.CHANGE_WIFI_STATE,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.SYSTEM_ALERT_WINDOW,
-
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION
-
-        ).subscribe(permission->{
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                .subscribe(permission->{
             if(permission){
                 //TODO 成功
 
             }else{//TODO 失败
 
             }
+        });
+        rxPermissions.request(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) .subscribe(permission->{
+                CacheManager.getInstance().setSdPermission(permission);
         });
 
         videoView = findViewById(R.id.videoView);
@@ -96,7 +99,9 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
         videoView.setVideoPath(Uri.parse("android.resource://" + getPackageName() + "/"+R.raw.peng).toString());
         handler.sendEmptyMessage(1);
         but.setText(count +getString(R.string.second));
+
         CacheManager.getInstance().getHomeDate();
+
         AutoLoginManager.getInstance().getLoginData();
         CacheManager.getInstance().registerGetDateListener(new CacheManager.IHomeReceivedListener() {
             @Override
@@ -112,7 +117,6 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
                 isRequestHomeBean = false;
                 isNotNet = true;
                 onFinish();
-
             }
         });
 

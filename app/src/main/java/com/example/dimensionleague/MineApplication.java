@@ -34,5 +34,7 @@ public class MineApplication extends Application {
         JPushInterface.init(this);
         AutoSizeConfig.getInstance().setCustomFragment(false).setUseDeviceSize(true);
         ZXingLibrary.initDisplayOpinion(this);
+        //初始化缓存
+        CacheManager.getInstance();
     }
 }

@@ -29,6 +29,20 @@ public class CacheManager {
     private static CacheManager instance;
     private IHomeReceivedListener listener;
     private static final String indexPath = "/sdcard/indexData.txt";
+    private boolean sdPermission=false;
+    private HomeBean homeBean;
+
+    public HomeBean getHomeBean() {
+        return homeBean;
+    }
+
+    public boolean isSdPermission() {
+        return sdPermission;
+    }
+
+    public void setSdPermission(boolean sdPermission) {
+        this.sdPermission = sdPermission;
+    }
 
     public static CacheManager getInstance() {
         if (instance == null) {
@@ -43,7 +57,7 @@ public class CacheManager {
         try {
             out = new FileOutputStream(new File(indexPath));
             bos = new BufferedOutputStream(out);
-            @SuppressLint("Recycle") Parcel parcel = Parcel.obtain();
+            Parcel parcel = Parcel.obtain();
             parcel.writeParcelable(data, 0);
             bos.write(parcel.marshall());
             bos.flush();
@@ -113,8 +127,10 @@ public class CacheManager {
                         synchronized (CacheManager.class) {
                             try {
                                 String string = responseBody.string();
-                                HomeBean homeBean = new Gson().fromJson(string, HomeBean.class);
-                                writeObject(homeBean);
+                                homeBean = new Gson().fromJson(string, HomeBean.class);
+                                if (sdPermission){
+                                    writeObject(homeBean);
+                                }
                                 if (string == null) {
                                     getHomeDate();
                                     return;
