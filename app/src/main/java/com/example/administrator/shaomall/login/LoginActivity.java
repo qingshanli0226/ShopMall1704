@@ -88,13 +88,13 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
                     if (loginUser.getText().toString().equals("") || loginPass.getText().toString().equals("")) {
                         Toast.makeText(mActivity, "用户名和密码或密码不可为空", Toast.LENGTH_SHORT).show();
                     } else {
-                        String username = loginUser.getText().toString();
-                        String password = loginPass.getText().toString();
-                        presenter.setUsername(username);
-                        presenter.setPassname(password);
-                        presenter.doPostHttpRequest(100);
-                        ActivityInstanceManager.removeActivity(LoginActivity.this);
 
+                            String username = loginUser.getText().toString();
+                            String password = loginPass.getText().toString();
+                            presenter.setUsername(username);
+                            presenter.setPassname(password);
+                            presenter.doPostHttpRequest(100);
+                            ActivityInstanceManager.removeActivity(LoginActivity.this);
                     }
                 }
                 return false;
@@ -105,7 +105,7 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
     @Override
     public void onRequestHttpDataFailed(int requestCode, ShopMailError error) {
         //登录失败
-        Toast.makeText(mActivity, ""+error.getErrorMessage(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(mActivity, "123"+error.getErrorMessage(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -113,7 +113,6 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
         super.onBackPressed();
         ActivityInstanceManager.removeActivity(this);
 
-//        toClass(MainActivity.class, 0); //返回首页
     }
 
     @Override

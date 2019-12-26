@@ -16,6 +16,7 @@ class FunctionActivity : BaseMVPActivity<FindForBean>() {
     private lateinit var forAdapter: FindForAdapter
     private var forPresenter: FindForPresenter? = null
     private var bundle: Bundle? = null
+
     override fun setLayoutId(): Int = R.layout.activity_function
     override fun initView() {
         bundle = intent.extras
@@ -80,6 +81,8 @@ class FunctionActivity : BaseMVPActivity<FindForBean>() {
     private fun findForPayData() {
         forPresenter!!.path = AppNetConfig.FIND_FOR_PAY
     }
+
+
 
 
 }

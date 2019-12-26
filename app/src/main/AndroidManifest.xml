@@ -92,7 +92,10 @@
         </service>
 
         <activity android:name=".activity.SettingActivity" />
-        <activity android:name=".activity.NameChangeActivity"></activity>
+        <activity android:name=".activity.NameChangeActivity">
+
+        </activity>
+
     </application>
 
 </manifest>

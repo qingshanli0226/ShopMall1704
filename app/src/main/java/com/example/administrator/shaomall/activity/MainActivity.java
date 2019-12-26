@@ -5,10 +5,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.administrator.shaomall.FindFragment;
@@ -18,6 +20,7 @@ import com.example.administrator.shaomall.type.TypeFragment;
 import com.example.administrator.shaomall.home.HomeFragment;
 import com.example.administrator.shaomall.login.LoginActivity;
 
+import com.example.commen.util.PageUtil;
 import com.example.commen.util.ShopMailError;
 import com.example.shoppingcart.Ui.ShoppingCartFragment;
 import com.flyco.tablayout.CommonTabLayout;
@@ -42,12 +45,16 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
     private List<Fragment> fragments = new ArrayList<>();
     private AutoLoginPresenter autoLoginPresenter;
 
+    private RelativeLayout mainRelativeLayout;
+    PageUtil pageUtil;
+
     @Override
     public int setLayoutId() {
         return R.layout.activity_main;
     }
 
     protected void initView() {
+        mainRelativeLayout = (RelativeLayout) findViewById(R.id.mainRelativeLayout);
         mMainFragmentHome = findViewById(R.id.main_fragmentHome);
         mMainTab = findViewById(R.id.main_tab);
         fragments.add(new HomeFragment());
@@ -55,8 +62,27 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
         fragments.add(new FindFragment());
         fragments.add(new ShoppingCartFragment());
         fragments.add(new MineFragment());
+        pageUtil=new PageUtil(this);
+        pageUtil.setReview(mainRelativeLayout);
 
     }
+
+    @Override
+    public void loadingPage(int requestCode, int code) {
+        if (code==200){
+            Log.d("SSH",code+"");
+            Toast.makeText(this, "200", Toast.LENGTH_SHORT).show();
+            //homeepageReLayout.addView(inflate,params);
+            pageUtil.showLoad();
+        }else if (code==300){
+            Toast.makeText(this, "300", Toast.LENGTH_SHORT).show();
+            //homeepageReLayout.removeView(inflate);
+            pageUtil.hideload();
+        }
+    }
+
+
+
 
 //    @Override
 //    protected void onRestart() {

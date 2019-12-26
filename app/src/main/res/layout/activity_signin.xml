@@ -102,15 +102,14 @@
 
         <TextView
             android:id="@+id/signinSignin"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/singinSiginTextViewMarginRight"
-            android:layout_weight="1"
             android:gravity="right|center"
             android:text="@string/register_user_goLogin"
             android:textColor="@color/darkturquoise"
             android:textSize="@dimen/singinSiginTextViewTextSize"
-            android:background="?android:selectableItemBackgroundBorderless"/>
+            tools:ignore="NestedWeights,RtlHardcoded" />
 
     </LinearLayout>
 

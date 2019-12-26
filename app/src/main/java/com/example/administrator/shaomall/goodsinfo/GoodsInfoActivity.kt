@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.PointF
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.webkit.WebView
@@ -12,12 +13,14 @@ import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.Toast
 import com.alibaba.fastjson.JSONObject
 import com.bumptech.glide.Glide
 import com.example.administrator.shaomall.R
 import com.example.administrator.shaomall.activity.MainActivity
 import com.example.administrator.shaomall.goodsinfo.bean.GoodsInfoBean
 import com.example.administrator.shaomall.login.LoginActivity
+import com.example.commen.util.PageUtil
 import com.example.commen.util.ShopMailError
 import com.example.net.AppNetConfig
 import com.shaomall.framework.base.BaseMVPActivity
@@ -42,11 +45,14 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
     private lateinit var qBadgeView: QBadgeView //小红点显示
     lateinit var frameLayout: FrameLayout
     private lateinit var mWebView: WebView
-
+    internal lateinit var pageUtil: PageUtil
     override fun setLayoutId(): Int = R.layout.activity_commodity
 
     @SuppressLint("SetTextI18n", "SetJavaScriptEnabled")
     override fun initView() {
+
+        pageUtil = PageUtil(this)
+        pageUtil.review =  goodsInfoRelativeLayout
         //点击关闭
         mIbGoodInfoBack.setOnClickListener {
             animOutActivity()
@@ -122,6 +128,17 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
         settings.javaScriptEnabled = true //允许使用js
     }
 
+
+    override fun loadingPage(requestCode: Int, code: Int) {
+        if (requestCode == 200) {
+            Log.d("SSH", code.toString() + "")
+            Toast.makeText(this, "200", Toast.LENGTH_SHORT).show()
+            pageUtil.showLoad()
+        } else if (requestCode == 300) {
+            Toast.makeText(this, "300", Toast.LENGTH_SHORT).show()
+            pageUtil.hideload()
+        }
+    }
 
     /**
      * 点击事件监听处理

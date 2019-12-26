@@ -15,12 +15,17 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.commen.util.PageUtil;
 import com.example.remindsteporgan.Base.Bean;
 import com.example.remindsteporgan.DIYView.MyPassometView;
+import com.example.remindsteporgan.Util.FrontService;
+import com.example.remindsteporgan.Util.LiveJobService;
+import com.example.remindsteporgan.Util.LocalService;
+import com.example.remindsteporgan.Util.RemoteService;
 import com.example.remindsteporgan.Util.ScreenBroadcastListener;
 import com.example.remindsteporgan.Util.ScreenManager;
 import com.example.view.demogreendao.BeanDao;
@@ -32,6 +37,8 @@ import com.shaomall.framework.manager.PointManager;
 import java.util.Calendar;
 import java.util.List;
 
+import static android.app.Service.START_REDELIVER_INTENT;
+
 @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
 public class RemindActivity extends BaseActivity implements SensorEventListener {
     private TextView tv1;
@@ -39,6 +46,8 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
     private RelativeLayout review;
     private TextView historySteps;
     PageUtil pageUtil;
+    private Button remindMap;
+
 
     //TODO 获取当前系统的时间
     Calendar calendar = Calendar.getInstance();
@@ -75,6 +84,7 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
         historySteps = (TextView) findViewById(R.id.historySteps);
         TextView historySteps = (TextView) findViewById(R.id.historySteps);
         sp = getSharedPreferences("ssh", 0);
+        remindMap = (Button) findViewById(R.id.remindMap);
 
         Intent intent=getIntent();
         Bundle extras = intent.getExtras();
@@ -108,6 +118,15 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
 
     @Override
     protected void initData() {
+        remindMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toClass(RemindMapActivity.class);
+
+            }
+        });
+
+        //Keep_alice();
         pageUtil.setReview(review);
         historySteps.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,6 +184,7 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
                 }
             }
 
+
             //TODO 这里判断是哪一个用户然后分别显示不同的步数
 
 
@@ -214,15 +234,27 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
         edit.apply();
     }
 
+
     private void Keep_alice() {
+        //使用前台服务提高进程优先级保活
+        startService(new Intent(RemindActivity.this, FrontService.class));
+
+        //使用双进程保活
+        startService(new Intent(RemindActivity.this, LocalService.class));
+        startService(new Intent(RemindActivity.this, RemoteService.class));
+
+        //使用JobScheduler进行保活
+        startService(new Intent(RemindActivity.this, LiveJobService.class));
+
+
         final ScreenManager screenManager = ScreenManager.getInstance(this);
         ScreenBroadcastListener listener = new ScreenBroadcastListener(this);
         listener.registerListener(new ScreenBroadcastListener.ScreenStateListener() {
+
             @Override
             public void onScreenOn() {
                 screenManager.finishActivity();
             }
-
             @Override
             public void onScreenOff() {
                 screenManager.startActivity();

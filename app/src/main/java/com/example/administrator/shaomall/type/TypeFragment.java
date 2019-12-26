@@ -4,11 +4,15 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.type.adapter.TypeLeftAdapter;
 import com.example.administrator.shaomall.type.adapter.TypeRightAdapter;
 import com.example.commen.Constants;
+import com.example.commen.LoadingPageConfig;
+import com.example.commen.util.PageUtil;
 import com.example.net.AppNetConfig;
 import com.shaomall.framework.base.BaseMVPFragment;
 import com.shaomall.framework.bean.TypeBean;
@@ -19,6 +23,9 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> {
     private android.widget.ListView mTypeLeftLv;
     private android.support.v7.widget.RecyclerView mTypeRightRv;
     private TypePresenter typePresenter;
+    PageUtil pageUtil;
+    private RelativeLayout typeRelaTiveLayout;
+
 
     @Override
     public int setLayoutId() {
@@ -36,6 +43,10 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> {
     protected void initView(View view, Bundle savedInstanceState) {
         mTypeLeftLv = view.findViewById(R.id.type_left_lv);
         mTypeRightRv = view.findViewById(R.id.type_right_rv);
+        typeRelaTiveLayout = (RelativeLayout) view.findViewById(R.id.typeRelaTiveLayout);
+        pageUtil=new PageUtil(getContext());
+        pageUtil.setReview(typeRelaTiveLayout);
+        pageUtil.init();
     }
 
     @Override
@@ -80,13 +91,21 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> {
 
     }
 
+    //加载动画
+    @Override
+    public void loadingPage(int requestCode, int code) {
+        if (code == LoadingPageConfig.STATE_LOADING_CODE) {
+            pageUtil.showLoad();
+        } else if (code == LoadingPageConfig.STATE_SUCCESS_CODE) {
+            pageUtil.hideload();
+        }
+    }
 
     @Override
     public void onRequestHttpDataListSuccess(int requestCode, String message, List<TypeBean> data) {
         super.onRequestHttpDataListSuccess(requestCode, message, data);
         if (requestCode == Constants.TYPE_DATA_CODE) {
-            if (isFirest)
-            {
+            if (isFirest) {
                 typeLeftAdapter = new TypeLeftAdapter(getContext());
                 mTypeLeftLv.setAdapter(typeLeftAdapter);
             }

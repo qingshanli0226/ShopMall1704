@@ -46,7 +46,6 @@ public class PageUtil {
         if (!isloading){
             getReview().addView(inflate,params);
             isloading=!isloading;
-
         }
 
     }

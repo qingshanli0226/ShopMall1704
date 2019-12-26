@@ -63,6 +63,7 @@ public abstract class BaseMVPActivity<T> extends BaseActivity implements IBaseVi
 
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
