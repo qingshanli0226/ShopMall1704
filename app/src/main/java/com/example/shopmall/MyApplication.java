@@ -11,7 +11,6 @@ import androidx.multidex.MultiDex;
 
 import com.example.common.AppProcessUtil;
 import com.example.framework.manager.ConnectManager;
-import com.example.framework.manager.CrashHandler;
 import com.example.framework.manager.MessageManager;
 import com.example.framework.manager.UserManager;
 import com.example.framework.service.StepJobService;
@@ -36,16 +35,14 @@ public class MyApplication extends Application {
         context = this;
 
 
-
-
         ConnectManager.getInstance().init(this);
         //初始化异常
         CrashHandler.getInstance(this).init();
-            JAnalyticsInterface.setDebugMode(true);
-            JAnalyticsInterface.init(this);
-            JPushInterface.init(this);
+        JAnalyticsInterface.setDebugMode(true);
+        JAnalyticsInterface.init(this);
+        JPushInterface.init(this);
 
-        if(AppProcessUtil.isAppProcess(this)==true){
+        if (AppProcessUtil.isAppProcess(this) == true) {
 
 
             StepManager.getInstance().init(getApplicationContext());
@@ -59,10 +56,6 @@ public class MyApplication extends Application {
                 startService(new Intent(this, StepJobService.class));
             }
         }
-
-
-
-
 
         //点击通知跳转MainActivity
         Intent intent = new Intent(this, MainActivity.class);

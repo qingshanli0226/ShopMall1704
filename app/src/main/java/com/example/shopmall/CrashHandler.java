@@ -1,10 +1,14 @@
-package com.example.framework.manager;
+package com.example.shopmall;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Looper;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+
+import com.example.framework.manager.AppActivityManager;
+import com.example.shopmall.activity.MainActivity;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -60,6 +64,9 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         }
 
         AppActivityManager.finishActivity();
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        MyApplication.getContext().startActivity(intent);
         System.exit(0);
     }
 }

@@ -72,6 +72,7 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
     @Override
     protected void onResume() {
         super.onResume();
+
         refreshShoppingCartData();
         int mainitem = ShoppingManager.getInstance().getMainitem();
 
@@ -199,7 +200,6 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
             }
         }
     }
-
 
     private void replaceFragment(Fragment fragment) {
         //获取管理者,开启事务
