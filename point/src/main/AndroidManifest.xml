@@ -52,11 +52,9 @@
             android:launchMode="singleTop" />
         <activity
             android:name=".activity.IntegralActivity"
-            android:launchMode="singleTop" ><intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            android:launchMode="singleTop" >
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
+        </activity>
         <activity
             android:name=".activity.PresentActivity"
             android:launchMode="singleTop" />

@@ -19,7 +19,6 @@ import com.example.framework.port.IFragment;
  * author:李浩帆
  */
 public abstract class BaseFragment extends Fragment implements IFragment {
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
