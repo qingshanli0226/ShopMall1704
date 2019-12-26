@@ -7,8 +7,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseNetConnectActivity;
@@ -113,7 +111,4 @@ public class IntegralActivity extends BaseNetConnectActivity {
             iPresenter.detachView();
         }
     }
-
-
-
 }

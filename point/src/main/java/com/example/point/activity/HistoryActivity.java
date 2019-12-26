@@ -1,38 +1,26 @@
 package com.example.point.activity;
 
-import android.app.DatePickerDialog;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.format.DateFormat;
 import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
-
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.bean.StepBean;
 import com.example.framework.manager.DaoManager;
 import com.example.point.R;
-import com.example.point.adpter.StepItemAdpter;
 import com.example.point.view.MiuiWeatherView;
 
 import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.List;
-
-
 public class HistoryActivity extends BaseActivity {
-
     private MyToolBar history_tool;
-
     private MiuiWeatherView muiview;
     private TextView history_mileage;
     private TextView history_calorie;
