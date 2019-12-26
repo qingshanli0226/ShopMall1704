@@ -7,6 +7,9 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
+
 
 import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.message.MessageActivity;
@@ -14,6 +17,8 @@ import com.example.administrator.shaomall.search.SearchActivity;
 import com.example.administrator.shaomall.type.adapter.TypeLeftAdapter;
 import com.example.administrator.shaomall.type.adapter.TypeRightAdapter;
 import com.example.commen.Constants;
+import com.example.commen.LoadingPageConfig;
+import com.example.commen.util.PageUtil;
 import com.example.net.AppNetConfig;
 import com.shaomall.framework.base.BaseMVPFragment;
 import com.shaomall.framework.bean.MessageBean;
@@ -31,6 +36,8 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> implements MessageMa
     private android.widget.EditText titleSearchTv;
     private QBadgeView qBadgeView;
     private android.widget.ImageView titleMessage;
+    PageUtil pageUtil;
+    private RelativeLayout typeRelaTiveLayout;
 
 
     @Override
@@ -49,6 +56,7 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> implements MessageMa
     protected void initView(View view, Bundle savedInstanceState) {
         mTypeLeftLv = view.findViewById(R.id.type_left_lv);
         mTypeRightRv = view.findViewById(R.id.type_right_rv);
+
         titleSearchTv = view.findViewById(R.id.title_search_tv);
         titleSearchTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +70,11 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> implements MessageMa
                 .setBadgeTextSize(10f,true)
                 .setBadgeGravity(Gravity.START | Gravity.TOP)
                 .setBadgeBackgroundColor(Color.BLUE);
+
+        typeRelaTiveLayout = (RelativeLayout) view.findViewById(R.id.typeRelaTiveLayout);
+        pageUtil=new PageUtil(getContext());
+        pageUtil.setReview(typeRelaTiveLayout);
+        pageUtil.init();
     }
 
     @Override
@@ -112,12 +125,22 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> implements MessageMa
 
     }
 
+    //加载动画
+    @Override
+    public void loadingPage(int requestCode, int code) {
+        if (code == LoadingPageConfig.STATE_LOADING_CODE) {
+            pageUtil.showLoad();
+        } else if (code == LoadingPageConfig.STATE_SUCCESS_CODE) {
+            pageUtil.hideload();
+        }
+    }
 
     @Override
     public void onRequestHttpDataListSuccess(int requestCode, String message, List<TypeBean> data) {
         super.onRequestHttpDataListSuccess(requestCode, message, data);
         if (requestCode == Constants.TYPE_DATA_CODE) {
-            if (isFirst) {
+
+            if (isFirest) {
                 typeLeftAdapter = new TypeLeftAdapter(getContext());
                 mTypeLeftLv.setAdapter(typeLeftAdapter);
             }

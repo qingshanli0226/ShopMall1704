@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_function.*
 class FunctionActivity : BaseActivity() {
     lateinit var presenter: IBasePresenter<FunctionBean>
     private var bundle: Bundle? = null
+
     private lateinit var functionAdaptor: FunctionAdaptor   //适配器
     private lateinit var functionViewModel: FunctionViewModel //ViewModel 网络请求
 
@@ -84,4 +85,5 @@ class FunctionActivity : BaseActivity() {
         functionViewModel.clearDisposable()
         super.onDestroy()
     }
+
 }

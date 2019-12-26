@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.administrator.shaomall.FindFragment;
@@ -20,6 +23,7 @@ import com.example.commen.Constants;
 import com.example.commen.network.NetChangeObserver;
 import com.example.commen.network.NetType;
 import com.example.commen.network.NetworkManager;
+import com.example.commen.util.PageUtil;
 import com.example.commen.util.ShopMailError;
 import com.example.shoppingcart.ShoppingCartFragment;
 import com.flyco.tablayout.CommonTabLayout;
@@ -44,6 +48,8 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
     private List<Fragment> fragments = new ArrayList<>();
     private AutoLoginPresenter autoLoginPresenter;
 
+    private RelativeLayout mainRelativeLayout;
+    PageUtil pageUtil;
 
     @Override
     public int setLayoutId() {
@@ -56,6 +62,7 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
         NetworkManager.getDefault().init(getApplication()); //网络状态管理类
         NetworkManager.getDefault().setListener(this); //网络监听
 
+        mainRelativeLayout = (RelativeLayout) findViewById(R.id.mainRelativeLayout);
         mMainFragmentHome = findViewById(R.id.main_fragmentHome);
         mMainTab = findViewById(R.id.main_tab);
         fragments.add(new HomeFragment());
@@ -63,19 +70,26 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
         fragments.add(new FindFragment());
         fragments.add(new ShoppingCartFragment());
         fragments.add(new MineFragment());
-
-
-        //        //实现自动登录
-        //        if (autoLoginPresenter == null) {
-        //            autoLoginPresenter = new AutoLoginPresenter();
-        //            autoLoginPresenter.attachView(this);
-        //        }
-        //        if (UserInfoManager.getInstance().isLogin()) {
-        //            autoLoginPresenter.doPostHttpRequest();
-        //        }
-
+        pageUtil=new PageUtil(this);
+        pageUtil.setReview(mainRelativeLayout);
 
     }
+
+    @Override
+    public void loadingPage(int requestCode, int code) {
+        if (code==200){
+            Log.d("SSH",code+"");
+            Toast.makeText(this, "200", Toast.LENGTH_SHORT).show();
+            //homeepageReLayout.addView(inflate,params);
+            pageUtil.showLoad();
+        }else if (code==300){
+            Toast.makeText(this, "300", Toast.LENGTH_SHORT).show();
+            //homeepageReLayout.removeView(inflate);
+            pageUtil.hideload();
+        }
+    }
+
+
 
     @Override
     protected void initData() {

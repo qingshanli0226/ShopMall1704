@@ -4,20 +4,26 @@ import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.graphics.Color
 import android.graphics.PointF
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import android.widget.Toast
 import com.alibaba.fastjson.JSONObject
 import com.bumptech.glide.Glide
 import com.example.administrator.shaomall.R
 import com.example.administrator.shaomall.activity.MainActivity
 import com.example.administrator.shaomall.goodsinfo.bean.GoodsInfoBean
 import com.example.administrator.shaomall.login.LoginActivity
+
 import com.example.commen.ToolbarCustom
 import com.example.commen.WebViewConfig
+
+import com.example.commen.util.PageUtil
+
 import com.example.commen.util.ShopMailError
 import com.example.net.AppNetConfig
 import com.shaomall.framework.base.BaseMVPActivity
@@ -42,13 +48,19 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
     private lateinit var qBadgeView: QBadgeView //小红点显示
     private lateinit var linearLayout: LinearLayout
     private lateinit var mWebView: WebView
-
+    internal lateinit var pageUtil: PageUtil
     override fun setLayoutId(): Int = R.layout.activity_commodity
 
     override fun initView() {
+
         //购物车商品数量更新监听
         ShoppingManager.getInstance().registerShoppingNumChangeListener(this)
 
+
+
+
+        pageUtil = PageUtil(this)
+        pageUtil.review =  goodsInfoRelativeLayout
 
         //点击关闭
         mTc_top.setLeftBackImageViewOnClickListener {
@@ -120,6 +132,17 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
         mWebView.loadUrl(productPic)
     }
 
+
+    override fun loadingPage(requestCode: Int, code: Int) {
+        if (requestCode == 200) {
+            Log.d("SSH", code.toString() + "")
+            Toast.makeText(this, "200", Toast.LENGTH_SHORT).show()
+            pageUtil.showLoad()
+        } else if (requestCode == 300) {
+            Toast.makeText(this, "300", Toast.LENGTH_SHORT).show()
+            pageUtil.hideload()
+        }
+    }
 
     /**
      * 点击事件监听处理
@@ -196,7 +219,7 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
         val goods = ImageView(this)
         goods.setImageResource(R.drawable.add_cart_bg_selector)
         val params = RelativeLayout.LayoutParams(50, 50)
-        rl.addView(goods, params)
+        goodsInfoRelativeLayout.addView(goods, params)
 
         //得到加入购物车按钮的坐标（用于计算动画开始的坐标）
         val startLoc = IntArray(2)
@@ -248,7 +271,7 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
                 iBasePresenter!!.doJsonPostHttpRequest()
 
                 // 把移动的图片imageview从父布局里移除
-                rl.removeView(goods)
+                goodsInfoRelativeLayout.removeView(goods)
             }
 
             override fun onAnimationCancel(animation: Animator?) {

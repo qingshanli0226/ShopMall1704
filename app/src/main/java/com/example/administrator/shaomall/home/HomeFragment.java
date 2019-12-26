@@ -8,13 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.LinearLayoutManager;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.message.MessageActivity;
 import com.example.administrator.shaomall.search.SearchActivity;
 import com.example.administrator.shaomall.app.ShaoHuaApplication;
 import com.example.commen.Constants;
+import com.example.commen.util.PageUtil;
 import com.example.commen.view.AnimationNestedScrollView;
 import com.example.administrator.shaomall.home.adapter.HomeRecycleAdapter;
 import com.example.commen.util.CommonUtil;
@@ -41,6 +44,10 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> implements MessageM
     private TextView message;
     private QBadgeView qBadgeView;
     private TextView searchTv;
+
+
+
+
 
     @Override
     public int setLayoutId() {
@@ -84,6 +91,7 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> implements MessageM
 
     protected void initData() {
         setTitle();
+
         ACache aCache = ACache.get(mContext);
         HomeBean.ResultBean data = (HomeBean.ResultBean) aCache.getAsObject(Constants.KEY_HOME_DATA);
 
@@ -174,4 +182,6 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> implements MessageM
         super.onDestroy();
         MessageManager.getInstance().unRegisterMessageListener(this);
     }
+
+
 }

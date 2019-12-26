@@ -20,12 +20,13 @@ import com.shaomall.framework.manager.ActivityInstanceManager;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
+
     /**
      * 获取TAG的activity名称
      */
     protected Context mContext;
     private ImmersionBar immersionBar;
-
+    protected   Bundle savedInstanceState=null;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,6 +34,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         flagFullScreen();
         setContentView(setLayoutId());
         mContext = this.getApplicationContext();
+        savedInstanceState=this.savedInstanceState;
+
 
         immersionBar = ImmersionBar.with(this);
         immersionBar.init();

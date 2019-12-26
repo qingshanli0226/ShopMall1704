@@ -138,7 +138,7 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
         });
 
         //TODO 付款按钮
-        tvGoToPay.setOnClickListener(new View.OnClickListener() {
+        tvGoToPay.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //获取选中的商品

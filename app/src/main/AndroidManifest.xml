@@ -157,6 +157,8 @@
                 <action android:name="cn.jiguang.user.service.action" />
             </intent-filter>
         </service>
+
+
     </application>
 
 </manifest>
