@@ -68,7 +68,6 @@ public class WelcomeActivity extends BaseActivity implements CacheManager.IHomeR
         welcomeHandlerThread = new HandlerThread("WelcomeHandlerThread");
         welcomeHandlerThread.start();
 
-
         //创建工作线程
         workHandler = new Handler(welcomeHandlerThread.getLooper()) {
             private boolean isNet = false;
@@ -131,6 +130,7 @@ public class WelcomeActivity extends BaseActivity implements CacheManager.IHomeR
     @Override
     public void onHomeDataReceived(HomeBean.ResultBean homeBean) {
         workHandler.sendEmptyMessage(101);
+        CacheManager.getInstance().unregisterListener(this);
     }
 
     private int time = 3;
@@ -215,7 +215,6 @@ public class WelcomeActivity extends BaseActivity implements CacheManager.IHomeR
     protected void onDestroy() {
         welcomeHandlerThread.quit();
         workHandler.removeCallbacksAndMessages(null);
-        CacheManager.getInstance().unregisterListener(this);
         super.onDestroy();
     }
 }

@@ -49,7 +49,6 @@ public class HomeFragment extends BaseFragment implements MessageManager.Message
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
-
         CacheManager.getInstance().registerListener(this);
         MessageManager.getInstance().registerMessageListener(this);
 
@@ -120,7 +119,7 @@ public class HomeFragment extends BaseFragment implements MessageManager.Message
      */
     @Override
     public void onConnected(NetType type) {
-//        mTvNetHint.setVisibility(View.GONE);
+        //        mTvNetHint.setVisibility(View.GONE);
         mTvNetHint.hideView();
         if (type == NetType.WIFI) { //wifi刷新数据
             CacheManager.getInstance().getData();//重新请求数据
@@ -132,7 +131,7 @@ public class HomeFragment extends BaseFragment implements MessageManager.Message
      */
     @Override
     public void onDisConnected() {
-//        mTvNetHint.setVisibility(View.VISIBLE);
+        //        mTvNetHint.setVisibility(View.VISIBLE);
         mTvNetHint.showView();
     }
 

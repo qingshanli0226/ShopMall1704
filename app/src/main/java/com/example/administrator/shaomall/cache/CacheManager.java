@@ -53,7 +53,7 @@ public class CacheManager {
      * 加载数据
      */
     public void getData() {
-        if (!NetWorkUtils.isNetWorkAvailable()){
+        if (!NetWorkUtils.isNetWorkAvailable()) {
             return;
         }
 
@@ -133,7 +133,9 @@ public class CacheManager {
 
     public void unregisterListener(IHomeReceivedListener iHomeReceivedListener) {
         synchronized (CacheManager.class) {
-            iHomeReceivedListeners.remove(iHomeReceivedListener);
+            if (iHomeReceivedListeners.contains(iHomeReceivedListener)) {
+                iHomeReceivedListeners.remove(iHomeReceivedListener);
+            }
         }
     }
 
