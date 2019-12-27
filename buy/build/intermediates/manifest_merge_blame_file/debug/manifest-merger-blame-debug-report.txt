@@ -29,7 +29,7 @@
 17    <application>
 17-->E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:11:5-16:19
 18        <activity android:name="com.example.buy.activity.PayGoodsActivity" />
-18-->E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:12:9-87
+18-->E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:12:9-77
 18-->E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:12:19-75
 19        <activity android:name="com.example.buy.activity.SendGoodsActivity" />
 19-->E:\GitLearn\ShopMall1704\buy\src\main\AndroidManifest.xml:13:9-64
