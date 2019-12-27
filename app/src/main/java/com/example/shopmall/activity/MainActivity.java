@@ -47,9 +47,6 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
     //底部导航
     private BottomBar bbMain;
 
-    //购物车商品数量
-    private int allNumber;
-
     private ShoppingCartView mRedMessage;
     private ShoppingCartPresenter shoppingCartPresenter;
 
@@ -116,7 +113,8 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
         ShoppingManager.getInstance().setOnNumberChangedListener(this);
         refreshShoppingCartData();
         //获取购物车商品数量
-        allNumber = ShoppingManager.getInstance().getAllNumber();
+        //购物车商品数量
+        int allNumber = ShoppingManager.getInstance().getAllNumber();
         mRedMessage.setNum(allNumber);
 
         replaceFragment(fragmentArrayList.get(0));
@@ -158,7 +156,7 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
     }
 
 
-    public void refreshShoppingCartData() {
+    void refreshShoppingCartData() {
         boolean loginStatus = UserManager.getInstance().getLoginStatus();
         if(loginStatus){
             String token = ShoppingManager.getInstance().getToken(MainActivity.this);
@@ -171,14 +169,13 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
         }
     }
 
-    private MessageReceiver mMessageReceiver;
     public static final String MESSAGE_RECEIVED_ACTION = "com.example.shopmall.MESSAGE_RECEIVED_ACTION";
     public static final String KEY_TITLE = "title";
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_EXTRAS = "extras";
 
     public void registerMessageReceiver() {
-        mMessageReceiver = new MessageReceiver();
+        MessageReceiver mMessageReceiver = new MessageReceiver();
         IntentFilter filter = new IntentFilter();
         filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
         filter.addAction(MESSAGE_RECEIVED_ACTION);
@@ -194,13 +191,13 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
                     String messge = intent.getStringExtra(KEY_MESSAGE);
                     String extras = intent.getStringExtra(KEY_EXTRAS);
                     StringBuilder showMsg = new StringBuilder();
-                    showMsg.append(KEY_MESSAGE + " : " + messge + "\n");
+                    showMsg.append(KEY_MESSAGE + " : ").append(messge).append("\n");
                     if (!ExampleUtil.isEmpty(extras)) {
-                        showMsg.append(KEY_EXTRAS + " : " + extras + "\n");
+                        showMsg.append(KEY_EXTRAS + " : ").append(extras).append("\n");
                     }
 //                    setCostomMsg(showMsg.toString());
                 }
-            } catch (Exception e){
+            } catch (Exception ignored){
             }
         }
     }

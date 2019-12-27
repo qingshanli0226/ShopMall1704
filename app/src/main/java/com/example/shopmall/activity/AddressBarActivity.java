@@ -2,7 +2,6 @@ package com.example.shopmall.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
@@ -17,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IPostBaseView;
-import com.example.framework.manager.ShoppingManager;
 import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
 import com.example.shopmall.adapter.AddressBarAdapter;
@@ -53,7 +51,7 @@ public class AddressBarActivity extends BaseActivity implements IPostBaseView<Au
     }
 
     @SuppressLint("HandlerLeak")
-    private Handler handler = new Handler(){
+    private final Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);

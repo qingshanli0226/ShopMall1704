@@ -7,7 +7,6 @@ import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.example.framework.bean.MessageBean;
 import com.example.framework.manager.MessageManager;
 import com.example.shopmall.activity.MainActivity;
 
@@ -43,7 +42,7 @@ public class PushMessageReceiver extends JPushMessageReceiver {
             //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             context.startActivity(i);
-        } catch (Throwable throwable) {
+        } catch (Throwable ignored) {
 
         }
     }
@@ -58,14 +57,19 @@ public class PushMessageReceiver extends JPushMessageReceiver {
             Log.d(TAG, "ACTION_NOTIFICATION_CLICK_ACTION nActionExtra is null");
             return;
         }
-        if (nActionExtra.equals("my_extra1")) {
-            Log.e(TAG, "[onMultiActionClicked] 用户点击通知栏按钮一");
-        } else if (nActionExtra.equals("my_extra2")) {
-            Log.e(TAG, "[onMultiActionClicked] 用户点击通知栏按钮二");
-        } else if (nActionExtra.equals("my_extra3")) {
-            Log.e(TAG, "[onMultiActionClicked] 用户点击通知栏按钮三");
-        } else {
-            Log.e(TAG, "[onMultiActionClicked] 用户点击通知栏按钮未定义");
+        switch (nActionExtra) {
+            case "my_extra1":
+                Log.e(TAG, "[onMultiActionClicked] 用户点击通知栏按钮一");
+                break;
+            case "my_extra2":
+                Log.e(TAG, "[onMultiActionClicked] 用户点击通知栏按钮二");
+                break;
+            case "my_extra3":
+                Log.e(TAG, "[onMultiActionClicked] 用户点击通知栏按钮三");
+                break;
+            default:
+                Log.e(TAG, "[onMultiActionClicked] 用户点击通知栏按钮未定义");
+                break;
         }
     }
 
@@ -137,7 +141,7 @@ public class PushMessageReceiver extends JPushMessageReceiver {
                 if (extraJson.length() > 0) {
                     msgIntent.putExtra(MainActivity.KEY_EXTRAS, extras);
                 }
-            } catch (JSONException e) {
+            } catch (JSONException ignored) {
 
             }
 

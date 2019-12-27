@@ -1,6 +1,6 @@
 package com.example.shopmall.bean;
 
-public class HeadBean {
+class HeadBean {
 
     /**
      * code : 200

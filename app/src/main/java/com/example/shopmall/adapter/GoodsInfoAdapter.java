@@ -2,7 +2,6 @@ package com.example.shopmall.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -54,12 +53,12 @@ public class GoodsInfoAdapter extends BaseAdapter<GoodsBean,GoodsInfoAdapter.Vie
         return 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    protected class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvGoodsName;
         private TextView tvCoverPrice;
 
-        public ViewHolder(@NonNull View itemView) {
+        private ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             wbFigureGoodsInfo = itemView.findViewById(R.id.wb_figure_goods_info);

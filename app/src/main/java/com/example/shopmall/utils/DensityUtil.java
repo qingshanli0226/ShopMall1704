@@ -6,7 +6,7 @@ import android.content.Context;
  * 作用：单位转换工具
  * px和dp互相转换工具
  */
-public class DensityUtil {
+class DensityUtil {
     /**
      * 根据手机的分辨率从 dip 的单位 转成为 px(像素)
      */

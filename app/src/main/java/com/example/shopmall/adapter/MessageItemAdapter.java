@@ -1,6 +1,5 @@
 package com.example.shopmall.adapter;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
@@ -39,14 +38,14 @@ public class MessageItemAdapter extends BaseAdapter<MessageBean,MessageItemAdapt
         return 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    protected class ViewHolder extends RecyclerView.ViewHolder {
 
         private RedView red_view_message;
         private TextView tvNameMessage;
         private TextView tvContentMessage;
         private TextView tvViewMoreMessage;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             red_view_message = itemView.findViewById(R.id.red_view_message);
@@ -56,7 +55,7 @@ public class MessageItemAdapter extends BaseAdapter<MessageBean,MessageItemAdapt
 
         }
 
-        public void setData(final List<MessageBean> messageBeans, final int position) {
+        void setData(final List<MessageBean> messageBeans, final int position) {
             tvNameMessage.setText(messageBeans.get(position).getNameMessage());
             tvContentMessage.setText(messageBeans.get(position).getContentMessage());
 
@@ -87,7 +86,7 @@ public class MessageItemAdapter extends BaseAdapter<MessageBean,MessageItemAdapt
     private Likeliest likeliest;
 
     public interface Likeliest{
-        public void getLikeliest(int position);
+         void getLikeliest(int position);
     }
 
     public void setLikeliest(Likeliest likeliest) {

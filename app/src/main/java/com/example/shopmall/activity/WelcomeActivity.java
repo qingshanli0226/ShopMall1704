@@ -46,7 +46,7 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
     private final HandlerThread handlerThread = new HandlerThread("welcome");
     private Handler handler;
     private IntegerPresenter integerPresenter;
-
+    private AutoLoginPresenter autoLoginPresenter;
     private String[] prems = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
     private boolean isJump = false;
 
@@ -93,7 +93,7 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
             JumpActivity();
         }
 
-        if (isJump == true) {
+        if (isJump) {
             JumpActivity();
         }
     }
@@ -101,8 +101,9 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
     private void initAutoLogin() {
         boolean loginStatus = UserManager.getInstance().getLoginStatus();
         if (loginStatus) {
+
             String token = UserManager.getInstance().getToken();
-            AutoLoginPresenter autoLoginPresenter = new AutoLoginPresenter(token);
+            autoLoginPresenter = new AutoLoginPresenter(token);
             autoLoginPresenter.attachPostView(this);
             autoLoginPresenter.getCipherTextData();
         } else {
@@ -171,7 +172,7 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
                     isJump = true;
                 }
             }
-            if (isJump == true) {
+            if (isJump) {
                 JumpActivity();
             }
         }
@@ -209,7 +210,6 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
             integerPresenter.detachView();
         }
 
-
         SharedPreferences welcome = getSharedPreferences("welcome", Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = welcome.edit();
         edit.putBoolean("isWelcome", false);
@@ -220,6 +220,10 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
         Bitmap bitmap = drawable1.getBitmap();
         bitmap.recycle();
         bitmap = null;
+
+        if (autoLoginPresenter != null) {
+            autoLoginPresenter.detachView();
+        }
 
         handlerThread.quit();
         if (handler != null) {

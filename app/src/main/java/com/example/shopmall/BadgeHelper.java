@@ -25,7 +25,6 @@ import java.lang.reflect.Field;
 public class BadgeHelper extends View {
 
     private static final String TAG = "BadgeHelper";
-    private float density;
     private Paint mTextPaint;
     private Paint mBackgroundPaint;
     private String text = "0";
@@ -50,7 +49,7 @@ public class BadgeHelper extends View {
 
     @IntDef({Type.TYPE_POINT, Type.TYPE_TEXT})
     @Retention(RetentionPolicy.SOURCE)
-    public @interface Type {
+    private  @interface Type {
         int TYPE_POINT = 0;
         int TYPE_TEXT = 1;
     }
@@ -65,7 +64,7 @@ public class BadgeHelper extends View {
     private void init(@Type int type, boolean isOverlap) {
         this.type = type;
         this.isOverlap = isOverlap;
-        density = getResources().getDisplayMetrics().density;
+        float density = getResources().getDisplayMetrics().density;
 
         switch (type) {
             case Type.TYPE_POINT:
@@ -182,7 +181,7 @@ public class BadgeHelper extends View {
      * @param isIgnoreTargetPadding 是否忽略目标View的padding
      * @return
      */
-    public BadgeHelper setBadgeOverlap(boolean isOverlap, boolean isIgnoreTargetPadding) {
+    private BadgeHelper setBadgeOverlap(boolean isOverlap, boolean isIgnoreTargetPadding) {
         this.isOverlap = isOverlap;
         this.mIgnoreTargetPadding = isIgnoreTargetPadding;
         if (!isOverlap && isIgnoreTargetPadding) {
@@ -275,7 +274,7 @@ public class BadgeHelper extends View {
      *
      * @param target
      */
-    public void bindToTargetView(View target) {
+    private void bindToTargetView(View target) {
         init(type, isOverlap);
         if (getParent() != null) {
             ((ViewGroup) getParent()).removeView(this);

@@ -77,7 +77,7 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <include layout="@layout/nested_scroll"></include>
+        <include layout="@layout/nested_scroll"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

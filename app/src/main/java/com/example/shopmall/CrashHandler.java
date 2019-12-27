@@ -18,10 +18,10 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
     private static CrashHandler crashHandler;
 
-    Context context;
+    private Context context;
 
 
-    public CrashHandler(Context context) {
+    private CrashHandler(Context context) {
         this.context = context;
     }
 

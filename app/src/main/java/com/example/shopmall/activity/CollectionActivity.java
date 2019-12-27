@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 public class CollectionActivity extends BaseActivity implements CollectionAdapter.OnItemClickListener {
-    TitleBar tbCollection;
-    RecyclerView rvCollections;
+    private TitleBar tbCollection;
+    private RecyclerView rvCollections;
     private CollectionAdapter collectionAdapter;
 
     @Override

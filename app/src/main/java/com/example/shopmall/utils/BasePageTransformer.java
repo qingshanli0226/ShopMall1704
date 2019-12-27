@@ -6,10 +6,10 @@ import android.view.View;
 
 import androidx.viewpager.widget.ViewPager;
 
-public abstract class BasePageTransformer implements ViewPager.PageTransformer
+abstract class BasePageTransformer implements ViewPager.PageTransformer
 {
-    protected ViewPager.PageTransformer mPageTransformer = NonPageTransformer.INSTANCE;
-    public static final float DEFAULT_CENTER = 0.5f;
+     ViewPager.PageTransformer mPageTransformer = NonPageTransformer.INSTANCE;
+     static final float DEFAULT_CENTER = 0.5f;
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void transformPage(View view, float position)

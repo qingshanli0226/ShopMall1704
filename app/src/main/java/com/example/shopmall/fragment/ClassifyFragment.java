@@ -5,11 +5,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Handler;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.example.common.LoadingPage;
@@ -26,7 +23,6 @@ import com.example.shopmall.bean.ClassifyBean;
 import com.example.shopmall.presenter.IntegerPresenter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,12 +36,11 @@ public class ClassifyFragment extends BaseFragment implements IGetBaseView<Class
     private RecyclerView rvClassifyLeft;
     private RecyclerView rvClassifyRight;
     private ClassifyLeftAdapter classifyLeftAdapter;
-    private ClassifyRightAdapter classifyRightAdapter;
 
     private IntegerPresenter integerPresenter;
 
     //左边显示到的数据
-    private List<String> titles = new ArrayList();
+    private ArrayList<String> titles;
 
     //右边要显示的数据的地址
     private String[] urls = new String[]{Constant.SKIRT_URL, Constant.JACKET_URL, Constant.PANTS_URL, Constant.OVERCOAT_URL,
@@ -125,6 +120,7 @@ public class ClassifyFragment extends BaseFragment implements IGetBaseView<Class
         rvClassifyLeft.setLayoutManager(new LinearLayoutManager(getContext()));
         rvClassifyRight.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        titles = new ArrayList<>();
         //左侧数据
         titles.add("小裙子");
         titles.add("上衣");
@@ -147,7 +143,7 @@ public class ClassifyFragment extends BaseFragment implements IGetBaseView<Class
 
     @Override
     public void onGetDataSucess(ClassifyBean data) {
-        classifyRightAdapter = new ClassifyRightAdapter(getContext());
+        ClassifyRightAdapter classifyRightAdapter = new ClassifyRightAdapter(getContext());
         classifyRightAdapter.reFresh(data.getResult());
         rvClassifyRight.setAdapter(classifyRightAdapter);
 

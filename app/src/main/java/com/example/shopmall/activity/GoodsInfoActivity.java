@@ -48,7 +48,7 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
     private RecyclerView rvGoodsInfo;
     private BottomBar bbGoodsInfo;
     private MyOKButton btGoodsInfo;
-    RelativeLayout rlGoodsinfo;
+    private RelativeLayout rlGoodsinfo;
 
     private ArrayList<GoodsBean> list_goods = new ArrayList<>();
 
@@ -59,9 +59,6 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
     private GoodsBean goods_bean;
     private int mainitem;
     private GoodsInfoAdapter goodsInfoAdapter;
-    private Drawable mine;
-    private Drawable collect;
-    private Drawable shoppingcart;
 
     @Override
     protected int setLayout() {
@@ -110,9 +107,9 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
         });
 
         String[] strs = new String[]{"联系客服", "收藏", "购物车"};
-        mine = getResources().getDrawable(R.drawable.mine);
-        collect = getResources().getDrawable(R.drawable.collect);
-        shoppingcart = getResources().getDrawable(R.drawable.shoppingcart);
+        Drawable mine1 = getResources().getDrawable(R.drawable.mine);
+        Drawable collect1 = getResources().getDrawable(R.drawable.collect);
+        Drawable shoppingcart1 = getResources().getDrawable(R.drawable.shoppingcart);
         final Drawable mine = getResources().getDrawable(R.drawable.mine);
 
         Drawable collect = null;
@@ -191,8 +188,8 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
         });
     }
 
-    int[] colors = {Color.RED,Color.BLUE,Color.BLACK,Color.GREEN,Color.YELLOW};
-    public void addAnimation(View view){
+    private int[] colors = {Color.RED,Color.BLUE,Color.BLACK,Color.GREEN,Color.YELLOW};
+    private void addAnimation(View view){
 
         int[] startLocation = new int[2];
 
@@ -220,10 +217,10 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
 
         Log.e("####",x+"/"+startF.y);
 
-        ObjectAnimator objectAnimator = new ObjectAnimator().ofFloat(textView, "translationY", startF.y-150f,startF.y-350f);
+        ObjectAnimator objectAnimator =  ObjectAnimator.ofFloat(textView, "translationY", startF.y-150f,startF.y-350f);
         objectAnimator.setDuration(2000);
 
-        ObjectAnimator objectAnimator2 = new ObjectAnimator().ofFloat(textView, "Alpha", 1,0);
+        ObjectAnimator objectAnimator2 = ObjectAnimator.ofFloat(textView, "Alpha", 1,0);
         objectAnimator2.setDuration(2000);
 
         AnimatorSet animatorSet = new AnimatorSet();

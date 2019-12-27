@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CollectionAdapter extends BaseAdapter<Map<String,String>, CollectionAdapter.ViewHolder> {
-    Context context;
+    private Context context;
 
     public CollectionAdapter(Context context) {
         this.context = context;
@@ -57,7 +57,7 @@ public class CollectionAdapter extends BaseAdapter<Map<String,String>, Collectio
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        public ViewHolder(@NonNull View itemView) {
+        private ViewHolder(@NonNull View itemView) {
             super(itemView);
         }
 

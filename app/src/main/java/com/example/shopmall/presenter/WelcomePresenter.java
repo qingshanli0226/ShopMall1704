@@ -10,7 +10,7 @@ import java.util.HashMap;
 /**
  * 首页
  */
-public class WelcomePresenter extends BasePresenter<HomepageBean> {
+class WelcomePresenter extends BasePresenter<HomepageBean> {
 
     @Override
     protected Type getBeanType() {

@@ -40,7 +40,7 @@ public class MyApplication extends Application {
         JAnalyticsInterface.init(this);
         JPushInterface.init(this);
 
-        if (AppProcessUtil.isAppProcess(this) == true) {
+        if (AppProcessUtil.isAppProcess(this)) {
 
 
             StepManager.getInstance().init(getApplicationContext());

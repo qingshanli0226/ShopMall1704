@@ -50,13 +50,13 @@ public class RecommendItemAdapter extends BaseAdapter<HomepageBean.ResultBean.Re
         return 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    protected class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView ivRecommendFigure;
         private TextView tvRecommendName;
         private TextView tvRecommendPrice;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             ivRecommendFigure = itemView.findViewById(R.id.iv_recommend_figure);
@@ -66,7 +66,7 @@ public class RecommendItemAdapter extends BaseAdapter<HomepageBean.ResultBean.Re
         }
 
         @SuppressLint("SetTextI18n")
-        public void setData(List<HomepageBean.ResultBean.RecommendInfoBean> recommendInfoBeans, final int position) {
+        void setData(List<HomepageBean.ResultBean.RecommendInfoBean> recommendInfoBeans, final int position) {
             Glide.with(mContext).load(Constant.BASE_URL_IMAGE + recommendInfoBeans.get(position).getFigure()).into(ivRecommendFigure);
             tvRecommendName.setText(recommendInfoBeans.get(position).getName());
             tvRecommendPrice.setText("￥" + recommendInfoBeans.get(position).getCover_price());
@@ -83,7 +83,7 @@ public class RecommendItemAdapter extends BaseAdapter<HomepageBean.ResultBean.Re
     private Likeliest likeliest;
 
     interface Likeliest{
-        public void getLikeliest(int position);
+         void getLikeliest(int position);
     }
 
     public void setLikeliest(Likeliest likeliest) {

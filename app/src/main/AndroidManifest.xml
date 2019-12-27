@@ -46,7 +46,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name="com.example.framework.manager.DisConnectActivity"></activity>
+        <activity android:name="com.example.framework.manager.DisConnectActivity"/>
         <activity
             android:name=".activity.SetActivity"
             android:screenOrientation="portrait" />

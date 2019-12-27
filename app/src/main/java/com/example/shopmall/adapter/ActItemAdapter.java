@@ -16,10 +16,10 @@ import java.util.List;
 /**
  * Act适配器
  */
-public class ActItemAdapter extends PagerAdapter {
+ class ActItemAdapter extends PagerAdapter {
 
-    private Context mContext;
-    private List<HomepageBean.ResultBean.ActInfoBean> actInfoBeans;
+    private final Context mContext;
+    private final List<HomepageBean.ResultBean.ActInfoBean> actInfoBeans;
 
     public ActItemAdapter(Context mContext, List<HomepageBean.ResultBean.ActInfoBean> actInfoBeans) {
         this.mContext = mContext;

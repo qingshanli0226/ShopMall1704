@@ -13,7 +13,6 @@ import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IPostBaseView;
 import com.example.framework.bean.ResultBean;
-import com.example.framework.manager.ShoppingManager;
 import com.example.framework.manager.UserManager;
 import com.example.shopmall.R;
 import com.example.shopmall.bean.AddressBean;
@@ -27,7 +26,6 @@ public class SetActivity extends BaseActivity implements IPostBaseView<AddressBe
     private TitleBar tbSet;
     private Button btLogOut;
     private LogOutPresenter logOutPresenter;
-    private SharedPreferences sharedPreferences;
 
     @Override
     protected int setLayout() {
@@ -98,7 +96,7 @@ public class SetActivity extends BaseActivity implements IPostBaseView<AddressBe
         if (data.getCode().equals("200")) {
             ResultBean resultBean = new ResultBean();
             UserManager.getInstance().setActiveUser(SetActivity.this, resultBean);
-            sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
             SharedPreferences.Editor edit = sharedPreferences.edit();
             edit.putBoolean("isLogin", false);
             edit.apply();

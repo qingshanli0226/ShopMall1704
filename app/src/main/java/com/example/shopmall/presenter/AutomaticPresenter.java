@@ -12,9 +12,9 @@ import java.util.Map;
 /**
  * 自动登录
  */
-public class AutomaticPresenter extends BasePresenter<LoginBean> {
+class AutomaticPresenter extends BasePresenter<LoginBean> {
 
-    private String token;
+    private final String token;
 
     public AutomaticPresenter(String token) {
         this.token = token;
@@ -45,7 +45,6 @@ public class AutomaticPresenter extends BasePresenter<LoginBean> {
         parmMap.put("token", token);
         String sign = SignUtil.generateSign(parmMap);//生成签名
         parmMap.put("sign", sign);
-        Map<String, String> encryptParmMap = SignUtil.encryptParamsByBase64(parmMap);
-        return encryptParmMap;
+        return SignUtil.encryptParamsByBase64(parmMap);
     }
 }

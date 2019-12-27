@@ -23,16 +23,14 @@ public class ExampleUtil {
     public static final String PREFS_DAYS = "JPUSH_EXAMPLE_DAYS";
     public static final String PREFS_START_TIME = "PREFS_START_TIME";
     public static final String PREFS_END_TIME = "PREFS_END_TIME";
-    public static final String KEY_APP_KEY = "JPUSH_APPKEY";
+    private static final String KEY_APP_KEY = "JPUSH_APPKEY";
 
     public static boolean isEmpty(String s) {
-        if (null == s)
+        if (null != s)
             return true;
         if (s.length() == 0)
             return true;
-        if (s.trim().length() == 0)
-            return true;
-        return false;
+        return s.trim().length() == 0;
     }
     /**
      * 只能以 “+” 或者 数字开头；后面的内容只能包含 “-” 和 数字。
@@ -58,20 +56,19 @@ public class ExampleUtil {
         try {
             ApplicationInfo ai = context.getPackageManager().getApplicationInfo(
                     context.getPackageName(), PackageManager.GET_META_DATA);
-            if (null != ai)
-                metaData = ai.metaData;
+            metaData = ai.metaData;
             if (null != metaData) {
                 appKey = metaData.getString(KEY_APP_KEY);
                 if ((null == appKey) || appKey.length() != 24) {
                     appKey = null;
                 }
             }
-        } catch (NameNotFoundException e) {
+        } catch (NameNotFoundException ignored) {
 
         }
         return appKey;
     }
-    
+
     // 取得版本号
     public static String GetVersion(Context context) {
 		try {
@@ -86,7 +83,7 @@ public class ExampleUtil {
     public static void showToast(final String toast, final Context context)
     {
     	new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				Looper.prepare();
@@ -95,13 +92,13 @@ public class ExampleUtil {
 			}
 		}).start();
     }
-    
+
     public static boolean isConnected(Context context) {
         ConnectivityManager conn = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = conn.getActiveNetworkInfo();
         return (info != null && info.isConnected());
     }
-    
+
 	public static String getImei(Context context, String imei) {
         String ret = null;
 		try {

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class AutoLoginBean implements Serializable {
 
+    private static final long serialVersionUID = 4117927252007810122L;
     /**
      * code : 200
      * message : 登录成功

@@ -16,23 +16,23 @@ import cn.jpush.android.api.JPushMessage;
  * */
 public class TagAliasOperatorHelper {
     private static final String TAG = "JIGUANG-TagAliasHelper";
-    public static int sequence = 1;
+    private static int sequence = 1;
     /**增加*/
-    public static final int ACTION_ADD = 1;
+    private static final int ACTION_ADD = 1;
     /**覆盖*/
-    public static final int ACTION_SET = 2;
+    private static final int ACTION_SET = 2;
     /**删除部分*/
-    public static final int ACTION_DELETE = 3;
+    private static final int ACTION_DELETE = 3;
     /**删除所有*/
-    public static final int ACTION_CLEAN = 4;
+    private static final int ACTION_CLEAN = 4;
     /**查询*/
-    public static final int ACTION_GET = 5;
+    private static final int ACTION_GET = 5;
 
-    public static final int ACTION_CHECK = 6;
+    private static final int ACTION_CHECK = 6;
 
-    public static final int DELAY_SEND_ACTION = 1;
+    private static final int DELAY_SEND_ACTION = 1;
 
-    public static final int DELAY_SET_MOBILE_NUMBER_ACTION = 2;
+    private static final int DELAY_SET_MOBILE_NUMBER_ACTION = 2;
 
     private Context context;
 
@@ -54,7 +54,7 @@ public class TagAliasOperatorHelper {
             this.context = context.getApplicationContext();
         }
     }
-    private SparseArray<Object> setActionCache = new SparseArray<Object>();
+    private SparseArray<Object> setActionCache = new SparseArray<>();
 
     public Object get(int sequence){
         return setActionCache.get(sequence);
@@ -317,7 +317,7 @@ public class TagAliasOperatorHelper {
             }
         }
     }
-    public static class TagAliasBean{
+    static class TagAliasBean{
         int action;
         Set<String> tags;
         String alias;

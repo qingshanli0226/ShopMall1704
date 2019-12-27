@@ -21,7 +21,7 @@ public class AlphaPageTransformer extends BasePageTransformer {
         this(DEFAULT_MIN_ALPHA, pageTransformer);
     }
 
-    public AlphaPageTransformer(float minAlpha, ViewPager.PageTransformer pageTransformer) {
+    private AlphaPageTransformer(float minAlpha, ViewPager.PageTransformer pageTransformer) {
         mMinAlpha = minAlpha;
         mPageTransformer = pageTransformer;
     }
