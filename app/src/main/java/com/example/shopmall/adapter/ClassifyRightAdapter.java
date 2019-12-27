@@ -53,7 +53,7 @@ public class ClassifyRightAdapter extends BaseAdapter<ClassifyBean.ResultBean,Cl
         private RecyclerView rvClassifyRightInflate;
         private RecyclerView rvOrdinaryRightInflate;
 
-        public ViewHolder(View itemView) {
+        private ViewHolder(View itemView) {
             super(itemView);
             rvClassifyRightInflate = itemView.findViewById(R.id.rv_classify_right_inflate);
             rvClassifyRightInflate.setLayoutManager(new GridLayoutManager(mContext,3));

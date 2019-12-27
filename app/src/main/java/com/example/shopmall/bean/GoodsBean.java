@@ -8,6 +8,7 @@ import java.io.Serializable;
  */
 public class GoodsBean implements Serializable {
 
+    private static final long serialVersionUID = 8937375331712838412L;
     private String name;
     private String cover_price;
     private String figure;

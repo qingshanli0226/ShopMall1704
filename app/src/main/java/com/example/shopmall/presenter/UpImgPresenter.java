@@ -1,6 +1,5 @@
 package com.example.shopmall.presenter;
 
-import android.util.Log;
 
 import com.example.framework.base.BasePresenter;
 import com.example.shopmall.bean.RegisterBean;
@@ -54,7 +53,6 @@ public class UpImgPresenter extends BasePresenter<RegisterBean> {
     public MultipartBody.Part getFile() {
         File file = new File(uri);
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
-        MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
-        return body;
+        return MultipartBody.Part.createFormData("file", file.getName(), requestBody);
     }
 }

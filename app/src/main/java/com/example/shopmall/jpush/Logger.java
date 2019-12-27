@@ -2,7 +2,7 @@ package com.example.shopmall.jpush;
 
 import android.util.Log;
 
-public class Logger {
+class Logger {
 
     //设为false关闭日志
     private static final boolean LOG_ENABLE = true;

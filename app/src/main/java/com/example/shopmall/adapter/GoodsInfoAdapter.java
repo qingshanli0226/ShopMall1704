@@ -55,12 +55,12 @@ public class GoodsInfoAdapter extends BaseAdapter<GoodsBean,GoodsInfoAdapter.Vie
         return 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    protected class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvGoodsName;
         private TextView tvCoverPrice;
 
-        public ViewHolder(@NonNull View itemView) {
+        private ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             wbFigureGoodsInfo = itemView.findViewById(R.id.wb_figure_goods_info);

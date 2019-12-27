@@ -51,12 +51,12 @@ public class ClassifyRecyclerRightAdapter extends BaseAdapter<ClassifyBean.Resul
         return 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    protected class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView ivOrdinaryRight;
         private TextView tvOrdinaryRight;
 
-        public ViewHolder(@NonNull View itemView) {
+        private ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             ivOrdinaryRight = itemView.findViewById(R.id.iv_ordinary_right);
@@ -64,7 +64,7 @@ public class ClassifyRecyclerRightAdapter extends BaseAdapter<ClassifyBean.Resul
 
         }
 
-        public void setData(List<ClassifyBean.ResultBean.HotProductListBean> hot_product_list_bean, final int position) {
+        private void setData(List<ClassifyBean.ResultBean.HotProductListBean> hot_product_list_bean, final int position) {
             Glide.with(mContext).load(Constant.BASE_URL_IMAGE + hot_product_list_bean.get(position).getFigure()).into(ivOrdinaryRight);
             tvOrdinaryRight.setText( "￥" + hot_product_list_bean.get(position).getCover_price());
             tvOrdinaryRight.setTextColor(Color.RED);
@@ -81,7 +81,7 @@ public class ClassifyRecyclerRightAdapter extends BaseAdapter<ClassifyBean.Resul
     private Likeliest likeliest;
 
     interface Likeliest {
-        public void getLikeliest(int position);
+         void getLikeliest(int position);
     }
 
     public void setLikeliest(Likeliest likeliest) {

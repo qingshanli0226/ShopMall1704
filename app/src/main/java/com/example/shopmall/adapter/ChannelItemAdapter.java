@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class ChannelItemAdapter extends BaseAdapter<HomepageBean.ResultBean.ChannelInfoBean,ChannelItemAdapter.ViewHolder> {
 
-    private Context mContext;
+    private final Context mContext;
 
     public ChannelItemAdapter(Context mContext) {
         this.mContext = mContext;
@@ -49,12 +49,12 @@ public class ChannelItemAdapter extends BaseAdapter<HomepageBean.ResultBean.Chan
         return position;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    protected class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView ivChannel;
         private TextView tvChannel;
 
-        public ViewHolder(@NonNull View itemView) {
+        private ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             ivChannel = itemView.findViewById(R.id.iv_channel);
@@ -62,7 +62,7 @@ public class ChannelItemAdapter extends BaseAdapter<HomepageBean.ResultBean.Chan
 
         }
 
-        public void setData(List<HomepageBean.ResultBean.ChannelInfoBean> channel_info_bean, final int position) {
+        private void setData(List<HomepageBean.ResultBean.ChannelInfoBean> channel_info_bean, final int position) {
             Glide.with(mContext).load(Constant.BASE_URL_IMAGE + channel_info_bean.get(position).getImage()).into(ivChannel);
             tvChannel.setText(channel_info_bean.get(position).getChannel_name());
 
@@ -78,7 +78,7 @@ public class ChannelItemAdapter extends BaseAdapter<HomepageBean.ResultBean.Chan
     private Likeliest likeliest;
 
     interface Likeliest {
-        public void getLikeliest(int position);
+        void getLikeliest(int position);
     }
 
     public void setLikeliest(Likeliest likeliest) {

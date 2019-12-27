@@ -48,9 +48,6 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
     //底部导航
     private BottomBar bbMain;
 
-    //购物车商品数量
-    private int allNumber;
-
     private ShoppingCartView mRedMessage;
     private ShoppingCartPresenter shoppingCartPresenter;
 
@@ -58,6 +55,7 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
     protected int setLayout() {
         return R.layout.activity_main;
     }
+
     @Override
     public void initView() {
         bbMain = findViewById(R.id.bb_main);
@@ -76,13 +74,13 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
         refreshShoppingCartData();
         int mainitem = ShoppingManager.getInstance().getMainitem();
 
-        if (mainitem == 5){
-            startActivity(new Intent(MainActivity.this,LoginActivity.class));
-        }else{
+        if (mainitem == 5) {
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        } else {
             bbMain.setCheckedItem(mainitem);
             if (mainitem == 3) {
                 boolean loginStatus = UserManager.getInstance().getLoginStatus();
-                if(!loginStatus){
+                if (!loginStatus) {
                     setAlertDialog();
                 }
             }
@@ -96,7 +94,7 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
         builder.setPositiveButton("前往登录", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 dialogInterface.dismiss();
             }
         });
@@ -115,7 +113,8 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
         ShoppingManager.getInstance().setOnNumberChangedListener(this);
         refreshShoppingCartData();
         //获取购物车商品数量
-        allNumber = ShoppingManager.getInstance().getAllNumber();
+        //购物车商品数量
+        int allNumber = ShoppingManager.getInstance().getAllNumber();
         mRedMessage.setNum(allNumber);
 
         replaceFragment(fragmentArrayList.get(0));
@@ -140,7 +139,7 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
                 ShoppingManager.getInstance().setisSetting(false);
                 if (i == 3) {
                     boolean loginStatus = UserManager.getInstance().getLoginStatus();
-                    if(!loginStatus){
+                    if (!loginStatus) {
                         setAlertDialog();
                     }
                     refreshShoppingCartData();
@@ -153,7 +152,7 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
         DisplayMetrics displayMetrics = new DisplayMetrics();
         defaultDisplay.getMetrics(displayMetrics);
         int widthPixels = displayMetrics.widthPixels;
-        mRedMessage.setX(widthPixels/6*4);
+        mRedMessage.setX(widthPixels / 6 * 4);
     }
 
 
@@ -167,14 +166,13 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
         shoppingCartPresenter.getGetData();
     }
 
-    private MessageReceiver mMessageReceiver;
     public static final String MESSAGE_RECEIVED_ACTION = "com.example.shopmall.MESSAGE_RECEIVED_ACTION";
     public static final String KEY_TITLE = "title";
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_EXTRAS = "extras";
 
     public void registerMessageReceiver() {
-        mMessageReceiver = new MessageReceiver();
+        MessageReceiver mMessageReceiver = new MessageReceiver();
         IntentFilter filter = new IntentFilter();
         filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
         filter.addAction(MESSAGE_RECEIVED_ACTION);
@@ -190,13 +188,13 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
                     String messge = intent.getStringExtra(KEY_MESSAGE);
                     String extras = intent.getStringExtra(KEY_EXTRAS);
                     StringBuilder showMsg = new StringBuilder();
-                    showMsg.append(KEY_MESSAGE + " : " + messge + "\n");
+                    showMsg.append(KEY_MESSAGE + " : ").append(messge).append("\n");
                     if (!ExampleUtil.isEmpty(extras)) {
-                        showMsg.append(KEY_EXTRAS + " : " + extras + "\n");
+                        showMsg.append(KEY_EXTRAS + " : ").append(extras).append("\n");
                     }
 //                    setCostomMsg(showMsg.toString());
                 }
-            } catch (Exception e){
+            } catch (Exception ignored) {
             }
         }
     }
@@ -246,7 +244,7 @@ public class MainActivity extends BaseActivity implements ShoppingManager.OnNumb
     protected void onDestroy() {
         super.onDestroy();
 
-        if (shoppingCartPresenter != null){
+        if (shoppingCartPresenter != null) {
             shoppingCartPresenter.detachView();
         }
         ShoppingManager.getInstance().setOnNumberChangedListener(null);

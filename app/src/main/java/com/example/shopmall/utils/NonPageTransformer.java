@@ -4,11 +4,9 @@ import android.view.View;
 
 import androidx.viewpager.widget.ViewPager;
 
-public class NonPageTransformer implements ViewPager.PageTransformer
-{
+class NonPageTransformer implements ViewPager.PageTransformer {
     @Override
-    public void transformPage(View page, float position)
-    {
+    public void transformPage(View page, float position) {
         page.setScaleX(0.8f);//hack
     }
 

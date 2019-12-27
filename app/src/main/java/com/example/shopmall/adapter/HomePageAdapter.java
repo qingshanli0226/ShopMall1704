@@ -163,13 +163,13 @@ public class HomePageAdapter extends BaseAdapter<HomepageBean.ResultBean,Recycle
 
         private Banner bn_ner;
 
-        public BannerViewHolder(@NonNull View itemView) {
+        BannerViewHolder(@NonNull View itemView) {
             super(itemView);
 
             bn_ner = itemView.findViewById(R.id.bn_ner);
         }
 
-        public void setData(final List<HomepageBean.ResultBean.BannerInfoBean> bannerInfoBeans) {
+        void setData(final List<HomepageBean.ResultBean.BannerInfoBean> bannerInfoBeans) {
             bn_ner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
             ArrayList<String> images = new ArrayList<>();
             for (int i = 0; i < bannerInfoBeans.size(); i++) {
@@ -206,6 +206,8 @@ public class HomePageAdapter extends BaseAdapter<HomepageBean.ResultBean,Recycle
     }
 
     class ImageLoad extends ImageLoader{
+        private static final long serialVersionUID = 264596666147915146L;
+
         @Override
         public void displayImage(Context context, Object path, ImageView imageView) {
             Glide.with(context).load((String) path).into(imageView);
@@ -217,7 +219,7 @@ public class HomePageAdapter extends BaseAdapter<HomepageBean.ResultBean,Recycle
 
         private RecyclerView rv_channel;
 
-        public ChannelViewHolder(@NonNull View itemView) {
+        ChannelViewHolder(@NonNull View itemView) {
             super(itemView);
 
             rv_channel = itemView.findViewById(R.id.rv_channel);
@@ -226,7 +228,7 @@ public class HomePageAdapter extends BaseAdapter<HomepageBean.ResultBean,Recycle
 
         }
 
-        public void setData(List<HomepageBean.ResultBean.ChannelInfoBean> channelInfoBeans) {
+        void setData(List<HomepageBean.ResultBean.ChannelInfoBean> channelInfoBeans) {
             ChannelItemAdapter channel_item_adapter = new ChannelItemAdapter(mContext);
             channel_item_adapter.reFresh(channelInfoBeans);
             rv_channel.setAdapter(channel_item_adapter);
@@ -249,13 +251,13 @@ public class HomePageAdapter extends BaseAdapter<HomepageBean.ResultBean,Recycle
 
         private ViewPager vp_act;
 
-        public ActViewHolder(@NonNull View itemView) {
+        ActViewHolder(@NonNull View itemView) {
             super(itemView);
 
             vp_act = itemView.findViewById(R.id.vp_act);
         }
 
-        public void setData(final List<HomepageBean.ResultBean.ActInfoBean> actInfoBeans) {
+        void setData(final List<HomepageBean.ResultBean.ActInfoBean> actInfoBeans) {
             vp_act.setPageMargin(20);
             vp_act.setOffscreenPageLimit(3);
             vp_act.setPageTransformer(true, new AlphaPageTransformer(new ScaleInTransformer()));
@@ -292,21 +294,20 @@ public class HomePageAdapter extends BaseAdapter<HomepageBean.ResultBean,Recycle
     //Seckill
     class SeckillViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvSeckillMore;
         private RecyclerView rvSeckill;
 
-        public SeckillViewHolder(@NonNull View itemView) {
+        SeckillViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvSeckillTime = itemView.findViewById(R.id.tv_seckill_time);
-            tvSeckillMore = itemView.findViewById(R.id.tv_seckill_more);
+            TextView tvSeckillMore = itemView.findViewById(R.id.tv_seckill_more);
             rvSeckill = itemView.findViewById(R.id.rv_seckill);
         }
 
-        public void setData(final HomepageBean.ResultBean.SeckillInfoBean seckillInfoBean) {
+        void setData(final HomepageBean.ResultBean.SeckillInfoBean seckillInfoBean) {
             //设置时间
             if (isFirst) {
-                dt = (int) (Integer.parseInt(seckillInfoBean.getEnd_time()) - (Integer.parseInt(seckillInfoBean.getStart_time())));
+                dt = Integer.parseInt(seckillInfoBean.getEnd_time()) - (Integer.parseInt(seckillInfoBean.getStart_time()));
                 isFirst = false;
             }
 
@@ -340,13 +341,12 @@ public class HomePageAdapter extends BaseAdapter<HomepageBean.ResultBean,Recycle
     //Recommend
     class RecommendViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvRecommendMore;
         private RecyclerView rvRecommend;
 
-        public RecommendViewHolder(@NonNull View itemView) {
+        RecommendViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvRecommendMore = itemView.findViewById(R.id.tv_recommend_more);
+            TextView tvRecommendMore = itemView.findViewById(R.id.tv_recommend_more);
             rvRecommend = itemView.findViewById(R.id.rv_recommend);
 
             rvRecommend.setLayoutManager(new GridLayoutManager(mContext,3));
@@ -378,18 +378,17 @@ public class HomePageAdapter extends BaseAdapter<HomepageBean.ResultBean,Recycle
     //Hot
     class HotViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvMoreHot;
         private RecyclerView rvHot;
 
-        public HotViewHolder(@NonNull View itemView) {
+        HotViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvMoreHot = itemView.findViewById(R.id.tv_more_hot);
+            TextView tvMoreHot = itemView.findViewById(R.id.tv_more_hot);
             rvHot = itemView.findViewById(R.id.rv_hot);
             rvHot.setLayoutManager(new GridLayoutManager(mContext,2));
 
         }
 
-        public void setData(final List<HomepageBean.ResultBean.HotInfoBean> hotInfoBeans) {
+        void setData(final List<HomepageBean.ResultBean.HotInfoBean> hotInfoBeans) {
             HotItemAdapter hotItemAdapter = new HotItemAdapter(mContext);
             hotItemAdapter.reFresh(hotInfoBeans);
             rvHot.setAdapter(hotItemAdapter);

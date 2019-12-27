@@ -54,7 +54,7 @@ public class SeckillItemAdapter extends BaseAdapter<HomepageBean.ResultBean.Seck
         private TextView tvSeckillInflateCoverPrice;
         private TextView tvSeckillInflateOriginPrice;
 
-        public ViewHolder(View itemView) {
+        private ViewHolder(View itemView) {
             super(itemView);
             ivSeckillInflateFigure = itemView.findViewById(R.id.iv_seckill_inflate_figure);
             tvSeckillInflateCoverPrice = itemView.findViewById(R.id.tv_seckill_inflate_cover_price);
@@ -62,7 +62,7 @@ public class SeckillItemAdapter extends BaseAdapter<HomepageBean.ResultBean.Seck
         }
 
         @SuppressLint("SetTextI18n")
-        public void setData(List<HomepageBean.ResultBean.SeckillInfoBean.ListBean> listBeans, final int position) {
+        private void setData(List<HomepageBean.ResultBean.SeckillInfoBean.ListBean> listBeans, final int position) {
             HomepageBean.ResultBean.SeckillInfoBean.ListBean listBean = listBeans.get(position);
             tvSeckillInflateCoverPrice.setText("￥" + listBean.getCover_price());
             tvSeckillInflateOriginPrice.setText("￥" + listBean.getOrigin_price());
@@ -80,7 +80,7 @@ public class SeckillItemAdapter extends BaseAdapter<HomepageBean.ResultBean.Seck
     private Likeliest likeliest;
 
     interface Likeliest{
-        public void getLikeliest(int position);
+         void getLikeliest(int position);
     }
 
     public void setLikeliest(Likeliest likeliest) {

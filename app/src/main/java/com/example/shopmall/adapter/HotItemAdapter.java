@@ -45,13 +45,13 @@ public class HotItemAdapter extends BaseAdapter<HomepageBean.ResultBean.HotInfoB
         return 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    protected class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView ivHotFigure;
         private TextView tvHotName;
         private TextView tvHotCoverPrice;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             ivHotFigure = itemView.findViewById(R.id.iv_hot_figure);
@@ -61,7 +61,7 @@ public class HotItemAdapter extends BaseAdapter<HomepageBean.ResultBean.HotInfoB
         }
 
         @SuppressLint("SetTextI18n")
-        public void setData(List<HomepageBean.ResultBean.HotInfoBean> hotInfoBeans, final int position) {
+        void setData(List<HomepageBean.ResultBean.HotInfoBean> hotInfoBeans, final int position) {
             Glide.with(mContext).load(Constant.BASE_URL_IMAGE + hotInfoBeans.get(position).getFigure()).into(ivHotFigure);
             tvHotName.setText(hotInfoBeans.get(position).getName());
             tvHotCoverPrice.setText("￥" + hotInfoBeans.get(position).getCover_price());
@@ -78,7 +78,7 @@ public class HotItemAdapter extends BaseAdapter<HomepageBean.ResultBean.HotInfoB
     private Likeliest likeliest;
 
     interface Likeliest {
-        public void getLikeliest(int position);
+         void getLikeliest(int position);
     }
 
     public void setLikeliest(Likeliest likeliest) {

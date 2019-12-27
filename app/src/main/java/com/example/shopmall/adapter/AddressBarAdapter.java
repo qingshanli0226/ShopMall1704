@@ -34,26 +34,25 @@ public class AddressBarAdapter extends BaseAdapter<AutoLoginBean.ResultBean,Addr
         return 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    protected class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvConsignee;
-        private TextView tvCellPhoneNumber;
-        private TextView tvLocationAddressBar;
-        private TextView tvDetailedAddressBar;
-        private ImageView ivModificationAddressBar;
+        private final TextView tvConsignee;
+        private final TextView tvCellPhoneNumber;
+        private final TextView tvLocationAddressBar;
+        private final ImageView ivModificationAddressBar;
 
-        public ViewHolder(@NonNull View itemView) {
+        private ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvConsignee = itemView.findViewById(R.id.tv_consignee);
             tvCellPhoneNumber = itemView.findViewById(R.id.tv_cell_phone_number);
             tvLocationAddressBar = itemView.findViewById(R.id.tv_location_address_bar);
-            tvDetailedAddressBar = itemView.findViewById(R.id.tv_detailed_address_bar);
+            TextView tvDetailedAddressBar = itemView.findViewById(R.id.tv_detailed_address_bar);
             ivModificationAddressBar = itemView.findViewById(R.id.iv_modification_address_bar);
 
         }
 
-        public void setData(List<AutoLoginBean.ResultBean> resultBeans, int position) {
+        private void setData(List<AutoLoginBean.ResultBean> resultBeans, int position) {
             tvConsignee.setText(resultBeans.get(position).getName());
             tvCellPhoneNumber.setText((String) resultBeans.get(position).getPhone());
             tvLocationAddressBar.setText((String) resultBeans.get(position).getAddress());

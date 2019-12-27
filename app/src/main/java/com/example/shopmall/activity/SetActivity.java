@@ -9,9 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.buy.bean.ShoppingCartBean;
-import com.example.buy.fragment.ShoppingCartFragment;
-import com.example.buy.presenter.ShoppingCartPresenter;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IPostBaseView;
@@ -32,7 +29,6 @@ public class SetActivity extends BaseActivity implements IPostBaseView<AddressBe
     private TitleBar tbSet;
     private Button btLogOut;
     private LogOutPresenter logOutPresenter;
-    private SharedPreferences sharedPreferences;
 
     @Override
     protected int setLayout() {
@@ -102,9 +98,11 @@ public class SetActivity extends BaseActivity implements IPostBaseView<AddressBe
         if (data.getCode().equals("200")) {
             ResultBean resultBean = new ResultBean();
             UserManager.getInstance().setActiveUser(SetActivity.this, resultBean);
-            sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
-            sharedPreferences.edit().putBoolean("isLogin",false).apply();
+
             ShoppingManager.getInstance().setMainitem(0);
+
+            SharedPreferences sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+
             SharedPreferences.Editor edit = sharedPreferences.edit();
             edit.putBoolean("isLogin", false);
             edit.apply();

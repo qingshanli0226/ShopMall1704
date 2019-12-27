@@ -13,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
@@ -61,9 +62,6 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
     private InsertPresenter addOneProduct;
     private GoodsBean goods_bean;
     private GoodsInfoAdapter goodsInfoAdapter;
-    private Drawable mine;
-    private Drawable collect;
-    private Drawable shoppingcart;
 
     private ShoppingCartView svRedpoint;
 
@@ -128,9 +126,9 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
         });
 
         String[] strs = new String[]{"联系客服", "收藏", "购物车"};
-        mine = getResources().getDrawable(R.drawable.mine);
-        collect = getResources().getDrawable(R.drawable.collect);
-        shoppingcart = getResources().getDrawable(R.drawable.shoppingcart);
+        Drawable mine1 = getResources().getDrawable(R.drawable.mine);
+        Drawable collect1 = getResources().getDrawable(R.drawable.collect);
+        Drawable shoppingcart1 = getResources().getDrawable(R.drawable.shoppingcart);
         final Drawable mine = getResources().getDrawable(R.drawable.mine);
 
         Drawable collect = null;
@@ -205,8 +203,8 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
         });
     }
 
-    int[] colors = {Color.RED,Color.BLUE,Color.BLACK,Color.GREEN,Color.YELLOW};
-    public void addAnimation(View view){
+    private int[] colors = {Color.RED,Color.BLUE,Color.BLACK,Color.GREEN,Color.YELLOW};
+    private void addAnimation(View view){
 
         int[] startLocation = new int[2];
 
@@ -232,10 +230,15 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
         textView.setX(x);
         textView.setY(startF.y-150f);
 
+
         ObjectAnimator objectAnimator = new ObjectAnimator().ofFloat(textView, "translationY", startF.y-150f,startF.y-350f);
+
+        Log.e("####",x+"/"+startF.y);
+
+
         objectAnimator.setDuration(2000);
 
-        ObjectAnimator objectAnimator2 = new ObjectAnimator().ofFloat(textView, "Alpha", 1,0);
+        ObjectAnimator objectAnimator2 = ObjectAnimator.ofFloat(textView, "Alpha", 1,0);
         objectAnimator2.setDuration(2000);
 
         AnimatorSet animatorSet = new AnimatorSet();

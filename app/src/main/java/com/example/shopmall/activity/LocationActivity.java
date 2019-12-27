@@ -10,7 +10,6 @@ import android.widget.Toast;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
 import com.example.framework.base.IPostBaseView;
-import com.example.framework.manager.ShoppingManager;
 import com.example.shopmall.R;
 import com.example.shopmall.bean.AddressBean;
 import com.example.shopmall.presenter.AddressPresenter;

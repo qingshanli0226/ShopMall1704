@@ -42,18 +42,18 @@ public class ClassifyLeftAdapter extends BaseAdapter<String,ClassifyLeftAdapter.
         return 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    protected class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tv_title_classify_left;
 
-        public ViewHolder(@NonNull View itemView) {
+        private ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tv_title_classify_left = itemView.findViewById(R.id.tv_title_classify_left);
 
         }
 
-        public void setData(List<String> data, final int position) {
+        private void setData(List<String> data, final int position) {
             tv_title_classify_left.setText(data.get(position));
 
             if (mSelect == position){
@@ -85,7 +85,7 @@ public class ClassifyLeftAdapter extends BaseAdapter<String,ClassifyLeftAdapter.
     private Likeliest likeliest;
 
     public interface Likeliest{
-        public void getLikeliest(int position);
+         void getLikeliest(int position);
     }
 
     public void setLikeliest(Likeliest likeliest) {

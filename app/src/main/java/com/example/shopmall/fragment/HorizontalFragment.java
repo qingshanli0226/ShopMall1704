@@ -15,7 +15,7 @@ import com.example.shopmall.R;
  */
 public class HorizontalFragment extends BaseFragment {
 
-    TitleBar tbHorizontal;
+    private TitleBar tbHorizontal;
 
     @Override
     protected void initData() {

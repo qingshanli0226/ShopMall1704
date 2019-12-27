@@ -63,7 +63,7 @@ public class MyReceiver extends BroadcastReceiver {
 			} else {
 				Logger.d(TAG, "[MyReceiver] Unhandled intent - " + intent.getAction());
 			}
-		} catch (Exception e){
+		} catch (Exception ignored){
 
 		}
 
@@ -73,31 +73,35 @@ public class MyReceiver extends BroadcastReceiver {
 	private static String printBundle(Bundle bundle) {
 		StringBuilder sb = new StringBuilder();
 		for (String key : bundle.keySet()) {
-			if (key.equals(JPushInterface.EXTRA_NOTIFICATION_ID)) {
-				sb.append("\nkey:" + key + ", value:" + bundle.getInt(key));
-			}else if(key.equals(JPushInterface.EXTRA_CONNECTION_CHANGE)){
-				sb.append("\nkey:" + key + ", value:" + bundle.getBoolean(key));
-			} else if (key.equals(JPushInterface.EXTRA_EXTRA)) {
-				if (TextUtils.isEmpty(bundle.getString(JPushInterface.EXTRA_EXTRA))) {
-					Logger.i(TAG, "This message has no Extra data");
-					continue;
-				}
-
-				try {
-					JSONObject json = new JSONObject(bundle.getString(JPushInterface.EXTRA_EXTRA));
-					Iterator<String> it =  json.keys();
-
-					while (it.hasNext()) {
-						String myKey = it.next();
-						sb.append("\nkey:" + key + ", value: [" +
-								myKey + " - " +json.optString(myKey) + "]");
+			switch (key) {
+				case JPushInterface.EXTRA_NOTIFICATION_ID:
+					sb.append("\nkey:").append(key).append(", value:").append(bundle.getInt(key));
+					break;
+				case JPushInterface.EXTRA_CONNECTION_CHANGE:
+					sb.append("\nkey:").append(key).append(", value:").append(bundle.getBoolean(key));
+					break;
+				case JPushInterface.EXTRA_EXTRA:
+					if (TextUtils.isEmpty(bundle.getString(JPushInterface.EXTRA_EXTRA))) {
+						Logger.i(TAG, "This message has no Extra data");
+						continue;
 					}
-				} catch (JSONException e) {
-					Logger.e(TAG, "Get message extra JSON error!");
-				}
 
-			} else {
-				sb.append("\nkey:" + key + ", value:" + bundle.get(key));
+					try {
+						JSONObject json = new JSONObject(bundle.getString(JPushInterface.EXTRA_EXTRA));
+						Iterator<String> it = json.keys();
+
+						while (it.hasNext()) {
+							String myKey = it.next();
+							sb.append("\nkey:").append(key).append(", value: [").append(myKey).append(" - ").append(json.optString(myKey)).append("]");
+						}
+					} catch (JSONException e) {
+						Logger.e(TAG, "Get message extra JSON error!");
+					}
+
+					break;
+				default:
+					sb.append("\nkey:").append(key).append(", value:").append(bundle.get(key));
+					break;
 			}
 		}
 		return sb.toString();
@@ -116,7 +120,7 @@ public class MyReceiver extends BroadcastReceiver {
 					if (extraJson.length() > 0) {
 						msgIntent.putExtra(MainActivity.KEY_EXTRAS, extras);
 					}
-				} catch (JSONException e) {
+				} catch (JSONException ignored) {
 
 				}
 

@@ -1,7 +1,7 @@
 package com.example.shopmall.bean;
 
 
-public class StepBean {
+class StepBean {
 
     private String data;//时间
     private String currentStrp;//当前步‍数

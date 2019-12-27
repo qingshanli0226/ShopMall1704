@@ -27,7 +27,7 @@ public class ScaleInTransformer extends BasePageTransformer
     }
 
 
-    public ScaleInTransformer(float minScale, ViewPager.PageTransformer pageTransformer)
+    ScaleInTransformer(float minScale, ViewPager.PageTransformer pageTransformer)
     {
         mMinScale = minScale;
         mPageTransformer = pageTransformer;

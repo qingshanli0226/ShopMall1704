@@ -30,7 +30,6 @@ import com.example.shopmall.activity.SetActivity;
 import com.example.framework.base.IPostBaseView;
 import com.example.framework.bean.ResultBean;
 import com.example.framework.manager.UserManager;
-import com.example.shopmall.presenter.AutomaticPresenter;
 import com.example.shopmall.presenter.UpImgPresenter;
 import com.example.step.Ui.IntegralActivity;
 import com.example.shopmall.activity.LoginActivity;

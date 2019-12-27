@@ -42,8 +42,7 @@ public class LogOutPresenter extends BasePresenter {
 
     @Override
     protected HashMap<String, String> getParam() {
-        HashMap<String, String> map = new HashMap<>();
-//        map.put("token", token);
-        return map;
+        //        map.put("token", token);
+        return new HashMap<>();
     }
 }

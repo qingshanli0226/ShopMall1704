@@ -59,7 +59,7 @@ public class GoodsListAdapter extends BaseAdapter<GoodsListBean.ResultBean.PageD
         private TextView tvGoodsListName;
         private TextView tvGoodsListCoverPrice;
 
-        public ViewHolder(@NonNull View itemView) {
+        private ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             ivGoodsListFigure = itemView.findViewById(R.id.iv_goods_list_figure);
@@ -69,7 +69,7 @@ public class GoodsListAdapter extends BaseAdapter<GoodsListBean.ResultBean.PageD
         }
 
         @SuppressLint("SetTextI18n")
-        public void setData(final List<GoodsListBean.ResultBean.PageDataBean> pageDataBeans, final int position) {
+        private void setData(final List<GoodsListBean.ResultBean.PageDataBean> pageDataBeans, final int position) {
             Glide.with(mContext).load(Constant.BASE_URL_IMAGE + pageDataBeans.get(position).getFigure()).into(ivGoodsListFigure);
             tvGoodsListName.setText(pageDataBeans.get(position).getName());
             tvGoodsListCoverPrice.setText("￥" + pageDataBeans.get(position).getOrigin_price());
