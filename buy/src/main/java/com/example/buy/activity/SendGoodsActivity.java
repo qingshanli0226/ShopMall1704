@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.util.Log;
 
 import com.example.buy.R;
 import com.example.buy.adapter.MyShoppingSendAdapter;
@@ -22,8 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class SendGoodsActivity extends BaseActivity implements IGetBaseView<PayGoodsBean> {
-    TitleBar tbSendgoods;
-    RecyclerView rvSendgoods;
+    private TitleBar tbSendgoods;
+    private RecyclerView rvSendgoods;
     private MyShoppingSendAdapter myShoppingSendAdapter;
     private SendPresenter presenter;
 
@@ -85,7 +84,7 @@ public class SendGoodsActivity extends BaseActivity implements IGetBaseView<PayG
     private void initRecycler() {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rvSendgoods.setLayoutManager(manager);
-        myShoppingSendAdapter = new MyShoppingSendAdapter(this);
+        myShoppingSendAdapter = new MyShoppingSendAdapter();
         rvSendgoods.setAdapter(myShoppingSendAdapter);
     }
 

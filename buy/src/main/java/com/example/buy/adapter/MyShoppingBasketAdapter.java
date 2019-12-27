@@ -26,10 +26,10 @@ public class MyShoppingBasketAdapter extends BaseAdapter<Map<String, String>, My
 
 
     private double allcount = 0;
-    private Context context;
-    private NumberAddSubView.OnNumberChangeListener listener;
+    private final Context context;
+    private final NumberAddSubView.OnNumberChangeListener listener;
 
-    private Handler handler;
+    private final Handler handler;
 
     private int checkedcount = 0;
     private int checkedcount2 = 0;
@@ -166,13 +166,13 @@ public class MyShoppingBasketAdapter extends BaseAdapter<Map<String, String>, My
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ViewHolder(@NonNull View itemView) {
+        private ViewHolder(@NonNull View itemView) {
             super(itemView);
         }
 
-        ImageView ivImg = itemView.findViewById(R.id.iv_buy_gov);
-        TextView tvTitle = itemView.findViewById(R.id.tv_buy_descgov);
-        NumberAddSubView numberAddSubView = itemView.findViewById(R.id.number_buy_addsubview);
-        CheckBox cbGov = itemView.findViewById(R.id.cb_buy_gov);
+        final ImageView ivImg = itemView.findViewById(R.id.iv_buy_gov);
+        final TextView tvTitle = itemView.findViewById(R.id.tv_buy_descgov);
+        final NumberAddSubView numberAddSubView = itemView.findViewById(R.id.number_buy_addsubview);
+        final CheckBox cbGov = itemView.findViewById(R.id.cb_buy_gov);
     }
 }

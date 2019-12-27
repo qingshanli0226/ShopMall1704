@@ -27,7 +27,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.buy.BezierTypeEvaluator;
@@ -59,28 +58,28 @@ import java.util.Map;
  * 购物车页面
  */
 public class ShoppingCartFragment extends BaseFragment implements NumberAddSubView.OnNumberChangeListener, IGetBaseView<ShoppingCartBean>, IPostBaseView, ILoadView {
-    TitleBar tbShoppingCart;
-    ImageView ivShoppingCart;
-    RecyclerView mRecyclerview;
-    RelativeLayout shoppingcartlayout;
-    TextView tvShopcartTotal;
-    TextView tvShopcarttotaltitle;
-    CheckBox checkboxAll;
-    CheckBox cbAll;
-    LinearLayout llDelete;
-    LinearLayout llCheckAll;
-    Button btnDelete;
-    MyOKButton btnCheckOut;
-    LoadingPage lpLoading;
+    private TitleBar tbShoppingCart;
+    private ImageView ivShoppingCart;
+    private RecyclerView mRecyclerview;
+    private RelativeLayout shoppingcartlayout;
+    private TextView tvShopcartTotal;
+    private TextView tvShopcarttotaltitle;
+    private CheckBox checkboxAll;
+    private CheckBox cbAll;
+    private LinearLayout llDelete;
+    private LinearLayout llCheckAll;
+    private Button btnDelete;
+    private MyOKButton btnCheckOut;
+    private LoadingPage lpLoading;
 
-    int flag = 0;
+    private int flag = 0;
 
     private MyShoppingBasketAdapter myShoppingBasketAdapter;
     //删除数据暂存
-    private List<Map<String, String>> data3 = new ArrayList<>();
+    private final List<Map<String, String>> data3 = new ArrayList<>();
     private ShoppingManager myShoppingManager;
     @SuppressLint("HandlerLeak")
-    Handler handler = new Handler() {
+    private final Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
@@ -126,7 +125,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     }
 
     //判断购物车内是否有物品
-    protected void judgeNumberisZero() {
+    private void judgeNumberisZero() {
         if (myShoppingManager.getAllNumber() == 0) {
             mRecyclerview.setVisibility(View.INVISIBLE);
             myShoppingManager.setisSetting(true);
@@ -161,7 +160,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     }
 
     //设置物品是否被选择
-    protected void setCheck(Message msg) {
+    private void setCheck(Message msg) {
         boolean isSetting = myShoppingManager.getisSetting();
         String[] s = msg.obj.toString().split(" ");
         if (!isSetting) {
@@ -218,9 +217,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             @Override
             public void RightClick() {
                 int allNumber = myShoppingManager.getAllNumber();
-                if (allNumber == 0) {
-//                    Toast.makeText(getContext(), "购物车内空空的,快去加点什么吧~~", Toast.LENGTH_SHORT).show();
-                } else {
+                if (allNumber != 0) {
                     settingChanged();
                 }
             }
@@ -233,7 +230,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     }
 
     //设置弹出框
-    protected void setAlertDialog(int allchecked) {
+    private void setAlertDialog(int allchecked) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("提醒：");
         builder.setMessage("是否要删除这" + allchecked + "项物品?");
@@ -302,9 +299,8 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             data3.clear();
             List<Map<String, String>> data4 = myShoppingManager.getData();
             for (int i = 0; i < data4.size(); i++) {
-                Map<String, String> map = data4.get(i);
-                Map<String, String> map1 = new HashMap();
-                map1.putAll(map);
+                Map<String, String> map1 = data4.get(i);
+
                 map1.put("ischecked", "false");
                 data3.add(map1);
             }
@@ -407,7 +403,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     }
 
     //设置TitleBar
-    protected void setTitleBar() {
+    private void setTitleBar() {
         tbShoppingCart.setCenterText("购物车", 18, Color.BLACK);
         tbShoppingCart.setRightText("编辑", 14, Color.BLUE);
     }
@@ -525,7 +521,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     }
 
     //更新购物车物品数量
-    public void refreshNumber(int position) {
+    private void refreshNumber(int position) {
         String token = ShoppingManager.getInstance().getToken(getContext());
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("token", token);
@@ -551,7 +547,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
     }
 
     //贝斯尔曲线方法
-    public void add(final View view) {
+    private void add(final View view) {
 
         //贝塞尔起始数据点
         int[] startPosition = new int[2];
@@ -618,8 +614,8 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
             }
         });
 
-        ObjectAnimator objectAnimatorX = new ObjectAnimator().ofFloat(ivShoppingCart, "scaleX", 0.6f, 1.0f);
-        ObjectAnimator objectAnimatorY = new ObjectAnimator().ofFloat(ivShoppingCart, "scaleY", 0.6f, 1.0f);
+        ObjectAnimator objectAnimatorX = ObjectAnimator.ofFloat(ivShoppingCart, "scaleX", 0.6f, 1.0f);
+        ObjectAnimator objectAnimatorY = ObjectAnimator.ofFloat(ivShoppingCart, "scaleY", 0.6f, 1.0f);
         objectAnimatorX.setInterpolator(new AccelerateInterpolator());
         objectAnimatorY.setInterpolator(new AccelerateInterpolator());
         AnimatorSet set = new AnimatorSet();

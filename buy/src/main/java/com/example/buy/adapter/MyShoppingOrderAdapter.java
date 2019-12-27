@@ -1,9 +1,7 @@
 package com.example.buy.adapter;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,15 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.buy.R;
 import com.example.framework.base.BaseAdapter;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class MyShoppingOrderAdapter extends BaseAdapter<Map<String, String>, MyShoppingOrderAdapter.ViewHolder> {
 
 
-    private Context context;
+    private final Context context;
 
     public MyShoppingOrderAdapter(Context context) {
         this.context = context;
@@ -62,15 +58,15 @@ public class MyShoppingOrderAdapter extends BaseAdapter<Map<String, String>, MyS
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        public ViewHolder(@NonNull View itemView) {
+        private ViewHolder(@NonNull View itemView) {
             super(itemView);
         }
 
-        ImageView ivGov = itemView.findViewById(R.id.iv_buy_gov);
-        TextView tvTitle = itemView.findViewById(R.id.tv_buy_title);
-        TextView tvPrice = itemView.findViewById(R.id.tv_buy_price);
-        TextView tvOrderitemnum = itemView.findViewById(R.id.tv_buy_orderitemnum);
-        TextView tvItemprice = itemView.findViewById(R.id.tv_buy_itemprice);
+        final ImageView ivGov = itemView.findViewById(R.id.iv_buy_gov);
+        final TextView tvTitle = itemView.findViewById(R.id.tv_buy_title);
+        final TextView tvPrice = itemView.findViewById(R.id.tv_buy_price);
+        final TextView tvOrderitemnum = itemView.findViewById(R.id.tv_buy_orderitemnum);
+        final TextView tvItemprice = itemView.findViewById(R.id.tv_buy_itemprice);
 
     }
 

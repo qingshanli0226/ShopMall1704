@@ -4,7 +4,7 @@ import android.animation.TypeEvaluator;
 import android.graphics.PointF;
 
 public class BezierTypeEvaluator implements TypeEvaluator<PointF> {
-    private PointF mControllPoint;
+    private final PointF mControllPoint;
 
     public BezierTypeEvaluator(PointF mControllPoint) {
         this.mControllPoint = mControllPoint;
