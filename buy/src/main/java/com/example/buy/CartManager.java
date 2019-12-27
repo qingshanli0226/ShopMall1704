@@ -52,7 +52,7 @@ public class CartManager {
             checks.set(position,checkGoodsData);
         }
     }
-    //清空
+    //清空选中
     public void clearCheck(){
         checks.clear();
     }

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.bumptech.glide.Glide
-import com.example.buy.activity.GoodsActiviy
+import com.example.buy.activity.GoodsActivity
 import com.example.buy.databeans.GoodsBean
 import com.example.common.utils.IntentUtil
 import com.example.dimensionleague.R
@@ -32,7 +32,7 @@ class RecommendAdapter(
         holder.tvPrice.text = "${recommendInfo?.get(position)?.cover_price}￥"
         //跳转
         views.setOnClickListener { v->
-            val intent = Intent(v.context, GoodsActiviy::class.java)
+            val intent = Intent(v.context, GoodsActivity::class.java)
             intent.putExtra(IntentUtil.GOTO_GOOD, GoodsBean(
                 recommendInfo!![position].product_id,
                 0, recommendInfo!![position].name,

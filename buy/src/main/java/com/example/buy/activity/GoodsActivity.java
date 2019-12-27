@@ -10,7 +10,6 @@ import android.graphics.Path;
 import android.graphics.drawable.ColorDrawable;
 import android.text.InputType;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +29,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.buy.R;
-import com.example.buy.databeans.CheckGoodsData;
 import com.example.buy.databeans.GetCartBean;
 import com.example.buy.databeans.GoodsBean;
 import com.example.buy.databeans.OkBean;
@@ -40,13 +38,10 @@ import com.example.common.code.Constant;
 import com.example.common.view.LogoutDialog;
 
 import com.example.common.view.MyToolBar;
-import com.example.framework.listener.OnShopCartListener;
 import com.example.framework.manager.AccountManager;
 import com.example.buy.CartManager;
 import com.example.buy.presenter.PostAddCartPresenter;
-import com.example.common.HomeBean;
 import com.example.common.utils.IntentUtil;
-import com.example.common.TypeBean;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.port.IPresenter;
 import com.example.net.AppNetConfig;
@@ -57,7 +52,7 @@ import java.util.ArrayList;
  * 商品详情页
  */
 
-public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClickListener {
+public class GoodsActivity extends BaseNetConnectActivity implements View.OnClickListener {
     private Button goPayBut;
     private Button joinCartBut;
     private ImageView collectBut;
@@ -192,7 +187,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
 
                     CartManager.getInstance().addCheck(false, goods.getProductId());
                     sendCartPresenter = new GetCartPresenter();
-                    sendCartPresenter.attachView(GoodsActiviy.this);
+                    sendCartPresenter.attachView(GoodsActivity.this);
                     sendCartPresenter.doHttpGetRequest(CART_GOODS);
                 }
                 break;
@@ -230,7 +225,7 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
             @Override
             public void onClick(View v) {
                 //对话框
-                LogoutDialog logoutDialog = new LogoutDialog(GoodsActiviy.this);
+                LogoutDialog logoutDialog = new LogoutDialog(GoodsActivity.this);
                 logoutDialog.init(R.layout.dialog_num);
                 logoutDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 logoutDialog.setCanceledOnTouchOutside(false);
@@ -293,10 +288,10 @@ public class GoodsActiviy extends BaseNetConnectActivity implements View.OnClick
                     //强制将Float转为int
                     goods.setProductNum(((int) ((float) Float.valueOf(popuNum.getText().toString()))));
                     addCartPresenter = new PostAddCartPresenter(goods);
-                    addCartPresenter.attachView(GoodsActiviy.this);
+                    addCartPresenter.attachView(GoodsActivity.this);
                     addCartPresenter.doHttpPostJSONRequest(ADD_GOODS);
                 } else {
-                    Toast.makeText(GoodsActiviy.this, getResources().getString(R.string.buyLoginFirst), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GoodsActivity.this, getResources().getString(R.string.buyLoginFirst), Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -85,7 +85,12 @@ public class TypeFragment extends BaseNetConnectFragment {
 
         });
         //TODO 点击搜索跳转到搜索页面
-        my_toolbar.getSearch_edit().setOnClickListener(v -> startActivity(SearchActivity.class, null));
+        my_toolbar.getSearch_edit().setFocusable(false);
+        my_toolbar.getSearch_edit().clearFocus();
+        my_toolbar.getSearch_edit().setOnClickListener(v -> {
+                startActivity(SearchActivity.class, null);
+                v.clearFocus();
+        });
         //TODO 点击消息跳转到消息页面
         my_toolbar.getSearch_message().setOnClickListener(v -> {
             Bundle bundle = new Bundle();

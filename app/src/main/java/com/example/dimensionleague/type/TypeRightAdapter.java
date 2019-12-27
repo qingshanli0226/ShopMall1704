@@ -3,7 +3,6 @@ package com.example.dimensionleague.type;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,7 @@ import android.view.ViewGroup;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.buy.activity.GoodsActiviy;
+import com.example.buy.activity.GoodsActivity;
 import com.example.buy.databeans.GoodsBean;
 import com.example.common.utils.IntentUtil;
 import com.example.dimensionleague.R;
@@ -90,7 +89,7 @@ class TypeRightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             .setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    Intent intent = new Intent(holder.itemView.getContext(), GoodsActiviy.class);
+                                    Intent intent = new Intent(holder.itemView.getContext(), GoodsActivity.class);
                                     intent.putExtra(IntentUtil.GOTO_GOOD, new GoodsBean(
                                             hotProductList.get(position).getProduct_id(),
                                             0,

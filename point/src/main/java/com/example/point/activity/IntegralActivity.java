@@ -43,10 +43,10 @@ public class IntegralActivity extends BaseNetConnectActivity {
     public void init() {
         super.init();
 
-        MyToolBar integral_tool = (MyToolBar) findViewById(R.id.integral_tool);
+        MyToolBar integral_tool = findViewById(R.id.integral_tool);
         integral_tool.init(Constant.OTHER_STYLE);
         integral_tool.getOther_title().setText("我的积分");
-     //   integral_tool.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
+        //   integral_tool.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
 
         //返回我的页面
         integral_tool.getOther_back().setOnClickListener(new View.OnClickListener() {
@@ -77,6 +77,7 @@ public class IntegralActivity extends BaseNetConnectActivity {
         } else {
             integral_point.setText(((count / 100)) + "");
         }
+        AccountManager.getInstance().getUser().setPoint(integral_point.getText().toString());
         iPresenter = new PointPresenter(integral_point.getText().toString());
         iPresenter.attachView(IntegralActivity.this);
         iPresenter.doHttpPostRequest();
@@ -106,14 +107,14 @@ public class IntegralActivity extends BaseNetConnectActivity {
             }
         });
     }
+
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if (iPresenter != null) {
             iPresenter.detachView();
         }
+        super.onDestroy();
     }
-
 
 
 }

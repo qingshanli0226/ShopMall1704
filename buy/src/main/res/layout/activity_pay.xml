@@ -38,7 +38,7 @@
             android:layout_alignParentRight="true"/>
         <TextView
             android:id="@+id/orderMoney"
-            android:text="原来商品所需的现金"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
@@ -52,7 +52,7 @@
             android:id="@+id/subtractIntegra"
             android:layout_toRightOf="@id/orderDe"
             android:layout_centerVertical="true"
-            android:text="需要减去的积分数"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <CheckBox
@@ -74,7 +74,7 @@
             android:textColor="@color/buyRed"
             android:textSize="@dimen/buy_two"
             android:layout_alignParentRight="true"
-            android:text="最终支付的现金"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView

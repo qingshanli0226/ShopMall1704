@@ -26,7 +26,7 @@ public class MyToolBar extends Toolbar {
     //TODO 搜索风格
     private LinearLayout search_layout;
     private ImageView scan;
-    private TextView type_search;
+    private EditText type_search;
     private ImageView search_camera;
     private ImageView search_message;
     private TextView search_text;
@@ -98,7 +98,7 @@ public class MyToolBar extends Toolbar {
      * @return
      */
     //TODO 获取搜索页面的EditText
-    public TextView getSearch_edit() {
+    public EditText getSearch_edit() {
         return type_search;
     }
 

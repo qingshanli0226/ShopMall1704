@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.common.code.Constant;
+import com.example.common.utils.IntentUtil;
 import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.bean.MessageBean;
@@ -26,7 +27,6 @@ public class MessageActivity extends BaseNetConnectActivity {
 
     private MyToolBar message_tool;
     private MessageAdpter messageAdpter;
-    private MessageBean bean;
     private List<MessageBean> messageBeans;
     @Override
     public int getLayoutId() {
@@ -72,10 +72,10 @@ public class MessageActivity extends BaseNetConnectActivity {
         message_tool.getBuy_compile().setVisibility(View.GONE);
         message_tool.getBuy_message_icon().setImageResource(R.mipmap.brush);
         message_tool.getBuy_message_title().setText("消息");
-
-        String CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis())+"";//今日日期
+        //今日日期
+        String CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis())+"";
         messageBeans= DaoManager.Companion.getInstance(this).queryMessageBean(CURRENT_DATE);
-        messageAdpter = new MessageAdpter(R.layout.message_item, this.messageBeans, this);
+        messageAdpter = new MessageAdpter(R.layout.message_item, messageBeans);
         if (this.messageBeans.size()!=0) {
             message_re.setAdapter(messageAdpter);
         }
@@ -84,16 +84,7 @@ public class MessageActivity extends BaseNetConnectActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(MessageActivity.this, MessageItemActivity.class);
-                Integer message_img = MessageActivity.this.messageBeans.get(position).getMessage_img();
-                String message_title = MessageActivity.this.messageBeans.get(position).getMessage_title();
-                String message_message = MessageActivity.this.messageBeans.get(position).getMessage_message();
-                String message_date = MessageActivity.this.messageBeans.get(position).getMessage_date();
-                Bundle bundle = new Bundle();
-                bundle.putString("message_title", message_title);
-                bundle.putString("message_message", message_message);
-                bundle.putString("message_date", message_date);
-                bundle.putInt("message_img", message_img);
-                intent.putExtras(bundle);
+                intent.putExtra(IntentUtil.MESSAGE,messageBeans.get(position));
                 startActivity(intent);
             }
         });
