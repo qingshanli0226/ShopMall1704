@@ -17,7 +17,7 @@
             android:layout_height="180dp"
             android:background="#6af">
 
-            <com.example.commen.ToolbarCustom
+            <com.example.commen.custom.ToolbarCustom
                 android:id="@+id/tc_app_fragment_mine_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

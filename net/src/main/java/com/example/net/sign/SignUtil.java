@@ -67,7 +67,6 @@ public class SignUtil {
      * @param object
      * @return
      */
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String generateJsonSign(JSONObject object) {
         TreeMap<String, String> params = getEmptyTreeMap();
         Iterator<String> keys = object.keySet().iterator();
@@ -111,7 +110,6 @@ public class SignUtil {
      * @param params
      * @return
      */
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String generateSign(Map<String, String> params) {
 
         StringBuilder str = new StringBuilder();
@@ -127,7 +125,6 @@ public class SignUtil {
         return signValue;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String stringToMD5(String string) {
         byte[] hash = new byte[0];
         try {

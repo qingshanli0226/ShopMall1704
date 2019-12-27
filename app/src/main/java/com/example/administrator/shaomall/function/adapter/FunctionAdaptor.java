@@ -44,7 +44,6 @@ public class FunctionAdaptor extends RecyclerView.Adapter<FunctionAdaptor.Functi
         holder.findForBinding.setVariable(BR.functionActivity, activity);
         holder.findForBinding.setVariable(BR.functionAdapter, this);
         holder.findForBinding.setVariable(BR.position, i);
-        holder.findForBinding.executePendingBindings(); //防止闪烁
     }
 
 

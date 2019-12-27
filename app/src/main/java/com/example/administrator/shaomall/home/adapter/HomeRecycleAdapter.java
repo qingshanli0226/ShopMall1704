@@ -72,6 +72,11 @@ public class HomeRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         this.context = context;
     }
 
+    public void upData(HomeBean.ResultBean data){
+        this.data = data;
+        notifyDataSetChanged();
+    }
+
     @SuppressLint("InflateParams")
     @NonNull
     @Override

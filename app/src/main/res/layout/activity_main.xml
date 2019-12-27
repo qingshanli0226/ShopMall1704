@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".activity.MainActivity">
-
     <FrameLayout
         android:id="@+id/main_fragmentHome"
         android:layout_width="match_parent"
@@ -20,4 +19,5 @@
         android:background="@drawable/home_bottom_parent_bg"
         app:tl_textSelectColor="@android:color/holo_red_light"
         app:tl_textUnselectColor="@color/colorGrayTitle" />
+
 </LinearLayout>

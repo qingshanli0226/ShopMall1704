@@ -1,4 +1,4 @@
-package com.example.commen;
+package com.example.commen.custom;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.commen.R;
 
 public class ToolbarCustom extends LinearLayout {
     private final Context mContext;

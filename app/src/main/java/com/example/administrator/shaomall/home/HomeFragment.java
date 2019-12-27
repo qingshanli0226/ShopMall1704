@@ -2,7 +2,6 @@ package com.example.administrator.shaomall.home;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +10,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.administrator.shaomall.R;
+import com.example.administrator.shaomall.cache.CacheManager;
 import com.example.administrator.shaomall.message.MessageActivity;
 import com.example.administrator.shaomall.search.SearchActivity;
-import com.example.administrator.shaomall.app.ShaoHuaApplication;
-import com.example.commen.Constants;
+import com.example.commen.custom.NetWorkHintCustom;
+import com.example.commen.network.NetType;
+import com.example.commen.network.NetWorkUtils;
 import com.example.commen.view.AnimationNestedScrollView;
 import com.example.administrator.shaomall.home.adapter.HomeRecycleAdapter;
 import com.example.commen.util.CommonUtil;
-import com.example.commen.ACache;
 
-import com.example.commen.util.ShopMailError;
-import com.shaomall.framework.base.BaseMVPFragment;
+import com.shaomall.framework.base.BaseFragment;
 import com.shaomall.framework.bean.HomeBean;
-import com.shaomall.framework.bean.LoginBean;
 import com.shaomall.framework.bean.MessageBean;
 import com.shaomall.framework.manager.MessageManager;
 
@@ -31,7 +29,7 @@ import java.util.List;
 
 import q.rorbin.badgeview.QBadgeView;
 
-public class HomeFragment extends BaseMVPFragment<LoginBean> implements MessageManager.MessageListener {
+public class HomeFragment extends BaseFragment implements MessageManager.MessageListener, CacheManager.IHomeReceivedListener, View.OnClickListener {
     private AnimationNestedScrollView sv_view;
     private LinearLayout ll_search;
     private TextView tv_title;
@@ -41,6 +39,8 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> implements MessageM
     private TextView message;
     private QBadgeView qBadgeView;
     private TextView searchTv;
+    private NetWorkHintCustom mTvNetHint;
+    private HomeRecycleAdapter homeRecycleAdapter;
 
     @Override
     public int setLayoutId() {
@@ -49,65 +49,103 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> implements MessageM
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
+
+        CacheManager.getInstance().registerListener(this);
         MessageManager.getInstance().registerMessageListener(this);
+
         mHomeRecycler = view.findViewById(R.id.home_recycler);
         sv_view = view.findViewById(R.id.search_sv_view);
         ll_search = view.findViewById(R.id.search_ll_search);
         tv_title = view.findViewById(R.id.search_tv_title);
         message = view.findViewById(R.id.search_tv_message);
         searchTv = view.findViewById(R.id.search_tv_search);
+        mTvNetHint = view.findViewById(R.id.tv_net_hint);
+
+        //配置Recycler
+        mHomeRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        searchLayoutParams = (ViewGroup.MarginLayoutParams) ll_search.getLayoutParams();
+        titleLayoutParams = (ViewGroup.MarginLayoutParams) tv_title.getLayoutParams();
+
+
+        //点击事件
+        message.setOnClickListener(this);   //消息界面
+        searchTv.setOnClickListener(this);  //搜索界面
+
         qBadgeView = new QBadgeView(getContext());
         qBadgeView.bindTarget(message)
                 .setBadgeTextSize(10f, true)
                 .setBadgeGravity(Gravity.START | Gravity.TOP)
                 .setBadgeBackgroundColor(Color.BLUE);
-        searchLayoutParams = (ViewGroup.MarginLayoutParams) ll_search.getLayoutParams();
-        titleLayoutParams = (ViewGroup.MarginLayoutParams) tv_title.getLayoutParams();
-
-        //加载购物车数据
-        //        ShoppingManager.getInstance().notifyUpdatedShoppingData();
-    }
-
-    @Override
-    public void onRequestHttpDataSuccess(int requestCode, String message, LoginBean data) {
-        super.onRequestHttpDataSuccess(requestCode, message, data);
-        toast(message, false);
-        Log.i("login", "onRequestHttpDataSuccess: " + message);
-    }
-
-
-    @Override
-    public void onRequestHttpDataFailed(int requestCode, ShopMailError error) {
-        super.onRequestHttpDataFailed(requestCode, error);
-        toast(error.getErrorMessage(), false);
     }
 
     protected void initData() {
         setTitle();
-        ACache aCache = ACache.get(mContext);
-        HomeBean.ResultBean data = (HomeBean.ResultBean) aCache.getAsObject(Constants.KEY_HOME_DATA);
+        HomeBean.ResultBean data = CacheManager.getInstance().getHomeBean();
 
-        if (data != null) {
-            mHomeRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-            mHomeRecycler.setAdapter(new HomeRecycleAdapter(data, getContext()));
-        }
+        //设置适配器
+        homeRecycleAdapter = new HomeRecycleAdapter(data, getContext());
+        mHomeRecycler.setAdapter(homeRecycleAdapter);
 
-        message.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              toClass(MessageActivity.class);
-            }
-        });
         List<MessageBean> messageBeans = MessageManager.getInstance().qurayNotReadData();
         int size = messageBeans.size();
         qBadgeView.setBadgeNumber(size);
 
-        searchTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toClass(SearchActivity.class);
-            }
-        });
+
+        if (NetWorkUtils.isNetWorkAvailable()) {
+            //请求网络数据
+            CacheManager.getInstance().getData();
+        } else {
+            mTvNetHint.showView();
+        }
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.search_tv_message) { //消息界面
+            toClass(MessageActivity.class);
+
+        } else if (id == R.id.search_tv_search) {//搜索界面
+            toClass(SearchActivity.class);
+
+        }
+    }
+
+    /**
+     * 网络已连接
+     *
+     * @param type
+     */
+    @Override
+    public void onConnected(NetType type) {
+//        mTvNetHint.setVisibility(View.GONE);
+        mTvNetHint.hideView();
+        if (type == NetType.WIFI) { //wifi刷新数据
+            CacheManager.getInstance().getData();//重新请求数据
+        }
+    }
+
+    /**
+     * 无网络
+     */
+    @Override
+    public void onDisConnected() {
+//        mTvNetHint.setVisibility(View.VISIBLE);
+        mTvNetHint.showView();
+    }
+
+    /**
+     * 加载数据
+     *
+     * @param homeBean
+     */
+    @Override
+    public void onHomeDataReceived(HomeBean.ResultBean homeBean) {
+        if (homeRecycleAdapter != null)
+            homeRecycleAdapter.upData(homeBean); //更新数据
+
     }
 
 
@@ -171,7 +209,8 @@ public class HomeFragment extends BaseMVPFragment<LoginBean> implements MessageM
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         MessageManager.getInstance().unRegisterMessageListener(this);
+        super.onDestroy();
     }
+
 }

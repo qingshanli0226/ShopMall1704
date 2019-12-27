@@ -1,30 +1,35 @@
 package com.shaomall.framework.base;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Toast;
 
+import com.example.commen.network.NetChangeObserver;
+import com.example.commen.network.NetType;
+import com.example.commen.network.NetWorkUtils;
+import com.example.commen.network.NetworkManager;
 import com.gyf.immersionbar.ImmersionBar;
 import com.shaomall.framework.R;
 import com.shaomall.framework.manager.ActivityInstanceManager;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements NetChangeObserver {
 
     /**
      * 获取TAG的activity名称
      */
     protected Context mContext;
     private ImmersionBar immersionBar;
+    private AlertDialog alertDialog;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -39,9 +44,30 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         //activity 管理类
         ActivityInstanceManager.addActivity(this);
+        NetworkManager.getDefault().setListener(this);
+
+        setNetWorkHint();
 
         initView();
         initData();
+    }
+
+    /**
+     * 网络提示
+     */
+    protected void setNetWorkHint() {
+        //网络状态提示
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("设置网络");
+        builder.setMessage("没有网络是否要打开网络连接？");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                NetWorkUtils.openNetSetting(BaseActivity.this);
+            }
+        });
+        builder.setNegativeButton("取消", null);
+        alertDialog = builder.create();
     }
 
     public void flagFullScreen() {
@@ -70,10 +96,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-
-    protected void animOutActivity(){
-//        finish();
-
+    protected void animOutActivity() {
         ActivityInstanceManager.removeActivity(this);
         overridePendingTransition(R.anim.anim_in, R.anim.anim_out);
     }
@@ -131,6 +154,33 @@ public abstract class BaseActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.anim_in, R.anim.anim_out);
     }
 
+    @Override
+    public void onConnected(NetType type) {
+//        if (alertDialog != null) {
+//            //取消显示
+//            if (alertDialog.isShowing()) {
+//                alertDialog.cancel();
+//            }
+//        }
+        if (type == NetType.CMWAP) {
+            toast("当前处于移动网络状态, 请注意流量使用", false);
+        }
+    }
+
+    @Override
+    public void onDisConnected() {
+//        if (alertDialog != null) {
+//            try {
+//                Thread.sleep(500);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            if (!alertDialog.isShowing()) {
+//                alertDialog.show();
+//
+//            }
+//        }
+    }
 
     /**
      * 吐司提示
@@ -155,13 +205,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-        ActivityInstanceManager.removeActivity(this);
         if (immersionBar != null) {
             ImmersionBar.destroy(this, null);
         }
-
+        NetworkManager.getDefault().unSetListener(this);
         //内存泄漏检测
         BaseApplication.getRefWatcher().watch(this);
+        ActivityInstanceManager.removeActivity(this);
+        super.onDestroy();
     }
+
 }

@@ -70,9 +70,9 @@ public class HandPortraitManager {
                     public void onNext(ResponseBody responseBody) {
                         //获取sd卡的路径
                         File file = Environment.getExternalStorageDirectory();
-                        InputStream inputStream=null;//网络连接的输入流
-                        HttpURLConnection connection=null;//向SD卡写的输出流
-                        FileOutputStream out=null;
+                        InputStream inputStream;//网络连接的输入流
+                        HttpURLConnection connection;//向SD卡写的输出流
+                        FileOutputStream out;
 
                         try {
                             URL url=new URL(responseBody.string());

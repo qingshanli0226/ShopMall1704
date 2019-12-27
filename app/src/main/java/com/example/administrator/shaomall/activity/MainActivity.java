@@ -1,13 +1,14 @@
 package com.example.administrator.shaomall.activity;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.example.administrator.shaomall.FindFragment;
 import com.example.administrator.shaomall.mine.MineFragment;
@@ -16,11 +17,8 @@ import com.example.administrator.shaomall.type.TypeFragment;
 import com.example.administrator.shaomall.home.HomeFragment;
 import com.example.administrator.shaomall.login.LoginActivity;
 
-import com.example.commen.Constants;
 import com.example.commen.network.NetChangeObserver;
-import com.example.commen.network.NetType;
 import com.example.commen.network.NetworkManager;
-import com.example.commen.util.ShopMailError;
 import com.example.shoppingcart.ShoppingCartFragment;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
@@ -42,7 +40,6 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
     private ArrayList<CustomTabEntity> tabEntities = new ArrayList<>();
     private Fragment currentFragment = new Fragment();
     private List<Fragment> fragments = new ArrayList<>();
-    private AutoLoginPresenter autoLoginPresenter;
 
 
     @Override
@@ -53,7 +50,6 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
     protected void initView() {
         ShoppingManager.getInstance().registerShoppingNumChangeListener(this);
         UserInfoManager.getInstance().registerUserInfoStatusListener(this);
-        NetworkManager.getDefault().init(getApplication()); //网络状态管理类
         NetworkManager.getDefault().setListener(this); //网络监听
 
         mMainFragmentHome = findViewById(R.id.main_fragmentHome);
@@ -63,17 +59,6 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
         fragments.add(new FindFragment());
         fragments.add(new ShoppingCartFragment());
         fragments.add(new MineFragment());
-
-
-        //        //实现自动登录
-        //        if (autoLoginPresenter == null) {
-        //            autoLoginPresenter = new AutoLoginPresenter();
-        //            autoLoginPresenter.attachView(this);
-        //        }
-        //        if (UserInfoManager.getInstance().isLogin()) {
-        //            autoLoginPresenter.doPostHttpRequest();
-        //        }
-
 
     }
 
@@ -90,18 +75,6 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
         }
 
     }
-
-    @Override
-    public void onRequestHttpDataFailed(ShopMailError error) {
-        super.onRequestHttpDataFailed(error);
-        toast(error.getErrorMessage(), false);
-    }
-
-    @Override
-    public void onRequestHttpDataSuccess(String message, Object data) {
-        UserInfoManager.getInstance().saveUserInfo((LoginBean) data);
-    }
-
 
     /**
      * 购物车数量改变
@@ -203,18 +176,6 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
         currentFragment = targetFragment;
     }
 
-    @Override
-    public void onConnected(NetType type) {
-        Log.i(Constants.TAG, "网络连上了---type=" + type);
-        toast("网络连上了=" + type, false);
-    }
-
-    @Override
-    public void onDisConnected() {
-        Log.i(Constants.TAG, "网络断开了");
-        toast("网络断开了", false);
-    }
-
 
     /**
      * 填充数据
@@ -244,6 +205,7 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
         public int getTabUnselectedIcon() {
             return unIcon;
         }
+
     }
 
     private long exitTime = 0;
@@ -252,7 +214,7 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             if ((System.currentTimeMillis() - exitTime) > 2000) {
-                Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                toast("再按一次退出程序", false);
                 exitTime = System.currentTimeMillis();
             } else {
                 finish();

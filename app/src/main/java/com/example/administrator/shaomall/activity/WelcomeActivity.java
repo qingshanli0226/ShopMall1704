@@ -1,5 +1,9 @@
 package com.example.administrator.shaomall.activity;
 
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
@@ -10,26 +14,25 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
-import android.widget.Toast;
 
-import com.example.administrator.shaomall.app.ShaoHuaApplication;
 import com.example.administrator.shaomall.cache.CacheManager;
 import com.example.administrator.shaomall.R;
+import com.example.commen.network.NetType;
 import com.shaomall.framework.bean.HomeBean;
 import com.shaomall.framework.base.BaseActivity;
+import com.shaomall.framework.manager.ActivityInstanceManager;
+import com.shaomall.framework.manager.UserInfoManager;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-public class WelcomeActivity extends BaseActivity implements CacheManager.IHomeReceivedListener {
+public class WelcomeActivity extends BaseActivity implements CacheManager.IHomeReceivedListener, View.OnClickListener {
     private android.widget.RelativeLayout mWelcomeBackground;
-    private android.widget.ImageView mIvWelcomeIcon;
-    private android.widget.TextView mTvWelcomeVersion;
     private TextView timeTv;
-    private volatile boolean isData = false;
-    private int count = 0;
     String[] permissions = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+    private Handler workHandler;
+    private Timer timer;
+    private HandlerThread welcomeHandlerThread;
 
 
     @Override
@@ -40,17 +43,15 @@ public class WelcomeActivity extends BaseActivity implements CacheManager.IHomeR
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void initView() {
-        CacheManager.getInstance().init(ShaoHuaApplication.context);
+        CacheManager.getInstance().registerListener(this);
+
         timeTv = findViewById(R.id.welcome_time_tv);
         mWelcomeBackground = findViewById(R.id.welcome_background);
-        mIvWelcomeIcon = findViewById(R.id.iv_welcome_icon);
-        mTvWelcomeVersion = findViewById(R.id.tv_welcome_version);
 
-        //        aCache = ACache.get(this);
-        ////        iHomePresenter = new HomePresenter();
-        //        iHomePresenter.attachView(this);
-        //        iHomePresenter.doGetHttpRequest(AppNetConfig.HOME_DATA_CODE);
+        timeTv.setOnClickListener(this);
 
+        TimeThread(); //倒计时
+        CacheManager.getInstance().getData(); //请求数据
 
         //动态申请权限的结果
         checkPermisson();
@@ -64,14 +65,98 @@ public class WelcomeActivity extends BaseActivity implements CacheManager.IHomeR
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void initData() {
-        CacheManager.getInstance().registerListener(this);
-        timeTv.setOnClickListener(new View.OnClickListener() {
+        welcomeHandlerThread = new HandlerThread("WelcomeHandlerThread");
+        welcomeHandlerThread.start();
+
+
+        //创建工作线程
+        workHandler = new Handler(welcomeHandlerThread.getLooper()) {
+            private boolean isNet = false;
+            private boolean isData = false;
+            private boolean isTimer = false;
+
             @Override
-            public void onClick(View v) {
-                isData = true;
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                int what = msg.what;
+
+                if (what == 101) {//网络获取到数据
+                    isData = true;
+
+                } else if (what == 102) { //倒计时
+                    isTimer = true;
+
+                } else if (what == 103) { //点击跳过
+                    toClass(MainActivity.class);
+                    ActivityInstanceManager.removeActivity(WelcomeActivity.this);//销毁欢迎页面
+
+                } else if (what == 104) { //网络出现异常
+                    isNet = true;
+                    toast("网络连接异常, 请检查", false);
+
+                }
+
+                if ((isData && isTimer) || (isTimer && isNet)) {
+                    Log.i("TAG", "handleMessage: isTimer: " + isTimer + "  isData: " + isData + " isNet: " + isNet);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            workHandler.removeCallbacksAndMessages(null);
+                            UserInfoManager.getInstance().autoLogin();
+                            toClass(MainActivity.class);
+                            ActivityInstanceManager.removeActivity(WelcomeActivity.this);//销毁欢迎页面
+                        }
+                    });
+                }
             }
-        });
-        TimeThread();
+        };
+    }
+
+    @Override
+    public void onConnected(NetType type) {
+        super.onConnected(type);
+        CacheManager.getInstance().getData(); //请求数据
+    }
+
+    @Override
+    public void onDisConnected() {
+        workHandler.sendEmptyMessage(104);
+    }
+
+    /**
+     * 数据加载结果
+     *
+     * @param homeBean
+     */
+    @Override
+    public void onHomeDataReceived(HomeBean.ResultBean homeBean) {
+        workHandler.sendEmptyMessage(101);
+    }
+
+    private int time = 3;
+
+    private void TimeThread() {
+        //使用时间戳控制跳转主页面并销毁当前页面
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                time--;
+                runOnUiThread(new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (time <= 0) {
+                            timeTv.setText("跳过");
+                            workHandler.sendEmptyMessage(102);
+                            timer.cancel();
+                        } else {
+                            String s = "" + time;
+                            timeTv.setText(s);
+                        }
+                    }
+                });
+            }
+        }, 0, 1000);
     }
 
 
@@ -91,7 +176,8 @@ public class WelcomeActivity extends BaseActivity implements CacheManager.IHomeR
 
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 100) {
             boolean flag = true;
@@ -101,9 +187,9 @@ public class WelcomeActivity extends BaseActivity implements CacheManager.IHomeR
                 }
             }
             if (flag) {
-                Toast.makeText(this, "ok ", Toast.LENGTH_SHORT).show();
+                toast("ok", false);
             } else {
-                Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
+                toast("error", false);
             }
         }
     }
@@ -113,44 +199,24 @@ public class WelcomeActivity extends BaseActivity implements CacheManager.IHomeR
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
-    private int time = 4;
-
-    private void TimeThread() {
-        //使用时间戳控制跳转主页面并销毁当前页面
-        final Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                count++;
-                time--;
-                runOnUiThread(new TimerTask() {
-                    @Override
-                    public void run() {
-                        if (time <= 0) {
-                            timeTv.setText("跳过");
-                            timeTv.setClickable(true);
-                        } else
-                            timeTv.setText("" + time);
-                    }
-                });
-                if (count >= 4 && isData) {
-                    toClass(MainActivity.class);
-                    finish();
-                    timer.cancel();
-                }
-            }
-        }, 0, 1000);
+    /**
+     * 点击事件监听
+     *
+     * @param v
+     */
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.welcome_time_tv) { //跳过按钮
+            workHandler.sendEmptyMessage(103);
+        }
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        welcomeHandlerThread.quit();
+        workHandler.removeCallbacksAndMessages(null);
         CacheManager.getInstance().unregisterListener(this);
-    }
-
-    @Override
-    public void onHomeDataReceived(HomeBean.ResultBean homeBean) {
-        isData = true;
+        super.onDestroy();
     }
 }
     

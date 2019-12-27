@@ -27,7 +27,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             searchEdit.setSelection(keyword.length());
         }
         if(v.getId()==R.id.search_button&&searchEdit.getText().toString().length()!=0){
-            Toast.makeText(SearchActivity.this, "你搜索了 "+searchEdit.getText().toString(), Toast.LENGTH_SHORT).show();
+            toast("你搜索了 "+searchEdit.getText().toString(), false);
         }
 
         if (v.getId()==R.id.search_iv_back){

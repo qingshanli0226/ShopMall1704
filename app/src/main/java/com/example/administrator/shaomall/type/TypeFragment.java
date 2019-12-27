@@ -6,7 +6,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 
 import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.message.MessageActivity;
@@ -14,6 +13,8 @@ import com.example.administrator.shaomall.search.SearchActivity;
 import com.example.administrator.shaomall.type.adapter.TypeLeftAdapter;
 import com.example.administrator.shaomall.type.adapter.TypeRightAdapter;
 import com.example.commen.Constants;
+import com.example.commen.custom.ErrorPageCustom;
+import com.example.commen.network.NetType;
 import com.example.net.AppNetConfig;
 import com.shaomall.framework.base.BaseMVPFragment;
 import com.shaomall.framework.bean.MessageBean;
@@ -31,6 +32,7 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> implements MessageMa
     private android.widget.EditText titleSearchTv;
     private QBadgeView qBadgeView;
     private android.widget.ImageView titleMessage;
+    private ErrorPageCustom mErrorPage;
 
 
     @Override
@@ -47,6 +49,8 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> implements MessageMa
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
+        mErrorPage = view.findViewById(R.id.error_type_page);
+
         mTypeLeftLv = view.findViewById(R.id.type_left_lv);
         mTypeRightRv = view.findViewById(R.id.type_right_rv);
         titleSearchTv = view.findViewById(R.id.title_search_tv);
@@ -59,7 +63,7 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> implements MessageMa
         titleMessage = view.findViewById(R.id.title_message);
         qBadgeView = new QBadgeView(getContext());
         qBadgeView.bindTarget(titleMessage)
-                .setBadgeTextSize(10f,true)
+                .setBadgeTextSize(10f, true)
                 .setBadgeGravity(Gravity.START | Gravity.TOP)
                 .setBadgeBackgroundColor(Color.BLUE);
     }
@@ -74,7 +78,18 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> implements MessageMa
                 toClass(MessageActivity.class);
             }
         });
+    }
 
+    @Override
+    public void onConnected(NetType type) {
+        initData();
+        mErrorPage.hideView();
+    }
+
+    @Override
+    public void onDisConnected() {
+        super.onDisConnected();
+        mErrorPage.showView();
     }
 
     private void initListener(final TypeLeftAdapter adapter) {
