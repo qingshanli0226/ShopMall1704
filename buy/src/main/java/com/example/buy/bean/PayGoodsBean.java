@@ -1,10 +1,13 @@
 package com.example.buy.bean;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.List;
 
 public class PayGoodsBean implements Serializable {
 
+    private static final long serialVersionUID = 1437016515111251515L;
     /**
      * code : 200
      * message : 请求成功
@@ -40,6 +43,7 @@ public class PayGoodsBean implements Serializable {
     }
 
     public static class ResultBean implements Serializable{
+        private static final long serialVersionUID = -5721944256845124406L;
         /**
          * subject : buy
          * body : 测试数据
@@ -114,6 +118,7 @@ public class PayGoodsBean implements Serializable {
             this.orderInfo = orderInfo;
         }
 
+        @NonNull
         @Override
         public String toString() {
             return "ResultBean{" +
@@ -128,6 +133,7 @@ public class PayGoodsBean implements Serializable {
         }
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "PayGoodsBean{" +

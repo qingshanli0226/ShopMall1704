@@ -1,5 +1,7 @@
 package com.example.buy.bean;
 
+import androidx.annotation.NonNull;
+
 public class PayBean {
 
     /**
@@ -61,6 +63,7 @@ public class PayBean {
             this.outTradeNo = outTradeNo;
         }
 
+        @NonNull
         @Override
         public String toString() {
             return "ResultBean{" +

@@ -9,7 +9,7 @@ import com.example.framework.base.BaseActivity;
 import com.example.framework.manager.ShoppingManager;
 
 public class ShoppingResultActivity extends BaseActivity {
-    TitleBar tbPayResult;
+    private TitleBar tbPayResult;
 
     @Override
     protected int setLayout() {

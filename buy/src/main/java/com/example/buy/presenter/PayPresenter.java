@@ -3,7 +3,6 @@ package com.example.buy.presenter;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.buy.bean.PayBean;
 import com.example.framework.base.BasePresenter;
 
 import java.lang.reflect.Type;
@@ -14,10 +13,10 @@ import okhttp3.RequestBody;
 
 public class PayPresenter extends BasePresenter {
 
-    private String Config;
-    private Type type;
-    private HashMap<String, String> head;
-    private JSONObject body;
+    private final String Config;
+    private final Type type;
+    private final HashMap<String, String> head;
+    private final JSONObject body;
 
     public PayPresenter(String config, Type type, HashMap<String, String> head, JSONObject body) {
         Config = config;
@@ -49,7 +48,6 @@ public class PayPresenter extends BasePresenter {
     @Override
     protected RequestBody getRequestBody() {
         Log.e("####", body.toString());
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), body.toString());
-        return requestBody;
+        return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), body.toString());
     }
 }

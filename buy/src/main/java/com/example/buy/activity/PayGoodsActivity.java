@@ -7,11 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 
 import com.example.buy.R;
 import com.example.buy.adapter.MyShoppingSendAdapter;
-import com.example.buy.bean.GoodsBean;
 import com.example.buy.bean.PayGoodsBean;
 import com.example.buy.presenter.SendPresenter;
 import com.example.common.TitleBar;
@@ -31,7 +29,7 @@ public class PayGoodsActivity extends BaseActivity implements IGetBaseView<PayGo
     private RecyclerView rvPaygoods;
     private SendPresenter presenter;
     private MyShoppingSendAdapter myShoppingSendAdapter;
-    private List<PayGoodsBean.ResultBean> result = new ArrayList<>();
+    private final  List<PayGoodsBean.ResultBean> result = new ArrayList<>();
 
     @Override
     protected int setLayout() {
@@ -91,7 +89,7 @@ public class PayGoodsActivity extends BaseActivity implements IGetBaseView<PayGo
     private void initRecycler() {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rvPaygoods.setLayoutManager(manager);
-        myShoppingSendAdapter = new MyShoppingSendAdapter(this);
+        myShoppingSendAdapter = new MyShoppingSendAdapter();
         rvPaygoods.setAdapter(myShoppingSendAdapter);
         myShoppingSendAdapter.setOnItemClickListener(this);
     }

@@ -1,15 +1,11 @@
 package com.example.buy.adapter;
 
-import android.content.Context;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
 import com.example.buy.R;
 import com.example.buy.bean.PayGoodsBean;
 import com.example.framework.base.BaseAdapter;
@@ -17,15 +13,8 @@ import com.example.framework.base.BaseAdapter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public class MyShoppingSendAdapter extends BaseAdapter<PayGoodsBean.ResultBean, MyShoppingSendAdapter.ViewHolder> {
-
-    private Context context;
-
-    public MyShoppingSendAdapter(Context context) {
-        this.context = context;
-    }
 
     @Override
     protected ViewHolder getViewHolder(View view, int viewType) {
@@ -64,14 +53,14 @@ public class MyShoppingSendAdapter extends BaseAdapter<PayGoodsBean.ResultBean, 
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        public ViewHolder(@NonNull View itemView) {
+        private ViewHolder(@NonNull View itemView) {
             super(itemView);
         }
 
-        TextView tvTitle = itemView.findViewById(R.id.tv_buy_title);
-        TextView tvPrice = itemView.findViewById(R.id.tv_buy_price);
-        TextView tvTime = itemView.findViewById(R.id.tv_buy_time);
-        LinearLayout llItemlayout = itemView.findViewById(R.id.ll_buy_itemlayout);
+        final TextView tvTitle = itemView.findViewById(R.id.tv_buy_title);
+        final TextView tvPrice = itemView.findViewById(R.id.tv_buy_price);
+        final TextView tvTime = itemView.findViewById(R.id.tv_buy_time);
+        final LinearLayout llItemlayout = itemView.findViewById(R.id.ll_buy_itemlayout);
     }
 
     private OnItemClickListener onItemClickListener;

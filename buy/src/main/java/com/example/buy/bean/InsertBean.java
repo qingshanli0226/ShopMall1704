@@ -1,5 +1,7 @@
 package com.example.buy.bean;
 
+import androidx.annotation.NonNull;
+
 public class InsertBean {
 
     /**
@@ -35,6 +37,8 @@ public class InsertBean {
     public void setResult(String result) {
         this.result = result;
     }
+
+    @NonNull
     @Override
     public String toString() {
         return "InsertBean{" +

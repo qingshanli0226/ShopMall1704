@@ -1,13 +1,17 @@
 package com.example.buy.bean;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 /**
  * Created by Administrator on 2016/10/9.
  * child商品类
  */
+
 public class GoodsBean implements Serializable {
 
+    private static final long serialVersionUID = -8663294365716442272L;
     private String name;
     private String cover_price;
     private String figure;
@@ -42,8 +46,7 @@ public class GoodsBean implements Serializable {
     }
 
     public String getCover_price() {
-        cover_price.substring(0, cover_price.length() - 1);
-        return cover_price;
+        return cover_price.substring(0, cover_price.length() - 1);
     }
 
     public void setCover_price(String cover_price) {
@@ -90,6 +93,7 @@ public class GoodsBean implements Serializable {
         this.number = number;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "GoodsBean{" +

@@ -8,9 +8,9 @@ import java.util.HashMap;
 
 public class ShoppingCartPresenter extends BasePresenter<ShoppingCartBean> {
 
-    private String Config;
-    private Type type;
-    private HashMap<String, String> head;
+    private final String Config;
+    private final Type type;
+    private final HashMap<String, String> head;
 
     public ShoppingCartPresenter(String config, Type type, HashMap<String, String> head) {
         Config = config;

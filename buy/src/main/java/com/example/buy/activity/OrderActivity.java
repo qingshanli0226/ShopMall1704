@@ -1,17 +1,12 @@
 package com.example.buy.activity;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,70 +29,47 @@ import com.example.framework.manager.ShoppingManager;
 import com.example.buy.adapter.MyShoppingOrderAdapter;
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseActivity;
-import com.google.gson.GsonBuilder;
-
-import org.json.JSONException;
-
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class OrderActivity extends BaseActivity implements IPostBaseView {
 
-    TitleBar tbOrder;
-    TextView tvShopcartTotal;
-    RecyclerView rvOrder;
-    MyOKButton btnPay;
-    ShoppingManager shoppingManager;
+    private TitleBar tbOrder;
+    private TextView tvShopcartTotal;
+    private RecyclerView rvOrder;
+    private MyOKButton btnPay;
+    private ShoppingManager shoppingManager;
     private List<Map<String, String>> data;
     private MyShoppingOrderAdapter myShoppingOrderAdapter;
     private PayPresenter payPresenter;
 
     @SuppressLint("HandlerLeak")
-    Handler handler = new Handler() {
+    private final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what) {
-                //todo 验证支付结果信息.
-                case 1:
-                    PayMessage payMessage = (PayMessage) (msg.obj);
-                    String outTradeNo = payMessage.getOutTradeNo();
-                    Map<String, String> result = payMessage.getResult();
+            if(msg.what==1){
+                PayMessage payMessage = (PayMessage) (msg.obj);
+                String outTradeNo = payMessage.getOutTradeNo();
+                Map<String, String> result = payMessage.getResult();
 
-                    String resultStatus = result.get("resultStatus");
-                    String resultContent = result.get("result");
-                    boolean payResultIsOk = false;
-                    if (resultStatus.equals("9000")) {
-                        payResultIsOk = true;
-                    }
-                    confirmServerPayResult(outTradeNo, resultContent, payResultIsOk);
+                String resultStatus = result.get("resultStatus");
+                String resultContent = result.get("result");
+                boolean payResultIsOk = false;
+                if (resultStatus.equals("9000")) {
+                    payResultIsOk = true;
+                }
+                confirmServerPayResult(outTradeNo, resultContent, payResultIsOk);
 
-                    break;
-                default:
-                    break;
             }
         }
     };
 
-    private double allMoney;
     private PayPresenter payPresenter2;
 
     @Override
     protected int setLayout() {
         return R.layout.activity_order;
-    }
-
-    private static void showAlert(Context ctx, String info) {
-        showAlert(ctx, info, null);
-    }
-
-    private static void showAlert(Context ctx, String info, DialogInterface.OnDismissListener onDismiss) {
-        new AlertDialog.Builder(ctx)
-                .setMessage(info)
-                .setPositiveButton(R.string.confirm, null)
-                .setOnDismissListener(onDismiss)
-                .show();
     }
 
     @Override
@@ -153,6 +125,7 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
                     payV2(resultBean);
                 }
 
+
             }
         });
     }
@@ -160,7 +133,7 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
     /**
      * 支付宝支付
      */
-    public void payV2(final PayBean.ResultBean resultBean) {
+    private void payV2(final PayBean.ResultBean resultBean) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -281,6 +254,8 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
     }
 
     private void setAllMoney() {
+        double allMoney;
+
         Intent intent = getIntent();
         int isPaying = intent.getIntExtra("isPaying", 0);
         if(isPaying==0){
@@ -325,19 +300,19 @@ public class OrderActivity extends BaseActivity implements IPostBaseView {
         private Map<String, String> result;//第一个参数，存放支付宝返回的结果信息
         private String outTradeNo;//第二个参数是服务端生成订单号
 
-        public Map<String, String> getResult() {
+        private Map<String, String> getResult() {
             return result;
         }
 
-        public void setResult(Map<String, String> result) {
+        private void setResult(Map<String, String> result) {
             this.result = result;
         }
 
-        public String getOutTradeNo() {
+        private String getOutTradeNo() {
             return outTradeNo;
         }
 
-        public void setOutTradeNo(String outTradeNo) {
+        private void setOutTradeNo(String outTradeNo) {
             this.outTradeNo = outTradeNo;
         }
     }
