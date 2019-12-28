@@ -216,8 +216,6 @@ public class RegisterActivity extends BaseActivity implements IPostBaseView<Regi
         if (integerPresenter != null){
             integerPresenter.detachView();
         }
-
         handler.removeCallbacksAndMessages(this);
-
     }
 }
