@@ -17,10 +17,12 @@ public class Tokenlnterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request(); //去拿到request请求对象
         Request newRequest;
-        Log.d("SSH:", "intercept: " + TokenUtil.getToken());
-        if (TokenUtil.getToken() != null) {
+        String token = TokenUtil.getInstance().getToken();
+        Log.d("SSH:", "intercept: " + token);
+
+        if (token != null) {
             //在请求头部添加一个keyvalue形式的参数，将token值添加进去.
-            newRequest = request.newBuilder().addHeader(AppNetConfig.TOKEN, TokenUtil.getToken()).build();
+            newRequest = request.newBuilder().addHeader(AppNetConfig.TOKEN, token).build();
             return chain.proceed(newRequest); //将生成带token的newRequest做为请求参数进行网络请求
         } else {
             //如果没有token,使用老的不带token参数的request，去进行网络请求.

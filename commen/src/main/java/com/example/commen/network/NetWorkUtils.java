@@ -1,7 +1,5 @@
 package com.example.commen.network;
 
-import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -65,13 +63,17 @@ public class NetWorkUtils {
      * 打开网络设置界面
      *
      * @param context
-     * @param requestCode 请求跳转
      */
-    public static void openNetSetting(Context context, int requestCode) {
-        Intent intent = new Intent("/");
-        ComponentName cn = new ComponentName("com.android.settings", "com.android.settings.WirelessSettings");
-        intent.setComponent(cn);
-        intent.setAction("android.intent.action.VIEW");
-        ((Activity) context).startActivityForResult(intent, requestCode);
+    public static void openNetSetting(Context context) {
+        Intent intent;
+        if (android.os.Build.VERSION.SDK_INT > 10) {  // 3.0以上
+            //跳转wifi网络界面
+            //            intent = new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS);
+            intent = new Intent(android.provider.Settings.ACTION_SETTINGS); //跳转设置界面
+        } else {
+            intent = new Intent(Intent.ACTION_MAIN);
+            intent.setClassName("com.android.phone", "com.android.phone.NetworkSetting");
+        }
+        context.startActivity(intent);
     }
 }

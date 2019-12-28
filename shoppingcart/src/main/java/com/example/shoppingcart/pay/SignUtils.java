@@ -14,10 +14,10 @@ public class SignUtils {
 
 	private static final String DEFAULT_CHARSET = "UTF-8";
 
-	private static String getAlgorithms(boolean rsa2) {
+	private static String getAlgorithms(boolean rsa2){
 		return rsa2 ? SIGN_SHA256RSA_ALGORITHMS : SIGN_ALGORITHMS;
 	}
-	
+
 	public static String sign(String content, String privateKey, boolean rsa2) {
 		try {
 			PKCS8EncodedKeySpec priPKCS8 = new PKCS8EncodedKeySpec(

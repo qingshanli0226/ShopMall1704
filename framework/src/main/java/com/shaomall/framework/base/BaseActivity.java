@@ -6,19 +6,20 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Toast;
 
+import com.example.commen.network.NetChangeObserver;
+import com.example.commen.network.NetType;
+import com.example.commen.network.NetworkManager;
 import com.gyf.immersionbar.ImmersionBar;
 import com.shaomall.framework.R;
 import com.shaomall.framework.manager.ActivityInstanceManager;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements NetChangeObserver {
 
 
     /**
@@ -26,7 +27,8 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected Context mContext;
     private ImmersionBar immersionBar;
-    protected   Bundle savedInstanceState=null;
+    protected Bundle savedInstanceState = null;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,7 +36,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         flagFullScreen();
         setContentView(setLayoutId());
         mContext = this.getApplicationContext();
-        savedInstanceState=this.savedInstanceState;
+        savedInstanceState = this.savedInstanceState;
 
 
         immersionBar = ImmersionBar.with(this);
@@ -42,6 +44,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         //activity 管理类
         ActivityInstanceManager.addActivity(this);
+        NetworkManager.getDefault().setListener(this);
+
 
         initView();
         initData();
@@ -73,10 +77,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-
-    protected void animOutActivity(){
-//        finish();
-
+    protected void animOutActivity() {
         ActivityInstanceManager.removeActivity(this);
         overridePendingTransition(R.anim.anim_in, R.anim.anim_out);
     }
@@ -86,7 +87,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      *
      * @param clazz
      */
-    protected void toClass(Class<? extends Activity> clazz) {
+    public void toClass(Class<? extends Activity> clazz) {
         toClass(clazz, null);
     }
 
@@ -96,7 +97,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param clazz
      * @param index
      */
-    protected void toClass(Class<? extends Activity> clazz, int index) {
+    public void toClass(Class<? extends Activity> clazz, int index) {
         Bundle bundle = new Bundle();
         bundle.putInt("index", index);
         toClass(clazz, bundle);
@@ -134,6 +135,17 @@ public abstract class BaseActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.anim_in, R.anim.anim_out);
     }
 
+    @Override
+    public void onConnected(NetType type) {
+        if (type == NetType.CMWAP) {
+            toast("当前处于移动网络状态, 请注意流量使用", false);
+        }
+    }
+
+    @Override
+    public void onDisConnected() {
+
+    }
 
     /**
      * 吐司提示
@@ -158,13 +170,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-        ActivityInstanceManager.removeActivity(this);
         if (immersionBar != null) {
             ImmersionBar.destroy(this, null);
         }
-
+        NetworkManager.getDefault().unSetListener(this);
         //内存泄漏检测
         BaseApplication.getRefWatcher().watch(this);
+        ActivityInstanceManager.removeActivity(this);
+        super.onDestroy();
     }
+
 }

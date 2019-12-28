@@ -1,12 +1,23 @@
-package com.example.commen;
+package com.example.administrator.shaomall.app;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
+import android.os.Message;
 import android.os.Process;
+import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.example.administrator.shaomall.activity.WelcomeActivity;
+import com.shaomall.framework.manager.ActivityInstanceManager;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -23,23 +34,9 @@ import java.util.zip.ZipOutputStream;
 
 public class ShaoHuaCrashHandler implements Thread.UncaughtExceptionHandler {
     private static final String TAG = ShaoHuaCrashHandler.class.getSimpleName();
+    @SuppressLint("StaticFieldLeak")
     private static ShaoHuaCrashHandler instance = null;
     private Context mContext;
-    private Thread.UncaughtExceptionHandler mDefaultExceptionHandler;
-
-    @Override
-    public void uncaughtException(Thread t, Throwable e) {
-        //将信息写到sd卡
-        dumpToSDCard(t, e);
-
-        //上传服务器
-        e.printStackTrace();
-        if (mDefaultExceptionHandler != null) { //交给系统的UncaughtExceptionHandler处理
-            mDefaultExceptionHandler.uncaughtException(t, e);
-        } else {
-            Process.killProcess(Process.myPid()); //主动杀死进程
-        }
-    }
 
     private ShaoHuaCrashHandler() {
     }
@@ -55,10 +52,44 @@ public class ShaoHuaCrashHandler implements Thread.UncaughtExceptionHandler {
         return instance;
     }
 
+
     public void init(Context context) {
         this.mContext = context;
-        mDefaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();//获取当前默认ExceptionHandler，保存在全局对象
         Thread.setDefaultUncaughtExceptionHandler(this);//替换默认对象为当前对象
+    }
+
+    @Override
+    public void uncaughtException(Thread t, Throwable e) {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                //消息处理
+                Toast.makeText(mContext, "抓住了一条漏网之鱼", Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
+        }).start();
+
+
+        //将信息写到sd卡
+        dumpToSDCard(t, e);
+        //上传服务器
+        e.printStackTrace();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+
+        Intent intent = new Intent(mContext, WelcomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(intent);
+
+        ActivityInstanceManager.finishAllActivity();
+        System.exit(1); //杀死进程
+        Process.killProcess(Process.myPid()); //主动杀死进程
     }
 
 
@@ -80,7 +111,7 @@ public class ShaoHuaCrashHandler implements Thread.UncaughtExceptionHandler {
             file.mkdirs();
         }
 
-        String time = new SimpleDateFormat("yyyy-mm-dd-HH:mm:ss", Locale.CHINA).format(new Date(System.currentTimeMillis()));
+        String time = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss", Locale.CHINA).format(new Date(System.currentTimeMillis()));
         Log.i(TAG, mLodPath + time + ".trace");
         File logFile = new File(mLodPath, time + ".trace");
 
@@ -105,7 +136,7 @@ public class ShaoHuaCrashHandler implements Thread.UncaughtExceptionHandler {
     private void dumpPhoneInfo(PrintWriter pw) {
         //应用的版本名称和版本号
         PackageManager pm = mContext.getPackageManager();
-        PackageInfo pi = null;
+        PackageInfo pi;
         try {
             pi = pm.getPackageInfo(mContext.getPackageName(), PackageManager.GET_ACTIVITIES);
             if (pi != null) {

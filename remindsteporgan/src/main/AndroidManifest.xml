@@ -29,20 +29,20 @@
 
         <activity android:name=".HistoryActivity" />
 
-        <service android:name=".Util.FrontService" />
+        <service android:name=".util.FrontService" />
         <service
-            android:name=".Util.LocalService"
+            android:name=".util.LocalService"
             android:enabled="true"
             android:exported="true"></service>
         <service
-            android:name=".Util.RemoteService"
+            android:name=".util.RemoteService"
             android:enabled="true"
             android:exported="true"
             android:process="remote.service.seven_four"> <!-- 代表在另一个进程启动该组件service -->
 
         </service>
         <service
-            android:name=".Util.LiveJobService"
+            android:name=".util.LiveJobService"
             android:enabled="true"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE"> <!-- >添加使用的权限 -->

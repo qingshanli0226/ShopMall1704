@@ -8,21 +8,25 @@
     android:orientation="vertical"
     tools:context=".ShoppingCartFragment">
 
+
+    <com.example.commen.custom.ToolbarCustom
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="#E24146"
+        app:isShowLeftImageView="false"
+        app:isShowRightImageView="false"
+        app:isShowSettingTextView="false"
+        app:title="@string/shoopingcartTextViewText"
+        app:titleColor="@color/white" />
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/top_bar"
         android:orientation="vertical">
-
-        <com.example.commen.ToolbarCustom
-            android:id="@+id/top_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#E24146"
-            app:isShowLeftImageView="false"
-            app:isShowRightImageView="false"
-            app:isShowSettingTextView="false"
-            app:title="@string/shoopingcartTextViewText"
-            app:titleColor="@color/white" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_choppingCart"
@@ -48,27 +52,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/shoopingcartCheckBoxMarginLeft"
                     android:layout_marginLeft="@dimen/shoopingcartCheckBoxMarginLeft"
+                    android:layout_marginEnd="@dimen/shoopingcartCheckBoxMarginRight"
                     android:layout_marginRight="@dimen/shoopingcartCheckBoxMarginRight"
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:gravity="center"
                     android:minHeight="@dimen/shoopingcartCheckBoxminHeight"
+                    android:paddingStart="@dimen/shoopingcartCheckBoxpadingLeft"
                     android:paddingLeft="@dimen/shoopingcartCheckBoxpadingLeft"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:visibility="visible"
-                    android:paddingStart="@dimen/shoopingcartCheckBoxpadingLeft"
-                    tools:ignore="RtlSymmetry"
-                    android:layout_marginStart="@dimen/shoopingcartCheckBoxMarginLeft"
-                    android:layout_marginEnd="@dimen/shoopingcartCheckBoxMarginRight" />
+                    tools:ignore="RtlSymmetry" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/shoopingcartsumMarginLeft"
                     android:layout_marginLeft="@dimen/shoopingcartsumMarginLeft"
                     android:text="@string/shoopingcartsumText"
                     android:textSize="@dimen/shoopingcartsumTextSize"
-                    android:textStyle="bold"
-                    android:layout_marginStart="@dimen/shoopingcartsumMarginLeft" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_total_price"
@@ -87,10 +91,10 @@
                 android:layout_weight="1"
                 android:background="@color/orange"
                 android:clickable="true"
+                android:focusable="true"
                 android:gravity="center"
                 android:text="@string/shoopingcartdeleteText"
-                android:textColor="#FAFAFA"
-                android:focusable="true" />
+                android:textColor="#FAFAFA" />
 
             <TextView
                 android:id="@+id/tv_go_to_pay"
@@ -99,12 +103,17 @@
                 android:layout_weight="1"
                 android:background="#E24146"
                 android:clickable="true"
+                android:focusable="true"
                 android:gravity="center"
                 android:text="@string/shoopingcartPayText"
-                android:textColor="#FAFAFA"
-                android:focusable="true" />
+                android:textColor="#FAFAFA" />
         </LinearLayout>
-
     </LinearLayout>
+
+    <com.example.commen.custom.ErrorPageCustom
+        android:id="@+id/ep_shopping_error_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top_bar"/>
 
 </RelativeLayout>

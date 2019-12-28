@@ -23,9 +23,8 @@ import com.example.administrator.shaomall.R
 import com.example.administrator.shaomall.activity.MainActivity
 import com.example.administrator.shaomall.goodsinfo.bean.GoodsInfoBean
 import com.example.administrator.shaomall.login.LoginActivity
-
-import com.example.commen.ToolbarCustom
 import com.example.commen.WebViewConfig
+import com.example.commen.custom.ToolbarCustom
 
 import com.example.commen.util.PageUtil
 
@@ -65,7 +64,7 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
 
 
         pageUtil = PageUtil(this)
-        pageUtil.review =  goodsInfoRelativeLayout
+        pageUtil.review = goodsInfoRelativeLayout
 
         //点击关闭
         mTc_top.setLeftBackImageViewOnClickListener {
@@ -249,7 +248,7 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
 
         val p2 = PointF()
         p2.x = endLoc[0].toFloat() + mTvFGoodInfoCart.width.toFloat() / 2
-        p2.y = endLoc[1].toFloat() - mTvFGoodInfoCart.height.toFloat() / 2 + ToolbarCustom.getStatusBarHeight(this)
+        p2.y = endLoc[1].toFloat() - mTvFGoodInfoCart.height.toFloat() / 2 + statusBarHeight //状态栏高度
 
         val goInAnim = ObjectAnimator()
         goInAnim.setFloatValues(0f, 1f)

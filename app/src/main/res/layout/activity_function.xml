@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".function.FunctionActivity">
 
-    <com.example.commen.ToolbarCustom
+    <com.example.commen.custom.ToolbarCustom
         android:id="@+id/mToolBarCustom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

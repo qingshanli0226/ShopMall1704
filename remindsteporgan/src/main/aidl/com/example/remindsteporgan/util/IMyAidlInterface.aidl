@@ -1,5 +1,5 @@
 // IMyAidlInterface.aidl
-package com.example.remindsteporgan.Util;
+package util;
 
 // Declare any non-default types here with import statements
 

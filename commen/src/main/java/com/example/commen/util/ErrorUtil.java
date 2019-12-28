@@ -2,6 +2,7 @@ package com.example.commen.util;
 
 import org.json.JSONException;
 
+import java.net.ConnectException;
 import java.net.HttpRetryException;
 import java.net.SocketTimeoutException;
 
@@ -17,7 +18,11 @@ public class ErrorUtil {
         } else if (e instanceof JSONException) { //JSON异常
 
             return ShopMailError.JSON_ERROR;
+        } else if (e instanceof ConnectException) {
+
+            return ShopMailError.NETWORK_ERROR;
         } else { //其它错误
+            //            Log.i("TAG", "handlerError: " + e.getMessage() + ": " + e.toString());
             return ShopMailError.OTHER_ERROR;
 
         }
@@ -26,6 +31,7 @@ public class ErrorUtil {
 
     /**
      * 数据处理
+     *
      * @param code
      * @return
      */

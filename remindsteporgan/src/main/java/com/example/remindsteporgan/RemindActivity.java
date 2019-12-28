@@ -26,10 +26,10 @@ import com.example.remindsteporgan.diy.MyPassometView;
 import com.example.remindsteporgan.util.ScreenBroadcastListener;
 import com.example.remindsteporgan.util.ScreenManager;
 
-import com.example.remindsteporgan.Util.FrontService;
-import com.example.remindsteporgan.Util.LiveJobService;
-import com.example.remindsteporgan.Util.LocalService;
-import com.example.remindsteporgan.Util.RemoteService;
+import com.example.remindsteporgan.util.FrontService;
+import com.example.remindsteporgan.util.LiveJobService;
+import com.example.remindsteporgan.util.LocalService;
+import com.example.remindsteporgan.util.RemoteService;
 
 import com.example.view.demogreendao.BeanDao;
 import com.example.view.demogreendao.DaoMaster;
@@ -87,7 +87,7 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
         sp = getSharedPreferences("ssh", 0);
         remindMap = (Button) findViewById(R.id.remindMap);
 
-        Intent intent=getIntent();
+        Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         username = extras.getString("username");
 
@@ -99,7 +99,7 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
         beanDao = dao.getBeanDao();
 
         //TODO 加载动画
-        pageUtil=new PageUtil(this);
+        pageUtil = new PageUtil(this);
 
 
         //TODO 传感器
@@ -171,7 +171,7 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
                     if (daychange == day) {
                         //TODO 还是同一天
                         //TODO step代表和上一次运行相差了多少步
-                       // long step = sp.getLong("step", 0);
+                        // long step = sp.getLong("step", 0);
                         //TODO 这个是算出程序没有运行期间走了多少步
                         //plus=X-step;
                     } else {
@@ -256,6 +256,7 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
             public void onScreenOn() {
                 screenManager.finishActivity();
             }
+
             @Override
             public void onScreenOff() {
                 screenManager.startActivity();

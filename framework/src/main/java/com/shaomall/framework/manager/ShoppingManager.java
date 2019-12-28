@@ -1,11 +1,11 @@
 package com.shaomall.framework.manager;
 
-import android.content.BroadcastReceiver;
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.commen.network.NetWorkUtils;
 import com.example.commen.util.ErrorUtil;
 import com.example.commen.util.ShopMailError;
 import com.example.net.AppNetConfig;
@@ -35,6 +35,7 @@ import okhttp3.ResponseBody;
 
 public class ShoppingManager {
     private Context mContext;
+    @SuppressLint("StaticFieldLeak")
     private static ShoppingManager instance;
     private List<ShoppingCartBean> result = new ArrayList<>(); //购物车数据集合
     private LinkedList<ShoppingNumChangeListener> shoppingNumChangeListeners = new LinkedList<>();//购物车商品数量改变监听
@@ -58,7 +59,6 @@ public class ShoppingManager {
 
     public void init(final Context context) {
         this.mContext = context;
-        getData();
     }
 
     /**
@@ -190,6 +190,16 @@ public class ShoppingManager {
      * 获取购物车数据
      */
     public void getData() {
+        //判断网络状态
+        if (!NetWorkUtils.isNetWorkAvailable()) {
+            return;
+        }
+
+        //是否登录
+        if (!UserInfoManager.getInstance().isLogin()) {
+            return;
+        }
+
         //进行网络请求
         RetrofitCreator.getNetApiService().getData(new HashMap<String, String>(), AppNetConfig.GET_SHORTCART_PRODUCTS_URL, new HashMap<String, String>())
                 .subscribeOn(Schedulers.io())
@@ -215,7 +225,7 @@ public class ShoppingManager {
                                 notifyUpdatedShoppingData(); //通知数量改变
                                 sendShoppingNumChangeListener();//通知商品改变
                             } else {
-                                Toast.makeText(mContext, ErrorUtil.dataProcessing(code).getErrorMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "shopping: " + ErrorUtil.dataProcessing(code).getErrorMessage(), Toast.LENGTH_SHORT).show();
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -297,25 +307,31 @@ public class ShoppingManager {
     }
 
 
-//    //接收广播
-//    public BroadcastReceiver mReceiverShoppingManagerState = new BroadcastReceiver() {
-//
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//
-//        }
-//    };
+    //    //接收广播
+    //    public BroadcastReceiver mReceiverShoppingManagerState = new BroadcastReceiver() {
+    //
+    //        @Override
+    //        public void onReceive(Context context, Intent intent) {
+    //
+    //        }
+    //    };
 
 
     //设置监听
     public void registerShoppingNumChangeListener(ShoppingNumChangeListener listener) {
-        if (!shoppingNumChangeListeners.contains(listener)) {
-            shoppingNumChangeListeners.add(listener);
+        synchronized (ShoppingManager.class) {
+            if (!shoppingNumChangeListeners.contains(listener)) {
+                shoppingNumChangeListeners.add(listener);
+            }
         }
+
     }
 
     public void unRegisterShoppingNumChangeListener(ShoppingNumChangeListener listener) {
-        shoppingNumChangeListeners.remove(listener);
+        synchronized (ShoppingManager.class) {
+            shoppingNumChangeListeners.remove(listener);
+        }
+
     }
 
     //商品数量发生改变监听

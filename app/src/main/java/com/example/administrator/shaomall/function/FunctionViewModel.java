@@ -69,7 +69,7 @@ public class FunctionViewModel extends ViewModel {
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         super.onNext(responseBody);
-                        //判断mDisposable.isDisposed()如果解除了则不需要处理
+                        //判断mDisposable.isDisposed()如果解除了则不需要处理 默认为true
                         if (!mDisposable.isDisposed()) {
                             try {
                                 String string = responseBody.string();

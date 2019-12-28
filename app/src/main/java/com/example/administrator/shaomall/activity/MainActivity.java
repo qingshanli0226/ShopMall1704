@@ -4,27 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.example.administrator.shaomall.FindFragment;
-import com.example.administrator.shaomall.mine.MineFragment;
 import com.example.administrator.shaomall.R;
-import com.example.administrator.shaomall.type.TypeFragment;
+
 import com.example.administrator.shaomall.home.HomeFragment;
 import com.example.administrator.shaomall.login.LoginActivity;
-
-import com.example.commen.Constants;
-import com.example.commen.network.NetChangeObserver;
-import com.example.commen.network.NetType;
+import com.example.administrator.shaomall.mine.MineFragment;
+import com.example.administrator.shaomall.type.TypeFragment;
 import com.example.commen.network.NetworkManager;
-import com.example.commen.util.PageUtil;
-import com.example.commen.util.ShopMailError;
 import com.example.shoppingcart.ShoppingCartFragment;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
@@ -37,7 +27,7 @@ import com.shaomall.framework.manager.UserInfoManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseMVPActivity<Object> implements ShoppingManager.ShoppingNumChangeListener, UserInfoManager.UserInfoStatusListener, NetChangeObserver {
+public class MainActivity extends BaseMVPActivity<Object> implements ShoppingManager.ShoppingNumChangeListener, UserInfoManager.UserInfoStatusListener {
     private int[] icon = {R.drawable.main_home, R.drawable.main_type, R.drawable.cry, R.drawable.main_cart, R.drawable.main_user};
     private int[] unIcon = {R.drawable.main_home_press, R.drawable.main_type_press, R.drawable.smile, R.drawable.main_cart_press, R.drawable.main_user_press};
     private String[] titles = {"首页", "分类", "发现", "购物车", "我的"};
@@ -46,10 +36,6 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
     private ArrayList<CustomTabEntity> tabEntities = new ArrayList<>();
     private Fragment currentFragment = new Fragment();
     private List<Fragment> fragments = new ArrayList<>();
-    private AutoLoginPresenter autoLoginPresenter;
-
-    private RelativeLayout mainRelativeLayout;
-    PageUtil pageUtil;
 
     @Override
     public int setLayoutId() {
@@ -59,10 +45,7 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
     protected void initView() {
         ShoppingManager.getInstance().registerShoppingNumChangeListener(this);
         UserInfoManager.getInstance().registerUserInfoStatusListener(this);
-        NetworkManager.getDefault().init(getApplication()); //网络状态管理类
-        NetworkManager.getDefault().setListener(this); //网络监听
 
-        mainRelativeLayout = (RelativeLayout) findViewById(R.id.mainRelativeLayout);
         mMainFragmentHome = findViewById(R.id.main_fragmentHome);
         mMainTab = findViewById(R.id.main_tab);
         fragments.add(new HomeFragment());
@@ -70,26 +53,8 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
         fragments.add(new FindFragment());
         fragments.add(new ShoppingCartFragment());
         fragments.add(new MineFragment());
-        pageUtil=new PageUtil(this);
-        pageUtil.setReview(mainRelativeLayout);
 
     }
-
-    @Override
-    public void loadingPage(int requestCode, int code) {
-        if (code==200){
-            Log.d("SSH",code+"");
-            Toast.makeText(this, "200", Toast.LENGTH_SHORT).show();
-            //homeepageReLayout.addView(inflate,params);
-            pageUtil.showLoad();
-        }else if (code==300){
-            Toast.makeText(this, "300", Toast.LENGTH_SHORT).show();
-            //homeepageReLayout.removeView(inflate);
-            pageUtil.hideload();
-        }
-    }
-
-
 
     @Override
     protected void initData() {
@@ -104,18 +69,6 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
         }
 
     }
-
-    @Override
-    public void onRequestHttpDataFailed(ShopMailError error) {
-        super.onRequestHttpDataFailed(error);
-        toast(error.getErrorMessage(), false);
-    }
-
-    @Override
-    public void onRequestHttpDataSuccess(String message, Object data) {
-        UserInfoManager.getInstance().saveUserInfo((LoginBean) data);
-    }
-
 
     /**
      * 购物车数量改变
@@ -217,18 +170,6 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
         currentFragment = targetFragment;
     }
 
-    @Override
-    public void onConnected(NetType type) {
-        Log.i(Constants.TAG, "网络连上了---type=" + type);
-        toast("网络连上了=" + type, false);
-    }
-
-    @Override
-    public void onDisConnected() {
-        Log.i(Constants.TAG, "网络断开了");
-        toast("网络断开了", false);
-    }
-
 
     /**
      * 填充数据
@@ -258,6 +199,7 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
         public int getTabUnselectedIcon() {
             return unIcon;
         }
+
     }
 
     private long exitTime = 0;
@@ -266,7 +208,7 @@ public class MainActivity extends BaseMVPActivity<Object> implements ShoppingMan
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             if ((System.currentTimeMillis() - exitTime) > 2000) {
-                Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                toast("再按一次退出程序", false);
                 exitTime = System.currentTimeMillis();
             } else {
                 finish();

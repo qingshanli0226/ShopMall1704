@@ -121,7 +121,7 @@ public class SignInActivity extends BaseMVPActivity<String> {
                     diybutton.invalidate();
                     //判断用户名和密码逻辑
                     if (signInUser.getText().toString().equals("") || signInPass.getText().toString().equals("")) {
-                        Toast.makeText(mContext, "用户名和密码或密码不可为空", Toast.LENGTH_SHORT).show();
+                        toast("用户名和密码或密码不可为空", false);
                     } else {
                         String username = signInUser.getText().toString();
                         String password = signInPass.getText().toString();
@@ -138,7 +138,7 @@ public class SignInActivity extends BaseMVPActivity<String> {
     @Override
     public void onRequestHttpDataSuccess(int requestCode, String message, String data) {
         //注册成功
-        Toast.makeText(mContext, "" + message, Toast.LENGTH_SHORT).show();
+        toast(message, false);
         ActivityInstanceManager.removeActivity(this);
     }
 
@@ -146,7 +146,7 @@ public class SignInActivity extends BaseMVPActivity<String> {
     @Override
     public void onRequestHttpDataFailed(int requestCode, ShopMailError error) {
         //注册失败
-        Toast.makeText(mContext, "用户已存在, 注册失败", Toast.LENGTH_SHORT).show();
+        toast("用户已存在, 注册失败", false);
     }
 
     @Override

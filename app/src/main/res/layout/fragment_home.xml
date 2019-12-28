@@ -29,35 +29,34 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
                 android:drawableTop="@drawable/user_channel_icon_feedback"
                 android:gravity="center"
                 android:text="@string/message"
-                android:textColor="@color/colorWhite"
-                android:layout_marginEnd="20dp" />
+                android:textColor="@color/colorWhite" />
 
             <TextView
                 android:id="@+id/search_tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="11.5dp"
+                android:drawableStart="@drawable/app_icon"
                 android:drawableLeft="@drawable/app_icon"
                 android:gravity="center"
                 android:text="@string/app_name"
                 android:textColor="#fff"
                 android:textSize="17sp"
-                android:textStyle="bold"
-                android:layout_marginStart="20dp"
-                android:drawableStart="@drawable/app_icon" />
-
-
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/search_ll_search"
             android:layout_width="match_parent"
             android:layout_height="35dp"
+            android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="49dp"
@@ -66,41 +65,41 @@
             android:background="@drawable/home_seach_square"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:visibility="visible"
-            android:layout_alignParentStart="true">
+            android:visibility="visible">
 
             <ImageView
                 style="@style/LittleImage"
+                android:layout_marginStart="10dp"
                 android:layout_marginLeft="10dp"
                 android:src="@drawable/icon_search_white"
-                tools:ignore="ContentDescription"
-                android:layout_marginStart="10dp" />
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/search_tv_search"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:cursorVisible="false"
                 android:gravity="center_vertical"
                 android:hint="@string/search_hint"
                 android:textSize="15sp"
-                tools:ignore="TextViewEdits"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="10dp" />
+                tools:ignore="TextViewEdits" />
 
             <ImageView
                 style="@style/LittleImage"
-                android:src="@drawable/camera_icon"
-                tools:ignore="ContentDescription"
                 android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="10dp"
+                android:src="@drawable/camera_icon"
+                tools:ignore="ContentDescription" />
 
         </LinearLayout>
 
     </RelativeLayout>
+
 
     <com.example.commen.view.AnimationNestedScrollView
         android:id="@+id/search_sv_view"
@@ -122,4 +121,12 @@
 
         </LinearLayout>
     </com.example.commen.view.AnimationNestedScrollView>
+
+    <com.example.commen.custom.NetWorkHintCustom
+        android:id="@+id/tv_net_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_rl_top"
+        android:layout_marginTop="-3dp" />
+
 </RelativeLayout>

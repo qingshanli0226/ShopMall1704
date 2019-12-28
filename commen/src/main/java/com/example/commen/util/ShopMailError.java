@@ -4,6 +4,7 @@ public enum ShopMailError {
     //网络相关错误
     HTTP_ERROR(1001, "网络错误"),
     HTTP_SOCKET_TIME_OUT_ERROR(1002, "网络连接超时错误"),
+    NETWORK_ERROR(1003, "当前无网络连接, 请检查"),
 
     //解析相关错误, 从2000开始
     JSON_ERROR(2001, "数据格式不对"),

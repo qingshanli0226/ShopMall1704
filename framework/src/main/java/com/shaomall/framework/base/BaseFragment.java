@@ -3,21 +3,23 @@ package com.shaomall.framework.base;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.commen.network.NetChangeObserver;
+import com.example.commen.network.NetType;
+import com.example.commen.network.NetWorkUtils;
+import com.example.commen.network.NetworkManager;
 import com.shaomall.framework.R;
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements NetChangeObserver {
     protected Context mContext;
 
     /**
@@ -34,6 +36,7 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        NetworkManager.getDefault().setListener(this);
         return inflater.inflate(setLayoutId(), container, false);
     }
 
@@ -90,8 +93,9 @@ public abstract class BaseFragment extends Fragment {
         if (bundle != null && bundle.size() != 0) {
             intent.putExtras(bundle);
         }
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.anim_in, R.anim.anim_out);
     }
 
 
@@ -107,7 +111,17 @@ public abstract class BaseFragment extends Fragment {
         if (bundle != null && bundle.size() != 0) {
             intent.putExtras(bundle);
         }
-        getActivity().overridePendingTransition(R.anim.anim_in,R.anim.anim_out);
+        getActivity().startActivityForResult(intent, requestCode);
+        getActivity().overridePendingTransition(R.anim.anim_in, R.anim.anim_out);
+    }
+
+    @Override
+    public void onConnected(NetType type) {
+
+    }
+
+    @Override
+    public void onDisConnected() {
 
     }
 
@@ -133,13 +147,11 @@ public abstract class BaseFragment extends Fragment {
     }
 
 
-
-
     @Override
     public void onDestroy() {
-        super.onDestroy();
-
+        NetworkManager.getDefault().unSetListener(this);
         //内存泄漏检测
         BaseApplication.getRefWatcher().watch(this);
+        super.onDestroy();
     }
 }

@@ -6,7 +6,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.activity.MainActivity;
@@ -43,7 +42,6 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
     }
 
 
-
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void initData() {
@@ -75,7 +73,7 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
                     diybutton.invalidate();
                     //判断用户名和密码逻辑
                     if (loginUser.getText().toString().equals("") || loginPass.getText().toString().equals("")) {
-                        Toast.makeText(mContext, "用户名和密码或密码不可为空", Toast.LENGTH_SHORT).show();
+                        toast("用户名和密码或密码不可为空", false);
                     } else {
 
                         String username = loginUser.getText().toString();
@@ -96,7 +94,7 @@ public class LoginActivity extends BaseMVPActivity<LoginBean> {
     @Override
     public void onRequestHttpDataSuccess(int requestCode, String message, LoginBean data) {
         //登录成功
-        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+        toast(message, false);
         UserInfoManager.getInstance().saveUserInfo(data);
 
         setNewActivity();

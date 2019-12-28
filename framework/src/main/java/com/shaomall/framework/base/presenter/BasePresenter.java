@@ -1,8 +1,12 @@
 package com.shaomall.framework.base.presenter;
 
+import android.os.Build;
 import android.util.Log;
+import android.widget.MediaController;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.commen.network.NetWorkUtils;
 import com.example.commen.util.ErrorUtil;
 import com.example.commen.LoadingPageConfig;
 import com.example.commen.util.ShopMailError;
@@ -153,7 +157,10 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
             }
 
             //根据getParams()返回的参数, 生成对应的签名
-            String sign = SignUtil.generateSign(emptyTreeMap);
+            String sign = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                sign = SignUtil.generateSign(emptyTreeMap);
+            }
             params.put("sign", sign);
             //进行加密, 利用TreeMap
             Map<String, String> encryptParamMap = SignUtil.encryptParamsByBase64(params);
@@ -180,7 +187,9 @@ public abstract class BasePresenter<T> implements IBasePresenter<T> {
         RequestBody requestBody = null;
         if (jsonParam != null) {
             //TODO 取消加密
-            jsonParam.put("sign", SignUtil.generateJsonSign(jsonParam));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                jsonParam.put("sign", SignUtil.generateJsonSign(jsonParam));
+            }
             SignUtil.encryptJsonParamsByBase64(jsonParam);
             requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonParam.toString());
         }

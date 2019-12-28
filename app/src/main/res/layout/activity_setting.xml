@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".activity.SettingActivity">
 
-    <com.example.commen.ToolbarCustom
+    <com.example.commen.custom.ToolbarCustom
         android:id="@+id/tc_app_activity_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

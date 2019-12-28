@@ -8,13 +8,13 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.example.administrator.shaomall.R;
+import com.example.commen.custom.ToolbarCustom;
 import com.example.net.MVPObserver;
 import com.example.net.RetrofitCreator;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -53,7 +53,7 @@ public class SettingActivity extends BaseActivity {
     private LinearLayout settingLinearPhoto;
     private List<String> arr = new ArrayList<String>();
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
-    private com.example.commen.ToolbarCustom mTcAppActivitySetting;
+    private ToolbarCustom mTcAppActivitySetting;
 
     @Override
     protected int setLayoutId() {
@@ -159,7 +159,7 @@ public class SettingActivity extends BaseActivity {
                 int dayOfMonth = settingDatePicker.getDayOfMonth();
 
 
-                Toast.makeText(mContext, year + "  " + month + "  " + "  " + dayOfMonth, Toast.LENGTH_SHORT).show();
+                toast(year + "  " + month + "  " + "  " + dayOfMonth, false);
             }
         });
 
@@ -167,7 +167,7 @@ public class SettingActivity extends BaseActivity {
 
     private void upLode(File file) {
         if (!file.exists()) {
-            Toast.makeText(mContext, "上传的文件不存在", Toast.LENGTH_SHORT).show();
+            toast("上传的文件不存在", false);
         }
         //创建上传文件的请求体
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);

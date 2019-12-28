@@ -6,10 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
-
 
 import com.example.administrator.shaomall.R;
 import com.example.administrator.shaomall.message.MessageActivity;
@@ -19,6 +16,8 @@ import com.example.administrator.shaomall.type.adapter.TypeRightAdapter;
 import com.example.commen.Constants;
 import com.example.commen.LoadingPageConfig;
 import com.example.commen.util.PageUtil;
+import com.example.commen.custom.ErrorPageCustom;
+import com.example.commen.network.NetType;
 import com.example.net.AppNetConfig;
 import com.shaomall.framework.base.BaseMVPFragment;
 import com.shaomall.framework.bean.MessageBean;
@@ -36,8 +35,11 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> implements MessageMa
     private android.widget.EditText titleSearchTv;
     private QBadgeView qBadgeView;
     private android.widget.ImageView titleMessage;
-    PageUtil pageUtil;
+
+    private PageUtil pageUtil;
     private RelativeLayout typeRelaTiveLayout;
+
+    private ErrorPageCustom mErrorPage;
 
 
     @Override
@@ -51,9 +53,10 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> implements MessageMa
     private TypeLeftAdapter typeLeftAdapter;
     private boolean isFirst = true;
 
-
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
+        mErrorPage = view.findViewById(R.id.error_type_page);
+
         mTypeLeftLv = view.findViewById(R.id.type_left_lv);
         mTypeRightRv = view.findViewById(R.id.type_right_rv);
 
@@ -67,12 +70,12 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> implements MessageMa
         titleMessage = view.findViewById(R.id.title_message);
         qBadgeView = new QBadgeView(getContext());
         qBadgeView.bindTarget(titleMessage)
-                .setBadgeTextSize(10f,true)
+                .setBadgeTextSize(10f, true)
                 .setBadgeGravity(Gravity.START | Gravity.TOP)
                 .setBadgeBackgroundColor(Color.BLUE);
 
-        typeRelaTiveLayout = (RelativeLayout) view.findViewById(R.id.typeRelaTiveLayout);
-        pageUtil=new PageUtil(getContext());
+        typeRelaTiveLayout = view.findViewById(R.id.typeRelaTiveLayout);
+        pageUtil = new PageUtil(getContext());
         pageUtil.setReview(typeRelaTiveLayout);
         pageUtil.init();
     }
@@ -87,7 +90,17 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> implements MessageMa
                 toClass(MessageActivity.class);
             }
         });
+    }
 
+    @Override
+    public void onConnected(NetType type) {
+        initData();
+        mErrorPage.hideView();
+    }
+
+    @Override
+    public void onDisConnected() {
+        mErrorPage.showView();
     }
 
     private void initListener(final TypeLeftAdapter adapter) {

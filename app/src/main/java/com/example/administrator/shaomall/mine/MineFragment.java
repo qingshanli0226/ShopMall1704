@@ -20,6 +20,7 @@ import com.example.administrator.shaomall.message.MessageActivity;
 import com.example.administrator.shaomall.activity.SettingActivity;
 import com.example.administrator.shaomall.function.FunctionActivity;
 import com.example.administrator.shaomall.login.LoginActivity;
+import com.example.commen.custom.ToolbarCustom;
 import com.example.commen.util.ShopMailError;
 import com.example.net.AppNetConfig;
 import com.example.remindsteporgan.RemindActivity;
@@ -50,7 +51,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
     private String avatar;
     private int pointSum;
     private QBadgeView qBadgeView;
-    private com.example.commen.ToolbarCustom mTcAppFragmentMineTop;
+    private ToolbarCustom mTcAppFragmentMineTop;
 
     @Override
     public int setLayoutId() {

@@ -3,33 +3,34 @@
     android:id="@+id/typeRelaTiveLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
-
-       <include layout="@layout/title_common"/>
-
-
+    <include
+        android:id="@+id/rl_type_top"
+        layout="@layout/title_common" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:layout_below="@id/rl_type_top">
+
         <ListView
             android:id="@+id/type_left_lv"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:background="#11000000"
-            android:scrollbars="none"
-           />
+            android:scrollbars="none" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/type_right_rv"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="match_parent"
-            />
+            android:layout_weight="1" />
     </LinearLayout>
-    </LinearLayout>
+
+    <com.example.commen.custom.ErrorPageCustom
+        android:id="@+id/error_type_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/rl_type_top" />
+
 </RelativeLayout>

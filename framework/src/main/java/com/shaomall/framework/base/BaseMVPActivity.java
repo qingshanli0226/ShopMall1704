@@ -6,8 +6,6 @@ import com.shaomall.framework.base.view.IBaseView;
 import java.util.List;
 
 public abstract class BaseMVPActivity<T> extends BaseActivity implements IBaseView<T> {
-    //    private IBasePresenter<T> iBasePresenter;
-
     @Override
     protected void initData() {
     }

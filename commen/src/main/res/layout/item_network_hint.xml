@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_net_work_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f0ffffff"
+        android:drawableRight="@drawable/ic_action_right"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:text="当前无网络, 请检查。"
+        android:textColor="#FF0000"
+        android:visibility="gone" />
+</LinearLayout>

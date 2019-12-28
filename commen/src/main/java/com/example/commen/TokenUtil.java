@@ -1,14 +1,34 @@
 package com.example.commen;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 public class TokenUtil {
-    public static SharedPreferences sharedPreferences = null;
+    private static TokenUtil instance;
+    private SharedPreferences userInfo;
 
-    public static String getToken(){
-        if (sharedPreferences != null){
-            return sharedPreferences.getString("token", null);
+
+    public static TokenUtil getInstance() {
+        if (instance == null) {
+            synchronized (TokenUtil.class) {
+                if (instance == null) {
+                    instance = new TokenUtil();
+                }
+            }
         }
-        return null;
+        return instance;
+    }
+
+    public void init(Context context) {
+        if (userInfo == null) {
+            userInfo = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        }
+    }
+
+    public String getToken() {
+        if (userInfo == null) {
+            throw new RuntimeException("TokenUtil.getInstance().init()没有初始化");
+        }
+        return userInfo.getString("token", null);
     }
 }

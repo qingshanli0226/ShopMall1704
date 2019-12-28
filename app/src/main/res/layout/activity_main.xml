@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainRelativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/mainRelativeLayout"
+    android:orientation="vertical"
     tools:context=".activity.MainActivity">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
 
     <FrameLayout
         android:id="@+id/main_fragmentHome"
@@ -25,6 +21,6 @@
         android:background="@drawable/home_bottom_parent_bg"
         app:tl_textSelectColor="@android:color/holo_red_light"
         app:tl_textUnselectColor="@color/colorGrayTitle" />
-    </LinearLayout>
 
-    </RelativeLayout>
+</LinearLayout>
+
