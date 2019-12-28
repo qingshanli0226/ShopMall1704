@@ -15,8 +15,10 @@ public class MySettingAdapter extends BaseQuickAdapter<SettingBean, BaseViewHold
 
     @Override
     protected void convert(BaseViewHolder helper, SettingBean item) {
-        helper.setText(R.id.setting_item_title,item.getTitle()).addOnClickListener(R.id.setting_item_title);
+        helper.setText(R.id.setting_item_title,item.getTitle());
         helper.setText(R.id.setting_item_name,item.getMassage());
+        helper.addOnClickListener(R.id.setting_item_title);
+        helper.addOnClickListener(R.id.setting_item_name);
 
     }
 }

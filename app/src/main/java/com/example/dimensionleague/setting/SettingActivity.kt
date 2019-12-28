@@ -111,7 +111,7 @@ class SettingActivity : BaseActivity(), IAccountCallBack {
                 0 -> {
                     startActivity(AddressActivity::class.java, null)
                 }
-                else -> toast(this, list[position].title + R.string.contact)
+                else -> toast(this, list[position].title + getString(R.string.contact))
             }
 
         }

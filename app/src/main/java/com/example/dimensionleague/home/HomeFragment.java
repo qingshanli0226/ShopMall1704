@@ -108,14 +108,11 @@ public class HomeFragment extends BaseNetConnectFragment implements IAccountCall
                 }
             }
         }
-        home_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!AccountManager.getInstance().isLogin()) {
-                    startActivity(LoginActivity.class, null);
-                } else {
-                    startActivity(SettingActivity.class, null);
-                }
+        home_image.setOnClickListener(v -> {
+            if(!AccountManager.getInstance().isLogin()){
+                startActivity(LoginActivity.class,null);
+            }else{
+                startActivity(SettingActivity.class,null);
             }
         });
     }
