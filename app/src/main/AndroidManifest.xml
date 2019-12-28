@@ -154,5 +154,6 @@
         </service>
         <meta-data android:name="JPUSH_APPKEY" android:value="04891600dae0176bf5107248"/>
         <meta-data android:name="JPUSH_CHANNEL" android:value="${JPUSH_CHANNEL}"/>
+        <service android:name=".InitIntentService"/>
     </application>
 </manifest>

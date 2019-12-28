@@ -5,6 +5,7 @@ import android.view.KeyEvent
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.buy.CartManager
+import com.example.buy.GoodsManager
 import com.example.buy.ShopCartFragment
 import com.example.common.utils.SPUtil
 import com.example.common.view.MyToast
@@ -128,6 +129,10 @@ class MainActivity : BaseNetConnectActivity() {
             main_easy.setMsgPointCount(3, num)
         }
         CartManager.getInstance().registerListener(listener)
+        GoodsManager.setGoLoginListener { ctx->
+//            val intent = Intent(ctx, LoginActivity::class.java)
+            startActivity( LoginActivity::class.java,null)
+        }
     }
 
     override fun onDestroy() {

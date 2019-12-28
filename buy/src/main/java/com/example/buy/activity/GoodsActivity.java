@@ -4,6 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Path;
@@ -28,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.buy.GoodsManager;
 import com.example.buy.R;
 import com.example.buy.databeans.GetCartBean;
 import com.example.buy.databeans.GoodsBean;
@@ -110,7 +113,7 @@ public class GoodsActivity extends BaseNetConnectActivity implements View.OnClic
                 startActivity(ShoppCartActivity.class, null);
             }
         } else {
-            Toast.makeText(this, getResources().getString(R.string.buyLoginFirst), Toast.LENGTH_SHORT).show();
+            GoodsManager.gotoLogin(this);
         }
     }
 
@@ -118,12 +121,14 @@ public class GoodsActivity extends BaseNetConnectActivity implements View.OnClic
     private void setAnimator() {
         //保证只有一个动画
         if (animatorSet == null) {
+            beiImage.setVisibility(View.VISIBLE);
+            beiImage.bringToFront();
             animatorSet = new AnimatorSet();
-
             ObjectAnimator scaleX = ObjectAnimator.ofFloat(beiImage, "scaleX", 1, 0.1f);
             ObjectAnimator scaleY = ObjectAnimator.ofFloat(beiImage, "scaleY", 1, 0.1f);
             //缩放后加贝塞尔曲线
-            animatorSet.play(scaleX).with(scaleY).before(getBeiAnimator());
+            animatorSet.play(scaleX).with(scaleY);
+//                    .before(getBeiAnimator());
             animatorSet.setDuration(500);
             animatorSet.setInterpolator(new AccelerateInterpolator());
             //动画开始不能点击加入购物车  完成后才可以点击
@@ -137,32 +142,67 @@ public class GoodsActivity extends BaseNetConnectActivity implements View.OnClic
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
-                    //隐藏,并还原imageview
-                    beiImage.setVisibility(View.GONE);
-                    beiImage.setScaleX(0);
-                    beiImage.setScaleY(0);
-                    beiImage.setTranslationX(0);
-                    beiImage.setTranslationY(0);
-
-                    //购物车图标摇一摇动画
-                    ObjectAnimator carAnimator = ObjectAnimator.ofFloat(cartBut, "rotation", 0, 30, -30, 0);
-                    carAnimator.setDuration(500);
-                    carAnimator.addListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            super.onAnimationEnd(animation);
-                            joinCartBut.setClickable(true);
-                            animatorSet = null;
-                            setRed();
-                        }
-                    });
-                    carAnimator.start();
+                    beiImage.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
+                    getBeiAnimator();
                 }
             });
             animatorSet.start();
         }
     }
+    //返回贝塞尔曲线
+    private void getBeiAnimator() {
+        //每次都重新设置起始点 控制点 结束点  并绘制路线
 
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int height = metrics.heightPixels;
+        int width = metrics.widthPixels;
+        startLoaction[0] = 0;
+        startLoaction[1] = 0;
+
+        controlLoaction[0] = -(width / 2);
+        controlLoaction[1] = height / 2;
+
+        endLoaction[0] = -(beiImage.getWidth() / 2) + (cartBut.getWidth()*3);
+        endLoaction[1] = (height - (beiImage.getHeight() / 2));
+//        endLoaction[0]=width-beiImage.getLeft();
+//        endLoaction[1]=height-beiImage.getTop();
+
+        Path path = new Path();
+        //控制初始点
+        path.moveTo(startLoaction[0], startLoaction[1]);
+        path.quadTo(controlLoaction[0], controlLoaction[1], endLoaction[0], endLoaction[1]);
+//        return ObjectAnimator.ofFloat(beiImage, "translationX", "translationY", path);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(beiImage, "translationX", "translationY", path);
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                //购物车摇动
+                ObjectAnimator carAnimator = ObjectAnimator.ofFloat(cartBut, "rotation", 0, 30, -30, 0);
+                carAnimator.setDuration(500);
+                carAnimator.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        //还原image
+                        beiImage.setVisibility(View.GONE);
+                        beiImage.setScaleX(0);
+                        beiImage.setScaleY(0);
+                        beiImage.setTranslationX(0);
+                        beiImage.setTranslationY(0);
+                        joinCartBut.setClickable(true);
+                        animatorSet = null;
+                        setRed();
+                    }
+                });
+                carAnimator.start();
+            }
+        });
+        animator.setDuration(300);
+        animator.start();
+
+    }
     @Override
     public void hideLoading() {
         super.hideLoading();
@@ -314,32 +354,6 @@ public class GoodsActivity extends BaseNetConnectActivity implements View.OnClic
         getWindow().setAttributes(attributes);
     }
 
-    //返回贝塞尔曲线
-    private ObjectAnimator getBeiAnimator() {
-        //每次都重新设置起始点 控制点 结束点  并绘制路线
-        beiImage.setVisibility(View.VISIBLE);
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int height = metrics.heightPixels;
-        int width = metrics.widthPixels;
-        startLoaction[0] = 0;
-        startLoaction[1] = 0;
-
-        controlLoaction[0] = -(width / 2);
-        controlLoaction[1] = height / 2;
-
-        endLoaction[0] = -(beiImage.getWidth() / 2) + (cartBut.getWidth() * 2);
-        endLoaction[1] = (height - (beiImage.getHeight() / 2));
-//        endLoaction[0]=width;
-//        endLoaction[1]=height;
-
-        Path path = new Path();
-        //控制初始点
-        path.moveTo(startLoaction[0], startLoaction[1]);
-        path.quadTo(controlLoaction[0], controlLoaction[1], endLoaction[0], endLoaction[1]);
-        return ObjectAnimator.ofFloat(beiImage, "translationX", "translationY", path);
-    }
-
     @Override
     public int getLayoutId() {
         return R.layout.activity_goods;
@@ -364,6 +378,7 @@ public class GoodsActivity extends BaseNetConnectActivity implements View.OnClic
         goodsNewPrice = findViewById(R.id.goodsNewPrice);
         redNum = findViewById(R.id.redNum);
         MyToolBar myToolBar = findViewById(R.id.myToolBar);
+
         myToolBar.init(Constant.OTHER_STYLE);
 
         myToolBar.getOther_back().setImageResource(R.drawable.back3);

@@ -42,8 +42,6 @@ import java.util.HashMap;
  * author:李浩帆
  */
 public class LoginActivity extends BaseNetConnectActivity implements IButtonEnabledListener, View.OnClickListener {
-
-
     private EditText user_name;
     private EditText password;
     private CheckBox password_check;

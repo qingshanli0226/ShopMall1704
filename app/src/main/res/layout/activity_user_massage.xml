@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".setting.UserMassagesActivity">
+    tools:context=".setting.UserMassagesActivity"
+    android:background="@color/colorWhite">
     <com.example.common.view.MyToolBar
         android:id="@+id/user_toolbar"
         android:layout_width="match_parent"
