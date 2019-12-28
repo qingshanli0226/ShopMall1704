@@ -45,18 +45,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".setting.UserMassagesActivity"/>
+        <activity android:name=".setting.UserMassagesActivity"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".register.activity.RegisterActivity" />
+            android:name=".register.activity.RegisterActivity"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".login.activity.LoginActivity"
             android:launchMode="singleTask"/>
         <activity android:name=".address.AddressActivity"/>
-        <activity android:name=".search.SearchActivity"/>
+        <activity android:name=".search.SearchActivity"
+            android:launchMode="singleTop"/>
         <service android:name=".JobService"
             android:enabled="true"
             android:exported="true"
@@ -88,7 +91,8 @@
             android:name="cn.jpush.android.ui.PushActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@android:style/Theme.NoTitleBar"
-            android:exported="true">
+            android:exported="true"
+            >
             <intent-filter>
                 <action android:name="cn.jpush.android.ui.PushActivity" />
                 <category android:name="android.intent.category.DEFAULT" />

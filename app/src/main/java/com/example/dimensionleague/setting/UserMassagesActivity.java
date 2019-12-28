@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.common.code.Constant;
 import com.example.common.port.IAccountCallBack;
 import com.example.common.view.MyToolBar;
@@ -109,10 +110,10 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
                 getString(R.string.woman),
                 getString(R.string.man)
         };
-        list.add(new SettingBean(getString(R.string.setting_user),""));
-        list.add(new SettingBean(getString(R.string.name),""));
+        list.add(new SettingBean(getString(R.string.setting_user)," "));
+        list.add(new SettingBean(getString(R.string.name)," "));
         list.add(new SettingBean(getString(R.string.sex),getString(R.string.privary)));
-        list.add(new SettingBean(getString(R.string.birth),""));
+        list.add(new SettingBean(getString(R.string.birth)," "));
 
         mYear = nowdate.get(Calendar.YEAR);
         mMonth = nowdate.get(Calendar.MONTH);
@@ -160,8 +161,7 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
                 }
             }
         });
-        adapter.setOnItemClickListener((adapter, view, position) -> {
-
+        adapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (position) {
                 case 0:
                     Toast toast = Toast.makeText(view.getContext(), R.string.no, Toast.LENGTH_LONG);
@@ -170,8 +170,8 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
                     break;
                 case 1:
                     @SuppressLint("InflateParams")
-                    View inflate = LayoutInflater.from(UserMassagesActivity.this).inflate(R.layout.user_item_set_name, null);
-                    AlertDialog.Builder builder = new AlertDialog.Builder(UserMassagesActivity.this)
+                    View inflate = LayoutInflater.from(view.getContext()).inflate(R.layout.user_item_set_name, null);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext())
                             .setView(inflate)
                             .setCancelable(false)
                             .setPositiveButton(R.string.yes, (dialog, which) -> {
@@ -183,10 +183,10 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
                     builder.show();
                     break;
                 case 2:
-                    showSexDialog(position);
+                    showSexDialog(position,view);
                     break;
                 case 3:
-                    new DatePickerDialog(UserMassagesActivity.this, DatePickerDialog.THEME_HOLO_LIGHT, (view1, year, month, dayOfMonth) -> {
+                    new DatePickerDialog(view.getContext(), DatePickerDialog.THEME_HOLO_LIGHT, (view1, year, month, dayOfMonth) -> {
                         String s = mYear + getString(R.string.year) + mMonth +
                                 getString(R.string.moth) +
                                 mDay + getString(R.string.day);
@@ -203,9 +203,9 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
 
 
 
-        private void showSexDialog(int position) {
+        private void showSexDialog(int position, View view) {
 //        性别选择
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setSingleChoiceItems(sexArry, 0, (dialog, which) -> {
             list.get(position).setMassage(sexArry[which]);
             adapter.notifyDataSetChanged();

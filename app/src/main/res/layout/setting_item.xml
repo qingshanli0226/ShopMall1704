@@ -29,6 +29,7 @@
     <ImageView
         android:layout_height="@dimen/dp_10"
         android:layout_width="@dimen/dp_10"
+        android:id="@+id/setting_item_img"
         android:layout_marginRight="@dimen/dp_10"
         android:src="@drawable/home_arrow_right"
         />

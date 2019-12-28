@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.buy.activity.GoodsActiviy;
 import com.example.buy.databeans.GoodsBean;
 import com.example.common.utils.IntentUtil;
@@ -25,15 +27,15 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-class TypeRightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private final Context mContext;
-    //热卖商品列表的数据
-    private final List<TypeBean.ResultBean> resultBeans;
-    private final LayoutInflater mLayoutInflater;
-    private ArrayList<TypeBean.ResultBean.HotProductListBean> hotProductList=new ArrayList();
+        class TypeRightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+            private final Context mContext;
+            //热卖商品列表的数据
+            private final List<TypeBean.ResultBean> resultBeans;
+            private final LayoutInflater mLayoutInflater;
+            private ArrayList<TypeBean.ResultBean.HotProductListBean> hotProductList=new ArrayList();
 
-    public TypeRightAdapter(Context mContext, List<TypeBean.ResultBean> result) {
-        this.mContext = mContext;
+            public TypeRightAdapter(Context mContext, List<TypeBean.ResultBean> result) {
+                this.mContext = mContext;
         this.resultBeans = result;
         mLayoutInflater = LayoutInflater.from(mContext);
     }
@@ -87,22 +89,19 @@ class TypeRightAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 public void onBind(BaseViewHolder holder, int position) {
                     holder.getTextView(R.id.type_right_tv_ordinary_right, "￥" + dateList.get(position).getCover_price()).setTextColor(Color.RED);
                     holder.getImageView(R.id.type_right_iv_ordinary_right, AppNetConfig.BASE_URl_IMAGE + dateList.get(position).getFigure())
-                            .setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Intent intent = new Intent(holder.itemView.getContext(), GoodsActiviy.class);
-                                    intent.putExtra(IntentUtil.GOTO_GOOD, new GoodsBean(
-                                            hotProductList.get(position).getProduct_id(),
-                                            0,
-                                            hotProductList.get(position).getName(),
-                                            hotProductList.get(position).getFigure(),
-                                            hotProductList.get(position).getCover_price()));
-                                    holder.itemView.getContext().startActivity(intent);
-                                }
+                            .setOnClickListener(v -> {
+                                Intent intent = new Intent(holder.itemView.getContext(), GoodsActiviy.class);
+                                intent.putExtra(IntentUtil.GOTO_GOOD, new GoodsBean(
+                                        hotProductList.get(position).getProduct_id(),
+                                        0,
+                                        hotProductList.get(position).getName(),
+                                        hotProductList.get(position).getFigure(),
+                                        hotProductList.get(position).getCover_price()));
+                                holder.itemView.getContext().startActivity(intent);
                             });
                 }
             });
-            TypeChildRecycleAdapter childRecycleAdapter = new TypeChildRecycleAdapter(mContext, (ArrayList<TypeBean.ResultBean.ChildBean>) resultBeans.get(position).getChild());
+            TypeChildRecycleAdapter childRecycleAdapter = new TypeChildRecycleAdapter(R.layout.type_right_rv, resultBeans.get(position).getChild());
             rv_ordinary_right.setAdapter(childRecycleAdapter);
         }
 
