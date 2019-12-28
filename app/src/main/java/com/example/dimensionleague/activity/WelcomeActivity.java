@@ -217,13 +217,13 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
             Bundle bundle = new Bundle();
             bundle.putBoolean(getString(R.string.test_auto_login), isRequestAutoLogin);
             startActivity(MainActivity.class, bundle);
-            finishActivity();
+            finish();
         } else if (isCarouselFinish && isNotNet) {
             //跳转到主页面
             Bundle bundle = new Bundle();
             bundle.putBoolean(getString(R.string.test_auto_login), isRequestAutoLogin);
             startActivity(MainActivity.class, bundle);
-            finishActivity();
+            finish();
         }
     }
 
