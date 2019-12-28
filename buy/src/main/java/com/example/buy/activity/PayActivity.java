@@ -38,6 +38,7 @@ import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.base.BaseRecyclerAdapter;
 import com.example.framework.base.BaseViewHolder;
+import com.example.framework.bean.MessageBean;
 import com.example.framework.bean.PointBean;
 import com.example.framework.manager.AccountManager;
 import com.example.framework.manager.DaoManager;
@@ -221,10 +222,17 @@ public class PayActivity extends BaseNetConnectActivity{
                         if (sum < 0) {
                             sum = 0;
                         }
+                        AccountManager.getInstance().getUser().setPoint(sum+"");
                         pointPresenter = new PostUpDatePointPresenter(sum + "");
                         pointPresenter.attachView(this);
                         pointPresenter.doHttpPostRequest(COED_POINT);
                     }else {
+                        DaoManager.Companion.getInstance(this).addMessageBean(
+                                new MessageBean(null,
+                                        R.mipmap.dimension_league_icon,
+                                        "支付",
+                                        "支付message",
+                                        DateFormat.format("MM-dd", System.currentTimeMillis())+""));
                         finishActivity();
                     }
                 }
@@ -235,6 +243,12 @@ public class PayActivity extends BaseNetConnectActivity{
                     String time = DateFormat.format("MM月dd日HH时mm分", System.currentTimeMillis())+"";
                     PointBean pointBean = new PointBean(null, time, "购买了" + list.size() + "个商品", point);
                     DaoManager.Companion.getInstance(this).addPointBean(pointBean);
+                    DaoManager.Companion.getInstance(this).addMessageBean(
+                            new MessageBean(null,
+                                    R.mipmap.dimension_league_icon,
+                                    "支付",
+                                    "带积分支付message",
+                                    DateFormat.format("MM-dd", System.currentTimeMillis())+""));
                     finishActivity();
                 }
                 break;

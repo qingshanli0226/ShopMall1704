@@ -10,9 +10,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
 import com.example.common.User;
@@ -28,15 +34,18 @@ import com.example.framework.port.ITaskFinishListener;
 import com.example.point.StepIsSupport;
 import com.example.point.stepmanager.StepPointManager;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+
 import org.jetbrains.annotations.NotNull;
+
 import java.lang.ref.WeakReference;
 
 import io.reactivex.Observer;
 
 public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFinishListener {
-    private final Handler handler =new MyHandler(this);
+    private final Handler handler = new MyHandler(this);
 
     private VideoView videoView;
+    private ImageView welcomeImage;
     private Button but;
     private int count = 3;
 
@@ -66,37 +75,54 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
                 Manifest.permission.CHANGE_WIFI_STATE,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.SYSTEM_ALERT_WINDOW,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                .subscribe(permission -> {
+                    if (permission) {
+                        //TODO 成功
 
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                    } else {//TODO 失败
 
-        ).subscribe(permission->{
-            if(permission){
-                //TODO 成功
-
-            }else{//TODO 失败
-
-            }
+                    }
+                });
+        rxPermissions.request(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(permission -> {
+            CacheManager.getInstance().setSdPermission(permission);
         });
 
-        videoView = findViewById(R.id.videoView);
+        welcomeImage = findViewById(R.id.welcomeImage);
         but = findViewById(R.id.welcome_button);
-
+        if (videoView == null) {
+            videoView = new VideoView(this);
+            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+            layoutParams.gravity = Gravity.CENTER;
+            videoView.setLayoutParams(layoutParams);
+        }
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-         //设置监听
-        videoView.setOnPreparedListener(mp -> {
-            mp.setVolume(0,0);
-            mp.setLooping(true);
-            mp.start();
-        });
-
     }
 
     @Override
     public void initDate() {
-        videoView.setVideoPath(Uri.parse("android.resource://" + getPackageName() + "/"+R.raw.peng).toString());
-        handler.sendEmptyMessage(1);
-        but.setText(count +getString(R.string.second));
+        but.setVisibility(View.GONE);
+        //动态添加videoView
+        ViewGroup welLayout = findViewById(R.id.welLayout);
+        welLayout.removeAllViews();
+        welLayout.addView(videoView);
+        welLayout.addView(welcomeImage);
+        welLayout.addView(but);
+
+        videoView.setVideoPath(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.peng).toString());
+        //设置监听
+        videoView.setOnPreparedListener(mp -> {
+            mp.setVolume(0, 0);
+            mp.setLooping(true);
+            mp.start();
+        });
+        handler.sendEmptyMessageDelayed(1, 800);
+        but.setText(count + getString(R.string.second));
+
         CacheManager.getInstance().getHomeDate();
+
         AutoLoginManager.getInstance().getLoginData();
         CacheManager.getInstance().registerGetDateListener(new CacheManager.IHomeReceivedListener() {
             @Override
@@ -112,7 +138,6 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
                 isRequestHomeBean = false;
                 isNotNet = true;
                 onFinish();
-
             }
         });
 
@@ -165,14 +190,16 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
         CacheManager.getInstance().unRegisterGetDateListener();
         AutoLoginManager.getInstance().unRegisterAutoLoginListener();
         if (videoView != null) {
+            videoView.clearAnimation();
+            videoView.clearFocus();
             videoView.suspend();
             videoView.setOnErrorListener(null);
             videoView.setOnPreparedListener(null);
             videoView.setOnCompletionListener(null);
-            ViewGroup welcomeLayout = findViewById(R.id.welcomeLayout);
+            ViewGroup welcomeLayout = findViewById(R.id.welLayout);
             videoView = null;
             welcomeLayout.removeAllViews();
-            welcomeLayout=null;
+            welcomeLayout = null;
         }
         handler.removeCallbacksAndMessages(null);
         super.onDestroy();
@@ -188,15 +215,15 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
         if (isCarouselFinish && isRequestHomeBean) {
             //跳转到主页面
             Bundle bundle = new Bundle();
-            bundle.putBoolean(getString(R.string.test_auto_login),isRequestAutoLogin);
-            startActivity(MainActivity.class,bundle);
-            finish();
-        }else if(isCarouselFinish && isNotNet){
+            bundle.putBoolean(getString(R.string.test_auto_login), isRequestAutoLogin);
+            startActivity(MainActivity.class, bundle);
+            finishActivity();
+        } else if (isCarouselFinish && isNotNet) {
             //跳转到主页面
             Bundle bundle = new Bundle();
-            bundle.putBoolean(getString(R.string.test_auto_login),isRequestAutoLogin);
-            startActivity(MainActivity.class,bundle);
-            finish();
+            bundle.putBoolean(getString(R.string.test_auto_login), isRequestAutoLogin);
+            startActivity(MainActivity.class, bundle);
+            finishActivity();
         }
     }
 
@@ -206,18 +233,22 @@ public class WelcomeActivity extends BaseNetConnectActivity implements ITaskFini
 
         MyHandler(WelcomeActivity activity) {
             mWeakReference = new WeakReference<>(activity);
-            mContext=activity;
+            mContext = activity;
         }
 
         @Override
         public void handleMessage(@NotNull Message msg) {
             super.handleMessage(msg);
             WelcomeActivity activity = mWeakReference.get();
-            if(msg.what==1){
-                if (activity.count >0) {
-                    activity.but.setText(activity.count + mContext.getString(R.string.second));
+            if (msg.what == 1) {
+                activity.but.setText(activity.count + mContext.getString(R.string.second));
+                if (activity.count == 3) {
+                    activity.welcomeImage.setVisibility(View.GONE);
+                    activity.but.setVisibility(View.VISIBLE);
+                }
+                if (activity.count > 1) {
                     activity.count--;
-                    sendEmptyMessageDelayed(1,1000);
+                    sendEmptyMessageDelayed(1, 1000);
                 } else {
                     activity.isCarouselFinish = true;
                     activity.onFinish();

@@ -9,7 +9,7 @@ import com.alibaba.fastjson.JSONObject;
 import java.lang.reflect.Type;
 
 /**
- * 商品   GoodsActiviy  向服务器申请加入购物车
+ * 商品   GoodsActivity  向服务器申请加入购物车
  * */
 public class PostAddCartPresenter extends BasePresenter<OkBean> {
 

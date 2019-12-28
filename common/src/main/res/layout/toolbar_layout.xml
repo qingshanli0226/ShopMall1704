@@ -84,11 +84,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="10">
 
-                <TextView
+                <EditText
                     android:id="@+id/type_search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/dp_10"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:imeOptions="actionSearch"
                     android:background="@drawable/white_text_background"
                     android:drawableLeft="@drawable/search"
                     android:drawablePadding="@dimen/dp_10"

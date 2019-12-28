@@ -1,11 +1,10 @@
 package com.example.dimensionleague.find;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.buy.activity.GoodsActiviy;
+import com.example.buy.activity.GoodsActivity;
 import com.example.buy.databeans.GoodsBean;
 import com.example.common.HomeBean;
 import com.example.common.code.Constant;
@@ -52,7 +51,7 @@ public class FindSendFragment extends BaseNetConnectFragment {
                         .setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent = new Intent(getContext(), GoodsActiviy.class);
+                                Intent intent = new Intent(getContext(), GoodsActivity.class);
                                 intent.putExtra(IntentUtil.GOTO_GOOD, new GoodsBean(
                                         list.get(position).getProduct_id(),
                                         0,

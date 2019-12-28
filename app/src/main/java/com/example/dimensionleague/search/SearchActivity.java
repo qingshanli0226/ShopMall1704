@@ -2,21 +2,17 @@ package com.example.dimensionleague.search;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.databinding.BindingAdapter;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.bumptech.glide.Glide;
 import com.example.buy.R;
-import com.example.buy.activity.GoodsActiviy;
+import com.example.buy.activity.GoodsActivity;
 import com.example.buy.databeans.GetSearchBeanOne;
 import com.example.buy.databeans.GetSearchBeanTwo;
 import com.example.buy.databeans.GoodsBean;
@@ -67,6 +63,7 @@ public class SearchActivity extends BaseBindActivity<ActivitySearchBinding> {
         activitySearchBinding.myToolBar.getSearch_message().setVisibility(View.GONE);
         //TODO 获取焦点
         activitySearchBinding.myToolBar.getSearch_edit().requestFocus();
+        activitySearchBinding.myToolBar.getSearch_edit().setFocusable(true);
         //TODO 返回按钮
         activitySearchBinding.myToolBar.getScan().setImageResource(R.drawable.back3);
         //TODO 初始化RecyclerView
@@ -80,7 +77,7 @@ public class SearchActivity extends BaseBindActivity<ActivitySearchBinding> {
                 holder.bindView.itemSearchImg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(SearchActivity.this, GoodsActiviy.class);
+                        Intent intent = new Intent(SearchActivity.this, GoodsActivity.class);
                         intent.putExtra(IntentUtil.GOTO_GOOD, new GoodsBean(hotList.get(position).getProduct_id(),
                                 0,hotList.get(position).getName(),
                                 hotList.get(position).getFigure(),

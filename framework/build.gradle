@@ -32,8 +32,8 @@ android {
     }
 
     greendao {
-        schemaVersion 3 //当前数据库版本
-//        daoPackage 'com.example.framework' //包名 需要更改
+        schemaVersion 1 //当前数据库版本
+        daoPackage 'com.example.framework' //包名 需要更改
         targetGenDir 'src/main/java' //存放greendao库生成文件的目录
         dataBinding {
             enabled true

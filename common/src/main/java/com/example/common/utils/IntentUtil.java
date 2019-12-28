@@ -9,4 +9,6 @@ public  class  IntentUtil {
     public static final String WAIT_PAY_NO="waitPayTradeNo";
     //TODO 没有登录
     public static final String LOGIN = "notLogin";
+
+    public static final String MESSAGE="message";
 }

@@ -1,5 +1,6 @@
 package com.example.dimensionleague.type;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -22,6 +23,7 @@ import com.example.dimensionleague.R;
 import com.example.framework.base.BaseNetConnectFragment;
 import com.example.net.AppNetConfig;
 import com.example.point.message.MessageActivity;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.uuzuche.lib_zxing.activity.CaptureActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
@@ -31,6 +33,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class TypeFragment extends BaseNetConnectFragment {
+   private Activity activity;
+
+    public TypeFragment(Activity activity) {
+        this.activity = activity;
+    }
+
     private RecyclerView rv_right;
     private ListView type_left;
     private TypePresenter typePresenter;
@@ -61,33 +69,28 @@ public class TypeFragment extends BaseNetConnectFragment {
         showMyToolBar();
         //TODO 扫一扫
         my_toolbar.getScan().setOnClickListener(v -> {
-            int permission;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                permission = Objects.requireNonNull(getContext()).checkSelfPermission(Manifest.permission.CAMERA);
-                if (permission != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(new String[]{Manifest.permission.CAMERA}, Constant.REQUSET_CODE);
-                } else {
-                    Intent intent = new Intent(getActivity(), CaptureActivity.class);
-                    startActivityForResult(intent, Constant.REQUSET_ZXING_CODE);
-                }
-            }
+            final RxPermissions rxPermissions = new RxPermissions(activity);
+            rxPermissions.request(
+                    Manifest.permission.CAMERA)
+                    .subscribe(granted -> {
+                        if (granted) {
+                            Intent intent = new Intent();
+                            intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+                            startActivityForResult(intent, Constant.REQUSET_CAMERA_CODE);
+                        }
+                    });
         });
         //TODO AI相机
         my_toolbar.getSearch_camera().setOnClickListener(v -> {
-            int permission;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                permission = Objects.requireNonNull(getContext()).checkSelfPermission(Manifest.permission.CAMERA);
-                if (permission != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(new String[]{Manifest.permission.CAMERA}, Constant.REQUSET_CODE);
-                } else {
-                    Intent intent = new Intent();
-                    intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, Constant.REQUSET_CAMERA_CODE);
-                }
-            }
+
         });
         //TODO 点击搜索跳转到搜索页面
-        my_toolbar.getSearch_edit().setOnClickListener(v -> startActivity(SearchActivity.class, null));
+        my_toolbar.getSearch_edit().setFocusable(false);
+        my_toolbar.getSearch_edit().clearFocus();
+        my_toolbar.getSearch_edit().setOnClickListener(v -> {
+                startActivity(SearchActivity.class, null);
+                v.clearFocus();
+        });
         //TODO 点击消息跳转到消息页面
         my_toolbar.getSearch_message().setOnClickListener(v -> {
             Bundle bundle = new Bundle();
@@ -202,25 +205,6 @@ public class TypeFragment extends BaseNetConnectFragment {
             } else {
                 toast(getActivity(), getString(R.string.camera_no));
             }
-        }
-    }
-
-    //    处理权限
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == Constant.REQUSET_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission Granted 用户允许权限 继续执行（我这里执行的是二维码扫描，检查的是照相机权限）
-                Intent intent = new Intent(getActivity(), CaptureActivity.class);
-                startActivityForResult(intent, Constant.REQUSET_ZXING_CODE);
-
-            } else {
-                // Permission Denied 拒绝
-                toast(getActivity(), getString(R.string.request_no));
-            }
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 }

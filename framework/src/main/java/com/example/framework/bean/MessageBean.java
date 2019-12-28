@@ -1,12 +1,16 @@
 package com.example.framework.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.NotNull;
 import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
-public class MessageBean {
+public class MessageBean implements Parcelable {
+
     @Id(autoincrement = true)
     private Long id; //必须使用Long类型，long 或者 Integer int都不行
     @NotNull
@@ -62,4 +66,37 @@ public class MessageBean {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.id);
+        dest.writeValue(this.message_img);
+        dest.writeString(this.message_title);
+        dest.writeString(this.message_message);
+        dest.writeString(this.message_date);
+    }
+
+    protected MessageBean(Parcel in) {
+        this.id = (Long) in.readValue(Long.class.getClassLoader());
+        this.message_img = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.message_title = in.readString();
+        this.message_message = in.readString();
+        this.message_date = in.readString();
+    }
+
+    public static final Parcelable.Creator<MessageBean> CREATOR = new Parcelable.Creator<MessageBean>() {
+        @Override
+        public MessageBean createFromParcel(Parcel source) {
+            return new MessageBean(source);
+        }
+
+        @Override
+        public MessageBean[] newArray(int size) {
+            return new MessageBean[size];
+        }
+    };
 }

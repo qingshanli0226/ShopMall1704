@@ -39,7 +39,7 @@ class SettingActivity : BaseActivity(), IAccountCallBack {
         return R.layout.activity_setting
     }
 
-    @SuppressLint("InflateParams")
+
     override fun init() {
         setting_toolbar.init(Constant.OTHER_STYLE)
         setting_toolbar.background = resources.getDrawable(R.drawable.toolbar_style, null)
@@ -54,7 +54,6 @@ class SettingActivity : BaseActivity(), IAccountCallBack {
         heanName = headView.findViewById(R.id.setting_head_name)
         AccountManager.getInstance().registerUserCallBack(this)
 
-
     }
 
     override fun initDate() {
@@ -62,7 +61,6 @@ class SettingActivity : BaseActivity(), IAccountCallBack {
     }
 
     //    添加rv布局
-    @SuppressLint("SetTextI18n")
     private fun initRecycleView() {
         list.add(SettingBean(getString(R.string.setting_address)))
         list.add(SettingBean(getString(R.string.setting_security)))

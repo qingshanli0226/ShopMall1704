@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.buy.activity.GoodsActiviy;
+import com.example.buy.activity.GoodsActivity;
 import com.example.buy.activity.PayActivity;
 import com.example.buy.databeans.CheckGoodsData;
 import com.example.buy.databeans.GetCartBean;
@@ -227,7 +227,7 @@ public class ShopCartFragment extends BaseNetConnectFragment {
                         .setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent = new Intent(getContext(), GoodsActiviy.class);
+                                Intent intent = new Intent(getContext(), GoodsActivity.class);
                                 intent.putExtra(IntentUtil.GOTO_GOOD, list.get(position));
                                 if(style==0){
                                     boundActivity(intent);
