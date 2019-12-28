@@ -42,7 +42,7 @@ public class ConversionActivity extends BaseNetConnectActivity {
         conversion_toolbar.getOther_back().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                finishActivity();
             }
         });
         conversion_re.setLayoutManager(new LinearLayoutManager(this));

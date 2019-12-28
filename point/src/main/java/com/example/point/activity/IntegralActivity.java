@@ -1,22 +1,14 @@
 package com.example.point.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.manager.AccountManager;
-
 import com.example.framework.manager.DaoManager;
 import com.example.framework.port.IPresenter;
-import com.example.net.AppNetConfig;
 import com.example.point.PointPresenter;
 import com.example.point.R;
 import com.example.point.bean.UpdatePointBean;

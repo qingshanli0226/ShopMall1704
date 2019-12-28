@@ -49,6 +49,10 @@ public class PhysicalActivity extends BaseActivity {
 
     @Override
     public void initDate() {
+        SharedPreferences step = getSharedPreferences("Step", MODE_PRIVATE);
+        tv_step_number.setText(step.getInt("step",0)+"");
+        tv_remind_time.setText(step.getString("time","00:00"));
+
         physical_tool.init(Constant.OTHER_STYLE);
         physical_tool.getOther_title().setText("锻炼计划");
 
@@ -68,20 +72,28 @@ public class PhysicalActivity extends BaseActivity {
 
             @Override
             public void animationFinish() {
+
+                String s = tv_step_number.getText().toString();
+                try {
+                    int i = Integer.parseInt(s);
+                    //存储设置的每日锻炼步数
+                    SharedPreferences step = getSharedPreferences("Step", MODE_PRIVATE);
+                    SharedPreferences.Editor edit = step.edit();
+                    boolean checked = cb_remind.isChecked();
+                    String time = tv_remind_time.getText().toString();
+
+                    edit.putBoolean("isremind", checked);
+                    edit.putString("time", time);
+                    edit.putInt("step", i);
+                    edit.commit();
+                }catch (Exception e){
+                    Toast.makeText(PhysicalActivity.this, "你是要飞吗？", Toast.LENGTH_SHORT).show();
+                    tv_step_number.setText(0+"");
+                    btn_save.reset();
+                    return;
+                }
                 Toast.makeText(PhysicalActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
                 btn_save.reset();
-                String s = tv_step_number.getText().toString();
-                int i = Integer.parseInt(s);
-                //存储设置的每日锻炼步数
-                SharedPreferences step = getSharedPreferences("Step", MODE_PRIVATE);
-                SharedPreferences.Editor edit = step.edit();
-                boolean checked = cb_remind.isChecked();
-                String time = tv_remind_time.getText().toString();
-
-                edit.putBoolean("isremind", checked);
-                edit.putString("time", time);
-                edit.putInt("step", i);
-                edit.commit();
                 finishActivity();
             }
         });

@@ -4,12 +4,16 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseActivity;
+import com.example.framework.bean.TimeBean;
 import com.example.framework.manager.DaoManager;
+import com.example.framework.manager.TimeManager;
+import com.example.framework.port.ITimeListener;
 import com.example.point.R;
 import com.example.point.StepIsSupport;
 import com.example.framework.bean.StepBean;
@@ -18,17 +22,24 @@ import com.example.point.view.StepView;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-public class StepActivity extends BaseActivity {
+public class StepActivity extends BaseActivity implements ITimeListener{
     private TextView tv_isSupport;
     private StepView stepView;
     private TextView time;
     private int i = 0;//循环的初始值
     private int v = 1;//获取当前步数
     private int stepInt;
+    public String time_text;
 
     Handler handler = new MyHandler(this);
 
-    private static class MyHandler extends Handler {
+    @Override
+    public void onGetTime(TimeBean time) {
+        String sysTime1 = time.getSysTime2();
+        time_text = sysTime1;
+    }
+
+    private class MyHandler extends Handler {
         private WeakReference<StepActivity> mWeakReference;
 
         public MyHandler(StepActivity activity) {
@@ -40,14 +51,17 @@ public class StepActivity extends BaseActivity {
             super.handleMessage(msg);
             StepActivity activity = mWeakReference.get();
             if (msg.what == 0) {
+                TimeManager.getInstance().getTime();
                 boolean b = DateFormat.is24HourFormat(activity);
                 if (b) {
                     CharSequence charSequence = DateFormat.format("dd-MM HH:mm:ss", System.currentTimeMillis());
-                    activity.time.setText("时间" + charSequence);
+                    Log.d("lhf123---true", System.currentTimeMillis()+"");
+                    activity.time.setText("时间" + time_text);
 
                 } else {
                     CharSequence charSequence = DateFormat.format("dd-MM hh:mm:ss aa", System.currentTimeMillis());
-                    activity.time.setText("时间" + charSequence);
+                    activity.time.setText("时间" + time_text);
+                    Log.d("lhf123 ----false", System.currentTimeMillis()+"");
                 }
                 sendEmptyMessageDelayed(0,1000);
             }
@@ -60,6 +74,7 @@ public class StepActivity extends BaseActivity {
 
     @Override
     public void init() {
+        TimeManager.getInstance().setiTimeListener(this);
         tv_isSupport = findViewById(R.id.tv_isSupport);
         stepView = findViewById(R.id.step);
         time = findViewById(R.id.time);
