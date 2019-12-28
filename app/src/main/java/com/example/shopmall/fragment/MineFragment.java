@@ -138,7 +138,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build()
                     .create(NetGetService.class)
-                    .getGetData("http://49.233.93.155:8080" + avatar, new HashMap<String, String>())
+                    .getGetData("http://49.233.93.155:8080/" + avatar, new HashMap<String, String>())
                     .subscribe(new Observer<ResponseBody>() {
                         @Override
                         public void onSubscribe(Disposable d) {
@@ -148,7 +148,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                         @Override
                         public void onNext(ResponseBody body) {
                             try {
-                                Log.e("####", body.string());
+                                Log.e("####down", body.string());
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -259,6 +259,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         if (upImgPresenter != null) {
             upImgPresenter.detachView();
         }
+
+
     }
 
     @Override

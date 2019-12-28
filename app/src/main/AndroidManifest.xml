@@ -49,6 +49,7 @@
         <activity android:name="com.example.framework.manager.DisConnectActivity"/>
         <activity
             android:name=".activity.SetActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LocationActivity"
@@ -58,10 +59,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.GoodsInfoActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".activity.GoodsListActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".activity.MessageActivity"
             android:screenOrientation="portrait" />

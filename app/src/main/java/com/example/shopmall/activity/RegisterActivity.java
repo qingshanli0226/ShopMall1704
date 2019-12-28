@@ -181,10 +181,9 @@ public class RegisterActivity extends BaseActivity implements IPostBaseView<Regi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        integerPresenter.detachView();
-
+        if (integerPresenter != null) {
+            integerPresenter.detachView();
+        }
         handler.removeCallbacksAndMessages(this);
-
     }
 }
