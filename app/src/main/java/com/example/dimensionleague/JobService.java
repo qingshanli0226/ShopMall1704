@@ -4,6 +4,7 @@ import android.app.job.JobInfo;
 import android.app.job.JobParameters;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
@@ -12,10 +13,14 @@ import android.os.Message;
 import androidx.annotation.RequiresApi;
 
 import com.example.dimensionleague.activity.MainActivity;
+import com.example.dimensionleague.activity.WelcomeActivity;
 
-@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+import org.jetbrains.annotations.NotNull;
+
+import java.lang.ref.WeakReference;
+
 public class JobService extends android.app.job.JobService {
-
+    Handler mHandler=new MyHandler(this);
     @Override
     public void onCreate() {
         super.onCreate();
@@ -29,31 +34,40 @@ public class JobService extends android.app.job.JobService {
                 .build();
         jobScheduler.schedule(jobInfo);//启动任务
     }
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            JobParameters jobParameters = (JobParameters)msg.obj;
-            jobFinished(jobParameters, true);
-
-            Intent intent = new Intent(JobService.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        }
-    };
-
 
     @Override
     public boolean onStartJob(JobParameters jobParameters) {
         Message message = new Message();
         message.what = 1;
         message.obj = jobParameters;//传递参数
-        handler.sendMessage(message);
+        mHandler.sendMessage(message);
         return true;
     }
 
     @Override
     public boolean onStopJob(JobParameters jobParameters) {
         return false;
+    }
+
+    private static class MyHandler extends Handler {
+        private final WeakReference<JobService> mWeakReference;
+        private final Context mContext;
+
+        MyHandler(JobService service) {
+            mWeakReference = new WeakReference<>(service);
+            mContext = service;
+        }
+
+        @Override
+        public void handleMessage(@NotNull Message msg) {
+            super.handleMessage(msg);
+            JobService service = mWeakReference.get();
+            JobParameters jobParameters = (JobParameters)msg.obj;
+            service.jobFinished(jobParameters, true);
+
+            Intent intent = new Intent(service, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            service.startActivity(intent);
+        }
     }
 }

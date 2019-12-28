@@ -1,12 +1,15 @@
 package com.example.dimensionleague.mine;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -14,12 +17,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.buy.activity.GoodsActiviy;
 import com.example.buy.activity.OrderActivity;
+import com.example.buy.databeans.GoodsBean;
 import com.example.common.HomeBean;
 import com.example.common.utils.IntentUtil;
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.dimensionleague.setting.SettingActivity;
+import com.example.framework.base.BaseRecyclerAdapter;
+import com.example.framework.base.BaseViewHolder;
 import com.example.framework.manager.AccountManager;
 import com.example.common.port.IAccountCallBack;
 import com.example.dimensionleague.R;
@@ -40,16 +47,13 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
     private ImageView img;
     private TextView name;
     private RelativeLayout relative;
-    private MineRecycleViewAdapter listAdapter;
-    private MineRecycleAdapter channelAdapter;
-    private MineRecommendAdapter recommendAdapter;
     private NestedScrollView nestedScrollView;
     private MyToolBar myToolBar;
 
     private HomePresenter homePresenter;
-    private List<MineBean> list;
-    private List<HomeBean.ResultBean.ChannelInfoBean> channelList;
-    private List<HomeBean.ResultBean.SeckillInfoBean.ListBean> recommendlList;
+    private List<MineBean> list = new ArrayList<>();
+    private List<HomeBean.ResultBean.ChannelInfoBean> channelList = new ArrayList<>();
+    private List<HomeBean.ResultBean.SeckillInfoBean.ListBean> recommendlList = new ArrayList<>();
 
     //TODO 缓存用户信息管理类
     private AccountManager accountManager = AccountManager.getInstance();
@@ -65,9 +69,7 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
         name = view.findViewById(R.id.mine_user_name);
         img = view.findViewById(R.id.mine_img);
         relative = view.findViewById(R.id.mine_Relative);
-        list = new ArrayList<>();
-        channelList = new ArrayList<>();
-        recommendlList = new ArrayList<>();
+
         homePresenter = new HomePresenter();
         rvList.setNestedScrollingEnabled(false);
         rvChannel.setNestedScrollingEnabled(false);
@@ -105,9 +107,6 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
         list.add(new MineBean(R.drawable.mine_wallet, getString(R.string.mine_wallet)));
         homePresenter.attachView(this);
         homePresenter.doHttpGetRequest();
-        listAdapter = new MineRecycleViewAdapter(R.layout.item_mine_rv, list);
-        channelAdapter = new MineRecycleAdapter(R.layout.item_mine_rv_h, channelList);
-        recommendAdapter = new MineRecommendAdapter(R.layout.item_mine_rv_recommend, recommendlList);
         mineListeners();
         nestedScrollView.setOnScrollChangeListener((View.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             if (scrollY < 530) {
@@ -118,11 +117,82 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
         });
 
         rvList.setLayoutManager(new GridLayoutManager(getContext(), 5));
-        rvList.setAdapter(listAdapter);
+        rvList.setAdapter(new BaseRecyclerAdapter<MineBean>(R.layout.item_mine_rv, list) {
+            @Override
+            public void onBind(BaseViewHolder holder, int position) {
+                holder.getTextView(R.id.mine_rcv_name, list.get(position).getTitle());
+                holder.getImageView(R.id.mine_rcv_img, list.get(position).getImg())
+                        .setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (AccountManager.getInstance().isLogin()) {
+                                    Bundle bundle = new Bundle();
+                                    switch (position) {
+                                        case 0:
+                                            //待付款
+                                            bundle.putString(IntentUtil.ORDER_SHOW, Constant.WAIT_PAY);
+                                            startActivity(OrderActivity.class, bundle);
+                                            break;
+                                        case 1:
+                                            //待发货
+                                            bundle.putString(IntentUtil.ORDER_SHOW, Constant.WAIT_SEND);
+                                            startActivity(OrderActivity.class, bundle);
+                                            break;
+                                        case 4:
+                                            //我的订单
+                                            bundle.putString(IntentUtil.ORDER_SHOW, Constant.ALL_ORDER);
+                                            startActivity(OrderActivity.class, bundle);
+                                            break;
+                                        case 5:
+                                            //我的积分
+                                            startActivity(IntegralActivity.class, null);
+                                            break;
+                                        case 8:
+                                            //运动
+                                            startActivity(StepActivity.class, null);
+                                            break;
+                                        default:
+                                            toast(getActivity(), list.get(position).getTitle());
+                                    }
+                                } else {
+                                    startActivity(LoginActivity.class, null);
+                                }
+                            }
+                        });
+            }
+        });
+        //Channel设置
         rvChannel.setLayoutManager(new GridLayoutManager(getContext(), 5));
-        rvChannel.setAdapter(channelAdapter);
+        rvChannel.setAdapter(new BaseRecyclerAdapter<HomeBean.ResultBean.ChannelInfoBean>(R.layout.item_mine_rv_h, channelList) {
+            @Override
+            public void onBind(BaseViewHolder holder, int position) {
+                holder.getTextView(R.id.mine_rcv_h_name, channelList.get(position).getChannel_name());
+                holder.getImageView(R.id.mine_rcv_h_img, AppNetConfig.BASE_URl_IMAGE + channelList.get(position).getImage());
+            }
+        });
+        //Recommend设置
         rvRecommend.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        rvRecommend.setAdapter(recommendAdapter);
+        rvRecommend.setAdapter(new BaseRecyclerAdapter<HomeBean.ResultBean.SeckillInfoBean.ListBean>(R.layout.item_mine_rv_recommend, recommendlList) {
+            @Override
+            public void onBind(BaseViewHolder holder, int position) {
+                holder.getTextView(R.id.mine_rcv_recommend_title, recommendlList.get(position).getName());
+                holder.getTextView(R.id.mine_rcv_recommend_price, recommendlList.get(position).getCover_price());
+                holder.getImageView(R.id.mine_rcv_recommend_img, AppNetConfig.BASE_URl_IMAGE + recommendlList.get(position).getFigure())
+                        .setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(holder.itemView.getContext(), GoodsActiviy.class);
+                                intent.putExtra(IntentUtil.GOTO_GOOD, new GoodsBean(
+                                        recommendlList.get(position).getProduct_id(),
+                                        0,
+                                        recommendlList.get(position).getName(),
+                                        recommendlList.get(position).getFigure(),
+                                        recommendlList.get(position).getCover_price()));
+                                holder.itemView.getContext().startActivity(intent);
+                            }
+                        });
+            }
+        });
     }
 
     private void mineListeners() {
@@ -134,39 +204,6 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
             } else {
 //                跳转到个人信息
                 startActivity(SettingActivity.class, null);
-            }
-        });
-        listAdapter.setClickListener(position -> {
-            Bundle bundle = new Bundle();
-            if (AccountManager.getInstance().isLogin()) {
-                switch (position) {
-                    case 0:
-                        //待付款
-                        bundle.putString(IntentUtil.ORDER_SHOW, Constant.WAIT_PAY);
-                        startActivity(OrderActivity.class, bundle);
-                        break;
-                    case 1:
-                        //待发货
-                        bundle.putString(IntentUtil.ORDER_SHOW, Constant.WAIT_SEND);
-                        startActivity(OrderActivity.class, bundle);
-                        break;
-                    case 4:
-                        //我的订单
-                        bundle.putString(IntentUtil.ORDER_SHOW, Constant.ALL_ORDER);
-                        startActivity(OrderActivity.class, bundle);
-                        break;
-                    case 5:
-                        //我的积分
-                        startActivity(IntegralActivity.class, null);
-                        break;
-                    case 8:
-                        //运动
-                        startActivity(StepActivity.class, null);
-                        break;
-                    default:toast(getActivity(), list.get(position).getTitle());
-                }
-            } else {
-                startActivity(LoginActivity.class, null);
             }
         });
     }
@@ -211,8 +248,7 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
             if (code == Integer.parseInt(Constant.CODE_OK)) {
                 channelList.addAll(((HomeBean) data).getResult().getChannel_info());
                 recommendlList.addAll(((HomeBean) data).getResult().getRecommend_info());
-                channelAdapter.notifyDataSetChanged();
-                recommendAdapter.notifyDataSetChanged();
+                rvChannel.getAdapter().notifyDataSetChanged();
             } else {
                 toast(getActivity(), msg);
             }

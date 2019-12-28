@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login_help">Help</string>
+    <string name="btn_text_login">Login</string>
+    <string name="register_title">FastRegister</string>
+    <string name="btn_text_register">Register</string>
+    <string name="top_scan">Scan</string>
+    <string name="messenger">Message</string>
+    <string name="logout">Are You Sure?</string>
+    <string name="no">Cancel</string>
+    <string name="yes">Sure</string>
+    <string name="not_net">Not NetWork</string>
+</resources>

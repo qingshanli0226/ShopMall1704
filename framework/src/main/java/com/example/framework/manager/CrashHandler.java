@@ -43,7 +43,6 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     private static CrashHandler crashHandler;
 
     private final Map<String, String> mMessage = new HashMap<>();
-    @SuppressLint("StaticFieldLeak")
     private static ErrorHandler errorHandler;
 
 

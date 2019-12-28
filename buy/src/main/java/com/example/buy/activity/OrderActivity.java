@@ -3,7 +3,9 @@ package com.example.buy.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.buy.R;
 import com.example.buy.databeans.GetOrderBean;
+import com.example.buy.databeans.GetPayBean;
 import com.example.buy.presenter.GetPayOrderPresenter;
 import com.example.buy.presenter.GetWaitOrderPresenter;
 import com.example.common.utils.IntentUtil;
@@ -21,26 +24,32 @@ import com.example.framework.base.BaseRecyclerAdapter;
 import com.example.framework.base.BaseViewHolder;
 import com.example.framework.manager.OrderManager;
 import com.example.framework.port.IPresenter;
+import com.example.framework.port.OnClickItemListener;
+
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * 订单详情页
  */
 public class OrderActivity extends BaseNetConnectActivity {
 
-    //网络请求码 全部  待支付 待发货 第二次
+    //网络请求码 全部 全部的第二次 待支付 待发货
     public final static int CODE_ALL = 200;
+    public final static int CODE_All_TWO = 203;
     public final static int CODE_PAY = 201;
     public final static int CODE_WAIT = 202;
-    public final static int CODE_All_TWO = 203;
 
     private RecyclerView recyclerView;
+    private RecyclerView recyclerViewTwo;
     private MyToolBar myToolBar;
+    private LinearLayout body;
 
-    ArrayList<GetOrderBean.ResultBean> list = new ArrayList<>();
+    private ArrayList<GetPayBean.ResultBean> list = new ArrayList<>();
+    private ArrayList<GetOrderBean.ResultBean> listTwo = new ArrayList<>();
 
-    IPresenter payOrder;
-    IPresenter waitOrder;
+    private IPresenter payOrder;
+    private IPresenter waitOrder;
 
     @Override
     public int getLayoutId() {
@@ -56,19 +65,47 @@ public class OrderActivity extends BaseNetConnectActivity {
     public void init() {
         super.init();
         recyclerView = findViewById(R.id.recyclerView);
-
+        recyclerViewTwo = findViewById(R.id.recyclerViewTwo);
         myToolBar = findViewById(R.id.myToolBar);
+        body = findViewById(R.id.body);
+
         myToolBar.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
         myToolBar.init(Constant.OTHER_STYLE);
         myToolBar.getOther_back().setImageResource(R.drawable.back3);
         myToolBar.getOther_title().setTextColor(Color.WHITE);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(new BaseRecyclerAdapter<GetOrderBean.ResultBean>(R.layout.item_order, list) {
+        BaseRecyclerAdapter<GetPayBean.ResultBean> recyclerAdapter = new BaseRecyclerAdapter<GetPayBean.ResultBean>(R.layout.item_order_pay, list) {
             @Override
             public void onBind(BaseViewHolder holder, int position) {
-                ((TextView) holder.getView(R.id.orderTitle)).setText(list.get(position).getTotalPrice());
-                ((TextView) holder.getView(R.id.orderNum)).setText(list.get(position).getTime());
-                ((TextView) holder.getView(R.id.orderMoney)).setText(list.get(position).getTradeNo());
+                String time = DateFormat.format("MM月dd日    HH时mm分", Long.valueOf(list.get(position).getTime())) + "";
+                ((TextView) holder.getView(R.id.orderNum)).setText("时间: " + time);
+                ((TextView) holder.getView(R.id.orderMoney)).setText("价格(¥): " + list.get(position).getTotalPrice());
+                ((TextView) holder.getView(R.id.orderTrade)).setText("订单编号: " + list.get(position).getTradeNo());
+            }
+        };
+        recyclerAdapter.setClickListener(new OnClickItemListener() {
+            @Override
+            public void onClickListener(int position) {
+                if (list.get(position).getOrderInfo()!=null){
+                    Intent intent=new Intent(OrderActivity.this,PayActivity.class);
+                    intent.putExtra(IntentUtil.WAIT_PAY_NO,list.get(position).getTradeNo());
+                    intent.putExtra(IntentUtil.WAIT_PAY_INFO,(String)list.get(position).getOrderInfo());
+                    boundActivity(intent);
+                }else {
+                    toast(OrderActivity.this,"该订单已经失效");
+                }
+            }
+        });
+        recyclerView.setAdapter(recyclerAdapter);
+
+        recyclerViewTwo.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerViewTwo.setAdapter(new BaseRecyclerAdapter<GetOrderBean.ResultBean>(R.layout.item_order_wait, listTwo) {
+            @Override
+            public void onBind(BaseViewHolder holder, int position) {
+                String time = DateFormat.format("MM月dd日    HH时mm分",Long.valueOf(listTwo.get(position).getTime()))+"";
+                ((TextView) holder.getView(R.id.orderNum)).setText("时间: "+time);
+                ((TextView) holder.getView(R.id.orderMoney)).setText("价格(¥): "+listTwo.get(position).getTotalPrice());
+                ((TextView) holder.getView(R.id.orderTrade)).setText("订单编号: "+listTwo.get(position).getTradeNo());
             }
         });
 
@@ -103,9 +140,13 @@ public class OrderActivity extends BaseNetConnectActivity {
                 payOrder.doHttpGetRequest(CODE_ALL);
                 break;
             case Constant.WAIT_PAY:
+                recyclerViewTwo.setVisibility(View.GONE);
+                body.setVisibility(View.GONE);
                 payOrder.doHttpGetRequest(CODE_PAY);
                 break;
             case Constant.WAIT_SEND:
+                recyclerView.setVisibility(View.GONE);
+                body.setVisibility(View.GONE);
                 waitOrder.doHttpGetRequest(CODE_WAIT);
                 break;
         }
@@ -116,22 +157,30 @@ public class OrderActivity extends BaseNetConnectActivity {
         super.onRequestSuccess(requestCode, data);
         switch (requestCode) {
             case CODE_ALL:
-                list.addAll(((GetOrderBean) data).getResult());
+                list.addAll(((GetPayBean) data).getResult());
+                Collections.reverse(list);
                 waitOrder.doHttpGetRequest(CODE_All_TWO);
                 break;
+            case CODE_All_TWO:
+                listTwo.addAll(((GetOrderBean) data).getResult());
+                Collections.reverse(listTwo);
+                OrderManager.getInstance().updateAllOrederNum(listTwo.size());
+                break;
             case CODE_PAY:
-                list.clear();
-                list.addAll(((GetOrderBean) data).getResult());
-                OrderManager.getInstance().updatePayOrederNum(list.size());
+                if (((GetPayBean) data).getCode().equals(Constant.CODE_OK)){
+                    list.clear();
+                    list.addAll(((GetPayBean) data).getResult());
+                    Collections.reverse(list);
+                    OrderManager.getInstance().updatePayOrederNum(list.size());
+                    recyclerView.getAdapter().notifyDataSetChanged();
+                }
                 break;
             case CODE_WAIT:
-                list.clear();
-                list.addAll(((GetOrderBean) data).getResult());
-                OrderManager.getInstance().updateWaitOrederNum(list.size());
-                break;
-            case CODE_All_TWO:
-                list.addAll(((GetOrderBean) data).getResult());
-                OrderManager.getInstance().updateAllOrederNum(list.size());
+                listTwo.clear();
+                listTwo.addAll(((GetOrderBean) data).getResult());
+                Collections.reverse(listTwo);
+                OrderManager.getInstance().updateWaitOrederNum(listTwo.size());
+                recyclerViewTwo.getAdapter().notifyDataSetChanged();
                 break;
         }
     }

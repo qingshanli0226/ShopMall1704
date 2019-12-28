@@ -1,4 +1,4 @@
-package com.example.buy.viewmodel;
+package com.example.dimensionleague.search;
 
 import com.example.framework.base.BaseViewModel;
 import com.example.net.AppNetConfig;

@@ -17,15 +17,13 @@ import com.example.framework.bean.MessageBean;
 import com.example.framework.manager.AccountManager;
 import com.example.net.AppNetConfig;
 import com.example.point.R;
-
-import java.util.HashMap;
 import java.util.List;
 
 public class MessageitemAdpter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private LayoutInflater layoutInflater;
-    private Context context;
-    private List<MessageBean> beanList;
-    private static final int ONE=0;
+        private LayoutInflater layoutInflater;
+        private Context context;
+        private List<MessageBean> beanList;
+        private static final int ONE=0;
     private static final int TWO=1;
     public MessageitemAdpter(Context context, List<MessageBean> beanList) {
         this.context = context;

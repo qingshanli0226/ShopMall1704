@@ -1,9 +1,6 @@
 package com.example.point.activity;
-
 import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -11,7 +8,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseActivity;
@@ -112,7 +108,7 @@ public class PhysicalActivity extends BaseActivity {
                 }
             }
         });
-        //第三个line布局
+        //第三个line布局z
         physical_three.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

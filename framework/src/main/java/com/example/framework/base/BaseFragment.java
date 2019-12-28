@@ -45,6 +45,18 @@ public abstract class BaseFragment extends Fragment implements IFragment {
         getActivity().overridePendingTransition(R.anim.slide_to_left_in,R.anim.slide_to_left_out);
     }
 
+    public void boundActivity(Intent intent) {
+        startActivity(intent);
+        //TODO 添加入场动画以及退场动画
+        getActivity().overridePendingTransition(R.anim.slide_to_right_in, R.anim.slide_to_right_out);
+    }
+
+    //TODO finish的入场退场动画
+    public void finishActivity() {
+        getActivity().finish();
+        getActivity().overridePendingTransition(R.anim.slide_to_right_in, R.anim.slide_to_right_out);
+    }
+
     //TODO 吐司
     public void toast(Activity instance, String msg){
         Toast.makeText(instance, msg, Toast.LENGTH_SHORT).show();

@@ -24,7 +24,9 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import com.example.framework.bean.HourBean;
 import com.example.framework.bean.MessageBean;
+import com.example.framework.bean.MinutesBean;
 import com.example.framework.bean.StepBean;
 import com.example.framework.manager.DaoManager;
 import com.example.point.R;
@@ -39,8 +41,6 @@ public class StepService extends Service implements SensorEventListener {
      private  NotificationManager service;
     //创建我们的通知
     private NotificationCompat.Builder builder;
-    //上一次的步数
-    private int previousStepCount = 0;
     // 当前的日期
     private static String CURRENT_DATE = "";
     //每次打开APP时是否获取系统的步数
@@ -63,7 +63,17 @@ public class StepService extends Service implements SensorEventListener {
             String s=DateFormat.format("MM-dd", System.currentTimeMillis())+"";//今日日期
             List<StepBean> beans = DaoManager.Companion.getInstance(this).queryexcept(s);
             List<StepBean> beanList = DaoManager.Companion.getInstance(this).loadStepBean();
-            if (sensorStep==0){
+            SharedPreferences preferences = getSharedPreferences("1704A", MODE_PRIVATE);
+            boolean aBoolean = preferences.getBoolean("b", false);
+            //第一次安装
+            if (aBoolean){
+                CURRENT_STEP=0;
+                sensorEvent.values[0]=0;
+                SharedPreferences.Editor edit = preferences.edit();
+                edit.putBoolean("b",true);
+                edit.commit();
+            }
+            else if (sensorStep==0){
                 for (StepBean bean:beanList) {
                     //获取到所有日期的总步数
                     sensorStep+=bean.getStep();
@@ -181,6 +191,9 @@ public class StepService extends Service implements SensorEventListener {
                     isCall();
                     save();
                     isNewDay();
+                    saveMinutes();
+                }else if (true){
+
                 }
                 else if (Intent.ACTION_BOOT_COMPLETED.equals(action)) {
                     Intent StartIntent = new Intent(context, StepActivity.class);
@@ -198,6 +211,32 @@ public class StepService extends Service implements SensorEventListener {
             registerReceiver(mBatInfoReceiver, filter);
         }
     }
+     private void saveMinutes(){
+         String s=DateFormat.format("HH-mm", System.currentTimeMillis())+"";//当前分钟
+         String hour=DateFormat.format("HH", System.currentTimeMillis())+"";//当前小时
+         long l = DaoManager.Companion.getInstance(StepService.this).countMinutesBean();
+         if (l==60){
+             DaoManager.Companion.getInstance(StepService.this).delMinutesBean();
+             MinutesBean minutesBean = new MinutesBean();
+             minutesBean.setMinutes(s);
+             minutesBean.setStep(CURRENT_STEP);
+             minutesBean.setUser("");
+
+             DaoManager.Companion.getInstance(StepService.this).addMinutesBean(minutesBean);
+
+             HourBean hourBean = new HourBean();
+             hourBean.setHours(hour);
+             hourBean.setStep(CURRENT_STEP);
+             hourBean.setUser("");
+             DaoManager.Companion.getInstance(StepService.this).addHourBean(hourBean);
+         }else {
+             MinutesBean minutesBean = new MinutesBean();
+             minutesBean.setMinutes(s);
+             minutesBean.setStep(CURRENT_STEP);
+             minutesBean.setUser("");
+             DaoManager.Companion.getInstance(StepService.this).addMinutesBean(minutesBean);
+         }
+     }
 
     //监听提现用户锻炼
     private void isCall(){
@@ -207,18 +246,24 @@ public class StepService extends Service implements SensorEventListener {
         int stepi = step.getInt("step", 7000);
         //判断一下存储的日期是否是今天 和当前步数是否超过锻炼步数 是否有开启提现
         if (isremind&&CURRENT_STEP<stepi &&time.equals(new SimpleDateFormat("HH:mm").format(new Date()))){
-            Log.i("监听提现用户锻炼", " 监听提现用户锻炼");
-            builder.setContentTitle("更新今日步数" + CURRENT_STEP + " 步")
-                    .setContentText("距离目标还差" + (stepi - CURRENT_STEP) + "步，加油！")
-                    .setTicker(getResources().getString(R.string.app_name) + "提醒您开始锻炼了")//通知首次出现在通知栏，带上升动画效果的
+            //设置点击跳转
+            Intent hangIntent = new Intent(this, StepActivity.class);
+            PendingIntent hangPendingIntent = PendingIntent.getActivity(this, 0, hangIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+            builder.setContentTitle(getResources().getString(R.string.app_name))
+                    .setContentText("锻炼提醒" + stepi + " 步")
+                    .setContentIntent(hangPendingIntent)
                     .setWhen(System.currentTimeMillis())//通知产生的时间，会在通知信息里显示
                     .setAutoCancel(false)//设置这个标志当用户单击面板就可以让通知将自动取消
-                    .setOngoing(true)//一个正在进行的通知。
+                    .setOngoing(true)//ture，设置他为一个正在进行的通知。他们通常是用来表示一个后台任务,用户积极参与(如播放音乐)或以某种方式正在等待,因此占用设备(如一个文件下载,同步操作,主动网络连接)
                     .setSmallIcon(R.mipmap.jiaoyazi);
-
-            service = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            if (Build.VERSION.SDK_INT>=26){
+                @SuppressLint("WrongConstant")
+                NotificationChannel channel = new NotificationChannel("1","没事",NotificationManager.IMPORTANCE_DEFAULT);
+                service.createNotificationChannel(channel);
+                builder.setChannelId("1");
+            }
             if (Build.VERSION.SDK_INT>=16){
-                service.notify(100,builder.build());
+                service.notify(200,builder.build());
             }
         }
     }
@@ -255,10 +300,8 @@ public class StepService extends Service implements SensorEventListener {
             //插入计步数据库and消息数据库
             List<MessageBean> messbean =DaoManager.Companion.getInstance(this).queryMessageBean(CURRENT_DATE);
             DaoManager.Companion.getInstance(this).updateMessageBean(new MessageBean(messbean.get(0).getId(),R.mipmap.jiaoyazi,"次元联盟运动","客官您好，您今天行走了"+CURRENT_STEP+"步",CURRENT_DATE));
-
-
         }
-                }
+    }
        private void initNotification() {
         //设置点击跳转
         Intent hangIntent = new Intent(this, StepActivity.class);
@@ -271,18 +314,17 @@ public class StepService extends Service implements SensorEventListener {
         .setOngoing(true)//ture，设置他为一个正在进行的通知。他们通常是用来表示一个后台任务,用户积极参与(如播放音乐)或以某种方式正在等待,因此占用设备(如一个文件下载,同步操作,主动网络连接)
         .setSmallIcon(R.mipmap.dimension_league_icon);
         if (Build.VERSION.SDK_INT>=26){
-        @SuppressLint("WrongConstant")
-            NotificationChannel channel = new NotificationChannel("1","没事",NotificationManager.IMPORTANCE_DEFAULT);
+         @SuppressLint("WrongConstant")
+          NotificationChannel channel = new NotificationChannel("1","没事",NotificationManager.IMPORTANCE_DEFAULT);
                     service.createNotificationChannel(channel);
                     builder.setChannelId("1");
-                    }
+        }
+         if (Build.VERSION.SDK_INT>=16){
+             service.notify(100,builder.build());
+         }
+    }
 
-                    if (Build.VERSION.SDK_INT>=16){
-                    service.notify(100,builder.build());
-                    }
-                    }
-
-       private void updateNotification() {
+    private void updateNotification() {
         //设置点击跳转
         Intent hangIntent = new Intent(this, StepActivity.class);
         PendingIntent hangPendingIntent = PendingIntent.getActivity(this, 0, hangIntent, PendingIntent.FLAG_CANCEL_CURRENT);
@@ -315,9 +357,9 @@ public class StepService extends Service implements SensorEventListener {
         if (time.equals(new SimpleDateFormat("HH:mm").format(new Date())) || !CURRENT_DATE.equals(  DateFormat.format("dd-MM", System.currentTimeMillis())+"")) {
         initTodayData();
         }
-        }
-@Nullable
-@Override
+        }//
+      @Nullable
+      @Override
        public IBinder onBind(Intent intent) {
         return new StepBinder();
         }
@@ -330,10 +372,10 @@ public class StepService extends Service implements SensorEventListener {
        public void registerCallback(UpdateUiCallBack paramICallback) {
         this.mCallback = paramICallback;
         }
-//步数更新回调
-public interface UpdateUiCallBack{
-    void updateUi(int stepCount);
-}
+     //步数更新回调
+     public interface UpdateUiCallBack{
+       void updateUi(int stepCount);
+      }
     //服务销毁的注销广播and计步管理监听
     @Override
     public void onDestroy() {
@@ -342,7 +384,7 @@ public interface UpdateUiCallBack{
         sensorManager.unregisterListener(this);
     }
 
-class TimeCount extends CountDownTimer {
+    class TimeCount extends CountDownTimer {
     public TimeCount(long millisInFuture, long countDownInterval) {
         super(millisInFuture, countDownInterval);
     }
@@ -356,5 +398,5 @@ class TimeCount extends CountDownTimer {
         save();
         startTimeCount();
     }
-}
+    }
 }

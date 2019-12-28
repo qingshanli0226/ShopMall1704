@@ -6,7 +6,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -16,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.buy.activity.OrderActivity;
-import com.example.buy.activity.SearchActivity;
+import com.example.dimensionleague.search.SearchActivity;
 import com.example.common.code.Constant;
 import com.example.common.User;
 import com.example.common.code.ErrorCode;

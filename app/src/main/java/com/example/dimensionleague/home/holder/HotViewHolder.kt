@@ -5,6 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.buy.activity.GoodsActiviy
+import com.example.buy.databeans.GoodsBean
 import com.example.common.HomeBean
 import com.example.common.utils.IntentUtil
 import com.example.dimensionleague.R
@@ -25,8 +26,12 @@ class HotViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                     holder!!.getImageView(R.id.home_hot_iv_hot,AppNetConfig.BASE_URl_IMAGE + hotInfo[position].figure)
                         .setOnClickListener { v->
                             val intent = Intent(context, GoodsActiviy::class.java)
-                            intent.putExtra(IntentUtil.GOTO_GOOD, hotInfo[position])
-                            context.startActivity(intent)
+                            intent.putExtra(IntentUtil.GOTO_GOOD, GoodsBean(
+                                hotInfo[position].product_id,
+                                0, hotInfo[position].name,
+                                hotInfo[position].figure,
+                                hotInfo[position].cover_price))
+                            context.startActivity(intent, null)
                         }
                     holder.getTextView(R.id.home_hot_tv_name,hotInfo[position].name)
                     holder.getTextView(R.id.home_hot_tv_price,"${hotInfo[position].cover_price}￥")

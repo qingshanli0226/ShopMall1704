@@ -24,7 +24,7 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
     <uses-feature android:name="android.hardware.Camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature    android:name="android.hardware.camera.autofocus" />
 
     <application
         android:usesCleartextTraffic="true"
@@ -39,7 +39,11 @@
         <activity android:name=".setting.SettingActivity"
             android:launchMode="singleTask"/>
         <activity android:name=".activity.WelcomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".setting.UserMassagesActivity"/>
         <activity
@@ -52,7 +56,7 @@
             android:name=".login.activity.LoginActivity"
             android:launchMode="singleTask"/>
         <activity android:name=".address.AddressActivity"/>
-
+        <activity android:name=".search.SearchActivity"/>
         <service android:name=".JobService"
             android:enabled="true"
             android:exported="true"

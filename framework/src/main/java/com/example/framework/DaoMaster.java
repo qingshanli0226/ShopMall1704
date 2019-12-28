@@ -24,6 +24,8 @@ public class DaoMaster extends AbstractDaoMaster {
         PointBeanDao.createTable(db, ifNotExists);
         StepBeanDao.createTable(db, ifNotExists);
         MessageBeanDao.createTable(db, ifNotExists);
+        HourBeanDao.createTable(db, ifNotExists);
+        MinutesBeanDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
@@ -31,6 +33,8 @@ public class DaoMaster extends AbstractDaoMaster {
         PointBeanDao.dropTable(db, ifExists);
         StepBeanDao.dropTable(db, ifExists);
         MessageBeanDao.dropTable(db, ifExists);
+        HourBeanDao.dropTable(db, ifExists);
+        MinutesBeanDao.dropTable(db, ifExists);
     }
 
     /**
@@ -52,6 +56,8 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(PointBeanDao.class);
         registerDaoClass(StepBeanDao.class);
         registerDaoClass(MessageBeanDao.class);
+        registerDaoClass(HourBeanDao.class);
+        registerDaoClass(MinutesBeanDao.class);
     }
 
     public DaoSession newSession() {

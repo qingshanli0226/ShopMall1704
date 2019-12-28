@@ -1,13 +1,8 @@
 package com.example.point.activity;
-
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
-
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;

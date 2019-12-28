@@ -1,66 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    style="@style/w_match">
+    style="@style/w_match"
+    android:orientation="vertical">
+
     <com.example.common.view.MyToolBar
         android:id="@+id/history_tool"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></com.example.common.view.MyToolBar>
+        android:layout_height="wrap_content" />
 
-    <com.example.point.view.MiuiWeatherView
-        android:id="@+id/muiview"
-
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/history_tab"
         android:layout_width="match_parent"
-        android:layout_height="397dp"></com.example.point.view.MiuiWeatherView>
-    <RelativeLayout
-        style="@style/w_match">
-        <TextView
-            style="@style/w_wrap"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="@dimen/dp_100"
-            android:drawableLeft="@mipmap/licheng"
-            android:drawablePadding="@dimen/dp_5"
-            android:gravity="center_vertical"
-            android:text="里程"
-            android:textColor="@android:color/darker_gray" />
-
-        <TextView
-            style="@style/w_wrap"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:textSize="@dimen/sp_15"
-            android:layout_marginRight="@dimen/dp_50"
-            android:layout_marginTop="@dimen/dp_100"
-            android:drawableLeft="@mipmap/kaluli"
-            android:drawablePadding="5dp"
-            android:textColor="@android:color/darker_gray"
-            android:gravity="center_vertical"
-            android:text="卡路里"
-             />
-        <TextView
-            android:id="@+id/history_mileage"
-            style="@style/w_wrap"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="50dp"
-            android:textSize="21sp"
-            android:layout_marginTop="@dimen/dp_50"
-            android:gravity="center_vertical"
-            android:text="公里"
-            android:textColor="@android:color/black" />
-        <TextView
-            android:id="@+id/history_calorie"
-            style="@style/w_wrap"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:textSize="21sp"
-            android:layout_marginRight="@dimen/dp_50"
-            android:layout_marginTop="@dimen/dp_50"
-            android:textColor="@android:color/black"
-            android:gravity="center_vertical"
-            android:text="千卡"
-            />
-    </RelativeLayout>
+        android:layout_height="56dp"></com.google.android.material.tabs.TabLayout>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/history_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></androidx.viewpager.widget.ViewPager>
 </LinearLayout>

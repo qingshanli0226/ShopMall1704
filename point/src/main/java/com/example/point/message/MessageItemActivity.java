@@ -19,8 +19,6 @@ import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.bean.MessageBean;
-import com.example.framework.manager.DaoManager;
-
 import com.example.point.R;
 import java.util.ArrayList;
 import java.util.List;

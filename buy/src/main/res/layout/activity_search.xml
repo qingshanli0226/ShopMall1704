@@ -38,7 +38,12 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/historyRecyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="@dimen/dp_120" />
+                <FrameLayout
+                    android:id="@+id/searchFrameLayout"
+                    android:labelFor="@id/historyRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/child_recyclerView"

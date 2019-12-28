@@ -1,21 +1,20 @@
 package com.example.framework.manager
 
 import android.content.Context
-import com.example.framework.DaoMaster
-import com.example.framework.MessageBeanDao
-import com.example.framework.PointBeanDao
-import com.example.framework.StepBeanDao
-import com.example.framework.bean.MessageBean
-import com.example.framework.bean.StepBean
-import com.example.framework.bean.PointBean
+import com.example.framework.*
+import com.example.framework.bean.*
 
 class DaoManager {
+    //计步数据库
     private var stepBeanDao: StepBeanDao
-
+     //积分数据库
     private var pointBeanDao: PointBeanDao
-
+    //消息数据库
     private var messageBeanDao: MessageBeanDao
-
+    //分钟数据库
+    private var minutesBeanDao: MinutesBeanDao
+    //消息数据库
+    private var hourBeanDao: HourBeanDao
     private constructor(ctx: Context) {
 
         //创建一个db 数据库
@@ -26,6 +25,8 @@ class DaoManager {
         stepBeanDao = daoSession.stepBeanDao
         pointBeanDao = daoSession.pointBeanDao
         messageBeanDao=daoSession.messageBeanDao
+        minutesBeanDao=daoSession.minutesBeanDao
+        hourBeanDao=daoSession.hourBeanDao
     }
 
     //通过伴生对象，实现单例
@@ -63,7 +64,6 @@ class DaoManager {
         var start_date:MutableList<StepBean> = stepBeanDao.queryRaw("where curr_date=?", start)//先获取开始日期
         var stop_date:MutableList<StepBean> = stepBeanDao.queryRaw("where curr_date=?", stop)//结束日期
         if (start_date.size==0 || stop_date.size==0){
-
         }else{
             //获取两个日期之间的ID
             val start_id = start_date.get(0).id
@@ -79,7 +79,6 @@ class DaoManager {
                     StepBeanDao.Properties.Id.between(stop_id,start_id)).build().list()
                 return list
             }
-
         }
         var list:MutableList<StepBean> = mutableListOf()
         return  list
@@ -120,5 +119,36 @@ class DaoManager {
     fun queryMessageBean(curr_date:String):MutableList<MessageBean> {
         var stuList:MutableList<MessageBean> = messageBeanDao.queryRaw("where message_date=?", curr_date)
         return stuList
+    }
+
+    //按小时插入
+    fun addHourBean(hour: HourBean) {
+        hourBeanDao.insert(hour)
+    }
+    //加载小时所有
+    fun loadHourBean():MutableList<HourBean> {
+        var stuList:MutableList<HourBean> =hourBeanDao.queryBuilder().orderDesc(HourBeanDao.Properties.Id).list()
+        return stuList
+    }
+
+    //按分钟插入
+    fun addMinutesBean(min: MinutesBean) {
+        minutesBeanDao.insert(min)
+    }
+    //加载分钟所有
+    fun loadMinutesBean():MutableList<MinutesBean> {
+        var stuList:MutableList<MinutesBean> =minutesBeanDao.queryBuilder().orderDesc(MinutesBeanDao.Properties.Id).list()
+        return stuList
+    }
+
+    //查询日期
+    fun countMinutesBean():Long {
+        return minutesBeanDao.count()
+    }
+
+    //删除日期
+    fun delMinutesBean() {
+        val list = minutesBeanDao.queryBuilder().limit(1).build().list()
+        minutesBeanDao.delete(list.get(0));
     }
 }

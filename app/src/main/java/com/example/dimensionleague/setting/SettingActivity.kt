@@ -41,7 +41,7 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
     @SuppressLint("InflateParams")
     override fun init() {
         setting_toolbar.init(Constant.OTHER_STYLE)
-        setting_toolbar.background = resources.getDrawable(R.drawable.toolbar_style)
+        setting_toolbar.background = resources.getDrawable(R.drawable.toolbar_style,null)
         setting_toolbar.other_back.setImageResource(R.drawable.back3)
         setting_toolbar.other_title.setTextColor(Color.WHITE)
         setting_toolbar.other_title.text = getString(R.string.user_setting)

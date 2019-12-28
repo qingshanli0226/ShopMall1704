@@ -1,6 +1,7 @@
-package com.example.buy.activity;
+package com.example.dimensionleague.search;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.buy.R;
+import com.example.buy.activity.GoodsActiviy;
 import com.example.buy.databeans.GetSearchBeanOne;
 import com.example.buy.databeans.GetSearchBeanTwo;
 import com.example.buy.databeans.GoodsBean;
@@ -19,9 +21,10 @@ import com.example.buy.databinding.ItemHistoryBinding;
 import com.example.buy.databinding.ItemSearchChildBinding;
 import com.example.buy.databinding.ItemSearchHotBinding;
 import com.example.buy.databinding.ItemSearchResultBinding;
-import com.example.buy.viewmodel.SearchViewModel;
 import com.example.common.code.Constant;
+import com.example.common.utils.IntentUtil;
 import com.example.common.utils.SPUtil;
+import com.example.dimensionleague.find.FindSendFragment;
 import com.example.framework.base.BaseBindActivity;
 import com.example.framework.base.BaseRVAdapter;
 import com.example.net.AppNetConfig;
@@ -39,7 +42,8 @@ public class SearchActivity extends BaseBindActivity<ActivitySearchBinding> {
 
     private ActivitySearchBinding activitySearchBinding;
 
-    SearchViewModel searchViewModel;
+    private SearchViewModel searchViewModel;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_search;
@@ -47,6 +51,7 @@ public class SearchActivity extends BaseBindActivity<ActivitySearchBinding> {
 
     @Override
     protected void initView(ActivitySearchBinding bindView) {
+        getSupportFragmentManager().beginTransaction().add(R.id.searchFrameLayout,new FindSendFragment()).commit();
         activitySearchBinding = bindView;
         //TODO 初始化控件
         activitySearchBinding.myToolBar.init(Constant.SEARCH_STYLE);
@@ -69,6 +74,17 @@ public class SearchActivity extends BaseBindActivity<ActivitySearchBinding> {
                 hotList.get(position).setFigure(AppNetConfig.BASE_URl_IMAGE + hotList.get(position).getFigure());
                 holder.bindView.setBean(hotList.get(position));
                 holder.bindView.setRvAdapter((BaseRVAdapter) activitySearchBinding.hotRecyclerView.getAdapter());
+                holder.bindView.itemSearchImg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(SearchActivity.this, GoodsActiviy.class);
+                        intent.putExtra(IntentUtil.GOTO_GOOD, new GoodsBean(hotList.get(position).getProduct_id(),
+                                0,hotList.get(position).getName(),
+                                hotList.get(position).getFigure()
+                                ,hotList.get(position).getCover_price()));
+                        boundActivity(intent);
+                    }
+                });
             }
         });
 
@@ -127,6 +143,7 @@ public class SearchActivity extends BaseBindActivity<ActivitySearchBinding> {
                 historyList.addAll(SPUtil.getSearch());
                 activitySearchBinding.historyRecyclerView.getAdapter().notifyDataSetChanged();
 
+                activitySearchBinding.searchFrameLayout.setVisibility(View.VISIBLE);
                 activitySearchBinding.historyRecyclerView.setVisibility(View.VISIBLE);
                 activitySearchBinding.resultRecyclerView.setVisibility(View.GONE);
                 activitySearchBinding.childRecyclerView.setVisibility(View.GONE);
@@ -158,6 +175,7 @@ public class SearchActivity extends BaseBindActivity<ActivitySearchBinding> {
                     activitySearchBinding.childRecyclerView.setVisibility(View.VISIBLE);
                     activitySearchBinding.resultRecyclerView.setVisibility(View.GONE);
                     activitySearchBinding.historyRecyclerView.setVisibility(View.GONE);
+                    activitySearchBinding.searchFrameLayout.setVisibility(View.GONE);
                 } catch (Exception e) {
                     try {
                         GetSearchBeanTwo dateTwo = new Gson().fromJson(str, GetSearchBeanTwo.class);
@@ -168,6 +186,7 @@ public class SearchActivity extends BaseBindActivity<ActivitySearchBinding> {
                         activitySearchBinding.hotRecyclerView.setVisibility(View.GONE);
                         activitySearchBinding.childRecyclerView.setVisibility(View.GONE);
                         activitySearchBinding.historyRecyclerView.setVisibility(View.GONE);
+                        activitySearchBinding.searchFrameLayout.setVisibility(View.GONE);
                     } catch (Exception e1) {
                         Toast.makeText(SearchActivity.this, "这个数据太长了,而且拿不到bean", Toast.LENGTH_SHORT).show();
                         historyList.clear();
@@ -175,6 +194,7 @@ public class SearchActivity extends BaseBindActivity<ActivitySearchBinding> {
                         activitySearchBinding.historyRecyclerView.getAdapter().notifyDataSetChanged();
 
                         activitySearchBinding.historyRecyclerView.setVisibility(View.VISIBLE);
+                        activitySearchBinding.searchFrameLayout.setVisibility(View.VISIBLE);
                         activitySearchBinding.resultRecyclerView.setVisibility(View.GONE);
                         activitySearchBinding.hotRecyclerView.setVisibility(View.GONE);
                         activitySearchBinding.childRecyclerView.setVisibility(View.GONE);

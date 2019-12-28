@@ -9,7 +9,6 @@ import org.greenrobot.greendao.annotation.Generated;
 public class StepBean {
     @Id(autoincrement = true)
     private Long id; //必须使用Long类型，long 或者 Integer int都不行
-
     @NotNull
     private String curr_date;
 
@@ -50,4 +49,5 @@ public class StepBean {
     public void setStep(int step) {
         this.step = step;
     }
+
 }

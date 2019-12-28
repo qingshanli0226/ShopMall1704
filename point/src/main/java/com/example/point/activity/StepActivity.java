@@ -1,19 +1,10 @@
 package com.example.point.activity;
-
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-
 import com.example.common.code.Constant;
 import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseActivity;
@@ -25,6 +16,8 @@ import com.example.point.stepmanager.StepPointManager;
 import com.example.point.view.StepView;
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class StepActivity extends BaseActivity {
     private TextView tv_isSupport;
@@ -61,7 +54,7 @@ public class StepActivity extends BaseActivity {
     private TextView tv_set;
     private TextView tv_data;
     private MyToolBar step_tool;
-
+    private   List<StepBean> beans;
     @Override
     public void init() {
         tv_isSupport = findViewById(R.id.tv_isSupport);
@@ -86,8 +79,7 @@ public class StepActivity extends BaseActivity {
         tv_set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(StepActivity.this, PhysicalActivity.class);
-                startActivity(intent);
+                startActivity(PhysicalActivity.class,null);
 
             }
         });
@@ -96,8 +88,7 @@ public class StepActivity extends BaseActivity {
         tv_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(StepActivity.this, HistoryActivity.class);
-                startActivity(intent);
+                startActivity(HistoryActivity.class,null);
             }
         });
 
@@ -122,15 +113,27 @@ public class StepActivity extends BaseActivity {
             }
         }).start();
 
-        if (new StepIsSupport().isSupportStepCountSensor(this)) {
-            String CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis())+"";//今日日期
+        //线程池
+        ExecutorService service = Executors.newSingleThreadExecutor();
+        service.execute(new Runnable() {
+            @Override
+            public void run() {
+                String CURRENT_DATE = DateFormat.format("MM-dd", System.currentTimeMillis())+"";//今日日期
 
-            List<StepBean> beans = DaoManager.Companion.getInstance(this).queryStepBean(CURRENT_DATE);
-            if (beans.size()!=0){
-                stepView.setCurrentCount(stepInt, beans.get(0).getStep());
-            }else {
-                stepView.setCurrentCount(stepInt,0);
+                 beans = DaoManager.Companion.getInstance(StepActivity.this).queryStepBean(CURRENT_DATE);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (beans.size()!=0){
+                            stepView.setCurrentCount(stepInt, beans.get(0).getStep());
+                        }else {
+                            stepView.setCurrentCount(stepInt,0);
+                        }
+                    }
+                });
             }
+        });
+        if (new StepIsSupport().isSupportStepCountSensor(this)) {
             tv_isSupport.setText("计步中...");
             StepPointManager.getInstance(this).addGetStepListener(new StepPointManager.GetStepListener() {
                 @Override

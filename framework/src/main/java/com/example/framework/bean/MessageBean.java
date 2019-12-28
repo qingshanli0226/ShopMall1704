@@ -61,5 +61,4 @@ public class MessageBean {
         this.message_date = message_date;
     }
 
-
 }
