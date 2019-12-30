@@ -21,6 +21,7 @@ class FunctionActivity : BaseActivity(), FunctionViewModel.LoadingPage {
 
     private lateinit var functionAdaptor: FunctionAdaptor   //适配器
     private lateinit var functionViewModel: FunctionViewModel //ViewModel 网络请求
+    private lateinit var pageUtil: PageUtil
 
     override fun setLayoutId(): Int = R.layout.activity_function
     override fun initView() {
@@ -37,6 +38,7 @@ class FunctionActivity : BaseActivity(), FunctionViewModel.LoadingPage {
             ActivityInstanceManager.removeActivity(this)
         }
 
+        pageUtil = PageUtil(this)
 
         val linearLayoutManager = LinearLayoutManager(this)
         linearLayoutManager.stackFromEnd = true //列表再底部开始展示，反转后由上面开始展示
@@ -68,12 +70,12 @@ class FunctionActivity : BaseActivity(), FunctionViewModel.LoadingPage {
 
     //显示加载页
     override fun showLoadingPage() {
-        PageUtil.getInstance(this).setReview(mRlFunction).showLoad()
+        pageUtil.setReview(mRlFunction).showLoad()
     }
 
     //隐藏加载页
     override fun hideLoadingPage() {
-        PageUtil.getInstance(this).setReview(mRlFunction).hideLoad()
+        pageUtil.setReview(mRlFunction).hideLoad()
     }
 
 

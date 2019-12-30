@@ -37,6 +37,7 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> implements MessageMa
 
     private ErrorPageCustom mErrorPage;
     private RelativeLayout mTypeRelativeLayout;
+    private PageUtil pageUtil;
 
 
     @Override
@@ -56,6 +57,9 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> implements MessageMa
 
         mTypeLeftLv = view.findViewById(R.id.type_left_lv);
         mTypeRightRv = view.findViewById(R.id.type_right_rv);
+
+        pageUtil = new PageUtil(getContext());
+
         //添加加载页
         mTypeRelativeLayout = view.findViewById(R.id.typeRelaTiveLayout);
 
@@ -142,9 +146,9 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> implements MessageMa
     @Override
     public void loadingPage(int requestCode, int code) {
         if (code == LoadingPageConfig.STATE_LOADING_CODE) {
-            PageUtil.getInstance(getContext()).setReview(mTypeRelativeLayout).showLoad();
+            pageUtil.setReview(mTypeRelativeLayout).showLoad();
         } else if (code == LoadingPageConfig.STATE_SUCCESS_CODE) {
-            PageUtil.getInstance(getContext()).setReview(mTypeRelativeLayout).hideLoad();
+            pageUtil.setReview(mTypeRelativeLayout).hideLoad();
         }
     }
 

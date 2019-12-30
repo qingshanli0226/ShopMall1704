@@ -40,5 +40,4 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'], exclude: [])
     //noinspection GradlePath
     implementation files('libs\\pinyin4j-2.5.0.jar')
-
 }

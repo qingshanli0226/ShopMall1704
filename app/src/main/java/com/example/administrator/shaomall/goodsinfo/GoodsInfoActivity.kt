@@ -9,14 +9,12 @@ import android.graphics.Color
 import android.graphics.PointF
 import android.os.Build
 import android.support.annotation.RequiresApi
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import android.widget.Toast
 import com.alibaba.fastjson.JSONObject
 import com.bumptech.glide.Glide
 import com.example.administrator.shaomall.R
@@ -51,13 +49,14 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
     private lateinit var qBadgeView: QBadgeView //小红点显示
     private lateinit var linearLayout: LinearLayout
     private lateinit var mWebView: WebView
-    override fun setLayoutId(): Int = R.layout.activity_commodity
+    private lateinit var pageUtil: PageUtil
 
+
+    override fun setLayoutId(): Int = R.layout.activity_commodity
     override fun initView() {
 
         //购物车商品数量更新监听
         ShoppingManager.getInstance().registerShoppingNumChangeListener(this)
-
 
         //点击关闭
         mTc_top.setTbLeftIVOnClickListener {
@@ -129,17 +128,6 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
         mWebView.loadUrl(productPic)
     }
 
-
-    override fun loadingPage(requestCode: Int, code: Int) {
-        if (requestCode == 200) {
-            Log.d("SSH", code.toString() + "")
-            Toast.makeText(this, "200", Toast.LENGTH_SHORT).show()
-            PageUtil.getInstance(this).setReview(goodsInfoRelativeLayout).showLoad()
-        } else if (requestCode == 300) {
-            Toast.makeText(this, "300", Toast.LENGTH_SHORT).show()
-            PageUtil.getInstance(this).setReview(goodsInfoRelativeLayout).showLoad()
-        }
-    }
 
     /**
      * 点击事件监听处理
