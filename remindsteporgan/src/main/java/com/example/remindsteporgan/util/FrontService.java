@@ -1,4 +1,4 @@
-package com.example.remindsteporgan.Util;
+package com.example.remindsteporgan.util;
 
 import android.app.Notification;
 import android.app.Service;

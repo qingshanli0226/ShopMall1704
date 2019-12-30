@@ -38,6 +38,9 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
     private TextView tvGoToPay;
     private RvAdp rvAdp;
     private float sum = 0.00f;
+    private TextView textNull;
+    //商品的个数
+    int shoppingNum = ShoppingManager.getInstance().getShoppingNum();
 
     //商品数据
     private List<ShoppingCartBean> listData = ShoppingManager.getInstance().getShoppingCartData();
@@ -56,6 +59,8 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
         //数据更新监听
         ShoppingManager.getInstance().registerNotifyUpdatedShoppingDataListener(this);
 
+        textNull = (TextView) view.findViewById(R.id.textNull);
+
         LinearLayout topBar =  view.findViewById(R.id.top_bar);
         TextView title =  view.findViewById(R.id.title);
         recyclerView =  view.findViewById(R.id.rv_choppingCart);
@@ -63,6 +68,9 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
         tvTotalPrice =  view.findViewById(R.id.tv_total_price);
         tvDelete =  view.findViewById(R.id.tv_delete);
         tvGoToPay =  view.findViewById(R.id.tv_go_to_pay);
+
+
+
 
         rvAdp = new RvAdp(listData, getContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, true);
@@ -76,6 +84,9 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
         }
         setTvTotalPriceValue();//更新合计值
     }
+
+
+
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -112,6 +123,8 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
                 } else {
                     Toast.makeText(mContext, "您还没有选择商品请先选择", Toast.LENGTH_SHORT).show();
                 }
+
+
             }
         });
 
@@ -262,11 +275,16 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
     @Override
     public void onNotifyUpdateShoppingData(List<ShoppingCartBean> data) {
         //TODO 如果购物车里面没有数据了吧全选按钮设置为false并把总价格归零
+
+
         if (data.size() == 0) {
             allCheckbox.setChecked(false);
-        } else if (data.size() == ShoppingManager.getInstance().getShoppingCartSelectionData().size()) {
+            recyclerView.setVisibility(View.GONE);
+            textNull.setVisibility(View.VISIBLE);
+        }else if (data.size() == ShoppingManager.getInstance().getShoppingCartSelectionData().size()) {
             //是否是全选
             allCheckbox.setChecked(true);
+
         }
         setTvTotalPriceValue();//更新合计值
         rvAdp.notifyDataSetChanged();
@@ -274,6 +292,11 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
         //始终显示到顶部
         if (data.size() > 1) {
             recyclerView.smoothScrollToPosition(data.size() - 1);
+            
+        }
+        if (data.size() > 0){
+            recyclerView.setVisibility(View.VISIBLE);
+            textNull.setVisibility(View.GONE);
         }
     }
 

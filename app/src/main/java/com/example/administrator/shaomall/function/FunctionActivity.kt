@@ -5,13 +5,17 @@ import android.arch.lifecycle.ViewModelProviders
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
+import android.widget.Toast
 import com.example.administrator.shaomall.R
 import com.example.administrator.shaomall.function.adapter.FunctionAdaptor
+import com.example.commen.util.PageUtil
 import com.example.shoppingcart.OrderFormActivity
 import com.shaomall.framework.base.BaseActivity
 import com.shaomall.framework.bean.FunctionBean
 import com.shaomall.framework.base.presenter.IBasePresenter
 import com.shaomall.framework.manager.ActivityInstanceManager
+import kotlinx.android.synthetic.main.activity_commodity.*
 import kotlinx.android.synthetic.main.activity_function.*
 
 class FunctionActivity : BaseActivity() {
@@ -21,7 +25,7 @@ class FunctionActivity : BaseActivity() {
     private lateinit var functionAdaptor: FunctionAdaptor   //适配器
     private lateinit var functionViewModel: FunctionViewModel //ViewModel 网络请求
 
-
+    internal lateinit var pageUtil: PageUtil
     override fun setLayoutId(): Int = R.layout.activity_function
     override fun initView() {
         bundle = intent.extras
@@ -48,6 +52,10 @@ class FunctionActivity : BaseActivity() {
     }
 
     override fun initData() {
+
+        pageUtil = PageUtil(this)
+        pageUtil.review =  goodsInfoRelativeLayout
+
         //使用ViewModel提供者,获取ViewModel的实例
         functionViewModel = ViewModelProviders.of(this).get(FunctionViewModel::class.java)
         functionViewModel.liveData.observe(this, Observer<List<FunctionBean>> { t ->

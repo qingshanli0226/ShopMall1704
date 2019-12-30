@@ -42,4 +42,5 @@
     <string name="commodity_by">由</string>
     <string name="chooseStyle">请选择款式</string>
     <string name="commodity_prompt">提示：普通商品享有质量问题7天退货，签收后3个工作日内可换货。其他特殊商品（如手办）的售后以页面说明为准</string>
+    <string name="loginRemindPassWordText">记住密码</string>
 </resources>
