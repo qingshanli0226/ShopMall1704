@@ -73,7 +73,7 @@
             android:name=".activity.LoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.CollectionActivity" />
+        <activity android:name=".activity.CollectionActivity" android:launchMode="singleTop"/>
 
         <activity
             android:name="com.example.step.Ui.HistoryActivity"

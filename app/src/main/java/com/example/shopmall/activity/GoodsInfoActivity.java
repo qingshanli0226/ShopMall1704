@@ -126,9 +126,6 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
         });
 
         String[] strs = new String[]{"联系客服", "收藏", "购物车"};
-        Drawable mine1 = getResources().getDrawable(R.drawable.mine);
-        Drawable collect1 = getResources().getDrawable(R.drawable.collect);
-        Drawable shoppingcart1 = getResources().getDrawable(R.drawable.shoppingcart);
         final Drawable mine = getResources().getDrawable(R.drawable.mine);
 
         Drawable collect = null;
@@ -179,26 +176,30 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
         btGoodsInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String token = ShoppingManager.getInstance().getToken(GoodsInfoActivity.this);
-                HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put("token", token);
+                boolean loginStatus = UserManager.getInstance().getLoginStatus();
+                if(loginStatus){
+                    String token = ShoppingManager.getInstance().getToken(GoodsInfoActivity.this);
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    hashMap.put("token", token);
 
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("productId", goods_bean.getProduct_id());
-                jsonObject.put("productNum", goods_bean.getNumber());
-                jsonObject.put("productName", goods_bean.getName());
-                jsonObject.put("url", Constant.BASE_URL_IMAGE + goods_bean.getFigure());
-                jsonObject.put("productPrice", goods_bean.getCover_price());
-                jsonObject.put("sign", SignUtil.generateJsonSign(jsonObject));
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("productId", goods_bean.getProduct_id());
+                    jsonObject.put("productNum", goods_bean.getNumber());
+                    jsonObject.put("productName", goods_bean.getName());
+                    jsonObject.put("url", Constant.BASE_URL_IMAGE + goods_bean.getFigure());
+                    jsonObject.put("productPrice", goods_bean.getCover_price());
+                    jsonObject.put("sign", SignUtil.generateJsonSign(jsonObject));
 
-                SignUtil.encryptJsonParamsByBase64(jsonObject);
+                    SignUtil.encryptJsonParamsByBase64(jsonObject);
 
-                addOneProduct = new InsertPresenter("addOneProduct", InsertBean.class, hashMap, jsonObject);
-                addOneProduct.attachPostView(GoodsInfoActivity.this);
-                addOneProduct.getPostJsonData();
+                    addOneProduct = new InsertPresenter("addOneProduct", InsertBean.class, hashMap, jsonObject);
+                    addOneProduct.attachPostView(GoodsInfoActivity.this);
+                    addOneProduct.getPostJsonData();
 
-
-                addAnimation(btGoodsInfo);
+                    addAnimation(btGoodsInfo);
+                }else {
+                    setAlertDialog();
+                }
             }
         });
     }
@@ -279,8 +280,8 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
     //购物车
     private void shoppingcart() {
         ShoppingManager.getInstance().setMainitem(3);
+        startActivity(new Intent(this,MainActivity.class));
         finish();
-
     }
 
     //收藏
@@ -339,8 +340,7 @@ public class GoodsInfoActivity extends BaseActivity implements IPostBaseView<Ins
         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                ShoppingManager.getInstance().setMainitem(0);
-                finish();
+                dialogInterface.dismiss();
             }
         });
         AlertDialog alertDialog = builder.create();
