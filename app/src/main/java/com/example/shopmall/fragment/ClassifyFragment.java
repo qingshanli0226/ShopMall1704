@@ -178,7 +178,9 @@ public class ClassifyFragment extends BaseFragment implements IGetBaseView<Class
     @Override
     public void onDestroy() {
         super.onDestroy();
-        integerPresenter.detachView();
+        if (integerPresenter!=null){
+            integerPresenter.detachView();
+        }
         lpClassifyLoading.DetachLoadingView();
     }
 

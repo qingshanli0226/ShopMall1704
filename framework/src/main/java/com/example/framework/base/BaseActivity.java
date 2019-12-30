@@ -44,6 +44,7 @@ public abstract class BaseActivity extends AppCompatActivity implements ConnectM
         super.onCreate(savedInstanceState);
         setContentView(setLayout());
         AppActivityManager.addActivity(this);
+
         //沉浸式
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();

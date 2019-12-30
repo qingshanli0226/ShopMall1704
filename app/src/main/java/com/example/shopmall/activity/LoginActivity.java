@@ -219,20 +219,14 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
         if (data.getMessage().equals("登录成功")) {
             LoginEvent loginEvent = new LoginEvent("用户登录", true);
             JAnalyticsInterface.onEvent(LoginActivity.this, loginEvent);
-            new Thread() {
-                @Override
-                public void run() {
-                    super.run();
-                    ResultBean result = data.getResult();
-                    UserManager.getInstance().setActiveUser(LoginActivity.this,result);
-                    String token = result.getToken();
-                    UserManager.getInstance().savaToken(token);
-                    SharedPreferences token1 = getSharedPreferences("login", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor edit = token1.edit();
-                    edit.putBoolean("isLogin", true);
-                    edit.apply();
-                }
-            }.start();
+            ResultBean result = data.getResult();
+            UserManager.getInstance().setActiveUser(LoginActivity.this, result);
+            String token = result.getToken();
+            UserManager.getInstance().savaToken(token);
+            SharedPreferences token1 = getSharedPreferences("login", Context.MODE_PRIVATE);
+            SharedPreferences.Editor edit = token1.edit();
+            edit.putBoolean("isLogin", true);
+            edit.apply();
             ShoppingManager.getInstance().setMainitem(0);
             finish();
         } else {
@@ -252,10 +246,9 @@ public class LoginActivity extends BaseActivity implements IPostBaseView<LoginBe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (loginPresenter != null){
+        if (loginPresenter != null) {
             loginPresenter.detachView();
         }
         handler.removeCallbacksAndMessages(this);
-
     }
 }

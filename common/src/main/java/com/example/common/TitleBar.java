@@ -1,6 +1,7 @@
 package com.example.common;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -17,7 +18,14 @@ import androidx.annotation.Nullable;
 //自定义标题栏
 public class TitleBar extends LinearLayout {
 
+    private String centerText;
+    private String leftText;
+    private String rightText;
+    private int leftImg;
+    private int centerImg;
+    private int rightImg;
     private Context context;
+    private boolean redMessageVisibility;
 
     public TitleBar(Context context) {
         this(context, null);
@@ -30,6 +38,16 @@ public class TitleBar extends LinearLayout {
     public TitleBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.context = context;
+
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TitleBar);
+        centerText = typedArray.getString(R.styleable.TitleBar_centerText);
+        leftText = typedArray.getString(R.styleable.TitleBar_leftText);
+        rightText = typedArray.getString(R.styleable.TitleBar_rightText);
+
+        leftImg = typedArray.getResourceId(R.styleable.TitleBar_leftImg, 0);
+        centerImg = typedArray.getResourceId(R.styleable.TitleBar_centerImg, 0);
+        rightImg = typedArray.getResourceId(R.styleable.TitleBar_rightImg, 0);
+        redMessageVisibility = typedArray.getBoolean(R.styleable.TitleBar_redMessageVisibility, false);
         init();
     }
 
@@ -43,6 +61,7 @@ public class TitleBar extends LinearLayout {
     private TitleClickLisner titleClickLisner;
     private TextView mTvMessage;
     private RelativeLayout mRlLineTitle;
+
     //初始化
     private void init() {
         View view = LayoutInflater.from(context).inflate(R.layout.titlebar_layout, this);
@@ -54,7 +73,9 @@ public class TitleBar extends LinearLayout {
         mIvRight = view.findViewById(R.id.iv_right);
         mTitle = view.findViewById(R.id.rl_title);
         mTvMessage = view.findViewById(R.id.tv_red_message);
-        mRlLineTitle=view.findViewById(R.id.rl_title_line);
+        mRlLineTitle = view.findViewById(R.id.rl_title_line);
+
+        initTitle();
 
         mIvRight.setOnClickListener(new OnClickListener() {
             @Override
@@ -94,6 +115,28 @@ public class TitleBar extends LinearLayout {
         });
     }
 
+    private void initTitle() {
+        mTvCenter.setText(centerText);
+        mTvLeft.setText(leftText);
+        mTvRight.setText(rightText);
+
+        if (centerImg != 0) {
+            mIvCenter.setImageResource(centerImg);
+        }
+        if (leftImg != 0) {
+            mIvLeft.setImageResource(leftImg);
+        }
+        if (rightImg != 0) {
+            mIvRight.setImageResource(rightImg);
+        }
+
+        if (redMessageVisibility) {
+            mTvMessage.setVisibility(View.VISIBLE);
+        } else {
+            mTvMessage.setVisibility(View.GONE);
+        }
+    }
+
     //设置标题栏监听
     public void setTitleClickLisner(TitleClickLisner titleClickLisner) {
         this.titleClickLisner = titleClickLisner;
@@ -101,9 +144,9 @@ public class TitleBar extends LinearLayout {
 
     //标题栏显示红色消息
     public void setMessageShow(boolean show) {
-        if (show){
+        if (show) {
             mTvMessage.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             mTvMessage.setVisibility(View.GONE);
         }
     }

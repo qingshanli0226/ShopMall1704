@@ -61,6 +61,7 @@ public class MyApplication extends Application {
 //                startService(new Intent(this, StepJobService.class));
                 startService(new Intent(this,StepLocalService.class));
                 startService(new Intent(this,StepRemoteService.class));
+
             }
         }
 

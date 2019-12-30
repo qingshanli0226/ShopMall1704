@@ -35,7 +35,7 @@ import com.example.shopmall.presenter.IntegerPresenter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomePageFragment extends BaseFragment implements IGetBaseView<HomepageBean>, ILoadView {
+public class HomePageFragment extends BaseFragment implements IGetBaseView<HomepageBean>, ILoadView, ConnectManager.INetConnetListener {
 
     private TitleBar tbHomepage;
     private RecyclerView rvHomePage;
@@ -49,41 +49,37 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
     public void onResume() {
         super.onResume();
 
-        integerPresenter = new IntegerPresenter(Constant.HOME_URL, HomepageBean.class);
-        integerPresenter.attachGetView(this);
-        integerPresenter.getGetData();
-
         if (UserManager.getInstance().getLoginStatus()) {
             handler.sendEmptyMessage(100);
-        }else {
+        } else {
             handler.sendEmptyMessage(101);
         }
     }
 
     @SuppressLint("HandlerLeak")
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
 
-            if (msg.what == 100){
+            if (msg.what == 100) {
                 List<MessageBean> messages = MessageManager.getInstance().getMessage();
                 if (messages.size() > 0) {
                     for (int i = 0; i < messages.size(); i++) {
                         if (!messages.get(i).getIsMessage()) {
                             sum++;
-                            if (sum > 0){
+                            if (sum > 0) {
                                 tbHomepage.setMessageShow(true);
-                            }else {
+                            } else {
                                 tbHomepage.setMessageShow(false);
                             }
-                        }else {
+                        } else {
                             sum = 0;
                             tbHomepage.setMessageShow(false);
                         }
                     }
                 }
-            }else if (msg.what == 101){
+            } else if (msg.what == 101) {
                 tbHomepage.setMessageShow(false);
             }
         }
@@ -93,7 +89,6 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
     protected void initData() {
         ShoppingManager.getInstance().setMainitem(0);
         tbHomepage.setTitleBacKGround(Color.RED);
-        tbHomepage.setTitleBacKGround(Color.WHITE);
         tbHomepage.setCenterText("首页", 18, Color.WHITE);
         tbHomepage.setRightImg(R.mipmap.new_message_icon);
 
@@ -106,11 +101,11 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
             @Override
             public void RightClick() {
                 //跳转到消息
-                if (UserManager.getInstance().getLoginStatus()){ //判断登录，登录后跳转到消息
+                if (UserManager.getInstance().getLoginStatus()) { //判断登录，登录后跳转到消息
                     startActivity(new Intent(getContext(), MessageActivity.class));
-                }else {//没有登录跳转到登录页登录
+                } else {//没有登录跳转到登录页登录
                     Intent intent = new Intent(getContext(), LoginActivity.class);
-                    intent.putExtra("mainitem",0);
+                    intent.putExtra("mainitem", 0);
                     startActivity(intent);
                 }
             }
@@ -122,9 +117,9 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
 
         //检查是否有网络
         boolean connectStatus = ConnectManager.getInstance().getConnectStatus();
-
+        ConnectManager.getInstance().registerConnectListener(this);
         //从缓存中获取数据
-        if (connectStatus){
+        if (connectStatus) {
             HomepageBean cacheBean = new CaCheManager(getContext()).getCacheBean(getContext());
             List<HomepageBean.ResultBean> resultBeans = new ArrayList<>();
             if (cacheBean != null) {
@@ -170,6 +165,7 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
         HomePageAdapter home_page_adapter = new HomePageAdapter(getContext());
         home_page_adapter.reFresh(resultBeans);
         rvHomePage.setAdapter(home_page_adapter);
+        lpLoadingPageHomePage.setVisibility(View.GONE);
     }
 
     //网络获取失败显示loadingPage
@@ -207,10 +203,22 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
     public void onDestroy() {
         super.onDestroy();
 
-        if (integerPresenter != null){
+        if (integerPresenter != null) {
             integerPresenter.detachView();
         }
         lpLoadingPageHomePage.DetachLoadingView();
         handler.removeCallbacksAndMessages(this);
+    }
+
+    @Override
+    public void onConnect() {
+        integerPresenter = new IntegerPresenter(Constant.HOME_URL, HomepageBean.class);
+        integerPresenter.attachGetView(this);
+        integerPresenter.getGetData();
+    }
+
+    @Override
+    public void onDisConnect() {
+
     }
 }
