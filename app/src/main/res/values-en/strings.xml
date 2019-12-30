@@ -86,6 +86,6 @@
     <string name="sex">sex</string>
     <string name="name">name</string>
     <string name="hean_user_name">portrait</string>
-    <string name="setAddress">select address</string>
-    <string name="address_manage">地址管理</string>
+    <string name="setAddress">Save address</string>
+    <string name="address_manage">Address Manager</string>
 </resources>

@@ -2,23 +2,58 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     android:id="@+id/addressRel">
     <com.example.common.view.MyToolBar
         android:id="@+id/addressMyToolBar"
         android:background="@drawable/toolbar_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/addressSure"
-        android:layout_below="@id/myAddress"
-        style="@style/BuyBut"
-        android:text="@string/setAddress"
+    <TextView
+        android:id="@+id/addressMyName"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_below="@id/addressMyToolBar"
+        android:text="收货人:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/phoneText"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_below="@id/addressMyName"
+        android:text="手机号码:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:layout_toRightOf="@id/phoneText"
+        android:layout_below="@id/addressMyName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/addressBigText"
+        android:layout_below="@id/phoneText"
+        android:layout_marginTop="@dimen/dp_15"
+        android:text="所在地区"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/addressSmallText"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_below="@id/addressBigText"
+        android:text="详细地址:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/addressSure"
+        android:layout_centerInParent="true"
+        android:text="@string/setAddress"
+        style="@style/BuyBut"/>
     <TextView
         android:id="@+id/myAddress"
         android:layout_below="@id/addressMyToolBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-
+    <EditText
+        android:layout_below="@id/addressSmallText"
+        android:layout_width="@dimen/dp_250"
+        android:layout_height="@dimen/dp_250"/>
 </RelativeLayout>

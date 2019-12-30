@@ -178,6 +178,7 @@ public class GoodsActivity extends BaseNetConnectActivity implements View.OnClic
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
+                animation.cancel();
                 //购物车摇动
                 ObjectAnimator carAnimator = ObjectAnimator.ofFloat(cartBut, "rotation", 0, 30, -30, 0);
                 carAnimator.setDuration(500);
@@ -185,6 +186,7 @@ public class GoodsActivity extends BaseNetConnectActivity implements View.OnClic
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationEnd(animation);
+                        animation.cancel();
                         //还原image
                         beiImage.setVisibility(View.GONE);
                         beiImage.setScaleX(0);
