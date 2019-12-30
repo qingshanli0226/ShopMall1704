@@ -47,7 +47,6 @@ public class StepManager {
 
     private Intent intent;
 
-//    private int cut;
 
     SQLiteDatabase hourDb;
 
@@ -105,11 +104,9 @@ public class StepManager {
         };
 
         Intent intent = new Intent(context, StepService.class);
+        context.startService(intent);
         context.bindService(intent,serviceConnection,Context.BIND_AUTO_CREATE);
         isBinder=true;
-
-
-
 
         HourSql hourSql = new HourSql(context);
         hourDb = hourSql.getWritableDatabase();
@@ -162,22 +159,27 @@ public class StepManager {
         contentValues.put("date",date);
         contentValues.put("currentStep",current);
         hourDb.insert("history",null,contentValues);
+
+        Log.e("##Curr",current+"");
+        findHour();
     }
     public List<HourBean> findHour(){
-        Cursor cursor = hourDb.rawQuery("select distinct time,date,currentStep from history", null);
-        List<HourBean> mlist=new ArrayList<>();
-        while (cursor.moveToNext())
-        {
-            String time = cursor.getString(cursor.getColumnIndex("time"));
-            String date = cursor.getString(cursor.getColumnIndex("date"));
-            int currentStep = cursor.getInt(cursor.getColumnIndex("currentStep"));
 
-            HourBean hourBean = new HourBean(time, date, currentStep);
-            mlist.add(hourBean);
+            Cursor cursor = hourDb.rawQuery("select distinct time,date,currentStep from history", null);
+            List<HourBean> mlist=new ArrayList<>();
+            while (cursor.moveToNext())
+            {
+                String time = cursor.getString(cursor.getColumnIndex("time"));
+                String date = cursor.getString(cursor.getColumnIndex("date"));
+                int currentStep = cursor.getInt(cursor.getColumnIndex("currentStep"));
 
+                Log.e("##Cuss",currentStep+"");
+                HourBean hourBean = new HourBean(time, date, currentStep);
+                mlist.add(hourBean);
 
-        }
-        return mlist;
+            }
+            return mlist;
+
 
     }
 

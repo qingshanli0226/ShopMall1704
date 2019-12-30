@@ -1,13 +1,16 @@
 package com.example.shopmall.fragment;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.buy.activity.PayGoodsActivity;
+import androidx.annotation.NonNull;
+
 import com.example.common.TitleBar;
 import com.example.framework.base.BaseFragment;
 import com.example.buy.activity.SendGoodsActivity;
@@ -64,14 +69,19 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private RelativeLayout rlUserCollect;
     private TextView mTvName;
     private int sum = 0;
+    private String[] prems=new String[]{Manifest.permission.CAMERA};
 
     @Override
     protected int setLayout() {
         return R.layout.fragment_mine;
     }
-    //
+    @SuppressLint("NewApi")
     @Override
     protected void initView(View view) {
+
+
+
+
         tbMine = view.findViewById(R.id.tb_mine);
         tvUserScore = view.findViewById(R.id.tv_user_score);
         tvUsername = view.findViewById(R.id.tv_username);
@@ -92,20 +102,20 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         tbMine.setRightImg(R.mipmap.new_user_setting);
 
         tbMine.setTitleClickLisner(new TitleBar.TitleClickLisner() {
-            @Override
-            public void LeftClick() {
+                @Override
+                public void LeftClick() {
 
-            }
+                }
 
-            @Override
-            public void RightClick() {
-                startActivity(new Intent(getContext(), SetActivity.class));
-            }
+                @Override
+                public void RightClick() {
+                    startActivity(new Intent(getContext(), SetActivity.class));
+                }
 
-            @Override
-            public void CenterClick() {
+                @Override
+                public void CenterClick() {
 
-            }
+                }
         });
 
         //用户登录后在UserManager里存储用户信息并触发监听
@@ -183,64 +193,19 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
                 boolean isLogin = sharedPreferences.getBoolean("isLogin", false);
                 if (isLogin) {
-                    new AvatarStudio.Builder(getActivity())
-                            .setText("相机", "相册", "取消")
-                            .setTextColor(Color.RED)
-                            .setAspect(1, 1)
-                            .setOutput(100, 100)
-                            .dimEnabled(true)
-                            .show(new AvatarStudio.CallBack() {
-                                @Override
-                                public void callback(String uri) {
-                                    ivUserIconAvator.setImageURI(Uri.parse(uri));
 
-                                    BitmapFactory.Options options = new BitmapFactory.Options();
-                                    options.inJustDecodeBounds = true;
-                                    BitmapFactory.decodeFile(uri, options);
-                                    int outWidth = options.outWidth;
-                                    int outHeight = options.outHeight;
-                                    int sampleSize = 1;
-                                    while (outHeight / sampleSize > 50 || outWidth / sampleSize > 50) {
-                                        sampleSize *= 2;
-                                    }
+                    if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+                        for (int i=0;i<prems.length;i++){
+                            if(getContext().checkSelfPermission(prems[i])!= PackageManager.PERMISSION_GRANTED){
+                                requestPermissions(prems,100);
+                            }else {
+                                UploadImg();
+                            }
+                        }
+                    }else{
+                        UploadImg();
+                    }
 
-                                    options.inJustDecodeBounds = false;
-                                    //设置缩放比例
-                                    options.inSampleSize = sampleSize;
-                                    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                                    Bitmap bitmap = BitmapFactory.decodeFile(uri, options);
-
-                                    File file = new File(Environment.getExternalStorageDirectory(), "shop");
-                                    if (!file.mkdirs()) {
-                                        file.mkdir();
-                                    }
-                                    String s = System.currentTimeMillis() + ".png";
-                                    file1 = new File(file, s);
-                                    try {
-                                        FileOutputStream fos = new FileOutputStream(file1);
-                                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                                    } catch (FileNotFoundException e) {
-                                        e.printStackTrace();
-                                    }
-
-                                    if (uri != null) {
-                                        String token = UserManager.getInstance().getToken();
-                                        upImgPresenter = new UpImgPresenter(file1.getAbsolutePath(), token);
-                                        upImgPresenter.attachPostView(new IPostBaseView() {
-                                            @Override
-                                            public void onPostDataSucess(Object data) {
-                                                Log.e("####", "" + data.toString());
-                                            }
-
-                                            @Override
-                                            public void onPostDataFailed(String ErrorMsg) {
-
-                                            }
-                                        });
-                                        upImgPresenter.getPostFile();
-                                    }
-                                }
-                            });
                 } else {
                     Toast.makeText(getContext(), "请先登录账号", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -273,6 +238,66 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     }
 
+    private void UploadImg(){
+        new AvatarStudio.Builder(getActivity())
+                .setText("相机", "相册", "取消")
+                .setTextColor(Color.RED)
+                .setAspect(1, 1)
+                .setOutput(100, 100)
+                .dimEnabled(true)
+                .show(new AvatarStudio.CallBack() {
+                    @Override
+                    public void callback(String uri) {
+                        ivUserIconAvator.setImageURI(Uri.parse(uri));
+
+                        BitmapFactory.Options options = new BitmapFactory.Options();
+                        options.inJustDecodeBounds = true;
+                        BitmapFactory.decodeFile(uri, options);
+                        int outWidth = options.outWidth;
+                        int outHeight = options.outHeight;
+                        int sampleSize = 1;
+                        while (outHeight / sampleSize > 50 || outWidth / sampleSize > 50) {
+                            sampleSize *= 2;
+                        }
+
+                        options.inJustDecodeBounds = false;
+                        //设置缩放比例
+                        options.inSampleSize = sampleSize;
+                        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                        Bitmap bitmap = BitmapFactory.decodeFile(uri, options);
+
+                        File file = new File(Environment.getExternalStorageDirectory(), "shop");
+                        if (!file.mkdirs()) {
+                            file.mkdir();
+                        }
+                        String s = System.currentTimeMillis() + ".png";
+                        file1 = new File(file, s);
+                        try {
+                            FileOutputStream fos = new FileOutputStream(file1);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+
+                        if (uri != null) {
+                            String token = UserManager.getInstance().getToken();
+                            upImgPresenter = new UpImgPresenter(file1.getAbsolutePath(), token);
+                            upImgPresenter.attachPostView(new IPostBaseView() {
+                                @Override
+                                public void onPostDataSucess(Object data) {
+                                    Log.e("####", "" + data.toString());
+                                }
+
+                                @Override
+                                public void onPostDataFailed(String ErrorMsg) {
+
+                                }
+                            });
+                            upImgPresenter.getPostFile();
+                        }
+                    }
+                });
+    }
     @Override
     public void onClick(View v) {
         Intent intent = new Intent();
@@ -312,6 +337,20 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             startActivity(intent);
         } else {
             startActivity(new Intent(getContext(), LoginActivity.class));
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==100){
+            for (int i=0;i<grantResults.length;i++){
+                if(grantResults[i]!=PackageManager.PERMISSION_GRANTED){
+                    Toast.makeText(getContext(), "请手动添加权限", Toast.LENGTH_SHORT).show();
+                }else{
+                    UploadImg();
+                }
+            }
         }
     }
 }

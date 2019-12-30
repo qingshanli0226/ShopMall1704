@@ -47,7 +47,9 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
     private Handler handler;
     private IntegerPresenter integerPresenter;
 
-    private String[] prems=new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+    private String[] prems=new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA,Manifest.permission.BODY_SENSORS
+            ,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION};
     private boolean isJump=false;
     private ObjectAnimator objectAnimator;
     private AutoLoginPresenter autoLoginPresenter;
@@ -98,23 +100,6 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
             window.setStatusBarColor(Color.TRANSPARENT);
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            for (int i = 0; i < prems.length; i++) {
-                if (checkSelfPermission(prems[i])
-                        != PackageManager.PERMISSION_GRANTED) {
-                    isJump = false;
-                    requestPermissions(prems, 100);
-                } else {
-                    isJump = true;
-                }
-            }
-        } else {
-            JumpActivity();
-        }
-
-        if (isJump) {
-            JumpActivity();
-        }
     }
 
     private void initAutoLogin() {

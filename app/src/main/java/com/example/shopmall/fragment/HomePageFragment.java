@@ -93,6 +93,7 @@ public class HomePageFragment extends BaseFragment implements IGetBaseView<Homep
     protected void initData() {
         ShoppingManager.getInstance().setMainitem(0);
         tbHomepage.setTitleBacKGround(Color.RED);
+        tbHomepage.setTitleBacKGround(Color.WHITE);
         tbHomepage.setCenterText("首页", 18, Color.WHITE);
         tbHomepage.setRightImg(R.mipmap.new_message_icon);
 

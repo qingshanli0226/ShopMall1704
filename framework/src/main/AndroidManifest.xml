@@ -4,23 +4,9 @@
 
 
 
+
     <application>
-        <service android:name="com.example.framework.service.StepRemoteService"
-            android:exported="true"
-            android:enabled="true"
-            android:process="remote.service.two"
-            >
 
-
-
-        </service>
-        <service android:name="com.example.framework.service.StepLocalService"
-            android:exported="true"
-            android:enabled="true"
-            >
-
-
-        </service>
     </application>
 
 

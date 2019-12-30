@@ -4,10 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewParent;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 
@@ -15,11 +18,16 @@ import com.example.framework.base.BaseFragment;
 import com.example.framework.bean.HourBean;
 import com.example.framework.manager.StepManager;
 import com.example.step.Bean.DateLine;
+import com.example.step.PonitBean;
 import com.example.step.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import lecho.lib.hellocharts.gesture.ContainerScrollType;
 import lecho.lib.hellocharts.gesture.ZoomType;
@@ -39,13 +47,24 @@ public class History_MinutesFragment extends BaseFragment  {
 
     private List<PointValue> mPointValues = new ArrayList<PointValue>();
     private List<AxisValue> mAxisXValues = new ArrayList<AxisValue>();
-    ArrayList<DateLine> list = new ArrayList<>();;
+    LineChartData lineChartData;
+    int c=0;
     @Override
     protected void initData() {
 
 
+        showLineChart();
+
+
+
+    }
+
+
+    private void showLineChart(){
+
         mPointValues.clear();
         mAxisXValues.clear();
+
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
@@ -68,10 +87,10 @@ public class History_MinutesFragment extends BaseFragment  {
                     if (currentTimeRange == true) {
 
 
+
+
                         mAxisXValues.add(new AxisValue(i).setLabel(real.get(i).getTime()));
-                        mPointValues.add(new PointValue(i,real.get(i).getCurrentStep()));
-
-
+                        getAxisPoint(i,real.get(i).getCurrentStep());
 
                         initLineChart();//初始化
 
@@ -82,17 +101,15 @@ public class History_MinutesFragment extends BaseFragment  {
                 }
 
             }
-
         }
-
-
-
-
     }
 
-
+    private void getAxisPoint(int i, int currentStep){
+        mPointValues.add(new PointValue(i,currentStep));
+    }
     @SuppressLint("NewApi")
     private void initLineChart() {
+
 
 
 
@@ -105,7 +122,7 @@ public class History_MinutesFragment extends BaseFragment  {
         line.setHasLines(true);
         line.setHasPoints(true);
         lines.add(line);
-        LineChartData lineChartData = new LineChartData();
+         lineChartData= new LineChartData();
 //        lines.add(line);
         lineChartData.setLines(lines);
 
@@ -135,11 +152,13 @@ public class History_MinutesFragment extends BaseFragment  {
         int y=(int)mPointValues.get(mPointValues.size()-1).getY();
 
 
+
+
         Viewport v = new Viewport(lineChartView.getMaximumViewport());
+
         v.left=0;
         v.right=7;
         lineChartView.setCurrentViewport(v);
-
 
     }
 
@@ -167,4 +186,5 @@ public class History_MinutesFragment extends BaseFragment  {
         mAxisXValues.clear();
         mPointValues.clear();
     }
+
 }

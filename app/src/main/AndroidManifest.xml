@@ -34,6 +34,10 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <uses-permission android:name="android.permission.BODY_SENSORS"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -202,6 +206,29 @@
         <meta-data
             android:name="JPUSH_CHANNEL"
             android:value="${JPUSH_CHANNEL}" />
+        <meta-data android:name="JPUSH_APPKEY" android:value="00069070c0ece64218196376"/>
+        <meta-data android:name="JPUSH_CHANNEL" android:value="${JPUSH_CHANNEL}"/>
+
+
+
+
+
+
+        <service android:name="com.example.framework.service.StepRemoteService"
+            android:exported="true"
+            android:enabled="true"
+            android:process="remote.service.two"
+            >
+        </service>
+        <service android:name="com.example.framework.service.StepLocalService"
+            android:exported="true"
+            android:enabled="true"
+            >
+        </service>
+
+
+
+
     </application>
 
 </manifest>
