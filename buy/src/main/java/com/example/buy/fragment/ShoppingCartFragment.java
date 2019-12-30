@@ -600,6 +600,7 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
 
             @Override
             public void onAnimationEnd(Animator animator) {
+                imageView.clearAnimation();
                 shoppingcartlayout.removeView(imageView);
             }
 
@@ -622,6 +623,8 @@ public class ShoppingCartFragment extends BaseFragment implements NumberAddSubVi
         set.play(objectAnimatorX).with(objectAnimatorY).after(valueAnimator);
         set.setDuration(800);
         set.start();
+
+        ivShoppingCart.clearAnimation();
     }
 
     //购物车数据网址连接成功
