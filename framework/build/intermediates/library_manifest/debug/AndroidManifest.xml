@@ -9,17 +9,6 @@
         android:targetSdkVersion="29" />
 
     <application>
-        <service
-            android:name="com.example.framework.service.StepRemoteService"
-            android:enabled="true"
-            android:exported="true"
-            android:process="remote.service.two" >
-        </service>
-        <service
-            android:name="com.example.framework.service.StepLocalService"
-            android:enabled="true"
-            android:exported="true" >
-        </service>
     </application>
 
 </manifest>

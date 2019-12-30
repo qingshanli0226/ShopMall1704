@@ -104,11 +104,9 @@ public class StepManager {
         };
 
         Intent intent = new Intent(context, StepService.class);
+        context.startService(intent);
         context.bindService(intent,serviceConnection,Context.BIND_AUTO_CREATE);
         isBinder=true;
-
-
-
 
         HourSql hourSql = new HourSql(context);
         hourDb = hourSql.getWritableDatabase();

@@ -22,6 +22,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -145,7 +146,7 @@ public class StepService extends Service implements SensorEventListener {
             List<ShopStepBean> queryAll = OrmUtils.getQueryAll(ShopStepBean.class);
             String current_step = queryAll.get(queryAll.size() - 1).getCurrent_step();
             MessageManager.getInstance().setMessageManager("今日步数",current_step);
-            Log.e("##Nine","999"+current_step);
+
         }
         if ("00:00:00".equals(new SimpleDateFormat("HH:mm:ss").format(new Date()))) {
             initToday();
@@ -236,14 +237,16 @@ public class StepService extends Service implements SensorEventListener {
     //初始化注册传感器监听
     private void initSensorListener() {
         SensorManager manager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
         Sensor sensor = manager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
         if (sensor != null) {
             manager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
         Sensor ctor = manager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
         if(ctor!=null){
-        manager.registerListener(this, ctor, SensorManager.SENSOR_DELAY_NORMAL);
+            manager.registerListener(this, ctor, SensorManager.SENSOR_DELAY_NORMAL);
         }
+
     }
 
     @Override

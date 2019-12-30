@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.multidex.MultiDex;
 
@@ -46,16 +47,21 @@ public class MyApplication extends Application {
             JPushInterface.init(this);
 
         if(AppProcessUtil.isAppProcess(this)==true){
-            
-            StepManager.getInstance().init(getApplicationContext());
+
+        StepManager.getInstance().init(getApplicationContext());
+
             //如果手机版本大于8.0开启前台服务
             if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
                 //Job保活,双进程保活
-               getContext().startForegroundService(new Intent(this,StepJobService.class));
-                getContext().startForegroundService(new Intent(this,StepLocalService.class));
-                getContext().startForegroundService(new Intent(this,StepRemoteService.class));
+//               getContext().startForegroundService(new Intent(this,StepJobService.class));
+//                getContext().startForegroundService(new Intent(this,StepLocalService.class));
+//                getContext().startForegroundService(new Intent(this,StepRemoteService.class));
+
+//                startService(new Intent(this, StepJobService.class));
+                startService(new Intent(this,StepLocalService.class));
+                startService(new Intent(this,StepRemoteService.class));
             }else{
-                startService(new Intent(this, StepJobService.class));
+//                startService(new Intent(this, StepJobService.class));
                 startService(new Intent(this,StepLocalService.class));
                 startService(new Intent(this,StepRemoteService.class));
             }

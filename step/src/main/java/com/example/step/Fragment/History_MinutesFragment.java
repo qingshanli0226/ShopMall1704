@@ -49,62 +49,11 @@ public class History_MinutesFragment extends BaseFragment  {
     private List<AxisValue> mAxisXValues = new ArrayList<AxisValue>();
     LineChartData lineChartData;
     int c=0;
-
     @Override
     protected void initData() {
 
 
-
-
         showLineChart();
-
-        Timer timer=new Timer();
-      TimerTask timerTask=  new TimerTask(){
-
-          @Override
-          public void run() {
-
-              mPointValues.clear();
-
-
-              Calendar calendar = Calendar.getInstance();
-              int hour = calendar.get(Calendar.HOUR_OF_DAY);
-              int minute = calendar.get(Calendar.MINUTE);
-              List<HourBean> real = StepManager.getInstance().findHour();
-              for (int i=0;i<real.size();i++) {
-                  String realTime = real.get(i).getTime();
-                  String[] split = realTime.split(":");
-                  //之前小时
-                  int beforeHour = Integer.parseInt(split[0]);
-                  int beforeMinute = Integer.parseInt(split[1]);
-                  //当前小时
-                  int thrreHour = calendar.get(Calendar.HOUR_OF_DAY) - 3;
-
-                  //是否是当天
-                  if (StepManager.getInstance().isToday(real.get(i).getDate())) {
-
-                      //如果是在三小时之内显示数据
-                      if (beforeHour >= thrreHour && beforeHour <= hour) {
-                          boolean currentTimeRange = StepManager.getInstance().isCurrentTimeRange(beforeHour, beforeMinute, hour, minute);
-                          if (currentTimeRange == true) {
-
-                              getAxisPoint(i,real.get(i).getCurrentStep());
-                          }
-                      }
-                  }
-              }
-
-
-
-
-
-
-
-//              getAxisPoint(c+1,);
-              lineChartView.setLineChartData(lineChartData);
-          }
-      };
-
 
 
 
@@ -160,6 +109,7 @@ public class History_MinutesFragment extends BaseFragment  {
     }
     @SuppressLint("NewApi")
     private void initLineChart() {
+
 
 
 

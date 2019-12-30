@@ -11,27 +11,7 @@
 9-->D:\GitHub\ShopMall1704\framework\src\main\AndroidManifest.xml
 10
 11    <application>
-11-->D:\GitHub\ShopMall1704\framework\src\main\AndroidManifest.xml:7:5-24:19
-12        <service
-12-->D:\GitHub\ShopMall1704\framework\src\main\AndroidManifest.xml:8:9-16:19
-13            android:name="com.example.framework.service.StepRemoteService"
-13-->D:\GitHub\ShopMall1704\framework\src\main\AndroidManifest.xml:8:18-80
-14            android:enabled="true"
-14-->D:\GitHub\ShopMall1704\framework\src\main\AndroidManifest.xml:10:13-35
-15            android:exported="true"
-15-->D:\GitHub\ShopMall1704\framework\src\main\AndroidManifest.xml:9:13-36
-16            android:process="remote.service.two" >
-16-->D:\GitHub\ShopMall1704\framework\src\main\AndroidManifest.xml:11:13-49
-17        </service>
-18        <service
-18-->D:\GitHub\ShopMall1704\framework\src\main\AndroidManifest.xml:17:9-23:19
-19            android:name="com.example.framework.service.StepLocalService"
-19-->D:\GitHub\ShopMall1704\framework\src\main\AndroidManifest.xml:17:18-79
-20            android:enabled="true"
-20-->D:\GitHub\ShopMall1704\framework\src\main\AndroidManifest.xml:19:13-35
-21            android:exported="true" >
-21-->D:\GitHub\ShopMall1704\framework\src\main\AndroidManifest.xml:18:13-36
-22        </service>
-23    </application>
-24
-25</manifest>
+11-->D:\GitHub\ShopMall1704\framework\src\main\AndroidManifest.xml:8:5-10:19
+12    </application>
+13
+14</manifest>
