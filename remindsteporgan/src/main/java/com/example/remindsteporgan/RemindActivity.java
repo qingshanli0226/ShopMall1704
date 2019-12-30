@@ -19,8 +19,6 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.commen.util.PageUtil;
-
 import com.example.remindsteporgan.base.Bean;
 import com.example.remindsteporgan.diy.MyPassometView;
 import com.example.remindsteporgan.util.ScreenBroadcastListener;
@@ -46,7 +44,6 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
     private MyPassometView viewPassometView;
     private RelativeLayout review;
     private TextView historySteps;
-    PageUtil pageUtil;
     private Button remindMap;
 
 
@@ -98,10 +95,6 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
         dao = daoMaster.newSession();
         beanDao = dao.getBeanDao();
 
-        //TODO 加载动画
-        pageUtil = new PageUtil(this);
-
-
         //TODO 传感器
         SensorManager sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         // 计步统计
@@ -127,8 +120,6 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
             }
         });
 
-        //Keep_alice();
-        pageUtil.setReview(review);
         historySteps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

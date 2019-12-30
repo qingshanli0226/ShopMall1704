@@ -114,7 +114,7 @@ public class SettingActivity extends BaseActivity {
 
 
         //退出按钮
-        mTcAppActivitySetting.setLeftBackImageViewOnClickListener(new View.OnClickListener() {
+        mTcAppActivitySetting.setTbLeftIVOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ActivityInstanceManager.removeActivity(SettingActivity.this);

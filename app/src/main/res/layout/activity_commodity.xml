@@ -5,238 +5,235 @@
     android:id="@+id/goodsInfoRelativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:orientation="vertical"
     tools:context=".goodsinfo.GoodsInfoActivity">
+
     <RelativeLayout
-        android:layout_marginTop="28dp"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-
-
-    <com.example.commen.custom.ToolbarCustom
-        android:id="@+id/mTc_top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:isShowRightImageView="false"
-        app:isShowSettingTextView="false"
-        android:background="#7474"
-        app:title="商品详情" />
-
-    <!--分割线-->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/mTc_top"
-        android:background="#eeee" />
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/ll_goods_root"
-        android:layout_below="@id/mTc_top">
-
-        <LinearLayout
+        <com.example.commen.custom.ToolbarCustom
+            android:id="@+id/mTc_top"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:background="#7474"
+            app:tb_left_iv_isShow="true"
+            app:tb_title_isShow="true"
+            app:tb_title_text="商品详情" />
 
-            <com.example.administrator.shaomall.MyScrollView
+        <!--分割线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/mTc_top"
+            android:background="#eeee" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/ll_goods_root"
+            android:layout_below="@id/mTc_top">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbars="none">
+                android:orientation="vertical">
 
-                <LinearLayout
+                <com.example.administrator.shaomall.MyScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#fff"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_marginTop="2dp"
-                        android:id="@+id/mIvGoodInfoImage"
-                        android:layout_width="match_parent"
-                        android:layout_height="350dp"
-                        android:layout_gravity="center_horizontal"
-                        tools:ignore="ContentDescription" />
-
-                    <TextView
-                        android:id="@+id/mTvGoodInfoName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:textColor="#323427"
-                        tools:ignore="RtlHardcoded" />
-
-                    <TextView
-                        android:id="@+id/mTvGoodInfoDesc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:text="@string/cimmodity_detail"
-                        android:textColor="#767f86" />
-
-
-                    <TextView
-                        android:id="@+id/mTvGoodInfoPrice"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:textColor="#ed3f3f"
-                        android:textSize="20sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_margin="10dp"
-                        android:background="#eeee" />
+                    android:scrollbars="none">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="10dp">
+                        android:layout_height="match_parent"
+                        android:background="#fff"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/mIvGoodInfoImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="350dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="2dp"
+                            tools:ignore="ContentDescription" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/mTvGoodInfoName"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/commodity_by"
+                            android:layout_marginLeft="15dp"
+                            android:textColor="#323427"
+                            tools:ignore="RtlHardcoded" />
+
+                        <TextView
+                            android:id="@+id/mTvGoodInfoDesc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="@string/cimmodity_detail"
+                            android:textColor="#767f86" />
+
+
+                        <TextView
+                            android:id="@+id/mTvGoodInfoPrice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:textColor="#ed3f3f"
+                            android:textSize="20sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="10dp"
+                            android:background="#eeee" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/commodity_by"
+                                android:textColor="#3c3d40" />
+
+                            <TextView
+                                android:id="@+id/mTvGoodInfoStore"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/app_name"
+                                android:textColor="#ff4040" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/goodInfo_ship"
+                                android:textColor="#3c3d40" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="8dp"
+                            android:background="#eeee" />
+
+                        <TextView
+                            android:id="@+id/mTvGoodInfoStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableRight="@drawable/home_arrow_right"
+                            android:padding="10dp"
+                            android:text="@string/chooseStyle"
+                            android:textColor="#3c3d40"
+                            tools:ignore="RtlHardcoded" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="8dp"
+                            android:background="#eeee" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="@string/commodity_prompt"
                             android:textColor="#3c3d40" />
 
-                        <TextView
-                            android:id="@+id/mTvGoodInfoStore"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/app_name"
-                            android:textColor="#ff4040" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="8dp"
+                            android:background="#eeee" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/goodInfo_ship"
-                            android:textColor="#3c3d40" />
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="@string/goodInfo_detail"
+                            android:textColor="#3c3d40"
+                            android:textSize="15sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#ed3f3f" />
+
+                        <LinearLayout
+                            android:id="@+id/mWbGoodInfoMore"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" />
+
                     </LinearLayout>
+                </com.example.administrator.shaomall.MyScrollView>
+            </LinearLayout>
+        </FrameLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="8dp"
-                        android:background="#eeee" />
 
-                    <TextView
-                        android:id="@+id/mTvGoodInfoStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableRight="@drawable/home_arrow_right"
-                        android:padding="10dp"
-                        android:text="@string/chooseStyle"
-                        android:textColor="#3c3d40"
-                        tools:ignore="RtlHardcoded" />
+        <LinearLayout
+            android:id="@+id/ll_goods_root"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:background="#fff">
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="8dp"
-                        android:background="#eeee" />
+            <TextView
+                android:id="@+id/mTvGoodInfoCallcenter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?android:selectableItemBackgroundBorderless"
+                android:drawableTop="@drawable/icon_callserver_unpressed"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="@string/goodInfo_customer"
+                android:textColor="#393b3e"
+                tools:targetApi="lollipop" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:text="@string/commodity_prompt"
-                        android:textColor="#3c3d40" />
+            <TextView
+                android:id="@+id/mTvGoodInfoCollection"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?android:selectableItemBackgroundBorderless"
+                android:drawableTop="@drawable/good_uncollected"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="@string/goodInfo_collect"
+                android:textColor="#393b3e"
+                tools:targetApi="lollipop" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="8dp"
-                        android:background="#eeee" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="@string/goodInfo_detail"
-                        android:textColor="#3c3d40"
-                        android:textSize="15sp" />
+            <TextView
+                android:id="@+id/mTvFGoodInfoCart"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?android:selectableItemBackgroundBorderless"
+                android:drawableTop="@drawable/icon_good_detail_cart"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="@string/goodInfo_car"
+                android:textColor="#393b3e"
+                tools:targetApi="lollipop" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#ed3f3f" />
-
-                    <LinearLayout
-                        android:id="@+id/mWbGoodInfoMore"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" />
-
-                </LinearLayout>
-            </com.example.administrator.shaomall.MyScrollView>
+            <Button
+                android:id="@+id/mBtnGoodInfoAddcart"
+                android:layout_width="120dp"
+                android:layout_height="51dp"
+                android:layout_gravity="center"
+                android:background="@drawable/add_cart_bg_selector"
+                android:gravity="center"
+                android:text="@string/goodInfo_joinCar"
+                android:textColor="#fff" />
         </LinearLayout>
-    </FrameLayout>
-
-
-    <LinearLayout
-        android:id="@+id/ll_goods_root"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        android:background="#fff">
-
-        <TextView
-            android:id="@+id/mTvGoodInfoCallcenter"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="?android:selectableItemBackgroundBorderless"
-            android:drawableTop="@drawable/icon_callserver_unpressed"
-            android:drawablePadding="5dp"
-            android:gravity="center"
-            android:padding="2dp"
-            android:text="@string/goodInfo_customer"
-            android:textColor="#393b3e"
-            tools:targetApi="lollipop" />
-
-        <TextView
-            android:id="@+id/mTvGoodInfoCollection"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="?android:selectableItemBackgroundBorderless"
-            android:drawableTop="@drawable/good_uncollected"
-            android:drawablePadding="5dp"
-            android:gravity="center"
-            android:padding="2dp"
-            android:text="@string/goodInfo_collect"
-            android:textColor="#393b3e"
-            tools:targetApi="lollipop" />
-
-
-        <TextView
-            android:id="@+id/mTvFGoodInfoCart"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="?android:selectableItemBackgroundBorderless"
-            android:drawableTop="@drawable/icon_good_detail_cart"
-            android:drawablePadding="5dp"
-            android:gravity="center"
-            android:padding="2dp"
-            android:text="@string/goodInfo_car"
-            android:textColor="#393b3e"
-            tools:targetApi="lollipop" />
-
-        <Button
-            android:id="@+id/mBtnGoodInfoAddcart"
-            android:layout_width="120dp"
-            android:layout_height="51dp"
-            android:layout_gravity="center"
-            android:background="@drawable/add_cart_bg_selector"
-            android:gravity="center"
-            android:text="@string/goodInfo_joinCar"
-            android:textColor="#fff" />
-    </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

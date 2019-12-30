@@ -41,6 +41,4 @@ dependencies {
     //noinspection GradlePath
     implementation files('libs\\pinyin4j-2.5.0.jar')
 
-
-
 }

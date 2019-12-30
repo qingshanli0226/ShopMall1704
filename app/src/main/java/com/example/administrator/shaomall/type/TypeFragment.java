@@ -15,6 +15,7 @@ import com.example.administrator.shaomall.type.adapter.TypeLeftAdapter;
 import com.example.administrator.shaomall.type.adapter.TypeRightAdapter;
 import com.example.commen.Constants;
 import com.example.commen.LoadingPageConfig;
+import com.example.commen.custom.ToolbarCustom;
 import com.example.commen.util.PageUtil;
 import com.example.commen.custom.ErrorPageCustom;
 import com.example.commen.network.NetType;
@@ -32,14 +33,10 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> implements MessageMa
     private android.widget.ListView mTypeLeftLv;
     private android.support.v7.widget.RecyclerView mTypeRightRv;
     private TypePresenter typePresenter;
-    private android.widget.EditText titleSearchTv;
     private QBadgeView qBadgeView;
-    private android.widget.ImageView titleMessage;
-
-    private PageUtil pageUtil;
-    private RelativeLayout typeRelaTiveLayout;
 
     private ErrorPageCustom mErrorPage;
+    private RelativeLayout mTypeRelativeLayout;
 
 
     @Override
@@ -59,37 +56,35 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> implements MessageMa
 
         mTypeLeftLv = view.findViewById(R.id.type_left_lv);
         mTypeRightRv = view.findViewById(R.id.type_right_rv);
+        //添加加载页
+        mTypeRelativeLayout = view.findViewById(R.id.typeRelaTiveLayout);
 
-        titleSearchTv = view.findViewById(R.id.title_search_tv);
-        titleSearchTv.setOnClickListener(new View.OnClickListener() {
+        ToolbarCustom mTbCustomTop = view.findViewById(R.id.rl_type_top);
+        //点击搜索框
+        mTbCustomTop.setTbSearchOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toClass(SearchActivity.class);
             }
         });
-        titleMessage = view.findViewById(R.id.title_message);
-        qBadgeView = new QBadgeView(getContext());
-        qBadgeView.bindTarget(titleMessage)
-                .setBadgeTextSize(10f, true)
-                .setBadgeGravity(Gravity.START | Gravity.TOP)
-                .setBadgeBackgroundColor(Color.BLUE);
-
-        typeRelaTiveLayout = view.findViewById(R.id.typeRelaTiveLayout);
-        pageUtil = new PageUtil(getContext());
-        pageUtil.setReview(typeRelaTiveLayout);
-        pageUtil.init();
-    }
-
-    @Override
-    protected void initData() {
-        getDataFormNet(urls[0]);
-
-        titleMessage.setOnClickListener(new View.OnClickListener() {
+        //点击消息
+        mTbCustomTop.setTbRightIvOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toClass(MessageActivity.class);
             }
         });
+
+        qBadgeView = new QBadgeView(getContext());
+        qBadgeView.bindTarget(mTbCustomTop.getTbRightIv())
+                .setBadgeTextSize(10f, true)
+                .setBadgeGravity(Gravity.START | Gravity.TOP)
+                .setBadgeBackgroundColor(Color.BLUE);
+    }
+
+    @Override
+    protected void initData() {
+        getDataFormNet(urls[0]);
     }
 
     @Override
@@ -131,6 +126,11 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> implements MessageMa
     }
 
     private void getDataFormNet(String url) {
+        if (typePresenter != null) {
+            typePresenter.detachView();
+            typePresenter = null;
+        }
+
         typePresenter = new TypePresenter();
         typePresenter.setPath(url);
         typePresenter.attachView(this);
@@ -142,9 +142,9 @@ public class TypeFragment extends BaseMVPFragment<TypeBean> implements MessageMa
     @Override
     public void loadingPage(int requestCode, int code) {
         if (code == LoadingPageConfig.STATE_LOADING_CODE) {
-            pageUtil.showLoad();
+            PageUtil.getInstance(getContext()).setReview(mTypeRelativeLayout).showLoad();
         } else if (code == LoadingPageConfig.STATE_SUCCESS_CODE) {
-            pageUtil.hideload();
+            PageUtil.getInstance(getContext()).setReview(mTypeRelativeLayout).hideLoad();
         }
     }
 

@@ -73,7 +73,7 @@ public class SearchActivity extends BaseMVPActivity<SearchBean> implements View.
         }
 
         if (v.getId() == R.id.search_iv_back) {
-            animOutActivity();
+            animOutActivity(this);
         }
 
         if (v.getId() == R.id.search_clear) {

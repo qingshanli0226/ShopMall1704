@@ -84,8 +84,8 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         mLlLayoutShow = view.findViewById(R.id.ll_layout_show);
 
 
-        mTcAppFragmentMineTop.setSettingTextViewOnClickListener(this); //设置
-        mTcAppFragmentMineTop.setRightImageViewOnClickListener(this); //消息
+        mTcAppFragmentMineTop.setTbRightTvOnClickListener(this); //设置
+        mTcAppFragmentMineTop.setTbRightIvOnClickListener(this); //消息
         mIvHeader.setOnClickListener(this);             //用户头像
         mTvUserName.setOnClickListener(this);           //用户名称
         mTvProductAttention.setOnClickListener(this);   //商品关注
@@ -98,7 +98,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         mTvNoPayment.setOnClickListener(this);          //待支付
         mTvSendGoods.setOnClickListener(this);          //待发货
 
-        ImageView image = mTcAppFragmentMineTop.findViewById(R.id.iv_toolbar_message_right);
+        ImageView image = mTcAppFragmentMineTop.findViewById(R.id.iv_toolbar_right);
         qBadgeView = new QBadgeView(getContext());
         qBadgeView.bindTarget(image)
                 .setBadgeTextSize(10f, true)
@@ -126,7 +126,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
         }
 
         switch (v.getId()) {
-            case R.id.tv_toolbar_setting: //设置界面
+            case R.id.tv_toolbar_right: //设置界面
             case R.id.iv_header: //点击头像
                 Bundle bundle = new Bundle();
                 bundle.putString("name", mTvUserName.getText().toString());
@@ -135,7 +135,7 @@ public class MineFragment extends BaseMVPFragment<String> implements View.OnClic
                 break;
 
 
-            case R.id.iv_toolbar_message_right:   //消息界面
+            case R.id.iv_toolbar_right:   //消息界面
                 toClass(MessageActivity.class);
                 break;
 

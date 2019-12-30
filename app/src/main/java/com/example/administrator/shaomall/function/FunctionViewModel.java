@@ -24,6 +24,7 @@ import okhttp3.ResponseBody;
 public class FunctionViewModel extends ViewModel {
     private MutableLiveData<List<FunctionBean>> liveData = new MutableLiveData<>();
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private LoadingPage loadingPageListener;
 
     public MutableLiveData<List<FunctionBean>> getLiveData() {
         return liveData;
@@ -64,11 +65,16 @@ public class FunctionViewModel extends ViewModel {
                         mDisposable = d;
                         //添加到容器中
                         compositeDisposable.add(d);
+
+                        if (loadingPageListener != null)
+                            loadingPageListener.showLoadingPage();
                     }
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         super.onNext(responseBody);
+                        if (loadingPageListener != null)
+                            loadingPageListener.hideLoadingPage();
                         //判断mDisposable.isDisposed()如果解除了则不需要处理 默认为true
                         if (!mDisposable.isDisposed()) {
                             try {
@@ -84,5 +90,23 @@ public class FunctionViewModel extends ViewModel {
                         }
                     }
                 });
+    }
+
+
+    public void registerLoadingPageListener(LoadingPage loadingPage) {
+        this.loadingPageListener = loadingPage;
+    }
+
+    public void unRegisterLoadingPageListener() {
+        if (loadingPageListener != null) {
+            loadingPageListener = null;
+        }
+    }
+
+
+    interface LoadingPage {
+        void showLoadingPage();
+
+        void hideLoadingPage();
     }
 }

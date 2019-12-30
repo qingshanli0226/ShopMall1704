@@ -1,32 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-        <include layout="@layout/title_common"/>
-                <TextView
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/new_title"
-                    android:text="@string/message_new_mesaage"
-                    android:paddingLeft="10dp"
-                    android:textColor="@color/colorDiscount"
-                    android:gravity="center_vertical"
-                    android:background="@color/colorWhite"
-                    tools:ignore="RtlHardcoded,RtlSymmetry" />
 
-                <ListView
-                    android:background="@color/colorWhite"
-                    android:id="@+id/message_lv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/message_lv_notread"
-                    android:text="@string/message_old_message"
-                    android:paddingLeft="10dp"
-                    android:textColor="@color/colorDiscount"
-                    android:gravity="center_vertical"
-                    tools:ignore="RtlHardcoded,RtlSymmetry" />
+    <com.example.commen.custom.ToolbarCustom
+        android:id="@+id/tb_top"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:background="@drawable/background_img1"
+        app:tb_left_iv_isShow="true"
+        app:tb_title_isShow="true"
+        app:tb_title_text="消息" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorWhite"
+        android:drawableLeft="@drawable/new_title"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="@string/message_new_mesaage"
+        android:textColor="@color/colorDiscount"
+        tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+    <ListView
+        android:id="@+id/message_lv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:drawableLeft="@drawable/message_lv_notread"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:text="@string/message_old_message"
+        android:textColor="@color/colorDiscount"
+        tools:ignore="RtlHardcoded,RtlSymmetry" />
 </LinearLayout>

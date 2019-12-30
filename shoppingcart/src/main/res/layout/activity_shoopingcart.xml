@@ -10,22 +10,19 @@
 
 
     <com.example.commen.custom.ToolbarCustom
-        android:id="@+id/top_bar"
+        android:id="@+id/tb_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:background="#E24146"
-        app:isShowLeftImageView="false"
-        app:isShowRightImageView="false"
-        app:isShowSettingTextView="false"
-        app:title="@string/shoopingcartTextViewText"
-        app:titleColor="@color/white" />
+        app:tb_title_isShow="true"
+        app:tb_title_text="@string/shoopingcartTextViewText" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/top_bar"
+        android:layout_below="@id/tb_top"
         android:orientation="vertical">
 
         <android.support.v7.widget.RecyclerView
@@ -96,7 +93,7 @@
                 android:text="@string/shoopingcartdeleteText"
                 android:textColor="#FAFAFA" />
 
-            <TextView
+            <Button
                 android:id="@+id/tv_go_to_pay"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -114,6 +111,6 @@
         android:id="@+id/ep_shopping_error_page"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/top_bar"/>
+        android:layout_below="@id/tb_top" />
 
 </RelativeLayout>

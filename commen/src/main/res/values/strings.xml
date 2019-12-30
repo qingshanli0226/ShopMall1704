@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">commen</string>
-    <string name="commen_boolbar_tv_setting">设置</string>
+    <string name="toolbar_title_text">标题</string>
+    <string name="toolbar_setting_text">设置</string>
+    <string name="toolbar_right_message">消息</string>
+    <string name="todo">TODO</string>
+    <string name="toolbar_text_search_hint">请输入您要搜索的内容…</string>
 </resources>

@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/typeRelaTiveLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
+    <com.example.commen.custom.ToolbarCustom
         android:id="@+id/rl_type_top"
-        layout="@layout/title_common" />
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:background="@drawable/background_img1"
+        app:tb_left_iv_icon="@drawable/sao_img"
+        app:tb_left_iv_isShow="true"
+        app:tb_right_iv_isShow="true"
+        app:tb_search_isShow="true" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,11 +27,17 @@
             android:background="#11000000"
             android:scrollbars="none" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/type_right_rv"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+        <RelativeLayout
+            android:id="@+id/typeRelaTiveLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/type_right_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </RelativeLayout>
     </LinearLayout>
 
     <com.example.commen.custom.ErrorPageCustom
@@ -32,5 +45,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/rl_type_top" />
-
 </RelativeLayout>

@@ -11,10 +11,10 @@
         android:id="@+id/tc_cart_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:isShowRightImageView="false"
         android:background="#edc"
-        app:isShowSettingTextView="false"
-        app:title="填写订单" />
+        app:tb_left_iv_isShow="true"
+        app:tb_title_isShow="true"
+        app:tb_title_text="填写订单" />
 
     <View
         android:layout_width="match_parent"
@@ -141,13 +141,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginEnd="6dp"
             android:layout_marginRight="6dp"
             android:gravity="center|right"
             android:text="合计:"
             android:textSize="18sp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="6dp"
             tools:ignore="RtlHardcoded" />
 
         <TextView

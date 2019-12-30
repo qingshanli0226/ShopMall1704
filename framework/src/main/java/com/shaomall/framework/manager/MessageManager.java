@@ -12,28 +12,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MessageManager {
-    private Context context;
-    private static MessageManager instache;
+    private static MessageManager instance;
     private MessageSQLiteHelper mHelper;
     private SQLiteDatabase db;
     private MessageListener messageListener;
 
 
-    public void init(final Context context)
-    {
-        this.context = context;
+    public static MessageManager getInstance() {
+        if (instance == null) {
+            synchronized (MessageManager.class) {
+                if (instance == null) {
+                    instance = new MessageManager();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public void init(final Context context) {
         mHelper = new MessageSQLiteHelper(context);
         db = mHelper.getReadableDatabase();
     }
-    public static MessageManager getInstance() {
-        if (instache == null) {
-           synchronized (MessageManager.class){
-               if (instache == null)
-                   instache = new MessageManager();
-           }
-        }
-        return instache;
-    }
+
 
     //添加数据
     public void insertData(MessageBean messageBean) {
@@ -53,18 +53,18 @@ public class MessageManager {
         db.execSQL(sql);
     }
 
-public List<MessageBean> selectAll(){
-    Cursor usermessage = db.query("usermessage", null, null, null, null, null, null);
-    ArrayList<MessageBean> messages = new ArrayList<>();
-    while (usermessage.moveToNext())
-    {
-        String messageId = usermessage.getString(0);
-        String message = usermessage.getString(1);
-        String isRead = usermessage.getString(2);
-        messages.add(new MessageBean(messageId, message, isRead));
+    public List<MessageBean> selectAll() {
+        Cursor usermessage = db.query("usermessage", null, null, null, null, null, null);
+        ArrayList<MessageBean> messages = new ArrayList<>();
+        while (usermessage.moveToNext()) {
+            String messageId = usermessage.getString(0);
+            String message = usermessage.getString(1);
+            String isRead = usermessage.getString(2);
+            messages.add(new MessageBean(messageId, message, isRead));
+        }
+        return messages;
     }
-    return messages;
-}
+
     public List<MessageBean> qurayIsReadData() {
         Cursor cursor = db.query("usermessage", null, "isRead = ?", new String[]{"yes"}, null, null, null);
         List<MessageBean> messages = new ArrayList<>();
@@ -105,7 +105,7 @@ public List<MessageBean> selectAll(){
     }
 
     public void unRegisterMessageListener(MessageListener messageListener) {
-        if (messageListener != null)
-            messageListener = null;
+        if (this.messageListener != null)
+            this.messageListener = null;
     }
 }

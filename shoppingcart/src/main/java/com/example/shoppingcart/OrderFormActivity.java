@@ -21,7 +21,6 @@ import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.example.commen.custom.ToolbarCustom;
-import com.example.commen.network.NetType;
 import com.example.commen.util.ShopMailError;
 import com.example.net.AppNetConfig;
 import com.example.shoppingcart.adapter.RvShoppingPayAdapter;
@@ -118,7 +117,7 @@ public class OrderFormActivity extends BaseMVPActivity<Object> implements View.O
         mTvOrderInfo = findViewById(R.id.tv_order_info);
 
         //点击事件监听
-        mTcCartTop.setLeftBackImageViewOnClickListener(this);
+        mTcCartTop.setTbLeftIVOnClickListener(this);
         mTvAddress.setOnClickListener(this);
         mBtOrderCommit.setOnClickListener(this);
         mCbOrderPointStatus.setOnClickListener(this);
@@ -177,7 +176,7 @@ public class OrderFormActivity extends BaseMVPActivity<Object> implements View.O
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if (id == R.id.iv_toolbar_back_left) { //返回按钮
+        if (id == R.id.iv_toolbar_left) { //返回按钮
             ActivityInstanceManager.removeActivity(OrderFormActivity.this);
 
         } else if (id == R.id.tv_order_address) { //地址信息
@@ -453,7 +452,6 @@ public class OrderFormActivity extends BaseMVPActivity<Object> implements View.O
 
     @Override
     protected void onDestroy() {
-        ShoppingManager.getInstance().getData();
         if (iBasePresenter != null) {
             iBasePresenter.detachView();
             iBasePresenter = null;

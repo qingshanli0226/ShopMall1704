@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="toolbar_dp_14">14dp</dimen>
+    <dimen name="toolbar_dp_28">28dp</dimen>
+    <dimen name="toolbar_text_size_sp_16">16sp</dimen>
+    <dimen name="toolbar_dp_38">38dp</dimen>
+    <dimen name="toolbar_text_size_sp_22">22sp</dimen>
+    <dimen name="toolbar_dp_2">2dp</dimen>
+</resources>

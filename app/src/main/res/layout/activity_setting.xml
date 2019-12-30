@@ -13,9 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#6af"
-        app:isShowRightImageView="false"
-        app:isShowSettingTextView="false"
-        app:titleColor="#fff" />
+        app:tb_left_iv_isShow="true"
+        app:tb_title_isShow="true"
+        app:tb_title_text="个人信息" />
 
     <View
         android:layout_width="match_parent"

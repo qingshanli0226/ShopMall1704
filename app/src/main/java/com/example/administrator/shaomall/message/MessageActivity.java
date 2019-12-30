@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.shaomall.R;
+import com.example.commen.custom.ToolbarCustom;
 import com.shaomall.framework.base.BaseActivity;
 import com.shaomall.framework.bean.MessageBean;
 import com.shaomall.framework.manager.MessageManager;
@@ -31,11 +32,6 @@ public class MessageActivity extends BaseActivity implements MessageManager.Mess
     }
 
     private MessageAdapter messageAdapter;
-    private android.widget.ImageView mTitleScanning;
-    private android.widget.ImageView mTitleBlack;
-    private android.widget.RelativeLayout mTitleSearch;
-    private android.widget.ImageView mTitleCamera;
-    private android.widget.ImageView mTitleMessage;
     private android.widget.ListView mNotReadMessageLv;
     private List<MessageBean> messages = new ArrayList<>();
 
@@ -47,28 +43,22 @@ public class MessageActivity extends BaseActivity implements MessageManager.Mess
     @Override
     protected void initView() {
         MessageManager.getInstance().registerMessageListener(this);
-        mTitleScanning = findViewById(R.id.title_scanning);
-        mTitleBlack = findViewById(R.id.title_black);
-        mTitleSearch = findViewById(R.id.title_search_rv);
+
         mNotReadMessageLv = findViewById(R.id.message_lv);
-        mTitleCamera = findViewById(R.id.title_camera);
-        mTitleMessage = findViewById(R.id.title_message);
+        ToolbarCustom mTbCustomTop = findViewById(R.id.tb_top);
+        mTbCustomTop.setTbLeftIVOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                animOutActivity(MessageActivity.this);
+            }
+        });
+
     }
 
 
     //初始化
     @Override
     protected void initData() {
-        mTitleScanning.setVisibility(View.INVISIBLE);
-        mTitleBlack.setVisibility(View.VISIBLE);
-        mTitleBlack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                animOutActivity();
-            }
-        });
-        mTitleMessage.setVisibility(View.INVISIBLE);
-        mTitleSearch.setVisibility(View.INVISIBLE);
         changeMessageDatas();
         messageAdapter = new MessageAdapter();
         mNotReadMessageLv.setAdapter(messageAdapter);
@@ -146,7 +136,7 @@ public class MessageActivity extends BaseActivity implements MessageManager.Mess
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         MessageManager.getInstance().unRegisterMessageListener(this);
+        super.onDestroy();
     }
 }

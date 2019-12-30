@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.remindsteporgan">
 
     <!-- 允许程序打开网络套接字 -->
@@ -19,7 +18,7 @@
     <application>
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="fe17378001fb84e6a7eb85a3f7780f10"></meta-data>
+            android:value="fe17378001fb84e6a7eb85a3f7780f10"/>
 
         <activity android:name=".RemindActivity" />
 
@@ -33,7 +32,7 @@
         <service
             android:name=".util.LocalService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true"/>
         <service
             android:name=".util.RemoteService"
             android:enabled="true"
@@ -49,7 +48,7 @@
 
         </service>
 
-        <activity android:name=".RemindMapActivity"></activity>
+        <activity android:name=".RemindMapActivity"/>
     </application>
 
 </manifest>

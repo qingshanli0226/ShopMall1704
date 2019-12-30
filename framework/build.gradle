@@ -49,4 +49,7 @@ dependencies {
     //添加viewMode的扩展依赖
     api "android.arch.lifecycle:extensions:1.1.1"
 
+    //透明通知栏
+    implementation 'com.jaeger.statusbarutil:library:1.4.0'
+
 }

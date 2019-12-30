@@ -16,6 +16,7 @@ import com.example.commen.network.NetChangeObserver;
 import com.example.commen.network.NetType;
 import com.example.commen.network.NetworkManager;
 import com.gyf.immersionbar.ImmersionBar;
+import com.jaeger.library.StatusBarUtil;
 import com.shaomall.framework.R;
 import com.shaomall.framework.manager.ActivityInstanceManager;
 
@@ -33,6 +34,7 @@ public abstract class BaseActivity extends AppCompatActivity implements NetChang
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtil.setTransparent(this);
         flagFullScreen();
         setContentView(setLayoutId());
         mContext = this.getApplicationContext();
@@ -77,8 +79,8 @@ public abstract class BaseActivity extends AppCompatActivity implements NetChang
     }
 
 
-    protected void animOutActivity() {
-        ActivityInstanceManager.removeActivity(this);
+    protected void animOutActivity(Activity activity) {
+        ActivityInstanceManager.removeActivity(activity);
         overridePendingTransition(R.anim.anim_in, R.anim.anim_out);
     }
 

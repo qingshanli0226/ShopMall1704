@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.example.administrator.shaomall.R
 import com.example.administrator.shaomall.function.adapter.FunctionAdaptor
+import com.example.commen.util.PageUtil
 import com.example.shoppingcart.OrderFormActivity
 import com.shaomall.framework.base.BaseActivity
 import com.shaomall.framework.bean.FunctionBean
@@ -14,13 +15,12 @@ import com.shaomall.framework.base.presenter.IBasePresenter
 import com.shaomall.framework.manager.ActivityInstanceManager
 import kotlinx.android.synthetic.main.activity_function.*
 
-class FunctionActivity : BaseActivity() {
+class FunctionActivity : BaseActivity(), FunctionViewModel.LoadingPage {
     lateinit var presenter: IBasePresenter<FunctionBean>
     private var bundle: Bundle? = null
 
     private lateinit var functionAdaptor: FunctionAdaptor   //适配器
     private lateinit var functionViewModel: FunctionViewModel //ViewModel 网络请求
-
 
     override fun setLayoutId(): Int = R.layout.activity_function
     override fun initView() {
@@ -33,7 +33,7 @@ class FunctionActivity : BaseActivity() {
         }
 
         //点击返回
-        mToolBarCustom.setLeftBackImageViewOnClickListener {
+        mToolBarCustom.setTbLeftIVOnClickListener {
             ActivityInstanceManager.removeActivity(this)
         }
 
@@ -50,6 +50,8 @@ class FunctionActivity : BaseActivity() {
     override fun initData() {
         //使用ViewModel提供者,获取ViewModel的实例
         functionViewModel = ViewModelProviders.of(this).get(FunctionViewModel::class.java)
+        functionViewModel.registerLoadingPageListener(this)
+
         functionViewModel.liveData.observe(this, Observer<List<FunctionBean>> { t ->
             functionAdaptor.upDateData(t) //赋值
         })
@@ -60,6 +62,18 @@ class FunctionActivity : BaseActivity() {
         } else if ("待发货" == string && !string.isNullOrBlank()) {
             functionViewModel.findForSend()
         }
+
+
+    }
+
+    //显示加载页
+    override fun showLoadingPage() {
+        PageUtil.getInstance(this).setReview(mRlFunction).showLoad()
+    }
+
+    //隐藏加载页
+    override fun hideLoadingPage() {
+        PageUtil.getInstance(this).setReview(mRlFunction).hideLoad()
     }
 
 
@@ -84,6 +98,7 @@ class FunctionActivity : BaseActivity() {
     override fun onDestroy() {
         //解除所有订阅者
         functionViewModel.clearDisposable()
+        functionViewModel.unRegisterLoadingPageListener()
         super.onDestroy()
     }
 

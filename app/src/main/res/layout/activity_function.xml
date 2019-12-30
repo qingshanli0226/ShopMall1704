@@ -12,17 +12,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#fa6"
-        app:isShowRightImageView="false"
-        app:isShowSettingTextView="false" />
-
+        app:tb_left_iv_isShow="true"
+        app:tb_title_isShow="true" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#a6a6a6" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/mRv"
+    <RelativeLayout
+        android:id="@+id/mRlFunction"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mRv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
 </LinearLayout>

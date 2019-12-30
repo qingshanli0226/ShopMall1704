@@ -31,7 +31,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         }
 
         if (v.getId()==R.id.search_iv_back){
-            animOutActivity();
+            animOutActivity(this);
         }
     }
     private static final int FEEDKEY_START = 1;

@@ -24,7 +24,6 @@ import com.example.administrator.shaomall.activity.MainActivity
 import com.example.administrator.shaomall.goodsinfo.bean.GoodsInfoBean
 import com.example.administrator.shaomall.login.LoginActivity
 import com.example.commen.WebViewConfig
-import com.example.commen.custom.ToolbarCustom
 
 import com.example.commen.util.PageUtil
 
@@ -52,7 +51,6 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
     private lateinit var qBadgeView: QBadgeView //小红点显示
     private lateinit var linearLayout: LinearLayout
     private lateinit var mWebView: WebView
-    internal lateinit var pageUtil: PageUtil
     override fun setLayoutId(): Int = R.layout.activity_commodity
 
     override fun initView() {
@@ -61,14 +59,9 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
         ShoppingManager.getInstance().registerShoppingNumChangeListener(this)
 
 
-
-
-        pageUtil = PageUtil(this)
-        pageUtil.review = goodsInfoRelativeLayout
-
         //点击关闭
-        mTc_top.setLeftBackImageViewOnClickListener {
-            animOutActivity()
+        mTc_top.setTbLeftIVOnClickListener {
+            animOutActivity(this)
         }
 
 
@@ -141,10 +134,10 @@ class GoodsInfoActivity : BaseMVPActivity<String>(), ShoppingManager.ShoppingNum
         if (requestCode == 200) {
             Log.d("SSH", code.toString() + "")
             Toast.makeText(this, "200", Toast.LENGTH_SHORT).show()
-            pageUtil.showLoad()
+            PageUtil.getInstance(this).setReview(goodsInfoRelativeLayout).showLoad()
         } else if (requestCode == 300) {
             Toast.makeText(this, "300", Toast.LENGTH_SHORT).show()
-            pageUtil.hideload()
+            PageUtil.getInstance(this).setReview(goodsInfoRelativeLayout).showLoad()
         }
     }
 

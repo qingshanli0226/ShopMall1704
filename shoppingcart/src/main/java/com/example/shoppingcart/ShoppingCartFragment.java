@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,8 +56,6 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
         //数据更新监听
         ShoppingManager.getInstance().registerNotifyUpdatedShoppingDataListener(this);
 
-        LinearLayout topBar = view.findViewById(R.id.top_bar);
-        TextView title = view.findViewById(R.id.title);
         recyclerView = view.findViewById(R.id.rv_choppingCart);
         allCheckbox = view.findViewById(R.id.all_chekbox);
         tvTotalPrice = view.findViewById(R.id.tv_total_price);
@@ -72,6 +69,7 @@ public class ShoppingCartFragment extends BaseMVPFragment<Object> implements Sho
         linearLayoutManager.setStackFromEnd(true); //列表再底部开始展示，反转后由上面开始展示
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(rvAdp);
+
 
         //是否是全选, 第一次更新数据
         if (listData.size() != 0 && listData.size() == ShoppingManager.getInstance().getShoppingCartSelectionData().size()) {

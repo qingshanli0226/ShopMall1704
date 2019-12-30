@@ -33,7 +33,7 @@ public class ShaoHuaApplication extends BaseApplication {
         mainThreadId = android.os.Process.myTid();//获取当前线程的Id
 
         //未捕获异常
-//        ShaoHuaCrashHandler.getInstance().init(this);
+        //        ShaoHuaCrashHandler.getInstance().init(this);
 
         ACache aCache = ACache.get(this);
         NetworkManager.getDefault().init(this); //网络状态管理类
@@ -41,7 +41,9 @@ public class ShaoHuaApplication extends BaseApplication {
         UserInfoManager.getInstance().init(this, aCache); //用户数据管理类
         ShoppingManager.getInstance().init(this); //商品数据管理类
         SearchManager.getInstance().init(this);
-        MessageManager.getInstance().init(this);
+        MessageManager.getInstance().init(this);  //消息管理类
+
+
         // 初始化 JPush
         JPushInterface.init(this);
         //发布时关闭日志

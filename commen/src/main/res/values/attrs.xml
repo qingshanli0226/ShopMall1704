@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ToolbarCustom">
-        <attr name="rightImageViewIcon" format="reference" />
+        <!--        标题-->
+        <attr name="tb_title_text" format="string" localization="suggested" />
+        <attr name="tb_title_isShow" format="boolean" />
+        <attr name="tb_title_size" format="dimension" />
+        <attr name="tb_title_color" format="color|reference" />
 
-        <attr name="leftImageViewIcon" format="reference" />
-        <attr name="isShowLeftImageView" format="boolean" />
-        <attr name="isShowRightImageView" format="boolean" />
-        <attr name="isShowTitleTextView" format="boolean" />
+        <!--        左图标-->
+        <attr name="tb_left_iv_icon" format="reference" />
+        <attr name="tb_left_iv_isShow" format="boolean" />
 
-        <attr name="title" format="string" />
-        <attr name="titleSize" format="dimension" />
-        <attr name="titleColor" format="reference|color" />
+        <!--        右图标-->
+        <attr name="tb_right_iv_icon" format="reference" />
+        <attr name="tb_right_iv_isShow" format="boolean" />
 
-        <attr name="isShowSettingTextView" format="boolean" />
+        <!--        右文本-->
+        <attr name="tb_right_tv_text" format="string" localization="suggested" />
+        <attr name="tb_right_tv_isShow" format="boolean" />
+        <attr name="tb_right_tv_size" format="dimension" />
+        <attr name="tb_right_tv_color" format="color|reference" />
+
+        <!--        搜索框-->
+        <attr name="tb_search_isShow" format="boolean" />
     </declare-styleable>
 </resources>

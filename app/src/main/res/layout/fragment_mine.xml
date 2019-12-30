@@ -21,8 +21,9 @@
                 android:id="@+id/tc_app_fragment_mine_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:isShowLeftImageView="false"
-                app:isShowTitleTextView="false" />
+                app:tb_right_iv_isShow="true"
+                app:tb_right_tv_isShow="true"
+                 />
 
             <LinearLayout
                 android:id="@+id/ll_header"

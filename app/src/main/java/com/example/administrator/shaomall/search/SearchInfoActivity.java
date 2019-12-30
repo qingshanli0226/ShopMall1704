@@ -53,7 +53,7 @@ public class SearchInfoActivity extends BaseMVPActivity<SearchBean> {
         titleBlack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                animOutActivity();
+                animOutActivity(SearchInfoActivity.this);
             }
         });
 
