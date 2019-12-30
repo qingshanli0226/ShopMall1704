@@ -31,6 +31,14 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:childIndicator="@null" />
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/textNull"
+            android:textSize="30dp"
+            android:gravity="center"
+            android:text="莫得数据"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -111,6 +119,6 @@
         android:id="@+id/ep_shopping_error_page"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tb_top" />
+        vbayout_below="@id/tb_top" />
 
 </RelativeLayout>

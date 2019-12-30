@@ -21,8 +21,7 @@ class FunctionActivity : BaseActivity(), FunctionViewModel.LoadingPage {
 
     private lateinit var functionAdaptor: FunctionAdaptor   //适配器
     private lateinit var functionViewModel: FunctionViewModel //ViewModel 网络请求
-    private lateinit var pageUtil: PageUtil
-
+    internal lateinit var pageUtil: PageUtil
     override fun setLayoutId(): Int = R.layout.activity_function
     override fun initView() {
         bundle = intent.extras
@@ -50,6 +49,9 @@ class FunctionActivity : BaseActivity(), FunctionViewModel.LoadingPage {
     }
 
     override fun initData() {
+
+        pageUtil = PageUtil(this)
+
         //使用ViewModel提供者,获取ViewModel的实例
         functionViewModel = ViewModelProviders.of(this).get(FunctionViewModel::class.java)
         functionViewModel.registerLoadingPageListener(this)

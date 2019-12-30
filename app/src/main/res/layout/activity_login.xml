@@ -87,7 +87,17 @@
         android:layout_marginTop="@dimen/loginMarginTop"
         android:layout_weight="1"
         android:orientation="horizontal">
-
+        <CheckBox
+            android:textColor="@color/ColorDark"
+            android:id="@+id/loginRemindPassWord"
+            android:text="@string/loginRemindPassWordText"
+            android:layout_marginLeft="45dp"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="45dp"
+            tools:ignore="NestedWeights" />
         <TextView
             android:id="@+id/loginSignin"
             android:layout_width="0dp"

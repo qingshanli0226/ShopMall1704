@@ -19,15 +19,15 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.remindsteporgan.base.Bean;
-import com.example.remindsteporgan.diy.MyPassometView;
-import com.example.remindsteporgan.util.ScreenBroadcastListener;
-import com.example.remindsteporgan.util.ScreenManager;
-
+import com.example.commen.util.PageUtil;
 import com.example.remindsteporgan.util.FrontService;
 import com.example.remindsteporgan.util.LiveJobService;
 import com.example.remindsteporgan.util.LocalService;
 import com.example.remindsteporgan.util.RemoteService;
+import com.example.remindsteporgan.base.Bean;
+import com.example.remindsteporgan.diy.MyPassometView;
+import com.example.remindsteporgan.util.ScreenBroadcastListener;
+import com.example.remindsteporgan.util.ScreenManager;
 
 import com.example.view.demogreendao.BeanDao;
 import com.example.view.demogreendao.DaoMaster;
@@ -66,6 +66,7 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
     SharedPreferences sp;
     //TODO 这个是"我的"页面里面传过来的用户名方便数据库存储
     private String username;
+    private PageUtil pageUtil;
 
 
     @Override
@@ -81,12 +82,15 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
         tv1 = this.findViewById(R.id.tv1);
         historySteps = findViewById(R.id.historySteps);
         TextView historySteps = findViewById(R.id.historySteps);
-        sp = getSharedPreferences("ssh", 0);
         remindMap = (Button) findViewById(R.id.remindMap);
+
 
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         username = extras.getString("username");
+
+        sp = getSharedPreferences("ssh", 0);
+
 
         //TODO 实例化数据库
         DaoMaster.DevOpenHelper openHelper = new DaoMaster.DevOpenHelper(this, "ssh");
@@ -94,6 +98,13 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
         DaoMaster daoMaster = new DaoMaster(writableDatabase);
         dao = daoMaster.newSession();
         beanDao = dao.getBeanDao();
+
+
+        //TODO 加载动画
+        pageUtil = new PageUtil(this);
+
+        //TODO 进程保活
+        Keep_alice();
 
         //TODO 传感器
         SensorManager sm = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -120,6 +131,8 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
             }
         });
 
+
+        pageUtil.setReview(review);
         historySteps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,13 +175,17 @@ public class RemindActivity extends BaseActivity implements SensorEventListener 
                     if (daychange == day) {
                         //TODO 还是同一天
                         //TODO step代表和上一次运行相差了多少步
-                        // long step = sp.getLong("step", 0);
+
+                        //long step = sp.getLong("step", 0);
+
                         //TODO 这个是算出程序没有运行期间走了多少步
-                        //plus=X-step;
+                        //plus=X-step+plus;
                     } else {
                         //TODO 不是同一天了
+
                         daychange = day;
                         SharedPreferences.Editor edit = sp.edit();
+                        edit.putInt("daychange",daychange);
                         edit.putLong("y", 0);
                         edit.putLong("step", 0);
                         edit.apply();
