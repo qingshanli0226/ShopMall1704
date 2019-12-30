@@ -5,6 +5,7 @@ import android.view.KeyEvent
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.buy.CartManager
+import com.example.buy.GoodsManager
 import com.example.buy.ShopCartFragment
 import com.example.common.utils.SPUtil
 import com.example.common.view.MyToast
@@ -46,7 +47,6 @@ class MainActivity : BaseNetConnectActivity() {
         if (NetConnectManager.getInstance().isNetConnectStatus && StepIsSupport().isSupportStepCountSensor(this)) {
             StepPointManager.getInstance(this).init()
         }
-
         val bundle = intent!!.getBundleExtra("data")
         if(bundle!=null){
             val isAutoLogin = bundle.getBoolean("isAutoLogin")
@@ -71,8 +71,8 @@ class MainActivity : BaseNetConnectActivity() {
         if (isNetType == getString(R.string.ascend)) {
             MyToast.showToast(this, getString(R.string.ascend_messenger), null, Toast.LENGTH_LONG)
         }
-        list.add(HomeFragment())
-        list.add(TypeFragment())
+        list.add(HomeFragment(this))
+        list.add(TypeFragment(this))
         list.add(FindFragment())
         list.add(ShopCartFragment(1))
         list.add(MineFragment())
@@ -129,6 +129,10 @@ class MainActivity : BaseNetConnectActivity() {
             main_easy.setMsgPointCount(3, num)
         }
         CartManager.getInstance().registerListener(listener)
+        GoodsManager.setGoLoginListener { ctx->
+//            val intent = Intent(ctx, LoginActivity::class.java)
+            startActivity( LoginActivity::class.java,null)
+        }
     }
 
     override fun onDestroy() {

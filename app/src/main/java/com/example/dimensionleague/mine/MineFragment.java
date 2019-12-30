@@ -3,13 +3,11 @@ package com.example.dimensionleague.mine;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -17,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.buy.activity.GoodsActiviy;
+import com.example.buy.activity.GoodsActivity;
 import com.example.buy.activity.OrderActivity;
 import com.example.buy.databeans.GoodsBean;
 import com.example.common.HomeBean;
@@ -181,7 +179,7 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
                         .setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent = new Intent(holder.itemView.getContext(), GoodsActiviy.class);
+                                Intent intent = new Intent(holder.itemView.getContext(), GoodsActivity.class);
                                 intent.putExtra(IntentUtil.GOTO_GOOD, new GoodsBean(
                                         recommendlList.get(position).getProduct_id(),
                                         0,
@@ -249,6 +247,7 @@ public class MineFragment extends BaseNetConnectFragment implements IAccountCall
                 channelList.addAll(((HomeBean) data).getResult().getChannel_info());
                 recommendlList.addAll(((HomeBean) data).getResult().getRecommend_info());
                 rvChannel.getAdapter().notifyDataSetChanged();
+                rvRecommend.getAdapter().notifyDataSetChanged();
             } else {
                 toast(getActivity(), msg);
             }

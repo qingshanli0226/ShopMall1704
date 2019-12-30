@@ -16,17 +16,15 @@ import com.example.common.view.MyToolBar;
 import com.example.dimensionleague.R;
 import com.example.dimensionleague.login.activity.LoginActivity;
 import com.example.dimensionleague.setting.SettingActivity;
-import com.example.framework.base.BaseNetConnectFragment;
+import com.example.framework.base.BaseFragment;
 import com.example.framework.manager.AccountManager;
 import com.example.point.message.MessageActivity;
 import com.flyco.tablayout.SlidingTabLayout;
-import java.util.ArrayList;
-import java.util.List;
 
-public class FindFragment extends BaseNetConnectFragment {
+public class FindFragment extends BaseFragment {
     private SlidingTabLayout tab;
     private ViewPager vp;
-    private List<Fragment> list;
+//    private List<Fragment> list = new ArrayList<>();
     private String[] titles;
     private MyToolBar my_toolbar;
 
@@ -37,8 +35,6 @@ public class FindFragment extends BaseNetConnectFragment {
 
     @Override
     public void init(View view) {
-        super.init(view);
-        list = new ArrayList<>();
         tab = view.findViewById(R.id.find_tab);
         vp = view.findViewById(R.id.find_vp);
         my_toolbar = view.findViewById(R.id.my_toolbar);
@@ -67,22 +63,16 @@ public class FindFragment extends BaseNetConnectFragment {
             bundle.putString("intent","消息");
             startActivity(MessageActivity.class,bundle);
         });
-        list.add(new FindSendFragment());
-        list.add(new FindSendFragment());
-        list.add(new FindSendFragment());
-        list.add(new FindSendFragment());
-        list.add(new FindSendFragment());
-        list.add(new FindSendFragment());
+//        list.add(new FindSendFragment());
+//        list.add(new FindSendFragment());
+//        list.add(new FindSendFragment());
+//        list.add(new FindSendFragment());
+//        list.add(new FindSendFragment());
+//        list.add(new FindSendFragment());
 
         titles = new String[]{getString(R.string.find_attention), getString(R.string.find_like), getString(R.string.find_recommend), getString(R.string.find_5G),getString(R.string.find_streaming),getString(R.string.find_video)};
         vp.setAdapter(new MyVPAdapter(getChildFragmentManager()));
         tab.setViewPager(vp, titles);
-
-    }
-
-    @Override
-    public int getRelativeLayout() {
-        return R.id.find_relativeLayout;
     }
 
     private class MyVPAdapter extends FragmentPagerAdapter {
@@ -101,24 +91,12 @@ public class FindFragment extends BaseNetConnectFragment {
         @NonNull
         @Override
         public Fragment getItem(int position) {
-            return list.get(position);
+            return new FindSendFragment();
         }
 
         @Override
         public int getCount() {
-            return list.size();
+            return titles.length;
         }
-    }
-
-    @Override
-    public void onConnected() {
-        hideEmpty();
-    }
-
-    @Override
-    public void onDisConnected() {
-        hideLoading();
-        hideError();
-        showEmpty();
     }
 }

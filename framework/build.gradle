@@ -32,7 +32,7 @@ android {
     }
 
     greendao {
-        schemaVersion 3 //当前数据库版本
+        schemaVersion 1 //当前数据库版本
         daoPackage 'com.example.framework' //包名 需要更改
         targetGenDir 'src/main/java' //存放greendao库生成文件的目录
         dataBinding {
@@ -42,8 +42,7 @@ android {
 
     dependencies {
         implementation fileTree(dir: 'libs', include: ['*.jar'])
-        implementation 'org.greenrobot:greendao:3.2.2' // 添加库
-//
+
         implementation 'androidx.appcompat:appcompat:1.1.0'
         testImplementation 'junit:junit:4.12'
         androidTestImplementation 'androidx.test:runner:1.2.0'

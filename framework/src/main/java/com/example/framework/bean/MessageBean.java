@@ -1,5 +1,8 @@
 package com.example.framework.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.NotNull;
@@ -7,6 +10,7 @@ import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
 public class MessageBean {
+
     @Id(autoincrement = true)
     private Long id; //必须使用Long类型，long 或者 Integer int都不行
     @NotNull
@@ -60,5 +64,6 @@ public class MessageBean {
     public void setMessage_date(String message_date) {
         this.message_date = message_date;
     }
+
 
 }

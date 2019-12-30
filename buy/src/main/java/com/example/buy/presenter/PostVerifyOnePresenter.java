@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 商品  GoodsActiviy  检查单个商品库存
+ * 商品  GoodsActivity  检查单个商品库存
  */
 
 public class PostVerifyOnePresenter extends BasePresenter<OkBean> {

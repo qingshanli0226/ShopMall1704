@@ -5,13 +5,14 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <application
         android:screenOrientation="portrait">
-        <activity android:name="com.example.buy.activity.GoodsActiviy">
+        <activity android:name="com.example.buy.activity.GoodsActivity"
+            android:launchMode="singleTop">
         </activity>
         <activity android:name="com.example.buy.activity.PayActivity"
             android:launchMode="singleTask"/>
         <activity android:name="com.example.buy.activity.OrderActivity"
             android:launchMode="singleTask"/>
         <activity android:name=".activity.ShoppCartActivity"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTop"/>
     </application>
 </manifest>

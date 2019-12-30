@@ -34,9 +34,11 @@ import com.example.buy.presenter.PostUpDatePointPresenter;
 import com.example.buy.presenter.PostVerifyGoodsPresenter;
 import com.example.common.code.Constant;
 import com.example.common.utils.IntentUtil;
+import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.base.BaseRecyclerAdapter;
 import com.example.framework.base.BaseViewHolder;
+import com.example.framework.bean.MessageBean;
 import com.example.framework.bean.PointBean;
 import com.example.framework.manager.AccountManager;
 import com.example.framework.manager.DaoManager;
@@ -62,6 +64,7 @@ public class PayActivity extends BaseNetConnectActivity{
     private TextView subtractIntegra;
     private CheckBox checkInegra;
     private TextView userPoint;
+    private MyToolBar myToolBar;
 
     private ArrayList<GoodsBean> list = new ArrayList<>();
     //下订单 支付确认  库存  积分 现金
@@ -97,7 +100,17 @@ public class PayActivity extends BaseNetConnectActivity{
         checkInegra = findViewById(R.id.checkInegra);
         subtractIntegra = findViewById(R.id.subtractIntegra);
         userPoint = findViewById(R.id.userPoint);
+        myToolBar = findViewById(R.id.myToolBar);
 
+        myToolBar.init(Constant.OTHER_STYLE);
+        myToolBar.getOther_back().setImageResource(R.drawable.back3);
+        myToolBar.getOther_title().setText(getResources().getString(R.string.cashier_desk));
+        myToolBar.getOther_back().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishActivity();
+            }
+        });
         payBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -209,10 +222,17 @@ public class PayActivity extends BaseNetConnectActivity{
                         if (sum < 0) {
                             sum = 0;
                         }
+                        AccountManager.getInstance().getUser().setPoint(sum+"");
                         pointPresenter = new PostUpDatePointPresenter(sum + "");
                         pointPresenter.attachView(this);
                         pointPresenter.doHttpPostRequest(COED_POINT);
                     }else {
+                        DaoManager.Companion.getInstance(this).addMessageBean(
+                                new MessageBean(null,
+                                        R.mipmap.dimension_league_icon,
+                                        "支付",
+                                        "支付message",
+                                        DateFormat.format("MM-dd", System.currentTimeMillis())+""));
                         finishActivity();
                     }
                 }
@@ -223,6 +243,12 @@ public class PayActivity extends BaseNetConnectActivity{
                     String time = DateFormat.format("MM月dd日HH时mm分", System.currentTimeMillis())+"";
                     PointBean pointBean = new PointBean(null, time, "购买了" + list.size() + "个商品", point);
                     DaoManager.Companion.getInstance(this).addPointBean(pointBean);
+                    DaoManager.Companion.getInstance(this).addMessageBean(
+                            new MessageBean(null,
+                                    R.mipmap.dimension_league_icon,
+                                    "支付",
+                                    "带积分支付message",
+                                    DateFormat.format("MM-dd", System.currentTimeMillis())+""));
                     finishActivity();
                 }
                 break;

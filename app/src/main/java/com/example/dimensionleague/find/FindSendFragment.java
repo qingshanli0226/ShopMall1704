@@ -2,32 +2,28 @@ package com.example.dimensionleague.find;
 
 import android.content.Intent;
 import android.view.View;
-
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.buy.activity.GoodsActiviy;
+import com.example.buy.activity.GoodsActivity;
 import com.example.buy.databeans.GoodsBean;
 import com.example.common.HomeBean;
 import com.example.common.code.Constant;
-
 import com.example.common.utils.IntentUtil;
 import com.example.dimensionleague.R;
 import com.example.dimensionleague.home.HomePresenter;
 import com.example.framework.base.BaseNetConnectFragment;
 import com.example.framework.base.BaseRecyclerAdapter;
 import com.example.framework.base.BaseViewHolder;
+import com.example.framework.port.IPresenter;
 import com.example.net.AppNetConfig;
-
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class FindSendFragment extends BaseNetConnectFragment {
 
     private List<HomeBean.ResultBean.SeckillInfoBean.ListBean> list;
     private RecyclerView rv;
-    private HomePresenter homePresenter;
+    private IPresenter homePresenter;
 
     @Override
     public int getLayoutId() {
@@ -55,14 +51,14 @@ public class FindSendFragment extends BaseNetConnectFragment {
                         .setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent = new Intent(holder.itemView.getContext(), GoodsActiviy.class);
+                                Intent intent = new Intent(getContext(), GoodsActivity.class);
                                 intent.putExtra(IntentUtil.GOTO_GOOD, new GoodsBean(
                                         list.get(position).getProduct_id(),
                                         0,
                                         list.get(position).getName(),
                                         list.get(position).getFigure(),
                                         list.get(position).getCover_price()));
-                                holder.itemView.getContext().startActivity(intent);
+                                getContext().startActivity(intent);
                             }
                         });
             }
@@ -82,23 +78,34 @@ public class FindSendFragment extends BaseNetConnectFragment {
 
     @Override
     public int getRelativeLayout() {
-        return R.id.find_relativeLayout;
+        return R.id.findRelativeLayout;
     }
 
 
     @Override
     public void onRequestSuccess(Object data) {
-        if (data != null) {
-            int code = ((HomeBean) data).getCode();
-            String msg = ((HomeBean) data).getMsg();
-            if (String.valueOf(code).equals(Constant.CODE_OK)) {
-                list.clear();
-                list.addAll(((HomeBean) data).getResult().getRecommend_info());
-                rv.getAdapter().notifyDataSetChanged();
-            } else {
-                toast(getActivity(), msg);
+        if (rv!=null){
+            if (data != null) {
+                int code = ((HomeBean) data).getCode();
+                String msg = ((HomeBean) data).getMsg();
+                if (String.valueOf(code).equals(Constant.CODE_OK)) {
+                    list.clear();
+                    list.addAll(((HomeBean) data).getResult().getRecommend_info());
+                    if (rv!=null){
+                        rv.getAdapter().notifyDataSetChanged();
+                    }
+                } else {
+                    toast(getActivity(), msg);
+                }
             }
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        rv=null;
+        homePresenter.detachView();
+        super.onDestroyView();
     }
 
     @Override
@@ -111,5 +118,15 @@ public class FindSendFragment extends BaseNetConnectFragment {
         hideLoading();
         hideError();
         showEmpty();
+    }
+
+    @Override
+    public void onDestroy() {
+        if(homePresenter!=null){
+            homePresenter.detachView();
+        }
+        rv=null;
+        super.onDestroy();
+
     }
 }

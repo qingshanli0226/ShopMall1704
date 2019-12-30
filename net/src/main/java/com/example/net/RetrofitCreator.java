@@ -11,12 +11,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitCreator {
 
     private static NetInterence netInterence;
+    private static TimeInternect timeInternect;
 
     public  static NetInterence getNetInterence(){
         if (netInterence==null){
             createNet();
         }
         return  netInterence;
+    }
+
+    public static TimeInternect getTimeInternect(){
+        if(timeInternect==null){
+            createTimeNet();
+        }
+        return timeInternect;
     }
 
     private static void createNet() {
@@ -39,5 +47,14 @@ public class RetrofitCreator {
                 .build();
 
         netInterence=build.create(NetInterence.class);
+    }
+
+    private static void createTimeNet(){
+        Retrofit builder = new Retrofit.Builder()
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(AppNetConfig.TIME_URL)
+                .build();
+        timeInternect = builder.create(TimeInternect.class);
     }
 }

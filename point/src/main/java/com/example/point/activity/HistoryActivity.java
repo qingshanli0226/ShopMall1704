@@ -57,7 +57,7 @@ public class HistoryActivity extends BaseActivity {
         history_tool.getOther_back().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                finishActivity();
             }
         });
         history_vp.setAdapter(fragementsVp);

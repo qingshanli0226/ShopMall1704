@@ -82,7 +82,7 @@ public class MessageActivity extends BaseNetConnectActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        messageAdpter = new MessageAdpter(R.layout.message_item, messageBeans, MessageActivity.this);
+                        messageAdpter = new MessageAdpter(R.layout.message_item, messageBeans);
                         if (messageBeans.size()!=0) {
                             message_re.setAdapter(messageAdpter);
                         }

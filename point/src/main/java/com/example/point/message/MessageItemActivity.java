@@ -2,6 +2,7 @@ package com.example.point.message;
 
 import android.content.Intent;
 import android.graphics.Rect;
+import android.os.Parcelable;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.common.code.Constant;
+import com.example.common.utils.IntentUtil;
 import com.example.common.view.MyToolBar;
 import com.example.framework.base.BaseNetConnectActivity;
 import com.example.framework.bean.MessageBean;
@@ -34,6 +36,7 @@ public class MessageItemActivity extends BaseNetConnectActivity {
     private LinearLayout messageitem_line;
     private List<MessageBean> beanList;
     private MessageitemAdpter messageitemAdpter;
+
     @Override
     public int getLayoutId() {
         return R.layout.messageitem_activity;
@@ -42,12 +45,13 @@ public class MessageItemActivity extends BaseNetConnectActivity {
     @Override
     public void init() {
         super.init();
-        MyToolBar messageitem_toolbar = findViewById(R.id.messageitem_toolbar);
-        ImageView messageitem_record = findViewById(R.id.messageitem_record);
-        final EditText messageitem_edit = findViewById(R.id.messageitem_edit);
-        ImageView messageitem_other = findViewById(R.id.messageitem_other);
+        messageitem_toolbar = findViewById(R.id.messageitem_toolbar);
+        messageitem_record = findViewById(R.id.messageitem_record);
+        messageitem_edit = findViewById(R.id.messageitem_edit);
+        messageitem_other = findViewById(R.id.messageitem_other);
         messageitem_line = findViewById(R.id.messageitem_line);
-        RecyclerView messageitem_re = findViewById(R.id.messageitem_re);
+        messageitem_re = findViewById(R.id.messageitem_re);
+
         messageitem_toolbar.setBackground(getResources().getDrawable(R.drawable.toolbar_style));
         messageitem_toolbar.init(Constant.OTHER_STYLE);
         messageitem_toolbar.getOther_back().setOnClickListener(new View.OnClickListener() {
@@ -57,14 +61,12 @@ public class MessageItemActivity extends BaseNetConnectActivity {
             }
         });
         Intent intent = getIntent();
-        String message_title = intent.getStringExtra("message_title");
-        String message_message = intent.getStringExtra("message_message");
-        String message_date = intent.getStringExtra("message_date");
-        Integer message_img = intent.getIntExtra("message_img", 0);
-        messageitem_toolbar.getOther_title().setText("" + message_message);
+        MessageBean bean = intent.getParcelableExtra(IntentUtil.MESSAGE);
+
+        messageitem_toolbar.getOther_title().setText(bean.getMessage_message());
 
         beanList=new ArrayList<>();
-        beanList.add(new MessageBean(null,message_img,message_title,message_message,message_date));
+        beanList.add(bean);
         messageitemAdpter=new MessageitemAdpter(this,beanList);
         messageitem_re.setLayoutManager(new LinearLayoutManager(this));
         messageitem_re.setAdapter(messageitemAdpter);

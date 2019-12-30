@@ -4,8 +4,10 @@ import android.Manifest;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.common.code.Constant;
 import com.example.common.port.IAccountCallBack;
 import com.example.common.view.MyToolBar;
@@ -29,6 +32,7 @@ import com.example.framework.manager.AccountManager;
 import com.example.net.AppNetConfig;
 import com.example.net.RetrofitCreator;
 import com.google.gson.Gson;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.wyp.avatarstudio.AvatarStudio;
 
 import java.io.File;
@@ -46,7 +50,6 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
-@SuppressWarnings({"ALL", "ResultOfMethodCallIgnored"})
 public class UserMassagesActivity extends BaseActivity implements IAccountCallBack {
     private List<SettingBean> list;
     private String[] sexArry;
@@ -84,7 +87,6 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
     }
 
     @Override
-    @SuppressLint("InflateParams")
     public void init() {
         user_toolbar = findViewById(R.id.user_toolbar);
         user_toolbar.init(Constant.OTHER_STYLE);
@@ -109,10 +111,10 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
                 getString(R.string.woman),
                 getString(R.string.man)
         };
-        list.add(new SettingBean(getString(R.string.setting_user),""));
-        list.add(new SettingBean(getString(R.string.name),""));
+        list.add(new SettingBean(getString(R.string.setting_user)," "));
+        list.add(new SettingBean(getString(R.string.name)," "));
         list.add(new SettingBean(getString(R.string.sex),getString(R.string.privary)));
-        list.add(new SettingBean(getString(R.string.birth),""));
+        list.add(new SettingBean(getString(R.string.birth)," "));
 
         mYear = nowdate.get(Calendar.YEAR);
         mMonth = nowdate.get(Calendar.MONTH);
@@ -140,28 +142,26 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
 
     private void initListener() {
         headView.setOnClickListener(v -> {
-            int permission = 0;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                permission = this.checkSelfPermission(Manifest.permission.CAMERA);
-                if (permission != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(new String[]{Manifest.permission.CAMERA}, Constant.REQUSET_CODE);
-                    return;
-                }
-            }
-            new AvatarStudio.Builder(UserMassagesActivity.this)
-                    .needCrop(true)
-                    .dimEnabled(true)
-                    .setAspect(1, 1)
-                    .setOutput(50, 50)
-                    .setText(getString(R.string.camera), getString(R.string.albums), getString(R.string.cancel))
-                    .setTextColor(Color.BLUE)
-                    .show(uri -> {
-                        File file = new File(uri);
-                        upload(file);
+            final RxPermissions rxPermissions = new RxPermissions(UserMassagesActivity.this);
+            rxPermissions.request(
+                    Manifest.permission.CAMERA)
+                    .subscribe(granted -> {
+                        if (granted) {
+                            new AvatarStudio.Builder(UserMassagesActivity.this)
+                                    .needCrop(true)
+                                    .dimEnabled(true)
+                                    .setAspect(1, 1)
+                                    .setOutput(50, 50)
+                                    .setText(getString(R.string.camera), getString(R.string.albums), getString(R.string.cancel))
+                                    .setTextColor(Color.BLUE)
+                                    .show(uri -> {
+                                        File file = new File(uri);
+                                        upload(file);
+                                    });
+                        }
                     });
         });
-        adapter.setOnItemClickListener((adapter, view, position) -> {
-
+        adapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (position) {
                 case 0:
                     Toast toast = Toast.makeText(view.getContext(), R.string.no, Toast.LENGTH_LONG);
@@ -169,7 +169,7 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
                     toast.show();
                     break;
                 case 1:
-                    @SuppressLint("InflateParams")
+
                     View inflate = LayoutInflater.from(UserMassagesActivity.this).inflate(R.layout.user_item_set_name, null);
                     AlertDialog.Builder builder = new AlertDialog.Builder(UserMassagesActivity.this)
                             .setView(inflate)
@@ -183,10 +183,10 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
                     builder.show();
                     break;
                 case 2:
-                    showSexDialog(position);
+                    showSexDialog(position,view);
                     break;
                 case 3:
-                    new DatePickerDialog(UserMassagesActivity.this, DatePickerDialog.THEME_HOLO_LIGHT, (view1, year, month, dayOfMonth) -> {
+                    new DatePickerDialog(view.getContext(), DatePickerDialog.THEME_HOLO_LIGHT, (view1, year, month, dayOfMonth) -> {
                         String s = mYear + getString(R.string.year) + mMonth +
                                 getString(R.string.moth) +
                                 mDay + getString(R.string.day);
@@ -199,13 +199,9 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
         });
     }
 
-
-
-
-
-        private void showSexDialog(int position) {
+        private void showSexDialog(int position, View view) {
 //        性别选择
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         builder.setSingleChoiceItems(sexArry, 0, (dialog, which) -> {
             list.get(position).setMassage(sexArry[which]);
             adapter.notifyDataSetChanged();
@@ -235,7 +231,6 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
                     public void onSubscribe(Disposable d) {
                     }
 
-                    @SuppressWarnings("ResultOfMethodCallIgnored")
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         String s;
@@ -264,32 +259,5 @@ public class UserMassagesActivity extends BaseActivity implements IAccountCallBa
     protected void onDestroy() {
         super.onDestroy();
         AccountManager.getInstance().unRegisterUserCallBack(this);
-    }
-
-    //    处理权限
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == Constant.REQUSET_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                new AvatarStudio.Builder(UserMassagesActivity.this)
-                        .needCrop(true)
-                        .dimEnabled(true)
-                        .setAspect(1, 1)
-                        .setOutput(50, 50)
-                        .setText(getString(R.string.camera), getString(R.string.albums), getString(R.string.cancel))
-                        .setTextColor(Color.BLUE)
-                        .show(uri -> {
-                            File file = new File(uri);
-                            upload(file);
-                        });
-
-            } else {
-                // Permission Denied 拒绝
-                toast(this, getString(R.string.request_no));
-            }
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
     }
 }

@@ -113,11 +113,11 @@ public abstract class BaseNetConnectActivity extends BaseActivity implements IAc
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if (netConnectManager!=null){
+            loadingPage=null;
             netConnectManager.unRegisterNetConnectListener(this);
         }
-
+        super.onDestroy();
     }
     @Override
     public void getSearchDataSuccess(String str) {

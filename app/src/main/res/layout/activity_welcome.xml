@@ -6,13 +6,7 @@
     tools:context=".activity.WelcomeActivity"
     android:fitsSystemWindows="true"
     android:background="@color/colorBlack"
-    android:id="@+id/welcomeLayout">
-
-    <VideoView
-        android:id="@+id/videoView"
-        android:layout_gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    android:id="@+id/welLayout">
     <Button
         android:id="@+id/welcome_button"
         style="@style/StyleRoundButton"
@@ -23,7 +17,12 @@
         android:layout_marginRight="@dimen/dp_10"
         android:layout_marginTop="@dimen/dp_30"
         android:textSize="@dimen/sp_12"
-        android:textColor="@color/colorWhite"
-        android:text="5秒"/>
+        android:textColor="@color/colorWhite" />
+    <ImageView
+        android:id="@+id/welcomeImage"
+        android:scaleType="fitXY"
+        android:src="@mipmap/style_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </FrameLayout>

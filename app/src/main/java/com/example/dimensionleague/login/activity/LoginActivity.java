@@ -42,8 +42,6 @@ import java.util.HashMap;
  * author:李浩帆
  */
 public class LoginActivity extends BaseNetConnectActivity implements IButtonEnabledListener, View.OnClickListener {
-
-
     private EditText user_name;
     private EditText password;
     private CheckBox password_check;
@@ -147,6 +145,7 @@ public class LoginActivity extends BaseNetConnectActivity implements IButtonEnab
 
     @Override
     public void onRequestSuccess(Object data) {
+        btn_login.setEnabled(true);
         LoginBean loginBean = (LoginBean) data;
         LoginBean.ResultBean result = loginBean.getResult();
         if (loginBean.getCode().equals(Constant.CODE_OK)) {
@@ -244,6 +243,7 @@ public class LoginActivity extends BaseNetConnectActivity implements IButtonEnab
                 loginPresenter.attachView(LoginActivity.this);
                 //TODO post请求数据
                 loginPresenter.doHttpPostRequest();
+                btn_login.setEnabled(false);
                 break;
             case R.id.user_register:
                 startActivity(RegisterActivity.class, null);

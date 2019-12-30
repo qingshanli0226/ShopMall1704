@@ -1,6 +1,7 @@
 package com.example.framework.base;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.example.common.code.ErrorCode;
@@ -19,15 +20,16 @@ public abstract class BaseNetConnectFragment extends BaseFragment implements IVi
     NetConnectManager netConnectManager;
 
     private LoadingPageUtils loadingPage;
-    private RelativeLayout relativeLayout;
 
     @Override
     public void init(View view) {
         netConnectManager = NetConnectManager.getInstance();
         netConnectManager.registerNetConnectListener(this);
         if(getRelativeLayout()!=0){
-            relativeLayout = view.findViewById(getRelativeLayout());
+            ViewGroup relativeLayout = view.findViewById(getRelativeLayout());
             loadingPage = new LoadingPageUtils(getContext(),relativeLayout);
+        }else {
+            loadingPage=new LoadingPageUtils(getContext(),null);
         }
     }
 
@@ -106,11 +108,21 @@ public abstract class BaseNetConnectFragment extends BaseFragment implements IVi
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (netConnectManager!=null){
+    public void onDestroyView() {
+        if (loadingPage!=null){
+            loadingPage=null;
             netConnectManager.unRegisterNetConnectListener(this);
         }
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
+        if (loadingPage!=null){
+            loadingPage=null;
+            netConnectManager.unRegisterNetConnectListener(this);
+        }
+        super.onDestroy();
     }
 }
 

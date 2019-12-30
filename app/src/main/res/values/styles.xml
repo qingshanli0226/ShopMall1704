@@ -6,6 +6,9 @@
         <item name="colorPrimary">@color/color_red</item>
         <item name="colorPrimaryDark">@color/color_red</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@mipmap/style_background</item>
+        <item name="windowNoTitle">true</item>
+
     </style>
 
     <style name="StyleRoundButton">

@@ -22,6 +22,7 @@
             android:layout_marginTop="@dimen/dp_10"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_50"
+            android:paddingTop="@dimen/dp_10"
             android:background="@drawable/toolbar_style"
             app:tl_indicator_width="@dimen/dp_10"
             app:tl_textSelectColor="@color/colorWhite"
@@ -33,7 +34,6 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
-            android:id="@+id/find_relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">

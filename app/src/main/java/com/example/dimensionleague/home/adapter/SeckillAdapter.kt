@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.buy.activity.GoodsActiviy
+import com.example.buy.activity.GoodsActivity
 import com.example.buy.databeans.GoodsBean
 import com.example.common.HomeBean
 import com.example.common.utils.IntentUtil
@@ -39,7 +39,7 @@ class SeckillAdapter(
             home_seckill_tv_origin_price.paintFlags=Paint.STRIKE_THRU_TEXT_FLAG
             this.setOnClickListener { v->
 
-                val intent = Intent(context, GoodsActiviy::class.java)
+                val intent = Intent(context, GoodsActivity::class.java)
                 intent.putExtra(IntentUtil.GOTO_GOOD, GoodsBean(
                         list!![position].product_id,
                         0, list!![position].name,

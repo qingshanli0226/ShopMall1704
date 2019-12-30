@@ -23,44 +23,44 @@ import com.example.dimensionleague.R
 import com.example.dimensionleague.activity.MainActivity
 import com.example.dimensionleague.address.AddressActivity
 import com.example.net.AppNetConfig
-class SettingActivity : BaseActivity(),IAccountCallBack {
+
+class SettingActivity : BaseActivity(), IAccountCallBack {
 
 
-    private var list:MutableList<SettingBean> = mutableListOf()
-    private lateinit var heanImg:ImageView
-    private lateinit var heanName:TextView
-    private lateinit var heanTitle:TextView
+    private var list: MutableList<SettingBean> = mutableListOf()
+    private lateinit var heanImg: ImageView
+    private lateinit var heanName: TextView
+    private lateinit var heanTitle: TextView
     private lateinit var headView: View
     private lateinit var foodView: View
-    private lateinit var foodButton:Button
-    private lateinit var adapter:MySettingAdapter
+    private lateinit var foodButton: Button
+    private lateinit var adapter: MySettingAdapter
     override fun getLayoutId(): Int {
         return R.layout.activity_setting
     }
 
-    @SuppressLint("InflateParams")
+
     override fun init() {
         setting_toolbar.init(Constant.OTHER_STYLE)
-        setting_toolbar.background = resources.getDrawable(R.drawable.toolbar_style,null)
+        setting_toolbar.background = resources.getDrawable(R.drawable.toolbar_style, null)
         setting_toolbar.other_back.setImageResource(R.drawable.back3)
         setting_toolbar.other_title.setTextColor(Color.WHITE)
         setting_toolbar.other_title.text = getString(R.string.user_setting)
         headView = LayoutInflater.from(this).inflate(R.layout.setting_item_head, null)
         foodView = LayoutInflater.from(this).inflate(R.layout.setting_item_food, null)
-        foodButton=foodView.findViewById(R.id.setting_food_out)
-        heanImg=headView.findViewById(R.id.setting_head_img)
-        heanTitle=headView.findViewById(R.id.setting_head_user_name)
-        heanName=headView.findViewById(R.id.setting_head_name)
+        foodButton = foodView.findViewById(R.id.setting_food_out)
+        heanImg = headView.findViewById(R.id.setting_head_img)
+        heanTitle = headView.findViewById(R.id.setting_head_user_name)
+        heanName = headView.findViewById(R.id.setting_head_name)
         AccountManager.getInstance().registerUserCallBack(this)
-
 
     }
 
     override fun initDate() {
         initRecycleView()
     }
-//    添加rv布局
-    @SuppressLint("SetTextI18n")
+
+    //    添加rv布局
     private fun initRecycleView() {
         list.add(SettingBean(getString(R.string.setting_address)))
         list.add(SettingBean(getString(R.string.setting_security)))
@@ -71,39 +71,47 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
         list.add(SettingBean(getString(R.string.setting_common)))
         list.add(SettingBean(getString(R.string.setting_union)))
         list.add(SettingBean(getString(R.string.setting_hall)))
-        list.add(SettingBean(getString(R.string.setting_about), packageManager.getPackageInfo(packageName,0).versionName))
-    //        判断是否登录
-    if (AccountManager.getInstance().isLogin){
+        list.add(
+            SettingBean(
+                getString(R.string.setting_about),
+                packageManager.getPackageInfo(packageName, 0).versionName
+            )
+        )
+        //        判断是否登录
+        if (AccountManager.getInstance().isLogin) {
 
-        heanTitle.text=(AccountManager.getInstance().user.name.toString())
-        heanName.text=(getString(R.string.setting_user)+AccountManager.getInstance().user.name.toString())
-        Log.d("lhf--welcome--Setting",AccountManager.getInstance().getUser().toString())
+            heanTitle.text = (AccountManager.getInstance().user.name.toString())
+            heanName.text =
+                (getString(R.string.setting_user) + AccountManager.getInstance().user.name.toString())
+            Log.d("lhf--welcome--Setting", AccountManager.getInstance().getUser().toString())
 
-        foodView.visibility=View.VISIBLE
-        if (AccountManager.getInstance().user.avatar!=null){
-            Glide.with(this).load(AppNetConfig.BASE_URL+AccountManager.getInstance().user.avatar).apply(RequestOptions().circleCrop()).into(heanImg)
+            foodView.visibility = View.VISIBLE
+            if (AccountManager.getInstance().user.avatar != null) {
+                Glide.with(this)
+                    .load(AppNetConfig.BASE_URL + AccountManager.getInstance().user.avatar)
+                    .apply(RequestOptions().circleCrop()).into(heanImg)
+            }
+
+        } else {
+            foodView.visibility = View.GONE
         }
-
-    }else{
-        foodView.visibility=View.GONE
-    }
-        setting_rv.layoutManager=LinearLayoutManager(this)
-        adapter= MySettingAdapter(R.layout.setting_item,list)
+        setting_rv.layoutManager = LinearLayoutManager(this)
+        adapter = MySettingAdapter(R.layout.setting_item, list)
         adapter.addHeaderView(headView)
         adapter.addFooterView(foodView)
-        setting_rv.adapter=adapter
-    initListener()
+        setting_rv.adapter = adapter
+        initListener()
 
     }
 
     private fun initListener() {
 //        全部监听
         adapter.setOnItemChildClickListener { adapter, view, position ->
-            when(position){
-                0-> {
-                    startActivity(AddressActivity::class.java,null)
+            when (position) {
+                0 -> {
+                    startActivity(AddressActivity::class.java, null)
                 }
-                else ->  toast(this, list[position].title+R.string.contact)
+                else -> toast(this, list[position].title + getString(R.string.contact))
             }
 
         }
@@ -123,21 +131,21 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
                 AccountManager.getInstance().logout()
                 AccountManager.getInstance().notifyLogout()
                 logoutDialog.dismiss()
-                toast(this,getString(R.string.login_out))
+                toast(this, getString(R.string.login_out))
                 finishActivity()
             }
         }
         headView.setOnClickListener {
-            if (heanTitle.text == getString(R.string.mine_login)){
+            if (heanTitle.text == getString(R.string.mine_login)) {
 //                登录注册跳转
-                startActivity(LoginActivity::class.java,null)
-            }else{
+                startActivity(LoginActivity::class.java, null)
+            } else {
 //                跳转到个人信息
-                startActivity(UserMassagesActivity::class.java,null)
+                startActivity(UserMassagesActivity::class.java, null)
             }
         }
         setting_toolbar.other_back.setOnClickListener {
-            val intent = Intent(this,MainActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             boundActivity(intent)
             finish()
         }
@@ -147,8 +155,10 @@ class SettingActivity : BaseActivity(),IAccountCallBack {
     override fun onRegisterSuccess() {}
     //    登录
     override fun onLogin() {}
+
     //    退出登录
     override fun onLogout() {}
+
     //    更新头像
     override fun onAvatarUpdate(url: String?) {
         Glide.with(this).load(url).apply(RequestOptions().circleCrop()).into(heanImg)
