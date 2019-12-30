@@ -3,9 +3,7 @@ package com.example.shopmall.activity;
 import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -46,9 +44,9 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
     private final HandlerThread handlerThread = new HandlerThread("welcome");
     private Handler handler;
     private IntegerPresenter integerPresenter;
-
-    private String[] prems=new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
-    private boolean isJump=false;
+    private Thread welcomeThread;
+    private String[] prems = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+    private boolean isJump = false;
     private ObjectAnimator objectAnimator;
     private AutoLoginPresenter autoLoginPresenter;
 
@@ -71,21 +69,21 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
 
         handlerThread.start();
 
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
-            for (int i=0;i<prems.length;i++){
-                if(  checkSelfPermission(prems[i])
-                        != PackageManager.PERMISSION_GRANTED){
-                    isJump=false;
-                    requestPermissions(prems,100);
-                }else{
-                    isJump=true;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            for (int i = 0; i < prems.length; i++) {
+                if (checkSelfPermission(prems[i])
+                        != PackageManager.PERMISSION_GRANTED) {
+                    isJump = false;
+                    requestPermissions(prems, 100);
+                } else {
+                    isJump = true;
                 }
             }
-        }else{
+        } else {
             JumpActivity();
         }
 
-        if(isJump==true){
+        if (isJump == true) {
             initAutoLogin();
         }
 
@@ -115,7 +113,10 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
         if (isJump) {
             JumpActivity();
         }
+
     }
+
+
 
     private void initAutoLogin() {
         boolean loginStatus = UserManager.getInstance().getLoginStatus();
@@ -131,15 +132,17 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
     }
 
     private void JumpActivity() {
-        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(iv_welcome, "Alpha", 0, 1);
+
+        objectAnimator = ObjectAnimator.ofFloat(iv_welcome, "Alpha", 0, 1);
         objectAnimator.setDuration(3000);
         objectAnimator.start();
 
         integerPresenter = new IntegerPresenter(Constant.HOME_URL, HomepageBean.class);
         integerPresenter.attachGetView(this);
         integerPresenter.getGetData();
+        integerPresenter.detachView();
 
-        Thread welcomeThread = new Thread() {
+        welcomeThread = new Thread() {
             @Override
             public void run() {
                 super.run();
@@ -172,10 +175,6 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
                     }
                 }
             };
-        } else {
-            Toast.makeText(this, "请检查网络连接情况...", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
-            finish();
         }
     }
 
@@ -225,31 +224,27 @@ public class WelcomeActivity extends BaseActivity implements IGetBaseView<Homepa
     protected void onDestroy() {
         super.onDestroy();
 
-        if (integerPresenter != null) {
-            integerPresenter.detachView();
-        }
-
-        SharedPreferences welcome = getSharedPreferences("welcome", Context.MODE_PRIVATE);
-        SharedPreferences.Editor edit = welcome.edit();
-        edit.putBoolean("isWelcome", false);
-        edit.apply();
-
         Drawable drawable = iv_welcome.getDrawable();
         BitmapDrawable drawable1 = (BitmapDrawable) drawable;
         Bitmap bitmap = drawable1.getBitmap();
         bitmap.recycle();
         bitmap = null;
 
-        if (autoLoginPresenter != null) {
-            autoLoginPresenter.detachView();
-        }
-
         handlerThread.quit();
+
         if (handler != null) {
             handler.removeCallbacksAndMessages(this);
         }
 
-        if (objectAnimator != null){
+        welcomeThread.interrupt();
+        if (integerPresenter != null) {
+            integerPresenter.detachView();
+        }
+        if (autoLoginPresenter != null) {
+            autoLoginPresenter.detachView();
+        }
+
+        if (objectAnimator != null) {
             objectAnimator.cancel();
         }
 

@@ -47,13 +47,14 @@ public class MyApplication extends Application {
 
             StepManager.getInstance().init(getApplicationContext());
 
-            startService(new Intent(this, StepLocalService.class));
-            startService(new Intent(this, StepRemoteService.class));
-
-            if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
-                startService(new Intent(this, StepJobService.class));
-            }else{
-                startService(new Intent(this, StepJobService.class));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                startService(new Intent(this, StepJobService.class));
+                startService(new Intent(this, StepLocalService.class));
+                startService(new Intent(this, StepRemoteService.class));
+            } else {
+//                startService(new Intent(this, StepJobService.class));
+                startService(new Intent(this, StepLocalService.class));
+                startService(new Intent(this, StepRemoteService.class));
             }
         }
 

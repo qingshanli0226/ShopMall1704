@@ -52,6 +52,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 个人页面
  */
 public class MineFragment extends BaseFragment implements View.OnClickListener {
+
     private File file1;
     private TitleBar tbMine;
     private TextView tvUserScore;
